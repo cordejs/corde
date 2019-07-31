@@ -18,7 +18,7 @@ test('crete user').run(
         say: "jhon",
         wait: "Hello jhon, welcome to my bot!"
     }
-);
+)
 ```
 
 Quite simple uh ?

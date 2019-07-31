@@ -7,10 +7,10 @@
 export default class MissingTestNameError extends Error {
     constructor(message?: string) {
         if (message) {
-            super(message);
+            super(message)
         } else {
-            super("Test name not defined");
-            this.name = "ERR_ENGAGE_MISSING_TEST_NAME";
+            super("Test name not defined")
+            this.name = "ERR_ENGAGE_MISSING_TEST_NAME"
         }
     }
 }

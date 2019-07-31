@@ -7,10 +7,10 @@
 export default class BotInitializationError extends Error {
   constructor(message?: string) {
     if (message) {
-      super(message);
+      super(message)
     } else {
-      super("Fail in the attempt of login to bot");
-      this.name = "ERR_concord_LOGIN_FAIL";
+      super("Fail in the attempt of login to bot")
+      this.name = "ERR_concord_LOGIN_FAIL"
     }
   }
 }

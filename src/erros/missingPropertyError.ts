@@ -7,10 +7,10 @@
 export default class MissingPropertyError extends Error {
     constructor(message?: string) {
         if (message) {
-            super(message);
+            super(message)
         } else {
-            super("Required property not found");
-            this.name = "ERR_ENGAGE_MISSING_PROPERTY";
+            super("Required property not found")
+            this.name = "ERR_ENGAGE_MISSING_PROPERTY"
         }
     }
 }

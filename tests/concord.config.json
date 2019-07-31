@@ -1,9 +1,0 @@
-{
-    "concordTestToken": "teste",
-    "botTestId": "12321231",
-    "channelId": "1232131",
-    "guildId": "3221",
-    "timeOut": 1000,
-    "botPrefix": "!",
-    "testDir": "./tests/cases"
-}

@@ -7,34 +7,34 @@ export declare interface IConfig {
   /**
    * Fake bot used to test the realy one
    */
-  concordTestToken: string;
+  concordTestToken: string
   /**
    * User's bot that will be tested 
    */
-  botTestId: string;
+  botTestId: string
   /**
    * User's bot token that will run.
    */
-  botTestToken: string;
+  botTestToken: string
   /**
    * Channel where tests will run
    */
-  channelId: string;
+  channelId: string
   /**
    * Guild where tests will run
    */
-  guildId: string;
+  guildId: string
   /**
    * Defines max amount of time that a command can run
    */
-  timeOut?: number;
+  timeOut?: number
   /**
    * Defines how indentify bot calls
    */
-  botPrefix: string;
+  botPrefix: string
 
   /**
    * Path for case tests. Use this from the base directory of the application
    */
-  testDir: string;
+  testFilesDir: string
 }

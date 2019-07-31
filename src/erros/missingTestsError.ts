@@ -7,10 +7,10 @@
 export default class MissingTestsErro extends Error {
     constructor(message?: string) {
       if (message) {
-        super(message);
+        super(message)
       } else {
-        super("There is no tests to be executed");
-        this.name = "ERR_ENGAGE_MISSING_TESTS";
+        super("There is no tests to be executed")
+        this.name = "ERR_ENGAGE_MISSING_TESTS"
       }
     }
   }
