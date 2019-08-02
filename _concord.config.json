@@ -1,6 +1,6 @@
 {
-    "concordTestToken": "NTEwODg2Njk2MDYyMjg3ODk0.XUGgSg.aBT7laTAkV6oj-gwDaMVaLfNQbA",
-    "botTestId": "495052325258395672",
+    "concordTestToken": "",
+    "botTestId": "",
     "timeOut": 1000,
     "botPrefix": "!",
     "testFilesDir": "./tests/cases"
