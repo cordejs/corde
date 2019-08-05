@@ -1,0 +1,1 @@
+{"version":3,"file":"missingPropertyError.js","sourceRoot":"","sources":["../../src/erros/missingPropertyError.ts"],"names":[],"mappings":";;AAMA,MAAqB,oBAAqB,SAAQ,KAAK;IACnD,YAAY,OAAgB;QACxB,IAAI,OAAO,EAAE;YACT,KAAK,CAAC,OAAO,CAAC,CAAA;SACjB;aAAM;YACH,KAAK,CAAC,6BAA6B,CAAC,CAAA;YACpC,IAAI,CAAC,IAAI,GAAG,6BAA6B,CAAA;SAC5C;IACL,CAAC;CACJ;AATD,uCASC"}
