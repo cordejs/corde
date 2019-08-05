@@ -4,6 +4,16 @@ import MissingPropertyError from "./erros/missingPropertyError";
 import { concordlogin, clientlogin } from "./bot";
 import { IConfigOptions } from "./config";
 
+process.on("uncaughtException", function(error) {
+  throw error;
+  process.exit(1);
+});
+
+process.on("unhandledRejection", function(error) {
+  throw error;
+  process.exit(1);
+});
+
 let config: IConfigOptions = loadConfig();
 export default config;
 
@@ -18,7 +28,7 @@ function loadConfig(): Config {
       throw new Error("Configuration file not found");
     }
 
-    if (_config) {      
+    if (_config) {
       return new Config(_config);
     } else {
       throw new Error("Invalid configuration file");
@@ -44,24 +54,27 @@ function validadeConfigs(configs: Config) {
 /**
  * Starts the execution of tests
  */
-export async function begin() { 
+export async function begin() {
   if (config) {
-
     validadeConfigs(config);
 
     try {
       // Make login with concord and load Message
       await concordlogin(config.concordTestToken);
     } catch {
-      throw new Error(`Error trying to connect to bot with token: ${config.concordTestToken}`);
+      throw new Error(
+        `Error trying to connect to bot with token: ${config.concordTestToken}`
+      );
     }
 
-    if (config.botTestToken) {   
+    if (config.botTestToken) {
       try {
         await clientlogin(config.botTestToken);
       } catch {
-        throw new Error(`Error trying to connect to bot with token: ${config.botTestToken}`);
-      } 
+        throw new Error(
+          `Error trying to connect to bot with token: ${config.botTestToken}`
+        );
+      }
     }
 
     let files: string[];
@@ -69,15 +82,15 @@ export async function begin() {
     try {
       files = fs.readdirSync(config.testFilesDir);
     } catch (err) {
-      console.error(err)
-      return
+      console.error(err);
+      return;
     }
 
     files.forEach(function(file) {
-       // Execute all test cases 
-       require(`${process.cwd()}/${config.testFilesDir}/${file}`)
-    })
+      // Execute all test cases
+      require(`${process.cwd()}/${config.testFilesDir}/${file}`);
+    });
   }
 }
 
-begin()
+begin();
