@@ -6,8 +6,8 @@ import * as Discord from "discord.js";
 export interface IConfigOptions {
   readonly concordTestToken: string;
   readonly botTestId: string;
-  readonly botTestToken: string;
-  readonly channelId: string;
+  readonly botTestToken?: string;
+  readonly channelId?: string;
   readonly guildId: string;
   readonly timeOut?: number;
   readonly botPrefix: string;
@@ -17,8 +17,10 @@ export interface IConfigOptions {
 
 /**
  * Default interface of json config
+ * @public
  * @description `botTestToken` is not required.
  * only inform if is desired to start test bot with concord
+ * @implements IConfigOptions
  */
 export class Config implements IConfigOptions {
   /**
@@ -32,11 +34,11 @@ export class Config implements IConfigOptions {
   /**
    * User's bot token that will run.
    */
-  public readonly botTestToken: string;
+  public readonly botTestToken?: string;
   /**
    * Channel where tests will run
    */
-  public readonly channelId: string;
+  public readonly channelId?: string;
   /**
    * Guild where tests will run
    */
