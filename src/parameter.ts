@@ -1,3 +1,8 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Lucas Gomes. All rights reserved.
+ *  Licensed under the MIT License. See LICENCE in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
 interface TestSend {
   say: string
 }

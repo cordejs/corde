@@ -40,21 +40,21 @@ concordBot.on(
           } doesn't belong to concord bot. change the guild id in concord.config or add the bot to a valid guild`
         );
       } else {
-        guild = concordBot.guilds.get(config.guildId);
+        guild = concordBot.guilds.get(config.guildId) || null;
       }
 
       if (!guild.channels) {
         throw new Error(
           `${guild.name} doesn't have a channel with id ${config.channelId}.`
         );
-      } else if (!guild.channels.has(config.channelId)) {
+      } else if (!guild.channels.has(config.channelId || '')) {
         throw new Error(
           `${config.channelId} doesn't appear to be a channel of guild ${
             guild.name
           }`
         );
       } else {
-        channel = guild.channels.get(config.channelId);
+        channel = guild.channels.get(config.channelId || '');
       }
 
       if (!channel) return;
@@ -65,8 +65,7 @@ concordBot.on(
           channel
         )
       ) {
-        throw new Error("")
-        return;
+        throw new Error("");
       }
 
       console.log("Client bot is ready for tests!");

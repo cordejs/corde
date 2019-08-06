@@ -1,8 +1,7 @@
 {
-	"baseUrl": "../",
 	"directory": "./src",
 	"delete": true,
-	"location": "top",
+	"location": "all",
 	"structure": "flat",
 	"verbose": true
 }
