@@ -1,1 +1,0 @@
-{"version":3,"file":"botInitializationError.js","sourceRoot":"","sources":["../../src/erros/botInitializationError.ts"],"names":[],"mappings":";;AAMA,MAAqB,sBAAuB,SAAQ,KAAK;IACvD,YAAY,OAAgB;QAC1B,IAAI,OAAO,EAAE;YACX,KAAK,CAAC,OAAO,CAAC,CAAA;SACf;aAAM;YACL,KAAK,CAAC,qCAAqC,CAAC,CAAA;YAC5C,IAAI,CAAC,IAAI,GAAG,wBAAwB,CAAA;SACrC;IACH,CAAC;CACF;AATD,yCASC"}

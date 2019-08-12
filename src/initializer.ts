@@ -81,7 +81,7 @@ async function login() {
 export async function begin() {
   if (config) {
     validadeConfigs(config);
-    login();
+    await login();
 
     let files: string[];
 

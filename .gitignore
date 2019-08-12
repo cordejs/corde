@@ -61,3 +61,4 @@ typings/
 .next
 
 concord.config.*
+lib/

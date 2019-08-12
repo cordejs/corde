@@ -1,1 +1,0 @@
-{"version":3,"file":"configFileNotFoundErro.js","sourceRoot":"","sources":["../../src/erros/configFileNotFoundErro.ts"],"names":[],"mappings":";;AAMA,MAAqB,uBAAwB,SAAQ,KAAK;IACtD,YAAY,OAAgB;QACxB,IAAI,OAAO,EAAE;YACT,KAAK,CAAC,OAAO,CAAC,CAAA;SACjB;aAAM;YACH,KAAK,CAAC,uBAAuB,CAAC,CAAA;YAC9B,IAAI,CAAC,IAAI,GAAG,gCAAgC,CAAA;SAC/C;IACL,CAAC;CACJ;AATD,0CASC"}

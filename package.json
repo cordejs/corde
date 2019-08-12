@@ -2,12 +2,12 @@
   "name": "concord",
   "version": "0.0.1",
   "description": "concord is a typescript library to create automated tests for discord bots",
-  "main": "./lib/index.js",
+  "main": "./lib/src/index.js",
   "directories": {
     "lib": "bin"
   },
   "bin": {
-    "concord": "./lib/cli.js"
+    "concord": "./lib/src/cli.js"
   },
   "keywords": [
     "cli",
@@ -19,7 +19,7 @@
   ],
   "scripts": {
     "start": "nodemon --watch 'src/**/*.ts' --exec ts-node src/cli.ts",
-    "cli": "node lib/cli.js --run",
+    "cli": "node lib/src/cli.js --run",
     "create": "npm run build && npm run test",
     "build": "tsc -p .",
     "build-watch": " tsc -w",

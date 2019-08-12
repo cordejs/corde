@@ -1,4 +1,4 @@
-import test from "../../src/operations/test"
+import test from "../../lib/src/operations/test";
 
 test("should return Hello").run(
     {
