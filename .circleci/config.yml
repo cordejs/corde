@@ -1,5 +1,6 @@
-version: 2
-jobs:
+version: 2.1
+orbs:
+  codecov: codecov/codecov@1.0.4
   build:
     docker:
       - image: circleci/node:10
@@ -21,8 +22,10 @@ jobs:
       - run:
           name: Build Project
           command: npm run build
-      - run:
-          name: Install Coverage
-          command: 
-            - npm install codecov -g
-            - codecov --token=CODECOV_TOKEN
+      - codecov/upload:
+          flags: backend,unittest
+      - run: npm install codecov -g
+      - run: codecov --token=CODECOV_TOKEN
+      - codecov/upload:
+          file: coverage/*.json
+          flags: frontend
