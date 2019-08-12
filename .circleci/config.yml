@@ -21,3 +21,8 @@ jobs:
       - run:
           name: Build Project
           command: npm run build
+      - run:
+          name: Install Coverage
+          command: 
+            - npm install codecov -g
+            - codecov --token=CODECOV_TOKEN
