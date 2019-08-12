@@ -4,12 +4,12 @@ import MissingPropertyError from "./erros/missingPropertyError";
 import { concordlogin, clientlogin } from "./bot";
 import { IConfigOptions } from "./config";
 
-process.on("uncaughtException", function(error) {
+process.on("uncaughtException", function (error) {
   throw error;
   process.exit(1);
 });
 
-process.on("unhandledRejection", function(error) {
+process.on("unhandledRejection", function (error) {
   throw error;
   process.exit(1);
 });
@@ -52,41 +52,51 @@ function validadeConfigs(configs: Config) {
 }
 
 /**
+ * Makes authentication to bots
+ */
+async function login() {
+  try {
+    // Make login with concord and load Message
+    await concordlogin(config.concordTestToken);
+  } catch {
+    throw new Error(
+      `Error trying to connect to bot with token: ${config.concordTestToken}`
+    );
+  }
+
+  if (config.botTestToken) {
+    try {
+      await clientlogin(config.botTestToken);
+    } catch {
+      throw new Error(
+        `Error trying to connect to bot with token: ${config.botTestToken}`
+      );
+    }
+  }
+}
+
+/**
  * Starts the execution of tests
  */
 export async function begin() {
   if (config) {
     validadeConfigs(config);
-
-    try {
-      // Make login with concord and load Message
-      await concordlogin(config.concordTestToken);
-    } catch {
-      throw new Error(
-        `Error trying to connect to bot with token: ${config.concordTestToken}`
-      );
-    }
-
-    if (config.botTestToken) {
-      try {
-        await clientlogin(config.botTestToken);
-      } catch {
-        throw new Error(
-          `Error trying to connect to bot with token: ${config.botTestToken}`
-        );
-      }
-    }
+    login();
 
     let files: string[];
 
     try {
-      files = fs.readdirSync(config.testFilesDir);
+      if (fs.existsSync(config.testFilesDir)) {
+        files = fs.readdirSync(config.testFilesDir);
+      } else {
+        throw new Error(`Path ${config.testFilesDir} does not exists}`);
+      }
     } catch (err) {
       console.error(err);
       return;
     }
 
-    files.forEach(function(file) {
+    files.forEach(function (file) {
       // Execute all test cases
       require(`${process.cwd()}/${config.testFilesDir}/${file}`);
     });
