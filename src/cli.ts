@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import clear from 'clear';
 import figlet from 'figlet';
 import program from 'commander';
-import { begin } from './initializer';
+import { begin } from './init';
 
 clear();
 

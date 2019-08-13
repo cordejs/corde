@@ -1,5 +1,5 @@
 import * as Discord from "discord.js";
-import config from "./initializer";
+import config from "./init";
 
 function hello(msg: Discord.Message) {
   msg.channel.send("hello!!");

@@ -4,16 +4,6 @@ import MissingPropertyError from "./erros/missingPropertyError";
 import { concordlogin, clientlogin } from "./bot";
 import { IConfigOptions } from "./config";
 
-process.on("uncaughtException", function (error) {
-  throw error;
-  process.exit(1);
-});
-
-process.on("unhandledRejection", function (error) {
-  throw error;
-  process.exit(1);
-});
-
 let config: IConfigOptions = loadConfig();
 export default config;
 
@@ -103,4 +93,4 @@ export async function begin() {
   }
 }
 
-begin();
+//begin();

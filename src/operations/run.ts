@@ -1,5 +1,5 @@
 import { Response } from "../parameter";
-import config from "src/initializer";
+import config from "../init";
 
 export default class runTest {
   private testName: string;

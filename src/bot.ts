@@ -1,5 +1,5 @@
 import * as Discord from "discord.js";
-import config from "./initializer";
+import config from "./init";
 import { commandHandler } from "./concordBot";
 
 export const clientBot = new Discord.Client();
