@@ -14,7 +14,7 @@ export default class runTest {
       this.sendPassedResponse();
     } else {
       steps.forEach(async step => {
-        await config.message.channel.send(step.say);
+        await config.channel.send(step.say);
 
         const answer = await config.message.channel.awaitMessages(
           responseName => responseName.author.id === config.botTestId,

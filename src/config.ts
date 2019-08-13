@@ -13,6 +13,8 @@ export interface IConfigOptions {
   readonly botPrefix: string;
   readonly testFilesDir: string;
   message: Discord.Message;
+  channel: Discord.TextChannel;
+  files: string[];
 }
 
 /**
@@ -59,6 +61,14 @@ export class Config implements IConfigOptions {
    * Discord message where all tests will run
    */
   public message: Discord.Message;
+  /**
+   * Connected channel on bot login
+   */
+  public channel: Discord.TextChannel;
+  /**
+   * All tests files
+   */
+  public files: string[];
 
   constructor(configs: IConfigOptions) {
     this.botPrefix = configs.botPrefix;
@@ -69,6 +79,7 @@ export class Config implements IConfigOptions {
     this.guildId = configs.guildId;
     this.testFilesDir = configs.testFilesDir;
     this.timeOut = configs.timeOut;
+    this.files = [];
   }
 
 }

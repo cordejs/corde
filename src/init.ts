@@ -68,16 +68,14 @@ async function login() {
 /**
  * Starts the execution of tests
  */
-export async function begin() {
+export async function loadData() {
   if (config) {
     validadeConfigs(config);
-    await login();
 
-    let files: string[];
-
+    // Get all tests files
     try {
       if (fs.existsSync(config.testFilesDir)) {
-        files = fs.readdirSync(config.testFilesDir);
+        config.files = fs.readdirSync(config.testFilesDir);
       } else {
         throw new Error(`Path ${config.testFilesDir} does not exists}`);
       }
@@ -86,11 +84,8 @@ export async function begin() {
       return;
     }
 
-    files.forEach(function (file) {
-      // Execute all test cases
-      require(`${process.cwd()}/${config.testFilesDir}/${file}`);
-    });
+    await login();
   }
 }
 
-//begin();
+loadData();

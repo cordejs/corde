@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import clear from 'clear';
 import figlet from 'figlet';
 import program from 'commander';
-import { begin } from './init';
+import { loadData } from './init';
 
 clear();
 
@@ -21,7 +21,7 @@ program
 	.parse(process.argv);
 	
 if (program.run) {
-  begin();
+  loadData();
 }
 
 if (!process.argv.slice(2).length) {

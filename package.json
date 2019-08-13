@@ -19,7 +19,7 @@
   ],
   "scripts": {
     "start": "nodemon --watch 'src/**/*.ts' --exec ts-node src/cli.ts",
-    "cli": "node lib/src/cli.js --run",
+    "cli": "node lib/cli.js --run",
     "create": "npm run build && npm run test",
     "build": "tsc -p .",
     "build-watch": " tsc -w",
@@ -38,12 +38,14 @@
     "typescript": "^3.1.6"
   },
   "dependencies": {
+    "@types/shelljs": "^0.8.5",
     "chalk": "^2.4.1",
     "clear": "^0.1.0",
     "commander": "^3.0.0",
     "discord.js": "^11.4.2",
     "figlet": "^1.2.1",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "shelljs": "^0.8.3"
   },
   "repository": {
     "type": "git",

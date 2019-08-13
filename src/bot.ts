@@ -1,6 +1,7 @@
 import * as Discord from "discord.js";
 import config from "./init";
 import { commandHandler } from "./concordBot";
+import { runTest } from "./shell";
 
 export const clientBot = new Discord.Client();
 export const concordBot = new Discord.Client();
@@ -47,14 +48,14 @@ concordBot.on(
         throw new Error(
           `${guild.name} doesn't have a channel with id ${config.channelId}.`
         );
-      } else if (!guild.channels.has(config.channelId || '')) {
+      } else if (!guild.channels.has(config.channelId || "")) {
         throw new Error(
           `${config.channelId} doesn't appear to be a channel of guild ${
             guild.name
           }`
         );
       } else {
-        channel = guild.channels.get(config.channelId || '');
+        channel = guild.channels.get(config.channelId || "");
       }
 
       if (!channel) return;
@@ -70,6 +71,8 @@ concordBot.on(
 
       console.log("Client bot is ready for tests!");
       channel.send(`Starting tests`);
+      config.channel = channel;
+      runTest(config.files);
     } catch (error) {
       return Promise.reject(error);
     }
@@ -82,4 +85,9 @@ export async function clientlogin(token: string) {
 
 export async function concordlogin(token: string) {
   return concordBot.login(token);
+}
+
+export async function logout() {
+  await concordBot.destroy();
+  await clientBot.destroy();
 }
