@@ -1,14 +1,14 @@
 import shell from "shelljs";
-import config from "./init";
+import { getConfig } from "./init";
 
 export function runTest(dir: string | string[]) {
   if (dir) {
-    (dir as Array<string>).forEach(function(file) {
+    (dir as Array<string>).forEach(function (file) {
       // Execute all test cases
-      runShell(`${config.testFilesDir}/${file}`);
+      require(`${process.cwd()}/${getConfig().testFilesDir}/${file}`);
     });
   } else {
-    runShell(`${config.testFilesDir}/${dir}`);
+    runShell(`${getConfig().testFilesDir}/${dir}`);
   }
 }
 

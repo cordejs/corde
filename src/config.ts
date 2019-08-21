@@ -79,6 +79,7 @@ export class Config implements IConfigOptions {
     this.guildId = configs.guildId;
     this.testFilesDir = configs.testFilesDir;
     this.timeOut = configs.timeOut;
+    this.channel = null;
     this.files = [];
   }
 

@@ -1,5 +1,5 @@
 import * as Discord from "discord.js";
-import config from "./init";
+import { getConfig } from "./init";
 import { commandHandler } from "./concordBot";
 import { runTest } from "./shell";
 
@@ -12,12 +12,13 @@ clientBot.on("ready", () => {
 
 // Correspond to the receptor of all messages sent by the users in Discord
 concordBot.on("message", async msg => {
+
   // Ignoring others bots
   if (msg.author.bot) return;
   // Checking if the command has the prefix
-  if (!msg.content.startsWith(config.botPrefix, 0)) return;
+  if (!msg.content.startsWith(getConfig().botPrefix, 0)) return;
 
-  config.message = msg;
+  getConfig().message = msg;
   commandHandler(msg);
 });
 
@@ -26,18 +27,18 @@ concordBot.on(
   async (): Promise<void> => {
     let guild: Discord.Guild;
     let channel: Discord.Channel;
-
+    let config = getConfig();
     try {
       if (!concordBot.guilds) {
         throw new Error(
           `Concord bot isn't added in a guild. Please add it to the guild: ${
-            config.guildId
+          config.guildId
           }`
         );
       } else if (!concordBot.guilds.has(config.guildId)) {
         throw new Error(
           `Guild ${
-            config.guildId
+          config.guildId
           } doesn't belong to concord bot. change the guild id in concord.config or add the bot to a valid guild`
         );
       } else {
@@ -51,14 +52,16 @@ concordBot.on(
       } else if (!guild.channels.has(config.channelId || "")) {
         throw new Error(
           `${config.channelId} doesn't appear to be a channel of guild ${
-            guild.name
+          guild.name
           }`
         );
       } else {
         channel = guild.channels.get(config.channelId || "");
       }
 
-      if (!channel) return;
+      if (channel === undefined) {
+        throw new Error("There is no informed channel to start tests");
+      }
 
       // Using a type guard to narrow down the correct type
       if (
@@ -66,11 +69,11 @@ concordBot.on(
           channel
         )
       ) {
-        throw new Error("");
+        throw new Error("There is no support for voice channel");
       }
 
       console.log("Client bot is ready for tests!");
-      channel.send(`Starting tests`);
+      await channel.send(`Starting tests`);
       config.channel = channel;
       runTest(config.files);
     } catch (error) {

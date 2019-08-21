@@ -1,5 +1,5 @@
 import { Response } from "../parameter";
-import config from "../init";
+import { getConfig } from "../init";
 
 export default class runTest {
   private testName: string;
@@ -10,9 +10,11 @@ export default class runTest {
 
   async run(...steps: Response[]): Promise<void> {
     let testsOk = true;
+    let config = getConfig();
+
     if (steps === undefined) {
       this.sendPassedResponse();
-    } else if(config.channel === undefined) {
+    } else if (config.channel === undefined) {
       throw new Error("Channel not found")
     } else {
       steps.forEach(async step => {
@@ -54,7 +56,7 @@ export default class runTest {
   private sendErrorResponse(expected: string, response: string) {
     console.error(
       `${
-        this.testName
+      this.testName
       } not passed successfully. Expected ${expected} to be ${response} `
     );
   }

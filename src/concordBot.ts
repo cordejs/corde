@@ -1,5 +1,5 @@
 import * as Discord from "discord.js";
-import config from "./init";
+import { getConfig } from "./init";
 
 function hello(msg: Discord.Message) {
   msg.channel.send("hello!!");
@@ -11,7 +11,7 @@ function hello(msg: Discord.Message) {
  */
 export function commandHandler(msg: Discord.Message) {
   const args = msg.content
-    .slice(config.botPrefix.length)
+    .slice(getConfig().botPrefix.length)
     .trim()
     .split(/ +/g);
 

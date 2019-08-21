@@ -5,8 +5,11 @@ import { concordlogin, clientlogin } from "./bot";
 import { IConfigOptions } from "./config";
 import { logout } from "./bot";
 
-let config: IConfigOptions = loadConfig();
-export default config;
+const config: IConfigOptions = loadConfig();
+
+export function getConfig() {
+  return config;
+}
 
 function loadConfig(): Config {
   try {

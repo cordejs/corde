@@ -18,11 +18,11 @@
     "test"
   ],
   "scripts": {
-    "start": "nodemon --watch 'src/**/*.ts' --exec ts-node src/cli.ts",
+    "start": "nodemon --watch 'src/**/*.ts'",
     "cli": "node lib/cli.js --run",
     "create": "npm run build && npm run test",
     "build": "tsc -p .",
-    "build-watch": " tsc -w",
+    "watch": " tsc -w",
     "test": "npm i -g && concord",
     "refresh": "rm -rf ./node_modules ./package-lock.json && npm install",
     "generate-barrels": "barrelsby -c barrelsby.json"
