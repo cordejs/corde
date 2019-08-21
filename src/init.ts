@@ -3,6 +3,7 @@ import { Config } from "./config";
 import MissingPropertyError from "./erros/missingPropertyError";
 import { concordlogin, clientlogin } from "./bot";
 import { IConfigOptions } from "./config";
+import { logout } from "./bot";
 
 let config: IConfigOptions = loadConfig();
 export default config;
@@ -88,4 +89,16 @@ export async function loadData() {
   }
 }
 
-loadData();
+async function processError(error: Error | {}) {
+  console.error(error);
+  await logout();
+  return process.exit(1);
+}
+
+process.on("uncaughtException", async function(error) {
+  return await processError(error);
+});
+
+process.on("unhandledRejection", async function(error) {
+  return await processError(error);
+});

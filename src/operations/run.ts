@@ -12,6 +12,8 @@ export default class runTest {
     let testsOk = true;
     if (steps === undefined) {
       this.sendPassedResponse();
+    } else if(config.channel === undefined) {
+      throw new Error("Channel not found")
     } else {
       steps.forEach(async step => {
         await config.channel.send(step.say);
