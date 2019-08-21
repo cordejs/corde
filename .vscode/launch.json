@@ -9,7 +9,11 @@
       "type": "node",
       "request": "launch",
       "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
-      "args": ["-r", "ts-node/register", "${relativeFile}"],
+      "args": [
+        "-r",
+        "ts-node/register",
+        "${relativeFile}"
+      ],
       "cwd": "${workspaceRoot}",
       "protocol": "inspector"
     },
@@ -17,8 +21,31 @@
       "name": "Current TS File",
       "type": "node",
       "request": "launch",
-      "args": ["${relativeFile}"],
-      "runtimeArgs": ["--nolazy", "-r", "ts-node/register"],
+      "args": [
+        "${relativeFile}"
+      ],
+      "runtimeArgs": [
+        "--nolazy",
+        "-r",
+        "ts-node/register"
+      ],
+      "sourceMaps": true,
+      "cwd": "${workspaceRoot}",
+      "protocol": "inspector"
+    },
+    {
+      "name": "Cli",
+      "type": "node",
+      "request": "launch",
+      "args": [
+        "lib/cli.js",
+        "--run"
+      ],
+      "runtimeArgs": [
+        "--nolazy",
+        "-r",
+        "ts-node/register"
+      ],
       "sourceMaps": true,
       "cwd": "${workspaceRoot}",
       "protocol": "inspector"
