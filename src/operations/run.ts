@@ -1,5 +1,5 @@
-import { Response } from "../parameter";
 import { getConfig } from "../init";
+import { Response } from "../parameter";
 
 export default class runTest {
   private testName: string;
@@ -8,25 +8,25 @@ export default class runTest {
     this.testName = testName;
   }
 
-  async run(...steps: Response[]): Promise<void> {
+  public async run(...steps: Response[]): Promise<void> {
     let testsOk = true;
-    let config = getConfig();
-
+    const config = getConfig();
+    console.log(config);
     if (steps === undefined) {
       this.sendPassedResponse();
     } else if (config.channel === undefined) {
-      throw new Error("Channel not found")
+      throw new Error("Channel not found");
     } else {
-      steps.forEach(async step => {
+      steps.forEach(async (step) => {
         await config.channel.send(step.say);
 
         const answer = await config.message.channel.awaitMessages(
-          responseName => responseName.author.id === config.botTestId,
+          (responseName) => responseName.author.id === config.botTestId,
           {
             max: 1,
             time: config.timeOut ? config.timeOut : 10000,
-            errors: ["time"]
-          }
+            errors: ["time"],
+          },
         );
 
         if (answer.first().content === step.wait) {
@@ -57,7 +57,7 @@ export default class runTest {
     console.error(
       `${
       this.testName
-      } not passed successfully. Expected ${expected} to be ${response} `
+      } not passed successfully. Expected ${expected} to be ${response} `,
     );
   }
 }

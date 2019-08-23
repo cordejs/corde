@@ -1,11 +1,14 @@
+import child from "child_process";
 import shell from "shelljs";
 import { getConfig } from "./init";
 
 export function runTest(dir: string | string[]) {
   if (dir) {
-    (dir as Array<string>).forEach(function (file) {
+    (dir as string[]).forEach((file) => {
       // Execute all test cases
-      require(`${process.cwd()}/${getConfig().testFilesDir}/${file}`);
+      child.exec(`ts-node ${process.cwd()}/${getConfig().testFilesDir}/${file}`, (output) => {
+        console.log(output);
+      });
     });
   } else {
     runShell(`${getConfig().testFilesDir}/${dir}`);

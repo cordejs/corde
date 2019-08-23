@@ -1,9 +1,9 @@
 import fs from "fs";
-import { Config } from "./config";
-import MissingPropertyError from "./erros/missingPropertyError";
-import { concordlogin, clientlogin } from "./bot";
-import { IConfigOptions } from "./config";
+import { clientlogin, concordlogin } from "./bot";
 import { logout } from "./bot";
+import { Config } from "./config";
+import { IConfigOptions } from "./config";
+import MissingPropertyError from "./erros/missingPropertyError";
 
 const config: IConfigOptions = loadConfig();
 
@@ -37,12 +37,15 @@ function loadConfig(): Config {
  * TODO: JSON Schema
  */
 function validadeConfigs(configs: Config) {
-  if (!configs.concordTestToken)
+  if (!configs.concordTestToken) {
     throw new MissingPropertyError("concord token not informed");
-  else if (!configs.botTestId)
+  }
+  else if (!configs.botTestId) {
     throw new MissingPropertyError("bot test id not informed");
-  else if (!configs.testFilesDir)
+ }
+  else if (!configs.testFilesDir) {
     throw new MissingPropertyError("bot test id not informed");
+ }
 }
 
 /**
@@ -54,7 +57,7 @@ async function login() {
     await concordlogin(config.concordTestToken);
   } catch {
     throw new Error(
-      `Error trying to connect to bot with token: ${config.concordTestToken}`
+      `Error trying to connect to bot with token: ${config.concordTestToken}`,
     );
   }
 
@@ -63,7 +66,7 @@ async function login() {
       await clientlogin(config.botTestToken);
     } catch {
       throw new Error(
-        `Error trying to connect to bot with token: ${config.botTestToken}`
+        `Error trying to connect to bot with token: ${config.botTestToken}`,
       );
     }
   }

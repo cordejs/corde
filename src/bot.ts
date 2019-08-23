@@ -1,6 +1,6 @@
 import * as Discord from "discord.js";
-import { getConfig } from "./init";
 import { commandHandler } from "./concordBot";
+import { getConfig } from "./init";
 import { runTest } from "./shell";
 
 export const clientBot = new Discord.Client();
@@ -11,12 +11,12 @@ clientBot.on("ready", () => {
 });
 
 // Correspond to the receptor of all messages sent by the users in Discord
-concordBot.on("message", async msg => {
+concordBot.on("message", async (msg) => {
 
   // Ignoring others bots
-  if (msg.author.bot) return;
+  if (msg.author.bot) { return; }
   // Checking if the command has the prefix
-  if (!msg.content.startsWith(getConfig().botPrefix, 0)) return;
+  if (!msg.content.startsWith(getConfig().botPrefix, 0)) { return; }
 
   getConfig().message = msg;
   commandHandler(msg);
@@ -27,19 +27,19 @@ concordBot.on(
   async (): Promise<void> => {
     let guild: Discord.Guild;
     let channel: Discord.Channel;
-    let config = getConfig();
+    const config = getConfig();
     try {
       if (!concordBot.guilds) {
         throw new Error(
           `Concord bot isn't added in a guild. Please add it to the guild: ${
           config.guildId
-          }`
+          }`,
         );
       } else if (!concordBot.guilds.has(config.guildId)) {
         throw new Error(
           `Guild ${
           config.guildId
-          } doesn't belong to concord bot. change the guild id in concord.config or add the bot to a valid guild`
+          } doesn't belong to concord bot. change the guild id in concord.config or add the bot to a valid guild`,
         );
       } else {
         guild = concordBot.guilds.get(config.guildId) || null;
@@ -47,13 +47,13 @@ concordBot.on(
 
       if (!guild.channels) {
         throw new Error(
-          `${guild.name} doesn't have a channel with id ${config.channelId}.`
+          `${guild.name} doesn't have a channel with id ${config.channelId}.`,
         );
       } else if (!guild.channels.has(config.channelId || "")) {
         throw new Error(
           `${config.channelId} doesn't appear to be a channel of guild ${
           guild.name
-          }`
+          }`,
         );
       } else {
         channel = guild.channels.get(config.channelId || "");
@@ -66,7 +66,7 @@ concordBot.on(
       // Using a type guard to narrow down the correct type
       if (
         !((channel): channel is Discord.TextChannel => channel.type === "text")(
-          channel
+          channel,
         )
       ) {
         throw new Error("There is no support for voice channel");
@@ -79,7 +79,7 @@ concordBot.on(
     } catch (error) {
       return Promise.reject(error);
     }
-  }
+  },
 );
 
 export async function clientlogin(token: string) {
