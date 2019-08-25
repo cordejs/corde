@@ -7,8 +7,7 @@ export async function execFiles(dir: string | string[]) {
     (dir as string[]).forEach(async (file) => {
       // Execute all test cases
       try {
-        const output = await runShell(`ts-node ${process.cwd()}/${getConfig().testFilesDir}/${file}`);
-        console.log(output);
+        await runShell(`ts-node ${process.cwd()}/${getConfig().testFilesDir}/${file}`);
       } catch (error) {
         console.log(error);
         logout();

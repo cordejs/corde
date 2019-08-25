@@ -4,7 +4,7 @@ test("should return Hello").then(obj => {
     obj.run(
         {
             say: "hello",
-            wait: "Hello!!"
+            wait: "hello!!"
         }
     )
 });
