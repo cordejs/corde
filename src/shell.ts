@@ -1,5 +1,4 @@
 import child from "child_process";
-import shell from "shelljs";
 import { getConfig } from "./init";
 
 export function runTest(dir: string | string[]) {
@@ -16,8 +15,8 @@ export function runTest(dir: string | string[]) {
 }
 
 function runShell(fileName: string) {
-  if (shell.exec(`ts-node ${fileName}`).code !== 0) {
-    shell.echo("Fail in file read");
-    shell.exit(1);
-  }
+  child.exec(`ts-node ${fileName}`, (error) => {
+    console.log(error);
+    process.exit(1);
+  })
 }

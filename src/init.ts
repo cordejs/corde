@@ -94,17 +94,3 @@ export async function loadData() {
     await login();
   }
 }
-
-async function processError(error: Error | {}) {
-  console.error(error);
-  await logout();
-  return process.exit(1);
-}
-
-process.on("uncaughtException", async function(error) {
-  return await processError(error);
-});
-
-process.on("unhandledRejection", async function(error) {
-  return await processError(error);
-});

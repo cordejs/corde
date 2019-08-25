@@ -1,6 +1,6 @@
 {
   "name": "concord",
-  "version": "0.0.1",
+  "version": "0.1.0-alpha",
   "description": "concord is a typescript library to create automated tests for discord bots",
   "main": "./lib/src/index.js",
   "directories": {

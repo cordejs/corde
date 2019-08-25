@@ -7,14 +7,12 @@ export const clientBot = new Discord.Client();
 export const concordBot = new Discord.Client();
 
 clientBot.on("ready", () => {
-  console.log("Concord bot is ready for tests!");
+  //console.log("Concord bot is ready for tests!");
 });
 
 // Correspond to the receptor of all messages sent by the users in Discord
 concordBot.on("message", async (msg) => {
 
-  // Ignoring others bots
-  if (msg.author.bot) { return; }
   // Checking if the command has the prefix
   if (!msg.content.startsWith(getConfig().botPrefix, 0)) { return; }
 
@@ -72,7 +70,7 @@ concordBot.on(
         throw new Error("There is no support for voice channel");
       }
 
-      console.log("Client bot is ready for tests!");
+      //console.log("Client bot is ready for tests!");
       await channel.send(`Starting tests`);
       config.channel = channel;
       runTest(config.files);

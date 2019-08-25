@@ -17,10 +17,12 @@ export default class runTest {
     } else if (config.channel === undefined) {
       throw new Error("Channel not found");
     } else {
-      steps.forEach(async (step) => {
-        await config.channel.send(step.say);
+      await steps.forEach(async (step) => {
 
-        const answer = await config.message.channel.awaitMessages(
+        const toSend = config.botPrefix + step.say;
+        config.channel.send(toSend);
+
+        const answer = await config.channel.awaitMessages(
           (responseName) => responseName.author.id === config.botTestId,
           {
             max: 1,
@@ -40,11 +42,11 @@ export default class runTest {
       if (testsOk) {
         const okMessage = "All tests finished successfully";
         console.info(okMessage);
-        config.message.channel.send(okMessage);
+        config.channel.send(okMessage);
       } else {
         const failMessage = "Tests runned with errors";
         console.info(failMessage);
-        config.message.channel.send(failMessage);
+        config.channel.send(failMessage);
       }
     }
   }

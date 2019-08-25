@@ -5,7 +5,7 @@ import clear from "clear";
 import program from "commander";
 import figlet from "figlet";
 import { loadData } from "./init";
-
+import pack from "../package.json";
 clear();
 
 console.log(
@@ -15,7 +15,7 @@ console.log(
 );
 
 program
-	.version("0.0.1")
+	.version(pack.version)
   .description("Discord bot testing framework")
   .option("-r, --run", "run tests")
 	.parse(process.argv);
