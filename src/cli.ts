@@ -10,7 +10,7 @@ clear();
 
 console.log(
   chalk.red(
-    figlet.textSync("Concord", { horizontalLayout: "full" }),
+    figlet.textSync("pucket", { horizontalLayout: "full" }),
   ),
 );
 

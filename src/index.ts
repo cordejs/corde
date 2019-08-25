@@ -4,7 +4,7 @@
 
 export * from "./bot";
 export * from "./cli";
-export * from "./concordBot";
+export * from "./pucketBot";
 export * from "./config";
 export * from "./init";
 export * from "./parameter";

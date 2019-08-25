@@ -1,10 +1,10 @@
 import * as Discord from "discord.js";
 
 /**
- * Contains a set of properties needed for execution of Concord
+ * Contains a set of properties needed for execution of pucket
  */
 export interface IConfigOptions {
-  readonly concordTestToken: string;
+  readonly pucketTestToken: string;
   readonly botTestId: string;
   readonly botTestToken?: string;
   readonly channelId?: string;
@@ -21,14 +21,14 @@ export interface IConfigOptions {
  * Default interface of json config
  * @public
  * @description `botTestToken` is not required.
- * only inform if is desired to start test bot with concord
+ * only inform if is desired to start test bot with pucket
  * @implements IConfigOptions
  */
 export class Config implements IConfigOptions {
   /**
    * Fake bot used to test the realy one
    */
-  public readonly concordTestToken: string;
+  public readonly pucketTestToken: string;
   /**
    * User's bot that will be tested
    */
@@ -75,7 +75,7 @@ export class Config implements IConfigOptions {
     this.botTestId = configs.botTestId;
     this.botTestToken = configs.botTestToken;
     this.channelId = configs.channelId;
-    this.concordTestToken = configs.concordTestToken;
+    this.pucketTestToken = configs.pucketTestToken;
     this.guildId = configs.guildId;
     this.testFilesDir = configs.testFilesDir;
     this.timeOut = configs.timeOut;

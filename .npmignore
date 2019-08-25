@@ -1,5 +1,5 @@
 tests/
 .vscode/
 barrelsby.json
-concord.config.json
-_concord.config.json
+pucket.config.json
+_pucket.config.json

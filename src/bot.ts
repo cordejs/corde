@@ -1,17 +1,17 @@
 import * as Discord from "discord.js";
-import { commandHandler } from "./concordBot";
+import { commandHandler } from "./pucketBot";
 import { getConfig } from "./init";
 import { runTest } from "./shell";
 
 export const clientBot = new Discord.Client();
-export const concordBot = new Discord.Client();
+export const pucketBot = new Discord.Client();
 
 clientBot.on("ready", () => {
-  //console.log("Concord bot is ready for tests!");
+  //console.log("pucket bot is ready for tests!");
 });
 
 // Correspond to the receptor of all messages sent by the users in Discord
-concordBot.on("message", async (msg) => {
+pucketBot.on("message", async (msg) => {
 
   // Checking if the command has the prefix
   if (!msg.content.startsWith(getConfig().botPrefix, 0)) { return; }
@@ -20,27 +20,27 @@ concordBot.on("message", async (msg) => {
   commandHandler(msg);
 });
 
-concordBot.on(
+pucketBot.on(
   "ready",
   async (): Promise<void> => {
     let guild: Discord.Guild;
     let channel: Discord.Channel;
     const config = getConfig();
     try {
-      if (!concordBot.guilds) {
+      if (!pucketBot.guilds) {
         throw new Error(
-          `Concord bot isn't added in a guild. Please add it to the guild: ${
+          `pucket bot isn't added in a guild. Please add it to the guild: ${
           config.guildId
           }`,
         );
-      } else if (!concordBot.guilds.has(config.guildId)) {
+      } else if (!pucketBot.guilds.has(config.guildId)) {
         throw new Error(
           `Guild ${
           config.guildId
-          } doesn't belong to concord bot. change the guild id in concord.config or add the bot to a valid guild`,
+          } doesn't belong to pucket bot. change the guild id in pucket.config or add the bot to a valid guild`,
         );
       } else {
-        guild = concordBot.guilds.get(config.guildId) || null;
+        guild = pucketBot.guilds.get(config.guildId) || null;
       }
 
       if (!guild.channels) {
@@ -84,11 +84,11 @@ export async function clientlogin(token: string) {
   return clientBot.login(token);
 }
 
-export async function concordlogin(token: string) {
-  return concordBot.login(token);
+export async function pucketlogin(token: string) {
+  return pucketBot.login(token);
 }
 
 export async function logout() {
-  await concordBot.destroy();
+  await pucketBot.destroy();
   await clientBot.destroy();
 }

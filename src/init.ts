@@ -1,5 +1,5 @@
 import fs from "fs";
-import { clientlogin, concordlogin } from "./bot";
+import { clientlogin, pucketlogin } from "./bot";
 import { logout } from "./bot";
 import { Config } from "./config";
 import { IConfigOptions } from "./config";
@@ -14,7 +14,7 @@ export function getConfig() {
 function loadConfig(): Config {
   try {
     let _config: IConfigOptions;
-    const jsonfilePath = `${process.cwd()}/concord.config.json`;
+    const jsonfilePath = `${process.cwd()}/pucket.config.json`;
 
     if (fs.existsSync(jsonfilePath)) {
       _config = JSON.parse(fs.readFileSync(jsonfilePath).toString());
@@ -37,8 +37,8 @@ function loadConfig(): Config {
  * TODO: JSON Schema
  */
 function validadeConfigs(configs: Config) {
-  if (!configs.concordTestToken) {
-    throw new MissingPropertyError("concord token not informed");
+  if (!configs.pucketTestToken) {
+    throw new MissingPropertyError("pucket token not informed");
   }
   else if (!configs.botTestId) {
     throw new MissingPropertyError("bot test id not informed");
@@ -53,11 +53,11 @@ function validadeConfigs(configs: Config) {
  */
 async function login() {
   try {
-    // Make login with concord and load Message
-    await concordlogin(config.concordTestToken);
+    // Make login with pucket and load Message
+    await pucketlogin(config.pucketTestToken);
   } catch {
     throw new Error(
-      `Error trying to connect to bot with token: ${config.concordTestToken}`,
+      `Error trying to connect to bot with token: ${config.pucketTestToken}`,
     );
   }
 

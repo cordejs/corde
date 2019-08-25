@@ -10,7 +10,7 @@ export default class BotInitializationError extends Error {
       super(message);
     } else {
       super("Fail in the attempt of login to bot");
-      this.name = "ERR_concord_LOGIN_FAIL";
+      this.name = "ERR_pucket_LOGIN_FAIL";
     }
   }
 }
