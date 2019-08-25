@@ -61,17 +61,17 @@ export class Compare {
           printFail(this.testName, expect, content);
           testsOk = false;
         }
-      } catch (err) {
-        throw new Error(err);
+      } catch {
+        console.log("The bot do not send any message in the time informed.");
+        process.exit(0);
       }
 
       if (testsOk) {
-
         console.log("All tests finished successfully");
         process.exit(0);
       } else {
         console.log("Tests runned with errors");
-        process.exit(1);
+        process.exit(0);
       }
     }
   }

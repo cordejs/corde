@@ -53,7 +53,7 @@ function validadeConfigs(configs: Config) {
  * Makes authentication to bots
  */
 export async function login() {
-
+  console.log("Connecting to bots...")
   try {
     // Make login with trybot and load Message
     await trybotlogin(config.trybotTestToken);
