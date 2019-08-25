@@ -4,9 +4,10 @@
 
 export * from "./bot";
 export * from "./cli";
-export * from "./pucketBot";
 export * from "./config";
 export * from "./init";
 export * from "./parameter";
+export * from "./pucketBot";
+export * from "./shell";
 export * from "./erros/index";
 export * from "./operations/index";

@@ -25,7 +25,7 @@
     "watch": " tsc -w",
     "test": "npm i -g && pucket",
     "refresh": "rm -rf ./node_modules ./package-lock.json && npm install",
-    "generate-barrels": "barrelsby -c barrelsby.json",
+    "barrels": "barrelsby -c barrelsby.json",
     "tslint": "tslint --fix 'src/**/*{.ts,.tsx}'",
     "np": "np"
   },
