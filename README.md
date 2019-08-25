@@ -8,17 +8,11 @@ trybot uses two bots to send messages between then, the first one is the 'fake u
 The second one, is the bot that you want to test the commands. After configure which one is the fake user and the test bot,
 you can write your case tests like this:
 
-```js
-test('crete user').run(
-    {
-        say: "create",
-        wait: "What's your name ?"
-    }, 
-    {
-        say: "jhon",
-        wait: "Hello jhon, welcome to my bot!"
-    }
-)
+```ts
+it("should return Hello", () => {
+    expect("hello!!").toBe("Hello");
+});
+
 ```
 
 Quite simple uh ?

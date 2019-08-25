@@ -1,10 +1,5 @@
-import test from "../../lib/src/operations/test";
+import it, { expect } from "../../lib/src/trybot";
 
-test("should return Hello").then(obj => {
-    obj.run(
-        {
-            say: "hello",
-            wait: "hello!!"
-        }
-    )
+it("should return Hello", () => {
+    expect("hello!!").toBe("Hello");
 });
