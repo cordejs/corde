@@ -11,7 +11,6 @@ export default class runTest {
   public async run(...steps: Response[]): Promise<void> {
     let testsOk = true;
     const config = getConfig();
-    console.log(config);
     if (steps === undefined) {
       this.sendPassedResponse();
     } else if (config.channel === undefined) {
@@ -22,31 +21,34 @@ export default class runTest {
         const toSend = config.botPrefix + step.say;
         config.channel.send(toSend);
 
-        const answer = await config.channel.awaitMessages(
-          (responseName) => responseName.author.id === config.botTestId,
-          {
-            max: 1,
-            time: config.timeOut ? config.timeOut : 10000,
-            errors: ["time"],
-          },
-        );
+        try {
 
-        if (answer.first().content === step.wait) {
-          this.sendPassedResponse();
-        } else {
-          this.sendErrorResponse(step.wait.toString(), answer.first().content);
-          testsOk = false;
+          const answer = await config.channel.awaitMessages(
+            (responseName) => responseName.author.id === config.botTestId,
+            {
+              max: 1,
+              time: config.timeOut ? config.timeOut : 10000,
+              errors: ["time"],
+            },
+          );
+
+          if (answer.first().content === step.wait) {
+            this.sendPassedResponse();
+          } else {
+            this.sendErrorResponse(step.wait.toString(), answer.first().content);
+            testsOk = false;
+          }
+        } catch (err) {
+          throw new Error(err);
         }
       });
 
       if (testsOk) {
-        const okMessage = "All tests finished successfully";
-        console.info(okMessage);
-        config.channel.send(okMessage);
+        console.log("All tests finished successfully");
+        process.exit(0);
       } else {
-        const failMessage = "Tests runned with errors";
-        console.info(failMessage);
-        config.channel.send(failMessage);
+        console.log("Tests runned with errors");
+        process.exit(1);
       }
     }
   }

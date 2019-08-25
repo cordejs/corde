@@ -38,7 +38,7 @@
       "type": "node",
       "request": "launch",
       "args": [
-        "lib/cli.js",
+        "lib/src/cli.js",
         "--run"
       ],
       "runtimeArgs": [

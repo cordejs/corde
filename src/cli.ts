@@ -4,8 +4,9 @@ import chalk from "chalk";
 import clear from "clear";
 import program from "commander";
 import figlet from "figlet";
-import { loadData } from "./init";
+import { execTestFiles } from "./init";
 import pack from "../package.json";
+
 clear();
 
 console.log(
@@ -21,7 +22,7 @@ program
 	.parse(process.argv);
 
 if (program.run) {
-  loadData();
+  execTestFiles();
 }
 
 if (!process.argv.slice(2).length) {

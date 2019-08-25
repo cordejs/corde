@@ -1,17 +1,18 @@
 
 import MissingTestNameError from "../erros/missingTestNameErro";
 import runTest from "./run";
-import { loadData } from "../init";
-
+import { loadTestFiles, login } from "../init";
+import { logout } from "../bot";
 /**
  * Initialize a new test to be executed
  * @param name name of the test (required)
  */
 export default async function test(name: string): Promise<runTest> {
   if (name && name.trim() !== "") {
-    await loadData();
+    await login();
     return new runTest(name);
   } else {
-      throw new MissingTestNameError();
+    logout();
+    throw new MissingTestNameError();
   }
 }

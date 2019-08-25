@@ -1,9 +1,9 @@
 import fs from "fs";
 import { clientlogin, pucketlogin } from "./bot";
-import { logout } from "./bot";
 import { Config } from "./config";
 import { IConfigOptions } from "./config";
 import MissingPropertyError from "./erros/missingPropertyError";
+import { execFiles } from "./shell";
 
 const config: IConfigOptions = loadConfig();
 
@@ -14,12 +14,13 @@ export function getConfig() {
 function loadConfig(): Config {
   try {
     let _config: IConfigOptions;
-    const jsonfilePath = `${process.cwd()}/pucket.config.json`;
+    const configFileName = "pucket.config.json";
+    const jsonfilePath = `${process.cwd()}/${configFileName}`;
 
     if (fs.existsSync(jsonfilePath)) {
       _config = JSON.parse(fs.readFileSync(jsonfilePath).toString());
     } else {
-      throw new Error("Configuration file not found");
+      throw new Error(`Configuration file not found. Create a file called ${configFileName} in root of your application`);
     }
 
     if (_config) {
@@ -42,16 +43,17 @@ function validadeConfigs(configs: Config) {
   }
   else if (!configs.botTestId) {
     throw new MissingPropertyError("bot test id not informed");
- }
+  }
   else if (!configs.testFilesDir) {
     throw new MissingPropertyError("bot test id not informed");
- }
+  }
 }
 
 /**
  * Makes authentication to bots
  */
-async function login() {
+export async function login() {
+
   try {
     // Make login with pucket and load Message
     await pucketlogin(config.pucketTestToken);
@@ -73,12 +75,21 @@ async function login() {
 }
 
 /**
- * Starts the execution of tests
+ * Find all tests files and run then in node
  */
-export async function loadData() {
+export async function execTestFiles() {
+  if (config) {
+    config.files = fs.readdirSync(config.testFilesDir);
+    await loadTestFiles();
+    await execFiles(config.files);
+  }
+}
+/**
+ * Load tests files into configs
+ */
+export async function loadTestFiles() {
   if (config) {
     validadeConfigs(config);
-
     // Get all tests files
     try {
       if (fs.existsSync(config.testFilesDir)) {
@@ -88,9 +99,8 @@ export async function loadData() {
       }
     } catch (err) {
       console.error(err);
-      return;
+      throw new Error(err);
     }
-
-    await login();
+    config.executeInBotLogin = true;
   }
 }

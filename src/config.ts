@@ -15,6 +15,7 @@ export interface IConfigOptions {
   message: Discord.Message;
   channel: Discord.TextChannel;
   files: string[];
+  executeInBotLogin: boolean;
 }
 
 /**
@@ -69,7 +70,13 @@ export class Config implements IConfigOptions {
    * All tests files
    */
   public files: string[];
-
+  /**
+   * Defines if tests execution must run
+   * right after bot login
+   * @default false
+   */
+  public executeInBotLogin: boolean;
+  
   constructor(configs: IConfigOptions) {
     this.botPrefix = configs.botPrefix;
     this.botTestId = configs.botTestId;

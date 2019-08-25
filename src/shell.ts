@@ -1,22 +1,33 @@
-import child from "child_process";
 import { getConfig } from "./init";
+import { logout } from "./bot";
+import sh from "shelljs";
 
-export function runTest(dir: string | string[]) {
+export async function execFiles(dir: string | string[]) {
   if (dir) {
-    (dir as string[]).forEach((file) => {
+    (dir as string[]).forEach(async (file) => {
       // Execute all test cases
-      child.exec(`ts-node ${process.cwd()}/${getConfig().testFilesDir}/${file}`, (output) => {
+      try {
+        const output = await runShell(`ts-node ${process.cwd()}/${getConfig().testFilesDir}/${file}`);
         console.log(output);
-      });
+      } catch (error) {
+        console.log(error);
+        logout();
+        process.exit(1);
+      }
     });
   } else {
     runShell(`${getConfig().testFilesDir}/${dir}`);
   }
 }
 
-function runShell(fileName: string) {
-  child.exec(`ts-node ${fileName}`, (error) => {
-    console.log(error);
-    process.exit(1);
-  })
+async function runShell(command: string) {
+  return new Promise((resolve, reject) => {
+    sh.exec(command, (code, stdout, stderr) => {
+      if (code !== 0) {
+        reject(stderr);
+      } else {
+        resolve(stdout);
+      }
+    });
+  });
 }

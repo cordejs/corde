@@ -19,7 +19,7 @@
   ],
   "scripts": {
     "start": "nodemon --watch 'src/**/*.ts'",
-    "cli": "node lib/cli.js --run",
+    "cli": "node lib/src/cli.js --run",
     "create": "npm run build && npm run test",
     "build": "tsc -p .",
     "watch": " tsc -w",

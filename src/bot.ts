@@ -1,7 +1,7 @@
 import * as Discord from "discord.js";
 import { commandHandler } from "./pucketBot";
 import { getConfig } from "./init";
-import { runTest } from "./shell";
+import { execFiles } from "./shell";
 
 export const clientBot = new Discord.Client();
 export const pucketBot = new Discord.Client();
@@ -71,9 +71,9 @@ pucketBot.on(
       }
 
       //console.log("Client bot is ready for tests!");
-      await channel.send(`Starting tests`);
+      // await channel.send(`Starting tests`);
       config.channel = channel;
-      runTest(config.files);
+      execFiles(config.files);
     } catch (error) {
       return Promise.reject(error);
     }
