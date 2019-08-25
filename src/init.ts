@@ -1,5 +1,5 @@
 import fs from "fs";
-import { clientlogin, pucketlogin } from "./bot";
+import { clientlogin, trybotlogin } from "./bot";
 import { Config } from "./config";
 import { IConfigOptions } from "./config";
 import MissingPropertyError from "./erros/missingPropertyError";
@@ -14,7 +14,7 @@ export function getConfig() {
 function loadConfig(): Config {
   try {
     let _config: IConfigOptions;
-    const configFileName = "pucket.config.json";
+    const configFileName = "trybot.config.json";
     const jsonfilePath = `${process.cwd()}/${configFileName}`;
 
     if (fs.existsSync(jsonfilePath)) {
@@ -38,8 +38,8 @@ function loadConfig(): Config {
  * TODO: JSON Schema
  */
 function validadeConfigs(configs: Config) {
-  if (!configs.pucketTestToken) {
-    throw new MissingPropertyError("pucket token not informed");
+  if (!configs.trybotTestToken) {
+    throw new MissingPropertyError("trybot token not informed");
   }
   else if (!configs.botTestId) {
     throw new MissingPropertyError("bot test id not informed");
@@ -55,11 +55,11 @@ function validadeConfigs(configs: Config) {
 export async function login() {
 
   try {
-    // Make login with pucket and load Message
-    await pucketlogin(config.pucketTestToken);
+    // Make login with trybot and load Message
+    await trybotlogin(config.trybotTestToken);
   } catch {
     throw new Error(
-      `Error trying to connect to bot with token: ${config.pucketTestToken}`,
+      `Error trying to connect to bot with token: ${config.trybotTestToken}`,
     );
   }
 

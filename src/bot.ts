@@ -1,17 +1,17 @@
 import * as Discord from "discord.js";
-import { commandHandler } from "./pucketBot";
+import { commandHandler } from "./trybotBot";
 import { getConfig } from "./init";
 import { execFiles } from "./shell";
 
 export const clientBot = new Discord.Client();
-export const pucketBot = new Discord.Client();
+export const trybotBot = new Discord.Client();
 
 clientBot.on("ready", () => {
-  //console.log("pucket bot is ready for tests!");
+  //console.log("trybot bot is ready for tests!");
 });
 
 // Correspond to the receptor of all messages sent by the users in Discord
-pucketBot.on("message", async (msg) => {
+trybotBot.on("message", async (msg) => {
 
   // Checking if the command has the prefix
   if (!msg.content.startsWith(getConfig().botPrefix, 0)) { return; }
@@ -20,27 +20,27 @@ pucketBot.on("message", async (msg) => {
   commandHandler(msg);
 });
 
-pucketBot.on(
+trybotBot.on(
   "ready",
   async (): Promise<void> => {
     let guild: Discord.Guild;
     let channel: Discord.Channel;
     const config = getConfig();
     try {
-      if (!pucketBot.guilds) {
+      if (!trybotBot.guilds) {
         throw new Error(
-          `pucket bot isn't added in a guild. Please add it to the guild: ${
+          `trybot bot isn't added in a guild. Please add it to the guild: ${
           config.guildId
           }`,
         );
-      } else if (!pucketBot.guilds.has(config.guildId)) {
+      } else if (!trybotBot.guilds.has(config.guildId)) {
         throw new Error(
           `Guild ${
           config.guildId
-          } doesn't belong to pucket bot. change the guild id in pucket.config or add the bot to a valid guild`,
+          } doesn't belong to trybot bot. change the guild id in trybot.config or add the bot to a valid guild`,
         );
       } else {
-        guild = pucketBot.guilds.get(config.guildId) || null;
+        guild = trybotBot.guilds.get(config.guildId) || null;
       }
 
       if (!guild.channels) {
@@ -84,11 +84,11 @@ export async function clientlogin(token: string) {
   return clientBot.login(token);
 }
 
-export async function pucketlogin(token: string) {
-  return pucketBot.login(token);
+export async function trybotlogin(token: string) {
+  return trybotBot.login(token);
 }
 
 export async function logout() {
-  await pucketBot.destroy();
+  await trybotBot.destroy();
   await clientBot.destroy();
 }

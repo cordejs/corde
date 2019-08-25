@@ -7,7 +7,7 @@ export * from "./cli";
 export * from "./config";
 export * from "./init";
 export * from "./parameter";
-export * from "./pucketBot";
+export * from "./trybotBot";
 export * from "./shell";
 export * from "./erros/index";
 export * from "./operations/index";

@@ -11,7 +11,7 @@ clear();
 
 console.log(
   chalk.red(
-    figlet.textSync("pucket", { horizontalLayout: "full" }),
+    figlet.textSync("trybot", { horizontalLayout: "full" }),
   ),
 );
 

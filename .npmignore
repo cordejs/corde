@@ -1,5 +1,5 @@
 tests/
 .vscode/
 barrelsby.json
-pucket.config.json
-_pucket.config.json
+trybot.config.json
+_trybot.config.json
