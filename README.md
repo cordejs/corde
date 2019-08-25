@@ -1,7 +1,7 @@
 # trybot Testing
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/lucasgmagalhaes/trybot.svg)](https://greenkeeper.io/)
-
+[![CircleCI](https://circleci.com/gh/lucasgmagalhaes/trybot.svg?style=shield)](https://circleci.com/gh/lucasgmagalhaes/trybot)
 
 trybot is a typescript library to create automated tests for discord bots
 
