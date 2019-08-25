@@ -1,6 +1,6 @@
 {
   "name": "trybot",
-  "version": "0.1.0-alpha.0",
+  "version": "0.1.0-alpha.1",
   "description": "trybot is a typescript library to create automated tests for discord bots",
   "main": "./lib/src/index.js",
   "directories": {
@@ -27,7 +27,7 @@
     "refresh": "rm -rf ./node_modules ./package-lock.json && npm install",
     "barrels": "barrelsby -c barrelsby.json",
     "tslint": "tslint --fix 'src/**/*{.ts,.tsx}'",
-    "np": "np"
+    "np": "np --no-cleanup --no-yarn"
   },
   "devDependencies": {
     "@types/clear": "^0.1.0",
