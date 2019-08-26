@@ -1,10 +1,10 @@
 import * as Discord from "discord.js";
 
 /**
- * Contains a set of properties needed for execution of trybot
+ * Contains a set of properties needed for execution of conncord
  */
 export interface IConfigOptions {
-  readonly trybotTestToken: string;
+  readonly conncordTestToken: string;
   readonly botTestId: string;
   readonly botTestToken?: string;
   readonly channelId?: string;
@@ -22,14 +22,14 @@ export interface IConfigOptions {
  * Default interface of json config
  * @public
  * @description `botTestToken` is not required.
- * only inform if is desired to start test bot with trybot
+ * only inform if is desired to start test bot with conncord
  * @implements IConfigOptions
  */
 export class Config implements IConfigOptions {
   /**
    * Fake bot used to test the realy one
    */
-  public readonly trybotTestToken: string;
+  public readonly conncordTestToken: string;
   /**
    * User's bot that will be tested
    */
@@ -82,7 +82,7 @@ export class Config implements IConfigOptions {
     this.botTestId = configs.botTestId;
     this.botTestToken = configs.botTestToken;
     this.channelId = configs.channelId;
-    this.trybotTestToken = configs.trybotTestToken;
+    this.conncordTestToken = configs.conncordTestToken;
     this.guildId = configs.guildId;
     this.testFilesDir = configs.testFilesDir;
     this.timeOut = configs.timeOut;

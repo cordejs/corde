@@ -1,5 +1,5 @@
 tests/
 .vscode/
 barrelsby.json
-trybot.config.json
-_trybot.config.json
+conncord.config.json
+_conncord.config.json

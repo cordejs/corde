@@ -60,5 +60,5 @@ typings/
 # next.js build output
 .next
 
-trybot.config.*
+conncord.config.*
 lib/

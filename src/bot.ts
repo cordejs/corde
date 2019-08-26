@@ -1,17 +1,17 @@
 import * as Discord from "discord.js";
-import { commandHandler } from "./trybotBot";
+import { commandHandler } from "./conncordBot";
 import { getConfig } from "./init";
 import { execFiles } from "./shell";
 
 export const clientBot = new Discord.Client();
-export const trybotBot = new Discord.Client();
+export const conncordBot = new Discord.Client();
 
 clientBot.on("ready", () => {
-  //console.log("trybot bot is ready for tests!");
+  //console.log("conncord bot is ready for tests!");
 });
 
 // Correspond to the receptor of all messages sent by the users in Discord
-trybotBot.on("message", async (msg) => {
+conncordBot.on("message", async (msg) => {
 
   // Checking if the command has the prefix
   if (!msg.content.startsWith(getConfig().botPrefix, 0)) { return; }
@@ -20,27 +20,27 @@ trybotBot.on("message", async (msg) => {
   commandHandler(msg);
 });
 
-trybotBot.on(
+conncordBot.on(
   "ready",
   async (): Promise<void> => {
     let guild: Discord.Guild;
     let channel: Discord.Channel;
     const config = getConfig();
     try {
-      if (!trybotBot.guilds) {
+      if (!conncordBot.guilds) {
         throw new Error(
-          `trybot bot isn't added in a guild. Please add it to the guild: ${
+          `conncord bot isn't added in a guild. Please add it to the guild: ${
           config.guildId
           }`,
         );
-      } else if (!trybotBot.guilds.has(config.guildId)) {
+      } else if (!conncordBot.guilds.has(config.guildId)) {
         throw new Error(
           `Guild ${
           config.guildId
-          } doesn't belong to trybot bot. change the guild id in trybot.config or add the bot to a valid guild`,
+          } doesn't belong to conncord bot. change the guild id in conncord.config or add the bot to a valid guild`,
         );
       } else {
-        guild = trybotBot.guilds.get(config.guildId) || null;
+        guild = conncordBot.guilds.get(config.guildId) || null;
       }
 
       if (!guild.channels) {
@@ -84,11 +84,11 @@ export async function clientlogin(token: string) {
   return clientBot.login(token);
 }
 
-export async function trybotlogin(token: string) {
-  return trybotBot.login(token);
+export async function conncordlogin(token: string) {
+  return conncordBot.login(token);
 }
 
 export async function logout() {
-  await trybotBot.destroy();
+  await conncordBot.destroy();
   await clientBot.destroy();
 }

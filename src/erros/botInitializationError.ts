@@ -10,7 +10,7 @@ export default class BotInitializationError extends Error {
       super(message);
     } else {
       super("Fail in the attempt of login to bot");
-      this.name = "ERR_trybot_LOGIN_FAIL";
+      this.name = "ERR_conncord_LOGIN_FAIL";
     }
   }
 }

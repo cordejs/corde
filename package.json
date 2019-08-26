@@ -1,13 +1,13 @@
 {
-  "name": "trybot",
+  "name": "conncord",
   "version": "0.1.0-alpha.1",
-  "description": "trybot is a typescript library to create automated tests for discord bots",
+  "description": "conncord is a typescript library to create automated tests for discord bots",
   "main": "./lib/src/index.js",
   "directories": {
     "lib": "bin"
   },
   "bin": {
-    "trybot": "./lib/src/cli.js"
+    "conncord": "./lib/src/cli.js"
   },
   "keywords": [
     "cli",
@@ -23,7 +23,7 @@
     "create": "npm run build && npm run test",
     "build": "tsc -p .",
     "watch": " tsc -w",
-    "test": "npm i -g && trybot",
+    "test": "npm i -g && conncord",
     "refresh": "rm -rf ./node_modules ./package-lock.json && npm install",
     "barrels": "barrelsby -c barrelsby.json",
     "tslint": "tslint --fix 'src/**/*{.ts,.tsx}'",
@@ -52,12 +52,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lucasgmagalhaes/trybot.git"
+    "url": "git+https://github.com/lucasgmagalhaes/conncord.git"
   },
   "author": "lucasgmagalhaes",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lucasgmagalhaes/trybot/issues"
+    "url": "https://github.com/lucasgmagalhaes/conncord/issues"
   },
-  "homepage": "https://github.com/lucasgmagalhaes/trybot#readme"
+  "homepage": "https://github.com/lucasgmagalhaes/conncord#readme"
 }
