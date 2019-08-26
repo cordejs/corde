@@ -4,32 +4,40 @@ import { Config } from "./config";
 import { IConfigOptions } from "./config";
 import MissingPropertyError from "./erros/missingPropertyError";
 import { execFiles } from "./shell";
+import ConfigFileNotFoundError from "./erros/configFileNotFoundErro";
 
+/**
+ * Contains informations loaded from configuration file
+ */
 const config: IConfigOptions = loadConfig();
 
+/**
+ * External function for **config** access
+ */
 export function getConfig() {
   return config;
 }
 
+/**
+ * Read config file(*.json) from root of project
+ * and validates it
+ * @throws
+ */
 function loadConfig(): Config {
-  try {
-    let _config: IConfigOptions;
-    const configFileName = "trybot.config.json";
-    const jsonfilePath = `${process.cwd()}/${configFileName}`;
+  let _config: IConfigOptions;
+  const configFileName = "trybot.config.json";
+  const jsonfilePath = `${process.cwd()}/${configFileName}`;
 
-    if (fs.existsSync(jsonfilePath)) {
-      _config = JSON.parse(fs.readFileSync(jsonfilePath).toString());
-    } else {
-      throw new Error(`Configuration file not found. Create a file called ${configFileName} in root of your application`);
-    }
+  if (fs.existsSync(jsonfilePath)) {
+    _config = JSON.parse(fs.readFileSync(jsonfilePath).toString());
+  } else {
+    throw new ConfigFileNotFoundError();
+  }
 
-    if (_config) {
-      return new Config(_config);
-    } else {
-      throw new Error("Invalid configuration file");
-    }
-  } catch {
-    throw new Error("Configuration file not found");
+  if (_config) {
+    return new Config(_config);
+  } else {
+    throw new Error("Invalid configuration file");
   }
 }
 
@@ -40,11 +48,9 @@ function loadConfig(): Config {
 function validadeConfigs(configs: Config) {
   if (!configs.trybotTestToken) {
     throw new MissingPropertyError("trybot token not informed");
-  }
-  else if (!configs.botTestId) {
+  } else if (!configs.botTestId) {
     throw new MissingPropertyError("bot test id not informed");
-  }
-  else if (!configs.testFilesDir) {
+  } else if (!configs.testFilesDir) {
     throw new MissingPropertyError("bot test id not informed");
   }
 }
@@ -53,13 +59,13 @@ function validadeConfigs(configs: Config) {
  * Makes authentication to bots
  */
 export async function login() {
-  console.log("Connecting to bots...")
+  console.log("Connecting to bots...");
   try {
     // Make login with trybot and load Message
     await trybotlogin(config.trybotTestToken);
   } catch {
     throw new Error(
-      `Error trying to connect to bot with token: ${config.trybotTestToken}`,
+      `Error trying to connect to bot with token: ${config.trybotTestToken}`
     );
   }
 
@@ -68,7 +74,7 @@ export async function login() {
       await clientlogin(config.botTestToken);
     } catch {
       throw new Error(
-        `Error trying to connect to bot with token: ${config.botTestToken}`,
+        `Error trying to connect to bot with token: ${config.botTestToken}`
       );
     }
   }

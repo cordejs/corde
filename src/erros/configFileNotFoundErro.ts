@@ -1,8 +1,7 @@
 /**
  * Throws when engage starts but no config file is found
- *
- * @public
  * @constructor Erro message, if not set, returns default message
+ * @default message Config file not found
  */
 export default class ConfigFileNotFoundError extends Error {
     constructor(message?: string) {
