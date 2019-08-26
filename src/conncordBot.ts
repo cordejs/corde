@@ -17,5 +17,7 @@ export function commandHandler(msg: Discord.Message) {
 
   const command = args[0].toLowerCase();
 
-  if (command === "hello" || command === "h") { hello(msg); }
+  if (command === "hello" || command === "h") {
+    hello(msg);
+  }
 }

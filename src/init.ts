@@ -2,9 +2,9 @@ import fs from "fs";
 import { clientlogin, conncordlogin } from "./bot";
 import { Config } from "./config";
 import { IConfigOptions } from "./config";
+import ConfigFileNotFoundError from "./erros/configFileNotFoundErro";
 import MissingPropertyError from "./erros/missingPropertyError";
 import { execFiles } from "./shell";
-import ConfigFileNotFoundError from "./erros/configFileNotFoundErro";
 
 /**
  * Contains informations loaded from configuration file

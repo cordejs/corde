@@ -1,16 +1,17 @@
-
+import { logout } from "./bot";
+import { printFail, printSucess } from "./console";
 import MissingTestNameError from "./erros/missingTestNameErro";
 import { login } from "./init";
-import { logout } from "./bot";
 import { getConfig } from "./init";
-import { printSucess, printFail } from "./console";
-
 
 /**
  * Initialize a new test to be executed
  * @param name name of the test (required)
  */
-export default async function it(name: string, steps: Function): Promise<void> {
+export default async function it(
+  name: string,
+  steps: () => void
+): Promise<void> {
   if (name && name.trim() !== "") {
     await login();
     await steps();
@@ -38,19 +39,17 @@ export class Compare {
     } else if (config.channel === undefined) {
       throw new Error("Channel not found");
     } else {
-
       const toSend = config.botPrefix + this.input;
       await config.channel.send(toSend);
 
       try {
-
         const answer = await config.channel.awaitMessages(
-          (responseName) => responseName.author.id === config.botTestId,
+          responseName => responseName.author.id === config.botTestId,
           {
             max: 1,
             time: config.timeOut ? config.timeOut : 10000,
-            errors: ["time"],
-          },
+            errors: ["time"]
+          }
         );
 
         const content = answer.first().content;

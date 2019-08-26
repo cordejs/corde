@@ -76,7 +76,7 @@ export class Config implements IConfigOptions {
    * @default false
    */
   public executeInBotLogin: boolean;
-  
+
   constructor(configs: IConfigOptions) {
     this.botPrefix = configs.botPrefix;
     this.botTestId = configs.botTestId;
@@ -89,5 +89,4 @@ export class Config implements IConfigOptions {
     this.channel = null;
     this.files = [];
   }
-
 }

@@ -1,13 +1,15 @@
-import { getConfig } from "./init";
-import { logout } from "./bot";
 import sh from "shelljs";
+import { logout } from "./bot";
+import { getConfig } from "./init";
 
 export async function execFiles(dir: string | string[]) {
   if (dir) {
-    (dir as string[]).forEach(async (file) => {
+    (dir as string[]).forEach(async file => {
       // Execute all test cases
       try {
-        await runShell(`ts-node ${process.cwd()}/${getConfig().testFilesDir}/${file}`);
+        await runShell(
+          `ts-node ${process.cwd()}/${getConfig().testFilesDir}/${file}`
+        );
       } catch (error) {
         console.log(error);
         logout();
