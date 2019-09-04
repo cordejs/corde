@@ -53,7 +53,7 @@
     "clear": "^0.1.0",
     "commander": "^3.0.1",
     "discord.js": "^11.4.2",
-    "figlet": "^1.2.1",
+    "figlet": "^1.2.4",
     "path": "^0.12.7",
     "shelljs": "^0.8.3"
   },
