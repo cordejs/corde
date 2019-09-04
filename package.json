@@ -39,7 +39,7 @@
     "@types/figlet": "^1.2.0",
     "@types/node": "^12.7.3",
     "barrelsby": "^2.1.1",
-    "nodemon": "^1.18.7",
+    "nodemon": "^1.19.2",
     "np": "^5.0.3",
     "ts-node": "^8.3.0",
     "tslint": "^5.19.0",
