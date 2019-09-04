@@ -1,7 +1,12 @@
 {
   "compilerOptions": {
     "outDir": "lib",
-    "baseUrl": "./src/",
+    "rootDir": ".",
+    "baseUrl": "",
+    "rootDirs": [
+      ".",
+      "./src"
+    ],
     "resolveJsonModule": true,
     "allowJs": false,
     "pretty": true,

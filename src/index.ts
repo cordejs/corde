@@ -9,6 +9,6 @@ export * from "./console";
 export * from "./init";
 export * from "./parameter";
 export * from "./shell";
-export * from "./conncord";
-export * from "./conncordBot";
+export * from "./corde";
+export * from "./cordeBot";
 export * from "./erros/index";

@@ -1,5 +1,5 @@
 tests/
 .vscode/
 barrelsby.json
-conncord.config.json
-_conncord.config.json
+corde.config.json
+_corde.config.json

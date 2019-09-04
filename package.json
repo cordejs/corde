@@ -1,13 +1,13 @@
 {
-  "name": "conncord",
+  "name": "corde",
   "version": "0.1.0-alpha.1",
-  "description": "conncord is a typescript library to create automated tests for discord bots",
+  "description": "corde is a typescript library to create automated tests for discord bots",
   "main": "./lib/src/index.js",
   "directories": {
     "lib": "bin"
   },
   "bin": {
-    "conncord": "./lib/src/cli.js"
+    "corde": "./lib/src/cli.js"
   },
   "engines": {
     "node": ">=0.10"
@@ -26,7 +26,7 @@
     "create": "npm run build && npm run test",
     "build": "tsc -p .",
     "watch": " tsc -w",
-    "test": "npm i -g && conncord",
+    "test": "npm i -g && corde",
     "refresh": "rm -rf ./node_modules ./package-lock.json && npm install",
     "barrels": "barrelsby -c barrelsby.json",
     "tslint": "tslint --fix 'src/**/*{.ts,.tsx}'",
@@ -59,7 +59,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lucasgmagalhaes/conncord.git"
+    "url": "git+https://github.com/lucasgmagalhaes/corde.git"
   },
   "author": {
     "name": "lucasgmagalhaes",
@@ -68,7 +68,7 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lucasgmagalhaes/conncord/issues"
+    "url": "https://github.com/lucasgmagalhaes/corde/issues"
   },
-  "homepage": "https://github.com/lucasgmagalhaes/conncord#readme"
+  "homepage": "https://github.com/lucasgmagalhaes/corde#readme"
 }

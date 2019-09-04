@@ -1,10 +1,10 @@
 import * as Discord from "discord.js";
 
 /**
- * Contains a set of properties needed for execution of conncord
+ * Contains a set of properties needed for execution of corde
  */
 export interface IConfigOptions {
-  readonly conncordTestToken: string;
+  readonly cordeTestToken: string;
   readonly botTestId: string;
   readonly botTestToken?: string;
   readonly channelId?: string;
@@ -22,14 +22,14 @@ export interface IConfigOptions {
  * Default interface of json config
  * @public
  * @description `botTestToken` is not required.
- * only inform if is desired to start test bot with conncord
+ * only inform if is desired to start test bot with corde
  * @implements IConfigOptions
  */
 export class Config implements IConfigOptions {
   /**
    * Fake bot used to test the realy one
    */
-  public readonly conncordTestToken: string;
+  public readonly cordeTestToken: string;
   /**
    * User's bot that will be tested
    */
@@ -82,7 +82,7 @@ export class Config implements IConfigOptions {
     this.botTestId = configs.botTestId;
     this.botTestToken = configs.botTestToken;
     this.channelId = configs.channelId;
-    this.conncordTestToken = configs.conncordTestToken;
+    this.cordeTestToken = configs.cordeTestToken;
     this.guildId = configs.guildId;
     this.testFilesDir = configs.testFilesDir;
     this.timeOut = configs.timeOut;

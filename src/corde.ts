@@ -13,8 +13,12 @@ export default async function it(
   steps: () => void
 ): Promise<void> {
   if (name && name.trim() !== "") {
-    await login();
-    await steps();
+    try {
+      await login();
+      await steps();
+    } catch (error) {
+      throw error;
+    }
   } else {
     logout();
     throw new MissingTestNameError();

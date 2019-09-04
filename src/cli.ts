@@ -10,7 +10,7 @@ import { execTestFiles } from "./init";
 clear();
 
 console.log(
-  chalk.red(figlet.textSync("conncord", { horizontalLayout: "full" }))
+  chalk.red(figlet.textSync("corde", { horizontalLayout: "full" }))
 );
 
 program

@@ -1,17 +1,17 @@
 import * as Discord from "discord.js";
-import { commandHandler } from "./conncordBot";
+import { commandHandler } from "./cordeBot";
 import { getConfig } from "./init";
 import { execFiles } from "./shell";
 
 export const clientBot = new Discord.Client();
-export const conncordBot = new Discord.Client();
+export const cordeBot = new Discord.Client();
 
 clientBot.on("ready", () => {
-  // console.log("conncord bot is ready for tests!");
+  // console.log("corde bot is ready for tests!");
 });
 
 // Correspond to the receptor of all messages sent by the users in Discord
-conncordBot.on("message", async msg => {
+cordeBot.on("message", async msg => {
   // Checking if the command has the prefix
   if (!msg.content.startsWith(getConfig().botPrefix, 0)) {
     return;
@@ -21,23 +21,23 @@ conncordBot.on("message", async msg => {
   commandHandler(msg);
 });
 
-conncordBot.on(
+cordeBot.on(
   "ready",
   async (): Promise<void> => {
     let guild: Discord.Guild;
     let channel: Discord.Channel;
     const config = getConfig();
     try {
-      if (!conncordBot.guilds) {
+      if (!cordeBot.guilds) {
         throw new Error(
-          `conncord bot isn't added in a guild. Please add it to the guild: ${config.guildId}`
+          `corde bot isn't added in a guild. Please add it to the guild: ${config.guildId}`
         );
-      } else if (!conncordBot.guilds.has(config.guildId)) {
+      } else if (!cordeBot.guilds.has(config.guildId)) {
         throw new Error(
-          `Guild ${config.guildId} doesn't belong to conncord bot. change the guild id in conncord.config or add the bot to a valid guild`
+          `Guild ${config.guildId} doesn't belong to corde bot. change the guild id in corde.config or add the bot to a valid guild`
         );
       } else {
-        guild = conncordBot.guilds.get(config.guildId);
+        guild = cordeBot.guilds.get(config.guildId);
       }
 
       if (!guild.channels) {
@@ -79,11 +79,11 @@ export async function clientlogin(token: string) {
   return clientBot.login(token);
 }
 
-export async function conncordlogin(token: string) {
-  return conncordBot.login(token);
+export async function cordelogin(token: string) {
+  return cordeBot.login(token);
 }
 
 export async function logout() {
-  await conncordBot.destroy();
+  await cordeBot.destroy();
   await clientBot.destroy();
 }

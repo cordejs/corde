@@ -1,5 +1,5 @@
 import fs from "fs";
-import { clientlogin, conncordlogin } from "./bot";
+import { clientlogin, cordelogin } from "./bot";
 import { Config } from "./config";
 import { IConfigOptions } from "./config";
 import ConfigFileNotFoundError from "./erros/configFileNotFoundErro";
@@ -25,7 +25,7 @@ export function getConfig() {
  */
 function loadConfig(): Config {
   let _config: IConfigOptions;
-  const configFileName = "conncord.config.json";
+  const configFileName = "corde.config.json";
   const jsonfilePath = `${process.cwd()}/${configFileName}`;
 
   if (fs.existsSync(jsonfilePath)) {
@@ -46,8 +46,8 @@ function loadConfig(): Config {
  * TODO: JSON Schema
  */
 function validadeConfigs(configs: Config) {
-  if (!configs.conncordTestToken) {
-    throw new MissingPropertyError("conncord token not informed");
+  if (!configs.cordeTestToken) {
+    throw new MissingPropertyError("corde token not informed");
   } else if (!configs.botTestId) {
     throw new MissingPropertyError("bot test id not informed");
   } else if (!configs.testFilesDir) {
@@ -61,11 +61,11 @@ function validadeConfigs(configs: Config) {
 export async function login() {
   console.log("Connecting to bots...");
   try {
-    // Make login with conncord and load Message
-    await conncordlogin(config.conncordTestToken);
+    // Make login with corde and load Message
+    await cordelogin(config.cordeTestToken);
   } catch {
     throw new Error(
-      `Error trying to connect to bot with token: ${config.conncordTestToken}`
+      `Error trying to connect to bot with token: ${config.cordeTestToken}`
     );
   }
 
@@ -74,7 +74,7 @@ export async function login() {
       await clientlogin(config.botTestToken);
     } catch {
       throw new Error(
-        `Error trying to connect to bot with token: ${config.botTestToken}`
+        `can not connect to bot with token: ${config.botTestToken}`
       );
     }
   }
