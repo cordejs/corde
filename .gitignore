@@ -60,5 +60,5 @@ typings/
 # next.js build output
 .next
 
-corde.config.*
+corde.json
 lib/

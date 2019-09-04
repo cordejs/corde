@@ -1,7 +1,0 @@
-{
-    "cordeTestToken": "",
-    "botTestId": "",
-    "timeOut": 1000,
-    "botPrefix": "!",
-    "testFilesDir": "./tests/cases"
-}

@@ -25,7 +25,7 @@ export function getConfig() {
  */
 function loadConfig(): Config {
   let _config: IConfigOptions;
-  const configFileName = "corde.config.json";
+  const configFileName = "corde.json";
   const jsonfilePath = `${process.cwd()}/${configFileName}`;
 
   if (fs.existsSync(jsonfilePath)) {
