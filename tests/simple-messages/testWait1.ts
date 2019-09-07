@@ -1,5 +1,10 @@
-import it, { expect } from "../../lib/src/corde";
+import it, { expect, env } from "../../lib/src/corde";
 
-it("should return Hello", () => {
-    expect("hello").toBe("Hello");
+env(async () => {
+    it("should return Hello", async () => {
+         expect("hello").toBe("hello!!").then(() => {
+            expect("hey").toBe("hey!!");
+        });
+    });
 });
+

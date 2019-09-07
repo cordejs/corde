@@ -2,6 +2,7 @@ import sh from "shelljs";
 import { logout } from "./bot";
 import { getConfig } from "./init";
 
+export const result: string[] = [];
 export async function execFiles(dir: string | string[]) {
   if (dir) {
     (dir as string[]).forEach(async file => {

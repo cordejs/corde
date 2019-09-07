@@ -6,12 +6,8 @@ import { execFiles } from "./shell";
 export const clientBot = new Discord.Client();
 export const cordeBot = new Discord.Client();
 
-clientBot.on("ready", () => {
-  // console.log("corde bot is ready for tests!");
-});
-
 // Correspond to the receptor of all messages sent by the users in Discord
-cordeBot.on("message", async msg => {
+clientBot.on("message", async msg => {
   // Checking if the command has the prefix
   if (!msg.content.startsWith(getConfig().botPrefix, 0)) {
     return;

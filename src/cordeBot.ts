@@ -5,6 +5,10 @@ function hello(msg: Discord.Message) {
   msg.channel.send("hello!!");
 }
 
+function hey(msg: Discord.Message) {
+  msg.channel.send("hey!!");
+}
+
 /**
  * Receives a message, treating it and sending to the right method
  * @param msg message sent by Discord
@@ -19,5 +23,7 @@ export function commandHandler(msg: Discord.Message) {
 
   if (command === "hello" || command === "h") {
     hello(msg);
+  } else if (command === "hey") {
+    hey(msg);
   }
 }
