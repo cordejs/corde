@@ -1,11 +1,14 @@
 import chalk from "chalk";
+import { getConfig } from "./init";
 
 class Logger {
     public info(message: any) {
+        if (getConfig().silentMode) return;
         console.log(message);
     }
 
     public error(message: any) {
+        if (getConfig().silentMode) return;
         console.error(message);
     }
 
@@ -21,6 +24,7 @@ class Logger {
         expect: string | number | boolean,
         output: string
     ) {
+        if (getConfig().silentMode) return;
         const response = `expected: '${expect}', output: '${output}'`;
         if (testName && testName.trim() !== "") {
             console.log(`${this.green(testName)}: \n ${this.bgGreen("OK:")} ${response}`);
@@ -41,6 +45,7 @@ class Logger {
         expect: string | number | boolean,
         output: string
     ) {
+        if (getConfig().silentMode) return;
         const response = `expected: '${expect}', output: '${output}'`;
         if (testName && testName.trim() !== "") {
             console.error(`${this.red(testName)}: \n ${this.bgRed("Fail")} ${this.red(response)}`);
