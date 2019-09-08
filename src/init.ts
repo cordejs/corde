@@ -6,6 +6,7 @@ import ConfigFileNotFoundError from "./erros/configFileNotFoundErro";
 import MissingPropertyError from "./erros/missingPropertyError";
 import { execFiles } from "./shell";
 import chalk from "chalk";
+import { Loader } from "./loader";
 
 
 /**
@@ -67,11 +68,13 @@ function validadeConfigs(configs: Config) {
  * Makes authentication to bots
  */
 export async function login() {
-  console.log("Connecting to bots...");
+  const loader = new Loader("Connecting to bots... ");
+  loader.start();
   try {
     // Make login with corde and load Message
     await cordelogin(config.cordeTestToken);
   } catch {
+    loader.stop();
     throw new Error(
       `Error trying to connect to bot with token: ${config.cordeTestToken}`
     );
@@ -81,11 +84,13 @@ export async function login() {
     try {
       await clientlogin(config.botTestToken);
     } catch {
+      loader.stop();
       throw new Error(
         `can not connect to bot with token: ${config.botTestToken}`
       );
     }
   }
+  loader.stop();
 }
 
 /**
