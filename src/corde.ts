@@ -12,6 +12,7 @@ export async function env(tests: () => Promise<void> | void) {
       return new Promise(async () => {
         try {
           await tests();
+          console.log("TESTS PASSED!!!");
           process.exit(0);
         } catch (error) {
           logout();
@@ -94,13 +95,13 @@ export class Compare {
           reject();
         }
 
-        if (testsOk) {
-          console.log("All tests finished successfully");
-          resolve();
-        } else {
-          console.log("Tests runned with errors");
-          reject();
-        }
+        // if (testsOk) {
+        //   console.log("All tests finished successfully");
+        //   resolve();
+        // } else {
+        //   console.log("Tests runned with errors");
+        //   reject();
+        // }
       }
     });
   }
