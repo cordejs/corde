@@ -64,17 +64,29 @@ function validadeConfigs(configs: Config) {
   }
 }
 
+function stopLoader(loader: Loader) {
+  if (!config.silentMode) {
+    loader.stop();
+  }
+}
+
 /**
  * Makes authentication to bots
  */
 export async function login() {
+
   const loader = new Loader("Connecting to bots... ");
-  loader.start();
+
+  if (!config.silentMode) {
+    loader.start();
+  }
+
   try {
     // Make login with corde and load Message
     await cordelogin(config.cordeTestToken);
   } catch {
-    loader.stop();
+
+    stopLoader(loader);
     throw new Error(
       `Error trying to connect to bot with token: ${config.cordeTestToken}`
     );
@@ -84,13 +96,13 @@ export async function login() {
     try {
       await clientlogin(config.botTestToken);
     } catch {
-      loader.stop();
+      stopLoader(loader);
       throw new Error(
         `can not connect to bot with token: ${config.botTestToken}`
       );
     }
   }
-  loader.stop();
+  stopLoader(loader);
 }
 
 /**
