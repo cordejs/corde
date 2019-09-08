@@ -1,6 +1,6 @@
 {
   "name": "corde",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-beta.0",
   "description": "corde is a typescript library to create automated tests for discord bots",
   "main": "./lib/src/index.js",
   "directories": {
