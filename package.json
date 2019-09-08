@@ -32,7 +32,8 @@
     "tslint": "tslint --fix 'src/**/*{.ts,.tsx}'",
     "np": "np --no-cleanup --no-yarn",
     "format": "prettier --write \"src/**/*.ts\"",
-    "lint": "tslint --project tsconfig.json -t stylish"
+    "lint": "tslint --project tsconfig.json -t stylish",
+    "docs": "typedoc --out docs src"
   },
   "devDependencies": {
     "@types/clear": "^0.1.0",
@@ -41,11 +42,12 @@
     "barrelsby": "^2.1.1",
     "nodemon": "^1.19.2",
     "np": "^5.0.3",
+    "prettier": "^1.16.4",
     "ts-node": "^8.3.0",
     "tslint": "^5.19.0",
-    "typescript": "^3.6.2",
     "tslint-config-prettier": "^1.18.0",
-    "prettier": "^1.16.4"
+    "typedoc": "^0.15.0",
+    "typescript": "^3.6.2"
   },
   "dependencies": {
     "@types/shelljs": "^0.8.5",

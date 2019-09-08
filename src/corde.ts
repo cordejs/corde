@@ -5,7 +5,11 @@ import { login } from "./init";
 import { getConfig } from "./init";
 import { result } from "./shell";
 
-export async function env(tests: () => Promise<void> | void) {
+/**
+ * 
+ * @param tests 
+ */
+export async function cases(tests: () => Promise<void> | void) {
   if (tests) {
     try {
       await login();

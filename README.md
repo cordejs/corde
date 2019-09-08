@@ -12,8 +12,11 @@ The second one, is the bot that you want to test the commands. After configure w
 you can write your case tests like this:
 
 ```ts
-it("should return Hello", () => {
-    expect("hello!!").toBe("Hello");
+env(async () => {
+    await it("should return Hello", async () => {
+         await expect("hello").toBe("hello!!");
+         await expect("hey").toBe("hey!!");
+    });
 });
 
 ```
