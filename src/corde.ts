@@ -9,7 +9,7 @@ import { logger } from "./logger";
  * 
  * @example
  * 
- *  env(async () => {
+ *  afterLogin(async () => {
  *      await it("should return Hello!!", async () => {
  *        await expect("hello").toBe("hello!!");
  *      });
@@ -25,18 +25,33 @@ import { logger } from "./logger";
  * 
  * @param tests a block of **it** tests
  */
-export async function cases(tests: () => Promise<void> | void) {
+export async function afterLogin(tests: () => Promise<boolean | void>, silent?: boolean): Promise<boolean | void> {
   if (tests) {
+
+    if (silent) {
+      getConfig().silentMode = true;
+    }
+
     try {
       await login();
-      return new Promise(async () => {
+      return new Promise(async (resolve, reject) => {
         try {
-          await tests();
-          console.log("TESTS PASSED!!!");
-          process.exit(0);
+          const response = await tests();
+
+          if (response) {
+            logger.info("TESTS PASSED!!!");
+          } else {
+            logger.error("Tests runned with errors");
+          }
+
+          //process.exit(0);
+          resolve(response);
         } catch (error) {
+          logger.error(error);
+          //process.exit(1);
+          reject(error);
+        } finally {
           logout();
-          process.exit(1);
         }
       });
     } catch (error) {
@@ -74,12 +89,12 @@ export async function cases(tests: () => Promise<void> | void) {
  */
 export default async function it(
   name: string,
-  steps: (caseName: string) => Promise<void>
-): Promise<void> {
+  steps: () => Promise<boolean | void>
+): Promise<boolean | void> {
   if (name && name.trim() !== "") {
     try {
       logger.info(name);
-      return steps(name);
+      return steps();
     } catch (error) {
       throw error;
     }
@@ -101,7 +116,7 @@ export class Compare {
     this.testName = testName;
   }
 
-  public async shouldRespond(expect: string): Promise<void> {
+  public async shouldRespond(expect: string): Promise<boolean> {
     return new Promise(async (resolve, reject) => {
       const config = getConfig();
       if (expect === undefined) {
@@ -126,13 +141,15 @@ export class Compare {
 
           if (content === expect) {
             logger.sucess(this.testName, expect, content);
+            resolve(true);
           } else {
             logger.fail(this.testName, expect, content);
+            resolve(false);
           }
-          resolve();
-        } catch {
+
+        } catch (error) {
           console.log("The bot do not send any message in the time informed.");
-          reject();
+          reject(error);
         }
       }
     });
@@ -150,6 +167,6 @@ export class Compare {
  * @returns The **Compare** object, where will handle 
  * the type of response is expected.
  */
-export function command(commandName: string) {
+export function command(commandName: string): Compare {
   return new Compare(commandName, this.testName);
 }
