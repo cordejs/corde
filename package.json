@@ -56,7 +56,8 @@
     "discord.js": "^11.4.2",
     "figlet": "^1.2.4",
     "path": "^0.12.7",
-    "shelljs": "^0.8.3"
+    "shelljs": "^0.8.3",
+    "supports-color": "^7.0.0"
   },
   "repository": {
     "type": "git",

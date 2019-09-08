@@ -74,11 +74,12 @@ export async function cases(tests: () => Promise<void> | void) {
  */
 export default async function it(
   name: string,
-  steps: () => Promise<void>
+  steps: (caseName: string) => Promise<void>
 ): Promise<void> {
   if (name && name.trim() !== "") {
     try {
-      return steps();
+      logger.info(name);
+      return steps(name);
     } catch (error) {
       throw error;
     }
@@ -102,7 +103,6 @@ export class Compare {
 
   public async shouldRespond(expect: string): Promise<void> {
     return new Promise(async (resolve, reject) => {
-      let testsOk = true;
       const config = getConfig();
       if (expect === undefined) {
         console.log("No testes were declared");
@@ -128,7 +128,6 @@ export class Compare {
             logger.sucess(this.testName, expect, content);
           } else {
             logger.fail(this.testName, expect, content);
-            testsOk = false;
           }
           resolve();
         } catch {

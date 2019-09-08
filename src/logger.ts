@@ -25,7 +25,7 @@ class Logger {
         if (testName && testName.trim() !== "") {
             console.log(`${this.green(testName)}: \n ${this.bgGreen("OK:")} ${response}`);
         } else {
-            console.log(`${this.bgGreen("OK:")} ${response}`);
+            console.log(`   ${this.bgGreen("OK:")} ${response}`);
         }
     }
 
@@ -45,7 +45,7 @@ class Logger {
         if (testName && testName.trim() !== "") {
             console.error(`${this.red(testName)}: \n ${this.bgRed("Fail")} ${this.red(response)}`);
         } else {
-            console.error(`${this.bgRed("Fail")} ${this.red(response)}`);
+            console.error(`   ${this.bgRed("Fail")} ${this.red(response)}`);
         }
     }
 

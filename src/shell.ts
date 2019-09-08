@@ -1,6 +1,7 @@
 import sh from "shelljs";
 import { logout } from "./bot";
 import { getConfig } from "./init";
+import { logger } from "./logger";
 
 export const result: string[] = [];
 export async function execFiles(dir: string | string[]) {
@@ -22,7 +23,7 @@ export async function execFiles(dir: string | string[]) {
   }
 }
 
-async function runShell(command: string) {
+async function runShell(command: string): Promise<string> {
   return new Promise((resolve, reject) => {
     sh.exec(command, (code, stdout, stderr) => {
       if (code !== 0) {

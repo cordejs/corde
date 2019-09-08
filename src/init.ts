@@ -5,6 +5,14 @@ import { IConfigOptions } from "./config";
 import ConfigFileNotFoundError from "./erros/configFileNotFoundErro";
 import MissingPropertyError from "./erros/missingPropertyError";
 import { execFiles } from "./shell";
+import chalk from "chalk";
+
+
+/**
+ * Allow chalk to work in child process
+ * @see https://github.com/chalk/chalk/issues/327
+ */
+process.env['FORCE_COLOR'] = chalk.level.toString();
 
 /**
  * Contains informations loaded from configuration file
