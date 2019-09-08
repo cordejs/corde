@@ -1,9 +1,9 @@
-import it, { expect, cases } from "../../lib/src/corde";
+import it, { command, cases } from "../../lib/src/corde";
 
 cases(async () => {
     await it("should return Hello", async () => {
-         await expect("hello").toBe("hello!!");
-         await expect("hey").toBe("hey!!");
+         await command("hello").shouldRespond("hello!!");
+         await command("hey").shouldRespond("hey!!");
     });
 });
 
