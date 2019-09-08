@@ -6,8 +6,25 @@ import { getConfig } from "./init";
 import { result } from "./shell";
 
 /**
+ * Defines which tests will be executed.
  * 
- * @param tests 
+ * @example
+ * 
+ *  env(async () => {
+ *      await it("should return Hello!!", async () => {
+ *        await expect("hello").toBe("hello!!");
+ *      });
+ *     await it("should return Hey!!", async () => {
+ *        await expect("hey").toBe("hey!!");
+ *     });
+ *  });
+ * 
+ * @deprecated Pay attention for the **await** operator in before the call
+ * functions **it** and **expect**. Because Discord's messages send and return
+ * are async, this operatior must be informed in order to allow the correctly
+ * execution of tests.
+ * 
+ * @param tests a block of **it** tests
  */
 export async function cases(tests: () => Promise<void> | void) {
   if (tests) {
@@ -35,7 +52,26 @@ export async function cases(tests: () => Promise<void> | void) {
 
 /**
  * Initialize a new test to be executed
+ * 
  * @param name name of the test (required)
+ * @throws MissingTestNameError When the name isn't informed.
+ * 
+ * @example
+ *  // Correct use
+ *  await it("should return Hey!!", async () => {
+ *      await expect("hey").toBe("hey!!");
+ *  });
+ *
+ *  // Incorect use
+ *  await it("should return Hey!! and Hello!!", async () => {
+ *      await expect("hey").toBe("hey!!");
+ *      await expect("hello").toBe("hello!!");
+ *  });
+ * 
+ * @description this function is the container of a lack of tests
+ * for a **single command test case**.In other words, this should be used
+ * for test only one return of a command. Do not test more than i command
+ * in the same it clausure.
  */
 export default async function it(
   name: string,
@@ -53,6 +89,9 @@ export default async function it(
   }
 }
 
+/**
+ * Container of 
+ */
 export class Compare {
   private input: string;
   private testName: string;
