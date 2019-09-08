@@ -1,9 +1,8 @@
 import { logout } from "./bot";
-import { printFail, printSucess } from "./console";
 import MissingTestNameError from "./erros/missingTestNameErro";
 import { login } from "./init";
 import { getConfig } from "./init";
-import { result } from "./shell";
+import { logger } from "./logger";
 
 /**
  * Defines which tests will be executed.
@@ -101,7 +100,7 @@ export class Compare {
     this.testName = testName;
   }
 
-  public async toBe(expect: string): Promise<void> {
+  public async shouldRespond(expect: string): Promise<void> {
     return new Promise(async (resolve, reject) => {
       let testsOk = true;
       const config = getConfig();
@@ -113,7 +112,6 @@ export class Compare {
       } else {
         const toSend = config.botPrefix + this.input;
         await config.channel.send(toSend);
-        result.push("tata");
         try {
           const answer = await config.channel.awaitMessages(
             responseName => responseName.author.id === config.botTestId,
@@ -127,9 +125,9 @@ export class Compare {
           const content = answer.first().content;
 
           if (content === expect) {
-            printSucess(this.testName, expect, content);
+            logger.sucess(this.testName, expect, content);
           } else {
-            printFail(this.testName, expect, content);
+            logger.fail(this.testName, expect, content);
             testsOk = false;
           }
           resolve();
@@ -137,19 +135,22 @@ export class Compare {
           console.log("The bot do not send any message in the time informed.");
           reject();
         }
-
-        // if (testsOk) {
-        //   console.log("All tests finished successfully");
-        //   resolve();
-        // } else {
-        //   console.log("Tests runned with errors");
-        //   reject();
-        // }
       }
     });
   }
 }
 
-export function expect(input: string) {
-  return new Compare(input, this.testName);
+/**
+ * Receives wich command will be tested.
+ * 
+ * @param commandName Command name.
+ * 
+ * @description Do not inform the command prefix if
+ * it's already informed in **configs**
+ * 
+ * @returns The **Compare** object, where will handle 
+ * the type of response is expected.
+ */
+export function command(commandName: string) {
+  return new Compare(commandName, this.testName);
 }
