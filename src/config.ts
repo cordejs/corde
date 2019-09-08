@@ -16,6 +16,7 @@ export interface IConfigOptions {
   channel: Discord.TextChannel;
   files: string[];
   executeInBotLogin: boolean;
+  silentMode: boolean;
 }
 
 /**
@@ -76,6 +77,10 @@ export class Config implements IConfigOptions {
    * @default false
    */
   public executeInBotLogin: boolean;
+  /**
+   * Defines if all tests must execute in silent mode.
+   */
+  public silentMode: boolean;
 
   constructor(configs: IConfigOptions) {
     this.botPrefix = configs.botPrefix;
@@ -88,5 +93,6 @@ export class Config implements IConfigOptions {
     this.timeOut = configs.timeOut;
     this.channel = null;
     this.files = [];
+    this.silentMode = configs.silentMode;
   }
 }
