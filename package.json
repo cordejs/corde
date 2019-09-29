@@ -26,7 +26,7 @@
     "create": "npm run build && npm run test",
     "build": "tsc -p .",
     "watch": " tsc -w",
-    "test": "npm i -g && corde",
+    "test": "mocha -r ts-node/register tests/**/*.test.ts",
     "refresh": "rm -rf ./node_modules ./package-lock.json && npm install",
     "barrels": "barrelsby -c barrelsby.json",
     "tslint": "tslint --fix 'src/**/*{.ts,.tsx}'",
@@ -36,9 +36,13 @@
     "docs": "typedoc --out docs src"
   },
   "devDependencies": {
+    "@types/chai": "^4.2.1",
     "@types/clear": "^0.1.0",
     "@types/figlet": "^1.2.0",
+    "@types/mocha": "^5.2.7",
     "@types/node": "^12.7.4",
+    "chai": "^4.2.0",
+    "mocha": "^6.2.0",
     "nodemon": "^1.19.2",
     "np": "^5.0.3",
     "prettier": "^1.16.4",

@@ -22,10 +22,6 @@ jobs:
       - run:
           name: Build Project
           command: npm run build
-      # - codecov/upload:
-      #     flags: backend,unittest
-      # - run: npm install codecov -g
-      # - run: codecov --token=CODECOV_TOKEN
-      # - codecov/upload:
-      #     file: coverage/*.json
-      #     flags: frontend
+      - run:
+          name: "Tests"
+          command: "npm run test"

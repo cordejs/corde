@@ -5,17 +5,20 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Current TS Tests File",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+      "name": "Mocha Current File",
+      "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
       "args": [
-        "-r",
-        "ts-node/register",
-        "${relativeFile}"
+        "--no-timeouts",
+        "--colors",
+        "${file}",
+        "--require",
+        "ts-node/register"
       ],
-      "cwd": "${workspaceRoot}",
-      "protocol": "inspector"
+      "console": "integratedTerminal",
+      "sourceMaps": true,
+      "internalConsoleOptions": "neverOpen"
     },
     {
       "name": "Current TS File",
