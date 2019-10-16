@@ -2,6 +2,7 @@
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/lucasgmagalhaes/corde.svg)](https://greenkeeper.io/)
 [![CircleCI](https://circleci.com/gh/lucasgmagalhaes/corde.svg?style=shield)](https://circleci.com/gh/lucasgmagalhaes/corde)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Flucasgmagalhaes%2Fcorde.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Flucasgmagalhaes%2Fcorde?ref=badge_shield)
 
 corde is a typescript library to create automated tests for discord bots
 
