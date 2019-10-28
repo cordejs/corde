@@ -1,19 +1,19 @@
-import fs from "fs";
-import { clientlogin, cordelogin } from "./bot";
-import { Config } from "./config";
-import { IConfigOptions } from "./config";
-import ConfigFileNotFoundError from "./erros/configFileNotFoundErro";
-import MissingPropertyError from "./erros/missingPropertyError";
-import { execFiles } from "./shell";
-import chalk from "chalk";
-import { Loader } from "./loader";
+import fs from 'fs';
+import { clientlogin, cordelogin } from './bot';
+import { Config } from './config';
+import { IConfigOptions } from './config';
+import ConfigFileNotFoundError from './erros/configFileNotFoundErro';
+import MissingPropertyError from './erros/missingPropertyError';
+import { execFiles } from './shell';
+import chalk from 'chalk';
+import { Loader } from './loader';
 
 
 /**
  * Allow chalk to work in child process
  * @see https://github.com/chalk/chalk/issues/327
  */
-process.env['FORCE_COLOR'] = chalk.level.toString();
+process.env.FORCE_COLOR = chalk.level.toString();
 
 /**
  * Contains informations loaded from configuration file
@@ -34,7 +34,7 @@ export function getConfig() {
  */
 function loadConfig(): Config {
   let _config: IConfigOptions;
-  const configFileName = "corde.json";
+  const configFileName = 'corde.json';
   const jsonfilePath = `${process.cwd()}/${configFileName}`;
 
   if (fs.existsSync(jsonfilePath)) {
@@ -46,7 +46,7 @@ function loadConfig(): Config {
   if (_config) {
     return new Config(_config);
   } else {
-    throw new Error("Invalid configuration file");
+    throw new Error('Invalid configuration file');
   }
 }
 
@@ -56,11 +56,11 @@ function loadConfig(): Config {
  */
 function validadeConfigs(configs: Config) {
   if (!configs.cordeTestToken) {
-    throw new MissingPropertyError("corde token not informed");
+    throw new MissingPropertyError('corde token not informed');
   } else if (!configs.botTestId) {
-    throw new MissingPropertyError("bot test id not informed");
+    throw new MissingPropertyError('bot test id not informed');
   } else if (!configs.testFilesDir) {
-    throw new MissingPropertyError("bot test id not informed");
+    throw new MissingPropertyError('bot test id not informed');
   }
 }
 
@@ -75,7 +75,7 @@ function stopLoader(loader: Loader) {
  */
 export async function login() {
 
-  const loader = new Loader("Connecting to bots... ");
+  const loader = new Loader('Connecting to bots... ');
 
   if (!config.silentMode) {
     loader.start();
