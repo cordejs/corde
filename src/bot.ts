@@ -2,6 +2,7 @@ import * as Discord from "discord.js";
 import { commandHandler } from "./cordeBot";
 import { getConfig } from "./init";
 import { execFiles } from "./shell";
+import GuildNotFoundError from "./erros/guildNotFoundError";
 
 export const clientBot = new Discord.Client();
 export const cordeBot = new Discord.Client();
@@ -29,7 +30,7 @@ cordeBot.on(
           `corde bot isn't added in a guild. Please add it to the guild: ${config.guildId}`
         );
       } else if (!cordeBot.guilds.has(config.guildId)) {
-        throw new Error(
+        throw new GuildNotFoundError(
           `Guild ${config.guildId} doesn't belong to corde bot. change the guild id in corde.config or add the bot to a valid guild`
         );
       } else {
