@@ -36,6 +36,8 @@
     "docs": "typedoc --out docs src"
   },
   "devDependencies": {
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
     "@types/chai": "^4.2.1",
     "@types/clear": "^0.1.0",
     "@types/figlet": "^1.2.0",
@@ -76,5 +78,10 @@
   "bugs": {
     "url": "https://github.com/lucasgmagalhaes/corde/issues"
   },
-  "homepage": "https://github.com/lucasgmagalhaes/corde#readme"
+  "homepage": "https://github.com/lucasgmagalhaes/corde#readme",
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
 }
