@@ -94,7 +94,7 @@ export default async function it(
   if (name && name.trim() !== "") {
     try {
       logger.info(name);
-      return steps();
+      return await steps();
     } catch (error) {
       throw error;
     }

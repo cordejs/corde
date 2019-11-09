@@ -6,7 +6,7 @@ export class ChannelUtil {
     }
 
     static isTextChannel(channel: Discord.Channel): boolean {
-        return !((channel): channel is Discord.TextChannel => channel.type === "text")(
+        return ((channel): channel is Discord.TextChannel => channel.type === "text")(
             channel
         )
     }
