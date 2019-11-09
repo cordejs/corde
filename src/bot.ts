@@ -2,6 +2,9 @@ import * as Discord from "discord.js";
 import { commandHandler } from "./cordeBot";
 import { getConfig } from "./init";
 import { execFiles } from "./shell";
+import { IConfigOptions } from "./config";
+import { ChannelUtil } from "./channelUtils";
+import ChannelTypeNotSupportedError from "./erros/channelTypeNotSupportedError";
 import GuildNotFoundError from "./erros/guildNotFoundError";
 
 export const clientBot = new Discord.Client();
@@ -25,46 +28,16 @@ cordeBot.on(
     let channel: Discord.Channel;
     const config = getConfig();
     try {
-      if (!cordeBot.guilds) {
-        throw new Error(
-          `corde bot isn't added in a guild. Please add it to the guild: ${config.guildId}`
-        );
-      } else if (!cordeBot.guilds.has(config.guildId)) {
-        throw new GuildNotFoundError(
-          `Guild ${config.guildId} doesn't belong to corde bot. change the guild id in corde.config or add the bot to a valid guild`
-        );
-      } else {
-        guild = cordeBot.guilds.get(config.guildId);
-      }
 
-      if (!guild.channels) {
-        throw new Error(
-          `${guild.name} doesn't have a channel with id ${config.channelId}.`
-        );
-      } else if (!guild.channels.has(config.channelId || "")) {
-        throw new Error(
-          `${config.channelId} doesn't appear to be a channel of guild ${guild.name}`
-        );
-      } else {
-        channel = guild.channels.get(config.channelId || "");
-      }
-
-      if (channel === undefined) {
-        throw new Error("There is no informed channel to start tests");
-      }
+      guild = findGuild(config);
+      channel = findChannel(guild, config);
 
       // Using a type guard to narrow down the correct type
-      if (
-        !((channel): channel is Discord.TextChannel => channel.type === "text")(
-          channel
-        )
-      ) {
-        throw new Error("There is no support for voice channel");
+      if (!ChannelUtil.isTextChannel(channel)) {
+        throw new ChannelTypeNotSupportedError("There is no support for voice channel");
       }
 
-      // console.log("Client bot is ready for tests!");
-      // await channel.send(`Starting tests`);
-      config.channel = channel;
+      config.channel = ChannelUtil.convertToTextChannel(channel);
       execFiles(config.files);
     } catch (error) {
       return Promise.reject(error);
@@ -72,7 +45,7 @@ cordeBot.on(
   }
 );
 
-export async function clientlogin(token: string) {
+export async function clientlogin(token: string): Promise<string> {
   return clientBot.login(token);
 }
 
@@ -83,4 +56,38 @@ export async function cordelogin(token: string) {
 export async function logout() {
   await cordeBot.destroy();
   await clientBot.destroy();
+}
+
+function findGuild(config: IConfigOptions): Discord.Guild {
+  if (!cordeBot.guilds) {
+    throw new Error(
+      `corde bot isn't added in a guild. Please add it to the guild: ${config.guildId}`
+    );
+  } else if (!cordeBot.guilds.has(config.guildId)) {
+    throw new GuildNotFoundError(
+      `Guild ${config.guildId} doesn't belong to corde bot. change the guild id in corde.config or add the bot to a valid guild`
+    );
+  } else {
+    return cordeBot.guilds.get(config.guildId);
+  }
+}
+
+function findChannel(guild: Discord.Guild, config: IConfigOptions): Discord.Channel {
+  if (!guild.channels) {
+    throw new GuildNotFoundError(
+      `${guild.name} doesn't have a channel with id ${config.channelId}.`
+    );
+  } else if (!guild.channels.has(config.channelId || "")) {
+    throw new Error(
+      `${config.channelId} doesn't appear to be a channel of guild ${guild.name}`
+    );
+  } else {
+    const channel = guild.channels.get(config.channelId || "");
+
+    if (channel === undefined) {
+      throw new Error("There is no informed channel to start tests");
+    }
+
+    return channel;
+  }
 }
