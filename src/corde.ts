@@ -159,7 +159,7 @@ export class Compare {
             responseName => responseName.author.id === config.botTestId,
             {
               max: 1,
-              time: config.timeOut ? config.timeOut : 10000,
+              time: config.timeOut ? config.timeOut : 5000,
               errors: ["time"]
             }
           );
