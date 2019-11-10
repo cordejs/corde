@@ -1,9 +1,9 @@
 import sh from "shelljs";
 import { logout } from "./bot";
 import { getConfig } from "./init";
-import { logger } from "./logger";
 
 export const result: string[] = [];
+
 export async function execFiles(dir: string | string[]) {
   if (dir) {
     (dir as string[]).forEach(async file => {
@@ -12,6 +12,8 @@ export async function execFiles(dir: string | string[]) {
         await runShell(
           `ts-node ${process.cwd()}/${getConfig().testFilesDir}/${file}`
         );
+        console.log("\n");
+        console.log("All tests passed");
       } catch (error) {
         console.log(error);
         logout();

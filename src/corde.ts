@@ -33,22 +33,16 @@ export async function afterLogin(tests: () => Promise<boolean | void>, silent?: 
     }
 
     try {
+
       await login();
+      console.log("\n");
+
       return new Promise(async (resolve, reject) => {
         try {
           const response = await tests();
-
-          if (response) {
-            logger.info("TESTS PASSED!!!");
-          } else {
-            logger.error("Tests runned with errors");
-          }
-
-          //process.exit(0);
           resolve(response);
         } catch (error) {
           logger.error(error);
-          //process.exit(1);
           reject(error);
         } finally {
           logout();
