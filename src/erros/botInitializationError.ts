@@ -4,7 +4,7 @@
  * @public
  * @constructor Erro message, if not set, returns default message
  */
-export default class BotInitializationError extends Error {
+export class BotInitializationError extends Error {
   constructor(message?: string) {
     if (message) {
       super(message);

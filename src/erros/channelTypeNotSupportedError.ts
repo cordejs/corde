@@ -3,7 +3,7 @@
  * @constructor Erro message, if not set, returns default message
  * @default message The informed channel type is not supported
  */
-export default class ChannelTypeNotSupportedError extends Error {
+export class ChannelTypeNotSupportedError extends Error {
     constructor(message?: string) {
         if (message) {
             super(message);

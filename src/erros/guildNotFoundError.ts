@@ -3,7 +3,7 @@
  * @constructor Erro message, if not set, returns default message
  * @default message Guild not found for informed user
  */
-export default class GuildNotFoundError extends Error {
+export class GuildNotFoundError extends Error {
     constructor(message?: string) {
       if (message) {
         super(message);
