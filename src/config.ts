@@ -17,6 +17,7 @@ export interface IConfigOptions {
   files: string[];
   executeInBotLogin: boolean;
   silentMode: boolean;
+  handlerFunction: (msg: Discord.Message) => void;
 }
 
 /**
@@ -81,6 +82,11 @@ export class Config implements IConfigOptions {
    * Defines if all tests must execute in silent mode.
    */
   public silentMode: boolean;
+  /**
+   * Defines the function who will handle the messages to the 
+   * testing bot.
+   */
+  public handlerFunction: (msg: Discord.Message) => void;
 
   constructor(configs: IConfigOptions) {
     this.botPrefix = configs.botPrefix;

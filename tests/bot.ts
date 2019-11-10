@@ -1,13 +1,5 @@
 import * as Discord from "discord.js";
-import { getConfig } from "./init";
-
-function hello(msg: Discord.Message) {
-  msg.channel.send("hello!!");
-}
-
-function hey(msg: Discord.Message) {
-  msg.channel.send("hey!!");
-}
+import { getConfig } from "../src/init";
 
 /**
  * Receives a message, treating it and sending to the right method
@@ -26,4 +18,12 @@ export function commandHandler(msg: Discord.Message) {
   } else if (command === "hey") {
     hey(msg);
   }
+}
+
+function hello(msg: Discord.Message) {
+  msg.channel.send("hello!!");
+}
+
+function hey(msg: Discord.Message) {
+  msg.channel.send("hey!!");
 }

@@ -32,6 +32,6 @@
   },
   "compileOnSave": true,
   "include": [
-    "src/**/*"
+    "src/**/*", "tests/bot.ts"
   ]
 }

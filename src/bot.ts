@@ -1,5 +1,5 @@
 import * as Discord from "discord.js";
-import { commandHandler } from "./cordeBot";
+import { commandHandler } from "../tests/bot";
 import { getConfig } from "./init";
 import { execFiles } from "./shell";
 import { IConfigOptions } from "./config";
@@ -18,7 +18,7 @@ clientBot.on("message", async msg => {
   }
 
   getConfig().message = msg;
-  commandHandler(msg);
+  getConfig().handlerFunction(msg);
 });
 
 cordeBot.on(
