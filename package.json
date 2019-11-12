@@ -49,7 +49,8 @@
     "mocha": "^6.2.0",
     "nodemon": "^1.19.2",
     "np": "^5.0.3",
-    "prettier": "^1.16.4",
+    "prettier": "^1.19.1",
+    "pretty-quick": "^2.0.1",
     "ts-node": "^8.3.0",
     "tslint": "^5.19.0",
     "tslint-config-prettier": "^1.18.0",
@@ -83,7 +84,8 @@
   "homepage": "https://github.com/lucasgmagalhaes/corde#readme",
   "husky": {
     "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "pretty-quick --staged"
     }
   }
 }
