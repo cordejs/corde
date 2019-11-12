@@ -4,8 +4,7 @@ import { getConfig } from "./init";
 import { execFiles } from "./shell";
 import { IConfigOptions } from "./config";
 import { ChannelUtil } from "./channelUtils";
-import ChannelTypeNotSupportedError from "./erros/channelTypeNotSupportedError";
-import GuildNotFoundError from "./erros/guildNotFoundError";
+import { ChannelTypeNotSupportedError, GuildNotFoundError} from "./erros";
 
 export const clientBot = new Discord.Client();
 export const cordeBot = new Discord.Client();

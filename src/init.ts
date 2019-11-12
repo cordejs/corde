@@ -2,12 +2,10 @@ import fs from 'fs';
 import { clientlogin, cordelogin } from './bot';
 import { Config } from './config';
 import { IConfigOptions } from './config';
-import ConfigFileNotFoundError from './erros/configFileNotFoundErro';
-import MissingPropertyError from './erros/missingPropertyError';
+import { ConfigFileNotFoundError, MissingPropertyError } from './erros';
 import { execFiles } from './shell';
 import chalk from 'chalk';
 import { Loader } from './loader';
-
 
 /**
  * Allow chalk to work in child process
@@ -74,7 +72,6 @@ function stopLoader(loader: Loader) {
  * Makes authentication to bots
  */
 export async function login() {
-
   const loader = new Loader('Connecting to bots... ');
 
   if (!config.silentMode) {
@@ -85,11 +82,8 @@ export async function login() {
     // Make login with corde and load Message
     await cordelogin(config.cordeTestToken);
   } catch {
-
     stopLoader(loader);
-    throw new Error(
-      `Error trying to connect to bot with token: ${config.cordeTestToken}`
-    );
+    throw new Error(`Error trying to connect to bot with token: ${config.cordeTestToken}`);
   }
 
   if (config.botTestToken) {
@@ -97,9 +91,7 @@ export async function login() {
       await clientlogin(config.botTestToken);
     } catch {
       stopLoader(loader);
-      throw new Error(
-        `can not connect to bot with token: ${config.botTestToken}`
-      );
+      throw new Error(`can not connect to bot with token: ${config.botTestToken}`);
     }
   }
   stopLoader(loader);
