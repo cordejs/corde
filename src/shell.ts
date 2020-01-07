@@ -1,6 +1,7 @@
 import sh from "shelljs";
 import { logout } from "./bot";
 import { getConfig } from "./init";
+import { logger } from "./logger";
 
 export const result: string[] = [];
 
@@ -15,9 +16,13 @@ export async function execFiles(dir: string | string[]) {
         console.log("\n");
         console.log("All tests passed");
       } catch (error) {
-        console.log(error);
-        logout();
-        process.exit(1);
+        if(error instanceof Error && error.name === "TIMEOUT") {
+          console.log("Test fail");
+        } else {
+          console.log(error);
+          logout();
+          process.exit(1);
+        }
       }
     });
   } else {
