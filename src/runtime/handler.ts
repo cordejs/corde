@@ -1,14 +1,14 @@
-import * as Discord from "discord.js";
-import { getConfig } from "src/init";
+import * as Discord from 'discord.js';
+import { getConfig } from '../init';
 
 /**
  * Setup the function handler.
- * 
+ *
  * @param handlerFunction Function who will handle Discord's messages and will
  * redirect to the desired function.
- * 
+ *
  * @example
- * 
+ *
  * function commandHandler(msg: Discord.Message) {
  * const args = msg.content
  *   .slice(getConfig().botPrefix.length)
@@ -27,7 +27,7 @@ import { getConfig } from "src/init";
  */
 export function handler(handlerFunction: (msg: Discord.Message) => void) {
   if (!handlerFunction) {
-    throw new Error("Missing handler function");
+    throw new Error('Missing handler function');
   }
 
   getConfig().handlerFunction = handlerFunction;
