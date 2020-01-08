@@ -2,7 +2,6 @@ import * as Discord from 'discord.js';
 import { getConfig } from './init';
 import { execFiles } from './shell';
 import { IConfigOptions } from './config';
-import { ChannelUtil } from './channelUtils';
 import { ChannelTypeNotSupportedError, GuildNotFoundError } from './erros';
 
 export const clientBot = new Discord.Client();
@@ -30,11 +29,11 @@ cordeBot.on(
       channel = findChannel(guild, config);
 
       // Using a type guard to narrow down the correct type
-      if (!ChannelUtil.isTextChannel(channel)) {
+      if (!isTextChannel(channel)) {
         throw new ChannelTypeNotSupportedError('There is no support for voice channel');
       }
 
-      config.channel = ChannelUtil.convertToTextChannel(channel);
+      config.channel = convertToTextChannel(channel);
       execFiles(config.files);
     } catch (error) {
       return Promise.reject(error);
@@ -85,4 +84,12 @@ function findChannel(guild: Discord.Guild, config: IConfigOptions): Discord.Chan
 
     return channel;
   }
+}
+
+function convertToTextChannel(channel: Discord.Channel): Discord.TextChannel {
+  return channel as Discord.TextChannel;
+}
+
+function isTextChannel(channel: Discord.Channel): boolean {
+  return ((channel): channel is Discord.TextChannel => channel.type === 'text')(channel);
 }

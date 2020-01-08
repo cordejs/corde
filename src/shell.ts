@@ -1,25 +1,21 @@
-import sh from "shelljs";
-import { logout } from "./bot";
-import { getConfig } from "./init";
-import { logger } from "./logger";
-
-export const result: string[] = [];
+import sh from 'shelljs';
+import { logout } from './bot';
+import { getConfig } from './init';
+import { logger } from './logger';
 
 export async function execFiles(dir: string | string[]) {
   if (dir) {
     (dir as string[]).forEach(async file => {
       // Execute all test cases
       try {
-        await runShell(
-          `ts-node ${process.cwd()}/${getConfig().testFilesDir}/${file}`
-        );
-        console.log("\n");
-        console.log("All tests passed");
+        await runShell(`ts-node ${process.cwd()}/${getConfig().testFilesDir}/${file}`);
+        logger.info('\n');
+        logger.info('All tests passed');
       } catch (error) {
-        if(error instanceof Error && error.name === "TIMEOUT") {
-          console.log("Test fail");
+        if (error instanceof Error && error.name === 'TIMEOUT') {
+          logger.info('Test fail');
         } else {
-          console.log(error);
+          logger.info(error);
           logout();
           process.exit(1);
         }

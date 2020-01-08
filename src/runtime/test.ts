@@ -27,7 +27,7 @@ import { MissingTestNameError } from '../erros/missingTestNameErro';
  * for test only one return of a command. Do not test more than i command
  * in the same it clausure.
  */
-export async function it(
+export async function test(
   name: string,
   steps: () => Promise<boolean | void>,
 ): Promise<boolean | void> {
