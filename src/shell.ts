@@ -5,10 +5,10 @@ import { logger } from './logger';
 
 export async function execFiles(dir: string | string[]) {
   if (dir) {
-    (dir as string[]).forEach(async file => {
+    (dir as string[]).forEach(async fileFullPath => {
       // Execute all test cases
       try {
-        await runShell(`ts-node ${process.cwd()}/${getConfig().testFilesDir}/${file}`);
+        await runShell(`ts-node ${fileFullPath}`);
         logger.info('\n');
         logger.info('All tests passed');
       } catch (error) {

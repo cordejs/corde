@@ -27,7 +27,7 @@ import { MissingTestNameError } from '../erros/missingTestNameErro';
  * for test only one return of a command. Do not test more than i command
  * in the same it clausure.
  */
-export async function test(
+export async function group(
   name: string,
   steps: () => Promise<boolean | void>,
 ): Promise<boolean | void> {
@@ -37,6 +37,7 @@ export async function test(
       return await steps();
     } catch (error) {
       throw error;
+      process.exit(1);
     }
   } else {
     logout();

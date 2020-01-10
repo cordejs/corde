@@ -100,13 +100,18 @@ export async function login() {
 /**
  * Find all tests files and run then in node
  */
-export async function execTestFiles() {
+export async function execTestFiles(file: string) {
   if (config) {
-    config.files = fs.readdirSync(config.testFilesDir);
-    await loadTestFiles();
-    await execFiles(config.files);
+    if (typeof file === 'boolean') {
+      await loadTestFiles();
+      await execFiles(config.files);
+    } else {
+      config.files = [file];
+      await execFiles(config.files);
+    }
   }
 }
+
 /**
  * Load tests files into configs
  */
@@ -117,6 +122,7 @@ export async function loadTestFiles() {
     try {
       if (fs.existsSync(config.testFilesDir)) {
         config.files = fs.readdirSync(config.testFilesDir);
+        config.files.map(file => `${process.cwd()}/${getConfig().testFilesDir}/${file}`);
       } else {
         throw new Error(`Path ${config.testFilesDir} does not exists}`);
       }

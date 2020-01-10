@@ -9,13 +9,7 @@
       "request": "launch",
       "name": "Mocha Current File",
       "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-      "args": [
-        "--no-timeouts",
-        "--colors",
-        "${file}",
-        "--require",
-        "ts-node/register"
-      ],
+      "args": ["--no-timeouts", "--colors", "${file}", "--require", "ts-node/register"],
       "console": "integratedTerminal",
       "sourceMaps": true,
       "internalConsoleOptions": "neverOpen"
@@ -24,14 +18,8 @@
       "name": "Current TS File",
       "type": "node",
       "request": "launch",
-      "args": [
-        "${relativeFile}"
-      ],
-      "runtimeArgs": [
-        "--nolazy",
-        "-r",
-        "ts-node/register"
-      ],
+      "args": ["${relativeFile}"],
+      "runtimeArgs": ["--nolazy", "-r", "ts-node/register"],
       "sourceMaps": true,
       "cwd": "${workspaceRoot}",
       "protocol": "inspector"
@@ -40,15 +28,8 @@
       "name": "Cli",
       "type": "node",
       "request": "launch",
-      "args": [
-        "lib/src/cli.js",
-        "--run"
-      ],
-      "runtimeArgs": [
-        "--nolazy",
-        "-r",
-        "ts-node/register"
-      ],
+      "args": ["lib/src/cli.js", "--run", "./tests/messages/messages_fail.test.ts"],
+      "runtimeArgs": ["--nolazy", "-r", "ts-node/register"],
       "sourceMaps": true,
       "cwd": "${workspaceRoot}",
       "protocol": "inspector"

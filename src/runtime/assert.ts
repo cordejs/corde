@@ -42,8 +42,8 @@ export class Assert {
           resolve(false);
         }
       } catch (error) {
-        console.log('The bot do not send any message in the time informed.');
-        //reject(new MessageTimeoutError());
+        console.log('Test timeout.');
+        logger.fail(this.testName, expect, '');
         const _error = new Error();
         error.name = 'TIMEOUT';
         reject(_error);
