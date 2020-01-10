@@ -42,6 +42,7 @@ function commandHandler(msg: Discord.Message) {
 ```
 
 This is the result made by the simple unitary test:
+
 ![teminal](./img/terminal.png)
 
 ## Getting started
