@@ -49,7 +49,7 @@ This is the result made by the simple unitary test:
 
 - create a file in the root of your application called `corde.json` with the following properties:
 
-```json
+```js
 {
   /* Token of the bot that will talk to your bot (a fake one) */
   "cordeTestToken": "",
