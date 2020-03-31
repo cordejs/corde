@@ -28,7 +28,7 @@
       "name": "Cli",
       "type": "node",
       "request": "launch",
-      "args": ["lib/src/cli.js", "--run", "./tests/messages/messages_fail.test.ts"],
+      "args": ["lib/src/cli.js", "--run", "D:/git/corde/tests/messages/messages_ok.test"],
       "runtimeArgs": ["--nolazy", "-r", "ts-node/register"],
       "sourceMaps": true,
       "cwd": "${workspaceRoot}",

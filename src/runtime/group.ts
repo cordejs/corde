@@ -1,7 +1,5 @@
 import { logger } from '../logger';
-
 import { logout } from '../bot';
-
 import { MissingTestNameError } from '../erros/missingTestNameErro';
 
 /**
@@ -31,6 +29,7 @@ export async function group(
   name: string,
   steps: () => Promise<boolean | void>,
 ): Promise<boolean | void> {
+  console.log('group: ' + name);
   if (name && name.trim() !== '') {
     try {
       logger.info(name);

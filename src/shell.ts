@@ -29,6 +29,7 @@ export async function execFiles(dir: string | string[]) {
 async function runShell(command: string): Promise<string> {
   return new Promise((resolve, reject) => {
     sh.exec(command, (code, stdout, stderr) => {
+      console.log(stdout);
       if (code !== 0) {
         reject(stderr);
       } else {
