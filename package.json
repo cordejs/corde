@@ -43,7 +43,7 @@
     "@commitlint/config-conventional": "^8.2.0",
     "@types/clear": "^0.1.0",
     "@types/node": "^12.7.4",
-    "husky": "^3.0.9",
+    "husky": "^4.2.3",
     "nodemon": "^2.0.0",
     "np": "^5.0.3",
     "prettier": "^1.19.1",
