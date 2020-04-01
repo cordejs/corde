@@ -1,4 +1,4 @@
-import * as Discord from "discord.js";
+import * as Discord from 'discord.js';
 
 /**
  * Contains a set of properties needed for execution of corde
@@ -83,7 +83,7 @@ export class Config implements IConfigOptions {
    */
   public silentMode: boolean;
   /**
-   * Defines the function who will handle the messages to the 
+   * Defines the function who will handle the messages to the
    * testing bot.
    */
   public handlerFunction: (msg: Discord.Message) => void;

@@ -3,10 +3,6 @@
     "outDir": "lib",
     "rootDir": ".",
     "baseUrl": "",
-    "rootDirs": [
-      ".",
-      "./src"
-    ],
     "resolveJsonModule": true,
     "allowJs": false,
     "pretty": true,
@@ -25,13 +21,9 @@
     "allowUnusedLabels": false,
     "allowUnreachableCode": true,
     "sourceMap": true,
-    "types": [
-      "node"
-    ],
+    "types": ["node"],
     "esModuleInterop": true
   },
   "compileOnSave": true,
-  "include": [
-    "src/**/*", "tests/bot.ts"
-  ]
+  "include": ["src/**/*", "tests/bot.ts"]
 }

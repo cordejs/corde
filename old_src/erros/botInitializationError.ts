@@ -9,8 +9,8 @@ export class BotInitializationError extends Error {
     if (message) {
       super(message);
     } else {
-      super("Fail in the attempt of login to bot");
-      this.name = "ERR_CORDE_LOGIN_FAIL";
+      super('Fail in the attempt of login to bot');
+      this.name = 'ERR_CORDE_LOGIN_FAIL';
     }
   }
 }

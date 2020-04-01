@@ -8,8 +8,8 @@ export class ConfigFileNotFoundError extends Error {
     if (message) {
       super(message);
     } else {
-      super("Config file not found");
-      this.name = "ERR_CORDE_MISSING_CONFIG_FILE";
+      super('Config file not found');
+      this.name = 'ERR_CORDE_MISSING_CONFIG_FILE';
     }
   }
 }

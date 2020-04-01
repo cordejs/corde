@@ -9,8 +9,8 @@ export class MissingTestNameError extends Error {
     if (message) {
       super(message);
     } else {
-      super("Test name not defined");
-      this.name = "ERR_CORDE_MISSING_TEST_NAME";
+      super('Test name not defined');
+      this.name = 'ERR_CORDE_MISSING_TEST_NAME';
     }
   }
 }

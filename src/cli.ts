@@ -1,21 +1,21 @@
-#!/usr/bin/env node
+import arg from 'arg';
+import { runTests } from './engine';
 
-import chalk from 'chalk';
-import clear from 'clear';
-import program from 'commander';
-import figlet from 'figlet';
-import pack from '../package.json';
-import { execTestFiles } from './init';
+export function cli(args: string[]) {
+  let files = parseArgumentsIntoOptions(args);
+  if (!files) {
+    console.log('Inform a file to be tested');
+  } else {
+    runTests(files);
+  }
+}
 
-clear();
-
-console.log(chalk.red(figlet.textSync('corde', { horizontalLayout: 'full' })));
-
-program
-  .version(pack.version)
-  .description('Discord bot testing framework')
-  .option('-r, --run [file]', 'run tests')
-  .parse(process.argv);
-
-if (program.run) execTestFiles(program.run);
-if (!process.argv.slice(2).length) program.outputHelp();
+function parseArgumentsIntoOptions(rawArgs: string[]) {
+  const args = arg(
+    {},
+    {
+      argv: rawArgs.slice(2),
+    },
+  );
+  return args._;
+}

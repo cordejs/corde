@@ -9,8 +9,8 @@ export class MissingTestsErro extends Error {
     if (message) {
       super(message);
     } else {
-      super("There is no tests to be executed");
-      this.name = "ERR_CORDE_MISSING_TESTS";
+      super('There is no tests to be executed');
+      this.name = 'ERR_CORDE_MISSING_TESTS';
     }
   }
 }
