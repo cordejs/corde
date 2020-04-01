@@ -41,14 +41,9 @@
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",
     "@commitlint/config-conventional": "^8.2.0",
-    "@types/chai": "^4.2.1",
     "@types/clear": "^0.1.0",
-    "@types/figlet": "^1.2.0",
-    "@types/mocha": "^5.2.7",
     "@types/node": "^12.7.4",
-    "chai": "^4.2.0",
     "husky": "^3.0.9",
-    "mocha": "^6.2.0",
     "nodemon": "^2.0.0",
     "np": "^5.0.3",
     "prettier": "^1.19.1",
@@ -60,15 +55,9 @@
     "typescript": "^3.6.2"
   },
   "dependencies": {
-    "@types/shelljs": "^0.8.5",
-    "chalk": "^3.0.0",
-    "clear": "^0.1.0",
-    "commander": "^4.0.0",
     "discord.js": "^11.4.2",
     "figlet": "^1.2.4",
-    "path": "^0.12.7",
-    "shelljs": "^0.8.3",
-    "supports-color": "^7.0.0"
+    "path": "^0.12.7"
   },
   "repository": {
     "type": "git",
