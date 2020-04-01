@@ -2,7 +2,7 @@ import arg from 'arg';
 import { runTests } from './engine';
 
 export function cli(args: string[]) {
-  let files = parseArgumentsIntoOptions(args);
+  const files = parseArgumentsIntoOptions(args);
   if (!files) {
   } else {
     runTests(files);
