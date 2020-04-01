@@ -3,6 +3,7 @@ update_configs:
   # Update web app
   - package_manager: 'javascript'
     update_schedule: 'weekly'
+    directory: './'
     automerged_updates:
       - match:
           dependency_type: 'all'
