@@ -1,6 +1,6 @@
 export class TestLog {
   groupName: string;
   testName: string;
-  input: string;
+  commandName: string;
   expectation: string;
 }

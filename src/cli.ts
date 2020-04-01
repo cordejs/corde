@@ -4,7 +4,6 @@ import { runTests } from './engine';
 export function cli(args: string[]) {
   let files = parseArgumentsIntoOptions(args);
   if (!files) {
-    console.log('Inform a file to be tested');
   } else {
     runTests(files);
   }

@@ -1,19 +1,19 @@
 import { TestLog } from './testLog';
 
 export class Assert {
-  private input: string;
+  private commandName: string;
   private testName: string;
 
   constructor(input: string, testName: string) {
-    this.input = input;
+    this.commandName = input;
     this.testName = testName;
   }
 
-  public async shouldReturn(expect: string) {
+  public shouldReturn(expect: string) {
     const log = new TestLog();
     log.expectation = expect;
-    log.input = this.input;
+    log.commandName = this.commandName;
     log.testName = this.testName;
-    console.log(log);
+    process.stdout.write(JSON.stringify(log));
   }
 }

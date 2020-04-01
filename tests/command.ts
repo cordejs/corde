@@ -1,2 +1,3 @@
-import command from '../lib/src/';
-command;
+import { command } from '../src/index';
+
+command('ping').shouldReturn('pong');
