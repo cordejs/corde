@@ -22,9 +22,3 @@ jobs:
       - run:
           name: Build Project
           command: yarn build
-      - run:
-          name: 'Tests with Coverage'
-          command: 'yarn test'
-      - run:
-          name: 'Publish coverage'
-          command: 'bash <(curl -s https://codecov.io/bash)'
