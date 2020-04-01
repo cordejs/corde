@@ -1,0 +1,9 @@
+version: 1
+update_configs:
+  # Update web app
+  - package_manager: 'javascript'
+    update_schedule: 'weekly'
+    automerged_updates:
+      - match:
+          dependency_type: 'all'
+          update_type: 'all'
