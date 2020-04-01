@@ -21,7 +21,6 @@
     "allowUnusedLabels": false,
     "allowUnreachableCode": true,
     "sourceMap": true,
-    "types": ["node"],
     "esModuleInterop": true
   },
   "compileOnSave": true,
