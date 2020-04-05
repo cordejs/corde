@@ -4,6 +4,7 @@
 export interface AssertionProps {
   commandName: string;
   expectation: string;
+  output?: string;
 }
 
 /**
@@ -11,7 +12,7 @@ export interface AssertionProps {
  */
 export interface Test {
   name?: string;
-  subTest?: Test;
+  subTests?: Test[];
   assertions: AssertionProps[];
 }
 
@@ -21,6 +22,6 @@ export interface Test {
 
 export interface Group {
   name?: string;
-  subGroup?: Group;
+  subGroups?: Group[];
   tests: Test[];
 }

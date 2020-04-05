@@ -2,14 +2,14 @@ import { FilesNotFoundError } from './errors';
 import Shell from './shell';
 import { Group } from './testing/models';
 
-export async function getTestsList(files: string[]) {
+export async function getTestList(files: string[]) {
   if (files) {
-    const output: Group[] = [];
+    let output: Group[] = [];
     for (const i in files) {
       if (files.hasOwnProperty(i)) {
         try {
           const out = await Shell.commandRun(`ts-node ${files[i]}`);
-          output.push(out);
+          output = JSON.parse(out);
         } catch (error) {
           console.log(error);
         }

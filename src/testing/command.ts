@@ -12,5 +12,5 @@ import { Assert } from './assert';
  * the type of response is expected.
  */
 export function command(commandName: string): Assert {
-  return new Assert(commandName, this.testName);
+  return new Assert(commandName);
 }

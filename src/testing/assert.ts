@@ -1,13 +1,12 @@
 import Thread from './thread';
 import { Group } from './models';
+import log from '../log';
 
 export class Assert {
   private commandName: string;
-  private testName: string;
 
-  constructor(input: string, testName: string) {
+  constructor(input: string) {
     this.commandName = input;
-    this.testName = testName;
   }
 
   public shouldReturn(expect: string) {
@@ -18,7 +17,7 @@ export class Assert {
         commandName: this.commandName,
       });
     } else {
-      const log: Group = {
+      const group: Group = {
         tests: [
           {
             assertions: [
@@ -31,7 +30,7 @@ export class Assert {
         ],
       };
 
-      process.stdout.write(JSON.stringify(log));
+      log.out(group);
     }
   }
 }

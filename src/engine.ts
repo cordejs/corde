@@ -1,12 +1,14 @@
-import { getTestsList } from './reader';
+import { getTestList } from './reader';
 import fs from 'fs';
 import { FilesNotFoundError } from './errors';
 import { Group } from './testing/models';
+import { outPutResult } from './reporter';
 
 export async function runTests(files: string[]) {
   const relativePaths = getFilesFullPath(files);
-  const tests = await getTestsList(relativePaths);
+  const tests = await getTestList(relativePaths);
   console.log(tests);
+  outPutResult(tests);
   // await createBotConnection();
   // runTestList(tests);
 }
