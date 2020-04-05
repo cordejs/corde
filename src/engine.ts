@@ -1,7 +1,7 @@
 import { getTestsList } from './reader';
-import { Test, TestResult } from './test';
 import fs from 'fs';
 import { FilesNotFoundError } from './errors';
+import { Group } from './testing/models';
 
 export async function runTests(files: string[]) {
   const relativePaths = getFilesFullPath(files);
@@ -31,14 +31,14 @@ function getFilesFullPath(files: string[]) {
 
 async function createBotConnection() {}
 
-async function runTestList(tests: Test[]) {
-  const result = new TestResult();
-  result.expectation = tests[0].expectation;
-  result.input = tests[0].input;
-  result.output = '';
-  return [result];
-}
+// async function runTestList(tests: Group[]) {
+//   const result = new Group();
+//   result.expectation = tests[0].expectation;
+//   result.input = tests[0].input;
+//   result.output = '';
+//   return [result];
+// }
 
-function createReportFile(results: TestResult[]) {
-  console.log(results);
-}
+// function createReportFile(results: Test[]) {
+//   console.log(results);
+// }

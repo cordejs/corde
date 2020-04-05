@@ -1,18 +1,17 @@
-import { TestResult } from './test';
-import util from 'util';
 import { FilesNotFoundError } from './errors';
-const exec = util.promisify(require('child_process').exec);
+import Shell from './shell';
+import { Group } from './testing/models';
 
 export async function getTestsList(files: string[]) {
   if (files) {
-    const output: TestResult[] = [];
+    const output: Group[] = [];
     for (const i in files) {
       if (files.hasOwnProperty(i)) {
-        const { stdout, stderr } = await exec(`ts-node ${files[i]}`, { shell: false });
-        if (stderr) {
-          console.log(stderr);
-        } else {
-          output.push(JSON.parse(stdout));
+        try {
+          const out = await Shell.commandRun(`ts-node ${files[i]}`);
+          output.push(out);
+        } catch (error) {
+          console.log(error);
         }
       }
     }

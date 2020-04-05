@@ -1,8 +1,16 @@
-const assert = require('assert');
-describe('Array', function () {
-  describe('#indexOf()', function () {
-    it('should return -1 when the value is not present', () => {
-      assert.equal([1, 2, 3].indexOf(4), -1);
-    });
+import { group, command, test } from '../src/index';
+
+group('group test', () => {
+  test('testing ping commmand', () => {
+    command('ping').shouldReturn('pong');
+  });
+
+  test('teste 1212', () => {
+    command('ttt').shouldReturn('p222121ong');
   });
 });
+
+// Output
+// Group Test
+//    Testing ping command
+//      OK: ping should return pong
