@@ -51,6 +51,8 @@
     "typescript": "^3.6.2"
   },
   "dependencies": {
+    "esm": "^3.2.25",
+    "chalk": "^4.0.0",
     "discord.js": "^11.4.2",
     "figlet": "^1.2.4",
     "path": "^0.12.7"
