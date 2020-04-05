@@ -1,6 +1,7 @@
 import { getTestsList } from './reader';
 import { Test, TestResult } from './test';
 import fs from 'fs';
+import { FilesNotFoundError } from './errors';
 
 export async function runTests(files: string[]) {
   const relativePaths = getFilesFullPath(files);
@@ -17,7 +18,7 @@ export async function runTests(files: string[]) {
 function getFilesFullPath(files: string[]) {
   if (files) {
     const paths: string[] = [];
-    files.forEach(file => {
+    files.forEach((file) => {
       const possiblePath = `${process.cwd()}/${file}`;
       if (fs.existsSync(possiblePath)) {
         paths.push(possiblePath);
@@ -25,7 +26,7 @@ function getFilesFullPath(files: string[]) {
     });
     return paths;
   }
-  throw new Error('No files informed');
+  throw new FilesNotFoundError();
 }
 
 async function createBotConnection() {}

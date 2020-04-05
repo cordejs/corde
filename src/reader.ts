@@ -1,5 +1,6 @@
 import { TestResult } from './test';
 import util from 'util';
+import { FilesNotFoundError } from './errors';
 const exec = util.promisify(require('child_process').exec);
 
 export async function getTestsList(files: string[]) {
@@ -18,5 +19,5 @@ export async function getTestsList(files: string[]) {
 
     return output;
   }
-  throw new Error('Files not Informed');
+  throw new FilesNotFoundError();
 }
