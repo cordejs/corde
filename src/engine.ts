@@ -1,12 +1,36 @@
 import { getTestList } from './reader';
 import fs from 'fs';
 import { FilesNotFoundError } from './errors';
-import { Group } from './testing/models';
+import ora, { Ora, Color } from 'ora';
 import { outPutResult } from './reporter';
+
+let spinner: Ora;
+
+function displayLoading(message: string) {
+  // dots spinner do not works on windows 😰
+  // https://github.com/fossas/fossa-cli/issues/193
+  spinner = ora(message).start();
+  spinner.color = getRandomSpinnerColor() as Color;
+  spinner.spinner = 'dots';
+}
+
+function getRandomSpinnerColor() {
+  const colors = ['red', 'green', 'yellow', 'blue', 'magenta', 'cyan'];
+  let random = Math.random() * (colors.length - 1);
+  random = Math.round(random);
+  console.log(random);
+  return colors[random];
+}
+
+function stopLoading() {
+  spinner.stop();
+}
 
 export async function runTests(files: string[]) {
   const relativePaths = getFilesFullPath(files);
+  displayLoading('Reading files');
   const tests = await getTestList(relativePaths);
+  stopLoading();
   console.log(tests);
   outPutResult(tests);
   // await createBotConnection();
