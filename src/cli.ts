@@ -1,10 +1,11 @@
 import arg from 'arg';
 import { runTests } from './engine';
+import fs from 'fs';
 
 export function cli(args: string[]) {
   const files = parseArgumentsIntoOptions(args);
-  if (!files) {
-  } else {
+
+  if (files && files.length > 0 && checkIfFilesExist(files)) {
     runTests(files);
   }
 }
@@ -17,4 +18,15 @@ function parseArgumentsIntoOptions(rawArgs: string[]) {
     },
   );
   return args._;
+}
+
+function checkIfFilesExist(files: string[]) {
+  let exists = true;
+  for (const i in files) {
+    if (!fs.existsSync(files[i])) {
+      exists = false;
+      console.error(`Check files listed. '${files[i]}' was not found`);
+    }
+  }
+  return exists;
 }
