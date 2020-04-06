@@ -38,7 +38,7 @@
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",
     "@commitlint/config-conventional": "^8.2.0",
-    "@types/node": "^12.7.4",
+    "@types/node": "^13.11.0",
     "husky": "^4.2.3",
     "nodemon": "^2.0.0",
     "np": "^5.0.3",
