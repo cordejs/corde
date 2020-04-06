@@ -18,7 +18,6 @@ function getRandomSpinnerColor() {
   const colors = ['red', 'green', 'yellow', 'blue', 'magenta', 'cyan'];
   let random = Math.random() * (colors.length - 1);
   random = Math.round(random);
-  console.log(random);
   return colors[random];
 }
 
