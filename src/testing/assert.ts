@@ -10,11 +10,20 @@ export class Assert {
   }
 
   public shouldReturn(expect: string) {
+    this._return(expect, true);
+  }
+
+  public shouldNotReturn(notExpect: string) {
+    this._return(notExpect, false);
+  }
+
+  _return(expect: string, usingTrueStatement: boolean) {
     Thread.isBuildRunning = true;
     if (Thread.hasTest || Thread.hasGroup) {
       Thread.assertions.push({
         expectation: expect,
         commandName: this.commandName,
+        usingTrueStatement: usingTrueStatement,
       });
     } else {
       const group: Group = {
@@ -24,6 +33,7 @@ export class Assert {
               {
                 expectation: expect,
                 commandName: this.commandName,
+                usingTrueStatement: usingTrueStatement,
               },
             ],
           },

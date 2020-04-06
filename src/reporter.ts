@@ -54,11 +54,27 @@ function printTest(test: Test, tab: string) {
   }
 }
 
-function printAssertion(assertion: AssertionProps, tab: string) {
-  if (assertion.output !== assertion.expectation) {
+function printAssertion(assert: AssertionProps, tab: string) {
+  if (
+    (assert.usingTrueStatement && assert.output !== assert.expectation) ||
+    (!assert.usingTrueStatement && assert.output === assert.expectation)
+  ) {
     failureCount++;
-    log.printFailure(tab, assertion.commandName, assertion.expectation, assertion.output);
+    log.printFailure(
+      tab,
+      assert.commandName,
+      assert.expectation,
+      assert.output,
+      assert.usingTrueStatement,
+    );
   } else {
+    log.printSucess(
+      tab,
+      assert.commandName,
+      assert.expectation,
+      assert.output,
+      assert.usingTrueStatement,
+    );
     sucessCount++;
   }
 }

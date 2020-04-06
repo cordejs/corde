@@ -6,7 +6,7 @@ group('group test', () => {
   });
 
   test('teste 1212', () => {
-    command('ttt').shouldReturn('p222121ong');
+    command('ttt').shouldNotReturn('p222121ong');
   });
 });
 

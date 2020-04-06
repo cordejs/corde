@@ -12,20 +12,41 @@ class Log {
     }
   }
 
-  static printFailure(space: string, command: string, expectation: string, output: string) {
+  static printFailure(
+    space: string,
+    command: string,
+    expectation: string,
+    output: string,
+    usingTrueStatement: boolean,
+  ) {
+    let notWord = Log.getNotWordIfTrue(usingTrueStatement);
     console.log(
-      `${space} ${chalk.bgRed('FAIL')} command ${chalk.bold(command)} should return '${chalk.bold(
-        expectation,
-      )}'. Returned: '${chalk.red(output)}'`,
+      `${space} ${chalk.bgRed('FAIL')} command ${chalk.bold(
+        command,
+      )} should ${notWord} return '${chalk.bold(expectation)}'. Returned: '${chalk.red(output)}'`,
     );
   }
 
-  static printSucess(space: string, command: string, expectation: string, output: string) {
+  static printSucess(
+    space: string,
+    command: string,
+    expectation: string,
+    output: string,
+    usingTrueStatement: boolean,
+  ) {
+    let notWord = Log.getNotWordIfTrue(usingTrueStatement);
     console.log(
-      `${space} ${chalk.bgGreen('OK')} command ${chalk.bold(command)} should return '${chalk.bold(
-        expectation,
-      )}'. Returned: '${chalk.green(output)}'`,
+      `${space} ${chalk.bgGreen('OK')} command ${chalk.bold(
+        command,
+      )} should ${notWord} return '${chalk.bold(expectation)}'. Returned: '${chalk.green(output)}'`,
     );
+  }
+
+  private static getNotWordIfTrue(usingTrueStatement: boolean) {
+    if (usingTrueStatement) {
+      return '';
+    }
+    return 'not';
   }
 }
 
