@@ -1,3 +1,9 @@
+## Instaling
+
+- clone the repo: **git clone https://github.com/lucasgmagalhaes/corde.git**
+- intall all dependencies with: **yarn**
+- create a link for the project to make it easy to test: **npm link** 
+
 ## How to Commit
 
 We use [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/#summary) to padronize our commits
