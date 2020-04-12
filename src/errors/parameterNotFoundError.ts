@@ -9,7 +9,7 @@ export class ParameterNotFoundError extends Error {
       super(message);
     } else {
       super('Parameter not found');
-      this.name = 'ERR_parameter_NOT_FOUND';
     }
+    this.name = 'ERR_parameter_NOT_FOUND';
   }
 }

@@ -8,7 +8,7 @@ export class FilesNotFoundError extends Error {
       super(message);
     } else {
       super('Files not Informed');
-      this.name = 'ERR_CORDE_FILES_MISSING';
     }
+    this.name = 'ERR_CORDE_FILES_MISSING';
   }
 }

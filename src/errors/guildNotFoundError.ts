@@ -9,7 +9,7 @@ export class GuildNotFoundError extends Error {
       super(message);
     } else {
       super('Guild not found for informed user');
-      this.name = 'ERR_GUILD_NOT_FOUND';
     }
+    this.name = 'ERR_GUILD_NOT_FOUND';
   }
 }

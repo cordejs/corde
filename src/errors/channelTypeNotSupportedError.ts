@@ -9,7 +9,7 @@ export class ChannelTypeNotSupportedError extends Error {
       super(message);
     } else {
       super('The informed channel type is not supported');
-      this.name = 'ERR_CORDE_CHANNEL_TYPE_NOT_SUPPORTED';
     }
+    this.name = 'ERR_CORDE_CHANNEL_TYPE_NOT_SUPPORTED';
   }
 }
