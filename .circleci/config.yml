@@ -24,7 +24,7 @@ jobs:
           command: yarn build
       - run:
           name: Tests
-          command: yarn test
+          command: yarn test-with-coverage
       - run:
           name: Publish coverage
           command: yarn codecov -f coverage/*.json

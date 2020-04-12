@@ -6,6 +6,17 @@ import { outPutResult } from './reporter';
 
 let spinner: Ora;
 
+export async function runTests(files: string[]) {
+  const relativePaths = getFilesFullPath(files);
+  displayLoading('Reading files');
+  const tests = await getTestList(relativePaths);
+  stopLoading();
+  console.log(tests);
+  outPutResult(tests);
+  // await createBotConnection();
+  // runTestList(tests);
+}
+
 function displayLoading(message: string) {
   // dots spinner do not works on windows 😰
   // https://github.com/fossas/fossa-cli/issues/193
@@ -23,17 +34,6 @@ function getRandomSpinnerColor() {
 
 function stopLoading() {
   spinner.stop();
-}
-
-export async function runTests(files: string[]) {
-  const relativePaths = getFilesFullPath(files);
-  displayLoading('Reading files');
-  const tests = await getTestList(relativePaths);
-  stopLoading();
-  console.log(tests);
-  outPutResult(tests);
-  // await createBotConnection();
-  // runTestList(tests);
 }
 
 /**
