@@ -22,3 +22,9 @@ jobs:
       - run:
           name: Build Project
           command: yarn build
+      - run:
+          name: Tests
+          command: yarn test
+      - run:
+          name: Publish coverage
+          command: yarn codecov -f coverage/*.json
