@@ -8,6 +8,7 @@
     "pretty": true,
     "skipLibCheck": true,
     "declaration": true,
+    "declarationDir": "types",
     "target": "es6",
     "module": "commonjs",
     "strict": false,
