@@ -1,4 +1,4 @@
-import { Group, Test, AssertionProps } from './testing/models';
+import { Group, Test, AssertionProps } from './building/models';
 import chalk from 'chalk';
 
 import log from './log';

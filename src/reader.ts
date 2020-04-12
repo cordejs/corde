@@ -1,6 +1,6 @@
 import { FilesNotFoundError } from './errors';
 import Shell from './shell';
-import { Group } from './testing/models';
+import { Group } from './building/models';
 
 export async function getTestList(files: string[]) {
   if (files) {

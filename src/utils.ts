@@ -1,6 +1,8 @@
+import { ParameterNotFoundError } from './errors';
+
 export function clone(object: object | object[]): object | object[] {
   if (!object) {
-    throw new Error('Object can not be undefined');
+    throw new ParameterNotFoundError('Object can not be undefined');
   }
 
   if (object as object[]) {
