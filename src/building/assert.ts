@@ -17,7 +17,7 @@ export class Assert {
     this._return(notExpect, false);
   }
 
-  _return(expect: string, usingTrueStatement: boolean) {
+  private _return(expect: string, usingTrueStatement: boolean) {
     Thread.isBuildRunning = true;
     if (Thread.hasTest || Thread.hasGroup) {
       Thread.assertions.push({

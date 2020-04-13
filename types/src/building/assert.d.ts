@@ -3,5 +3,5 @@ export declare class Assert {
   constructor(input: string);
   shouldReturn(expect: string): void;
   shouldNotReturn(notExpect: string): void;
-  _return(expect: string, usingTrueStatement: boolean): void;
+  private _return;
 }
