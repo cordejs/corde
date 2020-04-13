@@ -64,7 +64,7 @@
   },
   "dependencies": {
     "chalk": "^4.0.0",
-    "discord.js": "^11.4.2",
+    "discord.js": "^12.1.1",
     "esm": "^3.2.25",
     "figlet": "^1.2.4",
     "ora": "^4.0.3",
