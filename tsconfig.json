@@ -6,13 +6,11 @@
     "resolveJsonModule": true,
     "allowJs": false,
     "pretty": true,
-    "skipLibCheck": true,
+    "skipLibCheck": false,
     "declaration": true,
-    "declarationDir": "types",
     "target": "es6",
+    "lib": ["es2017", "es7", "es6"],
     "module": "commonjs",
-    "strict": false,
-    "noImplicitUseStrict": true,
     "newLine": "LF",
     "noImplicitAny": true,
     "removeComments": false,
@@ -20,10 +18,9 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "allowUnusedLabels": false,
-    "allowUnreachableCode": true,
-    "sourceMap": true,
+    "allowUnreachableCode": false,
     "esModuleInterop": true
   },
-  "compileOnSave": true,
-  "include": ["src/**/*", "tests/bot.ts"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "lib", "tests"]
 }
