@@ -13,7 +13,7 @@
     "acess": "public"
   },
   "engines": {
-    "node": ">=0.10"
+    "node": ">=0.12"
   },
   "keywords": [
     "cli",
