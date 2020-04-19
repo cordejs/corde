@@ -27,7 +27,7 @@ export interface ConfigOptions {
  * only inform if is desired to start test bot with corde
  * @implements IConfigOptions
  */
-export class Config implements IConfigOptions {
+export class Config implements ConfigOptions {
   /**
    * Fake bot used to test the realy one
    */
