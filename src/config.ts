@@ -4,63 +4,101 @@ import * as Discord from 'discord.js';
  * Contains a set of properties needed for execution of corde
  */
 export interface ConfigOptions {
+  readonly cordeTestToken: string;
+  readonly botTestId: string;
+  readonly botTestToken?: string;
+  readonly channelId?: string;
+  readonly guildId: string;
+  readonly timeOut?: number;
+  readonly botPrefix: string;
+  readonly testFilesDir: string;
+  message: Discord.Message;
+  channel: Discord.TextChannel;
+  files: string[];
+  executeInBotLogin: boolean;
+  silentMode: boolean;
+  handlerFunction: (msg: Discord.Message) => void;
+}
+
+/**
+ * Default interface of json config
+ * @public
+ * @description `botTestToken` is not required.
+ * only inform if is desired to start test bot with corde
+ * @implements IConfigOptions
+ */
+export class Config implements IConfigOptions {
   /**
    * Fake bot used to test the realy one
    */
-  cordeTestToken: string;
+  public readonly cordeTestToken: string;
   /**
    * User's bot that will be tested
    */
-  botTestId: string;
+  public readonly botTestId: string;
   /**
    * User's bot token that will run.
    */
-  botTestToken?: string;
+  public readonly botTestToken?: string;
   /**
    * Channel where tests will run
    */
-  channelId?: string;
+  public readonly channelId?: string;
   /**
    * Guild where tests will run
    */
-  guildId: string;
+  public readonly guildId: string;
   /**
    * Defines max amount of time that a command can run
    */
-  timeOut?: number;
+  public readonly timeOut?: number;
   /**
    * Defines how indentify bot calls
    */
-  botPrefix: string;
+  public readonly botPrefix: string;
   /**
    * Path for case tests. Use this from the base directory of the application
    */
-  testFilesDir: string;
+  public readonly testFilesDir: string;
   /**
    * Discord message where all tests will run
    */
-  message: Discord.Message;
+  public message: Discord.Message;
   /**
    * Connected channel on bot login
    */
-  channel: Discord.TextChannel;
+  public channel: Discord.TextChannel;
   /**
    * All tests files
    */
-  files: string[];
+  public files: string[];
   /**
    * Defines if tests execution must run
    * right after bot login
    * @default false
    */
-  executeInBotLogin: boolean;
+  public executeInBotLogin: boolean;
   /**
    * Defines if all tests must execute in silent mode.
    */
-  silentMode: boolean;
+  public silentMode: boolean;
   /**
    * Defines the function who will handle the messages to the
    * testing bot.
    */
-  handlerFunction: (msg: Discord.Message) => void;
+  public handlerFunction: (msg: Discord.Message) => void;
+
+  constructor(configs: ConfigOptions) {
+    this.botPrefix = configs.botPrefix;
+    this.botTestId = configs.botTestId;
+    this.botTestToken = configs.botTestToken;
+    this.channelId = configs.channelId;
+    this.cordeTestToken = configs.cordeTestToken;
+    this.guildId = configs.guildId;
+    this.testFilesDir = configs.testFilesDir;
+    this.timeOut = configs.timeOut;
+    this.channel = null;
+    this.files = [];
+    this.silentMode = configs.silentMode;
+  }
 }

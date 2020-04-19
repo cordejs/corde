@@ -1,20 +1,20 @@
 import { getTestList } from './reader';
 import fs from 'fs';
-import { FilesNotFoundError } from './errors';
+import { FilesNotFoundError, ConfigFileNotFoundError, MissingPropertyError } from './errors';
 import ora, { Ora, Color } from 'ora';
 import { outPutResult } from './reporter';
+import { ConfigOptions, Config } from './config';
+import { GlobalSettings } from './global';
+import { cordelogin, clientlogin } from './bot';
 
 let spinner: Ora;
 
 export async function runTests(files: string[]) {
   const relativePaths = getFilesFullPath(files);
   displayLoading('Reading files');
-  const tests = await getTestList(relativePaths);
+  GlobalSettings.tests = await getTestList(relativePaths);
+  GlobalSettings.config = loadConfig();
   stopLoading();
-  console.log(tests);
-  outPutResult(tests);
-  // await createBotConnection();
-  // runTestList(tests);
 }
 
 function displayLoading(message: string) {
@@ -54,16 +54,66 @@ function getFilesFullPath(files: string[]) {
   throw new FilesNotFoundError();
 }
 
-async function createBotConnection() {}
+/**
+ * Read config file(*.json) from root of project
+ * and validates it
+ * @throws
+ */
+function loadConfig(): Config {
+  let _config: ConfigOptions;
+  const configFileName = 'corde.json';
+  const jsonfilePath = `${process.cwd()}/${configFileName}`;
 
-// async function runTestList(tests: Group[]) {
-//   const result = new Group();
-//   result.expectation = tests[0].expectation;
-//   result.input = tests[0].input;
-//   result.output = '';
-//   return [result];
-// }
+  if (fs.existsSync(jsonfilePath)) {
+    _config = JSON.parse(fs.readFileSync(jsonfilePath).toString());
+  } else {
+    throw new ConfigFileNotFoundError();
+  }
 
-// function createReportFile(results: Test[]) {
-//   console.log(results);
-// }
+  if (_config) {
+    validadeConfigs(_config);
+    return new Config(_config);
+  } else {
+    throw new Error('Invalid configuration file');
+  }
+}
+
+/**
+ * Check if all required values are setted
+ * TODO: JSON Schema
+ */
+function validadeConfigs(configs: ConfigOptions) {
+  if (!configs.cordeTestToken) {
+    throw new MissingPropertyError('corde token not informed');
+  } else if (!configs.botTestId) {
+    throw new MissingPropertyError('bot test id not informed');
+  } else if (!configs.testFilesDir) {
+    throw new MissingPropertyError('bot test id not informed');
+  }
+}
+
+/**
+ * Makes authentication to bots
+ */
+export async function login() {
+  displayLoading('Connecting to bots... ');
+  const cordetestToken = GlobalSettings.config.cordeTestToken;
+  const cordeTestToken = GlobalSettings.config.botTestToken;
+  try {
+    // Make login with corde and load Message
+    await cordelogin(cordetestToken);
+  } catch {
+    stopLoading();
+    throw new Error(`Error trying to connect to bot with token: ${cordetestToken}`);
+  }
+
+  if (cordeTestToken) {
+    try {
+      await clientlogin(cordeTestToken);
+    } catch {
+      stopLoading();
+      throw new Error(`can not connect to bot with token: ${cordeTestToken}`);
+    }
+  }
+  stopLoading();
+}
