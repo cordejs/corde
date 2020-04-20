@@ -30,8 +30,10 @@ export async function runTestsFromConfigs() {
 
   displayLoading('starting bots');
   try {
-    await startClientBot(GlobalSettings.config.botFilePath);
-    await cordelogin(GlobalSettings.config.cordeTestToken);
+    startClientBot(GlobalSettings.config.botFilePath);
+    setTimeout(async () => {
+      await cordelogin(GlobalSettings.config.cordeTestToken);
+    }, 3000);
   } catch (error) {
     console.log(error);
     process.exit(1);
@@ -42,9 +44,11 @@ export async function runTestsFromConfigs() {
   console.log(GlobalSettings.tests);
 }
 
-async function startClientBot(filePath: string) {
-  const fullPath = path.resolve(process.cwd(), filePath);
-  await Shell.commandRun(`ts-node ${fullPath}`);
+function startClientBot(filePath: string) {
+  let fullPath = path.resolve(process.cwd(), filePath);
+  fullPath = fullPath.replace('//', '/');
+  const dir = path.dirname(fullPath);
+  Shell.observe(`cd ${dir} && ts-node ${fullPath}`);
 }
 
 function displayLoading(message: string) {

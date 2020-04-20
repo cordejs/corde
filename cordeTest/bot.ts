@@ -7,8 +7,7 @@ const config: ConfigOptions = JSON.parse(file);
 const client = new Discord.Client();
 
 client.on('message', async (message) => {
-  if (message.author.bot) return;
-  else if (message.content.indexOf('') !== 0) return;
+  if (message.content.indexOf('') !== 0) return;
 
   const args = message.content.slice(config.botPrefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
