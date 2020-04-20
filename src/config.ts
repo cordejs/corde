@@ -1,7 +1,5 @@
 import * as Discord from 'discord.js';
 
-export type CordeBotHandlerFunction = (msg: Discord.Message) => void;
-
 /**
  * Contains a set of properties needed for execution of corde
  */
@@ -19,7 +17,7 @@ export interface ConfigOptions {
   files: string[];
   executeInBotLogin: boolean;
   silentMode: boolean;
-  handlerFunction: CordeBotHandlerFunction;
+  botFilePath: string;
 }
 
 /**
@@ -84,11 +82,7 @@ export class Config implements ConfigOptions {
    * Defines if all tests must execute in silent mode.
    */
   public silentMode: boolean;
-  /**
-   * Defines the function who will handle the messages to the
-   * testing bot.
-   */
-  public handlerFunction: CordeBotHandlerFunction;
+  public botFilePath: string;
 
   constructor(configs: ConfigOptions) {
     this.botPrefix = configs.botPrefix;
@@ -102,5 +96,6 @@ export class Config implements ConfigOptions {
     this.channel = null;
     this.files = [];
     this.silentMode = configs.silentMode;
+    this.botFilePath = configs.botFilePath;
   }
 }

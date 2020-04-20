@@ -59,7 +59,7 @@ export async function sendMessage(message: string): Promise<string> {
   return new Promise(async (resolve, reject) => {
     const config = getConfig();
     validateEntryData(config, message);
-    const toSend = config.botPrefix + this.input;
+    const toSend = config.botPrefix + message;
     await config.channel.send(toSend);
 
     try {

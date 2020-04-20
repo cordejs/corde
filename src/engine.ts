@@ -6,6 +6,7 @@ import { ConfigOptions, Config } from './config';
 import { GlobalSettings } from './global';
 import { cordelogin, clientlogin } from './bot';
 import path from 'path';
+import Shell from './shell';
 
 let spinner: Ora;
 
@@ -29,8 +30,8 @@ export async function runTestsFromConfigs() {
 
   displayLoading('starting bots');
   try {
+    await startClientBot(GlobalSettings.config.botFilePath);
     await cordelogin(GlobalSettings.config.cordeTestToken);
-    await clientlogin(GlobalSettings.config.botTestToken);
   } catch (error) {
     console.log(error);
     process.exit(1);
@@ -41,7 +42,10 @@ export async function runTestsFromConfigs() {
   console.log(GlobalSettings.tests);
 }
 
-async function attemptLogin() {}
+async function startClientBot(filePath: string) {
+  const fullPath = path.resolve(process.cwd(), filePath);
+  await Shell.commandRun(`ts-node ${fullPath}`);
+}
 
 function displayLoading(message: string) {
   // dots spinner do not works on windows 😰
@@ -115,6 +119,8 @@ function validadeConfigs(configs: ConfigOptions) {
     throw new MissingPropertyError('bot test id not informed');
   } else if (!configs.testFilesDir) {
     throw new MissingPropertyError('bot test id not informed');
+  } else if (!configs.botFilePath) {
+    throw new MissingPropertyError('bot file path not informed');
   }
 }
 

@@ -3,7 +3,6 @@ import { sendMessage } from './bot';
 
 export async function executeTestCases(groups: Group[]) {
   const assertions = getAssertionsFromGroups(groups);
-
   for (const i in assertions) {
     const assert = assertions[i];
     assert.output = await trySendMessage(assert);
