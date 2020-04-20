@@ -26,3 +26,5 @@ export interface Group {
   subGroups?: Group[];
   tests: Test[];
 }
+
+export interface LogOut {}

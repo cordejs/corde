@@ -2,10 +2,10 @@ import { getTestList } from './reader';
 import fs from 'fs';
 import { FilesNotFoundError, ConfigFileNotFoundError, MissingPropertyError } from './errors';
 import ora, { Ora, Color } from 'ora';
-import { outPutResult } from './reporter';
 import { ConfigOptions, Config } from './config';
 import { GlobalSettings } from './global';
 import { cordelogin, clientlogin } from './bot';
+import path from 'path';
 
 let spinner: Ora;
 
@@ -14,6 +14,17 @@ export async function runTests(files: string[]) {
   displayLoading('Reading files');
   GlobalSettings.tests = await getTestList(relativePaths);
   GlobalSettings.config = loadConfig();
+  stopLoading();
+}
+
+export async function runTestsFromConfigs() {
+  displayLoading('Reading cool configs');
+  GlobalSettings.config = loadConfig();
+  stopLoading();
+
+  displayLoading('Reading test files');
+  const files = await readDir(GlobalSettings.config.testFilesDir);
+  GlobalSettings.tests = await getTestList(files);
   stopLoading();
 }
 
@@ -116,4 +127,29 @@ export async function login() {
     }
   }
   stopLoading();
+}
+
+/**
+ * Load tests files into configs
+ */
+async function readDir(dir: string) {
+  let files: string[] = [];
+  if (dir) {
+    // Get all tests files
+    try {
+      if (fs.existsSync(dir)) {
+        fs.readdirSync(dir).forEach((file) => {
+          if (file.includes('.test.')) {
+            files.push(path.resolve(`${dir}/${file}`));
+          }
+        });
+      } else {
+        throw new Error(`Path ${dir} does not exists}`);
+      }
+    } catch (err) {
+      console.error(err);
+      throw new Error(err);
+    }
+  }
+  return files;
 }

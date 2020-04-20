@@ -1,5 +1,7 @@
 import * as Discord from 'discord.js';
 
+export type CordeBotHandlerFunction = (msg: Discord.Message) => void;
+
 /**
  * Contains a set of properties needed for execution of corde
  */
@@ -17,7 +19,7 @@ export interface ConfigOptions {
   files: string[];
   executeInBotLogin: boolean;
   silentMode: boolean;
-  handlerFunction: (msg: Discord.Message) => void;
+  handlerFunction: CordeBotHandlerFunction;
 }
 
 /**
@@ -86,7 +88,7 @@ export class Config implements ConfigOptions {
    * Defines the function who will handle the messages to the
    * testing bot.
    */
-  public handlerFunction: (msg: Discord.Message) => void;
+  public handlerFunction: CordeBotHandlerFunction;
 
   constructor(configs: ConfigOptions) {
     this.botPrefix = configs.botPrefix;

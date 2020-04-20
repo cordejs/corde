@@ -8,18 +8,7 @@ import { outPutResult } from './reporter';
 export const clientBot = new Discord.Client();
 export const cordeBot = new Discord.Client();
 
-// Correspond to the receptor of all messages sent by the users in Discord
-clientBot.on('message', async (msg) => {
-  // Checking if the command has the prefix
-  if (!isCommandValid(msg)) {
-    return;
-  }
-
-  getConfig().message = msg;
-  getConfig().handlerFunction(msg);
-});
-
-cordeBot.on(
+cordeBot.once(
   'ready',
   async (): Promise<void> => {
     let guild: Discord.Guild;

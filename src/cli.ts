@@ -1,5 +1,5 @@
 import arg from 'arg';
-import { runTests } from './engine';
+import { runTests, runTestsFromConfigs } from './engine';
 import fs from 'fs';
 
 export function cli(args: string[]) {
@@ -7,6 +7,8 @@ export function cli(args: string[]) {
 
   if (files && files.length > 0 && checkIfFilesExist(files)) {
     runTests(files);
+  } else {
+    runTestsFromConfigs();
   }
 }
 

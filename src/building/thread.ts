@@ -40,6 +40,7 @@ export default class Thread {
    * group name are optional
    */
   static groups: Group[] = [];
+  static handleFunctionSerializable: string;
 }
 
 /**

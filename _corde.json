@@ -1,10 +1,10 @@
 {
-    "cordeTestToken": "",
-    "botTestId": "",
-    "botTestToken": "",
-    "guildId": "",
-    "channelId": "",
-    "timeOut": 10000,
-    "botPrefix": "!",
-    "testFilesDir": ""
+  "cordeTestToken": "",
+  "botTestId": "",
+  "botTestToken": "",
+  "guildId": "",
+  "channelId": "",
+  "timeOut": 10000,
+  "botPrefix": "!",
+  "testFilesDir": ""
 }
