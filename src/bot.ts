@@ -1,18 +1,18 @@
-import * as Discord from 'discord.js';
+import { Guild, Channel, Client, Message, TextChannel } from 'discord.js';
 import { GlobalSettings } from './global';
 import { ConfigOptions } from './config';
 import { RuntimeErro } from './errors';
 import { executeTestCases } from './runner';
 import { outPutResult } from './reporter';
 
-export const clientBot = new Discord.Client();
-export const cordeBot = new Discord.Client();
+export const clientBot = new Client();
+export const cordeBot = new Client();
 
 cordeBot.once(
   'ready',
   async (): Promise<void> => {
-    let guild: Discord.Guild;
-    let channel: Discord.Channel;
+    let guild: Guild;
+    let channel: Channel;
     const config = getConfig();
     try {
       guild = findGuild(config);
@@ -35,16 +35,24 @@ cordeBot.once(
 );
 
 export async function clientlogin(token: string) {
-  return clientBot.login(token);
+  try {
+    return clientBot.login(token);
+  } catch (error) {
+    return Promise.reject(buildLoginErroMessage(token, error));
+  }
 }
 
 export async function cordelogin(token: string) {
-  return cordeBot.login(token);
+  try {
+    return cordeBot.login(token);
+  } catch (error) {
+    return Promise.reject(buildLoginErroMessage(token, error));
+  }
 }
 
-export async function logout() {
-  await cordeBot.destroy();
-  await clientBot.destroy();
+export function logout() {
+  cordeBot.destroy();
+  clientBot.destroy();
 }
 
 export async function sendMessage(message: string): Promise<string> {
@@ -72,6 +80,10 @@ export async function sendMessage(message: string): Promise<string> {
   });
 }
 
+function buildLoginErroMessage(token: string, error: object) {
+  return `Error trying to login with token ${token}. \n` + error;
+}
+
 function validateEntryData(config: ConfigOptions, message: string) {
   if (message === undefined) {
     console.log('No testes were declared');
@@ -81,7 +93,7 @@ function validateEntryData(config: ConfigOptions, message: string) {
   }
 }
 
-function isCommandValid(msg: Discord.Message) {
+function isCommandValid(msg: Message) {
   return !msg.content.startsWith(getConfigPrefix(), 0);
 }
 
@@ -98,22 +110,22 @@ function findGuild(config: ConfigOptions) {
     throw new Error(
       `corde bot isn't added in a guild. Please add it to the guild: ${config.guildId}`,
     );
-  } else if (!cordeBot.guilds.has(config.guildId)) {
+  } else if (!cordeBot.guilds.cache.has(config.guildId)) {
     throw new RuntimeErro(
       `Guild ${config.guildId} doesn't belong to corde bot. change the guild id in corde.config or add the bot to a valid guild`,
     );
   } else {
-    return cordeBot.guilds.get(config.guildId);
+    return cordeBot.guilds.cache.find((guild) => guild.id === config.guildId);
   }
 }
 
-function findChannel(guild: Discord.Guild, config: ConfigOptions) {
+function findChannel(guild: Guild, config: ConfigOptions) {
   if (!guild.channels) {
     throw new RuntimeErro(`${guild.name} doesn't have a channel with id ${config.channelId}.`);
-  } else if (!guild.channels.has(config.channelId || '')) {
+  } else if (!guild.channels.cache.has(config.channelId || '')) {
     throw new Error(`${config.channelId} doesn't appear to be a channel of guild ${guild.name}`);
   } else {
-    const channel = guild.channels.get(config.channelId || '');
+    const channel = guild.channels.cache.find((ch) => ch.id === config.channelId);
 
     if (channel === undefined) {
       throw new Error('There is no informed channel to start tests');
@@ -123,10 +135,10 @@ function findChannel(guild: Discord.Guild, config: ConfigOptions) {
   }
 }
 
-function convertToTextChannel(channel: Discord.Channel): Discord.TextChannel {
-  return channel as Discord.TextChannel;
+function convertToTextChannel(channel: Channel): TextChannel {
+  return channel as TextChannel;
 }
 
-function isTextChannel(channel: Discord.Channel): boolean {
-  return ((channel): channel is Discord.TextChannel => channel.type === 'text')(channel);
+function isTextChannel(channel: Channel): boolean {
+  return ((channel): channel is TextChannel => channel.type === 'text')(channel);
 }
