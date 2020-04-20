@@ -26,7 +26,22 @@ export async function runTestsFromConfigs() {
   const files = await readDir(GlobalSettings.config.testFilesDir);
   GlobalSettings.tests = await getTestList(files);
   stopLoading();
+
+  displayLoading('starting bots');
+  try {
+    await cordelogin(GlobalSettings.config.cordeTestToken);
+    await clientlogin(GlobalSettings.config.botTestToken);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  } finally {
+    stopLoading();
+  }
+
+  console.log(GlobalSettings.tests);
 }
+
+async function attemptLogin() {}
 
 function displayLoading(message: string) {
   // dots spinner do not works on windows 😰
