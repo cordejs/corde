@@ -30,7 +30,7 @@
     "test": "jest",
     "test-with-coverage": "jest --collect-coverage",
     "refresh": "rm -rf ./node_modules ./package-lock.json && npm install",
-    "tslint": "tslint --fix 'src/**/*{.ts,.tsx}'",
+    "tslint": "tslint --fix 'src/**/*.ts'",
     "np": "np --no-cleanup --no-yarn",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint --project tsconfig.json -t stylish"
