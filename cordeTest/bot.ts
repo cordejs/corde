@@ -1,20 +1,24 @@
 import * as Discord from 'discord.js';
+import { ConfigOptions } from '../src/config';
+import fs from 'fs';
 
-/**
- * Receives a message, treating it and sending to the right method
- * @param msg message sent by Discord
- */
-export function commandHandler(msg: Discord.Message) {
-  const args = msg.content.slice(1).trim().split(/ +/g);
+const file = fs.readFileSync('../corde.json').toString();
+const config: ConfigOptions = JSON.parse(file);
+const client = new Discord.Client();
 
-  const command = args[0].toLowerCase();
+client.on('message', async (message) => {
+  if (message.author.bot) return;
+  else if (message.content.indexOf('') !== 0) return;
+
+  const args = message.content.slice(config.botPrefix.length).trim().split(/ +/g);
+  const command = args.shift().toLowerCase();
 
   if (command === 'hello' || command === 'h') {
-    hello(msg);
+    hello(message);
   } else if (command === 'hey') {
-    hey(msg);
+    hey(message);
   }
-}
+});
 
 function hello(msg: Discord.Message) {
   msg.channel.send('hello!!');
@@ -23,3 +27,5 @@ function hello(msg: Discord.Message) {
 function hey(msg: Discord.Message) {
   msg.channel.send('hey!!');
 }
+
+client.login(config.botTestToken);
