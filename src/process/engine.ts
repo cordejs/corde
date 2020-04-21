@@ -3,11 +3,11 @@ import fs from 'fs';
 import { FilesNotFoundError, ConfigFileNotFoundError, MissingPropertyError } from '../errors';
 import ora, { Ora, Color } from 'ora';
 import runtime, { ConfigOptions } from '../runtime';
-import { cordelogin, getChannelForTests } from '../bot';
 import path from 'path';
 import Shell from '../utils/shell';
 import { executeTestCases } from './runner';
 import { outPutResult } from './reporter';
+import cordeBot from 'src/cordeBot';
 
 let spinner: Ora;
 
@@ -35,12 +35,12 @@ export async function runTestsFromConfigs() {
 
   setTimeout(async () => {
     try {
-      await cordelogin(runtime.cordeTestToken);
+      await cordeBot.login(runtime.cordeTestToken);
       setLoading('Running Tests');
 
       runtime.cordeBotHasStarted.subscribe(async (hasConnected) => {
         if (hasConnected) {
-          runtime.channel = getChannelForTests();
+          runtime.channel = cordeBot.getChannelForTests();
           await executeTestCases(runtime.tests);
           outPutResult(runtime.tests);
         }

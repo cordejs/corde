@@ -1,5 +1,5 @@
 import { Group, AssertionProps, Test } from '../building/models';
-import { sendMessage } from '../bot';
+import cordeBot from 'src/cordeBot';
 
 export async function executeTestCases(groups: Group[]) {
   const assertions = getAssertionsFromGroups(groups);
@@ -11,7 +11,7 @@ export async function executeTestCases(groups: Group[]) {
 
 async function trySendMessage(assertion: AssertionProps) {
   try {
-    return await sendMessage(assertion.commandName);
+    return await cordeBot.sendMessage(assertion.commandName);
   } catch (error) {
     throw new Error('Timeout');
   }
