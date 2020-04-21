@@ -2,12 +2,13 @@ import { getTestList } from './reader';
 import fs from 'fs';
 import { FilesNotFoundError, ConfigFileNotFoundError, MissingPropertyError } from '../errors';
 import ora, { Ora, Color } from 'ora';
-import runtime, { ConfigOptions } from '../runtime';
+import runtime from '../runtime';
 import path from 'path';
 import Shell from '../utils/shell';
 import { executeTestCases } from './runner';
 import { outPutResult } from './reporter';
-import cordeBot from 'src/cordeBot';
+import cordeBot from '../cordeBot';
+import ConfigOptions from 'src/config';
 
 let spinner: Ora;
 
@@ -43,16 +44,17 @@ export async function runTestsFromConfigs() {
           runtime.channel = cordeBot.getChannelForTests();
           await executeTestCases(runtime.tests);
           outPutResult(runtime.tests);
+          process.exit(0);
         }
       });
     } catch (error) {
       console.log(error);
-      process.exit(1);
-    } finally {
       stopLoading();
+      cordeBot.logout();
+      Shell.stopChild();
+      process.exit(1);
     }
-    console.log(runtime.tests);
-  }, 3000);
+  }, 2000);
 }
 
 function startClientBot(filePath: string) {

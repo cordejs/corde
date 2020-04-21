@@ -1,25 +1,7 @@
 import * as Discord from 'discord.js';
 import { Group } from './building/models';
 import { BehaviorSubject } from 'rxjs';
-/**
- * Contains a set of properties needed for execution of corde
- */
-export interface ConfigOptions {
-  cordeTestToken: string;
-  botTestId: string;
-  botTestToken?: string;
-  channelId?: string;
-  guildId: string;
-  timeOut?: number;
-  botPrefix: string;
-  testFilesDir: string;
-  message: Discord.Message;
-  channel: Discord.TextChannel;
-  files: string[];
-  executeInBotLogin: boolean;
-  silentMode: boolean;
-  botFilePath: string;
-}
+import ConfigOptions from './config';
 
 /**
  * Default interface of json config
@@ -106,7 +88,7 @@ class Runtime extends Config {
   }
 
   async sendMessageToChannel(message: string) {
-    return await super.channel.send(message);
+    return await this.channel.send(message);
   }
 }
 

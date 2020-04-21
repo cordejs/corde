@@ -1,5 +1,5 @@
 import { Group, AssertionProps, Test } from '../building/models';
-import cordeBot from 'src/cordeBot';
+import cordeBot from '../cordeBot';
 
 export async function executeTestCases(groups: Group[]) {
   const assertions = getAssertionsFromGroups(groups);

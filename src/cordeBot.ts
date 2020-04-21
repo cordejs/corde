@@ -1,6 +1,7 @@
 import { Guild, Channel, Client, TextChannel, AwaitMessagesOptions } from 'discord.js';
-import runtime, { ConfigOptions } from './runtime';
+import runtime from './runtime';
 import { RuntimeErro } from './errors';
+import ConfigOptions from './config';
 
 class CordeBot {
   private _client: Client;

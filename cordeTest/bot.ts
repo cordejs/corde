@@ -1,5 +1,5 @@
 import * as Discord from 'discord.js';
-import { ConfigOptions } from '../src/config';
+import ConfigOptions from '../src/config';
 import fs from 'fs';
 
 const file = fs.readFileSync('../corde.json').toString();
