@@ -1,5 +1,6 @@
 import { Utils } from '../src/utils/utils';
 import { ParameterNotFoundError } from '../src/errors';
+import Consts from './mocks/constsNames';
 
 describe('utils Clone', () => {
   it('Object should not be equal to its clone', () => {
@@ -7,7 +8,7 @@ describe('utils Clone', () => {
   });
 
   it('Object should have same value to its clone', () => {
-    expect(Utils.clone({ obj: 1 })).toEqual({ obj: 1 });
+    expect(Utils.clone(Consts.EMBED)).toEqual(Consts.EMBED);
   });
 
   it('Object array should not be equal to its clone', () => {

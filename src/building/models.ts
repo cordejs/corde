@@ -1,11 +1,9 @@
-import { MessageEmbed } from 'discord.js';
-
 /**
  * Represents **command** structure
  */
 export interface AssertionProps {
   commandName: string;
-  expectation: string | MessageEmbed;
+  expectation: string;
   output?: string;
   usingTrueStatement: boolean;
 }
