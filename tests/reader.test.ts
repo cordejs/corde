@@ -1,4 +1,4 @@
-import { getTestList } from '../src/reader';
+import { getTestList } from '../src/process/reader';
 import { Group } from '../src/building/models';
 import Consts from './mocks/constsNames';
 
