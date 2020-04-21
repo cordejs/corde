@@ -8,10 +8,10 @@ export class Utils {
     return JSON.parse(JSON.stringify(object));
   }
   static stringfyIfObject(data: unknown) {
-    if ((data as string) !== undefined) {
+    if (typeof data === 'string') {
       return data;
     } else {
-      JSON.stringify(data);
+      return JSON.stringify(data);
     }
   }
 }
