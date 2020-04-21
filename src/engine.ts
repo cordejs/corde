@@ -2,8 +2,7 @@ import { getTestList } from './reader';
 import fs from 'fs';
 import { FilesNotFoundError, ConfigFileNotFoundError, MissingPropertyError } from './errors';
 import ora, { Ora, Color } from 'ora';
-import { ConfigOptions, Config } from './config';
-import { GlobalSettings } from './global';
+import runtime, { ConfigOptions } from './config';
 import { cordelogin, getChannelForTests } from './bot';
 import path from 'path';
 import Shell from './shell';
@@ -15,33 +14,35 @@ let spinner: Ora;
 export async function runTests(files: string[]) {
   const relativePaths = getFilesFullPath(files);
   setLoading('Reading files');
-  GlobalSettings.tests = await getTestList(relativePaths);
-  GlobalSettings.config = loadConfig();
+  const configs = loadConfig();
+  runtime.loadFromConfigs(configs);
+  runtime.tests = await getTestList(relativePaths);
   stopLoading();
 }
 
 export async function runTestsFromConfigs() {
   setLoading('Reading cool configs');
-  GlobalSettings.config = loadConfig();
+  const configs = loadConfig();
+  runtime.loadFromConfigs(configs);
   stopLoading();
 
   setLoading('Reading test files');
-  const files = await readDir(GlobalSettings.config.testFilesDir);
-  GlobalSettings.tests = await getTestList(files);
+  const files = await readDir(runtime.testFilesDir);
+  runtime.tests = await getTestList(files);
 
   setLoading('starting bots');
-  startClientBot(GlobalSettings.config.botFilePath);
+  startClientBot(runtime.botFilePath);
 
   setTimeout(async () => {
     try {
-      await cordelogin(GlobalSettings.config.cordeTestToken);
+      await cordelogin(runtime.cordeTestToken);
       setLoading('Running Tests');
 
-      GlobalSettings.cordeBotHasStarted.subscribe(async (hasConnected) => {
+      runtime.cordeBotHasStarted.subscribe(async (hasConnected) => {
         if (hasConnected) {
-          GlobalSettings.config.channel = getChannelForTests();
-          await executeTestCases(GlobalSettings.tests);
-          outPutResult(GlobalSettings.tests);
+          runtime.channel = getChannelForTests();
+          await executeTestCases(runtime.tests);
+          outPutResult(runtime.tests);
         }
       });
     } catch (error) {
@@ -50,7 +51,7 @@ export async function runTestsFromConfigs() {
     } finally {
       stopLoading();
     }
-    console.log(GlobalSettings.tests);
+    console.log(runtime.tests);
   }, 3000);
 }
 
@@ -107,7 +108,7 @@ function getFilesFullPath(files: string[]) {
  * and validates it
  * @throws
  */
-function loadConfig(): Config {
+function loadConfig(): ConfigOptions {
   let _config: ConfigOptions;
   const configFileName = 'corde.json';
   const jsonfilePath = `${process.cwd()}/${configFileName}`;
@@ -120,7 +121,7 @@ function loadConfig(): Config {
 
   if (_config) {
     validadeConfigs(_config);
-    return new Config(_config);
+    return _config;
   } else {
     throw new Error('Invalid configuration file');
   }

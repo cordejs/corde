@@ -1,19 +1,17 @@
 import { Guild, Channel, Client, Message, TextChannel } from 'discord.js';
-import { GlobalSettings } from './global';
-import { ConfigOptions } from './config';
+import runtime, { ConfigOptions } from './config';
 import { RuntimeErro } from './errors';
 
 export const cordeBot = new Client();
 
 cordeBot.once('ready', () => {
   // emit to engine that corde bot is connected.
-  GlobalSettings.cordeBotHasStarted.next(true);
+  runtime.cordeBotHasStarted.next(true);
 });
 
 export function getChannelForTests() {
-  const config = getConfig();
-  const guild = findGuild(config);
-  const channel = findChannel(guild, config);
+  const guild = findGuild(runtime);
+  const channel = findChannel(guild, runtime);
   return convertToTextChannel(channel);
 }
 
@@ -31,17 +29,16 @@ export function logout() {
 
 export async function sendMessage(message: string): Promise<string> {
   return new Promise(async (resolve, reject) => {
-    const config = getConfig();
-    validateEntryData(config, message);
-    const toSend = config.botPrefix + message;
-    await config.channel.send(toSend);
+    validateEntryData(runtime, message);
+    const toSend = runtime.botPrefix + message;
+    await runtime.channel.send(toSend);
 
     try {
-      const answer = await config.channel.awaitMessages(
-        (responseName) => responseName.author.id === config.botTestId,
+      const answer = await runtime.channel.awaitMessages(
+        (responseName) => responseName.author.id === runtime.botTestId,
         {
           max: 1,
-          time: config.timeOut ? config.timeOut : 5000,
+          time: runtime.timeOut ? runtime.timeOut : 5000,
           errors: ['time'],
         },
       );
@@ -68,15 +65,7 @@ function validateEntryData(config: ConfigOptions, message: string) {
 }
 
 function isCommandValid(msg: Message) {
-  return !msg.content.startsWith(getConfigPrefix(), 0);
-}
-
-function getConfigPrefix() {
-  return GlobalSettings.config.botPrefix;
-}
-
-function getConfig() {
-  return GlobalSettings.config;
+  return !msg.content.startsWith(runtime.botPrefix, 0);
 }
 
 function findGuild(config: ConfigOptions) {

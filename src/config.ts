@@ -1,17 +1,18 @@
 import * as Discord from 'discord.js';
-
+import { Group } from './building/models';
+import { BehaviorSubject } from 'rxjs';
 /**
  * Contains a set of properties needed for execution of corde
  */
 export interface ConfigOptions {
-  readonly cordeTestToken: string;
-  readonly botTestId: string;
-  readonly botTestToken?: string;
-  readonly channelId?: string;
-  readonly guildId: string;
-  readonly timeOut?: number;
-  readonly botPrefix: string;
-  readonly testFilesDir: string;
+  cordeTestToken: string;
+  botTestId: string;
+  botTestToken?: string;
+  channelId?: string;
+  guildId: string;
+  timeOut?: number;
+  botPrefix: string;
+  testFilesDir: string;
   message: Discord.Message;
   channel: Discord.TextChannel;
   files: string[];
@@ -27,39 +28,39 @@ export interface ConfigOptions {
  * only inform if is desired to start test bot with corde
  * @implements IConfigOptions
  */
-export class Config implements ConfigOptions {
+class Config implements ConfigOptions {
   /**
    * Fake bot used to test the realy one
    */
-  public readonly cordeTestToken: string;
+  public cordeTestToken: string;
   /**
    * User's bot that will be tested
    */
-  public readonly botTestId: string;
+  public botTestId: string;
   /**
    * User's bot token that will run.
    */
-  public readonly botTestToken?: string;
+  public botTestToken?: string;
   /**
    * Channel where tests will run
    */
-  public readonly channelId?: string;
+  public channelId?: string;
   /**
    * Guild where tests will run
    */
-  public readonly guildId: string;
+  public guildId: string;
   /**
    * Defines max amount of time that a command can run
    */
-  public readonly timeOut?: number;
+  public timeOut?: number;
   /**
    * Defines how indentify bot calls
    */
-  public readonly botPrefix: string;
+  public botPrefix: string;
   /**
    * Path for case tests. Use this from the base directory of the application
    */
-  public readonly testFilesDir: string;
+  public testFilesDir: string;
   /**
    * Discord message where all tests will run
    */
@@ -83,9 +84,14 @@ export class Config implements ConfigOptions {
    */
   public silentMode: boolean;
   public botFilePath: string;
+}
 
-  constructor(configs: ConfigOptions) {
-    this.botPrefix = configs.botPrefix;
+class Runtime extends Config {
+  tests: Group[];
+  cordeBotHasStarted = new BehaviorSubject<boolean>(false);
+
+  loadFromConfigs(configs: ConfigOptions) {
+    super.botPrefix = configs.botPrefix;
     this.botTestId = configs.botTestId;
     this.botTestToken = configs.botTestToken;
     this.channelId = configs.channelId;
@@ -99,3 +105,6 @@ export class Config implements ConfigOptions {
     this.botFilePath = configs.botFilePath;
   }
 }
+
+const runtime = new Runtime();
+export default runtime;
