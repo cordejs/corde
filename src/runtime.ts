@@ -104,6 +104,10 @@ class Runtime extends Config {
     this.silentMode = configs.silentMode;
     this.botFilePath = configs.botFilePath;
   }
+
+  async sendMessageToChannel(message: string) {
+    return await super.channel.send(message);
+  }
 }
 
 const runtime = new Runtime();

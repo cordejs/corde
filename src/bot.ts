@@ -1,5 +1,5 @@
 import { Guild, Channel, Client, Message, TextChannel } from 'discord.js';
-import runtime, { ConfigOptions } from './config';
+import runtime, { ConfigOptions } from './runtime';
 import { RuntimeErro } from './errors';
 
 export const cordeBot = new Client();
@@ -30,8 +30,8 @@ export function logout() {
 export async function sendMessage(message: string): Promise<string> {
   return new Promise(async (resolve, reject) => {
     validateEntryData(runtime, message);
-    const toSend = runtime.botPrefix + message;
-    await runtime.channel.send(toSend);
+    const formatedMessage = runtime.botPrefix + message;
+    await runtime.sendMessageToChannel(formatedMessage);
 
     try {
       const answer = await runtime.channel.awaitMessages(

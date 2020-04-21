@@ -2,7 +2,7 @@ import { getTestList } from './reader';
 import fs from 'fs';
 import { FilesNotFoundError, ConfigFileNotFoundError, MissingPropertyError } from './errors';
 import ora, { Ora, Color } from 'ora';
-import runtime, { ConfigOptions } from './config';
+import runtime, { ConfigOptions } from './runtime';
 import { cordelogin, getChannelForTests } from './bot';
 import path from 'path';
 import Shell from './shell';
