@@ -64,7 +64,7 @@ function printAssertion(assert: AssertionProps, tab: string) {
     log.printFailure(
       tab,
       assert.commandName,
-      assert.expectation,
+      JSON.stringify(assert.expectation),
       assert.output,
       assert.usingTrueStatement,
     );
@@ -72,13 +72,15 @@ function printAssertion(assert: AssertionProps, tab: string) {
     log.printSucess(
       tab,
       assert.commandName,
-      assert.expectation,
+      JSON.stringify(assert.expectation),
       assert.output,
       assert.usingTrueStatement,
     );
     sucessCount++;
   }
 }
+
+function stringifyIfObject() {}
 
 function showSummary() {
   breakLine();

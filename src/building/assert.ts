@@ -1,6 +1,7 @@
 import Thread from './thread';
 import { Group } from './models';
 import log from '../utils/log';
+import { MessageEmbed } from 'discord.js';
 
 export class Assert {
   private commandName: string;
@@ -14,7 +15,7 @@ export class Assert {
     return this;
   }
 
-  public returnMessage(expect: string) {
+  public returnMessage(expect: string | MessageEmbed) {
     Thread.isBuildRunning = true;
     if (Thread.hasTest || Thread.hasGroup) {
       Thread.assertions.push({

@@ -1,6 +1,6 @@
 import Thread from './thread';
 import log from '../utils/log';
-import { clone } from '../utils/utils';
+import { Utils } from '../utils/utils';
 import { AssertionProps } from './models';
 
 /**
@@ -18,7 +18,7 @@ export function test(name: string, action: () => void) {
 
   Thread.tests.push({
     name: name,
-    assertions: clone(Thread.assertions) as AssertionProps[],
+    assertions: Utils.clone(Thread.assertions) as AssertionProps[],
   });
 
   Thread.hasTest = false;

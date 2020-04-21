@@ -1,7 +1,7 @@
 import Thread from './thread';
 import log from '../utils/log';
 import { Group, Test } from './models';
-import { clone } from '../utils/utils';
+import { Utils } from '../utils/utils';
 
 /**
  * Represents a group of tests.
@@ -18,7 +18,7 @@ export function group(name: string, action: () => void) {
 
   Thread.groups.push({
     name: name,
-    tests: clone(Thread.tests) as Test[],
+    tests: Utils.clone(Thread.tests) as Test[],
   });
 
   Thread.tests = [];
