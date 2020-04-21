@@ -1,24 +1,31 @@
-import { Guild, Channel, Client, Message, TextChannel } from 'discord.js';
+import { Guild, Channel, Client, TextChannel } from 'discord.js';
 import runtime, { ConfigOptions } from './runtime';
 import { RuntimeErro } from './errors';
 
-class CordeBot extends Client {
+class CordeBot {
+  private _client: Client;
+
+  constructor() {
+    this._client = new Client();
+    this.loadClientEvents();
+  }
+
   getChannelForTests() {
     const guild = this.findGuild(runtime);
     const channel = this.findChannel(guild, runtime);
     return this.convertToTextChannel(channel);
   }
 
-  async cordelogin(token: string) {
+  async login(token: string) {
     try {
-      return cordeBot.login(token);
+      return this._client.login(token);
     } catch (error) {
       return Promise.reject(this.buildLoginErroMessage(token, error));
     }
   }
 
   logout() {
-    cordeBot.destroy();
+    this._client.destroy();
   }
 
   async sendMessage(message: string): Promise<string> {
@@ -45,6 +52,13 @@ class CordeBot extends Client {
     });
   }
 
+  private loadClientEvents() {
+    this._client.once('ready', () => {
+      // emit to engine that corde bot is connected.
+      runtime.cordeBotHasStarted.next(true);
+    });
+  }
+
   private buildLoginErroMessage(token: string, error: object) {
     return `Error trying to login with token ${token}. \n` + error;
   }
@@ -59,16 +73,16 @@ class CordeBot extends Client {
   }
 
   private findGuild(config: ConfigOptions) {
-    if (!cordeBot.guilds) {
+    if (!this._client.guilds) {
       throw new Error(
         `corde bot isn't added in a guild. Please add it to the guild: ${config.guildId}`,
       );
-    } else if (!cordeBot.guilds.cache.has(config.guildId)) {
+    } else if (!this._client.guilds.cache.has(config.guildId)) {
       throw new RuntimeErro(
         `Guild ${config.guildId} doesn't belong to corde bot. change the guild id in corde.config or add the bot to a valid guild`,
       );
     } else {
-      return cordeBot.guilds.cache.find((guild) => guild.id === config.guildId);
+      return this._client.guilds.cache.find((guild) => guild.id === config.guildId);
     }
   }
 
@@ -97,10 +111,4 @@ class CordeBot extends Client {
  * Runtime instance of cordeBot, used to send messages to Discord.
  */
 const cordeBot = new CordeBot();
-
-cordeBot.once('ready', () => {
-  // emit to engine that corde bot is connected.
-  runtime.cordeBotHasStarted.next(true);
-});
-
 export default cordeBot;
