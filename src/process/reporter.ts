@@ -20,7 +20,7 @@ export function outPutResult(groups: Group[]) {
 }
 
 function breakLine() {
-  console.log('\n');
+  console.log('');
 }
 
 function printGroup(group: Group, tab: string) {
