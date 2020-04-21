@@ -2,44 +2,19 @@ import { Guild, Channel, Client, Message, TextChannel } from 'discord.js';
 import { GlobalSettings } from './global';
 import { ConfigOptions } from './config';
 import { RuntimeErro } from './errors';
-import { executeTestCases } from './runner';
-import { outPutResult } from './reporter';
 
-export const clientBot = new Client();
 export const cordeBot = new Client();
 
-cordeBot.once(
-  'ready',
-  async (): Promise<void> => {
-    let guild: Guild;
-    let channel: Channel;
-    const config = getConfig();
-    try {
-      guild = findGuild(config);
-      channel = findChannel(guild, config);
+cordeBot.once('ready', () => {
+  // emit to engine that corde bot is connected.
+  GlobalSettings.cordeBotHasStarted.next(true);
+});
 
-      // Using a type guard to narrow down the correct type
-      if (!isTextChannel(channel)) {
-        throw new RuntimeErro('There is no support for voice channel');
-      }
-
-      config.channel = convertToTextChannel(channel);
-      await executeTestCases(GlobalSettings.tests);
-      outPutResult(GlobalSettings.tests);
-    } catch (error) {
-      return Promise.reject(error);
-    } finally {
-      logout();
-    }
-  },
-);
-
-export async function clientlogin(token: string) {
-  try {
-    return clientBot.login(token);
-  } catch (error) {
-    return Promise.reject(buildLoginErroMessage(token, error));
-  }
+export function getChannelForTests() {
+  const config = getConfig();
+  const guild = findGuild(config);
+  const channel = findChannel(guild, config);
+  return convertToTextChannel(channel);
 }
 
 export async function cordelogin(token: string) {
@@ -52,7 +27,6 @@ export async function cordelogin(token: string) {
 
 export function logout() {
   cordeBot.destroy();
-  clientBot.destroy();
 }
 
 export async function sendMessage(message: string): Promise<string> {

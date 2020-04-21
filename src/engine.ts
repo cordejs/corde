@@ -4,44 +4,54 @@ import { FilesNotFoundError, ConfigFileNotFoundError, MissingPropertyError } fro
 import ora, { Ora, Color } from 'ora';
 import { ConfigOptions, Config } from './config';
 import { GlobalSettings } from './global';
-import { cordelogin, clientlogin } from './bot';
+import { cordelogin, getChannelForTests } from './bot';
 import path from 'path';
 import Shell from './shell';
+import { executeTestCases } from './runner';
+import { outPutResult } from './reporter';
 
 let spinner: Ora;
 
 export async function runTests(files: string[]) {
   const relativePaths = getFilesFullPath(files);
-  displayLoading('Reading files');
+  setLoading('Reading files');
   GlobalSettings.tests = await getTestList(relativePaths);
   GlobalSettings.config = loadConfig();
   stopLoading();
 }
 
 export async function runTestsFromConfigs() {
-  displayLoading('Reading cool configs');
+  setLoading('Reading cool configs');
   GlobalSettings.config = loadConfig();
   stopLoading();
 
-  displayLoading('Reading test files');
+  setLoading('Reading test files');
   const files = await readDir(GlobalSettings.config.testFilesDir);
   GlobalSettings.tests = await getTestList(files);
-  stopLoading();
 
-  displayLoading('starting bots');
-  try {
-    startClientBot(GlobalSettings.config.botFilePath);
-    setTimeout(async () => {
+  setLoading('starting bots');
+  startClientBot(GlobalSettings.config.botFilePath);
+
+  setTimeout(async () => {
+    try {
       await cordelogin(GlobalSettings.config.cordeTestToken);
-    }, 3000);
-  } catch (error) {
-    console.log(error);
-    process.exit(1);
-  } finally {
-    stopLoading();
-  }
+      setLoading('Running Tests');
 
-  console.log(GlobalSettings.tests);
+      GlobalSettings.cordeBotHasStarted.subscribe(async (hasConnected) => {
+        if (hasConnected) {
+          GlobalSettings.config.channel = getChannelForTests();
+          await executeTestCases(GlobalSettings.tests);
+          outPutResult(GlobalSettings.tests);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+      process.exit(1);
+    } finally {
+      stopLoading();
+    }
+    console.log(GlobalSettings.tests);
+  }, 3000);
 }
 
 function startClientBot(filePath: string) {
@@ -51,12 +61,16 @@ function startClientBot(filePath: string) {
   Shell.observe(`cd ${dir} && ts-node ${fullPath}`);
 }
 
-function displayLoading(message: string) {
+function setLoading(message: string) {
   // dots spinner do not works on windows 😰
   // https://github.com/fossas/fossa-cli/issues/193
-  spinner = ora(message).start();
-  spinner.color = getRandomSpinnerColor() as Color;
-  spinner.spinner = 'dots';
+  if (spinner) {
+    spinner.text = message;
+  } else {
+    spinner = ora(message).start();
+    spinner.color = getRandomSpinnerColor() as Color;
+    spinner.spinner = 'dots';
+  }
 }
 
 function getRandomSpinnerColor() {
@@ -126,32 +140,6 @@ function validadeConfigs(configs: ConfigOptions) {
   } else if (!configs.botFilePath) {
     throw new MissingPropertyError('bot file path not informed');
   }
-}
-
-/**
- * Makes authentication to bots
- */
-export async function login() {
-  displayLoading('Connecting to bots... ');
-  const cordetestToken = GlobalSettings.config.cordeTestToken;
-  const cordeTestToken = GlobalSettings.config.botTestToken;
-  try {
-    // Make login with corde and load Message
-    await cordelogin(cordetestToken);
-  } catch {
-    stopLoading();
-    throw new Error(`Error trying to connect to bot with token: ${cordetestToken}`);
-  }
-
-  if (cordeTestToken) {
-    try {
-      await clientlogin(cordeTestToken);
-    } catch {
-      stopLoading();
-      throw new Error(`can not connect to bot with token: ${cordeTestToken}`);
-    }
-  }
-  stopLoading();
 }
 
 /**
