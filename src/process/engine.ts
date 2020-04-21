@@ -44,17 +44,22 @@ export async function runTestsFromConfigs() {
           runtime.channel = cordeBot.getChannelForTests();
           await executeTestCases(runtime.tests);
           outPutResult(runtime.tests);
+          finishProcess();
           process.exit(0);
         }
       });
     } catch (error) {
       console.log(error);
       stopLoading();
-      cordeBot.logout();
-      Shell.stopChild();
+      finishProcess();
       process.exit(1);
     }
   }, 2000);
+}
+
+function finishProcess() {
+  cordeBot.logout();
+  Shell.stopChild();
 }
 
 function startClientBot(filePath: string) {
