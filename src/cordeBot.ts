@@ -1,21 +1,36 @@
-import { Guild, Channel, Client, TextChannel } from 'discord.js';
+import { Guild, Channel, Client, TextChannel, AwaitMessagesOptions } from 'discord.js';
 import runtime, { ConfigOptions } from './runtime';
 import { RuntimeErro } from './errors';
 
 class CordeBot {
   private _client: Client;
 
+  /**
+   * Starts new instance of Discord client
+   * with its events.
+   */
   constructor() {
     this._client = new Client();
     this.loadClientEvents();
   }
 
+  /**
+   * Get a channel based in the id stored in configs.
+   * @see Runtime
+   */
   getChannelForTests() {
     const guild = this.findGuild(runtime);
     const channel = this.findChannel(guild, runtime);
     return this.convertToTextChannel(channel);
   }
 
+  /**
+   * Authenticate Corde bot to the instaled bot in Discord server.
+   * @param token Corde bot token
+   * @returns Promise resolve for success connection, or a promisse
+   * rejection with a formated message if there was found a error in
+   * connection attempt.
+   */
   async login(token: string) {
     try {
       return this._client.login(token);
@@ -24,10 +39,21 @@ class CordeBot {
     }
   }
 
+  /**
+   * Destroi client connection.
+   */
   logout() {
     this._client.destroy();
   }
 
+  /**
+   * Send a message to a channel defined in configs.
+   * @see Runtime
+   * @param message Message without prefix that will be sent to defined servers's channel
+   * @description The message is concatened with the stored **prefix** and is sent to the channel.
+   * @return Promisse rejection if a testing bot does not send any message in the timeout value setted,
+   * or a resolve for the promisse with the message returned by the testing bot.
+   */
   async sendMessage(message: string): Promise<string> {
     return new Promise(async (resolve, reject) => {
       this.validateEntryData(runtime, message);
@@ -35,21 +61,32 @@ class CordeBot {
       await runtime.sendMessageToChannel(formatedMessage);
 
       try {
-        const answer = await runtime.channel.awaitMessages(
-          (responseName) => responseName.author.id === runtime.botTestId,
-          {
-            max: 1,
-            time: runtime.timeOut ? runtime.timeOut : 5000,
-            errors: ['time'],
-          },
-        );
-
+        const answer = await this.awaitMessagesFromTestingBot();
         const content = answer.first().content;
         resolve(content);
       } catch (error) {
         reject('Test timeout');
       }
     });
+  }
+
+  private async awaitMessagesFromTestingBot() {
+    return await runtime.channel.awaitMessages(
+      (responseName) => this.responseAuthorIsTestingBot(responseName),
+      this.createWatchResponseConfigs(),
+    );
+  }
+
+  private responseAuthorIsTestingBot(responseName: any) {
+    return responseName.author.id === runtime.botTestId;
+  }
+
+  private createWatchResponseConfigs(): AwaitMessagesOptions {
+    return {
+      max: 1,
+      time: runtime.timeOut ? runtime.timeOut : 5000,
+      errors: ['time'],
+    };
   }
 
   private loadClientEvents() {
