@@ -4,26 +4,23 @@ import log from '../utils/log';
 
 export class Assert {
   private commandName: string;
-
+  private usingTrueStatement = true;
   constructor(input: string) {
     this.commandName = input;
   }
 
-  public shouldReturn(expect: string) {
-    this._return(expect, true);
+  public get not() {
+    this.usingTrueStatement = false;
+    return this;
   }
 
-  public shouldNotReturn(notExpect: string) {
-    this._return(notExpect, false);
-  }
-
-  private _return(expect: string, usingTrueStatement: boolean) {
+  public returnMessage(expect: string) {
     Thread.isBuildRunning = true;
     if (Thread.hasTest || Thread.hasGroup) {
       Thread.assertions.push({
         expectation: expect,
         commandName: this.commandName,
-        usingTrueStatement: usingTrueStatement,
+        usingTrueStatement: this.usingTrueStatement,
       });
     } else {
       const group: Group = {
@@ -33,7 +30,7 @@ export class Assert {
               {
                 expectation: expect,
                 commandName: this.commandName,
-                usingTrueStatement: usingTrueStatement,
+                usingTrueStatement: this.usingTrueStatement,
               },
             ],
           },
