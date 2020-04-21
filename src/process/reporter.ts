@@ -1,7 +1,7 @@
-import { Group, Test, AssertionProps } from './building/models';
+import { Group, Test, AssertionProps } from '../building/models';
 import chalk from 'chalk';
 
-import log from './log';
+import log from '../utils/log';
 
 const detaultTab = '    ';
 let sucessCount = 0;

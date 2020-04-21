@@ -1,6 +1,6 @@
-import { FilesNotFoundError } from './errors';
-import Shell from './shell';
-import { Group } from './building/models';
+import { FilesNotFoundError } from '../errors';
+import Shell from '../utils/shell';
+import { Group } from '../building/models';
 
 export async function getTestList(files: string[]) {
   if (files) {

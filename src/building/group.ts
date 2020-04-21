@@ -1,7 +1,7 @@
 import Thread from './thread';
-import log from '../log';
+import log from '../utils/log';
 import { Group, Test } from './models';
-import { clone } from '../utils';
+import { clone } from '../utils/utils';
 
 /**
  * Represents a group of tests.

@@ -1,5 +1,5 @@
 import { AssertionProps, Group, Test } from './models';
-import log from '../log';
+import log from '../utils/log';
 
 /**
  * Contain all information of data collected from files in runtime test

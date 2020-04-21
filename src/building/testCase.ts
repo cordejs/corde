@@ -1,6 +1,6 @@
 import Thread from './thread';
-import log from '../log';
-import { clone } from '../utils';
+import log from '../utils/log';
+import { clone } from '../utils/utils';
 import { AssertionProps } from './models';
 
 /**

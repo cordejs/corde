@@ -1,6 +1,6 @@
 import Thread from './thread';
 import { Group } from './models';
-import log from '../log';
+import log from '../utils/log';
 
 export class Assert {
   private commandName: string;

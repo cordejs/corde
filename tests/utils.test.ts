@@ -1,4 +1,4 @@
-import { clone } from '../src/utils';
+import { clone } from '../src/utils/utils';
 import { ParameterNotFoundError } from '../src/errors';
 
 describe('utils', () => {

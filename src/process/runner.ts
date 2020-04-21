@@ -1,5 +1,5 @@
-import { Group, AssertionProps, Test } from './building/models';
-import { sendMessage } from './bot';
+import { Group, AssertionProps, Test } from '../building/models';
+import { sendMessage } from '../bot';
 
 export async function executeTestCases(groups: Group[]) {
   const assertions = getAssertionsFromGroups(groups);

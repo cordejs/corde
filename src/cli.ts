@@ -1,5 +1,5 @@
 import arg from 'arg';
-import { runTests, runTestsFromConfigs } from './engine';
+import { runTests, runTestsFromConfigs } from './process/engine';
 import fs from 'fs';
 
 export function cli(args: string[]) {
