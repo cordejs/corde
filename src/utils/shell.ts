@@ -26,6 +26,7 @@ export default class Shell {
   }
 
   static stopChild() {
-    this.child.kill();
+    console.log('tentando parar ' + this.child.pid);
+    process.kill(this.child.pid);
   }
 }

@@ -14,7 +14,7 @@ let spinner: Ora;
 
 export async function runTests(files: string[]) {
   const relativePaths = getFilesFullPath(files);
-  setLoading('Reading files');
+  startLoading('Reading files');
   const configs = loadConfig();
   runtime.loadFromConfigs(configs);
   runtime.tests = await getTestList(relativePaths);
@@ -22,22 +22,21 @@ export async function runTests(files: string[]) {
 }
 
 export async function runTestsFromConfigs() {
-  setLoading('Reading cool configs');
+  startLoading('Reading cool configs');
   const configs = loadConfig();
   runtime.loadFromConfigs(configs);
-  stopLoading();
 
-  setLoading('Reading test files');
+  setMessage('Reading test files');
   const files = await readDir(runtime.testFilesDir);
   runtime.tests = await getTestList(files);
 
-  setLoading('starting bots');
+  setMessage('starting bots');
   startClientBot(runtime.botFilePath);
 
   setTimeout(async () => {
     try {
       await cordeBot.login(runtime.cordeTestToken);
-      setLoading('Running Tests');
+      setMessage('Running Tests');
 
       runtime.cordeBotHasStarted.subscribe(async (hasConnected) => {
         if (hasConnected) {
@@ -58,6 +57,7 @@ export async function runTestsFromConfigs() {
 }
 
 function finishProcess() {
+  stopLoading();
   cordeBot.logout();
   Shell.stopChild();
 }
@@ -69,16 +69,16 @@ function startClientBot(filePath: string) {
   Shell.observe(`cd ${dir} && ts-node ${fullPath}`);
 }
 
-function setLoading(message: string) {
+function startLoading(initialMessage: string) {
   // dots spinner do not works on windows 😰
   // https://github.com/fossas/fossa-cli/issues/193
-  if (spinner) {
-    spinner.text = message;
-  } else {
-    spinner = ora(message).start();
-    spinner.color = getRandomSpinnerColor() as Color;
-    spinner.spinner = 'dots';
-  }
+  spinner = ora(initialMessage).start();
+  spinner.color = getRandomSpinnerColor() as Color;
+  spinner.spinner = 'runner';
+}
+
+function setMessage(message: string) {
+  spinner.text = message;
 }
 
 function getRandomSpinnerColor() {
