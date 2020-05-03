@@ -43,6 +43,7 @@ export async function runTestsFromConfigs() {
           runtime.channel = cordeBot.getChannelForTests();
           await executeTestCases(runtime.tests);
           outPutResult(runtime.tests);
+          console.log(11);
           finishProcess();
           process.exit(0);
         }
@@ -62,11 +63,13 @@ function finishProcess() {
   Shell.stopChild();
 }
 
+let child: any;
+
 function startClientBot(filePath: string) {
   let fullPath = path.resolve(process.cwd(), filePath);
   fullPath = fullPath.replace('//', '/');
   const dir = path.dirname(fullPath);
-  Shell.observe(`cd ${dir} && ts-node ${fullPath}`);
+  Shell.observe(`ts-node ${fullPath}`, dir);
 }
 
 function startLoading(initialMessage: string) {

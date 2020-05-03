@@ -16,7 +16,6 @@ export function outPutResult(groups: Group[]) {
   breakLine();
   groups.forEach((group) => printGroup(group, tabSpace));
   showSummary();
-  process.exit(0);
 }
 
 function breakLine() {
