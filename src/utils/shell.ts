@@ -21,6 +21,7 @@ export default class Shell {
 
     this.child.on('error', (error) => {
       console.log(error);
+      this.stopChild();
     });
   }
 

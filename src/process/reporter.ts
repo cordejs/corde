@@ -82,15 +82,35 @@ function printAssertion(assert: AssertionProps, tab: string) {
 
 function showSummary() {
   breakLine();
-  if (failureCount === 0 && sucessCount > 0) {
-    console.log('Tests passed!');
-    console.log(`${chalk.bgGreen('TOTAL:')} ${chalk.bold(sucessCount)}`);
-  } else if (failureCount > 0 && sucessCount > 0) {
-    console.log('Tests passed with erros.');
-    console.log(`${chalk.bgGreen('SUCESS:')} ${chalk.bold(sucessCount)}`);
-    console.log(`${chalk.bgRed('FAILURES:')} ${chalk.bold(failureCount)}`);
+  if (doesAllTestsPassed()) {
+    printFullSuccess();
+  } else if (doesSomeTestsPassed()) {
+    printPartialSuccess();
   } else {
-    console.log('All tests fail.');
-    console.log(`${chalk.bgRed('FAILURES:')} ${chalk.bold(failureCount)}`);
+    printFullFailure();
   }
+}
+
+function doesAllTestsPassed() {
+  return failureCount === 0 && sucessCount > 0;
+}
+
+function doesSomeTestsPassed() {
+  return failureCount > 0 && sucessCount > 0;
+}
+
+function printFullSuccess() {
+  console.log('All tests passed!');
+  console.log(`${log.bgSucess(' TOTAL: ')} ${chalk.bold(sucessCount)}`);
+}
+
+function printPartialSuccess() {
+  console.log('Tests passed with erros.');
+  console.log(`${log.bgSucess(' SUCESS: ')} ${chalk.bold(sucessCount)}`);
+  console.log(`${chalk.bgRed(' FAILURES: ')} ${chalk.bold(failureCount)}`);
+}
+
+function printFullFailure() {
+  console.log('All tests fail.');
+  console.log(`${chalk.bgRed(' FAILURES: ')} ${chalk.bold(failureCount)}`);
 }

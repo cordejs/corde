@@ -1,6 +1,8 @@
 import chalk from 'chalk';
 
 class Log {
+  static bgSucess = chalk.bgRgb(21, 194, 19);
+
   /**
    * Send a objet to process.stdout
    */
@@ -21,9 +23,9 @@ class Log {
   ) {
     let notWord = Log.getNotWordIfTrue(usingTrueStatement);
     console.log(
-      `${space} ${chalk.bgRed('FAIL')} command ${chalk.bold(
+      `${space} ${chalk.bgRed('FAIL')} expected ${chalk.bold(
         command,
-      )} should ${notWord} return '${chalk.bold(expectation)}'. Returned: '${chalk.red(output)}'`,
+      )} to${notWord}return '${chalk.bold(expectation)}'. Returned: '${chalk.red(output)}'`,
     );
   }
 
@@ -36,17 +38,17 @@ class Log {
   ) {
     let notWord = Log.getNotWordIfTrue(usingTrueStatement);
     console.log(
-      `${space} ${chalk.bgGreen('OK')} command ${chalk.bold(
+      `${space} ${this.bgSucess.bold(' PASS ')} expected ${chalk.bold(
         command,
-      )} should ${notWord} return '${chalk.bold(expectation)}'. Returned: '${chalk.green(output)}'`,
+      )} to${notWord}return '${chalk.bold(expectation)}'. Returned: '${chalk.green(output)}'`,
     );
   }
 
   private static getNotWordIfTrue(usingTrueStatement: boolean) {
     if (usingTrueStatement) {
-      return '';
+      return ' ';
     }
-    return 'not';
+    return ' not ';
   }
 }
 
