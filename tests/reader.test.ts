@@ -10,8 +10,7 @@ const singleGroup: Group = {
       assertions: [
         {
           commandName: Consts.COMMAND_1,
-          expectationString: Consts.COMMAND_RESPONSE_1,
-          expectationObj: null,
+          expectation: Consts.COMMAND_RESPONSE_1,
           usingTrueStatement: true,
         },
       ],
@@ -21,26 +20,14 @@ const singleGroup: Group = {
 
 describe('reader', () => {
   it('Should get single group, test and assertion', async () => {
-    const groupResponse = await getList('sampleWithSingleGroup');
+    const groupResponse = await getTestList([`${process.cwd()}/tests/mocks/sampleWithSingleGroup`]);
     const groupExpectation: Group[] = [singleGroup];
     expect(groupResponse).toEqual(groupExpectation);
   });
 
   it('Should get double group. But single test and assertion in each group', async () => {
-    const groupResponse = await getList('sampleDoubleGroup');
+    const groupResponse = await getTestList([`${process.cwd()}/tests/mocks/sampleDoubleGroup`]);
     const groupExpectation: Group[] = [singleGroup, singleGroup];
     expect(groupResponse).toEqual(groupExpectation);
   });
-
-  it('Should get single embed Message', async () => {
-    const groupResponse = await getList('embedMesageSample');
-    singleGroup.tests[0].assertions[0].expectationObj = Consts.EMBED;
-    const groupExpectation: Group[] = [singleGroup];
-    console.log(groupExpectation);
-    expect(groupResponse).toEqual(groupExpectation);
-  });
 });
-
-async function getList(fileName: string) {
-  return await getTestList([`${process.cwd()}/tests/mocks/${fileName}`]);
-}
