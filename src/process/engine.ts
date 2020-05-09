@@ -8,7 +8,7 @@ import Shell from '../utils/shell';
 import { executeTestCases } from './runner';
 import { outPutResult } from './reporter';
 import cordeBot from '../cordeBot';
-import ConfigOptions from 'src/config';
+import ConfigOptions from '../config';
 
 let spinner: Ora;
 

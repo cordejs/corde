@@ -20,18 +20,18 @@
     "test"
   ],
   "scripts": {
-    "start": "nodemon --watch 'src/**/*.ts'",
+    "start": "yarn nodemon --watch 'src/**/*.ts'",
     "run-cli": "node lib/src/cli.js --run",
-    "create": "npm run build && npm run test",
-    "build": "tsc -p .",
-    "watch": " tsc -w",
-    "test": "jest",
-    "test-with-coverage": "jest --collect-coverage",
+    "create": "yarn build && yarn test",
+    "build": "yarn tsc -p .",
+    "watch": " yarn tsc -w",
+    "test": "yarn jest",
+    "test-with-coverage": "yarn jest --collect-coverage",
     "refresh": "rm -rf ./node_modules ./package-lock.json && npm install",
-    "tslint": "tslint --fix 'src/**/*.ts'",
-    "np": "np --no-cleanup --no-yarn",
-    "format": "prettier --write \"src/**/*.ts\"",
-    "lint": "tslint --project tsconfig.json -t stylish"
+    "tslint": "yarn tslint --fix 'src/**/*.ts'",
+    "np": "yarn np --no-cleanup --no-yarn",
+    "format": "yarn prettier --write \"src/**/*.ts\"",
+    "lint": "yarn tslint --project tsconfig.json -t stylish"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -61,11 +61,13 @@
     "typescript": "^3.6.2"
   },
   "dependencies": {
+    "@yarnpkg/pnpify": "^2.0.0-rc.22",
+    "arg": "^4.1.3",
     "chalk": "^4.0.0",
-    "discord.js": "^12.1.1",
+    "discord.js": "^12.2.0",
     "esm": "^3.2.25",
     "figlet": "^1.2.4",
-    "ora": "^4.0.3",
+    "ora": "^4.0.4",
     "path": "^0.12.7",
     "rxjs": "^6.5.5"
   },

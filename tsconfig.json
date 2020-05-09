@@ -6,7 +6,7 @@
     "resolveJsonModule": true,
     "allowJs": false,
     "pretty": true,
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "declaration": true,
     "target": "es6",
     "lib": ["es2017", "es7", "es6"],
