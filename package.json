@@ -7,9 +7,7 @@
   "directories": {
     "lib": "bin"
   },
-  "bin": {
-    "corde": "bin/corde"
-  },
+  "bin": "bin/corde",
   "publishConfig": {
     "acess": "public"
   },
@@ -87,8 +85,8 @@
   "homepage": "https://github.com/lucasgmagalhaes/corde#readme",
   "husky": {
     "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "pretty-quick --staged"
+      "commit-msg": "yarn commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "yarn pretty-quick --staged"
     }
   },
   "nyc": {

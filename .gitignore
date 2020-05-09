@@ -62,3 +62,9 @@ typings/
 
 corde.json
 lib/
+
+#yarn berry (2.0)
+.yarn/cache/
+.yarn/unplugged/
+.yarn/install-state.gz
+.yarn/build-state.yml
