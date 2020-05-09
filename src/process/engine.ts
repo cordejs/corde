@@ -43,7 +43,6 @@ export async function runTestsFromConfigs() {
           runtime.channel = cordeBot.getChannelForTests();
           await executeTestCases(runtime.tests);
           outPutResult(runtime.tests);
-          console.log(11);
           finishProcess();
           process.exit(0);
         }

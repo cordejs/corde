@@ -2,7 +2,7 @@ import Thread from './thread';
 import { Group } from './models';
 import log from '../utils/log';
 
-export class Assert {
+export class Matcher {
   private commandName: string;
 
   constructor(input: string) {

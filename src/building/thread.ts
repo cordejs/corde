@@ -1,5 +1,6 @@
 import { AssertionProps, Group, Test } from './models';
-import log from '../utils/log';
+
+type voidFunction = () => void;
 
 /**
  * Contain all information of data collected from files in runtime test
@@ -40,14 +41,6 @@ export default class Thread {
    * group name are optional
    */
   static groups: Group[] = [];
-  static handleFunctionSerializable: string;
+  static beforeStartFunctions: voidFunction[] = [];
+  static afterAllFunctions: voidFunction[] = [];
 }
-
-/**
- * @see Thread
- */
-process.on('exit', () => {
-  if (Thread.isBuildRunning) {
-    log.out(Thread.groups);
-  }
-});

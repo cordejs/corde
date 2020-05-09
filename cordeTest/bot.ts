@@ -3,10 +3,10 @@ import ConfigOptions from '../src/config';
 import fs from 'fs';
 
 const file = fs.readFileSync('../corde.json').toString();
-const config: ConfigOptions = JSON.parse(file);
-const client = new Discord.Client();
+const config = JSON.parse(file);
+export const bot = new Discord.Client();
 
-client.on('message', async (message) => {
+bot.on('message', async (message) => {
   if (message.content.indexOf('') !== 0) return;
 
   const args = message.content.slice(config.botPrefix.length).trim().split(/ +/g);
@@ -27,4 +27,8 @@ function hey(msg: Discord.Message) {
   msg.channel.send('hey!!');
 }
 
-client.login(config.botTestToken);
+export function loginBot() {
+  bot.login(config.botTestToken);
+}
+
+loginBot();
