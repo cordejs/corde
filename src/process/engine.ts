@@ -9,6 +9,7 @@ import { executeTestCases } from './runner';
 import { outPutResult } from './reporter';
 import cordeBot from '../cordeBot';
 import ConfigOptions from '../config';
+import Thread from '../building/thread';
 
 let spinner: Ora;
 
@@ -28,37 +29,42 @@ export async function runTestsFromConfigs() {
 
   setMessage('Reading test files');
   const files = await readDir(runtime.testFilesDir);
-  runtime.tests = await getTestList(files);
 
-  setMessage('starting bots');
-  startClientBot(runtime.botFilePath);
+  try {
+    runtime.tests = await getTestList(files);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
 
-  setTimeout(async () => {
-    try {
-      await cordeBot.login(runtime.cordeTestToken);
-      setMessage('Running Tests');
+  // setMessage('starting bots');
+  // Thread.beforeStartFunctions.forEach((fn) => fn());
 
-      runtime.cordeBotHasStarted.subscribe(async (hasConnected) => {
-        if (hasConnected) {
-          runtime.channel = cordeBot.getChannelForTests();
-          await executeTestCases(runtime.tests);
-          outPutResult(runtime.tests);
-          finishProcess();
-          process.exit(0);
-        }
-      });
-    } catch (error) {
-      console.log(error);
-      stopLoading();
-      finishProcess();
-      process.exit(1);
-    }
-  }, 2000);
+  // try {
+  //   await cordeBot.login(runtime.cordeTestToken);
+  //   setMessage('Running Tests');
+  //   runtime.cordeBotHasStarted.subscribe(async (hasConnected) => {
+  //     if (hasConnected) {
+  //       runtime.channel = cordeBot.getChannelForTests();
+  //       await executeTestCases(runtime.tests);
+  //       outPutResult(runtime.tests);
+  //       finishProcess();
+  //       process.exit(0);
+  //     }
+  //   });
+  // } catch (error) {
+  //   console.log(error);
+  //   stopLoading();
+  //   finishProcess();
+  //   process.exit(1);
+  // }
+  process.exit(0);
 }
 
 function finishProcess() {
   stopLoading();
   cordeBot.logout();
+  Thread.afterAllFunctions.forEach((fn) => fn());
   Shell.stopChild();
 }
 

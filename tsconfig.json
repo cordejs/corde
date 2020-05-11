@@ -1,10 +1,9 @@
 {
   "compilerOptions": {
     "outDir": "lib",
-    "rootDir": ".",
-    "baseUrl": "",
+    "rootDir": "",
     "resolveJsonModule": true,
-    "allowJs": false,
+    "allowJs": true,
     "pretty": true,
     "skipLibCheck": true,
     "declaration": true,
@@ -21,6 +20,6 @@
     "allowUnreachableCode": false,
     "esModuleInterop": true
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "cordeTest/**/*"],
   "exclude": ["node_modules", "lib", "tests"]
 }

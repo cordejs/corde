@@ -1,9 +1,9 @@
 import * as Discord from 'discord.js';
-import ConfigOptions from '../src/config';
 import fs from 'fs';
 
 const file = fs.readFileSync('../corde.json').toString();
 const config = JSON.parse(file);
+
 export const bot = new Discord.Client();
 
 bot.on('message', async (message) => {
