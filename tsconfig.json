@@ -20,6 +20,6 @@
     "allowUnreachableCode": false,
     "esModuleInterop": true
   },
-  "include": ["src/**/*", "cordeTest/**/*"],
+  "include": ["src/**/*", "index.js"],
   "exclude": ["node_modules", "lib", "tests"]
 }
