@@ -43,7 +43,7 @@
     "@types/node": "^13.11.0",
     "@types/rewire": "^2.5.28",
     "@types/ws": "^7.2.4",
-    "babel-jest": "^25.3.0",
+    "babel-jest": "^26.0.1",
     "cli-spinners": "^2.3.0",
     "codecov": "^3.6.5",
     "husky": "^4.2.3",
