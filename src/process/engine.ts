@@ -37,35 +37,33 @@ export async function runTestsFromConfigs() {
     process.exit(1);
   }
 
-  // setMessage('starting bots');
-  // Thread.beforeStartFunctions.forEach((fn) => fn());
+  setMessage('starting bots');
+  Thread.beforeStartFunctions.forEach((fn) => fn());
 
-  // try {
-  //   await cordeBot.login(runtime.cordeTestToken);
-  //   setMessage('Running Tests');
-  //   runtime.cordeBotHasStarted.subscribe(async (hasConnected) => {
-  //     if (hasConnected) {
-  //       runtime.channel = cordeBot.getChannelForTests();
-  //       await executeTestCases(runtime.tests);
-  //       outPutResult(runtime.tests);
-  //       finishProcess();
-  //       process.exit(0);
-  //     }
-  //   });
-  // } catch (error) {
-  //   console.log(error);
-  //   stopLoading();
-  //   finishProcess();
-  //   process.exit(1);
-  // }
-  process.exit(0);
+  try {
+    await cordeBot.login(runtime.cordeTestToken);
+    setMessage('Running Tests');
+    runtime.cordeBotHasStarted.subscribe(async (hasConnected) => {
+      if (hasConnected) {
+        runtime.channel = cordeBot.getChannelForTests();
+        await executeTestCases(runtime.tests);
+        outPutResult(runtime.tests);
+        finishProcess();
+        process.exit(0);
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    stopLoading();
+    finishProcess();
+    process.exit(1);
+  }
 }
 
 function finishProcess() {
   stopLoading();
   cordeBot.logout();
   Thread.afterAllFunctions.forEach((fn) => fn());
-  Shell.stopChild();
 }
 
 let child: any;

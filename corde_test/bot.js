@@ -1,10 +1,11 @@
-import * as Discord from 'discord.js';
-import fs from 'fs';
+const Discord = require('discord.js');
+const fs = require('fs');
+const path = require('path');
 
-const file = fs.readFileSync('../corde.json').toString();
+const file = fs.readFileSync(path.resolve(__dirname, '../corde.json')).toString();
 const config = JSON.parse(file);
 
-export const bot = new Discord.Client();
+const bot = new Discord.Client();
 
 bot.on('message', async (message) => {
   if (message.content.indexOf('') !== 0) return;
@@ -19,16 +20,27 @@ bot.on('message', async (message) => {
   }
 });
 
-function hello(msg: Discord.Message) {
+/**
+ *
+ * @param {Discord.Message} msg
+ */
+function hello(msg) {
   msg.channel.send('hello!!');
 }
 
-function hey(msg: Discord.Message) {
+/**
+ *
+ * @param {Discord.Message} msg
+ */
+function hey(msg) {
   msg.channel.send('hey!!');
 }
 
-export function loginBot() {
+function loginBot() {
   bot.login(config.botTestToken);
 }
 
-loginBot();
+exports.bot = bot;
+exports.loginBot = loginBot;
+
+//loginBot();

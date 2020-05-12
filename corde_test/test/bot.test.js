@@ -1,8 +1,8 @@
-const { group, command, beforeStart } = require('../../lib/src/building');
+const { group, test, command, beforeStart, afterAll } = require('../../lib');
 const { bot, loginBot } = require('../bot');
 
 beforeStart(() => {
-  //loginBot();
+  loginBot();
 });
 
 group('main commands', () => {
@@ -12,5 +12,5 @@ group('main commands', () => {
 });
 
 afterAll(() => {
-  //bot.destroy();
+  bot.destroy();
 });
