@@ -1,22 +1,18 @@
 import { FilesNotFoundError } from '../errors';
-import Shell from '../utils/shell';
-import { Group } from '../building/models';
+import Thread from '../building/thread';
+import path from 'path';
 
 export async function getTestList(files: string[]) {
   if (files) {
-    let output: Group[] = [];
+    Thread.isBuildRunning = true;
+    Thread.groups = [];
     for (const i in files) {
       if (files.hasOwnProperty(i)) {
-        try {
-          const out = await Shell.commandRun(`ts-node ${files[i]}`);
-          output = JSON.parse(out);
-        } catch (error) {
-          console.log(error);
-        }
+        require(files[i]);
       }
     }
-
-    return output;
+    Thread.isBuildRunning = false;
+    return Thread.groups;
   }
   throw new FilesNotFoundError();
 }

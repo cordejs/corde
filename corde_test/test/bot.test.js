@@ -1,5 +1,5 @@
-import { group, test, command, beforeStart, afterAll } from '../src/building';
-import { bot, loginBot } from './bot';
+const { group, test, command, beforeStart, afterAll } = require('../../lib');
+const { bot, loginBot } = require('../bot');
 
 beforeStart(() => {
   loginBot();

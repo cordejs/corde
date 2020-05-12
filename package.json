@@ -2,8 +2,8 @@
   "name": "corde",
   "version": "0.1.0-beta.1",
   "description": "corde is a typescript library to create automated tests for discord bots",
-  "main": "./lib/src/index.js",
-  "types": "./lib/src/index.d.ts",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "directories": {
     "lib": "bin"
   },
@@ -20,8 +20,7 @@
     "test"
   ],
   "scripts": {
-    "start": "yarn nodemon --watch 'src/**/*.ts'",
-    "run-cli": "node lib/src/cli.js --run",
+    "start": "yarn node bin/corde",
     "create": "yarn build && yarn test",
     "build": "yarn tsc -p .",
     "watch": " yarn tsc -w",
