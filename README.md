@@ -1,4 +1,8 @@
-# corde Testing
+# Corde
+
+<p align="center">
+  <img width="300" height="300" src="./img/logo_formato1.png">
+</p>
 
 [![CircleCI](https://circleci.com/gh/lucasgmagalhaes/corde.svg?style=shield)](https://circleci.com/gh/lucasgmagalhaes/corde)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Flucasgmagalhaes%2Fcorde.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Flucasgmagalhaes%2Fcorde?ref=badge_shield)
