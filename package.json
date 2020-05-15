@@ -20,17 +20,17 @@
     "test"
   ],
   "scripts": {
-    "start": "yarn node bin/corde",
-    "create": "yarn build && yarn test",
-    "build": "yarn tsc -p .",
-    "watch": " yarn tsc -w",
-    "test": "yarn jest",
-    "test-with-coverage": "yarn jest --collect-coverage",
+    "start": "node bin/corde",
+    "create": "build && yarn test",
+    "build": "tsc -p .",
+    "watch": "tsc -w",
+    "test": "jest",
+    "test-with-coverage": "jest --collect-coverage",
     "refresh": "rm -rf ./node_modules ./package-lock.json && npm install",
-    "tslint": "yarn tslint --fix 'src/**/*.ts'",
-    "np": "yarn np --no-cleanup --no-yarn",
-    "format": "yarn prettier --write \"src/**/*.ts\"",
-    "lint": "yarn tslint --project tsconfig.json -t stylish"
+    "tslint": "tslint --fix 'src/**/*.ts'",
+    "np": "np --no-cleanup --no-yarn",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "tslint --project tsconfig.json -t stylish"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
