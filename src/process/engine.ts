@@ -1,10 +1,14 @@
 import { getTestList } from './reader';
 import fs from 'fs';
-import { FilesNotFoundError, ConfigFileNotFoundError, MissingPropertyError } from '../errors';
+import {
+  FilesNotFoundError,
+  ConfigFileNotFoundError,
+  MissingPropertyError,
+  FileParserError,
+} from '../errors';
 import ora, { Ora, Color } from 'ora';
 import runtime from '../runtime';
 import path from 'path';
-import Shell from '../utils/shell';
 import { executeTestCases } from './runner';
 import { outPutResult } from './reporter';
 import cordeBot from '../cordeBot';
@@ -14,23 +18,28 @@ import Thread from '../building/thread';
 let spinner: Ora;
 
 export async function runTests(files: string[]) {
-  const relativePaths = getFilesFullPath(files);
-  startLoading('Reading files');
-  const configs = loadConfig();
-  runtime.loadFromConfigs(configs);
-  runtime.tests = await getTestList(relativePaths);
-  stopLoading();
+  try {
+    const relativePaths = getFilesFullPath(files);
+    startLoading('Reading files');
+    const configs = loadConfig();
+    runtime.loadFromConfigs(configs);
+    runtime.tests = await getTestList(relativePaths);
+    stopLoading();
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
 }
 
 export async function runTestsFromConfigs() {
-  startLoading('Reading cool configs');
-  const configs = loadConfig();
-  runtime.loadFromConfigs(configs);
-
-  setMessage('Reading test files');
-  const files = await readDir(runtime.testFilesDir);
-
   try {
+    startLoading('Reading cool configs');
+    const configs = loadConfig();
+    runtime.loadFromConfigs(configs);
+
+    setMessage('Reading test files');
+    const files = await readDir(runtime.testFilesDir);
+
     runtime.tests = await getTestList(files);
   } catch (error) {
     console.log(error);
@@ -64,15 +73,6 @@ function finishProcess() {
   stopLoading();
   cordeBot.logout();
   Thread.afterAllFunctions.forEach((fn) => fn());
-}
-
-let child: any;
-
-function startClientBot(filePath: string) {
-  let fullPath = path.resolve(process.cwd(), filePath);
-  fullPath = fullPath.replace('//', '/');
-  const dir = path.dirname(fullPath);
-  Shell.observe(`ts-node ${fullPath}`, dir);
 }
 
 function startLoading(initialMessage: string) {
@@ -124,10 +124,10 @@ function getFilesFullPath(files: string[]) {
 function loadConfig(): ConfigOptions {
   let _config: ConfigOptions;
   const configFileName = 'corde.json';
-  const jsonfilePath = `${process.cwd()}/${configFileName}`;
+  const jsonFilePath = `${process.cwd()}/${configFileName}`;
 
-  if (fs.existsSync(jsonfilePath)) {
-    _config = JSON.parse(fs.readFileSync(jsonfilePath).toString());
+  if (fs.existsSync(jsonFilePath)) {
+    _config = tryLoadConfigs(jsonFilePath);
   } else {
     throw new ConfigFileNotFoundError();
   }
@@ -140,20 +140,48 @@ function loadConfig(): ConfigOptions {
   }
 }
 
+function tryLoadConfigs(jsonFilePath: string): ConfigOptions {
+  try {
+    return JSON.parse(fs.readFileSync(jsonFilePath).toString());
+  } catch (error) {
+    throw new FileParserError('Failed in parse configs. ' + error.message);
+  }
+}
+
 /**
  * Check if all required values are setted
  * TODO: JSON Schema
  */
 function validadeConfigs(configs: ConfigOptions) {
+  const errors: string[] = [];
   if (!configs.cordeTestToken) {
-    throw new MissingPropertyError('corde token not informed');
+    errors.push('corde token not informed');
+  } else if (!configs.botTestToken) {
+    errors.push('bot test token not informed');
   } else if (!configs.botTestId) {
-    throw new MissingPropertyError('bot test id not informed');
+    errors.push('bot test id not informed');
   } else if (!configs.testFilesDir) {
-    throw new MissingPropertyError('bot test id not informed');
+    errors.push('bot test id not informed');
   } else if (!configs.botFilePath) {
-    throw new MissingPropertyError('bot file path not informed');
+    errors.push('bot file path not informed');
   }
+
+  let errorsString = '';
+
+  if (errors.length == 1) {
+    errorsString = '\nAn error was found when reading config file';
+    buildMissingPropertiesErrorAndThrow(errorsString, errors);
+  }
+
+  if (errors.length > 1) {
+    errorsString = '\nSome erros were found when reading config file';
+    buildMissingPropertiesErrorAndThrow(errorsString, errors);
+  }
+}
+
+function buildMissingPropertiesErrorAndThrow(errorString: string, erros: string[]) {
+  erros.forEach((error) => (errorString += `\n- ${error}`));
+  throw new MissingPropertyError(errorString);
 }
 
 /**

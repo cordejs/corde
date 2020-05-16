@@ -5,3 +5,4 @@ export * from './parameterNotFoundError';
 export * from './configFileNotFoundError';
 export * from './missingPropertyError';
 export * from './runtimeError';
+export * from './fileParserError';
