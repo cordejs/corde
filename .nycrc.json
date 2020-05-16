@@ -1,0 +1,6 @@
+{
+  "extension": [".ts", ".tsx"],
+  "exclude": ["**/*.d.ts"],
+  "reporter": ["html"],
+  "all": true
+}
