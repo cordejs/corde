@@ -2,7 +2,7 @@ version: 1
 update_configs:
   # Update web app
   - package_manager: 'javascript'
-    update_schedule: 'weekly'
+    update_schedule: 'daily'
     directory: './'
     automerged_updates:
       - match:
