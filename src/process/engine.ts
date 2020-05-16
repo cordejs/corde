@@ -78,13 +78,13 @@ function finishProcess() {
 function startLoading(initialMessage: string) {
   // dots spinner do not works on windows 😰
   // https://github.com/fossas/fossa-cli/issues/193
-  spinner = ora(initialMessage).start();
+  spinner = ora(`${initialMessage}\n`).start();
   spinner.color = getRandomSpinnerColor() as Color;
   spinner.spinner = 'runner';
 }
 
 function setMessage(message: string) {
-  spinner.text = message;
+  spinner.text = `${message}\n`;
 }
 
 function getRandomSpinnerColor() {

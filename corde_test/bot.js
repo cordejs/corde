@@ -43,4 +43,4 @@ function loginBot() {
 exports.bot = bot;
 exports.loginBot = loginBot;
 
-//loginBot();
+loginBot();
