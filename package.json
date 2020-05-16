@@ -1,6 +1,6 @@
 {
   "name": "corde",
-  "version": "0.1.0-beta.1",
+  "version": "0.1.0",
   "description": "corde is a typescript library to create automated tests for discord bots",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -9,7 +9,7 @@
   },
   "bin": "bin/corde",
   "publishConfig": {
-    "acess": "public"
+    "registry": "https://npm.pkg.github.com/"
   },
   "keywords": [
     "cli",
