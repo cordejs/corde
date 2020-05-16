@@ -3,8 +3,8 @@
  *
  * @example
  * {
- *   // "cordeTestToken": "NjA4MDMzOTY2OTI2MjAwODMy.Xp4fEw.jsXgv5fC8t77PjLiZ4_CYHmybI4",
- *   "botTestId": "510886696062287894",
+ *   // "cordeTestToken": "ASFSaxcSDFAWSEGASDG",
+ *   "botTestId": "12312141241234124",
  * }
  *
  * @constructor Erro message, if not set, returns default message.
