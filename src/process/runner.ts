@@ -13,7 +13,7 @@ async function trySendMessage(assertion: AssertionProps) {
   try {
     return await cordeBot.sendMessage(assertion.commandName);
   } catch (error) {
-    throw new Error('Timeout');
+    return 'Timeout';
   }
 }
 
