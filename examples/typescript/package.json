@@ -1,0 +1,21 @@
+{
+  "name": "bot-example",
+  "version": "1.0.0",
+  "description": "A example bot using corde ",
+  "main": "./build/index.js",
+  "scripts": {
+    "build": "tsc -p .",
+    "watch": "tsc -w",
+    "test": "corde"
+  },
+  "author": "Lucas Gomes",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.2.0",
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {
+    "corde": "^0.1.0",
+    "typescript": "^3.6.2"
+  }
+}
