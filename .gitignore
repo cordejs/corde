@@ -56,7 +56,7 @@ typings/
 
 # dotenv environment variables file
 ./.env
-./corde.json
+corde.json
 
 # next.js build output
 .next
