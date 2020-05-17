@@ -55,12 +55,12 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
+./.env
+./corde.json
 
 # next.js build output
 .next
 
-corde.json
 lib/
 
 #yarn berry (2.0)

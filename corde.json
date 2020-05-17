@@ -1,0 +1,10 @@
+{
+  "cordeTestToken": "NjA4MDMzOTY2OTI2MjAwODMy.Xp4fEw.jsXgv5fC8t77PjLiZ4_CYHmybI4",
+  "botTestId": "510886696062287894",
+  "botTestToken": "NTEwODg2Njk2MDYyMjg3ODk0.Xp4sHg.Z0BLxeu_fX3AZY1sgbbc5jtvbak",
+  "guildId": "522581719568744468",
+  "channelId": "522581719568744470",
+  "botPrefix": "!",
+  "testFilesDir": "./corde_test/test",
+  "botFilePath": "./corde_test/bot.ts"
+}
