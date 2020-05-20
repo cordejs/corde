@@ -13,7 +13,7 @@
 [![devDependencies Status](https://david-dm.org/lucasgmagalhaes/corde/dev-status.svg?style=flat-square)](https://david-dm.org/lucasgmagalhaes/corde?type=dev)
 [![npmVersion](https://img.shields.io/npm/v/corde?style=flat-square)](https://www.npmjs.com/package/corde)
 
-* About
+* [About](#getting-started)
 * Getting Started
 * Config
 * Available Configurations
