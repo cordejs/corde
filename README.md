@@ -1,3 +1,4 @@
+
 # Corde
 
 <p align="center">
@@ -11,3 +12,75 @@
 [![dependencies Status](https://david-dm.org/lucasgmagalhaes/corde/status.svg?style=flat-square)](https://david-dm.org/lucasgmagalhaes/corde)
 [![devDependencies Status](https://david-dm.org/lucasgmagalhaes/corde/dev-status.svg?style=flat-square)](https://david-dm.org/lucasgmagalhaes/corde?type=dev)
 [![npmVersion](https://img.shields.io/npm/v/corde?style=flat-square)](https://www.npmjs.com/package/corde)
+
+* About
+* Getting Started
+* Config
+* Available Configurations
+
+## About
+
+Corde is a small testing library for Discord.js. As there is a tool to create bots for Discord, it's cool to also have a tool to test then. Corde objective is to be simple, fast and readable to delevopers, such as many others unity test tool around the web.
+
+## Getting started
+
+Starting create tests with Corde is realy simple. First install it locally with npm `npm i -D corde` or yarn `yarn add -D corde`. You can also install it globally: `npm i -g corde` or `yarn global add corde`.
+
+After installed, add the file `corde.json` in root of your application with the follow structure:
+
+```javascript
+{
+	"cordeTestToken":  "YOUR_TESTING_BOT_TOKEN_HERE",
+	"botTestId":  "YOUR_TESTING_BOT_ID_HERE",
+	"botTestToken":  "YOUR_BOT_TOKEN_HERE",
+	"guildId":  "THE_GUID_OF_BOT_HERE",
+	"channelId":  "CHANNELS_ID_HERE",
+	"botPrefix":  "+",
+	"testFilesDir":  "./test",
+	"botFilePath":  "./bot.js"
+}
+```
+
+Check the Config section for a more detailed explanation of each configuration propertie.
+
+Now that the config file is created, let's create some tests. You can keep the unity test natural file name structure, creating a `bot.test.js` with the follow structure:
+
+```javascript
+const { group, test, command, beforeStart, afterAll } =  require('corde');
+const { client, loginBot } =  require('..');
+
+beforeStart(() => {
+	loginBot();
+});
+
+group('main commands', () => {
+	test('ping command should return... Ping?!!', () => {
+		command('ping').shouldReturn('Ping?');
+	});
+});
+
+afterAll(() => {
+	client.destroy();
+});
+```
+What is happenning ?
+
+1) ``beforeStart`` is a fuction that is used to run something **before** the execution of tests. Put there the instruction that makes the bot login i.e. You can also start the bot and then run all tests, with that, there is no need of use ``beforeStart`` function.
+2) ``group`` Is a collections of tests that referes to some sort of tests. 
+3) ``test`` Is the container of a test. it's describe what will be tested, and what is the expectation.
+4) ``command`` is the core of Corde, that is what really with validade if a command is or not executing what it should. The simpliest action that a bot can do is send a plain message, with that,  ``command`` has a collections of options of expectations of response of the bot, in this case, is tested that a command *ping* should return *pong*.
+5)``afterAll`` is a fuction that is used to run something **after** the execution of tests. Put there the instructions that make the logoff of the bot, i.e.
+
+## Configurations
+
+| Option  | Description  |
+|    --   |      --      |
+| cordeTestToken | Bot's token that will send commands to the test bot. |
+| botTestId | Bot's id that is being tested. |
+| botTestToken | Bot's token of your tested bot. |
+| botTestId | Bot's id that is testing. |
+| guildId | Guild that your and the test bot are. |
+| channelId | Channel that your and the test bot are. |
+| botPrefix | Bot invoke command prefix |
+| testFilesDir | Path were all tests files are |
+| botFilePath | Path to the bot's index |
