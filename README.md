@@ -56,7 +56,7 @@
 </div>
 
 ## 😀 Table of Content
-------
+
 * [About](#-about)
 * [Getting Started](#-getting-started)
 * [Configurations](#%EF%B8%8F-configurations)
