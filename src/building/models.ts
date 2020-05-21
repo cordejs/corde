@@ -4,8 +4,9 @@
 export interface AssertionProps {
   commandName: string;
   expectation: string;
-  output?: string;
   usingTrueStatement: boolean;
+  output?: string;
+  isEmbbedMessage?: boolean;
 }
 
 /**
