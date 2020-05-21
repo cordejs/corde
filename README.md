@@ -1,28 +1,65 @@
+<div align="center">
+  <br />
+  <p>
+    <img width="300" height="300" src="./img/logo_formato1.png" />
+  </p>
+  <p>
+    <a href="https://circleci.com/gh/lucasgmagalhaes/corde">
+      <img
+        alt="CircleCi"
+        src="https://img.shields.io/circleci/build/github/lucasgmagalhaes/corde?style=flat-square"
+      />
+    </a>
+    <a
+      href="https://app.fossa.com/projects/git%2Bgithub.com%2Flucasgmagalhaes%2Fcorde?ref=badge_shield"
+      alt="FOSSA Status"
+    >
+      <img
+        src="https://app.fossa.com/api/projects/git%2Bgithub.com%2Flucasgmagalhaes%2Fcorde.svg?type=shield"
+      />
+    </a>
+    <a href="https://www.codefactor.io/repository/github/lucasgmagalhaes/corde">
+      <img
+        alt="CodeFactor"
+        src="https://www.codefactor.io/repository/github/lucasgmagalhaes/corde/badge?style=flat-square&s=70989af6ce2fa5361a2fdd19db2224fa2820b89e"
+      />
+    </a>
+    <a href="https://codecov.io/gh/lucasgmagalhaes/corde">
+      <img
+        alt="Codecov"
+        src="https://img.shields.io/codecov/c/github/lucasgmagalhaes/corde?style=flat-square"
+      />
+    </a>
+     <a href="https://www.npmjs.com/package/corde">
+      <img alt="Npm version" src="https://img.shields.io/npm/v/corde?style=flat-square" />
+    </a>
+  </p>
+  <p>
+    <a href="https://david-dm.org/lucasgmagalhaes/corde">
+      <img
+        alt="Dependencies Status"
+        src="https://david-dm.org/lucasgmagalhaes/corde/status.svg?style=flat-square"
+      />
+    </a>
+    <a href="https://david-dm.org/lucasgmagalhaes/corde?type=dev">
+      <img
+        alt="DevDependencies Status"
+        src="https://david-dm.org/lucasgmagalhaes/corde/dev-status.svg?style=flat-square"
+      />
+    </a>
+  </p>
+</div>
 
-# Corde
 
-<p align="center">
-  <img width="300" height="300" src="./img/logo_formato1.png">
-</p>
+* [About](#about)
+* [Getting Started](#getting-started)
+* [Configurations](#configurations
 
-[![CircleCI](https://img.shields.io/circleci/build/github/lucasgmagalhaes/corde?style=flat-square)](https://circleci.com/gh/lucasgmagalhaes/corde)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Flucasgmagalhaes%2Fcorde.svg?&style=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Flucasgmagalhaes%2Fcorde?ref=badge_shield)
-[![CodeFactor](https://www.codefactor.io/repository/github/lucasgmagalhaes/corde/badge?style=flat-square&s=70989af6ce2fa5361a2fdd19db2224fa2820b89e)](https://www.codefactor.io/repository/github/lucasgmagalhaes/corde)
-[![codecov](https://codecov.io/gh/lucasgmagalhaes/corde/branch/master/graph/badge.svg?style=flat-square)](https://codecov.io/gh/lucasgmagalhaes/corde)
-[![dependencies Status](https://david-dm.org/lucasgmagalhaes/corde/status.svg?style=flat-square)](https://david-dm.org/lucasgmagalhaes/corde)
-[![devDependencies Status](https://david-dm.org/lucasgmagalhaes/corde/dev-status.svg?style=flat-square)](https://david-dm.org/lucasgmagalhaes/corde?type=dev)
-[![npmVersion](https://img.shields.io/npm/v/corde?style=flat-square)](https://www.npmjs.com/package/corde)
-
-* About
-* Getting Started
-* Config
-* Available Configurations
-
-## About
+## 👀 About
 
 Corde is a small testing library for Discord.js. As there is a tool to create bots for Discord, it's cool to also have a tool to test then. Corde objective is to be simple, fast and readable to delevopers, such as many others unity test tool around the web.
 
-## Getting started
+## 🚀 Getting started
 
 Starting create tests with Corde is realy simple. First install it locally with npm `npm i -D corde` or yarn `yarn add -D corde`. You can also install it globally: `npm i -g corde` or `yarn global add corde`.
 
@@ -50,17 +87,17 @@ const { group, test, command, beforeStart, afterAll } =  require('corde');
 const { client, loginBot } =  require('..');
 
 beforeStart(() => {
-	loginBot();
+   loginBot();
 });
 
 group('main commands', () => {
-	test('ping command should return... Ping?!!', () => {
-		command('ping').shouldReturn('Ping?');
-	});
+   test('ping command should return... Ping?!!', () => {
+      command('ping').shouldReturn('Ping?');
+    });
 });
 
 afterAll(() => {
-	client.destroy();
+   client.destroy();
 });
 ```
 What is happenning ?
@@ -71,7 +108,7 @@ What is happenning ?
 4) ``command`` is the core of Corde, that is what really with validade if a command is or not executing what it should. The simpliest action that a bot can do is send a plain message, with that,  ``command`` has a collections of options of expectations of response of the bot, in this case, is tested that a command *ping* should return *pong*.
 5)``afterAll`` is a fuction that is used to run something **after** the execution of tests. Put there the instructions that make the logoff of the bot, i.e.
 
-## Configurations
+## ⚙️ Configurations
 
 | Option  | Description  |
 |    --   |      --      |
