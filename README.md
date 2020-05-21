@@ -30,6 +30,9 @@
         src="https://img.shields.io/codecov/c/github/lucasgmagalhaes/corde?style=flat-square"
       />
     </a>
+     <a href="https://www.npmjs.com/package/corde">
+      <img alt="Npm version" src="https://img.shields.io/npm/v/corde?style=flat-square" />
+    </a>
   </p>
   <p>
     <a href="https://david-dm.org/lucasgmagalhaes/corde">
@@ -44,17 +47,9 @@
         src="https://david-dm.org/lucasgmagalhaes/corde/dev-status.svg?style=flat-square"
       />
     </a>
-    <a href="https://www.npmjs.com/package/corde">
-      <img alt="Npm version" src="https://img.shields.io/npm/v/corde?style=flat-square" />
-    </a>
   </p>
 </div>
 
-
-
-
-
-[![npmVersion](https://img.shields.io/npm/v/corde?style=flat-square)](https://www.npmjs.com/package/corde)
 
 * [About](#about)
 * [Getting Started](#getting-started)
