@@ -2,7 +2,8 @@ import { Guild, Channel, Client, TextChannel, AwaitMessagesOptions } from 'disco
 import runtime from './runtime';
 import { RuntimeErro } from './errors';
 import ConfigOptions from './config';
-import { DEFAULT_TIMEOUT } from './consts';
+
+const DEFAULT_TIMEOUT = 5000;
 
 class CordeBot {
   private _client: Client;
