@@ -55,6 +55,9 @@
   </p>
 </div>
 
+# 🤖 Corde
+
+## 😀 Table of Content
 
 * [About](#-about)
 * [Getting Started](#-getting-started)
