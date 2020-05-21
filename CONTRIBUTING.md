@@ -1,7 +1,7 @@
 ## Instaling
 
 - clone the repo: **git clone https://github.com/lucasgmagalhaes/corde.git**
-- intall all dependencies with: **yarn intall**
+- intall all dependencies with: `yarn install`
 - create a link for the project to make it easy to test: **npm link**
 
 ## How to Commit
