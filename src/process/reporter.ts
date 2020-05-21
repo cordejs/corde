@@ -3,7 +3,7 @@ import chalk from 'chalk';
 
 import log from '../utils/log';
 
-const detaultTab = '    ';
+const SPACE = '    ';
 let sucessCount = 0;
 let failureCount = 0;
 
@@ -12,7 +12,7 @@ export function outPutResult(groups: Group[]) {
     return;
   }
 
-  let tabSpace = detaultTab;
+  let tabSpace = SPACE;
   breakLine();
   groups.forEach((group) => printGroup(group, tabSpace));
   showSummary();
@@ -28,12 +28,12 @@ function printGroup(group: Group, tab: string) {
   }
 
   if (group.subGroups) {
-    tab += detaultTab;
+    tab += SPACE;
     group.subGroups.forEach((subGroup) => printGroup(subGroup, ''));
   }
 
   if (group.tests) {
-    tab += detaultTab;
+    tab += SPACE;
     group.tests.forEach((test) => printTest(test, tab));
   }
 }
@@ -44,12 +44,12 @@ function printTest(test: Test, tab: string) {
   }
 
   if (test.subTests) {
-    tab += detaultTab;
+    tab += SPACE;
     test.subTests.forEach((subTest) => printTest(subTest, tab));
   }
 
   if (test.assertions) {
-    tab += detaultTab;
+    tab += SPACE;
     test.assertions.forEach((asser) => printAssertion(asser, tab));
   }
 }

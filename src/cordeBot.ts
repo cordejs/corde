@@ -2,6 +2,7 @@ import { Guild, Channel, Client, TextChannel, AwaitMessagesOptions } from 'disco
 import runtime from './runtime';
 import { RuntimeErro } from './errors';
 import ConfigOptions from './config';
+import { DEFAULT_TIMEOUT } from './consts';
 
 class CordeBot {
   private _client: Client;
@@ -85,7 +86,7 @@ class CordeBot {
   private createWatchResponseConfigs(): AwaitMessagesOptions {
     return {
       max: 1,
-      time: runtime.timeOut ? runtime.timeOut : 5000,
+      time: runtime.timeOut ? runtime.timeOut : DEFAULT_TIMEOUT,
       errors: ['time'],
     };
   }
