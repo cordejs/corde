@@ -30,7 +30,7 @@
         src="https://img.shields.io/codecov/c/github/lucasgmagalhaes/corde?style=flat-square"
       />
     </a>
-     <a href="https://www.npmjs.com/package/corde">
+    <a href="https://www.npmjs.com/package/corde">
       <img alt="Npm version" src="https://img.shields.io/npm/v/corde?style=flat-square" />
     </a>
   </p>
@@ -48,12 +48,17 @@
       />
     </a>
   </p>
+  <p>
+    <a href="https://nodei.co/npm/corde/"
+      ><img src="https://nodei.co/npm/corde.png?downloads=true&downloadRank=true&stars=true"
+    /></a>
+  </p>
 </div>
 
 
-* [About](#about)
-* [Getting Started](#getting-started)
-* [Configurations](#configurations
+* [About](#-about)
+* [Getting Started](#-getting-started)
+* [Configurations](#%EF%B8%8F-configurations)
 
 ## 👀 About
 
