@@ -25,7 +25,7 @@
     "build": "tsc -p .",
     "watch": "tsc -w",
     "test": "jest",
-    "test-with-coverage": "jest --collect-coverage",
+    "test-with-coverage": "jest --collect-coverage --collectCoverageFrom=src/**/*.ts --collectCoverageFrom='!src/errors/*.ts'",
     "refresh": "rm -rf ./node_modules ./package-lock.json && npm install",
     "tslint": "tslint --fix 'src/**/*.ts'",
     "np": "np --no-cleanup --no-yarn",
