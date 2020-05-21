@@ -30,6 +30,8 @@
         src="https://img.shields.io/codecov/c/github/lucasgmagalhaes/corde?style=flat-square"
       />
     </a>
+  </p>
+  <p>
     <a href="https://david-dm.org/lucasgmagalhaes/corde">
       <img
         alt="Dependencies Status"
@@ -47,6 +49,7 @@
     </a>
   </p>
 </div>
+
 
 
 
