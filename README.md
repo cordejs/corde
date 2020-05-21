@@ -62,12 +62,10 @@
 * [Configurations](#%EF%B8%8F-configurations)
 
 ## 👀 About
-------
 
 Corde is a small testing library for Discord.js. As there is a tool to create bots for Discord, it's cool to also have a tool to test then. Corde objective is to be simple, fast and readable to delevopers, such as many others unity test tool around the web.
 
 ## 🚀 Getting started
-------
 
 Starting create tests with Corde is realy simple. First install it locally with npm `npm i -D corde` or yarn `yarn add -D corde`. You can also install it globally: `npm i -g corde` or `yarn global add corde`.
 
@@ -117,7 +115,6 @@ What is happenning ?
 5)``afterAll`` is a fuction that is used to run something **after** the execution of tests. Put there the instructions that make the logoff of the bot, i.e.
 
 ## ⚙️ Configurations
-------
 
 | Option  | Description  |
 |    --   |      --      |
