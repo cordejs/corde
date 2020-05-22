@@ -39,7 +39,7 @@
     "@commitlint/cli": "^8.2.0",
     "@commitlint/config-conventional": "^8.2.0",
     "@types/jest": "^25.2.1",
-    "@types/node": "^14.0.4",
+    "@types/node": "^14.0.5",
     "@types/rewire": "^2.5.28",
     "@types/ws": "^7.2.4",
     "babel-jest": "^26.0.1",
