@@ -30,7 +30,8 @@
     "tslint": "tslint --fix 'src/**/*.ts'",
     "np": "np --no-cleanup --no-yarn",
     "format": "prettier --write \"src/**/*.ts\"",
-    "lint": "tslint --project tsconfig.json -t stylish"
+    "lint": "tslint --project tsconfig.json -t stylish",
+    "kill": "./bin/kill.bat"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
