@@ -13,15 +13,22 @@ const SPACE = '    ';
 let sucessCount = 0;
 let failureCount = 0;
 
+/**
+ * Prints the output of each assertion.
+ * @param groups All groups of tests
+ * @returns Returns true if all tests has passed
+ */
 export function outPutResult(groups: Group[]) {
   if (!groups) {
-    return;
+    return false;
   }
 
   let tabSpace = SPACE;
   breakLine();
   groups.forEach((group) => printGroup(group, tabSpace));
   showSummary();
+
+  return failureCount === 0;
 }
 
 function breakLine() {

@@ -56,9 +56,14 @@ export async function runTestsFromConfigs() {
       if (hasConnected) {
         runtime.channel = cordeBot.getChannelForTests();
         await executeTestCases(runtime.tests);
-        outPutResult(runtime.tests);
+        const hasAllTestsPassed = outPutResult(runtime.tests);
         finishProcess();
-        process.exit(0);
+
+        if (hasAllTestsPassed) {
+          process.exit(0);
+        } else {
+          process.exit(1);
+        }
       }
     });
   } catch (error) {
