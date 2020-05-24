@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "A simple library for Discord bot tests",
   "main": "./lib/index.js",
-  "types": "./lib/typings/index.d.ts",
+  "types": "./lib/index.d.ts",
   "directories": {
     "lib": "bin"
   },

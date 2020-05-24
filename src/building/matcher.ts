@@ -1,37 +1,42 @@
 import Thread from './thread';
 import { Group, messageType, messageExpectationType } from './models';
 import log from '../utils/log';
-import { MessageEmbed } from 'discord.js';
+import { MessageEmbed, Message } from 'discord.js';
 
-export class Matcher {
-  private commandName: string;
+export interface Matches {
+  shouldReturn(expect: string | MessageEmbed): void;
+  shouldNotReturn(notExpect: string | MessageEmbed): void;
+}
 
-  constructor(input: string) {
-    this.commandName = input;
-  }
+export function matcher(commandName: string): Matches {
+  return {
+    shouldReturn: function (expect: string | MessageEmbed) {
+      _buildShouldReturnMatch(expect, true);
+    },
+    shouldNotReturn: function (notExpect: string | MessageEmbed) {
+      _buildShouldReturnMatch(notExpect, false);
+    },
+  };
 
-  public shouldReturn(expect: string | MessageEmbed) {
+  function _buildShouldReturnMatch(expect: messageExpectationType, isTrueStatement: boolean) {
     if (typeof expect === 'string') {
-      this.return(expect);
+      buildAssertion(expect, true, 'text', commandName);
     } else {
-      this.return(expect, true, 'embed');
+      buildAssertion(expect, isTrueStatement, 'embed', commandName);
     }
   }
 
-  public shouldNotReturn(notExpect: string) {
-    this.return(notExpect, false);
-  }
-
-  private return(
+  function buildAssertion(
     expect: messageExpectationType,
     usingTrueStatement: boolean = true,
     messageType: messageType = 'text',
+    commandName: string,
   ) {
     Thread.isBuildRunning = true;
     if (Thread.hasTest || Thread.hasGroup) {
       Thread.assertions.push({
         expectation: expect,
-        commandName: this.commandName,
+        commandName: commandName,
         usingTrueStatement: usingTrueStatement,
         messageType: messageType,
       });
@@ -42,7 +47,7 @@ export class Matcher {
             assertions: [
               {
                 expectation: expect,
-                commandName: this.commandName,
+                commandName: commandName,
                 usingTrueStatement: usingTrueStatement,
                 messageType: messageType,
               },
