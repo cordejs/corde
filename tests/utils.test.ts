@@ -14,6 +14,12 @@ describe('utils', () => {
     expect(clone([{ obj: 1 }, { obj: 2 }])).not.toBe([{ obj: 1 }, { obj: 2 }]);
   });
 
+  it('stringify clone must be equal to its stringified object', () => {
+    expect(JSON.stringify(clone([{ obj: 1 }, { obj: 2 }]))).toEqual(
+      JSON.stringify([{ obj: 1 }, { obj: 2 }]),
+    );
+  });
+
   it('Should throw exception if parameter object is undefined', () => {
     try {
       clone(undefined);

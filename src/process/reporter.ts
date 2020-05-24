@@ -1,6 +1,12 @@
-import { Group, Test, AssertionProps } from '../building/models';
+import {
+  Group,
+  Test,
+  AssertionProps,
+  messageExpectationType,
+  messageOutputType,
+} from '../building/models';
 import chalk from 'chalk';
-
+import assert from 'assert';
 import log from '../utils/log';
 
 const SPACE = '    ';
@@ -55,27 +61,12 @@ function printTest(test: Test, tab: string) {
 }
 
 function printAssertion(assert: AssertionProps, tab: string) {
-  if (
-    (assert.usingTrueStatement && assert.output !== assert.expectation) ||
-    (!assert.usingTrueStatement && assert.output === assert.expectation)
-  ) {
-    failureCount++;
-    log.printFailure(
-      tab,
-      assert.commandName,
-      assert.expectation,
-      assert.output,
-      assert.usingTrueStatement,
-    );
-  } else {
-    log.printSucess(
-      tab,
-      assert.commandName,
-      assert.expectation,
-      assert.output,
-      assert.usingTrueStatement,
-    );
+  if (isExpectaionEqualToOutput(assert.expectation, assert.output, assert.usingTrueStatement)) {
+    log.printSucess(tab, assert);
     sucessCount++;
+  } else {
+    failureCount++;
+    log.printFailure(tab, assert);
   }
 }
 
@@ -104,12 +95,45 @@ function printFullSuccess() {
 }
 
 function printPartialSuccess() {
-  console.log('Tests passed with erros.');
+  console.log('Tests passed with errors.');
+  console.log(`${log.bgError(' FAILURES: ')} ${chalk.bold(failureCount)}`);
   console.log(`${log.bgSucess(' SUCESS: ')} ${chalk.bold(sucessCount)}`);
-  console.log(`${chalk.bgRed(' FAILURES: ')} ${chalk.bold(failureCount)}`);
 }
 
 function printFullFailure() {
   console.log('All tests fail.');
   console.log(`${chalk.bgRed(' FAILURES: ')} ${chalk.bold(failureCount)}`);
+}
+
+function isExpectaionEqualToOutput(
+  expectation: messageExpectationType,
+  output: messageOutputType,
+  isTrueStatement: boolean,
+) {
+  if (typeof expect === 'string') {
+    return (
+      (isTrueStatement && expectation === output) || (!isTrueStatement && expectation !== output)
+    );
+  } else if (isTrueStatement) {
+    try {
+      assert.deepEqual(expectation, output);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  } else {
+    try {
+      assert.notDeepEqual(expectation, output);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+}
+
+function stringifyIfNeed(value: messageExpectationType | messageOutputType) {
+  if (typeof value === 'string') {
+    return value;
+  }
+  return JSON.stringify(value);
 }

@@ -11,7 +11,7 @@ export async function executeTestCases(groups: Group[]) {
 
 async function trySendMessage(assertion: AssertionProps) {
   try {
-    return await cordeBot.sendMessage(assertion.commandName);
+    return await cordeBot.sendMessage(assertion.commandName, assertion.messageType);
   } catch (error) {
     return 'Timeout';
   }

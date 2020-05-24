@@ -1,5 +1,5 @@
 import Thread from './thread';
-import { Group } from './models';
+import { Group, messageType, messageExpectationType } from './models';
 import log from '../utils/log';
 import { MessageEmbed } from 'discord.js';
 
@@ -12,10 +12,9 @@ export class Matcher {
 
   public shouldReturn(expect: string | MessageEmbed) {
     if (typeof expect === 'string') {
-      this.return(expect, true);
+      this.return(expect);
     } else {
-      const messageObejct = expect.toJSON();
-      return this.return(JSON.stringify(messageObejct), true, true);
+      this.return(expect, true, 'embed');
     }
   }
 
@@ -23,13 +22,18 @@ export class Matcher {
     this.return(notExpect, false);
   }
 
-  private return(expect: string, usingTrueStatement: boolean, isMessageEmbed?: boolean) {
+  private return(
+    expect: messageExpectationType,
+    usingTrueStatement: boolean = true,
+    messageType: messageType = 'text',
+  ) {
     Thread.isBuildRunning = true;
     if (Thread.hasTest || Thread.hasGroup) {
       Thread.assertions.push({
         expectation: expect,
         commandName: this.commandName,
         usingTrueStatement: usingTrueStatement,
+        messageType: messageType,
       });
     } else {
       const group: Group = {
@@ -40,7 +44,7 @@ export class Matcher {
                 expectation: expect,
                 commandName: this.commandName,
                 usingTrueStatement: usingTrueStatement,
-                isEmbbedMessage: isMessageEmbed,
+                messageType: messageType,
               },
             ],
           },

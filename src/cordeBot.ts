@@ -1,7 +1,18 @@
-import { Guild, Channel, Client, TextChannel, AwaitMessagesOptions } from 'discord.js';
+import {
+  Guild,
+  Channel,
+  Client,
+  TextChannel,
+  AwaitMessagesOptions,
+  Collection,
+  Message,
+  MessageEmbed,
+} from 'discord.js';
 import runtime from './runtime';
 import { RuntimeErro } from './errors';
 import ConfigOptions from './config';
+import { messageType, MinifiedEmbedMessage, messageOutputType } from './building/models';
+import { pick } from './utils/utils';
 
 const DEFAULT_TIMEOUT = 5000;
 
@@ -57,7 +68,10 @@ class CordeBot {
    * @return Promisse rejection if a testing bot does not send any message in the timeout value setted,
    * or a resolve for the promisse with the message returned by the testing bot.
    */
-  async sendMessage(message: string): Promise<string> {
+  async sendMessage(
+    message: string,
+    responseType: messageType = 'text',
+  ): Promise<messageOutputType> {
     return new Promise(async (resolve, reject) => {
       this.validateEntryData(runtime, message);
       const formatedMessage = runtime.botPrefix + message;
@@ -65,12 +79,61 @@ class CordeBot {
 
       try {
         const answer = await this.awaitMessagesFromTestingBot();
-        const content = answer.first().content;
+        let content = this.getMessgeByType(answer, responseType);
         resolve(content);
       } catch (error) {
         reject('Test timeout');
       }
     });
+  }
+
+  /**
+   * Format Discord responses
+   * @param answer Discord response for a message sent
+   * @param type Type expected of that message
+   *
+   * @description
+   *   Discord adds some attributes that are not present in embed message before it is sent
+   *
+   *  This is data **before** send to Discord
+   *
+   *  ```javascript
+   *   "image": {
+   *       "url": "https://i.imgur.com/wSTFkRM.png"
+   *   },
+   *   "thumbnail": {
+   *       "url": "https://i.imgur.com/wSTFkRM.png"
+   *   }
+   *  ```
+   *
+   *  And this is part of embed message **after** get from Discord
+   *
+   *  ```javascript
+   *   "image": {
+   *     "height": 0,
+   *     "proxyURL": "https://images-ext-2.discordapp.net/external/DoAGN014Q46B7iDBr2VJyHUL59QLSWdEAZ5wOoWe8CY/https/i.imgur.com/wSTFkRM.png",
+   *     "url": "https://i.imgur.com/wSTFkRM.png",
+   *     "width": 0
+   *   },
+   *   "thumbnail": {
+   *       "height": 0,
+   *       "proxyURL": "https://images-ext-2.discordapp.net/external/DoAGN014Q46B7iDBr2VJyHUL59QLSWdEAZ5wOoWe8CY/https/i.imgur.com/wSTFkRM.png",
+   *       "url": "https://i.imgur.com/wSTFkRM.png",
+   *      "width": 0
+   *  }
+   *  ```
+   */
+  private getMessgeByType(answer: Collection<string, Message>, type: messageType) {
+    if (type === 'text') {
+      return answer.first().content;
+    } else if (type === 'embed') {
+      const tempObject = answer.first().embeds[0].toJSON() as MinifiedEmbedMessage;
+      tempObject.image = pick(tempObject.image, 'url');
+      tempObject.thumbnail = pick(tempObject.thumbnail, 'url');
+      return tempObject;
+    } else {
+      return '';
+    }
   }
 
   private async awaitMessagesFromTestingBot() {

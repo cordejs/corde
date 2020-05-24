@@ -27,7 +27,6 @@ export interface Test {
 /**
  * Represents **group** structure
  */
-
 export interface Group {
   name?: string;
   subGroups?: Group[];

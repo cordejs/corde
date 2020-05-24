@@ -12,6 +12,7 @@ const singleGroup: Group = {
           commandName: Consts.COMMAND_1,
           expectation: Consts.COMMAND_RESPONSE_1,
           usingTrueStatement: true,
+          messageType: 'text',
         },
       ],
     },

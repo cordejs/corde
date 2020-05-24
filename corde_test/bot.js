@@ -7,6 +7,22 @@ const config = JSON.parse(file);
 
 const bot = new Discord.Client();
 
+const embedMsg = new Discord.MessageEmbed()
+  .setColor('#0099ff')
+  .setTitle('Some title')
+  .setURL('https://discord.js.org/')
+  .setAuthor('Some name', 'https://i.imgur.com/wSTFkRM.png', 'https://discord.js.org')
+  .setDescription('Some description here')
+  .setThumbnail('https://i.imgur.com/wSTFkRM.png')
+  .addFields(
+    { name: 'Regular field title', value: 'Some value here' },
+    { name: '\u200B', value: '\u200B' },
+    { name: 'Inline field title', value: 'Some value here', inline: true },
+    { name: 'Inline field title', value: 'Some value here', inline: true },
+  )
+  .addField('Inline field title', 'Some value here', true)
+  .setImage('https://i.imgur.com/wSTFkRM.png');
+
 bot.on('message', async (message) => {
   if (message.content.indexOf('') !== 0) return;
 
@@ -17,6 +33,8 @@ bot.on('message', async (message) => {
     hello(message);
   } else if (command === 'hey') {
     hey(message);
+  } else if (command === 'embed') {
+    embed(message);
   }
 });
 
@@ -36,11 +54,17 @@ function hey(msg) {
   msg.channel.send('hey!!');
 }
 
+/**
+ * @param {Discord.Message} msg
+ */
+function embed(msg) {
+  msg.channel.send(embedMsg);
+}
+
 function loginBot() {
   bot.login(config.botTestToken);
 }
 
 exports.bot = bot;
 exports.loginBot = loginBot;
-
-loginBot();
+exports.embedMsg = embedMsg;
