@@ -110,7 +110,7 @@ function isExpectaionEqualToOutput(
   output: messageOutputType,
   isTrueStatement: boolean,
 ) {
-  if (typeof expect === 'string') {
+  if (typeof expectation === 'string') {
     return (
       (isTrueStatement && expectation === output) || (!isTrueStatement && expectation !== output)
     );
