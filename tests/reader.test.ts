@@ -1,20 +1,37 @@
 import { getTestList } from '../src/process/reader';
-import { Group } from '../src/building/models';
+import { Group, AssertionProps } from '../src/building/models';
 import Consts from './mocks/constsNames';
+
+const assertion: AssertionProps = {
+  commandName: Consts.COMMAND_1,
+  expectation: Consts.COMMAND_RESPONSE_1,
+  usingTrueStatement: true,
+  messageType: 'text',
+};
 
 const singleGroup: Group = {
   name: Consts.GROUP_1,
   tests: [
     {
       name: Consts.TEST_1,
-      assertions: [
-        {
-          commandName: Consts.COMMAND_1,
-          expectation: Consts.COMMAND_RESPONSE_1,
-          usingTrueStatement: true,
-          messageType: 'text',
-        },
-      ],
+      assertions: [assertion],
+    },
+  ],
+};
+
+const singleTest: Group = {
+  tests: [
+    {
+      name: Consts.TEST_1,
+      assertions: [assertion],
+    },
+  ],
+};
+
+const singleCommand: Group = {
+  tests: [
+    {
+      assertions: [assertion],
     },
   ],
 };
@@ -30,5 +47,17 @@ describe('reader', () => {
     const groupResponse = await getTestList([`${process.cwd()}/tests/mocks/sampleDoubleGroup`]);
     const groupExpectation: Group[] = [singleGroup, singleGroup];
     expect(groupResponse).toEqual(groupExpectation);
+  });
+
+  it('Should get single test function', async () => {
+    const groupResponse = await getTestList([`${process.cwd()}/tests/mocks/sampleSingleTest`]);
+    const groupExpectation: Group[] = [singleTest];
+    expect(groupResponse).toEqual(groupExpectation);
+  });
+
+  it('Should get a single command', async () => {
+    const groupResponse = await getTestList([`${process.cwd()}/tests/mocks/onlyCommands`]);
+    const groupExpectation: Group[] = [singleCommand];
+    expect<Group[]>(groupResponse).toEqual<Group[]>(groupExpectation);
   });
 });

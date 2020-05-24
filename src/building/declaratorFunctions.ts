@@ -1,5 +1,5 @@
 import Thread from './thread';
-import { matcher, Matches } from './matcher';
+import matcher, { Matches } from './matcher';
 import { Test } from './models';
 import { clone } from '../utils/utils';
 import { AssertionProps } from './models';
