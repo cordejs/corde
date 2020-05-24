@@ -1,5 +1,5 @@
 import arg from 'arg';
-import { runTests, runTestsFromConfigs } from './process/engine';
+import { runTestsFromFiles, runTestsFromConfigs } from './process/engine';
 import fs from 'fs';
 import path from 'path';
 import { ConfigFileNotFoundError } from './errors';
@@ -10,7 +10,7 @@ export function cli(args: string[]) {
   thowErrorIfConfigFileNotExists();
 
   if (files && files.length > 0 && checkIfFilesExist(files)) {
-    runTests(files);
+    runTestsFromFiles(files);
   } else {
     runTestsFromConfigs();
   }

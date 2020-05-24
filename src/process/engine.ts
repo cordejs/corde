@@ -17,29 +17,26 @@ import Thread from '../building/thread';
 
 let spinner: Ora;
 
-export async function runTests(files: string[]) {
-  try {
-    const relativePaths = getFilesFullPath(files);
-    startLoading('Reading files');
-    const configs = loadConfig();
-    runtime.loadFromConfigs(configs);
-    runtime.tests = await getTestList(relativePaths);
-    stopLoading();
-  } catch (error) {
-    console.log(error);
-    process.exit(1);
-  }
+export async function runTestsFromFiles(files: string[]) {
+  const relativePaths = getFilesFullPath(files);
+  loadConfigs();
+  await runTests(relativePaths);
 }
 
 export async function runTestsFromConfigs() {
+  loadConfigs();
+  const files = await readDir(runtime.testFilesDir);
+  await runTests(files);
+}
+
+function loadConfigs() {
+  const configs = loadConfig();
+  runtime.loadFromConfigs(configs);
+}
+
+async function runTests(files: string[]) {
   try {
     startLoading('Reading cool configs');
-    const configs = loadConfig();
-    runtime.loadFromConfigs(configs);
-
-    setMessage('Reading test files');
-    const files = await readDir(runtime.testFilesDir);
-
     runtime.tests = await getTestList(files);
   } catch (error) {
     console.log(error);
