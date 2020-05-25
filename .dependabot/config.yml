@@ -8,9 +8,9 @@ update_configs:
       - match:
           dependency_type: 'all'
           update_type: 'all'
-  - package_manager: "daily"	
+  - package_manager: "javascript"	
     directory: "./examples/javascript"	
-    update_schedule: "weekly"	
+    update_schedule: "daily"	
     automerged_updates:	
       - match:	
           dependency_type: "all"	
