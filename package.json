@@ -55,7 +55,7 @@
     "rewire": "^5.0.0",
     "source-map-support": "^0.5.16",
     "ts-jest": "^25.3.1",
-    "ts-node": "^8.8.1",
+    "ts-node": "^8.10.2",
     "tslint": "^6.1.1",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.9.3"
