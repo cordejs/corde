@@ -1,11 +1,6 @@
 import Thread from './thread';
-import { messageType, messageExpectationType } from './models';
+import { messageType, messageExpectationType, Matches } from './models';
 import { MessageEmbed } from 'discord.js';
-
-export interface Matches {
-  shouldReturn(expect: string | MessageEmbed): void;
-  shouldNotReturn(notExpect: string | MessageEmbed): void;
-}
 
 export default function matcher(commandName: string): Matches {
   return {

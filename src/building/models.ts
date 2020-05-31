@@ -68,3 +68,24 @@ export interface MinifiedEmbedMessage {
   type: string;
   url: string;
 }
+
+/**
+ * Defines all functions that can be used
+ * to check a bot reaction of a command.
+ */
+export interface Matches {
+  /**
+   * Defines the message expected to be returned by a
+   * command.
+   *
+   * @param expect A message returned by a bot after invoke a command
+   */
+  shouldReturn(expect: string | MessageEmbed): void;
+  /**
+   * Defines the message **not** expected to be returned by a
+   * command.
+   *
+   * @param expect A message that **should not be** returned by a bot after invoke a command
+   */
+  shouldNotReturn(notExpect: string | MessageEmbed): void;
+}
