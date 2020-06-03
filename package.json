@@ -8,9 +8,6 @@
     "lib": "bin"
   },
   "bin": "bin/corde",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "keywords": [
     "cli",
     "typescript",
