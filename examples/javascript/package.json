@@ -13,6 +13,6 @@
     "dotenv": "^8.2.0"
   },
   "devDependencies": {
-    "corde": "^0.1.0"
+    "corde": "^0.2.1"
   }
 }
