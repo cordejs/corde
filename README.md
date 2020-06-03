@@ -49,9 +49,8 @@
     </a>
   </p>
   <p>
-    <a href="https://nodei.co/npm/corde/"
-      ><img src="https://nodei.co/npm/corde.png?downloads=true&downloadRank=true&stars=true"
-    /></a>
+    <a href="https://nodei.co/npm/corde/">
+      <img alt="npm" src="https://img.shields.io/npm/dt/corde?style=flat-square"></a>
   </p>
 </div>
 
