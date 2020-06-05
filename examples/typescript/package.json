@@ -16,6 +16,6 @@
   },
   "devDependencies": {
     "corde": "^0.2.1",
-    "typescript": "^3.9.3"
+    "typescript": "^3.9.5"
   }
 }
