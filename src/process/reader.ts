@@ -21,18 +21,17 @@ export function getTestFilesFromDir(folderFilepath: string[] | string) {
       files.push(...getTestFilesFromDir(fileDir));
     });
   } else {
-    const filePath = folderFilepath;
-    const stats = fs.lstatSync(filePath);
+    const stats = fs.lstatSync(folderFilepath);
     if (stats.isDirectory()) {
       try {
-        fs.readdirSync(filePath).forEach((fileDir) => {
-          files.push(...getTestFilesFromDir(path.resolve(filePath, fileDir)));
+        fs.readdirSync(folderFilepath).forEach((fileDir) => {
+          files.push(...getTestFilesFromDir(path.resolve(folderFilepath, fileDir)));
         });
       } catch (err) {
         throw new Error(err);
       }
-    } else if (stats.isFile() && filePath.includes(Consts.DEFAULT_TEST_FILE_EXTENSION)) {
-      files.push(path.resolve(filePath));
+    } else if (stats.isFile() && folderFilepath.includes(Consts.DEFAULT_TEST_FILE_EXTENSION)) {
+      files.push(path.resolve(folderFilepath));
     }
   }
   return files;
