@@ -10,7 +10,7 @@ export default interface ConfigOptions {
   guildId: string;
   timeOut?: number;
   botPrefix: string;
-  testFilesDir: string;
+  testFiles: string[];
   message: Message;
   channel: TextChannel;
   files: string[];

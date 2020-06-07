@@ -1,6 +1,7 @@
-import { getTestList } from '../src/process/reader';
+import { getTestList, getTestFilesFromDir } from '../src/process/reader';
 import { Group, AssertionProps } from '../src/building/models';
 import Consts from './mocks/constsNames';
+import path from 'path';
 
 const assertion: AssertionProps = {
   commandName: Consts.COMMAND_1,
@@ -36,7 +37,7 @@ const singleCommand: Group = {
   ],
 };
 
-describe('reader', () => {
+describe('tests reader', () => {
   it('Should get single group, test and assertion', async () => {
     const groupResponse = await getTestList([`${process.cwd()}/tests/mocks/sampleWithSingleGroup`]);
     const groupExpectation: Group[] = [singleGroup];
@@ -59,5 +60,26 @@ describe('reader', () => {
     const groupResponse = await getTestList([`${process.cwd()}/tests/mocks/onlyCommands`]);
     const groupExpectation: Group[] = [singleCommand];
     expect<Group[]>(groupResponse).toEqual<Group[]>(groupExpectation);
+  });
+});
+
+describe('tests files reader', () => {
+  const basePath = `${process.cwd()}\\tests\\mocks\\folderForReaderFilesTest`;
+
+  it('Should get only a single file full path', () => {
+    const filePath = `${basePath}\\test1.test.ts`;
+    const files = getTestFilesFromDir([filePath]);
+    expect(files).toEqual([filePath]);
+  });
+
+  it('Should get all recursively files', () => {
+    const filesPath = [
+      `${basePath}\\test1.test.ts`,
+      `${basePath}\\test2.test.ts`,
+      `${basePath}\\testFolder\\test3.test.ts`,
+      `${basePath}\\testFolder\\testFolder2\\test4.test.ts`,
+    ];
+    const files = getTestFilesFromDir([basePath]);
+    expect(files).toEqual(filesPath);
   });
 });

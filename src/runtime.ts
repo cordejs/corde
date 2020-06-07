@@ -42,7 +42,7 @@ class Config implements ConfigOptions {
   /**
    * Path for case tests. Use this from the base directory of the application
    */
-  public testFilesDir: string;
+  public testFiles: string[];
   /**
    * Discord message where all tests will run
    */
@@ -79,7 +79,7 @@ class Runtime extends Config {
     this.channelId = configs.channelId;
     this.cordeTestToken = configs.cordeTestToken;
     this.guildId = configs.guildId;
-    this.testFilesDir = configs.testFilesDir;
+    this.testFiles = configs.testFiles;
     this.timeOut = configs.timeOut;
     this.channel = null;
     this.files = [];
