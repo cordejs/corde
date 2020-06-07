@@ -67,17 +67,17 @@ describe('tests files reader', () => {
   const basePath = `${process.cwd()}/tests/mocks/folderForReaderFilesTest`;
 
   it('Should get only a single file full path', () => {
-    const filePath = path.join(basePath, '\\test1.test.ts');
+    const filePath = path.join(basePath, '/test1.test.ts');
     const files = getTestFilesFromDir([filePath]);
     expect(files).toEqual([filePath]);
   });
 
   it('Should get all recursively files', () => {
     const filesPath = [
-      path.join(basePath, '\\test1.test.ts'),
-      path.join(basePath, '\\test2.test.ts'),
-      path.join(basePath, '\\testFolder/test3.test.ts'),
-      path.join(basePath, '\\testFolder/testFolder2/test4.test.ts'),
+      path.join(basePath, '/test1.test.ts'),
+      path.join(basePath, '/test2.test.ts'),
+      path.join(basePath, '/testFolder/test3.test.ts'),
+      path.join(basePath, '/testFolder/testFolder2/test4.test.ts'),
     ];
     const files = getTestFilesFromDir([basePath]);
     expect(files).toEqual(filesPath);
