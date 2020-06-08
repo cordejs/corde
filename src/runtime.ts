@@ -42,7 +42,7 @@ class Config implements ConfigOptions {
   /**
    * Path for case tests. Use this from the base directory of the application
    */
-  public testFiles: string[];
+  public testFilesDir: string;
   /**
    * Discord message where all tests will run
    */
@@ -65,7 +65,6 @@ class Config implements ConfigOptions {
    * Defines if all tests must execute in silent mode.
    */
   public silentMode: boolean;
-  public botFilePath: string;
 }
 
 class Runtime extends Config {
@@ -79,12 +78,11 @@ class Runtime extends Config {
     this.channelId = configs.channelId;
     this.cordeTestToken = configs.cordeTestToken;
     this.guildId = configs.guildId;
-    this.testFiles = configs.testFiles;
+    this.testFilesDir = configs.testFilesDir;
     this.timeOut = configs.timeOut;
     this.channel = null;
     this.files = [];
     this.silentMode = configs.silentMode;
-    this.botFilePath = configs.botFilePath;
   }
 
   async sendMessageToChannel(message: string) {

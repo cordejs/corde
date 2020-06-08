@@ -10,11 +10,10 @@ export default interface ConfigOptions {
   guildId: string;
   timeOut?: number;
   botPrefix: string;
-  testFiles: string[];
+  testFilesDir: string;
   message: Message;
   channel: TextChannel;
   files: string[];
   executeInBotLogin: boolean;
   silentMode: boolean;
-  botFilePath: string;
 }
