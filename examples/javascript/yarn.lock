@@ -131,10 +131,10 @@ combined-stream@^1.0.8:
   dependencies:
     delayed-stream "~1.0.0"
 
-corde@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/corde/-/corde-0.2.1.tgz#6bbdb10e927b626481e183c190534685bd96eee3"
-  integrity sha512-sEHq7UjsqSfVQS2qIPgABNKiPTr70tvS0j+xH2BUP1a+LAdm7E6qI2esbrYWSZDJl/aor6HKVo1OVeGzwfbkdg==
+corde@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/corde/-/corde-0.2.3.tgz#692ba01de2458907fd9535e3567a66efd22137fc"
+  integrity sha512-V4rPERESD0wcoXcg0dr/0/5gm6UYvBBJbGFOyC0r03jcN6bwU7u8+YssCnhjF3IDxLcBi7lHGxH+yLXgZtDhUg==
   dependencies:
     arg "^4.1.3"
     chalk "^4.0.0"
