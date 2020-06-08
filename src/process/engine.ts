@@ -1,4 +1,4 @@
-import { getTestList, getTestFilesFromDir } from './reader';
+import { getTestList } from './reader';
 import fs from 'fs';
 import {
   FilesNotFoundError,
@@ -25,7 +25,7 @@ export async function runTestsFromFiles(files: string[]) {
 
 export async function runTestsFromConfigs() {
   loadConfigs();
-  const files = getTestFilesFromDir(runtime.testFiles);
+  const files = await readDir(runtime.testFilesDir);
   await runTests(files);
 }
 
@@ -162,7 +162,7 @@ function validadeConfigs(configs: ConfigOptions) {
     errors.push('bot test token not informed');
   } else if (!configs.botTestId) {
     errors.push('bot test id not informed');
-  } else if (!configs.testFiles) {
+  } else if (!configs.testFilesDir) {
     errors.push('bot test id not informed');
   } else if (!configs.botFilePath) {
     errors.push('bot file path not informed');
@@ -184,4 +184,29 @@ function validadeConfigs(configs: ConfigOptions) {
 function buildMissingPropertiesErrorAndThrow(errorString: string, erros: string[]) {
   erros.forEach((error) => (errorString += `\n- ${error}`));
   throw new MissingPropertyError(errorString);
+}
+
+/**
+ * Load tests files into configs
+ */
+async function readDir(dir: string) {
+  let files: string[] = [];
+  if (dir) {
+    // Get all tests files
+    try {
+      if (fs.existsSync(dir)) {
+        fs.readdirSync(dir).forEach((file) => {
+          if (file.includes('.test.')) {
+            files.push(path.resolve(`${dir}/${file}`));
+          }
+        });
+      } else {
+        throw new Error(`Path ${dir} does not exists}`);
+      }
+    } catch (err) {
+      console.error(err);
+      throw new Error(err);
+    }
+  }
+  return files;
 }
