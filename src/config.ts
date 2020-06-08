@@ -16,5 +16,4 @@ export default interface ConfigOptions {
   files: string[];
   executeInBotLogin: boolean;
   silentMode: boolean;
-  botFilePath: string;
 }

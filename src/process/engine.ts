@@ -161,11 +161,9 @@ function validadeConfigs(configs: ConfigOptions) {
   } else if (!configs.botTestToken) {
     errors.push('bot test token not informed');
   } else if (!configs.botTestId) {
-    errors.push('bot test id not informed');
+    errors.push('test files dir not informed');
   } else if (!configs.testFilesDir) {
-    errors.push('bot test id not informed');
-  } else if (!configs.botFilePath) {
-    errors.push('bot file path not informed');
+    errors.push('bot file');
   }
 
   let errorsString = '';

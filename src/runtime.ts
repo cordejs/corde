@@ -65,7 +65,6 @@ class Config implements ConfigOptions {
    * Defines if all tests must execute in silent mode.
    */
   public silentMode: boolean;
-  public botFilePath: string;
 }
 
 class Runtime extends Config {
@@ -84,7 +83,6 @@ class Runtime extends Config {
     this.channel = null;
     this.files = [];
     this.silentMode = configs.silentMode;
-    this.botFilePath = configs.botFilePath;
   }
 
   async sendMessageToChannel(message: string) {

@@ -5,6 +5,5 @@
   "guildId": "THE_GUID_OF_BOT_HERE",
   "channelId": "CHANNELS_ID_HERE",
   "botPrefix": "+",
-  "testFilesDir": "./test",
-  "botFilePath": "./bot.js"
+  "testFilesDir": "./test"
 }
