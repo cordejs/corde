@@ -14,7 +14,6 @@ export function getTestsFromFiles(files: string[]) {
 
     addTestsGroupmentToGroupIfExist();
     addTestFuncionsToGroupIfExists();
-
     return Thread.groups;
   }
   throw new FilesNotFoundError();

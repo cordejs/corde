@@ -28,7 +28,7 @@ export async function runTestsFromConfigs() {
     const files = await readDir(runtime.configs.testFilesDir);
     await runTests(files);
   } catch (error) {
-    finishProcess(1);
+    finishProcess(1, error);
   }
 }
 
@@ -38,31 +38,21 @@ function loadConfigs() {
 }
 
 async function runTests(files: string[]) {
-  try {
-    startLoading('Reading cool configs');
-    const testsGroups = getTestsFromFiles(files);
+  startLoading('Reading cool configs');
+  const testsGroups = getTestsFromFiles(files);
 
-    setMessage('starting bots');
-    Thread.beforeStartFunctions.forEach((fn) => fn());
+  setMessage('starting bots');
+  Thread.beforeStartFunctions.forEach((fn) => fn());
 
-    try {
-      await runtime.bot.login(runtime.configs.cordeTestToken);
-      setMessage('Running Tests');
-      runtime.bot.hasInited.subscribe(async (hasConnected) => {
-        if (hasConnected) {
-          runTestsAndPrint(testsGroups);
-        }
-      });
-    } catch (error) {
-      console.log(error);
-      stopLoading();
-      finishProcess(error);
-      process.exit(1);
+  await runtime.bot.login(runtime.configs.cordeTestToken);
+
+  setMessage('Running Tests');
+  runtime.bot.hasInited.subscribe(async (hasConnected) => {
+    if (hasConnected) {
+      runtime.loadBotSettings();
+      runTestsAndPrint(testsGroups);
     }
-  } catch (error) {
-    console.log(error);
-    process.exit(1);
-  }
+  });
 }
 
 async function runTestsAndPrint(groups: Group[]) {

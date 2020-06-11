@@ -6,7 +6,6 @@ import { ConfigFileNotFoundError } from './errors';
 
 export function cli(args: string[]) {
   const files = parseArgumentsIntoOptions(args);
-
   thowErrorIfConfigFileNotExists();
 
   if (files && files.length > 0 && checkIfFilesExist(files)) {

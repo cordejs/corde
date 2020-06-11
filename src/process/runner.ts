@@ -3,6 +3,7 @@ import runtime from '../runtime';
 
 export async function executeTestCases(groups: Group[]) {
   const tests = getTestsFromGroup(groups);
+  console.log(JSON.stringify(tests));
   for (const i in tests) {
     const test = tests[i];
     const reports = await runTests(test.testsFunctions);

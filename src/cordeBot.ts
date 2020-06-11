@@ -33,8 +33,8 @@ export default class CordeBot {
    *
    * @see Runtime
    */
-  loadChannel(guidId: string, channelId: string) {
-    const guild = this.findGuild(guidId);
+  loadChannel(guildId: string, channelId: string) {
+    const guild = this.findGuild(guildId);
     const channel = this.findChannel(guild, channelId);
     this.textChannel = this.convertToTextChannel(channel);
   }
@@ -188,15 +188,26 @@ export default class CordeBot {
         `Guild ${guildId} doesn't belong to corde bot. change the guild id in corde.config or add the bot to a valid guild`,
       );
     } else {
-      return this._client.guilds.cache.find((guild) => guild.id === guildId);
+      const guild = this._client.guilds.cache.find((guild) => guild.id === guildId);
+
+      if (guild) {
+        return guild;
+      }
+
+      const availableGuildsIds = this._client.guilds.cache.map(
+        (guildAvailable) => guildAvailable.id,
+      );
+      throw new Error(
+        `Could not find the guild ${guildId}. this client has conections with the following guilds: ${availableGuildsIds}`,
+      );
     }
   }
 
   private findChannel(guild: Guild, channelId: string) {
     if (!guild.channels) {
-      throw new RuntimeErro(`${guild.name} doesn't have a channel with id ${channelId}.`);
-    } else if (!guild.channels.cache.has(channelId || '')) {
-      throw new Error(`${channelId} doesn't appear to be a channel of guild ${guild.name}`);
+      throw new RuntimeErro(`Guild '${guild.name}' do not have any channel.`);
+    } else if (!guild.channels.cache.has(channelId)) {
+      throw new Error(`channel ${channelId} doesn't appear to be a channel of guild ${guild.name}`);
     } else {
       const channel = guild.channels.cache.find((ch) => ch.id === channelId);
 

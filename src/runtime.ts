@@ -45,7 +45,6 @@ class Runtime {
     this.configs.testFilesDir = configs.testFilesDir;
     this.configs.timeOut = configs.timeOut;
     this.configs.files = [];
-    this.loadBotSettings();
   }
 
   loadBotSettings() {

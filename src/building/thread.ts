@@ -28,7 +28,7 @@ export default class Thread {
    */
   static assertions: AssertionProps[] = [];
 
-  static testsFunctions: testFunctionType[];
+  static testsFunctions: testFunctionType[] = [];
   /**
    * List of tests found in running file.
    * @description Tests are the second in position of objects,

@@ -10,16 +10,16 @@ group('main commands', () => {
     command('hello').shouldReturn('hello!!');
   });
 
-  test('Embed command should return a embed message!!', () => {
-    command('embed').shouldReturn(embedMsg);
-  });
+  // test('Embed command should return a embed message!!', () => {
+  //   command('embed').shouldReturn(embedMsg);
+  // });
 });
 
-test('Hello command should return... hello!!', () => {
-  command('hello').shouldReturn('hello!!');
-});
+// test('Hello command should return... hello!!', () => {
+//   command('hello').shouldReturn('hello!!');
+// });
 
-command('hello').shouldReturn('hello!!');
+// command('hello').shouldReturn('hello!!');
 
 afterAll(() => {
   bot.destroy();
