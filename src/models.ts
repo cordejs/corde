@@ -1,8 +1,18 @@
 import { MessageEmbed } from 'discord.js';
+import { Message } from 'discord.js';
+import CordeBot from './cordeBot';
 
 export type messageType = 'text' | 'embed';
 export type messageOutputType = string | MinifiedEmbedMessage;
 export type messageExpectationType = string | MessageEmbed;
+export type testFunctionType = (cordeBot: CordeBot) => TestReport;
+
+export interface TestReport {
+  commandName: string;
+  expectation: string;
+  output: string;
+  testSucessfully: boolean;
+}
 
 /**
  * Represents **command** structure
@@ -88,4 +98,50 @@ export interface Matches {
    * @param expect A message that **should not be** returned by a bot after invoke a command
    */
   shouldNotReturn(notExpect: string | MessageEmbed): void;
+}
+
+/**
+ * Contains a set of properties needed for execution of corde
+ */
+export default interface ConfigOptions {
+  /**
+   * Fake bot used to test the realy one
+   */
+  cordeTestToken: string;
+  /**
+   * User's bot that will be tested
+   */
+  botTestId: string;
+  /**
+   * User's bot token that will run.
+   */
+  botTestToken?: string;
+  /**
+   * Channel where tests will run
+   */
+  channelId: string;
+  /**
+   * Guild where tests will run
+   */
+  guildId: string;
+  /**
+   * Defines max amount of time that a command can run
+   */
+  timeOut?: number;
+  /**
+   * Defines how indentify bot calls
+   */
+  botPrefix: string;
+  /**
+   * Path for case tests. Use this from the base directory of the application
+   */
+  testFilesDir: string;
+  /**
+   * Discord message where all tests will run
+   */
+  message: Message;
+  /**
+   * All tests files
+   */
+  files: string[];
 }

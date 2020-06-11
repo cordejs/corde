@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import { AssertionProps, messageType } from '../building/models';
+import { AssertionProps, messageType } from '../models';
 
 const DEFAULT_SPACE_VALUE = 4;
 

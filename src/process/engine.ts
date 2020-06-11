@@ -9,11 +9,9 @@ import {
 import ora, { Ora, Color } from 'ora';
 import runtime from '../runtime';
 import path from 'path';
-import { executeTestCases } from './runner';
 import { outPutResult } from './reporter';
-import cordeBot from '../cordeBot';
-import ConfigOptions from '../config';
 import Thread from '../building/thread';
+import ConfigOptions from '../models';
 
 let spinner: Ora;
 
@@ -25,19 +23,19 @@ export async function runTestsFromFiles(files: string[]) {
 
 export async function runTestsFromConfigs() {
   loadConfigs();
-  const files = await readDir(runtime.testFilesDir);
+  const files = await readDir(runtime.configs.testFilesDir);
   await runTests(files);
 }
 
 function loadConfigs() {
   const configs = loadConfig();
-  runtime.loadFromConfigs(configs);
+  runtime.setConfigs(configs);
 }
 
 async function runTests(files: string[]) {
   try {
     startLoading('Reading cool configs');
-    runtime.tests = await getTestList(files);
+    //runtime.tests = await getTestList(files);
   } catch (error) {
     console.log(error);
     process.exit(1);
@@ -47,12 +45,12 @@ async function runTests(files: string[]) {
   Thread.beforeStartFunctions.forEach((fn) => fn());
 
   try {
-    await cordeBot.login(runtime.cordeTestToken);
+    await runtime.bot.login(runtime.configs.cordeTestToken);
     setMessage('Running Tests');
-    runtime.cordeBotHasStarted.subscribe(async (hasConnected) => {
+    runtime.bot.hasInited.subscribe(async (hasConnected) => {
       if (hasConnected) {
-        runtime.channel = cordeBot.getChannelForTests();
-        await executeTestCases(runtime.tests);
+        files.forEach((file) => require(file));
+        //await executeTestCases(runtime.tests);
         const hasAllTestsPassed = outPutResult(runtime.tests);
         finishProcess();
 
@@ -73,7 +71,7 @@ async function runTests(files: string[]) {
 
 function finishProcess() {
   stopLoading();
-  cordeBot.logout();
+  runtime.bot.logout();
   Thread.afterAllFunctions.forEach((fn) => fn());
 }
 

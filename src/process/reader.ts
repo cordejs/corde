@@ -1,7 +1,7 @@
 import { FilesNotFoundError } from '../errors';
 import Thread from '../building/thread';
 import { clone } from '../utils/utils';
-import { Test, AssertionProps } from '../building/models';
+import { Test, AssertionProps } from '../models';
 
 export async function getTestList(files: string[]) {
   if (files) {

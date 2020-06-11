@@ -1,8 +1,8 @@
 import Thread from './thread';
 import matcher from './matcher';
-import { Test, Matches } from './models';
+import { Test, Matches } from '../models';
 import { clone } from '../utils/utils';
-import { AssertionProps } from './models';
+import { AssertionProps } from '../models';
 
 /**
  * Declare a bunch of code that will be executed **after** tests beging

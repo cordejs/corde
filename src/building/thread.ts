@@ -1,4 +1,4 @@
-import { AssertionProps, Group, Test } from './models';
+import { AssertionProps, Group, Test } from '../models';
 
 type voidFunction = () => void;
 

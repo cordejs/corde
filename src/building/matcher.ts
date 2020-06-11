@@ -1,10 +1,11 @@
 import Thread from './thread';
-import { messageType, messageExpectationType, Matches } from './models';
+import { messageType, messageExpectationType, Matches } from '../models';
 import { MessageEmbed } from 'discord.js';
+import runtime from '../runtime';
 
 export default function matcher(commandName: string): Matches {
   return {
-    shouldReturn: function (expect: string | MessageEmbed) {
+    shouldReturn: async function (expect: string | MessageEmbed) {
       _buildShouldReturnMatch(expect, true);
     },
     shouldNotReturn: function (notExpect: string | MessageEmbed) {

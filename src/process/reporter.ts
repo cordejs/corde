@@ -1,10 +1,4 @@
-import {
-  Group,
-  Test,
-  AssertionProps,
-  messageExpectationType,
-  messageOutputType,
-} from '../building/models';
+import { Group, Test, AssertionProps, messageExpectationType, messageOutputType } from '../models';
 import chalk from 'chalk';
 import assert from 'assert';
 import log from '../utils/log';

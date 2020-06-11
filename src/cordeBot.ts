@@ -6,18 +6,17 @@ import {
   AwaitMessagesOptions,
   Collection,
   Message,
-  MessageEmbed,
 } from 'discord.js';
-import runtime from './runtime';
+import runtime, { DEFAULT_TEST_TIMEOUT } from './runtime';
 import { RuntimeErro } from './errors';
-import ConfigOptions from './config';
-import { messageType, MinifiedEmbedMessage, messageOutputType } from './building/models';
+import { messageType, MinifiedEmbedMessage, messageOutputType } from './models';
 import { pick } from './utils/utils';
+import { BehaviorSubject } from 'rxjs';
 
-const DEFAULT_TIMEOUT = 5000;
-
-class CordeBot {
+export default class CordeBot {
   private _client: Client;
+  hasInited: BehaviorSubject<boolean>;
+  textChannel: TextChannel;
 
   /**
    * Starts new instance of Discord client
@@ -25,22 +24,27 @@ class CordeBot {
    */
   constructor() {
     this._client = new Client();
+    this.hasInited = new BehaviorSubject<boolean>(false);
     this.loadClientEvents();
+    this.loadChannel(runtime.guildId, runtime.channelId);
   }
 
   /**
    * Get a channel based in the id stored in configs.
+   *
    * @see Runtime
    */
-  getChannelForTests() {
-    const guild = this.findGuild(runtime);
-    const channel = this.findChannel(guild, runtime);
-    return this.convertToTextChannel(channel);
+  loadChannel(guidId: string, channelId: string) {
+    const guild = this.findGuild(guidId);
+    const channel = this.findChannel(guild, channelId);
+    this.textChannel = this.convertToTextChannel(channel);
   }
 
   /**
    * Authenticate Corde bot to the instaled bot in Discord server.
+   *
    * @param token Corde bot token
+   *
    * @returns Promise resolve for success connection, or a promisse
    * rejection with a formated message if there was found a error in
    * connection attempt.
@@ -62,24 +66,25 @@ class CordeBot {
 
   /**
    * Send a message to a channel defined in configs.
+   *
    * @see Runtime
+   *
    * @param message Message without prefix that will be sent to defined servers's channel
+   *
    * @description The message is concatened with the stored **prefix** and is sent to the channel.
+   *
    * @return Promisse rejection if a testing bot does not send any message in the timeout value setted,
    * or a resolve for the promisse with the message returned by the testing bot.
    */
-  async sendMessage(
-    message: string,
-    responseType: messageType = 'text',
-  ): Promise<messageOutputType> {
+  async sendTextMessage(message: string, responseType: messageType): Promise<messageOutputType> {
     return new Promise(async (resolve, reject) => {
-      this.validateEntryData(runtime, message);
-      const formatedMessage = runtime.botPrefix + message;
-      await runtime.sendMessageToChannel(formatedMessage);
+      this.validateMessageAndChannel(message);
+      const formatedMessage = runtime.configs.botPrefix + message;
+      await this.textChannel.send(formatedMessage);
 
       try {
         const answer = await this.awaitMessagesFromTestingBot();
-        let content = this.getMessgeByType(answer, responseType);
+        let content = this.getMessageByType(answer, responseType);
         resolve(content);
       } catch (error) {
         reject('Test timeout');
@@ -89,11 +94,12 @@ class CordeBot {
 
   /**
    * Format Discord responses
+   *
    * @param answer Discord response for a message sent
+   *
    * @param type Type expected of that message
    *
-   * @description
-   *   Discord adds some attributes that are not present in embed message before it is sent
+   * @description Discord adds some attributes that are not present in embed message before it is sent
    *
    *  This is data **before** send to Discord
    *
@@ -123,7 +129,7 @@ class CordeBot {
    *  }
    *  ```
    */
-  private getMessgeByType(answer: Collection<string, Message>, type: messageType) {
+  private getMessageByType(answer: Collection<string, Message>, type: messageType) {
     if (type === 'text') {
       return answer.first().content;
     } else if (type === 'embed') {
@@ -137,20 +143,20 @@ class CordeBot {
   }
 
   private async awaitMessagesFromTestingBot() {
-    return await runtime.channel.awaitMessages(
+    return await this.textChannel.awaitMessages(
       (responseName) => this.responseAuthorIsTestingBot(responseName),
       this.createWatchResponseConfigs(),
     );
   }
 
   private responseAuthorIsTestingBot(responseName: any) {
-    return responseName.author.id === runtime.botTestId;
+    return responseName.author.id === runtime.configs.botTestId;
   }
 
   private createWatchResponseConfigs(): AwaitMessagesOptions {
     return {
       max: 1,
-      time: runtime.timeOut ? runtime.timeOut : DEFAULT_TIMEOUT,
+      time: runtime.configs.timeOut ? runtime.configs.timeOut : DEFAULT_TEST_TIMEOUT,
       errors: ['time'],
     };
   }
@@ -158,7 +164,7 @@ class CordeBot {
   private loadClientEvents() {
     this._client.once('ready', () => {
       // emit to engine that corde bot is connected.
-      runtime.cordeBotHasStarted.next(true);
+      this.hasInited.next(true);
     });
   }
 
@@ -166,36 +172,34 @@ class CordeBot {
     return `Error trying to login with token ${token}. \n` + error;
   }
 
-  private validateEntryData(config: ConfigOptions, message: string) {
+  private validateMessageAndChannel(message: string) {
     if (message === undefined) {
-      console.log('No testes were declared');
+      console.log('No tests were declared');
       process.exit(1);
-    } else if (config.channel === undefined) {
+    } else if (this.textChannel === undefined) {
       throw new Error('Channel not found');
     }
   }
 
-  private findGuild(config: ConfigOptions) {
+  private findGuild(guildId: string) {
     if (!this._client.guilds) {
-      throw new Error(
-        `corde bot isn't added in a guild. Please add it to the guild: ${config.guildId}`,
-      );
-    } else if (!this._client.guilds.cache.has(config.guildId)) {
+      throw new Error(`corde bot isn't added in a guild. Please add it to the guild: ${guildId}`);
+    } else if (!this._client.guilds.cache.has(guildId)) {
       throw new RuntimeErro(
-        `Guild ${config.guildId} doesn't belong to corde bot. change the guild id in corde.config or add the bot to a valid guild`,
+        `Guild ${guildId} doesn't belong to corde bot. change the guild id in corde.config or add the bot to a valid guild`,
       );
     } else {
-      return this._client.guilds.cache.find((guild) => guild.id === config.guildId);
+      return this._client.guilds.cache.find((guild) => guild.id === guildId);
     }
   }
 
-  private findChannel(guild: Guild, config: ConfigOptions) {
+  private findChannel(guild: Guild, channelId: string) {
     if (!guild.channels) {
-      throw new RuntimeErro(`${guild.name} doesn't have a channel with id ${config.channelId}.`);
-    } else if (!guild.channels.cache.has(config.channelId || '')) {
-      throw new Error(`${config.channelId} doesn't appear to be a channel of guild ${guild.name}`);
+      throw new RuntimeErro(`${guild.name} doesn't have a channel with id ${channelId}.`);
+    } else if (!guild.channels.cache.has(channelId || '')) {
+      throw new Error(`${channelId} doesn't appear to be a channel of guild ${guild.name}`);
     } else {
-      const channel = guild.channels.cache.find((ch) => ch.id === config.channelId);
+      const channel = guild.channels.cache.find((ch) => ch.id === channelId);
 
       if (channel === undefined) {
         throw new Error('There is no informed channel to start tests');
@@ -209,9 +213,3 @@ class CordeBot {
     return channel as TextChannel;
   }
 }
-
-/**
- * Runtime instance of cordeBot, used to send messages to Discord.
- */
-const cordeBot = new CordeBot();
-export default cordeBot;
