@@ -1,4 +1,11 @@
-import { Group, Test, AssertionProps, messageExpectationType, messageOutputType } from '../models';
+import {
+  Group,
+  Test,
+  AssertionProps,
+  messageExpectationType,
+  messageOutputType,
+  TestReport,
+} from '../models';
 import chalk from 'chalk';
 import assert from 'assert';
 import log from '../utils/log';
@@ -55,19 +62,19 @@ function printTest(test: Test, tab: string) {
     test.subTests.forEach((subTest) => printTest(subTest, tab));
   }
 
-  if (test.assertions) {
+  if (test.testsReports) {
     tab += SPACE;
-    test.assertions.forEach((asser) => printAssertion(asser, tab));
+    test.testsReports.forEach((report) => printAssertion(report, tab));
   }
 }
 
-function printAssertion(assert: AssertionProps, tab: string) {
-  if (isExpectaionEqualToOutput(assert.expectation, assert.output, assert.usingTrueStatement)) {
-    log.printSucess(tab, assert);
+function printAssertion(report: TestReport, tab: string) {
+  if (report.testSucessfully) {
+    log.printSucess(tab, report);
     sucessCount++;
   } else {
     failureCount++;
-    log.printFailure(tab, assert);
+    log.printFailure(tab, report);
   }
 }
 
@@ -104,37 +111,4 @@ function printPartialSuccess() {
 function printFullFailure() {
   console.log('All tests fail.');
   console.log(`${chalk.bgRed(' FAILURES: ')} ${chalk.bold(failureCount)}`);
-}
-
-function isExpectaionEqualToOutput(
-  expectation: messageExpectationType,
-  output: messageOutputType,
-  isTrueStatement: boolean,
-) {
-  if (typeof expectation === 'string') {
-    return (
-      (isTrueStatement && expectation === output) || (!isTrueStatement && expectation !== output)
-    );
-  } else if (isTrueStatement) {
-    try {
-      assert.deepEqual(expectation, output);
-      return true;
-    } catch (error) {
-      return false;
-    }
-  } else {
-    try {
-      assert.notDeepEqual(expectation, output);
-      return true;
-    } catch (error) {
-      return false;
-    }
-  }
-}
-
-function stringifyIfNeed(value: messageExpectationType | messageOutputType) {
-  if (typeof value === 'string') {
-    return value;
-  }
-  return JSON.stringify(value);
 }

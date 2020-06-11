@@ -1,9 +1,7 @@
 import { FilesNotFoundError } from '../errors';
 import Thread from '../building/thread';
-import { clone } from '../utils/utils';
-import { Test, AssertionProps } from '../models';
 
-export async function getTestList(files: string[]) {
+export function getTestsFromFiles(files: string[]) {
   if (files) {
     Thread.isBuildRunning = true;
     Thread.groups = [];
@@ -14,19 +12,26 @@ export async function getTestList(files: string[]) {
     }
     Thread.isBuildRunning = false;
 
-    if (Thread.tests && Thread.tests.length > 0) {
-      const testsCloned = clone(Thread.tests) as Test[];
-      Thread.groups.push({ tests: testsCloned });
-      Thread.tests = [];
-    }
-
-    if (Thread.assertions && Thread.assertions.length > 0) {
-      const assertionsCloned = clone(Thread.assertions) as AssertionProps[];
-      Thread.groups.push({ tests: [{ assertions: assertionsCloned }] });
-      Thread.assertions = [];
-    }
+    addTestsGroupmentToGroupIfExist();
+    addTestFuncionsToGroupIfExists();
 
     return Thread.groups;
   }
   throw new FilesNotFoundError();
+}
+
+function addTestsGroupmentToGroupIfExist() {
+  if (Thread.tests && Thread.tests.length > 0) {
+    const testsCloned = Thread.tests.map((test) => test);
+    Thread.groups.push({ tests: testsCloned });
+    Thread.tests = [];
+  }
+}
+
+function addTestFuncionsToGroupIfExists() {
+  if (Thread.testsFunctions && Thread.testsFunctions.length > 0) {
+    const testsCloned = Thread.testsFunctions.map((test) => test);
+    Thread.groups.push({ tests: [{ testsFunctions: testsCloned }] });
+    Thread.assertions = [];
+  }
 }

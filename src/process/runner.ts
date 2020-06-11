@@ -1,13 +1,22 @@
-import { Group, AssertionProps, Test } from '../models';
-import cordeBot from '../cordeBot';
+import { Group, AssertionProps, Test, TestReport, testFunctionType } from '../models';
 import runtime from '../runtime';
 
 export async function executeTestCases(groups: Group[]) {
-  const assertions = getAssertionsFromGroups(groups);
-  for (const i in assertions) {
-    const assert = assertions[i];
-    assert.output = await trySendMessage(assert);
+  const tests = getTestsFromGroup(groups);
+  for (const i in tests) {
+    const test = tests[i];
+    const reports = await runTests(test.testsFunctions);
+    test.testsReports = reports;
   }
+}
+
+async function runTests(testsFunctions: testFunctionType[]) {
+  const reports: TestReport[] = [];
+  for (const i in testsFunctions) {
+    const report = await testsFunctions[i](runtime.bot);
+    reports.push(report);
+  }
+  return reports;
 }
 
 async function trySendMessage(assertion: AssertionProps) {
@@ -18,22 +27,22 @@ async function trySendMessage(assertion: AssertionProps) {
   }
 }
 
-function getAssertionsFromGroups(groups: Group[]) {
-  const assertions: AssertionProps[] = [];
+function getTestsFromGroup(groups: Group[]) {
+  const tests: Test[] = [];
 
   if (!groups) {
-    return assertions;
+    return tests;
   }
 
   groups.forEach((group) => {
-    assertions.push(...getAssertionPropsFromGroup(group));
+    tests.push(...getAssertionPropsFromGroup(group));
   });
 
-  return assertions;
+  return tests;
 }
 
 function getAssertionPropsFromGroup(group: Group) {
-  const assertions: AssertionProps[] = [];
+  const assertions: Test[] = [];
   group.tests.forEach((test) => {
     assertions.push(...getAssertionsPropsFromTest(test));
   });
@@ -49,16 +58,16 @@ function getAssertionPropsFromGroup(group: Group) {
 }
 
 function getAssertionsPropsFromTest(test: Test) {
-  const assertions = test.assertions;
+  const tests: Test[] = [];
   if (!test) {
-    return assertions;
+    return [];
   }
 
   if (test.subTests) {
     test.subTests.forEach((subtest) => {
-      assertions.push(...getAssertionsPropsFromTest(subtest));
+      tests.push(...getAssertionsPropsFromTest(subtest));
     });
   }
 
-  return assertions;
+  return tests;
 }

@@ -1,11 +1,29 @@
 import Thread from './thread';
-import { messageType, messageExpectationType, Matches } from '../models';
+import { messageType, messageExpectationType, Matches, TestReport } from '../models';
 import { MessageEmbed } from 'discord.js';
 import runtime from '../runtime';
 
 export default function matcher(commandName: string): Matches {
   return {
     shouldReturn: async function (expect: string | MessageEmbed) {
+      Thread.testsFunctions.push(async (cordeBot) => {
+        let msg = '';
+
+        if (typeof expect === 'string') {
+          msg = (await cordeBot.sendTextMessage(commandName, 'text')) as string;
+        } else {
+          const json = await cordeBot.sendTextMessage(commandName, 'embed');
+          msg = JSON.stringify(json);
+        }
+
+        return {
+          commandName: commandName,
+          expectation: expect,
+          output: msg,
+          testSucessfully: expect === msg,
+          isDenyTest: false,
+        } as TestReport;
+      });
       _buildShouldReturnMatch(expect, true);
     },
     shouldNotReturn: function (notExpect: string | MessageEmbed) {

@@ -5,13 +5,14 @@ import CordeBot from './cordeBot';
 export type messageType = 'text' | 'embed';
 export type messageOutputType = string | MinifiedEmbedMessage;
 export type messageExpectationType = string | MessageEmbed;
-export type testFunctionType = (cordeBot: CordeBot) => TestReport;
+export type testFunctionType = (cordeBot: CordeBot) => Promise<TestReport>;
 
 export interface TestReport {
   commandName: string;
   expectation: string;
   output: string;
   testSucessfully: boolean;
+  isDenyTest: boolean;
 }
 
 /**
@@ -31,7 +32,8 @@ export interface AssertionProps {
 export interface Test {
   name?: string;
   subTests?: Test[];
-  assertions: AssertionProps[];
+  testsFunctions: testFunctionType[];
+  testsReports?: TestReport[];
 }
 
 /**

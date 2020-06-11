@@ -1,6 +1,7 @@
 import * as Discord from 'discord.js';
 import ConfigOptions, { Group, testFunctionType } from './models';
 import CordeBot from './cordeBot';
+import Thread from './building/thread';
 
 export const DEFAULT_TEST_TIMEOUT = 5000;
 
@@ -27,13 +28,11 @@ class Config implements ConfigOptions {
 
 class Runtime {
   configs: Config;
-  tests: Group[];
-  testsFunctions: testFunctionType[];
   bot: CordeBot;
 
   constructor() {
-    this.testsFunctions = [];
     this.bot = new CordeBot();
+    this.configs = new Config();
   }
 
   setConfigs(configs: ConfigOptions) {
@@ -46,6 +45,11 @@ class Runtime {
     this.configs.testFilesDir = configs.testFilesDir;
     this.configs.timeOut = configs.timeOut;
     this.configs.files = [];
+    this.loadBotSettings();
+  }
+
+  loadBotSettings() {
+    this.bot.loadChannel(this.guildId, this.channelId);
   }
 
   get channelId() {

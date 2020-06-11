@@ -1,4 +1,4 @@
-import { AssertionProps, Group, Test } from '../models';
+import { AssertionProps, Group, Test, testFunctionType } from '../models';
 
 type voidFunction = () => void;
 
@@ -27,6 +27,8 @@ export default class Thread {
    * position tree, but being the most important of all them.
    */
   static assertions: AssertionProps[] = [];
+
+  static testsFunctions: testFunctionType[];
   /**
    * List of tests found in running file.
    * @description Tests are the second in position of objects,

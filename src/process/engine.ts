@@ -1,4 +1,3 @@
-import { getTestList } from './reader';
 import fs from 'fs';
 import {
   FilesNotFoundError,
@@ -11,7 +10,9 @@ import runtime from '../runtime';
 import path from 'path';
 import { outPutResult } from './reporter';
 import Thread from '../building/thread';
-import ConfigOptions from '../models';
+import ConfigOptions, { Group } from '../models';
+import { getTestsFromFiles } from './reader';
+import { executeTestCases } from './runner';
 
 let spinner: Ora;
 
@@ -22,9 +23,13 @@ export async function runTestsFromFiles(files: string[]) {
 }
 
 export async function runTestsFromConfigs() {
-  loadConfigs();
-  const files = await readDir(runtime.configs.testFilesDir);
-  await runTests(files);
+  try {
+    loadConfigs();
+    const files = await readDir(runtime.configs.testFilesDir);
+    await runTests(files);
+  } catch (error) {
+    finishProcess(1);
+  }
 }
 
 function loadConfigs() {
@@ -35,44 +40,60 @@ function loadConfigs() {
 async function runTests(files: string[]) {
   try {
     startLoading('Reading cool configs');
-    //runtime.tests = await getTestList(files);
-  } catch (error) {
-    console.log(error);
-    process.exit(1);
-  }
+    const testsGroups = getTestsFromFiles(files);
 
-  setMessage('starting bots');
-  Thread.beforeStartFunctions.forEach((fn) => fn());
+    setMessage('starting bots');
+    Thread.beforeStartFunctions.forEach((fn) => fn());
 
-  try {
-    await runtime.bot.login(runtime.configs.cordeTestToken);
-    setMessage('Running Tests');
-    runtime.bot.hasInited.subscribe(async (hasConnected) => {
-      if (hasConnected) {
-        files.forEach((file) => require(file));
-        //await executeTestCases(runtime.tests);
-        const hasAllTestsPassed = outPutResult(runtime.tests);
-        finishProcess();
-
-        if (hasAllTestsPassed) {
-          process.exit(0);
-        } else {
-          process.exit(1);
+    try {
+      await runtime.bot.login(runtime.configs.cordeTestToken);
+      setMessage('Running Tests');
+      runtime.bot.hasInited.subscribe(async (hasConnected) => {
+        if (hasConnected) {
+          runTestsAndPrint(testsGroups);
         }
-      }
-    });
+      });
+    } catch (error) {
+      console.log(error);
+      stopLoading();
+      finishProcess(error);
+      process.exit(1);
+    }
   } catch (error) {
     console.log(error);
-    stopLoading();
-    finishProcess();
     process.exit(1);
   }
 }
 
-function finishProcess() {
-  stopLoading();
-  runtime.bot.logout();
-  Thread.afterAllFunctions.forEach((fn) => fn());
+async function runTestsAndPrint(groups: Group[]) {
+  await executeTestCases(groups);
+  const hasAllTestsPassed = outPutResult(groups);
+
+  if (hasAllTestsPassed) {
+    finishProcess(0);
+  } else {
+    finishProcess(1);
+  }
+}
+
+function finishProcess(code: number = 1 | 0, error?: any) {
+  try {
+    if (error) {
+      console.log(error);
+    }
+
+    stopLoading();
+
+    if (runtime && runtime.bot) {
+      runtime.bot.logout();
+    }
+
+    if (Thread.afterAllFunctions) {
+      Thread.afterAllFunctions.forEach((fn) => fn());
+    }
+  } finally {
+    process.exit(code);
+  }
 }
 
 function startLoading(initialMessage: string) {

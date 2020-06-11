@@ -26,7 +26,6 @@ export default class CordeBot {
     this._client = new Client();
     this.hasInited = new BehaviorSubject<boolean>(false);
     this.loadClientEvents();
-    this.loadChannel(runtime.guildId, runtime.channelId);
   }
 
   /**

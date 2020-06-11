@@ -89,7 +89,7 @@ export function group(name: string, action: () => void) {
 
   Thread.groups.push({
     name: name,
-    tests: clone(Thread.tests) as Test[],
+    tests: Thread.tests.map((test) => test),
   });
 
   Thread.tests = [];
@@ -118,7 +118,7 @@ export function test(name: string, action: () => void) {
 
   Thread.tests.push({
     name: name,
-    assertions: clone(Thread.assertions) as AssertionProps[],
+    testsFunctions: Thread.testsFunctions.map((testsFn) => testsFn),
   });
 
   Thread.hasTest = false;

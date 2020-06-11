@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import { AssertionProps, messageType } from '../models';
+import { AssertionProps, messageType, TestReport } from '../models';
 
 const DEFAULT_SPACE_VALUE = 4;
 
@@ -18,25 +18,25 @@ class Log {
     }
   }
 
-  static printFailure(space: string, assertion: AssertionProps) {
-    let notWord = Log.getNotWordIfTrue(assertion.usingTrueStatement);
+  static printFailure(space: string, report: TestReport) {
+    let notWord = Log.getNotWordIfTrue(report.isDenyTest);
     console.log(
       `${space} ${chalk.bgRed('FAIL')} expected ${chalk.bold(
-        assertion.commandName,
+        report.commandName,
       )} to${notWord}return '${chalk.bold(
-        Log.getPrintingValueByType(assertion.expectation),
-      )}'. Returned: '${chalk.red(Log.getPrintingValueByType(assertion.output))}'`,
+        Log.getPrintingValueByType(report.expectation),
+      )}'. Returned: '${chalk.red(Log.getPrintingValueByType(report.output))}'`,
     );
   }
 
-  static printSucess(space: string, assertion: AssertionProps) {
-    let notWord = Log.getNotWordIfTrue(assertion.usingTrueStatement);
+  static printSucess(tabSpace: string, report: TestReport) {
+    let notWord = Log.getNotWordIfTrue(report.isDenyTest);
     console.log(
-      `${space} ${this.bgSucess.bold(' PASS ')} expected ${chalk.bold(
-        assertion.commandName,
+      `${tabSpace} ${this.bgSucess.bold(' PASS ')} expected ${chalk.bold(
+        report.commandName,
       )} to${notWord}return '${chalk.bold(
-        Log.getPrintingValueByType(assertion.expectation),
-      )}'. Returned: '${chalk.green(Log.getPrintingValueByType(assertion.output))}'`,
+        Log.getPrintingValueByType(report.expectation),
+      )}'. Returned: '${chalk.green(Log.getPrintingValueByType(report.output))}'`,
     );
   }
 
