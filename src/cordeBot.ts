@@ -133,8 +133,12 @@ export default class CordeBot {
       return answer.first().content;
     } else if (type === 'embed') {
       const tempObject = answer.first().embeds[0].toJSON() as MinifiedEmbedMessage;
-      tempObject.image = pick(tempObject.image, 'url');
-      tempObject.thumbnail = pick(tempObject.thumbnail, 'url');
+      if (tempObject.image) {
+        tempObject.image = pick(tempObject.image, 'url');
+      }
+      if (tempObject.thumbnail) {
+        tempObject.thumbnail = pick(tempObject.thumbnail, 'url');
+      }
       return tempObject;
     } else {
       return '';

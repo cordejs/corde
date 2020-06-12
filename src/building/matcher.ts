@@ -15,10 +15,10 @@ export default function matcher(commandName: string): Matches {
           isEqual = msg === expect;
         } else {
           const json = await cordeBot.sendTextMessage(commandName, 'embed');
-          msg = JSON.stringify(json);
+          msg = json as string;
           showExpectAndOutputValue = false;
           try {
-            assert.deepEqual(expect, json);
+            assert.deepEqual(expect.toJSON(), json);
             isEqual = true;
           } catch (error) {
             isEqual = false;
@@ -31,7 +31,7 @@ export default function matcher(commandName: string): Matches {
           output: msg,
           testSucessfully: isEqual,
           isDenyTest: false,
-          showExpectAndOutputValue: false,
+          showExpectAndOutputValue: showExpectAndOutputValue,
         } as TestReport;
       });
       _buildShouldReturnMatch(expect, true);

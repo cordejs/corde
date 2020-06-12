@@ -55,8 +55,8 @@ export interface Author {
 }
 
 export interface Field {
-  inline: boolean;
   name: string;
+  inline: boolean;
   value: string;
 }
 
