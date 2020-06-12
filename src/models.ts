@@ -13,6 +13,7 @@ export interface TestReport {
   output: string;
   testSucessfully: boolean;
   isDenyTest: boolean;
+  showExpectAndOutputValue: boolean;
 }
 
 /**

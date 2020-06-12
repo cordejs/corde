@@ -19,7 +19,7 @@ class Log {
   }
 
   static printFailure(space: string, report: TestReport) {
-    let notWord = Log.getNotWordIfTrue(report.isDenyTest);
+    let notWord = Log.getNotWordIfTrue(!report.isDenyTest);
     console.log(
       `${space} ${chalk.bgRed('FAIL')} expected ${chalk.bold(
         report.commandName,

@@ -31,6 +31,6 @@ function addTestFuncionsToGroupIfExists() {
   if (Thread.testsFunctions && Thread.testsFunctions.length > 0) {
     const testsCloned = Thread.testsFunctions.map((test) => test);
     Thread.groups.push({ tests: [{ testsFunctions: testsCloned }] });
-    Thread.assertions = [];
+    Thread.testsFunctions = [];
   }
 }

@@ -3,7 +3,7 @@ import runtime from '../runtime';
 
 export async function executeTestCases(groups: Group[]) {
   const tests = getTestsFromGroup(groups);
-  console.log(JSON.stringify(tests));
+
   for (const i in tests) {
     const test = tests[i];
     const reports = await runTests(test.testsFunctions);
@@ -59,7 +59,8 @@ function getAssertionPropsFromGroup(group: Group) {
 }
 
 function getAssertionsPropsFromTest(test: Test) {
-  const tests: Test[] = [];
+  const tests: Test[] = [test];
+
   if (!test) {
     return [];
   }

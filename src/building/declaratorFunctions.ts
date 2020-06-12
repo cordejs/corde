@@ -122,5 +122,5 @@ export function test(name: string, action: () => void) {
   });
 
   Thread.hasTest = false;
-  Thread.assertions = [];
+  Thread.testsFunctions = [];
 }

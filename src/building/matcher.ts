@@ -1,27 +1,37 @@
 import Thread from './thread';
 import { messageType, messageExpectationType, Matches, TestReport } from '../models';
 import { MessageEmbed } from 'discord.js';
-import runtime from '../runtime';
+import assert from 'assert';
 
 export default function matcher(commandName: string): Matches {
   return {
     shouldReturn: async function (expect: string | MessageEmbed) {
       Thread.testsFunctions.push(async (cordeBot) => {
         let msg = '';
-
+        let isEqual = false;
+        let showExpectAndOutputValue = true;
         if (typeof expect === 'string') {
           msg = (await cordeBot.sendTextMessage(commandName, 'text')) as string;
+          isEqual = msg === expect;
         } else {
           const json = await cordeBot.sendTextMessage(commandName, 'embed');
           msg = JSON.stringify(json);
+          showExpectAndOutputValue = false;
+          try {
+            assert.deepEqual(expect, json);
+            isEqual = true;
+          } catch (error) {
+            isEqual = false;
+          }
         }
 
         return {
           commandName: commandName,
           expectation: expect,
           output: msg,
-          testSucessfully: expect === msg,
+          testSucessfully: isEqual,
           isDenyTest: false,
+          showExpectAndOutputValue: false,
         } as TestReport;
       });
       _buildShouldReturnMatch(expect, true);
