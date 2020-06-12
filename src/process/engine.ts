@@ -73,8 +73,6 @@ function finishProcess(code: number = 1 | 0, error?: any) {
       console.log(error);
     }
 
-    stopLoading();
-
     if (runtime && runtime.bot) {
       runtime.bot.logout();
     }
