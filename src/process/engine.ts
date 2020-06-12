@@ -57,6 +57,7 @@ async function runTests(files: string[]) {
 
 async function runTestsAndPrint(groups: Group[]) {
   await executeTestCases(groups);
+  stopLoading();
   const hasAllTestsPassed = outPutResult(groups);
 
   if (hasAllTestsPassed) {
