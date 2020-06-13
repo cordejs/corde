@@ -13,6 +13,5 @@ if (majorVer < MINIMAL_NODE_VERSION) {
   process.exit(1);
 } else {
   require = require('esm')(module /*, options*/);
-  const { main } = require('../lib/src/cli');
-  main(process.argv);
+  require('../lib/src/cli');
 }
