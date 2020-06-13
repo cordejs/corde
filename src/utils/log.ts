@@ -7,17 +7,6 @@ class Log {
   static bgSucess = chalk.bgRgb(21, 194, 19);
   static bgError = chalk.bgRed;
 
-  /**
-   * Send a objet to process.stdout
-   */
-  static out(obj: object | object[]) {
-    if (!obj) {
-      return;
-    } else if (obj as []) {
-      process.stdout.write(JSON.stringify(obj));
-    }
-  }
-
   static printFailure(tabSpace: string, report: TestReport) {
     let notWord = Log.getNotWordIfTrue(!report.isDenyTest);
 
