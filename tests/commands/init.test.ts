@@ -35,6 +35,14 @@ describe('Testing init cli function', () => {
     fs.unlinkSync(filePath);
   });
 
+  it('should create corde.json file with undefined argument', () => {
+    init(undefined);
+    const filePath = path.resolve(process.cwd(), 'corde.json');
+    const tsFileExists = fs.existsSync(filePath);
+    expect(tsFileExists).toBe(true);
+    fs.unlinkSync(filePath);
+  });
+
   it('should print msg error if invalid file extension was informed', () => {
     let outputData = '';
     const storeLog = (inputs: string) => (outputData += inputs);
