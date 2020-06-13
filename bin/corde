@@ -1,3 +1,16 @@
-#!/usr/bin/env node  
-require = require('esm')(module /*, options*/); 
-require('../lib/src/cli').cli(process.argv);
+#!/usr/bin/env node
+
+'use strict';
+
+var ver = process.versions.node;
+var majorVer = parseInt(ver.split('.')[0], 10);
+
+// Version required for Discord v12
+if (majorVer < 12) {
+  console.error('Node version ' + ver + ' is not supported, please use Node.js 12 or higher.');
+  process.exit(1);
+} else {
+  require = require('esm')(module /*, options*/);
+  const { main } = require('../lib/src/cli');
+  main(process.argv);
+}
