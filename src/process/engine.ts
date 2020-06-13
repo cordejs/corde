@@ -10,7 +10,7 @@ import runtime from '../runtime';
 import path from 'path';
 import { outPutResult } from './reporter';
 import Thread from '../building/thread';
-import ConfigOptions, { Group } from '../models';
+import ConfigOptions, { Group, configFileType } from '../models';
 import { getTestsFromFiles } from './reader';
 import { executeTestCases } from './runner';
 
@@ -133,28 +133,27 @@ function getFilesFullPath(files: string[]) {
  */
 function loadConfig(): ConfigOptions {
   let _config: ConfigOptions;
-  const configFileName = 'corde.json';
-  const jsonFilePath = `${process.cwd()}/${configFileName}`;
+
+  const jsonFilePath = `${process.cwd()}/corde.json`;
+  const tsFilePath = `${process.cwd()}/corde.ts`;
+  const jsFilePath = `${process.cwd()}/corde.js`;
 
   if (fs.existsSync(jsonFilePath)) {
-    _config = tryLoadConfigs(jsonFilePath);
+    _config = JSON.parse(fs.readFileSync(jsonFilePath).toString());
+  } else if (fs.existsSync(tsFilePath)) {
+    _config = require(tsFilePath);
+  } else if (fs.existsSync(jsFilePath)) {
+    _config = require(jsFilePath);
   } else {
     throw new ConfigFileNotFoundError();
   }
 
   if (_config) {
+    console.log(_config);
     validadeConfigs(_config);
     return _config;
   } else {
     throw new Error('Invalid configuration file');
-  }
-}
-
-function tryLoadConfigs(jsonFilePath: string): ConfigOptions {
-  try {
-    return JSON.parse(fs.readFileSync(jsonFilePath).toString());
-  } catch (error) {
-    throw new FileParserError('Failed in parse configs. ' + error.message);
   }
 }
 

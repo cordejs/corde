@@ -6,6 +6,10 @@ export type messageType = 'text' | 'embed';
 export type messageOutputType = string | MinifiedEmbedMessage;
 export type messageExpectationType = string | MessageEmbed;
 export type testFunctionType = (cordeBot: CordeBot) => Promise<TestReport>;
+/**
+ * Available types of config files
+ */
+export type configFileType = 'js' | 'json' | 'ts';
 
 export interface TestReport {
   commandName: string;
@@ -139,10 +143,6 @@ export default interface ConfigOptions {
    * Path for case tests. Use this from the base directory of the application
    */
   testFilesDir: string;
-  /**
-   * Discord message where all tests will run
-   */
-  message: Message;
   /**
    * All tests files
    */
