@@ -13,8 +13,8 @@ export function main(args: string[]) {
     .usage('to start testings o corde [option] to use a specific command.')
     .description(pack.description)
     .version(pack.version, '-v')
-    .action(() => {
-      runTestsFromConfigs();
+    .action(async () => {
+      await runTestsFromConfigs();
     });
 
   // Add init command
@@ -25,6 +25,7 @@ export function main(args: string[]) {
     .usage('[js ts json] or empty for default type (json)')
     .action((type: configFileType) => {
       init(type);
+      process.exit(0);
     });
 
   program.parse(args);

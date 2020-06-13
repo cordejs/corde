@@ -54,7 +54,6 @@ export default function init(fileType: configFileType = 'json') {
         'init --help',
       )}' to check valid types`,
     );
-    process.exit(1);
   }
 
   try {
@@ -65,13 +64,11 @@ export default function init(fileType: configFileType = 'json') {
     console.log(
       `- ${chalk.green('Successfully')} generated corde config in ${chalk.bold(filePath)}`,
     );
-    process.exit(0);
   } catch (error) {
     console.log(
       ' - Fail in config file creation. Check if you have permition to create files in this directory.',
     );
     console.log(error);
-    process.exit(1);
   }
 }
 
