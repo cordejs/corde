@@ -1,22 +1,55 @@
-import { FilesNotFoundError } from '../errors';
+import { FilesNotFoundError, ConfigFileNotFoundError } from '../errors';
 import Thread from '../building/thread';
+import ConfigOptions from '../models';
+import fs from 'fs';
 
-export function getTestsFromFiles(files: string[]) {
-  if (files) {
-    Thread.isBuildRunning = true;
-    Thread.groups = [];
-    for (const i in files) {
-      if (files.hasOwnProperty(i)) {
-        require(files[i]);
-      }
+class Reader {
+  /**
+   * Read config file(*.json) from root of project
+   * and validates it
+   * @throws
+   */
+  loadConfig(): ConfigOptions {
+    let _config: ConfigOptions;
+
+    const jsonFilePath = `${process.cwd()}/corde.json`;
+    const tsFilePath = `${process.cwd()}/corde.ts`;
+    const jsFilePath = `${process.cwd()}/corde.js`;
+
+    if (fs.existsSync(jsonFilePath)) {
+      _config = JSON.parse(fs.readFileSync(jsonFilePath).toString());
+    } else if (fs.existsSync(tsFilePath)) {
+      _config = require(tsFilePath);
+    } else if (fs.existsSync(jsFilePath)) {
+      _config = require(jsFilePath);
+    } else {
+      throw new ConfigFileNotFoundError();
     }
-    Thread.isBuildRunning = false;
 
-    addTestsGroupmentToGroupIfExist();
-    addTestFuncionsToGroupIfExists();
-    return Thread.groups;
+    if (_config) {
+      return _config;
+    } else {
+      throw new Error('Invalid configuration file');
+    }
   }
-  throw new FilesNotFoundError();
+
+  getTestsFromFiles(files: string[]) {
+    if (files) {
+      Thread.isBuildRunning = true;
+      Thread.groups = [];
+      for (const i in files) {
+        if (files.hasOwnProperty(i)) {
+          require(files[i]);
+        }
+      }
+      Thread.isBuildRunning = false;
+
+      addTestsGroupmentToGroupIfExist();
+      addTestFuncionsToGroupIfExists();
+      return Thread.groups;
+    }
+    throw new FilesNotFoundError();
+  }
 }
 
 function addTestsGroupmentToGroupIfExist() {
@@ -34,3 +67,6 @@ function addTestFuncionsToGroupIfExists() {
     Thread.testsFunctions = [];
   }
 }
+
+const reader = new Reader();
+export default reader;
