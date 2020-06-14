@@ -3,6 +3,9 @@ import * as pack from '../package.json';
 import init from './commands/init';
 import { configFileType } from './models';
 import { runTestsFromConfigs } from './process/engine';
+import reader from './process/reader';
+import validate from './commands/validate';
+import { exitProcessWithError } from './utils/utils';
 
 const program = new Command();
 
@@ -27,4 +30,18 @@ program
     process.exit(0);
   });
 
+program
+  .command('validate')
+  .alias('v')
+  .alias('val')
+  .alias('vali')
+  .description('Search for corde configs and check if all data are valid')
+  .action(() => {
+    const configs = reader.loadConfig();
+    if (validate(configs)) {
+      process.exit(0);
+    } else {
+      exitProcessWithError();
+    }
+  });
 program.parse(process.argv);

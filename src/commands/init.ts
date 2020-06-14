@@ -10,7 +10,6 @@ const jsonFile: ConfigOptions = {
   botTestId: '',
   channelId: '',
   cordeTestToken: '',
-  files: [],
   guildId: '',
   testFilesDir: '',
   botTestToken: '',

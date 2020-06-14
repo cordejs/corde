@@ -143,8 +143,4 @@ export default interface ConfigOptions {
    * Path for case tests. Use this from the base directory of the application
    */
   testFilesDir: string;
-  /**
-   * All tests files
-   */
-  files: string[];
 }

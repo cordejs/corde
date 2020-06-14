@@ -2,7 +2,7 @@ import init from '../../src/commands/init';
 import fs from 'fs';
 import path from 'path';
 
-describe('Testing init cli function', () => {
+describe('Testing init CLI function', () => {
   it('should create corde.json file', () => {
     init('js');
     const filePath = path.resolve(process.cwd(), 'corde.js');
