@@ -1,6 +1,6 @@
 import { MessageEmbed } from 'discord.js';
 import { Message } from 'discord.js';
-import CordeBot from './cordeBot';
+import CordeBot from './core/cordeBot';
 
 export type messageType = 'text' | 'embed';
 export type messageOutputType = string | MinifiedEmbedMessage;

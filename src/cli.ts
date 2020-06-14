@@ -2,8 +2,8 @@ import { Command } from 'commander';
 import * as pack from '../package.json';
 import init from './commands/init';
 import { configFileType } from './models';
-import { runTestsFromConfigs } from './process/engine';
-import reader from './process/reader';
+import { runTestsFromConfigs } from './commands/go';
+import reader from './core/reader';
 import validate from './commands/validate';
 import { exitProcessWithError } from './utils/utils';
 

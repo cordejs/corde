@@ -8,9 +8,9 @@ import {
   Message,
 } from 'discord.js';
 import runtime, { DEFAULT_TEST_TIMEOUT } from './runtime';
-import { RuntimeErro } from './errors';
-import { messageType, MinifiedEmbedMessage, messageOutputType } from './models';
-import { pick } from './utils/utils';
+import { RuntimeErro } from '../errors';
+import { messageType, MinifiedEmbedMessage, messageOutputType } from '../models';
+import { pick } from '../utils/utils';
 import { BehaviorSubject } from 'rxjs';
 
 export default class CordeBot {

@@ -6,13 +6,13 @@ import {
   FileParserError,
 } from '../errors';
 import ora, { Ora, Color } from 'ora';
-import runtime from '../runtime';
+import runtime from '../core/runtime';
 import path from 'path';
-import { outPutResult } from './reporter';
+import { outPutResult } from '../core/reporter';
 import Thread from '../building/thread';
 import ConfigOptions, { Group, configFileType } from '../models';
-import { getTestsFromFiles } from './reader';
-import { executeTestCases } from './runner';
+import reader from '../core/reader';
+import { executeTestCases } from '../core/runner';
 
 let spinner: Ora;
 
@@ -33,13 +33,13 @@ export async function runTestsFromConfigs() {
 }
 
 function loadConfigs() {
-  const configs = loadConfig();
+  const configs = reader.loadConfig();
   runtime.setConfigs(configs);
 }
 
 async function runTests(files: string[]) {
   startLoading('Reading cool configs');
-  const testsGroups = getTestsFromFiles(files);
+  const testsGroups = reader.getTestsFromFiles(files);
 
   setMessage('starting bots');
   Thread.beforeStartFunctions.forEach((fn) => fn());
@@ -124,71 +124,6 @@ function getFilesFullPath(files: string[]) {
     return paths;
   }
   throw new FilesNotFoundError();
-}
-
-/**
- * Read config file(*.json) from root of project
- * and validates it
- * @throws
- */
-function loadConfig(): ConfigOptions {
-  let _config: ConfigOptions;
-
-  const jsonFilePath = `${process.cwd()}/corde.json`;
-  const tsFilePath = `${process.cwd()}/corde.ts`;
-  const jsFilePath = `${process.cwd()}/corde.js`;
-
-  if (fs.existsSync(jsonFilePath)) {
-    _config = JSON.parse(fs.readFileSync(jsonFilePath).toString());
-  } else if (fs.existsSync(tsFilePath)) {
-    _config = require(tsFilePath);
-  } else if (fs.existsSync(jsFilePath)) {
-    _config = require(jsFilePath);
-  } else {
-    throw new ConfigFileNotFoundError();
-  }
-
-  if (_config) {
-    console.log(_config);
-    validadeConfigs(_config);
-    return _config;
-  } else {
-    throw new Error('Invalid configuration file');
-  }
-}
-
-/**
- * Check if all required values are setted
- * TODO: JSON Schema
- */
-function validadeConfigs(configs: ConfigOptions) {
-  const errors: string[] = [];
-  if (!configs.cordeTestToken) {
-    errors.push('corde token not informed');
-  } else if (!configs.botTestToken) {
-    errors.push('bot test token not informed');
-  } else if (!configs.botTestId) {
-    errors.push('test files dir not informed');
-  } else if (!configs.testFilesDir) {
-    errors.push('bot file');
-  }
-
-  let errorsString = '';
-
-  if (errors.length == 1) {
-    errorsString = '\nAn error was found when reading config file';
-    buildMissingPropertiesErrorAndThrow(errorsString, errors);
-  }
-
-  if (errors.length > 1) {
-    errorsString = '\nSome erros were found when reading config file';
-    buildMissingPropertiesErrorAndThrow(errorsString, errors);
-  }
-}
-
-function buildMissingPropertiesErrorAndThrow(errorString: string, erros: string[]) {
-  erros.forEach((error) => (errorString += `\n- ${error}`));
-  throw new MissingPropertyError(errorString);
 }
 
 /**
