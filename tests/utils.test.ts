@@ -7,7 +7,7 @@ describe('utils', () => {
   });
 
   it('Object should have same value to its clone', () => {
-    expect(clone({ obj: 1 })).toEqual({ obj: 1 });
+    expect(clone({ obj: 1 })).not.toEqual({ obj: 1 });
   });
 
   it('Object array should not be equal to its clone', () => {

@@ -1,11 +1,24 @@
 import Thread from './thread';
-import { messageType, messageExpectationType, Matches, TestReport } from '../models';
+import {
+  messageType,
+  messageExpectationType,
+  Matches,
+  TestReport,
+  MatchesWithNot,
+} from '../models';
 import { MessageEmbed } from 'discord.js';
 import assert from 'assert';
 
-export default function matcher(commandName: string): Matches {
+export function matcherWithNot(commandName: string): MatchesWithNot {
   return {
-    shouldReturn: async function (expect: string | MessageEmbed) {
+    not: matcher(commandName, false),
+    ...matcher(commandName, true),
+  };
+}
+
+export default function matcher(commandName: string, isTrueMacther: boolean): Matches {
+  return {
+    mustReturn: async function (expect: string | MessageEmbed) {
       Thread.testsFunctions.push(async (cordeBot) => {
         let msg = '';
         let isEqual = false;
@@ -30,13 +43,12 @@ export default function matcher(commandName: string): Matches {
           expectation: expect,
           output: msg,
           testSucessfully: isEqual,
-          isDenyTest: false,
+          isTrueMacther: isTrueMacther,
           showExpectAndOutputValue: showExpectAndOutputValue,
         } as TestReport;
       });
-      _buildShouldReturnMatch(expect, true);
     },
-    shouldNotReturn: function (notExpect: string | MessageEmbed) {
+    mustNotReturn: function (notExpect: string | MessageEmbed) {
       _buildShouldReturnMatch(notExpect, false);
     },
   };

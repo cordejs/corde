@@ -1,6 +1,6 @@
 import Thread from './thread';
-import matcher from './matcher';
-import { Test, Matches } from '../models';
+import matcher, { matcherWithNot } from './matcher';
+import { Test, Matches, MatchesWithNot } from '../models';
 import { clone } from '../utils/utils';
 import { AssertionProps } from '../models';
 
@@ -61,8 +61,8 @@ export function beforeStart(fn: () => void) {
  * @returns The **Compare** object, where will handle
  * the type of response is expected.
  */
-export function command(commandName: string): Matches {
-  return matcher(commandName);
+export function command(commandName: string): MatchesWithNot {
+  return matcherWithNot(commandName);
 }
 
 /**

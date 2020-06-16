@@ -1,5 +1,4 @@
 import { MessageEmbed } from 'discord.js';
-import { Message } from 'discord.js';
 import CordeBot from './core/cordeBot';
 
 export type messageType = 'text' | 'embed';
@@ -16,7 +15,7 @@ export interface TestReport {
   expectation: string;
   output: string;
   testSucessfully: boolean;
-  isDenyTest: boolean;
+  isTrueMacther: boolean;
   showExpectAndOutputValue: boolean;
 }
 
@@ -86,6 +85,10 @@ export interface MinifiedEmbedMessage {
   url: string;
 }
 
+export interface MatchesWithNot extends Matches {
+  not: Matches;
+}
+
 /**
  * Defines all functions that can be used
  * to check a bot reaction of a command.
@@ -97,14 +100,14 @@ export interface Matches {
    *
    * @param expect A message returned by a bot after invoke a command
    */
-  shouldReturn(expect: string | MessageEmbed): void;
+  mustReturn(expect: string | MessageEmbed): void;
   /**
    * Defines the message **not** expected to be returned by a
    * command.
    *
    * @param expect A message that **should not be** returned by a bot after invoke a command
    */
-  shouldNotReturn(notExpect: string | MessageEmbed): void;
+  mustNotReturn(notExpect: string | MessageEmbed): void;
 }
 
 /**
