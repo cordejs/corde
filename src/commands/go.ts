@@ -130,7 +130,7 @@ function getFilesFullPath(files: string[]) {
  * Load tests files into configs
  */
 async function readDir(dir: string) {
-  let files: string[] = [];
+  const files: string[] = [];
   if (dir) {
     // Get all tests files
     try {

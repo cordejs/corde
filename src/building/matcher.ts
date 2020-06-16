@@ -18,7 +18,7 @@ export function matcherWithNot(commandName: string): MatchesWithNot {
 
 export default function matcher(commandName: string, isTrueMacther: boolean): Matches {
   return {
-    mustReturn: async function (expect: string | MessageEmbed) {
+    async mustReturn(expect: string | MessageEmbed) {
       Thread.testsFunctions.push(async (cordeBot) => {
         let msg = '';
         let isEqual = false;
@@ -39,16 +39,16 @@ export default function matcher(commandName: string, isTrueMacther: boolean): Ma
         }
 
         return {
-          commandName: commandName,
+          commandName,
           expectation: expect,
           output: msg,
           testSucessfully: isEqual,
-          isTrueMacther: isTrueMacther,
-          showExpectAndOutputValue: showExpectAndOutputValue,
+          isTrueMacther,
+          showExpectAndOutputValue,
         } as TestReport;
       });
     },
-    mustNotReturn: function (notExpect: string | MessageEmbed) {
+    mustNotReturn(notExpect: string | MessageEmbed) {
       _buildShouldReturnMatch(notExpect, false);
     },
   };
@@ -70,9 +70,9 @@ export default function matcher(commandName: string, isTrueMacther: boolean): Ma
     Thread.isBuildRunning = true;
     Thread.assertions.push({
       expectation: expect,
-      commandName: commandName,
-      usingTrueStatement: usingTrueStatement,
-      messageType: messageType,
+      commandName,
+      usingTrueStatement,
+      messageType,
     });
   }
 }

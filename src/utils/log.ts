@@ -8,7 +8,7 @@ class Log {
   static bgError = chalk.bgRed;
 
   static printFailure(tabSpace: string, report: TestReport) {
-    let notWord = Log.getNotWordIfTrue(!report.isDenyTest);
+    const notWord = Log.getNotWordIfTrue(!report.isDenyTest);
 
     if (report.showExpectAndOutputValue) {
       console.log(
@@ -28,7 +28,7 @@ class Log {
   }
 
   static printSucess(tabSpace: string, report: TestReport) {
-    let notWord = Log.getNotWordIfTrue(report.isDenyTest);
+    const notWord = Log.getNotWordIfTrue(report.isDenyTest);
 
     if (report.showExpectAndOutputValue) {
       console.log(

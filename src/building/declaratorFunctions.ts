@@ -6,21 +6,21 @@ import { AssertionProps } from '../models';
 
 /**
  * Declare a bunch of code that will be executed **after** tests beging
- * 
+ *
  * More than one declaration of this code results in a list
  * of functions to run.
 
  * They will be executed following a sequence of files
  * reads and the positions of each `afterAll` call.
- * 
+ *
  * @example
  * // The main function of this is for start a bot if you haven't started it yet
- * 
+ *
  * const bot = new Discord.Client();
  * afterAll(() => {
  *   bot.destroy();
  * });
- * 
+ *
  * @param fn code that will be executed **after** tests start
  */
 export function afterAll(fn: () => void) {
@@ -29,21 +29,21 @@ export function afterAll(fn: () => void) {
 
 /**
  * Declare a bunch of code that will be executed before tests beging.
- * 
+ *
  * More than one declaration of this code results in a list
  * of functions to run.
 
  * They will be executed following a sequence of files
  * reads and the positions of each `afterAll` call.
- * 
+ *
  * @example
  * // The main function of this is for start a bot if you haven't started it yet
- * 
+ *
  * const bot = new Discord.Client();
  * beforeStart(() => {
  *   bot.login(config.botTestToken);
  * });
- * 
+ *
  * @param fn code that will be executed **before** tests start
  */
 export function beforeStart(fn: () => void) {
@@ -88,7 +88,7 @@ export function group(name: string, action: () => void) {
   }
 
   Thread.groups.push({
-    name: name,
+    name,
     tests: Thread.tests.map((test) => test),
   });
 
@@ -117,7 +117,7 @@ export function test(name: string, action: () => void) {
   }
 
   Thread.tests.push({
-    name: name,
+    name,
     testsFunctions: Thread.testsFunctions.map((testsFn) => testsFn),
   });
 

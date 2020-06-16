@@ -24,7 +24,7 @@ export function outPutResult(groups: Group[]) {
     return false;
   }
 
-  let tabSpace = SPACE;
+  const tabSpace = SPACE;
   breakLine();
   groups.forEach((group) => printGroup(group, tabSpace));
   showSummary();

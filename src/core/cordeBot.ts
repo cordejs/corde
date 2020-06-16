@@ -83,7 +83,7 @@ export default class CordeBot {
 
       try {
         const answer = await this.awaitMessagesFromTestingBot();
-        let content = this.getMessageByType(answer, responseType);
+        const content = this.getMessageByType(answer, responseType);
         resolve(content);
       } catch (error) {
         reject('Test timeout');
