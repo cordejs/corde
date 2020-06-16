@@ -1,7 +1,7 @@
-import { FilesNotFoundError, ConfigFileNotFoundError } from '../errors';
-import Thread from '../building/thread';
-import ConfigOptions from '../models';
 import fs from 'fs';
+import Thread from '../building/thread';
+import { ConfigFileNotFoundError, FilesNotFoundError } from '../errors';
+import ConfigOptions from '../models';
 
 class Reader {
   /**

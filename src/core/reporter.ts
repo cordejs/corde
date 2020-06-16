@@ -1,13 +1,5 @@
-import {
-  Group,
-  Test,
-  AssertionProps,
-  messageExpectationType,
-  messageOutputType,
-  TestReport,
-} from '../models';
 import chalk from 'chalk';
-import assert from 'assert';
+import { Group, Test, TestReport } from '../models';
 import log from '../utils/log';
 
 const SPACE = '    ';

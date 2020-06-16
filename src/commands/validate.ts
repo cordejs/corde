@@ -1,5 +1,5 @@
-import ConfigOptions from '../models';
 import chalk from 'chalk';
+import ConfigOptions from '../models';
 
 /**
  * Check if configs are valid. If not, print witch properties
@@ -29,7 +29,7 @@ export default function validate(configs: ConfigOptions) {
 
   let errorsString = '';
 
-  if (errors.length == 1) {
+  if (errors.length === 1) {
     errorsString = chalk.red('\n● An required property is missing in config file:');
     buildMissingPropertiesErrorAndThrow(errorsString, errors);
     return false;

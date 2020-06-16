@@ -1,17 +1,17 @@
 import {
-  Guild,
+  AwaitMessagesOptions,
   Channel,
   Client,
-  TextChannel,
-  AwaitMessagesOptions,
   Collection,
+  Guild,
   Message,
+  TextChannel,
 } from 'discord.js';
-import runtime, { DEFAULT_TEST_TIMEOUT } from './runtime';
-import { RuntimeErro } from '../errors';
-import { messageType, MinifiedEmbedMessage, messageOutputType } from '../models';
-import { pick } from '../utils/utils';
 import { BehaviorSubject } from 'rxjs';
+import { RuntimeErro } from '../errors';
+import { messageOutputType, messageType, MinifiedEmbedMessage } from '../models';
+import { pick } from '../utils/utils';
+import runtime, { DEFAULT_TEST_TIMEOUT } from './runtime';
 
 export default class CordeBot {
   private _client: Client;
@@ -192,7 +192,7 @@ export default class CordeBot {
         `Guild ${guildId} doesn't belong to corde bot. change the guild id in corde.config or add the bot to a valid guild`,
       );
     } else {
-      const guild = this._client.guilds.cache.find((guild) => guild.id === guildId);
+      const guild = this._client.guilds.cache.find((_guild) => _guild.id === guildId);
 
       if (guild) {
         return guild;

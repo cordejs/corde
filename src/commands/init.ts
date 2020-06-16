@@ -1,9 +1,8 @@
-import ConfigOptions, { configFileType } from '../models';
+import chalk from 'chalk';
 import fs from 'fs';
 import path from 'path';
 import prettier from 'prettier';
-import chalk from 'chalk';
-import { type } from 'os';
+import ConfigOptions, { configFileType } from '../models';
 
 const jsonFile: ConfigOptions = {
   botPrefix: '',

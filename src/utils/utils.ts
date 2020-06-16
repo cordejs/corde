@@ -1,5 +1,5 @@
-import { ParameterNotFoundError } from '../errors';
 import chalk from 'chalk';
+import { ParameterNotFoundError } from '../errors';
 
 export function clone<T>(object: T | T[]): T | T[] {
   if (!object) {

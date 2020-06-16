@@ -1,7 +1,5 @@
 /**
  * Throws when a requried property was not informed
- *
- * @public
  */
 export class MissingPropertyError extends Error {
   constructor(message?: string) {

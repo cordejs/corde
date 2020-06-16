@@ -1,13 +1,13 @@
-import Thread from './thread';
-import {
-  messageType,
-  messageExpectationType,
-  Matches,
-  TestReport,
-  MatchesWithNot,
-} from '../models';
-import { MessageEmbed } from 'discord.js';
 import assert from 'assert';
+import { MessageEmbed } from 'discord.js';
+import {
+  Matches,
+  MatchesWithNot,
+  messageExpectationType,
+  messageType,
+  TestReport,
+} from '../models';
+import Thread from './thread';
 
 export function matcherWithNot(commandName: string): MatchesWithNot {
   return {

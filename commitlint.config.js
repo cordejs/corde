@@ -23,6 +23,7 @@ module.exports = {
         'perf',
         'refact',
         'revert',
+        'lint',
         'style',
         'test',
       ],

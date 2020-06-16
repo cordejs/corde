@@ -1,18 +1,13 @@
 import fs from 'fs';
-import {
-  FilesNotFoundError,
-  ConfigFileNotFoundError,
-  MissingPropertyError,
-  FileParserError,
-} from '../errors';
-import ora, { Ora, Color } from 'ora';
-import runtime from '../core/runtime';
+import ora, { Color, Ora } from 'ora';
 import path from 'path';
-import { outPutResult } from '../core/reporter';
 import Thread from '../building/thread';
-import ConfigOptions, { Group, configFileType } from '../models';
 import reader from '../core/reader';
+import { outPutResult } from '../core/reporter';
 import { executeTestCases } from '../core/runner';
+import runtime from '../core/runtime';
+import { FilesNotFoundError } from '../errors';
+import ConfigOptions, { Group } from '../models';
 
 let spinner: Ora;
 
@@ -67,7 +62,7 @@ async function runTestsAndPrint(groups: Group[]) {
   }
 }
 
-function finishProcess(code: number = 1 | 0, error?: any) {
+function finishProcess(code: number, error?: any) {
   try {
     if (error) {
       console.log(error);

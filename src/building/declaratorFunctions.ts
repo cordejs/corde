@@ -1,15 +1,13 @@
+import { MatchesWithNot, Test } from '../models';
+import { matcherWithNot } from './matcher';
 import Thread from './thread';
-import matcher, { matcherWithNot } from './matcher';
-import { Test, Matches, MatchesWithNot } from '../models';
-import { clone } from '../utils/utils';
-import { AssertionProps } from '../models';
 
 /**
  * Declare a bunch of code that will be executed **after** tests beging
  *
  * More than one declaration of this code results in a list
  * of functions to run.
-
+ *
  * They will be executed following a sequence of files
  * reads and the positions of each `afterAll` call.
  *

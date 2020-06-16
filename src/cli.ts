@@ -1,10 +1,10 @@
 import { Command } from 'commander';
 import * as pack from '../package.json';
-import init from './commands/init';
-import { configFileType } from './models';
 import { runTestsFromConfigs } from './commands/go';
-import reader from './core/reader';
+import init from './commands/init';
 import validate from './commands/validate';
+import reader from './core/reader';
+import { configFileType } from './models';
 import { exitProcessWithError } from './utils/utils';
 
 const program = new Command();

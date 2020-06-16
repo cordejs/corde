@@ -49,8 +49,6 @@ export interface Group {
   tests: Test[];
 }
 
-export interface LogOut {}
-
 export interface Author {
   icon_url: string;
   name: string;
@@ -85,10 +83,6 @@ export interface MinifiedEmbedMessage {
   url: string;
 }
 
-export interface MatchesWithNot extends Matches {
-  not: Matches;
-}
-
 /**
  * Defines all functions that can be used
  * to check a bot reaction of a command.
@@ -108,6 +102,10 @@ export interface Matches {
    * @param expect A message that **should not be** returned by a bot after invoke a command
    */
   mustNotReturn(notExpect: string | MessageEmbed): void;
+}
+
+export interface MatchesWithNot extends Matches {
+  not: Matches;
 }
 
 /**

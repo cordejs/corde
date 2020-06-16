@@ -1,31 +1,27 @@
-import { Group, AssertionProps, Test, TestReport, testFunctionType } from '../models';
+import { Group, Test, testFunctionType, TestReport } from '../models';
 import runtime from './runtime';
 
 export async function executeTestCases(groups: Group[]) {
   const tests = getTestsFromGroup(groups);
 
   for (const i in tests) {
-    const test = tests[i];
-    const reports = await runTests(test.testsFunctions);
-    test.testsReports = reports;
+    if (tests.hasOwnProperty(i)) {
+      const test = tests[i];
+      const reports = await runTests(test.testsFunctions);
+      test.testsReports = reports;
+    }
   }
 }
 
 async function runTests(testsFunctions: testFunctionType[]) {
   const reports: TestReport[] = [];
   for (const i in testsFunctions) {
-    const report = await testsFunctions[i](runtime.bot);
-    reports.push(report);
+    if (testsFunctions.hasOwnProperty(i)) {
+      const report = await testsFunctions[i](runtime.bot);
+      reports.push(report);
+    }
   }
   return reports;
-}
-
-async function trySendMessage(assertion: AssertionProps) {
-  try {
-    return await runtime.bot.sendTextMessage(assertion.commandName, assertion.messageType);
-  } catch (error) {
-    return 'Timeout';
-  }
 }
 
 function getTestsFromGroup(groups: Group[]) {

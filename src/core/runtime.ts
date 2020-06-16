@@ -1,7 +1,6 @@
 import * as Discord from 'discord.js';
-import ConfigOptions, { Group, testFunctionType } from '../models';
+import ConfigOptions from '../models';
 import CordeBot from './cordeBot';
-import Thread from '../building/thread';
 
 export const DEFAULT_TEST_TIMEOUT = 5000;
 
