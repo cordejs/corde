@@ -18,6 +18,7 @@
   ],
   "scripts": {
     "start": "node bin/corde",
+    "prepublishOnly": "./scripts/publish.sh",
     "create": "build && yarn test",
     "build": "tsc -p .",
     "watch": "tsc -w",
