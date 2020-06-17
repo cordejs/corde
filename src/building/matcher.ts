@@ -1,34 +1,29 @@
 import assert from 'assert';
-import { MessageEmbed } from 'discord.js';
-import {
-  Matches,
-  MatchesWithNot,
-  messageExpectationType,
-  messageType,
-  TestReport,
-} from '../models';
+import { MessageEmbed, Message } from 'discord.js';
+import { Matches, MatchesWithNot, TestReport } from '../models';
 import Thread from './thread';
 
 export function matcherWithNot(commandName: string): MatchesWithNot {
   return {
-    not: matcher(commandName, false),
-    ...matcher(commandName, true),
+    not: matcher(commandName, true),
+    ...matcher(commandName, false),
   };
 }
 
-export default function matcher(commandName: string, isTrueMacther: boolean): Matches {
+export default function matcher(commandName: string, isNot: boolean): Matches {
   return {
-    async mustReturn(expect: string | MessageEmbed) {
+    mustReturn(expect: string | MessageEmbed) {
       Thread.testsFunctions.push(async (cordeBot) => {
         let msg = '';
         let isEqual = false;
         let showExpectAndOutputValue = true;
         if (typeof expect === 'string') {
-          msg = (await cordeBot.sendTextMessage(commandName, 'text')) as string;
+          const discordMsg = (await cordeBot.sendTextMessage(commandName, 'text')) as Message;
+          msg = discordMsg.content;
           isEqual = msg === expect;
         } else {
           const json = await cordeBot.sendTextMessage(commandName, 'embed');
-          msg = json as string;
+          msg = JSON.stringify(json);
           showExpectAndOutputValue = false;
           try {
             assert.deepEqual(expect.toJSON(), json);
@@ -43,36 +38,43 @@ export default function matcher(commandName: string, isTrueMacther: boolean): Ma
           expectation: expect,
           output: msg,
           testSucessfully: isEqual,
-          isTrueMacther,
+          isNot,
           showExpectAndOutputValue,
         } as TestReport;
       });
     },
-    mustNotReturn(notExpect: string | MessageEmbed) {
-      _buildShouldReturnMatch(notExpect, false);
+
+    mustAddReaction(reactions: string | string[]) {
+      Thread.testsFunctions.push(async (cordeBot) => {
+        const discordMsg = (await cordeBot.sendTextMessage(commandName, 'text')) as Message;
+        let isEqual = false;
+        let expectation = '';
+
+        if (typeof reactions === 'string' && discordMsg.reactions.cache.has(reactions)) {
+          isEqual = true;
+          expectation = reactions;
+        } else {
+          expectation = (reactions as string[]).join();
+          (reactions as string[]).forEach((reaction) => {
+            if (discordMsg.reactions.cache.has(reaction)) {
+              isEqual = true;
+            } else {
+              isEqual = false;
+            }
+          });
+        }
+
+        const output = discordMsg.reactions.cache.map((v) => v).join();
+
+        return {
+          commandName,
+          expectation,
+          output,
+          testSucessfully: true,
+          isNot,
+          showExpectAndOutputValue: true,
+        } as TestReport;
+      });
     },
   };
-
-  function _buildShouldReturnMatch(expect: messageExpectationType, isTrueStatement: boolean) {
-    if (typeof expect === 'string') {
-      _buildAssertion(expect, true, 'text', commandName);
-    } else {
-      _buildAssertion(expect, isTrueStatement, 'embed', commandName);
-    }
-  }
-
-  function _buildAssertion(
-    expect: messageExpectationType,
-    usingTrueStatement: boolean = true,
-    messageType: messageType = 'text',
-    commandName: string,
-  ) {
-    Thread.isBuildRunning = true;
-    Thread.assertions.push({
-      expectation: expect,
-      commandName,
-      usingTrueStatement,
-      messageType,
-    });
-  }
 }

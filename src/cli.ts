@@ -19,7 +19,6 @@ program
     await runTestsFromConfigs();
   });
 
-// Add init command
 program
   .command('init [type]')
   .alias('i')
@@ -33,8 +32,6 @@ program
 program
   .command('validate')
   .alias('v')
-  .alias('val')
-  .alias('vali')
   .description('Search for corde configs and check if all data are valid')
   .action(() => {
     const configs = reader.loadConfig();
@@ -43,5 +40,13 @@ program
     } else {
       exitProcessWithError();
     }
+  });
+
+program
+  .command('go')
+  .alias('g')
+  .description("Alias for corde execution. You can execute tests only writing 'go'.")
+  .action(async () => {
+    await runTestsFromConfigs();
   });
 program.parse(process.argv);

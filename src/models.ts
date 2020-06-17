@@ -1,8 +1,8 @@
-import { MessageEmbed } from 'discord.js';
+import { MessageEmbed, Message } from 'discord.js';
 import CordeBot from './core/cordeBot';
 
 export type messageType = 'text' | 'embed';
-export type messageOutputType = string | MinifiedEmbedMessage;
+export type messageOutputType = Message | MinifiedEmbedMessage;
 export type messageExpectationType = string | MessageEmbed;
 export type testFunctionType = (cordeBot: CordeBot) => Promise<TestReport>;
 /**
@@ -15,7 +15,7 @@ export interface TestReport {
   expectation: string;
   output: string;
   testSucessfully: boolean;
-  isTrueMacther: boolean;
+  isNot: boolean;
   showExpectAndOutputValue: boolean;
 }
 
@@ -95,16 +95,21 @@ export interface Matches {
    * @param expect A message returned by a bot after invoke a command
    */
   mustReturn(expect: string | MessageEmbed): void;
-  /**
-   * Defines the message **not** expected to be returned by a
-   * command.
-   *
-   * @param expect A message that **should not be** returned by a bot after invoke a command
-   */
-  mustNotReturn(notExpect: string | MessageEmbed): void;
+  mustAddReaction(reaction: string | string[]): void;
 }
 
+/**
+ * Defines the initial value of expectations from
+ * **command** function. It includes all matches and
+ * the *not* statement. Witch will deny the executed match
+ *
+ */
 export interface MatchesWithNot extends Matches {
+  /**
+   * Defines that a command should **not** do something.
+   * Use this if you are can not precise what response a command will throw,
+   * But know and responde it **can not** throw.
+   */
   not: Matches;
 }
 

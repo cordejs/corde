@@ -129,9 +129,7 @@ export default class CordeBot {
    *  ```
    */
   private getMessageByType(answer: Collection<string, Message>, type: messageType) {
-    if (type === 'text') {
-      return answer.first().content;
-    } else if (type === 'embed') {
+    if (type === 'embed') {
       const tempObject = answer.first().embeds[0].toJSON() as MinifiedEmbedMessage;
       if (tempObject.image) {
         tempObject.image = pick(tempObject.image, 'url');
@@ -141,7 +139,7 @@ export default class CordeBot {
       }
       return tempObject;
     } else {
-      return '';
+      return answer.first();
     }
   }
 

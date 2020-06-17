@@ -6,16 +6,11 @@ import reader from '../core/reader';
 import { outPutResult } from '../core/reporter';
 import { executeTestCases } from '../core/runner';
 import runtime from '../core/runtime';
-import { FilesNotFoundError } from '../errors';
-import ConfigOptions, { Group } from '../models';
+import { Group } from '../models';
+import validate from './validate';
+import { exitProcessWithError } from '../utils/utils';
 
 let spinner: Ora;
-
-export async function runTestsFromFiles(files: string[]) {
-  const relativePaths = getFilesFullPath(files);
-  loadConfigs();
-  await runTests(relativePaths);
-}
 
 export async function runTestsFromConfigs() {
   try {
@@ -29,7 +24,11 @@ export async function runTestsFromConfigs() {
 
 function loadConfigs() {
   const configs = reader.loadConfig();
-  runtime.setConfigs(configs);
+  if (validate(configs)) {
+    runtime.setConfigs(configs);
+  } else {
+    exitProcessWithError();
+  }
 }
 
 async function runTests(files: string[]) {
@@ -101,24 +100,6 @@ function getRandomSpinnerColor() {
 
 function stopLoading() {
   spinner.stop();
-}
-
-/**
- * Get the full path to acess a list of files
- * @param files file names
- */
-function getFilesFullPath(files: string[]) {
-  if (files) {
-    const paths: string[] = [];
-    files.forEach((file) => {
-      const possiblePath = `${process.cwd()}/${file}`;
-      if (fs.existsSync(possiblePath)) {
-        paths.push(possiblePath);
-      }
-    });
-    return paths;
-  }
-  throw new FilesNotFoundError();
 }
 
 /**
