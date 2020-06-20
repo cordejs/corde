@@ -1,4 +1,4 @@
-import init from '../../src/commands/init';
+import init from '../../src/cli-commands/init';
 import fs from 'fs';
 import path from 'path';
 import ConfigOptions from '../../src/models';

@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { ConfigFileNotFoundError, FilesNotFoundError } from '../errors';
 import ConfigOptions from '../models';
-import runtime from './runtime';
+import runtime from '../common/runtime';
 import testCollector from './testColletor';
 
 class Reader {

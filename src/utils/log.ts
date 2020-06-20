@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import { TestReport } from '../models';
+import { TestReport } from '../testing-api';
 
 const DEFAULT_SPACE_VALUE = 4;
 

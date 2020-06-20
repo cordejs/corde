@@ -1,14 +1,14 @@
 import fs from 'fs';
 import ora, { Color, Ora } from 'ora';
 import path from 'path';
-import Thread from '../building/thread';
 import reader from '../core/reader';
 import { outPutResult } from '../core/reporter';
 import { executeTestCases } from '../core/runner';
-import runtime from '../core/runtime';
+import runtime from '../common/runtime';
 import { Group } from '../models';
 import validate from './validate';
 import { exitProcessWithError } from '../utils/utils';
+import testCollector from '../core/testColletor';
 
 let spinner: Ora;
 
@@ -36,7 +36,7 @@ async function runTests(files: string[]) {
   const testsGroups = reader.getTestsFromFiles(files);
 
   setMessage('starting bots');
-  Thread.beforeStartFunctions.forEach((fn) => fn());
+  testCollector.beforeStartFunctions.forEach((fn) => fn());
 
   await runtime.bot.login(runtime.configs.cordeTestToken);
 
@@ -71,8 +71,8 @@ function finishProcess(code: number, error?: any) {
       runtime.bot.logout();
     }
 
-    if (Thread.afterAllFunctions) {
-      Thread.afterAllFunctions.forEach((fn) => fn());
+    if (testCollector.afterAllFunctions) {
+      testCollector.afterAllFunctions.forEach((fn) => fn());
     }
   } finally {
     process.exit(code);

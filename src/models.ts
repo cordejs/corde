@@ -1,23 +1,16 @@
 import { MessageEmbed, Message } from 'discord.js';
-import CordeBot from './core/cordeBot';
+import { CordeBot } from './common';
+import { TestReport } from './testing-api/models';
 
 export type messageType = 'text' | 'embed';
 export type messageOutputType = Message | MinifiedEmbedMessage;
 export type messageExpectationType = string | MessageEmbed;
 export type testFunctionType = (cordeBot: CordeBot) => Promise<TestReport>;
+
 /**
  * Available types of config files
  */
 export type configFileType = 'js' | 'json' | 'ts';
-
-export interface TestReport {
-  commandName: string;
-  expectation: string;
-  output: string;
-  testSucessfully: boolean;
-  isNot: boolean;
-  showExpectAndOutputValue: boolean;
-}
 
 /**
  * Represents **command** structure

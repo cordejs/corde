@@ -1,12 +1,12 @@
 import commander, { Command } from 'commander';
 import * as pack from '../package.json';
-import { go } from './commands/go';
-import init from './commands/init';
-import validate from './commands/validate';
+import { go } from './cli-commands/go';
+import init from './cli-commands/init';
+import validate from './cli-commands/validate';
 import reader from './core/reader';
 import { configFileType } from './models';
 import { exitProcessWithError } from './utils/utils';
-import runtime from './core/runtime';
+import runtime from './common/runtime';
 
 const program = new Command();
 

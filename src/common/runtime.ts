@@ -1,7 +1,6 @@
-import * as Discord from 'discord.js';
 import ConfigOptions from '../models';
-import CordeBot from './cordeBot';
-import { Config } from './config';
+import { Config } from '../core/config';
+import { CordeBot } from './cordeBot';
 
 export const DEFAULT_TEST_TIMEOUT = 5000;
 

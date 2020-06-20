@@ -13,7 +13,7 @@ import { messageOutputType, messageType, MinifiedEmbedMessage } from '../models'
 import { pick } from '../utils/utils';
 import runtime, { DEFAULT_TEST_TIMEOUT } from './runtime';
 
-export default class CordeBot {
+export class CordeBot {
   private _client: Client;
   hasInited: BehaviorSubject<boolean>;
   textChannel: TextChannel;
