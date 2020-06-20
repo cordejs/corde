@@ -3,7 +3,7 @@ import { MessageEmbed, Message } from 'discord.js';
 import { CordeBot } from '../../common';
 import { TestReport } from '../models';
 
-export async function mustReturn(
+export async function mustReturnFnImpl(
   expect: string | MessageEmbed,
   cordeBot: CordeBot,
   commandName: string,

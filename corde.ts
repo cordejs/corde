@@ -1,4 +1,12 @@
-export = {
+import env from 'dotenv';
+
+var result = env.config();
+
+if (result.error) {
+  throw result.error;
+}
+
+module.exports = {
   botPrefix: process.env.BOT_PREFIX,
   botTestId: process.env.BOT_TEST_ID,
   channelId: process.env.CHANNEL_ID,

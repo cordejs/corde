@@ -20,7 +20,7 @@ const jsFile = `
 `;
 
 const tsFile = `
-    exports = ${JSON.stringify(jsonFile)}
+    module.exports = ${JSON.stringify(jsonFile)}
 `;
 
 /**

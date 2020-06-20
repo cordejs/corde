@@ -1,4 +1,4 @@
-import testCollector from '../core/testColletor';
+import testCollector from '../common/testColletor';
 
 /**
  * Represents a group of tests.

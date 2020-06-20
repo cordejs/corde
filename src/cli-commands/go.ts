@@ -8,7 +8,7 @@ import runtime from '../common/runtime';
 import { Group } from '../models';
 import validate from './validate';
 import { exitProcessWithError } from '../utils/utils';
-import testCollector from '../core/testColletor';
+import testCollector from '../common/testColletor';
 
 let spinner: Ora;
 
