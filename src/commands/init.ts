@@ -15,8 +15,12 @@ const jsonFile: ConfigOptions = {
   timeOut: 5000,
 };
 
-const objFile = `
+const jsFile = `
     module.exports = ${JSON.stringify(jsonFile)}
+`;
+
+const tsFile = `
+    exports = ${JSON.stringify(jsonFile)}
 `;
 
 /**
@@ -38,8 +42,10 @@ export default function init(fileType: configFileType = 'json') {
 
   if (fileType === 'json') {
     fileContent = JSON.stringify(jsonFile);
-  } else if (fileType === 'js' || fileType === 'ts') {
-    fileContent = objFile;
+  } else if (fileType === 'js') {
+    fileContent = jsFile;
+  } else if (fileType === 'ts') {
+    fileContent = tsFile;
   } else {
     console.log(
       ` - ${chalk.bold(fileType)} is not a valid type. Use '${chalk.bold(
