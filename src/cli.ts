@@ -1,11 +1,12 @@
-import { Command } from 'commander';
+import commander, { Command } from 'commander';
 import * as pack from '../package.json';
-import { runTestsFromConfigs } from './commands/go';
+import { go } from './commands/go';
 import init from './commands/init';
 import validate from './commands/validate';
 import reader from './core/reader';
 import { configFileType } from './models';
 import { exitProcessWithError } from './utils/utils';
+import runtime from './core/runtime';
 
 const program = new Command();
 
@@ -14,10 +15,16 @@ program
   .name('Corde')
   .usage('to start testings o corde [option] to use a specific command.')
   .description(pack.description)
-  .version(pack.version, '-v')
-  .action(async () => {
-    await runTestsFromConfigs();
-  });
+  .version(pack.version, '-v');
+
+addGoConfig(program);
+
+program
+  .command('go')
+  .alias('g')
+  .description("Alias for corde execution. You can execute tests only writing 'go'.");
+
+addGoConfig(program);
 
 program
   .command('init [type]')
@@ -42,11 +49,13 @@ program
     }
   });
 
-program
-  .command('go')
-  .alias('g')
-  .description("Alias for corde execution. You can execute tests only writing 'go'.")
-  .action(async () => {
-    await runTestsFromConfigs();
+function addGoConfig(prog: commander.Command) {
+  prog.option('-c --config', 'Set config file path').action(async () => {
+    if (program.config) {
+      runtime.configFilePath = program.config;
+    }
+    await go();
   });
+}
+
 program.parse(process.argv);

@@ -1,7 +1,8 @@
 import fs from 'fs';
-import Thread from '../building/thread';
 import { ConfigFileNotFoundError, FilesNotFoundError } from '../errors';
 import ConfigOptions from '../models';
+import runtime from './runtime';
+import testCollector from './testColletor';
 
 class Reader {
   /**
@@ -12,6 +13,8 @@ class Reader {
   loadConfig(): ConfigOptions {
     let _config: ConfigOptions;
 
+    if (runtime.configFilePath) {
+    }
     const jsonFilePath = `${process.cwd()}/corde.json`;
     const tsFilePath = `${process.cwd()}/corde.ts`;
     const jsFilePath = `${process.cwd()}/corde.js`;
@@ -35,36 +38,36 @@ class Reader {
 
   getTestsFromFiles(files: string[]) {
     if (files) {
-      Thread.isBuildRunning = true;
-      Thread.groups = [];
+      testCollector.isCollecting = true;
+      testCollector.groups = [];
       for (const i in files) {
         if (files.hasOwnProperty(i)) {
           require(files[i]);
         }
       }
-      Thread.isBuildRunning = false;
+      testCollector.isCollecting = false;
 
       addTestsGroupmentToGroupIfExist();
       addTestFuncionsToGroupIfExists();
-      return Thread.groups;
+      return testCollector.groups;
     }
     throw new FilesNotFoundError();
   }
 }
 
 function addTestsGroupmentToGroupIfExist() {
-  if (Thread.tests && Thread.tests.length > 0) {
-    const testsCloned = Thread.tests.map((test) => test);
-    Thread.groups.push({ tests: testsCloned });
-    Thread.tests = [];
+  if (testCollector.tests && testCollector.tests.length > 0) {
+    const testsCloned = testCollector.tests.map((test) => test);
+    testCollector.groups.push({ tests: testsCloned });
+    testCollector.tests = [];
   }
 }
 
 function addTestFuncionsToGroupIfExists() {
-  if (Thread.testsFunctions && Thread.testsFunctions.length > 0) {
-    const testsCloned = Thread.testsFunctions.map((test) => test);
-    Thread.groups.push({ tests: [{ testsFunctions: testsCloned }] });
-    Thread.testsFunctions = [];
+  if (testCollector.hasTestFunctions()) {
+    const testsCloned = testCollector.cloneTestFunctions();
+    testCollector.groups.push({ tests: [{ testsFunctions: testsCloned }] });
+    testCollector.cleanTestFunctions();
   }
 }
 

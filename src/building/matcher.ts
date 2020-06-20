@@ -1,7 +1,7 @@
-import assert from 'assert';
 import { MessageEmbed, Message } from 'discord.js';
 import { Matches, MatchesWithNot, TestReport } from '../models';
-import Thread from './thread';
+import { mustReturn } from '../matches/mustReturn';
+import testCollector from '../core/testColletor';
 
 export function matcherWithNot(commandName: string): MatchesWithNot {
   return {
@@ -13,39 +13,11 @@ export function matcherWithNot(commandName: string): MatchesWithNot {
 export default function matcher(commandName: string, isNot: boolean): Matches {
   return {
     mustReturn(expect: string | MessageEmbed) {
-      Thread.testsFunctions.push(async (cordeBot) => {
-        let msg = '';
-        let isEqual = false;
-        let showExpectAndOutputValue = true;
-        if (typeof expect === 'string') {
-          const discordMsg = (await cordeBot.sendTextMessage(commandName, 'text')) as Message;
-          msg = discordMsg.content;
-          isEqual = msg === expect;
-        } else {
-          const json = await cordeBot.sendTextMessage(commandName, 'embed');
-          msg = JSON.stringify(json);
-          showExpectAndOutputValue = false;
-          try {
-            assert.deepEqual(expect.toJSON(), json);
-            isEqual = true;
-          } catch (error) {
-            isEqual = false;
-          }
-        }
-
-        return {
-          commandName,
-          expectation: expect,
-          output: msg,
-          testSucessfully: isEqual,
-          isNot,
-          showExpectAndOutputValue,
-        } as TestReport;
-      });
+      testCollector.addTestFunction((cordeBot) => mustReturn(expect, cordeBot, commandName, isNot));
     },
 
     mustAddReaction(reactions: string | string[]) {
-      Thread.testsFunctions.push(async (cordeBot) => {
+      testCollector.addTestFunction(async (cordeBot) => {
         const discordMsg = (await cordeBot.sendTextMessage(commandName, 'text')) as Message;
         let isEqual = false;
         let expectation = '';

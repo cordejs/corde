@@ -1,33 +1,14 @@
 import * as Discord from 'discord.js';
 import ConfigOptions from '../models';
 import CordeBot from './cordeBot';
+import { Config } from './config';
 
 export const DEFAULT_TEST_TIMEOUT = 5000;
-
-/**
- * Default interface of json config
- *
- * @description `botTestToken` is not required.
- * only inform if is desired to start test bot with corde
- *
- * @implements ConfigOptions
- */
-class Config implements ConfigOptions {
-  cordeTestToken: string;
-  botTestId: string;
-  botTestToken?: string;
-  channelId: string;
-  guildId: string;
-  timeOut?: number;
-  botPrefix: string;
-  testFilesDir: string;
-  message: Discord.Message;
-  files: string[];
-}
 
 class Runtime {
   configs: Config;
   bot: CordeBot;
+  configFilePath: string;
 
   constructor() {
     this.bot = new CordeBot();

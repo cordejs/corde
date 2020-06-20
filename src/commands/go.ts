@@ -12,7 +12,7 @@ import { exitProcessWithError } from '../utils/utils';
 
 let spinner: Ora;
 
-export async function runTestsFromConfigs() {
+export async function go() {
   try {
     loadConfigs();
     const files = await readDir(runtime.configs.testFilesDir);
