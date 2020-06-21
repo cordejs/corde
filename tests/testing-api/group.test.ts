@@ -1,4 +1,4 @@
-import { group } from '../../src/testing-api';
+import { group, test } from '../../src/testing-api';
 import testCollector from '../../src/common/testColletor';
 import { Group } from '../../src/models';
 
@@ -45,5 +45,25 @@ describe('Testing group function', () => {
     } else {
       expect(testCollector.groups.length).toEqual(0);
     }
+  });
+
+  it('Should add group with test inside', () => {
+    group('groupName', () => {
+      test('testName', () => {
+        let batata = 1;
+      });
+    });
+
+    const groupsObj: Group[] = [];
+    groupsObj.push({
+      name: 'groupName',
+      tests: [
+        {
+          testsFunctions: [],
+          name: 'testName',
+        },
+      ],
+    });
+    expect(testCollector.groups).toEqual(groupsObj);
   });
 });
