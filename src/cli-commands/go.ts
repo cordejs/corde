@@ -9,17 +9,18 @@ import { Group } from '../models';
 import validate from './validate';
 import { exitProcessWithError } from '../utils/utils';
 import testCollector from '../common/testColletor';
+import chalk from 'chalk';
+
+process.on('uncaughtException', () => {
+  stopLoading();
+});
 
 let spinner: Ora;
 
 export async function go() {
-  try {
-    loadConfigs();
-    const files = await readDir(runtime.configs.testFilesDir);
-    await runTests(files);
-  } catch (error) {
-    finishProcess(1, error);
-  }
+  loadConfigs();
+  const files = await readDir(runtime.configs.testFilesDir);
+  await runTests(files);
 }
 
 function loadConfigs() {
@@ -84,7 +85,7 @@ function startLoading(initialMessage: string) {
   // https://github.com/fossas/fossa-cli/issues/193
   spinner = ora(`${initialMessage}\n`).start();
   spinner.color = getRandomSpinnerColor() as Color;
-  spinner.spinner = 'runner';
+  spinner.spinner = 'dots';
 }
 
 function setMessage(message: string) {

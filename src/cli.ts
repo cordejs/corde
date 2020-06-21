@@ -7,6 +7,9 @@ import reader from './core/reader';
 import { configFileType } from './models';
 import { exitProcessWithError } from './utils/utils';
 import runtime from './common/runtime';
+import { initProcessEventsHandlers } from './processEvents';
+
+initProcessEventsHandlers();
 
 const program = new Command();
 
