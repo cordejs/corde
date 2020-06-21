@@ -50,7 +50,7 @@ program
   });
 
 function addGoConfig(prog: commander.Command) {
-  prog.option('-c --config', 'Set config file path').action(async () => {
+  prog.option('-c --config <type>', 'Set config file path').action(async () => {
     if (program.config) {
       runtime.configFilePath = program.config;
     }

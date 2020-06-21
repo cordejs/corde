@@ -13,11 +13,13 @@ class Reader {
   loadConfig(): ConfigOptions {
     let _config: ConfigOptions;
 
+    let jsonFilePath = path.resolve(process.cwd(), 'corde.json');
+    let tsFilePath = path.resolve(process.cwd(), 'corde.ts');
+    let jsFilePath = path.resolve(process.cwd(), 'corde.js');
+
     if (runtime.configFilePath) {
+      return loadConfigFromConfigFilePath();
     }
-    const jsonFilePath = path.resolve(process.cwd(), 'corde.json');
-    const tsFilePath = path.resolve(process.cwd(), 'corde.ts');
-    const jsFilePath = path.resolve(process.cwd(), 'corde.js');
 
     if (fs.existsSync(jsonFilePath)) {
       _config = JSON.parse(fs.readFileSync(jsonFilePath).toString());
@@ -51,6 +53,25 @@ class Reader {
       addTestFuncionsToGroupIfExists();
       return testCollector.groups;
     }
+    throw new FilesNotFoundError();
+  }
+}
+
+function loadConfigFromConfigFilePath(): ConfigOptions {
+  const filePath = path.resolve(process.cwd(), runtime.configFilePath);
+  const fileExt = path.extname(filePath);
+
+  console.log(filePath);
+
+  if (!fs.existsSync(filePath)) {
+    throw new Error('Path to config not found');
+  }
+
+  if (fileExt === '.json') {
+    return JSON.parse(fs.readFileSync(filePath).toString());
+  } else if (fileExt === '.js' || fileExt === '.ts') {
+    return require(filePath);
+  } else {
     throw new FilesNotFoundError();
   }
 }
