@@ -11,7 +11,7 @@ group('main commands', () => {
   // });
 
   test('Embed command should return a embed message!!', () => {
-    command('embed').shouldReturn(embedMsg);
+    command('embed').mustReturn(embedMsg);
   });
 });
 

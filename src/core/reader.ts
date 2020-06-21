@@ -3,7 +3,7 @@ import { ConfigFileNotFoundError, FilesNotFoundError } from '../errors';
 import ConfigOptions from '../models';
 import runtime from '../common/runtime';
 import testCollector from '../common/testColletor';
-
+import path from 'path';
 class Reader {
   /**
    * Read config file(*.json) from root of project
@@ -15,9 +15,9 @@ class Reader {
 
     if (runtime.configFilePath) {
     }
-    const jsonFilePath = `${process.cwd()}/corde.json`;
-    const tsFilePath = `${process.cwd()}/corde.ts`;
-    const jsFilePath = `${process.cwd()}/corde.js`;
+    const jsonFilePath = path.resolve(process.cwd(), 'corde.json');
+    const tsFilePath = path.resolve(process.cwd(), 'corde.ts');
+    const jsFilePath = path.resolve(process.cwd(), 'corde.js');
 
     if (fs.existsSync(jsonFilePath)) {
       _config = JSON.parse(fs.readFileSync(jsonFilePath).toString());

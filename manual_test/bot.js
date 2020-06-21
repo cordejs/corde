@@ -2,8 +2,7 @@ const Discord = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 
-const file = fs.readFileSync(path.resolve(__dirname, '../corde.json')).toString();
-const config = JSON.parse(file);
+const config = require('../corde');
 
 const bot = new Discord.Client();
 
