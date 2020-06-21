@@ -6,34 +6,45 @@ export async function mustAddReactionFnImpl(
   isNot: boolean,
   commandName: string,
   cordeBot: CordeBot,
-  args: string | string[],
+  reactions: string[],
 ): Promise<TestReport> {
-  const discordMsg = (await cordeBot.sendTextMessage(this.commandName, 'text')) as Message;
   let isEqual = false;
   let expectation = '';
+  let output = '';
 
-  if (typeof args === 'string' && discordMsg.reactions.cache.has(args)) {
-    isEqual = true;
-    expectation = args;
-  } else {
-    expectation = (args as string[]).join();
-    (args as string[]).forEach((reaction) => {
-      if (discordMsg.reactions.cache.has(reaction)) {
-        isEqual = true;
-      } else {
-        isEqual = false;
-      }
-    });
+  expectation = reactions.join();
+
+  try {
+    const message = await cordeBot.sendTextMessage(commandName);
+    await cordeBot.waitForReactions(message, reactions);
+    isEqual = isOutputEqualToExpect(message, reactions);
+    output = message.reactions.cache.map((v) => v.emoji.name).join();
+  } catch (error) {
+    console.log(error.message);
+  } finally {
+    return {
+      commandName,
+      expectation,
+      output,
+      testSucessfully: isEqual,
+      isNot,
+      // Problems in display emojis in windows console
+      showExpectAndOutputValue: process.platform === 'win32' ? false : true,
+    } as TestReport;
   }
+}
 
-  const output = discordMsg.reactions.cache.map((v) => v).join();
-
-  return {
-    commandName,
-    expectation,
-    output,
-    testSucessfully: true,
-    isNot,
-    showExpectAndOutputValue: true,
-  } as TestReport;
+function isOutputEqualToExpect(message: Message, expectation: string | string[]) {
+  if (typeof expectation === 'string' && message.reactions.cache.has(expectation)) {
+    return true;
+  } else {
+    for (const i in expectation as string[]) {
+      if (message.reactions.cache.has(expectation[i])) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+  return false;
 }

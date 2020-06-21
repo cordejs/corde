@@ -11,7 +11,9 @@ group('main commands', () => {
   // });
 
   test('Embed command should return a embed message!!', () => {
-    command('embed').mustReturn(embedMsg);
+    //command('embed').mustReturn(embedMsg);
+    //command('emoji').mustAddReaction('😄');
+    command('emojis').mustAddReaction('😄', '🍊');
   });
 });
 

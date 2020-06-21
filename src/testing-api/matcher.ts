@@ -19,7 +19,7 @@ export default function matcher(commandName: string, isNot: boolean): Matches {
       );
     },
 
-    mustAddReaction(reactions: string | string[]) {
+    mustAddReaction(...reactions: string[]) {
       testCollector.addTestFunction((cordebot) =>
         mustAddReactionFnImpl(isNot, commandName, cordebot, reactions),
       );

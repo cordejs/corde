@@ -6,12 +6,16 @@ import {
   Guild,
   Message,
   TextChannel,
+  CollectorFilter,
+  MessageReaction,
 } from 'discord.js';
 import { BehaviorSubject } from 'rxjs';
 import { RuntimeErro } from '../errors';
 import { messageOutputType, messageType, MinifiedEmbedMessage } from '../models';
 import { pick } from '../utils/utils';
 import runtime, { DEFAULT_TEST_TIMEOUT } from './runtime';
+import { promises } from 'fs';
+import validate from '../cli-commands/validate';
 
 export class CordeBot {
   private _client: Client;
@@ -69,22 +73,18 @@ export class CordeBot {
    * @see Runtime
    *
    * @param message Message without prefix that will be sent to defined servers's channel
-   *
    * @description The message is concatened with the stored **prefix** and is sent to the channel.
    *
    * @return Promisse rejection if a testing bot does not send any message in the timeout value setted,
    * or a resolve for the promisse with the message returned by the testing bot.
    */
-  async sendTextMessage(message: string, responseType: messageType): Promise<messageOutputType> {
-    return new Promise(async (resolve, reject) => {
-      this.validateMessageAndChannel(message);
-      const formatedMessage = runtime.configs.botPrefix + message;
-      await this.textChannel.send(formatedMessage);
-
+  async sendTextMessage(message: string): Promise<Message> {
+    return new Promise<Message>(async (resolve, reject) => {
       try {
-        const answer = await this.awaitMessagesFromTestingBot();
-        const content = this.getMessageByType(answer, responseType);
-        resolve(content);
+        this.validateMessageAndChannel(message);
+        const formatedMessage = runtime.configs.botPrefix + message;
+        const returnedMessage = await this.textChannel.send(formatedMessage);
+        resolve(returnedMessage);
       } catch (error) {
         reject('Test timeout');
       }
@@ -92,71 +92,59 @@ export class CordeBot {
   }
 
   /**
-   * Format Discord responses
-   *
-   * @param answer Discord response for a message sent
-   *
-   * @param type Type expected of that message
-   *
-   * @description Discord adds some attributes that are not present in embed message before it is sent
-   *
-   *  This is data **before** send to Discord
-   *
-   *  ```javascript
-   *   "image": {
-   *       "url": "https://i.imgur.com/wSTFkRM.png"
-   *   },
-   *   "thumbnail": {
-   *       "url": "https://i.imgur.com/wSTFkRM.png"
-   *   }
-   *  ```
-   *
-   *  And this is part of embed message **after** get from Discord
-   *
-   *  ```javascript
-   *   "image": {
-   *     "height": 0,
-   *     "proxyURL": "https://images-ext-2.discordapp.net/external/DoAGN014Q46B7iDBr2VJyHUL59QLSWdEAZ5wOoWe8CY/https/i.imgur.com/wSTFkRM.png",
-   *     "url": "https://i.imgur.com/wSTFkRM.png",
-   *     "width": 0
-   *   },
-   *   "thumbnail": {
-   *       "height": 0,
-   *       "proxyURL": "https://images-ext-2.discordapp.net/external/DoAGN014Q46B7iDBr2VJyHUL59QLSWdEAZ5wOoWe8CY/https/i.imgur.com/wSTFkRM.png",
-   *       "url": "https://i.imgur.com/wSTFkRM.png",
-   *      "width": 0
-   *  }
-   *  ```
+   * Observes for a message send by the testing bot after corde bot
+   * send it's message.
    */
-  private getMessageByType(answer: Collection<string, Message>, type: messageType) {
-    if (type === 'embed') {
-      const tempObject = answer.first().embeds[0].toJSON() as MinifiedEmbedMessage;
-      if (tempObject.image) {
-        tempObject.image = pick(tempObject.image, 'url');
-      }
-      if (tempObject.thumbnail) {
-        tempObject.thumbnail = pick(tempObject.thumbnail, 'url');
-      }
-      return tempObject;
-    } else {
-      return answer.first();
-    }
-  }
-
-  private async awaitMessagesFromTestingBot() {
-    return await this.textChannel.awaitMessages(
-      (responseName) => this.responseAuthorIsTestingBot(responseName),
+  async awaitMessagesFromTestingBot() {
+    const msg = await this.textChannel.awaitMessages(
+      (responseName) => this.responseAuthorIsTestingBot(responseName.author.id),
       this.createWatchResponseConfigs(),
     );
+
+    if (msg) {
+      return msg.first();
+    }
+    throw new Error('No message was send');
   }
 
-  private responseAuthorIsTestingBot(responseName: any) {
-    return responseName.author.id === runtime.configs.botTestId;
+  /**
+   * Observes for reactions in a message
+   */
+  async waitForReactions(message: Message, reactions?: string[]) {
+    return new Promise<Collection<string, MessageReaction>>(async (resolve, reject) => {
+      try {
+        let filter: CollectorFilter = null;
+
+        if (reactions) {
+          filter = (reaction, user) => {
+            return (
+              reactions.includes(reaction.emoji.name) && this.responseAuthorIsTestingBot(user.id)
+            );
+          };
+        } else {
+          filter = (_reaction, user) => {
+            return this.responseAuthorIsTestingBot(user.id);
+          };
+        }
+        const maxReactionsToWait = reactions ? reactions.length : 1;
+        const collectedReactions = await message.awaitReactions(
+          filter,
+          this.createWatchResponseConfigs(maxReactionsToWait),
+        );
+        resolve(collectedReactions);
+      } catch (error) {
+        reject('Test timeout');
+      }
+    });
   }
 
-  private createWatchResponseConfigs(): AwaitMessagesOptions {
+  private responseAuthorIsTestingBot(idAuthor: string) {
+    return idAuthor === runtime.configs.botTestId;
+  }
+
+  private createWatchResponseConfigs(max: number = 1): AwaitMessagesOptions {
     return {
-      max: 1,
+      max,
       time: runtime.configs.timeOut ? runtime.configs.timeOut : DEFAULT_TEST_TIMEOUT,
       errors: ['time'],
     };

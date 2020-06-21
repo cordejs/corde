@@ -34,30 +34,31 @@ bot.on('message', async (message) => {
     hey(message);
   } else if (command === 'embed') {
     embed(message);
+  } else if (command === 'emoji') {
+    emoji(message);
+  } else if (command === 'emojis') {
+    emojis(message);
   }
 });
 
-/**
- *
- * @param {Discord.Message} msg
- */
 function hello(msg) {
   msg.channel.send('hello!!');
 }
 
-/**
- *
- * @param {Discord.Message} msg
- */
 function hey(msg) {
   msg.channel.send('hey!!');
 }
 
-/**
- * @param {Discord.Message} msg
- */
 function embed(msg) {
   msg.channel.send(embedMsg);
+}
+
+function emoji(msg) {
+  msg.react('😄');
+}
+
+function emojis(msg) {
+  Promise.all([msg.react('😄'), msg.react('🍊')]);
 }
 
 function loginBot() {
