@@ -31,15 +31,15 @@ class Runtime {
   }
 
   get channelId() {
-    return this.configs.channelId;
+    return this.configs?.channelId;
   }
 
   get guildId() {
-    return this.configs.guildId;
+    return this.configs?.guildId;
   }
 
   get obverseBotStart() {
-    return this.bot.hasInited;
+    return this.bot?.hasInited;
   }
 }
 
