@@ -2,7 +2,7 @@ import commander, { Command } from 'commander';
 import * as pack from '../package.json';
 import { go } from './cli-commands/go';
 import init from './cli-commands/init';
-import validate from './cli-commands/validate';
+import { validate } from './cli-commands/validate';
 import reader from './core/reader';
 import { configFileType } from './models';
 import { exitProcessWithError } from './utils/utils';

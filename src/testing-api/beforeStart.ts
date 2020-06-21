@@ -20,5 +20,7 @@ import testCollector from '../common/testColletor';
  * @param fn code that will be executed **before** tests start
  */
 export function beforeStart(fn: () => void) {
-  testCollector.beforeStartFunctions.push(fn);
+  if (fn) {
+    testCollector.beforeStartFunctions.push(fn);
+  }
 }

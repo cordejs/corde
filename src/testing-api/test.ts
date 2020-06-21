@@ -20,10 +20,12 @@ export function test(name: string, action: () => void) {
     action();
   }
 
-  testCollector.tests.push({
-    name,
-    testsFunctions: testCollector.cloneTestFunctions(),
-  });
+  if (name) {
+    testCollector.tests.push({
+      name,
+      testsFunctions: testCollector.cloneTestFunctions(),
+    });
+  }
 
   testCollector.hasTest = false;
   testCollector.cleanTestFunctions();

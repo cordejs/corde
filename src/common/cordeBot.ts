@@ -15,7 +15,7 @@ import { messageOutputType, messageType, MinifiedEmbedMessage } from '../models'
 import { pick } from '../utils/utils';
 import runtime, { DEFAULT_TEST_TIMEOUT } from './runtime';
 import { promises } from 'fs';
-import validate from '../cli-commands/validate';
+import { validate } from '../cli-commands/validate';
 
 export class CordeBot {
   private _client: Client;

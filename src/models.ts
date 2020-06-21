@@ -77,59 +77,6 @@ export interface MinifiedEmbedMessage {
 }
 
 /**
- * Defines all functions that can be used
- * to check a bot reaction of a command.
- */
-export interface Matches {
-  /**
-   * Defines the message expected to be returned by a
-   * command.
-   *
-   * @param expect A message returned by a bot after invoke a command
-   *
-   */
-  mustReturn(expect: string | MessageEmbed): void;
-  /**
-   * Defines reactions that must be add to command message.
-   *
-   * @param reaction Single or list of reactions that must be added to an message
-   *
-   * @see For how to react message -> https://discordjs.guide/popular-topics/reactions.html#reacting-to-messages
-   *
-   * @example
-   *
-   *  bot.on('message', async (message) => {
-   *    if (command === 'emoji') {
-   *       msg.react('😄');
-   *    } else if(command === 'emojis') {
-   *       Promise.all([msg.react('😄'), msg.react('🍊')]);
-   *    }
-   *  });
-   *
-   *  Tests:
-   *
-   *  command('emoji').mustAddReaction('😄');
-   *  command('emojis').mustAddReaction('😄', '🍊');
-   */
-  mustAddReaction(...reaction: string[]): void;
-}
-
-/**
- * Defines the initial value of expectations from
- * **command** function. It includes all matches and
- * the *not* statement. Witch will deny the executed match
- *
- */
-export interface MatchesWithNot extends Matches {
-  /**
-   * Defines that a command should **not** do something.
-   * Use this if you are can not precise what response a command will throw,
-   * But know and responde it **can not** throw.
-   */
-  not: Matches;
-}
-
-/**
  * Contains a set of properties needed for execution of corde
  */
 export default interface ConfigOptions {

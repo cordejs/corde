@@ -6,7 +6,7 @@ import { outPutResult } from '../core/reporter';
 import { executeTestCases } from '../core/runner';
 import runtime from '../common/runtime';
 import { Group } from '../models';
-import validate from './validate';
+import { validate } from './validate';
 import { exitProcessWithError } from '../utils/utils';
 import testCollector from '../common/testColletor';
 import chalk from 'chalk';

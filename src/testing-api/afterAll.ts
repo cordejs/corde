@@ -20,5 +20,7 @@ import testCollector from '../common/testColletor';
  * @param fn code that will be executed **after** tests start
  */
 export function afterAll(fn: () => void) {
-  testCollector.afterAllFunctions.push(fn);
+  if (fn) {
+    testCollector.afterAllFunctions.push(fn);
+  }
 }

@@ -1,17 +1,17 @@
 import { MessageEmbed } from 'discord.js';
-import { Matches, MatchesWithNot } from '../models';
 import testCollector from '../common/testColletor';
 import { mustReturnFnImpl } from './commandOptions/mustReturn';
 import { mustAddReactionFnImpl } from './commandOptions';
+import { MatchesWithNot, Matches } from './models';
 
-export function matcherWithNot(commandName: string): MatchesWithNot {
+export function matcherWithNotFn(commandName: string): MatchesWithNot {
   return {
-    not: matcher(commandName, true),
-    ...matcher(commandName, false),
+    not: matcherFn(commandName, true),
+    ...matcherFn(commandName, false),
   };
 }
 
-export default function matcher(commandName: string, isNot: boolean): Matches {
+function matcherFn(commandName: string, isNot: boolean): Matches {
   return {
     mustReturn(expect: string | MessageEmbed) {
       testCollector.addTestFunction((cordeBot) =>

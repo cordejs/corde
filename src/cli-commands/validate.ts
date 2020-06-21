@@ -11,7 +11,7 @@ import ConfigOptions from '../models';
  * @param configs Config paramater that will be validated
  *
  */
-export default function validate(configs: ConfigOptions) {
+export function validate(configs: ConfigOptions) {
   if (!configs) {
     console.log(chalk.red('● configs not informed.'));
     return false;

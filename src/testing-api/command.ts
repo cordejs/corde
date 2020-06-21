@@ -1,5 +1,5 @@
-import { MatchesWithNot } from '../models';
-import { matcherWithNot } from './matcher';
+import { MatchesWithNot } from './models';
+import { matcherWithNotFn } from './matcher';
 
 /**
  * Receives wich command will be tested.
@@ -13,5 +13,5 @@ import { matcherWithNot } from './matcher';
  * the type of response is expected.
  */
 export function command(commandName: string): MatchesWithNot {
-  return matcherWithNot(commandName);
+  return matcherWithNotFn(commandName);
 }
