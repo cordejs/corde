@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import { TestReport } from '../testing-api';
+import { AssertionProps, messageType } from '../building/models';
 
 const DEFAULT_SPACE_VALUE = 4;
 
@@ -7,44 +7,37 @@ class Log {
   static bgSucess = chalk.bgRgb(21, 194, 19);
   static bgError = chalk.bgRed;
 
-  static printFailure(tabSpace: string, report: TestReport) {
-    const notWord = Log.getNotWordIfTrue(report.isNot);
-
-    if (report.showExpectAndOutputValue) {
-      console.log(
-        `${tabSpace} ${chalk.bgRed('FAIL')} expected ${chalk.bold(
-          report.commandName,
-        )} to${notWord}return '${chalk.bold(
-          Log.getPrintingValueByType(report.expectation),
-        )}'. Returned: '${chalk.red(Log.getPrintingValueByType(report.output))}'`,
-      );
-    } else {
-      console.log(
-        `${tabSpace}  ${this.bgSucess.bgRed(' FAIL ')} command ${chalk.bold(
-          report.commandName,
-        )} not returned what was expected`,
-      );
+  /**
+   * Send a objet to process.stdout
+   */
+  static out(obj: object | object[]) {
+    if (!obj) {
+      return;
+    } else if (obj as []) {
+      process.stdout.write(JSON.stringify(obj));
     }
   }
 
-  static printSucess(tabSpace: string, report: TestReport) {
-    const notWord = Log.getNotWordIfTrue(report.isNot);
+  static printFailure(space: string, assertion: AssertionProps) {
+    let notWord = Log.getNotWordIfTrue(assertion.usingTrueStatement);
+    console.log(
+      `${space} ${chalk.bgRed('FAIL')} expected ${chalk.bold(
+        assertion.commandName,
+      )} to${notWord}return '${chalk.bold(
+        Log.getPrintingValueByType(assertion.expectation),
+      )}'. Returned: '${chalk.red(Log.getPrintingValueByType(assertion.output))}'`,
+    );
+  }
 
-    if (report.showExpectAndOutputValue) {
-      console.log(
-        `${tabSpace} ${this.bgSucess.bold(' PASS ')} expected ${chalk.bold(
-          report.commandName,
-        )} to${notWord}return '${chalk.bold(
-          Log.getPrintingValueByType(report.expectation),
-        )}'. Returned: '${chalk.green(Log.getPrintingValueByType(report.output))}'`,
-      );
-    } else {
-      console.log(
-        `${tabSpace}  ${this.bgSucess.bold(' PASS ')} command ${chalk.bold(
-          report.commandName,
-        )} returned what was expected`,
-      );
-    }
+  static printSucess(space: string, assertion: AssertionProps) {
+    let notWord = Log.getNotWordIfTrue(assertion.usingTrueStatement);
+    console.log(
+      `${space} ${this.bgSucess.bold(' PASS ')} expected ${chalk.bold(
+        assertion.commandName,
+      )} to${notWord}return '${chalk.bold(
+        Log.getPrintingValueByType(assertion.expectation),
+      )}'. Returned: '${chalk.green(Log.getPrintingValueByType(assertion.output))}'`,
+    );
   }
 
   private static getNotWordIfTrue(usingTrueStatement: boolean) {

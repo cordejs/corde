@@ -1,64 +1,45 @@
-import commander, { Command } from 'commander';
-import * as pack from '../package.json';
-import { go } from './cli-commands/go';
-import init from './cli-commands/init';
-import { validate } from './cli-commands/validate';
-import reader from './core/reader';
-import { configFileType } from './models';
-import { exitProcessWithError } from './utils/utils';
-import runtime from './common/runtime';
-import { initProcessEventsHandlers } from './processEvents';
+import arg from 'arg';
+import { runTestsFromFiles, runTestsFromConfigs } from './process/engine';
+import fs from 'fs';
+import path from 'path';
+import { ConfigFileNotFoundError } from './errors';
 
-initProcessEventsHandlers();
+export function cli(args: string[]) {
+  const files = parseArgumentsIntoOptions(args);
 
-const program = new Command();
+  thowErrorIfConfigFileNotExists();
 
-// Add basic information with default run all command
-program
-  .name('Corde')
-  .usage('to start testings o corde [option] to use a specific command.')
-  .description(pack.description)
-  .version(pack.version, '-v');
-
-addGoConfig(program);
-
-program
-  .command('go')
-  .alias('g')
-  .description("Alias for corde execution. You can execute tests only writing 'go'.");
-
-addGoConfig(program);
-
-program
-  .command('init [type]')
-  .alias('i')
-  .description('Initialize a config file with all possible options')
-  .usage('[js ts json] or empty for default type (json)')
-  .action((type: configFileType) => {
-    init(type);
-    process.exit(0);
-  });
-
-program
-  .command('validate')
-  .alias('v')
-  .description('Search for corde configs and check if all data are valid')
-  .action(() => {
-    const configs = reader.loadConfig();
-    if (validate(configs)) {
-      process.exit(0);
-    } else {
-      exitProcessWithError();
-    }
-  });
-
-function addGoConfig(prog: commander.Command) {
-  prog.option('-c --config <type>', 'Set config file path').action(async () => {
-    if (program.config) {
-      runtime.configFilePath = program.config;
-    }
-    await go();
-  });
+  if (files && files.length > 0 && checkIfFilesExist(files)) {
+    runTestsFromFiles(files);
+  } else {
+    runTestsFromConfigs();
+  }
 }
 
-program.parse(process.argv);
+function parseArgumentsIntoOptions(rawArgs: string[]) {
+  const args = arg(
+    {},
+    {
+      argv: rawArgs.slice(2),
+    },
+  );
+  return args._;
+}
+
+function checkIfFilesExist(files: string[]) {
+  let exists = true;
+  for (const i in files) {
+    if (!fs.existsSync(files[i])) {
+      exists = false;
+      console.error(`Check files listed. '${files[i]}' was not found`);
+    }
+  }
+  return exists;
+}
+
+function thowErrorIfConfigFileNotExists() {
+  const configFilePath = path.resolve(process.cwd(), 'corde.json');
+  if (!fs.existsSync(configFilePath)) {
+    throw new ConfigFileNotFoundError();
+  }
+}
