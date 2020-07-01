@@ -1,5 +1,5 @@
-import { MatchesWithNot } from './models';
 import { matcherWithNotFn } from './matcher';
+import { MatchesWithNot } from './models';
 
 /**
  * Receives wich command will be tested.

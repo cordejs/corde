@@ -1,5 +1,5 @@
-import ConfigOptions from '../models';
 import { Message } from 'discord.js';
+import ConfigOptions from '../models';
 
 /**
  * Default interface of json config

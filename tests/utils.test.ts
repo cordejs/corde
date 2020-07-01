@@ -1,7 +1,7 @@
-import { clone } from '../src/utils/utils';
 import { ParameterNotFoundError } from '../src/errors';
+import { clone, exitProcessWithError, pick } from '../src/utils/utils';
 
-describe('utils', () => {
+describe('Testing clone', () => {
   it('Object should not be equal to its clone', () => {
     expect(clone({ obj: 1 })).not.toBe({ obj: 1 });
   });
@@ -26,5 +26,22 @@ describe('utils', () => {
     } catch (error) {
       expect(error instanceof ParameterNotFoundError).toEqual(true);
     }
+  });
+});
+
+describe('Testing pick function', () => {
+  it('Should pick only a property', () => {
+    const obj = {
+      id: '1',
+      name: 'name',
+    };
+    const newObj = pick(obj, 'name');
+    expect(newObj).toEqual({ id: undefined, name: 'name' });
+  });
+});
+
+describe('Testing exitProcessWithError', () => {
+  it('Should exit displaying default message', () => {
+    exitProcessWithError();
   });
 });

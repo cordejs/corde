@@ -5,7 +5,7 @@ import testCollector from '../common/testColletor';
  *
  * More than one declaration of this code results in a list
  * of functions to run.
-
+ *
  * They will be executed following a sequence of files
  * reads and the positions of each `afterAll` call.
  *

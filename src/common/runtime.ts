@@ -1,5 +1,5 @@
-import ConfigOptions from '../models';
 import { Config } from '../core/config';
+import ConfigOptions from '../models';
 import { CordeBot } from './cordeBot';
 
 export const DEFAULT_TEST_TIMEOUT = 5000;
@@ -15,6 +15,14 @@ class Runtime {
   }
 
   setConfigs(configs: ConfigOptions) {
+    if (!configs) {
+      throw new Error('Invalid Configs');
+    }
+
+    if (!this.configs) {
+      this.configs = new Config();
+    }
+
     this.configs.botPrefix = configs.botPrefix;
     this.configs.botTestId = configs.botTestId;
     this.configs.botTestToken = configs.botTestToken;

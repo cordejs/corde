@@ -3,20 +3,20 @@ import { TestReport } from '../testing-api';
 
 const DEFAULT_SPACE_VALUE = 4;
 
-class Log {
+class ReporterLog {
   static bgSucess = chalk.bgRgb(21, 194, 19);
   static bgError = chalk.bgRed;
 
   static printFailure(tabSpace: string, report: TestReport) {
-    const notWord = Log.getNotWordIfTrue(report.isNot);
+    const notWord = ReporterLog.getNotWordIfTrue(report.isNot);
 
     if (report.showExpectAndOutputValue) {
       console.log(
         `${tabSpace} ${chalk.bgRed('FAIL')} expected ${chalk.bold(
           report.commandName,
         )} to${notWord}return '${chalk.bold(
-          Log.getPrintingValueByType(report.expectation),
-        )}'. Returned: '${chalk.red(Log.getPrintingValueByType(report.output))}'`,
+          ReporterLog.getPrintingValueByType(report.expectation),
+        )}'. Returned: '${chalk.red(ReporterLog.getPrintingValueByType(report.output))}'`,
       );
     } else {
       console.log(
@@ -28,15 +28,15 @@ class Log {
   }
 
   static printSucess(tabSpace: string, report: TestReport) {
-    const notWord = Log.getNotWordIfTrue(report.isNot);
+    const notWord = ReporterLog.getNotWordIfTrue(report.isNot);
 
     if (report.showExpectAndOutputValue) {
       console.log(
         `${tabSpace} ${this.bgSucess.bold(' PASS ')} expected ${chalk.bold(
           report.commandName,
         )} to${notWord}return '${chalk.bold(
-          Log.getPrintingValueByType(report.expectation),
-        )}'. Returned: '${chalk.green(Log.getPrintingValueByType(report.output))}'`,
+          ReporterLog.getPrintingValueByType(report.expectation),
+        )}'. Returned: '${chalk.green(ReporterLog.getPrintingValueByType(report.output))}'`,
       );
     } else {
       console.log(
@@ -62,5 +62,5 @@ class Log {
   }
 }
 
-const log = Log;
+const log = ReporterLog;
 export default log;
