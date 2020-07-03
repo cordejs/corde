@@ -1,4 +1,5 @@
 import testCollector from '../../src/common/testColletor';
+import { testFunctionType } from '../../src/models';
 import { matcherWithNotFn } from '../../src/testing-api';
 
 // TODO: Improve this tests
@@ -12,7 +13,7 @@ describe('Testing describe function', () => {
     expect(matches).not.toBe(undefined);
   });
 
-  it('Should return not function', () => {
+  it('Should not return a function', () => {
     const matches = matcherWithNotFn('name');
     expect(matches.not).not.toBe(undefined);
   });
@@ -42,7 +43,7 @@ describe('Testing describe function', () => {
   });
 });
 
-function functionName(fun: Function) {
+function functionName(fun: testFunctionType) {
   let ret = fun.toString();
   ret = ret.substr('function '.length);
   ret = ret.substr(0, ret.indexOf('('));
