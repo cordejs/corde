@@ -1,5 +1,5 @@
-import ConfigOptions from '../../src/models';
 import { validate } from '../../src/cli-commands';
+import ConfigOptions from '../../src/models';
 
 let configs: ConfigOptions;
 
@@ -19,42 +19,35 @@ beforeEach(() => {
 describe('Testing validate CLI function', () => {
   it('Should return false due to no botPrefix', () => {
     configs.botPrefix = '';
-    const isValid = validate(configs);
-    expect(isValid).toBe(false);
+    expect(() => validate(configs)).toThrow();
   });
 
   it('Should return false due to no botTestId', () => {
     configs.botTestId = '';
-    const isValid = validate(configs);
-    expect(isValid).toBe(false);
+    expect(() => validate(configs)).toThrow(Error);
   });
 
   it('Should return false due to no channelId', () => {
     configs.channelId = '';
-    const isValid = validate(configs);
-    expect(isValid).toBe(false);
+    expect(() => validate(configs)).toThrow(Error);
   });
 
   it('Should return false due to no cordeTestToken', () => {
     configs.cordeTestToken = '';
-    const isValid = validate(configs);
-    expect(isValid).toBe(false);
+    expect(() => validate(configs)).toThrow(Error);
   });
 
   it('Should return false due to no guildId', () => {
     configs.guildId = '';
-    const isValid = validate(configs);
-    expect(isValid).toBe(false);
+    expect(() => validate(configs)).toThrow(Error);
   });
 
   it('Should return false due to no testFilesDir', () => {
     configs.testFilesDir = '';
-    const isValid = validate(configs);
-    expect(isValid).toBe(false);
+    expect(() => validate(configs)).toThrow(Error);
   });
 
   it('Should return true due all configs presence', () => {
-    const isValid = validate(configs);
-    expect(isValid).toBe(true);
+    expect(() => validate(configs)).not.toThrow(Error);
   });
 });

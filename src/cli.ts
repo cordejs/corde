@@ -3,10 +3,9 @@ import * as pack from '../package.json';
 import { go } from './cli-commands/go';
 import init from './cli-commands/init';
 import { validate } from './cli-commands/validate';
+import runtime from './common/runtime';
 import reader from './core/reader';
 import { configFileType } from './models';
-import { exitProcessWithError } from './utils/utils';
-import runtime from './common/runtime';
 import { initProcessEventsHandlers } from './processEvents';
 
 initProcessEventsHandlers();
@@ -45,11 +44,8 @@ program
   .description('Search for corde configs and check if all data are valid')
   .action(() => {
     const configs = reader.loadConfig();
-    if (validate(configs)) {
-      process.exit(0);
-    } else {
-      exitProcessWithError();
-    }
+    validate(configs);
+    process.exit(0);
   });
 
 function addGoConfig(prog: commander.Command) {

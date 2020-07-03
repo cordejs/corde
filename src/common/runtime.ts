@@ -5,9 +5,10 @@ import { CordeBot } from './cordeBot';
 export const DEFAULT_TEST_TIMEOUT = 5000;
 
 class Runtime {
-  configs: Config;
   bot: CordeBot;
   configFilePath: string;
+  files: string[];
+  configs: Config;
 
   constructor() {
     this.bot = new CordeBot();
@@ -31,23 +32,10 @@ class Runtime {
     this.configs.guildId = configs.guildId;
     this.configs.testFilesDir = configs.testFilesDir;
     this.configs.timeOut = configs.timeOut;
-    this.configs.files = [];
   }
 
   loadBotSettings() {
-    this.bot.loadChannel(this.guildId, this.channelId);
-  }
-
-  get channelId() {
-    return this.configs?.channelId;
-  }
-
-  get guildId() {
-    return this.configs?.guildId;
-  }
-
-  get obverseBotStart() {
-    return this.bot?.hasInited;
+    this.bot.loadChannel(this.configs?.guildId, this.configs?.channelId);
   }
 }
 

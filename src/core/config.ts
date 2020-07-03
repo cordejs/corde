@@ -7,7 +7,6 @@ import ConfigOptions from '../models';
  * @description `botTestToken` is not required.
  * only inform if is desired to start test bot with corde
  *
- * @implements ConfigOptions
  */
 export class Config implements ConfigOptions {
   cordeTestToken: string;
@@ -19,5 +18,4 @@ export class Config implements ConfigOptions {
   botPrefix: string;
   testFilesDir: string;
   message: Message;
-  files: string[];
 }

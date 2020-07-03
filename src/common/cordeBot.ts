@@ -3,19 +3,15 @@ import {
   Channel,
   Client,
   Collection,
+  CollectorFilter,
   Guild,
   Message,
-  TextChannel,
-  CollectorFilter,
   MessageReaction,
+  TextChannel,
 } from 'discord.js';
 import { BehaviorSubject } from 'rxjs';
 import { RuntimeErro } from '../errors';
-import { messageOutputType, messageType, MinifiedEmbedMessage } from '../models';
-import { pick } from '../utils/utils';
 import runtime, { DEFAULT_TEST_TIMEOUT } from './runtime';
-import { promises } from 'fs';
-import { validate } from '../cli-commands/validate';
 
 export class CordeBot {
   private _client: Client;

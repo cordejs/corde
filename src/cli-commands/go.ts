@@ -1,15 +1,13 @@
 import fs from 'fs';
 import ora, { Color, Ora } from 'ora';
 import path from 'path';
+import runtime from '../common/runtime';
+import testCollector from '../common/testColletor';
 import reader from '../core/reader';
 import { outPutResult } from '../core/reporter';
 import { executeTestCases } from '../core/runner';
-import runtime from '../common/runtime';
 import { Group } from '../models';
 import { validate } from './validate';
-import { exitProcessWithError } from '../utils/utils';
-import testCollector from '../common/testColletor';
-import chalk from 'chalk';
 
 process.on('uncaughtException', () => {
   stopLoading();
@@ -25,11 +23,8 @@ export async function go() {
 
 function loadConfigs() {
   const configs = reader.loadConfig();
-  if (validate(configs)) {
-    runtime.setConfigs(configs);
-  } else {
-    exitProcessWithError();
-  }
+  validate(configs);
+  runtime.setConfigs(configs);
 }
 
 async function runTests(files: string[]) {

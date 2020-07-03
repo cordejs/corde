@@ -1,22 +1,16 @@
-import { Group, Test, testFunctionType } from '../models';
 import runtime from '../common/runtime';
+import { Group, Test, testFunctionType } from '../models';
 import { TestReport } from '../testing-api/models';
-import { exitProcessWithError } from '../utils/utils';
 
 export async function executeTestCases(groups: Group[]) {
   const tests = getTestsFromGroup(groups);
 
-  try {
-    for (const i in tests) {
-      if (tests.hasOwnProperty(i)) {
-        const test = tests[i];
-        const reports = await runTests(test.testsFunctions);
-        test.testsReports = reports;
-      }
+  for (const i in tests) {
+    if (tests.hasOwnProperty(i)) {
+      const test = tests[i];
+      const reports = await runTests(test.testsFunctions);
+      test.testsReports = reports;
     }
-  } catch (error) {
-    console.log(error.message);
-    exitProcessWithError();
   }
 }
 
