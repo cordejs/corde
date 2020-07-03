@@ -1,12 +1,9 @@
-const Discord = require('discord.js');
-const fs = require('fs');
-const path = require('path');
+import { Client, MessageEmbed } from 'discord.js';
+const { botPrefix, botTestToken } = require('../../corde');
 
-const config = require('../.corde');
+const bot = new Client();
 
-const bot = new Discord.Client();
-
-const embedMsg = new Discord.MessageEmbed()
+const embedMsg = new MessageEmbed()
   .setColor('#0099ff')
   .setTitle('Some title')
   .setURL('https://discord.js.org/')
@@ -25,7 +22,7 @@ const embedMsg = new Discord.MessageEmbed()
 bot.on('message', async (message) => {
   if (message.content.indexOf('') !== 0) return;
 
-  const args = message.content.slice(config.botPrefix.length).trim().split(/ +/g);
+  const args = message.content.slice(botPrefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
 
   if (command === 'hello' || command === 'h') {
@@ -62,9 +59,7 @@ function emojis(msg) {
 }
 
 function loginBot() {
-  bot.login(config.botTestToken);
+  bot.login(botTestToken);
 }
 
-exports.bot = bot;
-exports.loginBot = loginBot;
-exports.embedMsg = embedMsg;
+export { bot, loginBot, embedMsg };

@@ -20,18 +20,18 @@ export async function mustAddReactionFnImpl(
     isEqual = isOutputEqualToExpect(message, reactions);
     output = message.reactions.cache.map((v) => v.emoji.name).join();
   } catch (error) {
-    console.log(error.message);
-  } finally {
-    return {
-      commandName,
-      expectation,
-      output,
-      testSucessfully: isEqual,
-      isNot,
-      // Problems in display emojis in windows console
-      showExpectAndOutputValue: process.platform === 'win32' ? false : true,
-    } as TestReport;
+    throw new Error(error.message);
   }
+
+  return {
+    commandName,
+    expectation,
+    output,
+    testSucessfully: isEqual,
+    isNot,
+    // Problems in display emojis in windows console
+    showExpectAndOutputValue: process.platform === 'win32' ? false : true,
+  } as TestReport;
 }
 
 function isOutputEqualToExpect(message: Message, expectation: string | string[]) {

@@ -1,9 +1,10 @@
 import fs from 'fs';
-import { ConfigFileNotFoundError, FilesNotFoundError } from '../errors';
-import ConfigOptions from '../models';
+import path from 'path';
 import runtime from '../common/runtime';
 import testCollector from '../common/testColletor';
-import path from 'path';
+import { ConfigFileNotFoundError, FilesNotFoundError } from '../errors';
+import ConfigOptions from '../models';
+
 class Reader {
   /**
    * Read config file(*.json) from root of project
@@ -13,9 +14,9 @@ class Reader {
   loadConfig(): ConfigOptions {
     let _config: ConfigOptions;
 
-    let jsonFilePath = path.resolve(process.cwd(), 'corde.json');
-    let tsFilePath = path.resolve(process.cwd(), 'corde.ts');
-    let jsFilePath = path.resolve(process.cwd(), 'corde.js');
+    const jsonFilePath = path.resolve(process.cwd(), 'corde.json');
+    const tsFilePath = path.resolve(process.cwd(), 'corde.ts');
+    const jsFilePath = path.resolve(process.cwd(), 'corde.js');
 
     if (runtime.configFilePath) {
       return loadConfigFromConfigFilePath();
@@ -42,10 +43,8 @@ class Reader {
     if (files) {
       testCollector.isCollecting = true;
       testCollector.groups = [];
-      for (const i in files) {
-        if (files.hasOwnProperty(i)) {
-          require(files[i]);
-        }
+      for (const file of files) {
+        require(file);
       }
       testCollector.isCollecting = false;
 

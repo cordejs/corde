@@ -26,8 +26,6 @@ program
   .alias('g')
   .description("Alias for corde execution. You can execute tests only writing 'go'.");
 
-addGoConfig(program);
-
 program
   .command('init [type]')
   .alias('i')
