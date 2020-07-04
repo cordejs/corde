@@ -10,8 +10,8 @@ import {
   TextChannel,
 } from 'discord.js';
 import { BehaviorSubject } from 'rxjs';
+import { DEFAULT_TEST_TIMEOUT } from '../consts';
 import { RuntimeErro } from '../errors';
-import { DEFAULT_TEST_TIMEOUT } from './runtime';
 
 /**
  * Encapsulation of Discord Client with all specific

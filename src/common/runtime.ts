@@ -2,8 +2,6 @@ import { Config } from '../core/config';
 import ConfigOptions from '../models';
 import { CordeBot } from './cordeBot';
 
-export const DEFAULT_TEST_TIMEOUT = 5000;
-
 class Runtime {
   bot: CordeBot;
   configFilePath: string;
