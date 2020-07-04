@@ -1,28 +1,36 @@
 version: 2.1
+
+orbs:
+  yarn: substantial/yarn@3.10.2
+
 jobs:
   build:
     docker:
       - image: circleci/node:14
+
     steps:
       - checkout
-      - run:
-          name: Update-npm
-          command: 'sudo npm install -g npm@5'
       - restore_cache:
+          name: Restore Yarn Package Cache
           key: yarn-packages-{{ checksum "yarn.lock" }}
+
       - run:
           name: Install dependencies
-          command: yarn install
+          command: yarn install --immutable
+
       - save_cache:
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
+
       - run:
           name: Build Project
           command: yarn build
+
       - run:
           name: Tests
           command: yarn test-with-coverage
+
       - run:
           name: Publish coverage
           command: yarn codecov -f coverage/*.json
