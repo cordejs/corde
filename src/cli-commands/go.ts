@@ -39,7 +39,6 @@ async function runTests(files: string[]) {
   setMessage('Running Tests');
   runtime.bot.hasInited.subscribe(async (hasConnected) => {
     if (hasConnected) {
-      runtime.loadBotSettings();
       runTestsAndPrint(testsGroups);
     }
   });

@@ -11,7 +11,6 @@ class Runtime {
   configs: Config;
 
   constructor() {
-    this.bot = new CordeBot();
     this.configs = new Config();
   }
 
@@ -32,10 +31,18 @@ class Runtime {
     this.configs.guildId = configs.guildId;
     this.configs.testFilesDir = configs.testFilesDir;
     this.configs.timeOut = configs.timeOut;
+
+    this.loadBot();
   }
 
-  loadBotSettings() {
-    this.bot.loadChannel(this.configs?.guildId, this.configs?.channelId);
+  private loadBot() {
+    this.bot = new CordeBot(
+      this.configs.botPrefix,
+      this.configs.guildId,
+      this.configs.channelId,
+      this.configs.timeOut,
+      this.configs.botTestId,
+    );
   }
 }
 

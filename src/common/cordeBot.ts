@@ -11,32 +11,50 @@ import {
 } from 'discord.js';
 import { BehaviorSubject } from 'rxjs';
 import { RuntimeErro } from '../errors';
-import runtime, { DEFAULT_TEST_TIMEOUT } from './runtime';
+import { DEFAULT_TEST_TIMEOUT } from './runtime';
 
+/**
+ * Encapsulation of Discord Client with all specific
+ * functions for corde test.
+ */
 export class CordeBot {
-  private _client: Client;
+  /**
+   * Observes if corde bot is **ready**
+   */
   hasInited: BehaviorSubject<boolean>;
-  textChannel: TextChannel;
+
+  private textChannel: TextChannel;
+  private _client: Client;
+  private _prefix: string;
+  private _guildId: string;
+  private _channelId: string;
+  private _waitTimeOut: number;
+  private _testBotId: string;
 
   /**
-   * Starts new instance of Discord client
-   * with its events.
+   * Starts new instance of Discord client with its events.
+   *
+   * @param prefix Corde bot prefix.
+   * @param guildId Guild id where corde bot is located in.
+   * @param channelId Channel id where corde bot is located in.
+   * @param waitTimeOut Timeout for message wait.
+   * @param testBotId id of testing bot.
    */
-  constructor() {
+  constructor(
+    prefix: string,
+    guildId: string,
+    channelId: string,
+    waitTimeOut: number = DEFAULT_TEST_TIMEOUT,
+    testBotId: string,
+  ) {
+    this._channelId = channelId;
+    this._prefix = prefix;
+    this._guildId = guildId;
+    this._waitTimeOut = waitTimeOut;
+    this._testBotId = testBotId;
     this._client = new Client();
     this.hasInited = new BehaviorSubject<boolean>(false);
     this.loadClientEvents();
-  }
-
-  /**
-   * Get a channel based in the id stored in configs.
-   *
-   * @see Runtime
-   */
-  loadChannel(guildId: string, channelId: string) {
-    const guild = this.findGuild(guildId);
-    const channel = this.findChannel(guild, channelId);
-    this.textChannel = this.convertToTextChannel(channel);
   }
 
   /**
@@ -50,7 +68,7 @@ export class CordeBot {
    */
   async login(token: string) {
     try {
-      return this._client.login(token);
+      return await this._client.login(token);
     } catch (error) {
       return Promise.reject(this.buildLoginErroMessage(token, error));
     }
@@ -78,7 +96,7 @@ export class CordeBot {
     return new Promise<Message>(async (resolve, reject) => {
       try {
         this.validateMessageAndChannel(message);
-        const formatedMessage = runtime.configs.botPrefix + message;
+        const formatedMessage = this._prefix + message;
         const returnedMessage = await this.textChannel.send(formatedMessage);
         resolve(returnedMessage);
       } catch (error) {
@@ -134,20 +152,32 @@ export class CordeBot {
     });
   }
 
+  /**
+   * Get a channel based in the id stored in configs.
+   *
+   * @see Runtime
+   */
+  private loadChannel() {
+    const guild = this.findGuild(this._guildId);
+    const channel = this.findChannel(guild, this._channelId);
+    this.textChannel = this.convertToTextChannel(channel);
+  }
+
   private responseAuthorIsTestingBot(idAuthor: string) {
-    return idAuthor === runtime.configs.botTestId;
+    return idAuthor === this._testBotId;
   }
 
   private createWatchResponseConfigs(max: number = 1): AwaitMessagesOptions {
     return {
       max,
-      time: runtime.configs.timeOut ? runtime.configs.timeOut : DEFAULT_TEST_TIMEOUT,
+      time: this._waitTimeOut ? this._waitTimeOut : DEFAULT_TEST_TIMEOUT,
       errors: ['time'],
     };
   }
 
   private loadClientEvents() {
     this._client.once('ready', () => {
+      this.loadChannel();
       // emit to engine that corde bot is connected.
       this.hasInited.next(true);
     });

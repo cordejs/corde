@@ -32,4 +32,6 @@ describe('Testing runtime', () => {
     runtime.setConfigs(config);
     expect(runtime.configs).toEqual(config);
   });
+
+  it('Should load ');
 });
