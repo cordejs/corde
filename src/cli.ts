@@ -3,7 +3,7 @@ import * as pack from '../package.json';
 import { go } from './cli-commands/go';
 import init from './cli-commands/init';
 import { validate } from './cli-commands/validate';
-import runtime from './common/runtime';
+import { runtime } from './common';
 import reader from './core/reader';
 import { configFileType } from './models';
 import { initProcessEventsHandlers } from './processEvents';

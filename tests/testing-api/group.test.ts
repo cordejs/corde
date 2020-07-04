@@ -1,6 +1,6 @@
-import { group, test } from '../../src/testing-api';
-import testCollector from '../../src/common/testColletor';
+import { testCollector } from '../../src/common';
 import { Group } from '../../src/models';
+import { group, test } from '../../src/testing-api';
 
 describe('Testing group function', () => {
   beforeEach(() => {
@@ -24,20 +24,20 @@ describe('Testing group function', () => {
     };
 
     group(groupName, () => {
-      let a = 2;
+      const a = 2;
     });
 
     if (testCollector.groups?.length === 0) {
       fail();
     } else {
-      const group = testCollector.groups[0];
-      expect(group).toEqual(groupObj);
+      const gp = testCollector.groups[0];
+      expect(gp).toEqual(groupObj);
     }
   });
 
   it('Should not add a group', () => {
     group(undefined, () => {
-      let a = 2;
+      const a = 2;
     });
 
     if (!testCollector.groups) {
@@ -50,7 +50,7 @@ describe('Testing group function', () => {
   it('Should add group with test inside', () => {
     group('groupName', () => {
       test('testName', () => {
-        let batata = 1;
+        const batata = 1;
       });
     });
 

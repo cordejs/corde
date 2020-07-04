@@ -1,4 +1,4 @@
-import runtime from '../../src/common/runtime';
+import { runtime } from '../../src/common/runtime';
 
 import ConfigOptions from '../../src/models';
 

@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import runtime from '../common/runtime';
-import testCollector from '../common/testColletor';
+import { runtime } from '../common';
+import { testCollector } from '../common/testColletor';
 import { ConfigFileNotFoundError, FilesNotFoundError } from '../errors';
 import ConfigOptions from '../models';
 

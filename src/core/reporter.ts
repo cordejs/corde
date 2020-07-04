@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import { Group, Test } from '../models';
-import log from '../utils/log';
 import { TestReport } from '../testing-api/models';
+import log from '../utils/log';
 
 const SPACE = '    ';
 let sucessCount = 0;

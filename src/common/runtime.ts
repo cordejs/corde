@@ -45,4 +45,4 @@ class Runtime {
 }
 
 const runtime = new Runtime();
-export default runtime;
+export { runtime };

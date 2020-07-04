@@ -1,4 +1,4 @@
-import testCollector from '../common/testColletor';
+import { testCollector } from '../common/testColletor';
 
 /**
  * Represents a group of commands.
@@ -11,7 +11,6 @@ import testCollector from '../common/testColletor';
  *
  * @param name Name of the test
  * @param action Commands related to this test
- * @public
  */
 export function test(name: string, action: () => void) {
   testCollector.hasTest = true;

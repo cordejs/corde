@@ -66,4 +66,4 @@ class TestCollector {
 }
 
 const testCollector = new TestCollector();
-export default testCollector;
+export { testCollector };

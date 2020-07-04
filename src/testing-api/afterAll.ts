@@ -1,4 +1,4 @@
-import testCollector from '../common/testColletor';
+import { testCollector } from '../common/testColletor';
 
 /**
  * Declare a bunch of code that will be executed **after** tests beging

@@ -1,5 +1,4 @@
-import testCollector from '../../src/common/testColletor';
-import { testFunctionType } from '../../src/models';
+import { testCollector } from '../../src/common/testColletor';
 import { matcherWithNotFn } from '../../src/testing-api';
 
 // TODO: Improve this tests

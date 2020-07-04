@@ -1,4 +1,4 @@
-import testCollector from '../../src/common/testColletor';
+import { testCollector } from '../../src/common/testColletor';
 import { mustReturnFnImpl } from '../../src/testing-api';
 
 describe('Testing CordeBot object', () => {

@@ -1,4 +1,4 @@
-import runtime from '../common/runtime';
+import { runtime } from '../common';
 import { Group, Test, testFunctionType } from '../models';
 import { TestReport } from '../testing-api/models';
 

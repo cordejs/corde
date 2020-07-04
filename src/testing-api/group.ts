@@ -1,4 +1,4 @@
-import testCollector from '../common/testColletor';
+import { testCollector } from '../common/testColletor';
 
 /**
  * Represents a group of tests.
@@ -13,7 +13,6 @@ import testCollector from '../common/testColletor';
  *
  * @param name Name of the group
  * @param action Tests related to this group
- * @public
  */
 export function group(name: string, action: () => void) {
   testCollector.hasGroup = true;

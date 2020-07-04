@@ -1,6 +1,6 @@
+import { testCollector } from '../../src/common/testColletor';
+import { Test } from '../../src/models';
 import { test } from '../../src/testing-api';
-import testCollector from '../../src/common/testColletor';
-import { Group, Test } from '../../src/models';
 
 describe('Testing test function', () => {
   beforeEach(() => {

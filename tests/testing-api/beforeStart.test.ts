@@ -1,5 +1,5 @@
+import { testCollector } from '../../src/common/testColletor';
 import { beforeStart } from '../../src/testing-api';
-import testCollector from '../../src/common/testColletor';
 
 describe('Testing beforeStart function', () => {
   beforeEach(() => {

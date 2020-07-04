@@ -1,5 +1,5 @@
 import { MessageEmbed } from 'discord.js';
-import testCollector from '../common/testColletor';
+import { testCollector } from '../common/testColletor';
 import { mustAddReactionFnImpl } from './commandOptions';
 import { mustReturnFnImpl } from './commandOptions/mustReturn';
 import { Matches, MatchesWithNot } from './models';

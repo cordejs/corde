@@ -1,8 +1,8 @@
 import fs from 'fs';
 import ora, { Color, Ora } from 'ora';
 import path from 'path';
-import runtime from '../common/runtime';
-import testCollector from '../common/testColletor';
+import { runtime } from '../common/runtime';
+import { testCollector } from '../common/testColletor';
 import reader from '../core/reader';
 import { outPutResult } from '../core/reporter';
 import { executeTestCases } from '../core/runner';
