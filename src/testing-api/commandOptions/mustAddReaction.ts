@@ -1,5 +1,5 @@
 import { Message } from 'discord.js';
-import { CordeBot } from '../../common';
+import { CordeBot } from '../../models';
 import { TestReport } from '../models/testReport';
 
 export async function mustAddReactionFnImpl(

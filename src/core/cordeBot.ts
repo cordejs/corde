@@ -12,15 +12,13 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import { DEFAULT_TEST_TIMEOUT } from '../consts';
 import { RuntimeErro } from '../errors';
+import { CordeBot } from '../models';
 
 /**
  * Encapsulation of Discord Client with all specific
  * functions for corde test.
  */
-export class CordeBot {
-  /**
-   * Observes if corde bot is **ready**
-   */
+export class CordeBotClient implements CordeBot {
   hasInited: BehaviorSubject<boolean>;
 
   private textChannel: TextChannel;
@@ -57,15 +55,6 @@ export class CordeBot {
     this.loadClientEvents();
   }
 
-  /**
-   * Authenticate Corde bot to the instaled bot in Discord server.
-   *
-   * @param token Corde bot token
-   *
-   * @returns Promise resolve for success connection, or a promisse
-   * rejection with a formated message if there was found a error in
-   * connection attempt.
-   */
   async login(token: string) {
     try {
       return await this._client.login(token);
@@ -74,24 +63,10 @@ export class CordeBot {
     }
   }
 
-  /**
-   * Destroi client connection.
-   */
   logout() {
     this._client.destroy();
   }
 
-  /**
-   * Send a message to a channel defined in configs.
-   *
-   * @see Runtime
-   *
-   * @param message Message without prefix that will be sent to defined servers's channel
-   * @description The message is concatened with the stored **prefix** and is sent to the channel.
-   *
-   * @return Promisse rejection if a testing bot does not send any message in the timeout value setted,
-   * or a resolve for the promisse with the message returned by the testing bot.
-   */
   async sendTextMessage(message: string): Promise<Message> {
     return new Promise<Message>(async (resolve, reject) => {
       try {
@@ -105,10 +80,6 @@ export class CordeBot {
     });
   }
 
-  /**
-   * Observes for a message send by the testing bot after corde bot
-   * send it's message.
-   */
   async awaitMessagesFromTestingBot() {
     const msg = await this.textChannel.awaitMessages(
       (responseName) => this.responseAuthorIsTestingBot(responseName.author.id),
@@ -121,9 +92,6 @@ export class CordeBot {
     throw new Error('No message was send');
   }
 
-  /**
-   * Observes for reactions in a message
-   */
   async waitForReactions(message: Message, reactions?: string[]) {
     return new Promise<Collection<string, MessageReaction>>(async (resolve, reject) => {
       try {

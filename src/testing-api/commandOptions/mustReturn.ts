@@ -1,7 +1,6 @@
 import assert from 'assert';
 import { Message, MessageEmbed } from 'discord.js';
-import { CordeBot } from '../../common';
-import { messageType, MinifiedEmbedMessage } from '../../models';
+import { CordeBot, messageType, MinifiedEmbedMessage } from '../../models';
 import { TestReport } from '../models';
 
 export async function mustReturnFnImpl(
@@ -24,6 +23,7 @@ export async function mustReturnFnImpl(
     msg = JSON.stringify(jsonMessage);
     showExpectAndOutputValue = false;
     try {
+      // tslint:disable-next-line: deprecation
       assert.deepEqual(expect.toJSON(), jsonMessage);
       isEqual = true;
     } catch (error) {
