@@ -31,21 +31,12 @@ describe('Testing describe function', () => {
   it('Should add mustReturn function', () => {
     matcherWithNotFn('test').mustReturn('empty');
     const func = testCollector.cloneTestFunctions()[0];
-    const name = functionName(func);
-    expect(name).toContain('mustReturnFnImpl');
+    expect(func.toString()).toContain('mustReturnFnImpl');
   });
 
   it('Should add mustAddReaction function', () => {
     matcherWithNotFn('test').mustAddReaction('empty');
     const func = testCollector.cloneTestFunctions()[0];
-    const name = functionName(func);
-    expect(name).toContain('mustAddReactionFnImpl');
+    expect(func.toString()).toContain('mustAddReactionFnImpl');
   });
 });
-
-function functionName(fun: testFunctionType) {
-  let ret = fun.toString();
-  ret = ret.substr('function '.length);
-  ret = ret.substr(0, ret.indexOf('('));
-  return ret;
-}
