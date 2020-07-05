@@ -3,16 +3,16 @@ import ConfigOptions, { CordeBot } from '../models';
 import { Config } from './config';
 
 class Runtime {
-  bot: CordeBot;
-  configFilePath: string;
-  files: string[];
-  configs: Config;
+  public bot: CordeBot;
+  public configFilePath: string;
+  public files: string[];
+  public configs: Config;
 
   constructor() {
     this.configs = new Config();
   }
 
-  setConfigs(configs: ConfigOptions) {
+  public setConfigs(configs: ConfigOptions) {
     if (!configs) {
       throw new Error('Invalid Configs');
     }

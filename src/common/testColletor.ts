@@ -12,31 +12,31 @@ class TestCollector {
    * @description This is used to tell node process the type of process that is
    * existing.
    */
-  isCollecting: boolean;
+  public isCollecting: boolean;
 
   /**
    * Defines if the thread running has a **gruop** function.
    */
-  hasGroup: boolean;
+  public hasGroup: boolean;
 
   /**
    * Defines if the thread running has a **test** function.
    */
-  hasTest: boolean;
+  public hasTest: boolean;
 
   /**
    * List of assertions found in running file.
    * @description Assetions are the minor type of object in
    * position tree, but being the most important of all them.
    */
-  assertions: AssertionProps[] = [];
+  public assertions: AssertionProps[] = [];
 
   /**
    * List of tests found in running file.
    * @description Tests are the second in position of objects,
    * all tests are encapsulated inside groups in the end of processing.
    */
-  tests: Test[] = [];
+  public tests: Test[] = [];
 
   /**
    * List of groups found in running file.
@@ -46,27 +46,27 @@ class TestCollector {
    * but not necessary all assertions need a group or a test, that is why
    * group name are optional
    */
-  groups: Group[] = [];
-  beforeStartFunctions: voidFunction[] = [];
-  afterAllFunctions: voidFunction[] = [];
+  public groups: Group[] = [];
+  public beforeStartFunctions: voidFunction[] = [];
+  public afterAllFunctions: voidFunction[] = [];
 
   private testsFunctions: testFunctionType[] = [];
 
-  addTestFunction(testFunction: testFunctionType) {
+  public addTestFunction(testFunction: testFunctionType) {
     if (testFunction) {
       this.testsFunctions.push(testFunction);
     }
   }
 
-  hasTestFunctions() {
+  public hasTestFunctions() {
     return this.testsFunctions && this.testsFunctions.length > 0;
   }
 
-  cloneTestFunctions() {
+  public cloneTestFunctions() {
     return this.testsFunctions.map((test) => test);
   }
 
-  cleanTestFunctions() {
+  public cleanTestFunctions() {
     this.testsFunctions = [];
   }
 }

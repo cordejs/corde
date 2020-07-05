@@ -19,7 +19,7 @@ import { CordeBot } from '../models';
  * functions for corde test.
  */
 export class CordeBotClient implements CordeBot {
-  hasInited: BehaviorSubject<boolean>;
+  public hasInited: BehaviorSubject<boolean>;
 
   private textChannel: TextChannel;
   private _client: Client;
@@ -55,7 +55,7 @@ export class CordeBotClient implements CordeBot {
     this.loadClientEvents();
   }
 
-  async login(token: string) {
+  public async login(token: string) {
     try {
       return await this._client.login(token);
     } catch (error) {
@@ -63,11 +63,11 @@ export class CordeBotClient implements CordeBot {
     }
   }
 
-  logout() {
+  public logout() {
     this._client.destroy();
   }
 
-  async sendTextMessage(message: string): Promise<Message> {
+  public async sendTextMessage(message: string): Promise<Message> {
     return new Promise<Message>(async (resolve, reject) => {
       try {
         this.validateMessageAndChannel(message);
@@ -80,7 +80,7 @@ export class CordeBotClient implements CordeBot {
     });
   }
 
-  async awaitMessagesFromTestingBot() {
+  public async awaitMessagesFromTestingBot() {
     const msg = await this.textChannel.awaitMessages(
       (responseName) => this.responseAuthorIsTestingBot(responseName.author.id),
       this.createWatchResponseConfigs(),
@@ -92,7 +92,7 @@ export class CordeBotClient implements CordeBot {
     throw new Error('No message was send');
   }
 
-  async waitForReactions(message: Message, reactions?: string[]) {
+  public async waitForReactions(message: Message, reactions?: string[]) {
     return new Promise<Collection<string, MessageReaction>>(async (resolve, reject) => {
       try {
         let filter: CollectorFilter = null;

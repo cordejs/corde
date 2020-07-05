@@ -9,13 +9,13 @@ import ConfigOptions from '../models';
  *
  */
 export class Config implements ConfigOptions {
-  cordeTestToken: string;
-  botTestId: string;
-  botTestToken?: string;
-  channelId: string;
-  guildId: string;
-  timeOut?: number;
-  botPrefix: string;
-  testFilesDir: string;
-  message: Message;
+  public cordeTestToken: string;
+  public botTestId: string;
+  public botTestToken?: string;
+  public channelId: string;
+  public guildId: string;
+  public timeOut?: number;
+  public botPrefix: string;
+  public testFilesDir: string;
+  public message: Message;
 }

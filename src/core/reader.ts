@@ -11,7 +11,7 @@ class Reader {
    * and validates it
    * @throws
    */
-  loadConfig(): ConfigOptions {
+  public loadConfig(): ConfigOptions {
     let _config: ConfigOptions;
 
     const jsonFilePath = path.resolve(process.cwd(), 'corde.json');
@@ -39,7 +39,7 @@ class Reader {
     }
   }
 
-  getTestsFromFiles(files: string[]) {
+  public getTestsFromFiles(files: string[]) {
     if (files) {
       testCollector.isCollecting = true;
       testCollector.groups = [];
