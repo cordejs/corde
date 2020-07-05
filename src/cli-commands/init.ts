@@ -63,10 +63,9 @@ export default function init(fileType: configFileType = "json") {
       `- ${chalk.green("Successfully")} generated corde config in ${chalk.bold(filePath)}`,
     );
   } catch (error) {
-    console.log(
+    throw new Error(
       " - Fail in config file creation. Check if you have permition to create files in this directory.",
     );
-    console.log(error);
   }
 }
 

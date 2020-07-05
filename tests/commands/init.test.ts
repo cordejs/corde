@@ -113,13 +113,12 @@ describe("Testing content of config file in init", () => {
   it("should js file have same values of configFile", () => {
     init("js");
     const filePath = path.resolve(process.cwd(), "corde.js");
-    try {
+    if (filePath) {
       const content = require(filePath);
       expect(configFile).toEqual(content);
-    } catch (error) {
-      fail();
-    } finally {
       fs.unlinkSync(filePath);
+    } else {
+      fail();
     }
   });
 
@@ -147,5 +146,13 @@ describe("Testing content of config file in init", () => {
     } finally {
       fs.unlinkSync(filePath);
     }
+  });
+
+  it("Should throw exception due to error in write", () => {
+    fs.writeFileSync = jest.fn().mockImplementationOnce(() => {
+      throw new Error();
+    });
+
+    expect(() => init("json")).toThrow(Error);
   });
 });
