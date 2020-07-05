@@ -25,7 +25,7 @@
     "test": "jest",
     "test-with-coverage": "jest --collect-coverage --collectCoverageFrom=src/**/*.ts --collectCoverageFrom='!src/errors/*.ts'",
     "refresh": "rm -rf ./node_modules ./package-lock.json && yarn install",
-    "tslint": "tslint --fix 'src/**/*.ts'",
+    "tslint": "tslint --fix 'src/**/*.ts' 'tests/**/*.ts",
     "np": "np --no-cleanup --no-yarn",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint --project tsconfig.json -t stylish",

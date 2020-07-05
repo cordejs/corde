@@ -88,9 +88,9 @@ describe('Testing creation of config file in init', () => {
   it('should print msg error if invalid file extension was informed', () => {
     let outputData = '';
     const storeLog = (inputs: string) => (outputData += inputs);
-    console['log'] = jest.fn(storeLog);
+    console.log = jest.fn(storeLog);
     const invalidExtension = 'asdf';
-    //@ts-expect-error
+    // @ts-expect-error
     init(invalidExtension);
     expect(outputData).not.toBe('');
     const filePath = path.resolve(process.cwd(), `corde.${invalidExtension}`);

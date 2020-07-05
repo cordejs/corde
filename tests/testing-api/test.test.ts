@@ -24,7 +24,7 @@ describe('Testing test function', () => {
     };
 
     test(testName, () => {
-      let a = 2;
+      const a = 2;
     });
 
     if (testCollector.tests?.length === 0) {
@@ -37,7 +37,7 @@ describe('Testing test function', () => {
 
   it('Should not add a group', () => {
     test(undefined, () => {
-      let a = 2;
+      const a = 2;
     });
 
     if (!testCollector.tests) {
