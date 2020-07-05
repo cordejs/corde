@@ -1,15 +1,15 @@
-import fs from 'fs';
-import ora, { Color, Ora } from 'ora';
-import path from 'path';
-import { runtime } from '../common/runtime';
-import { testCollector } from '../common/testColletor';
-import reader from '../core/reader';
-import { reporter } from '../core/reporter';
-import { executeTestCases } from '../core/runner';
-import { Group } from '../models';
-import { validate } from './validate';
+import fs, { readdir } from "fs";
+import ora, { Color, Ora } from "ora";
+import path from "path";
+import { runtime } from "../common/runtime";
+import { testCollector } from "../common/testColletor";
+import reader from "../core/reader";
+import { reporter } from "../core/reporter";
+import { executeTestCases } from "../core/runner";
+import { Group } from "../models";
+import { validate } from "./validate";
 
-process.on('uncaughtException', () => {
+process.on("uncaughtException", () => {
   stopLoading();
 });
 
@@ -17,7 +17,7 @@ let spinner: Ora;
 
 export async function go() {
   loadConfigs();
-  const files = await readDir(runtime.configs.testFilesDir);
+  const files = readDir(runtime.configs.testFiles);
   await runTests(files);
 }
 
@@ -28,15 +28,15 @@ function loadConfigs() {
 }
 
 async function runTests(files: string[]) {
-  startLoading('Reading cool configs');
+  startLoading("Reading cool configs");
   const testsGroups = reader.getTestsFromFiles(files);
 
-  setMessage('starting bots');
+  setMessage("starting bots");
   testCollector.beforeStartFunctions.forEach((fn) => fn());
 
   await runtime.bot.login(runtime.configs.cordeTestToken);
 
-  setMessage('Running Tests');
+  setMessage("Running Tests");
   runtime.bot.hasInited.subscribe(async (hasConnected) => {
     if (hasConnected) {
       runTestsAndPrint(testsGroups);
@@ -79,7 +79,7 @@ function startLoading(initialMessage: string) {
   // https://github.com/fossas/fossa-cli/issues/193
   spinner = ora(`${initialMessage}\n`).start();
   spinner.color = getRandomSpinnerColor() as Color;
-  spinner.spinner = 'dots';
+  spinner.spinner = "dots";
 }
 
 function setMessage(message: string) {
@@ -87,7 +87,7 @@ function setMessage(message: string) {
 }
 
 function getRandomSpinnerColor() {
-  const colors = ['red', 'green', 'yellow', 'blue', 'magenta', 'cyan'];
+  const colors = ["red", "green", "yellow", "blue", "magenta", "cyan"];
   let random = Math.random() * (colors.length - 1);
   random = Math.round(random);
   return colors[random];
@@ -100,24 +100,19 @@ function stopLoading() {
 /**
  * Load tests files into configs
  */
-async function readDir(dir: string) {
+function readDir(directories: string[]) {
   const files: string[] = [];
-  if (dir) {
-    // Get all tests files
-    try {
-      if (fs.existsSync(dir)) {
-        fs.readdirSync(dir).forEach((file) => {
-          if (file.includes('.test.')) {
-            files.push(path.resolve(`${dir}/${file}`));
-          }
-        });
-      } else {
-        throw new Error(`Path ${dir} does not exists}`);
+  for (const dir of directories) {
+    if (fs.existsSync(dir)) {
+      const stats = fs.lstatSync(dir);
+      if (stats.isDirectory()) {
+        const dirContent = fs.readdirSync(dir);
+        files.push(...readDir(dirContent));
+      } else if (stats.isFile() && dir.includes(".test.")) {
+        files.push(path.resolve(dir));
       }
-    } catch (err) {
-      console.error(err);
-      throw new Error(err);
     }
   }
+
   return files;
 }

@@ -1,20 +1,20 @@
-import init from '../../src/cli-commands/init';
-import fs from 'fs';
-import path from 'path';
-import ConfigOptions from '../../src/models';
+import init from "../../src/cli-commands/init";
+import fs from "fs";
+import path from "path";
+import ConfigOptions from "../../src/models";
 
 // As there are a local config file for manual tests,
 // These files are renamed to avoid remotion after finish
 // all tests.
 
-const normalTsPath = path.resolve(process.cwd(), 'corde.ts');
-const tempTsPath = path.resolve(process.cwd(), '__corde.ts');
+const normalTsPath = path.resolve(process.cwd(), "corde.ts");
+const tempTsPath = path.resolve(process.cwd(), "__corde.ts");
 
-const normalJsPath = path.resolve(process.cwd(), 'corde.js');
-const tempJsPath = path.resolve(process.cwd(), '__corde.js');
+const normalJsPath = path.resolve(process.cwd(), "corde.js");
+const tempJsPath = path.resolve(process.cwd(), "__corde.js");
 
-const normalJsonPath = path.resolve(process.cwd(), 'corde.json');
-const tempJsonPath = path.resolve(process.cwd(), '__corde.json');
+const normalJsonPath = path.resolve(process.cwd(), "corde.json");
+const tempJsonPath = path.resolve(process.cwd(), "__corde.json");
 
 beforeAll(() => {
   if (fs.existsSync(normalTsPath)) {
@@ -44,75 +44,75 @@ afterAll(() => {
   }
 });
 
-describe('Testing creation of config file in init', () => {
-  it('should create corde.js file', () => {
-    init('js');
-    const filePath = path.resolve(process.cwd(), 'corde.js');
+describe("Testing creation of config file in init", () => {
+  it("should create corde.js file", () => {
+    init("js");
+    const filePath = path.resolve(process.cwd(), "corde.js");
     const jsFileExists = fs.existsSync(filePath);
     expect(jsFileExists).toBe(true);
     fs.unlinkSync(filePath);
   });
 
-  it('should create corde.ts file', () => {
-    init('ts');
-    const filePath = path.resolve(process.cwd(), 'corde.ts');
+  it("should create corde.ts file", () => {
+    init("ts");
+    const filePath = path.resolve(process.cwd(), "corde.ts");
     const tsFileExists = fs.existsSync(filePath);
     expect(tsFileExists).toBe(true);
     fs.unlinkSync(filePath);
   });
 
-  it('should create corde.json file with directly argument', () => {
-    init('json');
-    const filePath = path.resolve(process.cwd(), 'corde.json');
+  it("should create corde.json file with directly argument", () => {
+    init("json");
+    const filePath = path.resolve(process.cwd(), "corde.json");
     const tsFileExists = fs.existsSync(filePath);
     expect(tsFileExists).toBe(true);
     fs.unlinkSync(filePath);
   });
 
-  it('should create corde.json file without directly argument', () => {
+  it("should create corde.json file without directly argument", () => {
     init();
-    const filePath = path.resolve(process.cwd(), 'corde.json');
+    const filePath = path.resolve(process.cwd(), "corde.json");
     const tsFileExists = fs.existsSync(filePath);
     expect(tsFileExists).toBe(true);
     fs.unlinkSync(filePath);
   });
 
-  it('should create corde.json file with undefined argument', () => {
+  it("should create corde.json file with undefined argument", () => {
     init(undefined);
-    const filePath = path.resolve(process.cwd(), 'corde.json');
+    const filePath = path.resolve(process.cwd(), "corde.json");
     const tsFileExists = fs.existsSync(filePath);
     expect(tsFileExists).toBe(true);
     fs.unlinkSync(filePath);
   });
 
-  it('should print msg error if invalid file extension was informed', () => {
-    let outputData = '';
+  it("should print msg error if invalid file extension was informed", () => {
+    let outputData = "";
     const storeLog = (inputs: string) => (outputData += inputs);
     console.log = jest.fn(storeLog);
-    const invalidExtension = 'asdf';
+    const invalidExtension = "asdf";
     // @ts-expect-error
     init(invalidExtension);
-    expect(outputData).not.toBe('');
+    expect(outputData).not.toBe("");
     const filePath = path.resolve(process.cwd(), `corde.${invalidExtension}`);
     fs.unlinkSync(filePath);
   });
 });
 
-describe('Testing content of config file in init', () => {
+describe("Testing content of config file in init", () => {
   const configFile: ConfigOptions = {
-    botPrefix: '',
-    botTestId: '',
-    channelId: '',
-    cordeTestToken: '',
-    guildId: '',
-    testFilesDir: '',
-    botTestToken: '',
+    botPrefix: "",
+    botTestId: "",
+    channelId: "",
+    cordeTestToken: "",
+    guildId: "",
+    testFiles: [""],
+    botTestToken: "",
     timeOut: 5000,
   };
 
-  it('should js file have same values of configFile', () => {
-    init('js');
-    const filePath = path.resolve(process.cwd(), 'corde.js');
+  it("should js file have same values of configFile", () => {
+    init("js");
+    const filePath = path.resolve(process.cwd(), "corde.js");
     try {
       const content = require(filePath);
       expect(configFile).toEqual(content);
@@ -123,9 +123,9 @@ describe('Testing content of config file in init', () => {
     }
   });
 
-  it('should ts file have same values of configFile', () => {
-    init('ts');
-    const filePath = path.resolve(process.cwd(), 'corde.ts');
+  it("should ts file have same values of configFile", () => {
+    init("ts");
+    const filePath = path.resolve(process.cwd(), "corde.ts");
     try {
       const content = require(filePath);
       expect(configFile).toEqual(content);
@@ -136,9 +136,9 @@ describe('Testing content of config file in init', () => {
     }
   });
 
-  it('should json file have same values of configFile', () => {
-    init('json');
-    const filePath = path.resolve(process.cwd(), 'corde.json');
+  it("should json file have same values of configFile", () => {
+    init("json");
+    const filePath = path.resolve(process.cwd(), "corde.json");
     try {
       const content = JSON.parse(fs.readFileSync(filePath).toString());
       expect(configFile).toEqual(content);

@@ -1,12 +1,12 @@
-import { testCollector } from '../../src/common';
-import { afterAll } from '../../src/testing-api';
+import { testCollector } from "../../src/common";
+import { afterAll } from "../../src/testing-api";
 
-describe('Testing afterAll function', () => {
+describe("Testing afterAll function", () => {
   beforeEach(() => {
     testCollector.afterAllFunctions = [];
   });
 
-  it('Should add a function', () => {
+  it("Should add a function", () => {
     let a = 1;
     afterAll(() => {
       a = 2;
@@ -16,7 +16,7 @@ describe('Testing afterAll function', () => {
     expect(a).toBe(2);
   });
 
-  it('Should do nothing', () => {
+  it("Should do nothing", () => {
     afterAll(undefined);
 
     const length = testCollector.afterAllFunctions.length;

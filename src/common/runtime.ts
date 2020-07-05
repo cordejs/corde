@@ -1,6 +1,6 @@
-import { CordeBotClient } from '../core';
-import ConfigOptions, { CordeBot } from '../models';
-import { Config } from './config';
+import { CordeBotClient } from "../core";
+import ConfigOptions, { CordeBot } from "../models";
+import { Config } from "./config";
 
 class Runtime {
   public bot: CordeBot;
@@ -14,7 +14,7 @@ class Runtime {
 
   public setConfigs(configs: ConfigOptions) {
     if (!configs) {
-      throw new Error('Invalid Configs');
+      throw new Error("Invalid Configs");
     }
 
     if (!this.configs) {
@@ -27,7 +27,7 @@ class Runtime {
     this.configs.channelId = configs.channelId;
     this.configs.cordeTestToken = configs.cordeTestToken;
     this.configs.guildId = configs.guildId;
-    this.configs.testFilesDir = configs.testFilesDir;
+    this.configs.testFiles = configs.testFiles;
     this.configs.timeOut = configs.timeOut;
 
     this.loadBot();

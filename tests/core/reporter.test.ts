@@ -121,7 +121,7 @@ function executeOutPutResultAndGetConsoleLogResult(testReport: TestReport) {
 }
 
 function createGroupObject(testReport: TestReport) {
-  const group: Group = {
+  const _group: Group = {
     tests: [
       {
         testsFunctions: [],
@@ -130,7 +130,7 @@ function createGroupObject(testReport: TestReport) {
       },
     ],
   };
-  return [group];
+  return [_group];
 }
 
 function getFullConsoleLogWithoutColors(log: [any?, ...any[]][]) {

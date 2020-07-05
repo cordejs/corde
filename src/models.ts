@@ -1,8 +1,8 @@
-import { Collection, Message, MessageEmbed, MessageReaction } from 'discord.js';
-import { BehaviorSubject } from 'rxjs';
-import { TestReport } from './testing-api/models';
+import { Collection, Message, MessageEmbed, MessageReaction } from "discord.js";
+import { BehaviorSubject } from "rxjs";
+import { TestReport } from "./testing-api/models";
 
-export type messageType = 'text' | 'embed';
+export type messageType = "text" | "embed";
 export type messageOutputType = Message | MinifiedEmbedMessage;
 export type messageExpectationType = string | MessageEmbed;
 export type testFunctionType = (cordeBot: CordeBot) => Promise<TestReport>;
@@ -10,7 +10,7 @@ export type testFunctionType = (cordeBot: CordeBot) => Promise<TestReport>;
 /**
  * Available types of config files
  */
-export type configFileType = 'js' | 'json' | 'ts';
+export type configFileType = "js" | "json" | "ts";
 
 /**
  * Represents **command** structure
@@ -111,7 +111,7 @@ export default interface ConfigOptions {
   /**
    * Path for case tests. Use this from the base directory of the application
    */
-  testFilesDir: string;
+  testFiles: string[];
 }
 
 /**
