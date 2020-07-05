@@ -18,6 +18,9 @@ let spinner: Ora;
 export async function go() {
   loadConfigs();
   const files = readDir(runtime.configs.testFiles);
+  if (!files || files.length === 0) {
+    throw new Error(`No test file was found in the path '${runtime.configs.testFiles}'`);
+  }
   await runTests(files);
 }
 
@@ -107,7 +110,11 @@ function readDir(directories: string[]) {
       const stats = fs.lstatSync(dir);
       if (stats.isDirectory()) {
         const dirContent = fs.readdirSync(dir);
-        files.push(...readDir(dirContent));
+        const dirContentPaths = [];
+        for (const singleDirContent of dirContent) {
+          dirContentPaths.push(path.resolve(dir, singleDirContent));
+        }
+        files.push(...readDir(dirContentPaths));
       } else if (stats.isFile() && dir.includes(".test.")) {
         files.push(path.resolve(dir));
       }

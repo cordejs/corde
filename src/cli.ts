@@ -1,12 +1,12 @@
-import commander, { Command } from 'commander';
-import * as pack from '../package.json';
-import { go } from './cli-commands/go';
-import init from './cli-commands/init';
-import { validate } from './cli-commands/validate';
-import { runtime } from './common';
-import reader from './core/reader';
-import { configFileType } from './models';
-import { initProcessEventsHandlers } from './processEvents';
+import commander, { Command } from "commander";
+import * as pack from "../package.json";
+import { go } from "./cli-commands/go";
+import init from "./cli-commands/init";
+import { validate } from "./cli-commands/validate";
+import { runtime } from "./common";
+import reader from "./core/reader";
+import { configFileType } from "./models";
+import { initProcessEventsHandlers } from "./processEvents";
 
 initProcessEventsHandlers();
 
@@ -14,32 +14,32 @@ const program = new Command();
 
 // Add basic information with default run all command
 program
-  .name('Corde')
-  .usage('to start testings o corde [option] to use a specific command.')
+  .name("Corde")
+  .usage("to start testings o corde [option] to use a specific command.")
   .description(pack.description)
-  .version(pack.version, '-v');
+  .version(pack.version, "-v");
 
 addGoConfig(program);
 
 program
-  .command('go')
-  .alias('g')
+  .command("go")
+  .alias("g")
   .description("Alias for corde execution. You can execute tests only writing 'go'.");
 
 program
-  .command('init [type]')
-  .alias('i')
-  .description('Initialize a config file with all possible options')
-  .usage('[js ts json] or empty for default type (json)')
+  .command("init [type]")
+  .alias("i")
+  .description("Initialize a config file with all possible options")
+  .usage("[js ts json] or empty for default type (json)")
   .action((type: configFileType) => {
     init(type);
     process.exit(0);
   });
 
 program
-  .command('validate')
-  .alias('v')
-  .description('Search for corde configs and check if all data are valid')
+  .command("validate")
+  .alias("v")
+  .description("Search for corde configs and check if all data are valid")
   .action(() => {
     const configs = reader.loadConfig();
     validate(configs);
@@ -47,7 +47,7 @@ program
   });
 
 function addGoConfig(prog: commander.Command) {
-  prog.option('-c --config <type>', 'Set config file path').action(async () => {
+  prog.option("-c --config <type>", "Set config file path").action(async () => {
     if (program.config) {
       runtime.configFilePath = program.config;
     }

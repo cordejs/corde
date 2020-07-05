@@ -1,4 +1,4 @@
-import env from 'dotenv';
+import env from "dotenv";
 
 var result = env.config();
 
@@ -12,7 +12,7 @@ module.exports = {
   channelId: process.env.CHANNEL_ID,
   cordeTestToken: process.env.CORDE_TEST_TOKEN,
   guildId: process.env.GUILD_ID,
-  testFilesDir: process.env.TEST_FILES_DIR,
+  testFiles: [process.env.TEST_FILES_DIR],
   botTestToken: process.env.BOT_TEST_TOKEN,
   timeOut: process.env.TIME_OUT,
 };
