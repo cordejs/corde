@@ -18,7 +18,8 @@
     "noFallthroughCasesInSwitch": true,
     "allowUnusedLabels": false,
     "allowUnreachableCode": false,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "diagnostics": true
   },
   "include": ["src/**/*", "index.js"],
   "exclude": ["node_modules", "lib", "tests"],

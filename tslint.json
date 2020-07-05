@@ -29,7 +29,7 @@
     "object-literal-key-quotes": [true, "as-needed"],
     "object-literal-sort-keys": false,
     "ordered-imports": false,
-    "quotemark": [true, "single"],
+    "quotemark": [true, "double"],
     "trailing-comma": false,
     "no-unused-variable": true
   }
