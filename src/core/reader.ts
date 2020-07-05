@@ -1,9 +1,9 @@
-import fs from 'fs';
-import path from 'path';
-import { runtime } from '../common';
-import { testCollector } from '../common/testColletor';
-import { ConfigFileNotFoundError, FilesNotFoundError } from '../errors';
-import ConfigOptions from '../models';
+import fs from "fs";
+import path from "path";
+import { runtime } from "../common";
+import { testCollector } from "../common/testColletor";
+import { ConfigFileNotFoundError, FilesNotFoundError } from "../errors";
+import ConfigOptions from "../models";
 
 class Reader {
   /**
@@ -14,9 +14,9 @@ class Reader {
   public loadConfig(): ConfigOptions {
     let _config: ConfigOptions;
 
-    const jsonFilePath = path.resolve(process.cwd(), 'corde.json');
-    const tsFilePath = path.resolve(process.cwd(), 'corde.ts');
-    const jsFilePath = path.resolve(process.cwd(), 'corde.js');
+    const jsonFilePath = path.resolve(process.cwd(), "corde.json");
+    const tsFilePath = path.resolve(process.cwd(), "corde.ts");
+    const jsFilePath = path.resolve(process.cwd(), "corde.js");
 
     if (runtime.configFilePath) {
       return loadConfigFromConfigFilePath();
@@ -35,7 +35,7 @@ class Reader {
     if (_config) {
       return _config;
     } else {
-      throw new Error('Invalid configuration file');
+      throw new Error("Invalid configuration file");
     }
   }
 
@@ -60,15 +60,13 @@ function loadConfigFromConfigFilePath(): ConfigOptions {
   const filePath = path.resolve(process.cwd(), runtime.configFilePath);
   const fileExt = path.extname(filePath);
 
-  console.log(filePath);
-
   if (!fs.existsSync(filePath)) {
-    throw new Error('Path to config not found');
+    throw new Error("Path to config not found");
   }
 
-  if (fileExt === '.json') {
+  if (fileExt === ".json") {
     return JSON.parse(fs.readFileSync(filePath).toString());
-  } else if (fileExt === '.js' || fileExt === '.ts') {
+  } else if (fileExt === ".js" || fileExt === ".ts") {
     return require(filePath);
   } else {
     throw new FilesNotFoundError();

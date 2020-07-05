@@ -1,4 +1,4 @@
-import commander, { Command } from "commander";
+import { Command } from "commander";
 import * as pack from "../package.json";
 import { go } from "./cli-commands/go";
 import init from "./cli-commands/init";
@@ -17,14 +17,14 @@ program
   .name("Corde")
   .usage("to start testings o corde [option] to use a specific command.")
   .description(pack.description)
-  .version(pack.version, "-v");
-
-addGoConfig(program);
-
-program
-  .command("go")
-  .alias("g")
-  .description("Alias for corde execution. You can execute tests only writing 'go'.");
+  .version(`v${pack.version}`, "-v, --version")
+  .option("-c --config <type>", "Set config file path")
+  .action(async () => {
+    if (program.config) {
+      runtime.configFilePath = program.config;
+    }
+    await go();
+  });
 
 program
   .command("init [type]")
@@ -42,17 +42,12 @@ program
   .description("Search for corde configs and check if all data are valid")
   .action(() => {
     const configs = reader.loadConfig();
-    validate(configs);
-    process.exit(0);
-  });
-
-function addGoConfig(prog: commander.Command) {
-  prog.option("-c --config <type>", "Set config file path").action(async () => {
-    if (program.config) {
-      runtime.configFilePath = program.config;
+    try {
+      validate(configs);
+      console.log("All configs are ok!");
+    } catch (error) {
+      process.exit(1);
     }
-    await go();
   });
-}
 
 program.parse(process.argv);
