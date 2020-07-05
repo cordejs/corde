@@ -65,4 +65,14 @@ describe("Testing validate CLI function", () => {
   it("Should return true due all configs presence", () => {
     expect(() => validate(configs)).not.toThrow(Error);
   });
+
+  it("Should throw exception due to null parameter", () => {
+    expect(() => validate(null)).toThrow(Error);
+  });
+
+  it("Should throw exception due to null parameter", () => {
+    configs.guildId = "";
+    configs.testFiles = ["./tests/dirTestFiles/testF.test.ts"];
+    expect(() => validate(configs)).toThrow(Error);
+  });
 });
