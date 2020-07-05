@@ -1,6 +1,6 @@
-import { reporter } from '../../src/core/reporter';
-import { Group } from '../../src/models';
-import { TestReport } from '../../src/testing-api/models';
+import { reporter } from "../../src/core/reporter";
+import { Group } from "../../src/models";
+import { TestReport } from "../../src/testing-api/models";
 /**
  * About log.test
  *
@@ -13,19 +13,51 @@ import { TestReport } from '../../src/testing-api/models';
  *
  */
 
-const spy = jest.spyOn(console, 'log');
+const spy = jest.spyOn(console, "log");
 
-describe('Testing log class', () => {
+let group: Group;
+
+describe("Testing log class", () => {
   afterEach(() => {
     spy.mockClear();
   });
 
+  beforeEach(() => {
+    group = {
+      name: "group name",
+      tests: [],
+    };
+  });
+
+  it("Should return false due to no groups to print", () => {
+    const response = reporter.outPutResult(null);
+    expect(response).toBe(false);
+  });
+
+  it("Should print group name", () => {
+    reporter.outPutResult([group]);
+    expect(getFullConsoleLogWithoutColors(spy.mock.calls)).toContain(group.name);
+  });
+
+  it("Should print subgroup name", () => {
+    group.subGroups = [
+      {
+        tests: [],
+        name: "group name",
+      },
+    ];
+    reporter.outPutResult([group]);
+    const fullLog = getFullConsoleLogWithoutColors(spy.mock.calls);
+    const count = fullLog.split(group.name).length - 1;
+    expect(count).toEqual(2);
+  });
+
   it("Should print fail, showing expectation and output value. And not show 'not' statement", () => {
     const report: TestReport = {
-      commandName: 'commandName',
-      expectation: '1',
+      commandName: "commandName",
+      expectation: "1",
       isNot: false,
-      output: '2',
+      output: "2",
       showExpectAndOutputValue: true,
       testSucessfully: false,
     };
@@ -37,10 +69,10 @@ describe('Testing log class', () => {
 
   it("Should print fail, showing expectation and output value. And show 'not' statement", () => {
     const report: TestReport = {
-      commandName: 'commandName',
-      expectation: '1',
+      commandName: "commandName",
+      expectation: "1",
       isNot: true,
-      output: '1',
+      output: "1",
       showExpectAndOutputValue: true,
       testSucessfully: false,
     };
@@ -52,10 +84,10 @@ describe('Testing log class', () => {
 
   it("Should print fail. Without expectation and output value. And not show 'not' statement", () => {
     const report: TestReport = {
-      commandName: 'commandName',
-      expectation: '1',
+      commandName: "commandName",
+      expectation: "1",
       isNot: false,
-      output: '1',
+      output: "1",
       showExpectAndOutputValue: false,
       testSucessfully: false,
     };
@@ -67,10 +99,10 @@ describe('Testing log class', () => {
 
   it("Should print fail, without expectation and output value. And do nothing with 'isNot' statement as true", () => {
     const report: TestReport = {
-      commandName: 'commandName',
-      expectation: '1',
+      commandName: "commandName",
+      expectation: "1",
       isNot: true,
-      output: '1',
+      output: "1",
       showExpectAndOutputValue: false,
       testSucessfully: false,
     };
@@ -93,7 +125,7 @@ function createGroupObject(testReport: TestReport) {
     tests: [
       {
         testsFunctions: [],
-        name: 'test',
+        name: "test",
         testsReports: [testReport],
       },
     ],
@@ -101,15 +133,20 @@ function createGroupObject(testReport: TestReport) {
   return [group];
 }
 
+function getFullConsoleLogWithoutColors(log: [any?, ...any[]][]) {
+  const response = getFullConsoleLog(log);
+  return removeColors(response);
+}
+
 function removeColors(text: string) {
   return text.replace(
     /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g,
-    '',
+    "",
   );
 }
 
 function getFullConsoleLog(log: [any?, ...any[]][]) {
-  let stringValue = '';
+  let stringValue = "";
   for (const value1 of log) {
     for (const value2 of value1) {
       stringValue += `${value2}\n`;
