@@ -1,45 +1,53 @@
-import arg from 'arg';
-import { runTestsFromFiles, runTestsFromConfigs } from './process/engine';
-import fs from 'fs';
-import path from 'path';
-import { ConfigFileNotFoundError } from './errors';
+import { Command } from "commander";
+import * as pack from "../package.json";
+import { go } from "./cli-commands/go";
+import init from "./cli-commands/init";
+import { validate } from "./cli-commands/validate";
+import { runtime } from "./common";
+import reader from "./core/reader";
+import { configFileType } from "./models";
+import { initProcessEventsHandlers } from "./processEvents";
 
-export function cli(args: string[]) {
-  const files = parseArgumentsIntoOptions(args);
+initProcessEventsHandlers();
 
-  thowErrorIfConfigFileNotExists();
+const program = new Command();
 
-  if (files && files.length > 0 && checkIfFilesExist(files)) {
-    runTestsFromFiles(files);
-  } else {
-    runTestsFromConfigs();
-  }
-}
-
-function parseArgumentsIntoOptions(rawArgs: string[]) {
-  const args = arg(
-    {},
-    {
-      argv: rawArgs.slice(2),
-    },
-  );
-  return args._;
-}
-
-function checkIfFilesExist(files: string[]) {
-  let exists = true;
-  for (const i in files) {
-    if (!fs.existsSync(files[i])) {
-      exists = false;
-      console.error(`Check files listed. '${files[i]}' was not found`);
+// Add basic information with default run all command
+program
+  .name("Corde")
+  .usage("to start testings o corde [option] to use a specific command.")
+  .description(pack.description)
+  .version(`v${pack.version}`, "-v, --version")
+  .option("-c --config <type>", "Set config file path")
+  .action(async () => {
+    if (program.config) {
+      runtime.configFilePath = program.config;
     }
-  }
-  return exists;
-}
+    await go();
+  });
 
-function thowErrorIfConfigFileNotExists() {
-  const configFilePath = path.resolve(process.cwd(), 'corde.json');
-  if (!fs.existsSync(configFilePath)) {
-    throw new ConfigFileNotFoundError();
-  }
-}
+program
+  .command("init [type]")
+  .alias("i")
+  .description("Initialize a config file with all possible options")
+  .usage("[js ts json] or empty for default type (json)")
+  .action((type: configFileType) => {
+    init(type);
+    process.exit(0);
+  });
+
+program
+  .command("validate")
+  .alias("v")
+  .description("Search for corde configs and check if all data are valid")
+  .action(() => {
+    const configs = reader.loadConfig();
+    try {
+      validate(configs);
+      console.log("All configs are ok!");
+    } catch (error) {
+      process.exit(1);
+    }
+  });
+
+program.parse(process.argv);
