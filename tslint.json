@@ -28,7 +28,7 @@
     "no-var-requires": false,
     "object-literal-key-quotes": [true, "as-needed"],
     "object-literal-sort-keys": false,
-    "ordered-imports": true,
+    "ordered-imports": false,
     "quotemark": [true, "single"],
     "trailing-comma": false,
     "no-unused-variable": true

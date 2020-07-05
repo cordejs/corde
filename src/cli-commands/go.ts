@@ -4,7 +4,7 @@ import path from 'path';
 import { runtime } from '../common/runtime';
 import { testCollector } from '../common/testColletor';
 import reader from '../core/reader';
-import { outPutResult } from '../core/reporter';
+import { reporter } from '../core/reporter';
 import { executeTestCases } from '../core/runner';
 import { Group } from '../models';
 import { validate } from './validate';
@@ -47,7 +47,7 @@ async function runTests(files: string[]) {
 async function runTestsAndPrint(groups: Group[]) {
   await executeTestCases(groups);
   stopLoading();
-  const hasAllTestsPassed = outPutResult(groups);
+  const hasAllTestsPassed = reporter.outPutResult(groups);
 
   if (hasAllTestsPassed) {
     finishProcess(0);
