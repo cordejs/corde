@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import { ParameterNotFoundError } from "../errors";
 
 /**

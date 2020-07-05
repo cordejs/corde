@@ -1,7 +1,7 @@
 <div align="center">
   <br />
   <p>
-    <img width="300" height="300" src="./docs/logo_formato1.png" />
+    <img width="300" height="300" src="./docs/logo.png" />
   </p>
   <p>
     <a href="https://circleci.com/gh/lucasgmagalhaes/corde">
@@ -87,16 +87,16 @@ Check the Config section for a more detailed explanation of each configuration p
 Now that the config file is created, let's create some tests. You can keep the unity test natural file name structure, creating a `bot.test.js` with the follow structure:
 
 ```javascript
-const { group, test, command, beforeStart, afterAll } = require('corde');
-const { client, loginBot } = require('..');
+const { group, test, command, beforeStart, afterAll } = require("corde");
+const { client, loginBot } = require("..");
 
 beforeStart(() => {
   loginBot();
 });
 
-group('main commands', () => {
-  test('ping command should return... Ping?!!', () => {
-    command('ping').shouldReturn('Ping?');
+group("main commands", () => {
+  test("ping command should return... Ping?!!", () => {
+    command("ping").shouldReturn("Ping?");
   });
 });
 
