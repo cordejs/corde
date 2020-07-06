@@ -123,4 +123,4 @@ What is happenning ?
 | guildId        | Guild that your and the test bot are.                |
 | channelId      | Channel that your and the test bot are.              |
 | botPrefix      | Bot invoke command prefix                            |
-| testFilesDir   | Path were all tests files are                        |
+| testFiles      | Path were all tests files are                        |
