@@ -20,7 +20,7 @@
     "typescript-library",
     "typescript",
     "automated-testing",
-    "bot,
+    "bot"
   ],
   "scripts": {
     "start": "node bin/corde",
