@@ -78,7 +78,7 @@ After installed, add the file `corde.json` in root of your application with the 
 	"guildId":  "THE_GUID_OF_BOT_HERE",
 	"channelId":  "CHANNELS_ID_HERE",
 	"botPrefix":  "+",
-	"testFilesDir":  "./test"
+	"testFiles":  ["./test"]
 }
 ```
 
