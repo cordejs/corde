@@ -9,12 +9,18 @@
   },
   "bin": "bin/corde",
   "keywords": [
-    "cli",
-    "typescript",
-    "nodejs",
     "discord-bot",
-    "end-to-end",
-    "test"
+    "discord-js",
+    "nodejs",
+    "testing",
+    "discord",
+    "corde", 
+    "test",
+    "cli",
+    "typescript-library",
+    "typescript",
+    "automated-testing",
+    "bot,
   ],
   "scripts": {
     "start": "node bin/corde",
