@@ -6,8 +6,8 @@ import { testCollector } from "../common/testColletor";
  * @example
  *
  * group('main commands', () => {
- *   test('Hello command should return... hello!!', () => {
- *      command('hello').shouldReturn('hello!!');
+ *   test('Hello command must return... hello!!', () => {
+ *      command('hello').mustReturn('hello!!');
  *   });
  * });
  *

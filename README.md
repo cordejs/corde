@@ -95,8 +95,8 @@ beforeStart(() => {
 });
 
 group("main commands", () => {
-  test("ping command should return... Ping?!!", () => {
-    command("ping").shouldReturn("Ping?");
+  test("ping command must return... Ping?!!", () => {
+    command("ping").mustReturn("Ping?");
   });
 });
 
