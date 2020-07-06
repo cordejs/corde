@@ -1,6 +1,6 @@
 {
   "name": "corde",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple library for Discord bot tests",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -14,7 +14,7 @@
     "nodejs",
     "testing",
     "discord",
-    "corde", 
+    "corde",
     "test",
     "cli",
     "typescript-library",
