@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import { runtime, testCollector } from "./common";
 
-export function initProcessEventsHandlers() {
+export function initErrorHandlers() {
   process.on("uncaughtException", (err: Error) => {
     printErrorAndExit(err);
   });
@@ -15,10 +15,15 @@ export function initProcessEventsHandlers() {
   });
 }
 
-function printErrorAndExit(error: Error) {
+function printErrorAndExit(error: Error): never {
   console.error(`- ${error.name}: ${error.message}`);
   console.error(`${chalk.red("error")} Command failed with exit code 1`);
-  runtime.bot.logout();
-  testCollector.afterAllFunctions.forEach((fn) => fn());
+  if (runtime.bot && runtime.bot.isLoggedIn()) {
+    runtime.bot.logout();
+  }
+  if (testCollector.afterAllFunctions) {
+    testCollector.afterAllFunctions.forEach((fn) => fn());
+  }
+
   process.exit(1);
 }

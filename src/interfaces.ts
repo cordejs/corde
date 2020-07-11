@@ -165,4 +165,9 @@ export interface CordeBot {
     message: Message,
     reactions?: string[],
   ): Promise<Collection<string, MessageReaction>>;
+
+  /**
+   * Checks if corde bot is connected
+   */
+  isLoggedIn(): boolean;
 }

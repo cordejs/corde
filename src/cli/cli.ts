@@ -6,9 +6,9 @@ import { validate } from "./validate";
 import { runtime } from "../common";
 import reader from "../core/reader";
 import { configFileType } from "../interfaces";
-import { initProcessEventsHandlers } from "../processEvents";
+import { initErrorHandlers } from "../errorHandler";
 
-initProcessEventsHandlers();
+initErrorHandlers();
 
 const program = new Command();
 

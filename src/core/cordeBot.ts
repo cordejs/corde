@@ -120,6 +120,10 @@ export class CordeBotClient implements CordeBot {
     });
   }
 
+  public isLoggedIn() {
+    return !!this._client;
+  }
+
   /**
    * Get a channel based in the id stored in configs.
    *
