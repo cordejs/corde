@@ -1170,9 +1170,9 @@
     "@types/istanbul-lib-report" "*"
 
 "@types/jest@^26.0.0":
-  version "26.0.3"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-26.0.3.tgz#79534e0e94857171c0edc596db0ebe7cb7863251"
-  integrity sha512-v89ga1clpVL/Y1+YI0eIu1VMW+KU7Xl8PhylVtDKVWaSUHBHYPLXMQGBdrpHewaKoTvlXkksbYqPgz8b4cmRZg==
+  version "26.0.4"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-26.0.4.tgz#d2e513e85aca16992816f192582b5e67b0b15efb"
+  integrity sha512-4fQNItvelbNA9+sFgU+fhJo8ZFF+AS4Egk3GWwCW2jFtViukXbnztccafAdLhzE/0EiCogljtQQXP8aQ9J7sFg==
   dependencies:
     jest-diff "^25.2.1"
     pretty-format "^25.2.1"
@@ -1193,9 +1193,9 @@
   resolved "https://registry.yarnpkg.com/@types/minimist/-/minimist-1.2.0.tgz#69a23a3ad29caf0097f06eda59b361ee2f0639f6"
 
 "@types/node@*", "@types/node@^14.0.9":
-  version "14.0.14"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.14.tgz#24a0b5959f16ac141aeb0c5b3cd7a15b7c64cbce"
-  integrity sha512-syUgf67ZQpaJj01/tRTknkMNoBBLWJOBODF0Zm4NrXmiSuxjymFrxnTu1QVYRubhVkRcZLYZG8STTwJRdVm/WQ==
+  version "14.0.21"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.21.tgz#c84005e3f43b7e19a7374d47d5c411039da59231"
+  integrity sha512-kmfWRnh81BrOfQ2Bn3xXCkoB6PLNsJlHhliYvkPa5UL6nmMHkANm358zVpO7TW6CDe9i267pkS/Id65OKL8+Ug==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -4241,9 +4241,9 @@ normalize-url@^4.1.0:
   resolved "https://registry.yarnpkg.com/normalize-url/-/normalize-url-4.5.0.tgz#453354087e6ca96957bd8f5baf753f5982142129"
 
 np@^6.2.0:
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/np/-/np-6.3.0.tgz#061d1f3c2b7e2307b14c49547879b358b31acc07"
-  integrity sha512-UwXhgmuzgkJHqflf2sCVdeCn2P9auKlcjQ/L37o9ORQe0O+mbrNhU04PBoLcdW+sMu3gCSx/uGBx79iL1sp9qg==
+  version "6.3.1"
+  resolved "https://registry.yarnpkg.com/np/-/np-6.3.1.tgz#e859b6d2a0ccf016390655627cb02f8e67f0170b"
+  integrity sha512-vLCqfM/r/GeJLhdiodeOPzY3ZKuaLb+qLA5M9XXSRuyu513punk2DWtswMha1qCa56CvTQPmxgwEyP93XQlgQg==
   dependencies:
     "@samverschueren/stream-to-observable" "^0.3.0"
     any-observable "^0.5.0"
