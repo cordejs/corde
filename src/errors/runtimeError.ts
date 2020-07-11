@@ -8,6 +8,6 @@ export class RuntimeErro extends Error {
     } else {
       super("A data from discord was not found");
     }
-    this.name = "ERR_CORDE_RUNTIME_ERROR";
+    this.name = "RuntimeError";
   }
 }
