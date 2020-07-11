@@ -1,5 +1,5 @@
 import { testCollector } from "../../src/common/testColletor";
-import { mustReturnFnImpl } from "../../src/testing-api";
+import { mustReturnFnImpl } from "../../src/api";
 
 describe("Testing CordeBot object", () => {
   beforeEach(() => {

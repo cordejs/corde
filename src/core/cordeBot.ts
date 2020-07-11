@@ -12,7 +12,7 @@ import {
 import { BehaviorSubject } from "rxjs";
 import { DEFAULT_TEST_TIMEOUT } from "../consts";
 import { RuntimeErro } from "../errors";
-import { CordeBot } from "../models";
+import { CordeBot } from "../interfaces";
 
 /**
  * Encapsulation of Discord Client with all specific

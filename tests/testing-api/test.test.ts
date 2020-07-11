@@ -1,6 +1,6 @@
 import { testCollector } from "../../src/common/testColletor";
-import { Test } from "../../src/models";
-import { test } from "../../src/testing-api";
+import { Test } from "../../src/interfaces";
+import { test } from "../../src/api";
 
 describe("Testing test function", () => {
   beforeEach(() => {
@@ -23,11 +23,9 @@ describe("Testing test function", () => {
       name: testName,
     };
 
-    test(testName, () => {
-      const a = 2;
-    });
+    test(testName, () => {});
 
-    if (testCollector.tests?.length === 0) {
+    if (testCollector.tests.length === 0) {
       fail();
     } else {
       const _tests = testCollector.tests[0];
@@ -36,9 +34,7 @@ describe("Testing test function", () => {
   });
 
   it("Should not add a group", () => {
-    test(undefined, () => {
-      const a = 2;
-    });
+    test(undefined, () => {});
 
     if (!testCollector.tests) {
       fail();

@@ -1,5 +1,5 @@
 import { testCollector } from "../../src/common";
-import { afterAll } from "../../src/testing-api";
+import { afterAll } from "../../src/api";
 
 describe("Testing afterAll function", () => {
   beforeEach(() => {

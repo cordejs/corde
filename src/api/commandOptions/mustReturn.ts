@@ -1,7 +1,7 @@
 import assert from "assert";
 import { Message, MessageEmbed } from "discord.js";
-import { CordeBot, messageType, MinifiedEmbedMessage } from "../../models";
-import { TestReport } from "../models";
+import { CordeBot, messageType, MinifiedEmbedMessage } from "../../interfaces";
+import { TestReport } from "../interfaces";
 
 export async function mustReturnFnImpl(
   expect: string | MessageEmbed,

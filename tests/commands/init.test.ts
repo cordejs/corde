@@ -1,7 +1,7 @@
-import init from "../../src/cli-commands/init";
+import init from "../../src/cli/init";
 import fs from "fs";
 import path from "path";
-import ConfigOptions from "../../src/models";
+import ConfigOptions from "../../src/interfaces";
 
 // As there are a local config file for manual tests,
 // These files are renamed to avoid remotion after finish

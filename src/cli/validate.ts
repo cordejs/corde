@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import ConfigOptions from "../models";
+import ConfigOptions from "../interfaces";
 import fs from "fs";
 import path from "path";
 

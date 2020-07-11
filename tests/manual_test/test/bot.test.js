@@ -1,5 +1,5 @@
 import { group, test, command, beforeStart, afterAll } from "../../../lib";
-import { bot, loginBot, embedMsg } from "../bot";
+import { bot, loginBot, embedMsg } from "../bot.js";
 
 beforeStart(() => {
   loginBot();

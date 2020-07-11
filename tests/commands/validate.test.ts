@@ -1,5 +1,5 @@
-import { validate } from "../../src/cli-commands";
-import ConfigOptions from "../../src/models";
+import ConfigOptions from "../../src/interfaces";
+import { validate } from "../../src/cli/validate";
 
 let configs: ConfigOptions;
 

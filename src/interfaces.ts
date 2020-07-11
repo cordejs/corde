@@ -1,6 +1,6 @@
 import { Collection, Message, MessageEmbed, MessageReaction } from "discord.js";
 import { BehaviorSubject } from "rxjs";
-import { TestReport } from "./testing-api/models";
+import { TestReport } from "./api/interfaces";
 
 export type messageType = "text" | "embed";
 export type messageOutputType = Message | MinifiedEmbedMessage;

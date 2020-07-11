@@ -2,7 +2,7 @@ import { MessageEmbed } from "discord.js";
 import { testCollector } from "../common/testColletor";
 import { mustAddReactionFnImpl } from "./commandOptions";
 import { mustReturnFnImpl } from "./commandOptions/mustReturn";
-import { Matches, MatchesWithNot } from "./models";
+import { Matches, MatchesWithNot } from "./interfaces";
 
 export function matcherWithNotFn(commandName: string): MatchesWithNot {
   return {

@@ -2,7 +2,7 @@ import chalk from "chalk";
 import fs from "fs";
 import path from "path";
 import prettier from "prettier";
-import ConfigOptions, { configFileType } from "../models";
+import ConfigOptions, { configFileType } from "../interfaces";
 
 const jsonFile: ConfigOptions = {
   botPrefix: "",

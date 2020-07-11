@@ -1,6 +1,6 @@
 import { reporter } from "../../src/core/reporter";
-import { Group } from "../../src/models";
-import { TestReport } from "../../src/testing-api/models";
+import { Group } from "../../src/interfaces";
+import { TestReport } from "../../src/api/interfaces";
 /**
  * About log.test
  *

@@ -1,6 +1,3 @@
-import chalk from "chalk";
-import { ParameterNotFoundError } from "../errors";
-
 /**
  * Pick some properties of a object
  *

@@ -1,6 +1,6 @@
 import { runtime } from "../../src/common/runtime";
 
-import ConfigOptions from "../../src/models";
+import ConfigOptions from "../../src/interfaces";
 
 const config: ConfigOptions = {
   botPrefix: "!",

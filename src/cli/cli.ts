@@ -1,12 +1,12 @@
 import { Command } from "commander";
-import * as pack from "../package.json";
-import { go } from "./cli-commands/go";
-import init from "./cli-commands/init";
-import { validate } from "./cli-commands/validate";
-import { runtime } from "./common";
-import reader from "./core/reader";
-import { configFileType } from "./models";
-import { initProcessEventsHandlers } from "./processEvents";
+import * as pack from "../../package.json";
+import { go } from "./go";
+import init from "./init";
+import { validate } from "./validate";
+import { runtime } from "../common";
+import reader from "../core/reader";
+import { configFileType } from "../interfaces";
+import { initProcessEventsHandlers } from "../processEvents";
 
 initProcessEventsHandlers();
 

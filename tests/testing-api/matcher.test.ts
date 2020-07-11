@@ -1,5 +1,5 @@
 import { testCollector } from "../../src/common/testColletor";
-import { matcherWithNotFn } from "../../src/testing-api";
+import { matcherWithNotFn } from "../../src/api";
 
 // TODO: Improve this tests
 describe("Testing describe function", () => {

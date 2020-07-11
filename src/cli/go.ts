@@ -1,4 +1,4 @@
-import fs, { readdir } from "fs";
+import fs from "fs";
 import ora, { Color, Ora } from "ora";
 import path from "path";
 import { runtime } from "../common/runtime";
@@ -6,7 +6,7 @@ import { testCollector } from "../common/testColletor";
 import reader from "../core/reader";
 import { reporter } from "../core/reporter";
 import { executeTestCases } from "../core/runner";
-import { Group } from "../models";
+import { Group } from "../interfaces";
 import { validate } from "./validate";
 
 process.on("uncaughtException", () => {

@@ -1,9 +1,8 @@
 import chalk from "chalk";
-import { Group, Test } from "../models";
-import { TestReport } from "../testing-api/models";
+import { Group, Test } from "../interfaces";
+import { TestReport } from "../api/interfaces";
 
 const FAIL = "FAIL";
-const SUCESS = "SUCESS";
 const SPACE = "    ";
 const DEFAULT_SPACE_VALUE = 4;
 
