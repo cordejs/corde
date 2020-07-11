@@ -66,6 +66,8 @@ Corde is a small testing library for Discord.js. As there is a tool to create bo
 
 ## 🚀 Getting started
 
+**Node.js 12.0.0 or newer is required**
+
 Starting create tests with Corde is realy simple. First install it locally with npm `npm i -D corde` or yarn `yarn add -D corde`. You can also install it globally: `npm i -g corde` or `yarn global add corde`.
 
 After installed, add the file `corde.json` in root of your application with the follow structure:
