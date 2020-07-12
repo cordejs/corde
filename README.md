@@ -18,6 +18,9 @@
         src="https://app.fossa.com/api/projects/git%2Bgithub.com%2Flucasgmagalhaes%2Fcorde.svg?type=shield"
       />
     </a>
+    <a href="https://codeclimate.com/github/lucasgmagalhaes/corde/maintainability">
+	    <img src="https://api.codeclimate.com/v1/badges/bd6aa1e8cc90223a399d/maintainability" />
+    </a>
     <a href="https://www.codefactor.io/repository/github/lucasgmagalhaes/corde">
       <img
         alt="CodeFactor"
