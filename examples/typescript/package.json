@@ -15,7 +15,7 @@
     "dotenv": "^8.2.0"
   },
   "devDependencies": {
-    "corde": "^1.0.1",
+    "corde": "^1.0.2",
     "typescript": "^3.9.6"
   }
 }
