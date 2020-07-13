@@ -1,7 +1,7 @@
 import { MessageEmbed } from "discord.js";
 import { testCollector } from "../common/testColletor";
-import { mustAddReactionFnImpl } from "./commandOptions";
-import { mustReturnFnImpl } from "./commandOptions/mustReturn";
+import { MustAddReaction } from "./commandOptions";
+import { MustReturn } from "./commandOptions/mustReturn";
 import { Matches, MatchesWithNot } from "./interfaces";
 
 export function matcherWithNotFn(commandName: string): MatchesWithNot {
@@ -14,15 +14,13 @@ export function matcherWithNotFn(commandName: string): MatchesWithNot {
 function matcherFn(commandName: string, isNot: boolean): Matches {
   return {
     mustReturn(expect: string | MessageEmbed) {
-      testCollector.addTestFunction((cordeBot) =>
-        mustReturnFnImpl(expect, cordeBot, commandName, isNot),
-      );
+      const command = new MustReturn(isNot, commandName);
+      testCollector.addTestFunction((cordeBot) => command.run(cordeBot, expect));
     },
 
     mustAddReaction(...reactions: string[]) {
-      testCollector.addTestFunction((cordebot) =>
-        mustAddReactionFnImpl(isNot, commandName, cordebot, reactions),
-      );
+      const command = new MustAddReaction(isNot, commandName);
+      testCollector.addTestFunction((cordebot) => command.run(cordebot, reactions));
     },
   };
 }

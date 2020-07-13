@@ -30,12 +30,12 @@ describe("Testing describe function", () => {
   it("Should add mustReturn function", () => {
     matcherWithNotFn("test").mustReturn("empty");
     const func = testCollector.cloneTestFunctions()[0];
-    expect(func.toString()).toContain("mustReturnFnImpl");
+    expect(func.toString()).toContain("run");
   });
 
   it("Should add mustAddReaction function", () => {
     matcherWithNotFn("test").mustAddReaction("empty");
     const func = testCollector.cloneTestFunctions()[0];
-    expect(func.toString()).toContain("mustAddReactionFnImpl");
+    expect(func.toString()).toContain("run");
   });
 });
