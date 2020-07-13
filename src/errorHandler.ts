@@ -15,13 +15,9 @@ export function initErrorHandlers() {
   });
 }
 
-function printErrorAndExit(error: Error): never {
-  if (process.env.ENV === "DEV") {
-    console.error(error);
-  } else {
-    console.error(`- ${error.name}: ${error.message}`);
-    console.error(`${chalk.red("error")} Command failed with exit code 1`);
-  }
+function printErrorAndExit(error: Error) {
+  console.error(`- ${error.name}: ${error.message}`);
+  console.error(`${chalk.red("error")} Command failed with exit code 1`);
 
   if (runtime.bot && runtime.bot.isLoggedIn()) {
     runtime.bot.logout();
@@ -30,5 +26,7 @@ function printErrorAndExit(error: Error): never {
     testCollector.afterAllFunctions.forEach((fn) => fn());
   }
 
-  process.exit(1);
+  if (process.env.ENV !== "TEST") {
+    process.exit(1);
+  }
 }
