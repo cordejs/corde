@@ -4,7 +4,7 @@ import { MessageEmbed } from "discord.js";
  * Defines all functions that can be used
  * to check a bot reaction of a command.
  */
-export interface Matches {
+export interface MessageMatches {
   /**
    * Defines the message expected to be returned by a
    * command.
@@ -12,7 +12,7 @@ export interface Matches {
    * @param expect A message returned by a bot after invoke a command
    *
    */
-  mustReturn(expect: string | MessageEmbed): void;
+  toReturn(expect: string | MessageEmbed): void;
   /**
    * Defines reactions that must be add to command message.
    *
@@ -32,8 +32,8 @@ export interface Matches {
    *
    *  Tests:
    *
-   *  command('emoji').mustAddReaction('😄');
-   *  command('emojis').mustAddReaction('😄', '🍊');
+   *  expect('emoji').toAddReaction('😄');
+   *  expect('emojis').toAddReaction('😄', '🍊');
    */
-  mustAddReaction(...reaction: string[]): void;
+  toAddReaction(...reaction: string[]): void;
 }

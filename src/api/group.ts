@@ -7,7 +7,7 @@ import { testCollector } from "../common/testColletor";
  *
  * group('main commands', () => {
  *   test('Hello command must return... hello!!', () => {
- *      command('hello').mustReturn('hello!!');
+ *      expect('hello').toReturn('hello!!');
  *   });
  * });
  *

@@ -17,24 +17,24 @@ describe("Testing describe function", () => {
     expect(matches.not).not.toBe(undefined);
   });
 
-  it("Should add a function after call mustReturn", () => {
-    matcherWithNotFn("test").mustReturn("empty");
+  it("Should add a function after call toReturn", () => {
+    matcherWithNotFn("test").toReturn("empty");
     expect(testCollector.hasTestFunctions()).toBe(true);
   });
 
-  it("Should add a function after call mustAddReaction", () => {
-    matcherWithNotFn("test").mustAddReaction("empty");
+  it("Should add a function after call toAddReaction", () => {
+    matcherWithNotFn("test").toAddReaction("empty");
     expect(testCollector.hasTestFunctions()).toBe(true);
   });
 
-  it("Should add mustReturn function", () => {
-    matcherWithNotFn("test").mustReturn("empty");
+  it("Should add toReturn function", () => {
+    matcherWithNotFn("test").toReturn("empty");
     const func = testCollector.cloneTestFunctions()[0];
     expect(func.toString()).toContain("run");
   });
 
-  it("Should add mustAddReaction function", () => {
-    matcherWithNotFn("test").mustAddReaction("empty");
+  it("Should add toAddReaction function", () => {
+    matcherWithNotFn("test").toAddReaction("empty");
     const func = testCollector.cloneTestFunctions()[0];
     expect(func.toString()).toContain("run");
   });

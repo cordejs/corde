@@ -98,7 +98,7 @@ beforeStart(() => {
 
 group("main commands", () => {
   test("ping command must return... Ping?!!", () => {
-    command("ping").mustReturn("Ping?");
+    expect("ping").toReturn("Ping?");
   });
 });
 

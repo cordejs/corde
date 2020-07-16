@@ -1,4 +1,4 @@
-import { command } from '../../src/building';
-import consts from './constsNames';
+import { expect } from "../../src/api";
+import consts from "./constsNames";
 
-command(consts.COMMAND_1).shouldReturn(consts.COMMAND_RESPONSE_1);
+expect(consts.COMMAND_1).toReturn(consts.COMMAND_RESPONSE_1);

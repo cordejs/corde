@@ -6,7 +6,7 @@ import { testCollector } from "../common/testColletor";
  * @example
  *
  * test('Hello command should return... hello!!', () => {
- *   command('hello').mustReturn('hello!!');
+ *   expect('hello').toReturn('hello!!');
  * });
  *
  * @param name Name of the test

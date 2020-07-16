@@ -27,7 +27,7 @@ program
   });
 
 program
-  .command("init [type]")
+  .expect("init [type]")
   .alias("i")
   .description("Initialize a config file with all possible options")
   .usage("[js ts json] or empty for default type (json)")
@@ -37,7 +37,7 @@ program
   });
 
 program
-  .command("validate")
+  .expect("validate")
   .alias("v")
   .description("Search for corde configs and check if all data are valid")
   .action(() => {
