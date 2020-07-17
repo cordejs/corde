@@ -1,6 +1,6 @@
 import { runtime } from "../common";
-import { Group, Test, testFunctionType } from "../models";
-import { TestReport } from "../testing-api/models";
+import { Group, Test, testFunctionType } from "../interfaces";
+import { TestReport } from "../api/interfaces";
 
 export async function executeTestCases(groups: Group[]) {
   const tests = getTestsFromGroup(groups);

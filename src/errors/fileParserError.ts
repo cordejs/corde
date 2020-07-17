@@ -14,7 +14,7 @@ export class FileParserError extends Error {
       super(message);
     } else {
       super("Failed in parse a file");
-      this.name = "ERR_CORDE_PARSE_FILE";
+      this.name = "ParseFileError";
     }
   }
 }

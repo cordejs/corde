@@ -4,24 +4,25 @@
     "rootDir": "./",
     "resolveJsonModule": true,
     "allowJs": true,
+    "checkJs": true,
     "pretty": true,
     "skipLibCheck": true,
     "declaration": true,
-    "target": "es6",
+    "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "node",
     "newLine": "LF",
+    "noEmitOnError": true,
     "noImplicitAny": true,
     "removeComments": false,
+    "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "allowUnusedLabels": false,
     "allowUnreachableCode": false,
-    "esModuleInterop": true,
-    "diagnostics": true
+    "esModuleInterop": true
   },
   "include": ["src/**/*", "index.js"],
-  "exclude": ["node_modules", "lib", "tests"],
-  "references": []
+  "exclude": ["node_modules", "lib", "tests"]
 }

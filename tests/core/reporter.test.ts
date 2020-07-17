@@ -1,6 +1,7 @@
 import { reporter } from "../../src/core/reporter";
-import { Group } from "../../src/models";
-import { TestReport } from "../../src/testing-api/models";
+import { Group } from "../../src/interfaces";
+import { TestReport } from "../../src/api/interfaces";
+import { getFullConsoleLog } from "../testHelper";
 /**
  * About log.test
  *
@@ -143,14 +144,4 @@ function removeColors(text: string) {
     /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g,
     "",
   );
-}
-
-function getFullConsoleLog(log: [any?, ...any[]][]) {
-  let stringValue = "";
-  for (const value1 of log) {
-    for (const value2 of value1) {
-      stringValue += `${value2}\n`;
-    }
-  }
-  return stringValue;
 }

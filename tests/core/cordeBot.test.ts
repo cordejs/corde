@@ -1,12 +1,12 @@
 import { testCollector } from "../../src/common/testColletor";
-import { mustReturnFnImpl } from "../../src/testing-api";
+import { toReturn } from "../../src/api/expectMatches";
 
 describe("Testing CordeBot object", () => {
   beforeEach(() => {
     testCollector.cleanTestFunctions();
   });
   it("Should add a test function", () => {
-    testCollector.addTestFunction((corde) => mustReturnFnImpl("test", corde, "com", true));
+    testCollector.addTestFunction((corde) => toReturn("test", false, corde, "com"));
     expect(testCollector.cloneTestFunctions().length).toBe(1);
   });
 

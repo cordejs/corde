@@ -3,7 +3,7 @@ import path from "path";
 import { runtime } from "../common";
 import { testCollector } from "../common/testColletor";
 import { ConfigFileNotFoundError, FilesNotFoundError } from "../errors";
-import ConfigOptions from "../models";
+import ConfigOptions from "../interfaces";
 
 class Reader {
   /**

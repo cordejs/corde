@@ -7,7 +7,7 @@ export class MissingPropertyError extends Error {
       super(message);
     } else {
       super("Required property not found");
-      this.name = "ERR_CORDE_MISSING_PROPERTY";
+      this.name = "PropertyMissingError";
     }
   }
 }

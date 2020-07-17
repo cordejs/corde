@@ -1,5 +1,5 @@
 import { CordeBotClient } from "../core";
-import ConfigOptions, { CordeBot } from "../models";
+import ConfigOptions, { CordeBot } from "../interfaces";
 import { Config } from "./config";
 
 class Runtime {
@@ -20,16 +20,7 @@ class Runtime {
     if (!this.configs) {
       this.configs = new Config();
     }
-
-    this.configs.botPrefix = configs.botPrefix;
-    this.configs.botTestId = configs.botTestId;
-    this.configs.botTestToken = configs.botTestToken;
-    this.configs.channelId = configs.channelId;
-    this.configs.cordeTestToken = configs.cordeTestToken;
-    this.configs.guildId = configs.guildId;
-    this.configs.testFiles = configs.testFiles;
-    this.configs.timeOut = configs.timeOut;
-
+    this.configs = configs;
     this.loadBot();
   }
 

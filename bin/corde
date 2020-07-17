@@ -3,13 +3,14 @@
 
 const MINIMAL_NODE_VERSION = 12;
 
-var ver = process.versions.node;
-var majorVer = parseInt(ver.split(".")[0], MINIMAL_NODE_VERSION);
+const ver = process.versions.node;
+const majorVer = +ver.split(".")[0];
 
 // Version required for Discord v12
 if (majorVer < MINIMAL_NODE_VERSION) {
   console.error(
     `Node version '${ver}' is not supported. Please use Node.js ${MINIMAL_NODE_VERSION} or higher.`,
+    `\nsee https://nodejs.org/en/download`
   );
   process.exit(1);
 } else {

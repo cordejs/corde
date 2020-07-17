@@ -1,5 +1,4 @@
-import { Message } from "discord.js";
-import ConfigOptions from "../models";
+import ConfigOptions from "../interfaces";
 
 /**
  * Default interface of json config
@@ -17,5 +16,4 @@ export class Config implements ConfigOptions {
   public timeOut?: number;
   public botPrefix: string;
   public testFiles: string[];
-  public message: Message;
 }
