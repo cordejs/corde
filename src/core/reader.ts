@@ -32,7 +32,6 @@ class Reader {
       throw new ConfigFileNotFoundError();
     }
 
-    console.log(_config);
     if (!_config || Object.keys(_config).length === 0) {
       throw new Error("Invalid configuration file");
     } else {
