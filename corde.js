@@ -1,6 +1,6 @@
-import env from "dotenv";
+const env = require("dotenv");
 
-var result = env.config();
+const result = env.config();
 
 if (result.error) {
   throw result.error;

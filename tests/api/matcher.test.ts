@@ -1,5 +1,5 @@
 import { testCollector } from "../../src/common/testColletor";
-import { matcherWithNotFn } from "../../src/api";
+import { expectMatchWithNot } from "../../src/api";
 
 // TODO: Improve this tests
 describe("Testing describe function", () => {
@@ -8,34 +8,34 @@ describe("Testing describe function", () => {
   });
 
   it("Should not return undefined", () => {
-    const matches = matcherWithNotFn("name");
+    const matches = expectMatchWithNot("name");
     expect(matches).not.toBe(undefined);
   });
 
   it("Should not return a function", () => {
-    const matches = matcherWithNotFn("name");
+    const matches = expectMatchWithNot("name");
     expect(matches.not).not.toBe(undefined);
   });
 
   it("Should add a function after call toReturn", () => {
-    matcherWithNotFn("test").toReturn("empty");
+    expectMatchWithNot("test").toReturn("empty");
     expect(testCollector.hasTestFunctions()).toBe(true);
   });
 
   it("Should add a function after call toAddReaction", () => {
-    matcherWithNotFn("test").toAddReaction("empty");
+    expectMatchWithNot("test").toAddReaction("empty");
     expect(testCollector.hasTestFunctions()).toBe(true);
   });
 
   it("Should add toReturn function", () => {
-    matcherWithNotFn("test").toReturn("empty");
+    expectMatchWithNot("test").toReturn("empty");
     const func = testCollector.cloneTestFunctions()[0];
-    expect(func.toString()).toContain("run");
+    expect(func.toString()).toContain("toReturn");
   });
 
   it("Should add toAddReaction function", () => {
-    matcherWithNotFn("test").toAddReaction("empty");
+    expectMatchWithNot("test").toAddReaction("empty");
     const func = testCollector.cloneTestFunctions()[0];
-    expect(func.toString()).toContain("run");
+    expect(func.toString()).toContain("toAddReaction");
   });
 });

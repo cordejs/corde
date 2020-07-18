@@ -1,11 +1,12 @@
 import { exec, ExecException } from "child_process";
 import * as pack from "../../package.json";
+
 test("Code should be 0", async () => {
   const result = await cli(["-v"]);
   expect(result.code).toBe(0);
 }, 5000);
 
-test("Should return pckage.json version", async () => {
+test("Should return package.json version", async () => {
   const result = await cli(["-v"]);
   expect(result.stdout).toContain(pack.version);
 }, 5000);

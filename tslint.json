@@ -31,6 +31,6 @@
     "ordered-imports": false,
     "quotemark": [true, "double"],
     "trailing-comma": false,
-    "no-unused-variable": true
+    "no-unused-variable": false
   }
 }

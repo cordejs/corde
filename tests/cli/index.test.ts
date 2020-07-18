@@ -1,5 +1,3 @@
-import * as cli from "../../src/cli";
-
 // For some reason, errorHandler is being throwed when imported here.
 
 describe("Testing export of cli index", () => {
@@ -11,7 +9,7 @@ describe("Testing export of cli index", () => {
   });
   it("Should export cli", () => {
     try {
-      expect(cli).toBeTruthy();
+      expect(require("../../src/cli")).toBeTruthy();
     } catch (error) {}
   });
 });

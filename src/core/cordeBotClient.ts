@@ -21,14 +21,14 @@ import { CordeBot } from "../interfaces";
 export class CordeBotClient implements CordeBot {
   public hasInited: BehaviorSubject<boolean>;
 
+  private readonly _prefix: string;
+  private readonly _guildId: string;
+  private readonly _channelId: string;
+  private readonly _waitTimeOut: number;
+  private readonly _testBotId: string;
+
   private textChannel: TextChannel;
   private _client: Client;
-  private _prefix: string;
-  private _guildId: string;
-  private _channelId: string;
-  private _waitTimeOut: number;
-  private _testBotId: string;
-
   /**
    * Starts new instance of Discord client with its events.
    *
@@ -121,7 +121,7 @@ export class CordeBotClient implements CordeBot {
   }
 
   public isLoggedIn() {
-    return !!this._client;
+    return !!this._client && !!this._client.readyAt && this.hasInited.value;
   }
 
   /**
