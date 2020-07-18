@@ -1,7 +1,10 @@
 const env = require("dotenv");
 
-const result = env.config();
-
+try {
+  const result = env.config();
+} catch (error) {
+  console.log(".env file not found");
+}
 if (result.error) {
   throw result.error;
 }
