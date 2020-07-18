@@ -32,10 +32,11 @@ class Reader {
       throw new ConfigFileNotFoundError();
     }
 
-    if (_config) {
-      return _config;
-    } else {
+    console.log(_config);
+    if (!_config || Object.keys(_config).length === 0) {
       throw new Error("Invalid configuration file");
+    } else {
+      return _config;
     }
   }
 
@@ -57,7 +58,12 @@ class Reader {
 }
 
 function loadConfigFromConfigFilePath(): ConfigOptions {
-  const filePath = path.resolve(process.cwd(), runtime.configFilePath);
+  let filePath = "";
+  if (fs.existsSync(runtime.configFilePath)) {
+    filePath = runtime.configFilePath;
+  } else {
+    filePath = path.resolve(process.cwd(), runtime.configFilePath);
+  }
   const fileExt = path.extname(filePath);
 
   if (!fs.existsSync(filePath)) {

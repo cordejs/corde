@@ -7,11 +7,11 @@ const SPACE = "    ";
 const DEFAULT_SPACE_VALUE = 4;
 
 class Reporter {
-  private _bgSucess = chalk.bgRgb(21, 194, 19);
-  private _bgError = chalk.bgRed;
-  private _bold = chalk.bold;
-  private _red = chalk.red;
-  private _bgSucessBold = this._bgSucess.bold;
+  private readonly _bgSucess = chalk.bgRgb(21, 194, 19);
+  private readonly _bgError = chalk.bgRed;
+  private readonly _bold = chalk.bold;
+  private readonly _red = chalk.red;
+  private readonly _bgSucessBold = this._bgSucess.bold;
   private _sucessCount = 0;
   private _failureCount = 0;
 

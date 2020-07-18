@@ -2,46 +2,18 @@ import init from "../../src/cli/init";
 import fs from "fs";
 import path from "path";
 import ConfigOptions from "../../src/interfaces";
+import { renameConfigFilesToTempNames, renameConfigTempFileNamesToNormal } from "../testHelper";
 
 // As there are a local config file for manual tests,
 // These files are renamed to avoid remotion after finish
 // all tests.
 
-const normalTsPath = path.resolve(process.cwd(), "corde.ts");
-const tempTsPath = path.resolve(process.cwd(), "__corde.ts");
-
-const normalJsPath = path.resolve(process.cwd(), "corde.js");
-const tempJsPath = path.resolve(process.cwd(), "__corde.js");
-
-const normalJsonPath = path.resolve(process.cwd(), "corde.json");
-const tempJsonPath = path.resolve(process.cwd(), "__corde.json");
-
 beforeAll(() => {
-  if (fs.existsSync(normalTsPath)) {
-    fs.renameSync(normalTsPath, tempTsPath);
-  }
-
-  if (fs.existsSync(normalJsPath)) {
-    fs.renameSync(normalJsPath, tempJsPath);
-  }
-
-  if (fs.existsSync(normalJsonPath)) {
-    fs.renameSync(normalJsonPath, tempJsonPath);
-  }
+  renameConfigFilesToTempNames();
 });
 
 afterAll(() => {
-  if (fs.existsSync(tempTsPath)) {
-    fs.renameSync(tempTsPath, normalTsPath);
-  }
-
-  if (fs.existsSync(tempJsPath)) {
-    fs.renameSync(tempJsPath, normalJsPath);
-  }
-
-  if (fs.existsSync(tempJsonPath)) {
-    fs.renameSync(tempJsonPath, normalJsonPath);
-  }
+  renameConfigTempFileNamesToNormal();
 });
 
 describe("Testing creation of config file in init", () => {
