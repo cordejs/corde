@@ -28,7 +28,7 @@
     "build": "bash ./scripts/build.sh",
     "watch": "bash ./scripts/watch.sh",
     "test": "jest --silent",
-    "test-with-coverage": "jest --collect-coverage --collectCoverageFrom=src/**/*.ts --collectCoverageFrom='!src/errors/*.ts'",
+    "test-with-coverage": "jest --silent --collect-coverage --collectCoverageFrom=src/**/*.ts --collectCoverageFrom='!src/errors/*.ts'",
     "refresh": "rm -rf ./node_modules ./package-lock.json && yarn install",
     "tslint": "tslint --fix 'src/**/*.ts' 'tests/**/*.ts",
     "np": "np --no-cleanup --no-yarn",

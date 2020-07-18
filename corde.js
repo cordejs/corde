@@ -2,11 +2,11 @@ const env = require("dotenv");
 
 try {
   const result = env.config();
+  if (result.error) {
+    throw result.error;
+  }
 } catch (error) {
   console.log(".env file not found");
-}
-if (result.error) {
-  throw result.error;
 }
 
 module.exports = {
