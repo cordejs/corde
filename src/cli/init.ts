@@ -27,9 +27,11 @@ const tsFile = `
  * Initialize a config file with all available options.
  * Formated using **prettier**
  *
- * @since 1.0
+ * @version 1.0
  *
- * @param fileType Possible type of file @see
+ * @param fileType Possible type of file
+ *
+ * @throws Error if could not create the config file
  */
 export default function init(fileType: configFileType = "json") {
   let fileContent = "";

@@ -8,10 +8,11 @@ import path from "path";
  * if there is no parameter or if any required property is
  * missing.
  *
- * @since 1.0
+ * @version 1.0
  *
  * @param configs Config paramater that will be validated
  *
+ * @throws Error if any config is invalid.
  */
 export function validate(configs: ConfigOptions) {
   if (!configs) {
