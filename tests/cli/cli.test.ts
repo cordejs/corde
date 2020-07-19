@@ -1,14 +1,18 @@
 import { exec, ExecException } from "child_process";
 import * as pack from "../../package.json";
+import { cliProgram } from "../../src/cli/cli";
+import { program } from "commander";
+import path from "path";
 
 test("Code should be 0", async () => {
   try {
-    const result = await cli(["-v"]);
+    const result = await cli([""]);
     expect(result.code).toBe(0);
   } catch (error) {
+    console.log(error);
     fail();
   }
-}, 5000);
+});
 
 test("Should return package.json version", async () => {
   try {
@@ -17,7 +21,7 @@ test("Should return package.json version", async () => {
   } catch (error) {
     fail();
   }
-}, 5000);
+});
 
 interface CliResult {
   code: number;
@@ -27,14 +31,20 @@ interface CliResult {
 }
 
 function cli(args: string[]): Promise<CliResult> {
-  return new Promise((resolve) => {
-    exec(`node ./bin/corde ${args.join(" ")}`, (error, stdout, stderr) => {
-      resolve({
-        code: error && error.code ? error.code : 0,
-        error,
-        stdout,
-        stderr,
-      });
-    });
+  return new Promise((resolve, reject) => {
+    exec(
+      `yarn ts-node ${path.resolve(process.cwd(), "./src/cli/cli")} ${args.join(" ")}`,
+      (error, stdout, stderr) => {
+        if (error) {
+          reject(error);
+        }
+        resolve({
+          code: error && error.code ? error.code : 0,
+          error,
+          stdout,
+          stderr,
+        });
+      },
+    );
   });
 }
