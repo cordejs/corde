@@ -1,37 +1,35 @@
 version: 2.1
 
 orbs:
-  node: circleci/node@3.0.0
+  node: circleci/node@3.0.1
 
 jobs:
   build:
     docker:
       - image: circleci/node:14
-    parallelism: 1
 
     executor: node/default
     steps:
       - checkout
-      - node/install-npm
       - node/install-packages:
-          app-dir: ~/corde
-          cache-path: node_modules
-          override-ci-command: npm i
+          pkg-manager: yarn
+          cache-path: ~/corde/node_modules
+          override-ci-command: yarn install
+
+      - run: yarn test
 
       # Save workspace for subsequent (test)
       - persist_to_workspace:
-        root: .
-        paths:
-          - .
+          root: .
+          paths:
+            - .
 
       - run:
           name: Build Project
-          command: npm run build
+          command: yarn build
 
   test:
-    docker:
-      - image: circleci/node:14
-    parallelism: 1
+    executor: node/default
 
     steps:
       # Reuse the workspace from the build job
@@ -40,23 +38,21 @@ jobs:
 
       - run:
           name: Tests
-          command: npm run test-with-coverage
+          command: yarn test-with-coverage
       - store_test_results:
           path: coverage
 
   publish_coverage:
-    docker:
-      - image: circleci/node:14
-    parallelism: 1
+    executor: node/default
 
     steps:
       # Reuse the workspace from the build job
       - attach_workspace:
-        at: .
+          at: .
 
       - run:
           name: Publish coverage
-          command: npm run codecov -f coverage/*.json
+          command: yarn codecov -f coverage/*.json
 
 workflows:
   version: 2

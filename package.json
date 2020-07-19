@@ -33,7 +33,8 @@
     "tslint": "tslint --fix 'src/**/*.ts' 'tests/**/*.ts",
     "np": "np --no-cleanup --no-yarn",
     "format": "prettier --write \"src/**/*.ts\"",
-    "lint": "tslint --project tsconfig.json -t stylish"
+    "lint": "tslint --project tsconfig.json -t stylish",
+    "validate-ci": "bash ./scripts/validateCircleciConfig.sh"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",
