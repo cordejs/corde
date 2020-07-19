@@ -9,14 +9,17 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: yarn-packages-{{ checksum "yarn.lock" }}
+          keys:
+            - yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - yarn-packages-v1-{{ .Branch }}-
+            - yarn-packages-v1-
 
       - run:
           name: Install dependencies
           command: yarn install
 
       - save_cache:
-          key: yarn-packages-{{ checksum "yarn.lock" }}
+          key: yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
 
@@ -31,7 +34,10 @@ jobs:
 
     steps:
       - restore_cache:
-          key: yarn-packages-{{ checksum "yarn.lock" }}
+          keys:
+            - yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - yarn-packages-v1-{{ .Branch }}-
+            - yarn-packages-v1-
 
       - run:
           name: Tests
@@ -46,7 +52,10 @@ jobs:
 
     steps:
       - restore_cache:
-          key: yarn-packages-{{ checksum "yarn.lock" }}
+          keys:
+            - yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - yarn-packages-v1-{{ .Branch }}-
+            - yarn-packages-v1-
 
       - run:
           name: Publish coverage
