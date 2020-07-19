@@ -4,7 +4,7 @@ jobs:
   build:
     docker:
       - image: circleci/node:14
-    parallelism: 4
+    parallelism: 1
 
     steps:
       - checkout
@@ -30,13 +30,14 @@ jobs:
     parallelism: 4
 
     steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+
       - run:
           name: Tests
           command: yarn test-with-coverage
-
-      - run:
-          name: Publish coverage
-          command: yarn codecov -f coverage/*.json
 
       - store_test_results:
           path: coverage/*.xml
@@ -44,9 +45,13 @@ jobs:
   coverage:
     docker:
       - image: circleci/node:14
-    parallelism: 4
+    parallelism: 1
 
     steps:
+      - run:
+          name: Publish coverage
+          command: yarn codecov -f coverage/*.json
+
       - run:
           name: Publish coverage
           command: yarn codecov -f coverage/*.json
