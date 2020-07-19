@@ -48,9 +48,8 @@ jobs:
       - run:
           name: Tests
           command: yarn test-with-coverage
-
       - store_test_results:
-          path: coverage/*.xml
+          destination: coverage
 
   publish_coverage:
     docker:
@@ -58,10 +57,6 @@ jobs:
     parallelism: 1
 
     steps:
-      - run:
-          name: Publish coverage
-          command: yarn codecov -f coverage/*.json
-
       - run:
           name: Publish coverage
           command: yarn codecov -f coverage/*.json
