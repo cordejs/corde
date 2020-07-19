@@ -28,7 +28,7 @@ jobs:
   test:
     docker:
       - image: circleci/node:14
-    parallelism: 4
+    parallelism: 1
 
     steps:
       - checkout
