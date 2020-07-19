@@ -12,7 +12,6 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "newLine": "LF",
-    "noEmitOnError": true,
     "noImplicitAny": true,
     "removeComments": false,
     "noUnusedLocals": false,

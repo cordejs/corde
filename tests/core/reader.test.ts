@@ -3,14 +3,12 @@ import {
   renameConfigFilesToTempNames,
   renameConfigTempFileNamesToNormal,
   normalJsPath,
-  tempJsPath,
 } from "../testHelper";
 import { runtime } from "../../src/common";
 
 import conf from "../../corde";
 import fs from "fs";
 import path from "path";
-import { ConfigFileNotFoundError } from "../../src/errors";
 
 afterEach(() => {
   runtime.configFilePath = null;
@@ -35,7 +33,9 @@ describe("Testing reader", () => {
     // The file used for general tests is corde.js so, we rename it to __code.js to test other files
     renameConfigFilesToTempNames();
     const file = path.resolve(process.cwd(), "corde.ts");
-    fs.writeFileSync(file, `module.exports = ${JSON.stringify(conf)}`);
+    try {
+      fs.writeFileSync(file, `module.exports = ${JSON.stringify(conf)}`);
+    } catch (error) {}
     expect(reader.loadConfig()).toEqual(conf);
     fs.unlinkSync(file);
   });
@@ -57,7 +57,7 @@ describe("Testing reader", () => {
 
   it("Should throw error due to empty object config", () => {
     renameConfigFilesToTempNames();
-    const file = path.resolve(process.cwd(), "corde.js");
+    const file = path.resolve(process.cwd(), "corde.json");
     fs.writeFileSync(file, "");
     expect(() => reader.loadConfig()).toThrowError();
     fs.unlinkSync(file);

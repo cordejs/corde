@@ -5,5 +5,4 @@ module.exports = {
   collectCoverageFrom: ["./src/**/*.ts"],
   testMatch: ["**/tests/**/*.test.ts"],
   modulePathIgnorePatterns: ["./tests/mocks", "./tests/manual_test", "./tests/dirTestFiles"],
-  setupFilesAfterEnv: ["./tests/setup.js"],
 };
