@@ -30,19 +30,29 @@ jobs:
     parallelism: 4
 
     steps:
-      - checkout
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
+      steps:
+        - checkout
+        - restore_cache:
+            name: Restore Yarn Package Cache
+            key: yarn-packages-{{ checksum "yarn.lock" }}
 
-      - run:
-          name: Tests
-          command: yarn test-with-coverage
+        - run:
+            name: Install dependencies
+            command: yarn install
 
-      - store_test_results:
-          path: coverage/*.xml
+        - save_cache:
+            key: yarn-packages-{{ checksum "yarn.lock" }}
+            paths:
+              - ~/.cache/yarn
 
-  coverage:
+        - run:
+            name: Tests
+            command: yarn test-with-coverage
+
+        - store_test_results:
+            path: coverage/*.xml
+
+  publish_coverage:
     docker:
       - image: circleci/node:14
     parallelism: 1
@@ -58,12 +68,12 @@ jobs:
 
 workflows:
   version: 2
-  build_test_deploy_coverage:
+  build_test_publish_coverage:
     jobs:
       - build
       - test:
           requires:
             - build
-      - coverage:
+      - publish_coverage:
           requires:
             - test
