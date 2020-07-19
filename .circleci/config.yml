@@ -49,7 +49,7 @@ jobs:
           name: Tests
           command: yarn test-with-coverage
       - store_test_results:
-          destination: coverage
+          path: coverage
 
   publish_coverage:
     docker:
