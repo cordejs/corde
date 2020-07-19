@@ -1,60 +1,46 @@
 import init from "../../src/cli/init";
-import fs from "fs";
-import path from "path";
+import { FsMockUtils } from "../mockUtils/fs";
 import ConfigOptions from "../../src/interfaces";
-import { renameConfigFilesToTempNames, renameConfigTempFileNamesToNormal } from "../testHelper";
 
 // As there are a local config file for manual tests,
 // These files are renamed to avoid remotion after finish
 // all tests.
 
+const fs = new FsMockUtils();
+jest.mock("fs");
+
 beforeAll(() => {
-  renameConfigFilesToTempNames();
+  fs.createMockForWriteFileSync();
 });
 
-afterAll(() => {
-  renameConfigTempFileNamesToNormal();
+afterEach(() => {
+  jest.clearAllMocks();
 });
 
 describe("Testing creation of config file in init", () => {
   it("should create corde.js file", () => {
     init("js");
-    const filePath = path.resolve(process.cwd(), "corde.js");
-    const jsFileExists = fs.existsSync(filePath);
-    expect(jsFileExists).toBe(true);
-    fs.unlinkSync(filePath);
+    expect(fs.writeFileSyncArgs).toContain(fs.buildFilePath("corde.js"));
   });
 
   it("should create corde.ts file", () => {
     init("ts");
-    const filePath = path.resolve(process.cwd(), "corde.ts");
-    const tsFileExists = fs.existsSync(filePath);
-    expect(tsFileExists).toBe(true);
-    fs.unlinkSync(filePath);
+    expect(fs.writeFileSyncArgs).toContain(fs.buildFilePath("corde.ts"));
   });
 
   it("should create corde.json file with directly argument", () => {
     init("json");
-    const filePath = path.resolve(process.cwd(), "corde.json");
-    const tsFileExists = fs.existsSync(filePath);
-    expect(tsFileExists).toBe(true);
-    fs.unlinkSync(filePath);
+    expect(fs.writeFileSyncArgs).toContain(fs.buildFilePath("corde.json"));
   });
 
   it("should create corde.json file without directly argument", () => {
     init();
-    const filePath = path.resolve(process.cwd(), "corde.json");
-    const tsFileExists = fs.existsSync(filePath);
-    expect(tsFileExists).toBe(true);
-    fs.unlinkSync(filePath);
+    expect(fs.writeFileSyncArgs).toContain(fs.buildFilePath("corde.json"));
   });
 
   it("should create corde.json file with undefined argument", () => {
     init(undefined);
-    const filePath = path.resolve(process.cwd(), "corde.json");
-    const tsFileExists = fs.existsSync(filePath);
-    expect(tsFileExists).toBe(true);
-    fs.unlinkSync(filePath);
+    expect(fs.writeFileSyncArgs).toContain(fs.buildFilePath("corde.json"));
   });
 
   it("should print msg error if invalid file extension was informed", () => {
@@ -65,8 +51,6 @@ describe("Testing creation of config file in init", () => {
     // @ts-expect-error
     init(invalidExtension);
     expect(outputData).not.toBe("");
-    const filePath = path.resolve(process.cwd(), `corde.${invalidExtension}`);
-    fs.unlinkSync(filePath);
   });
 });
 
@@ -84,45 +68,23 @@ describe("Testing content of config file in init", () => {
 
   it("should js file have same values of configFile", () => {
     init("js");
-    const filePath = path.resolve(process.cwd(), "corde.js");
-    if (filePath) {
-      const content = require(filePath);
-      expect(configFile).toEqual(content);
-      fs.unlinkSync(filePath);
-    } else {
-      fail();
-    }
+    expect(configFile).toEqual(fs.convertCreatedFileContentToModule());
   });
 
   it("should ts file have same values of configFile", () => {
     init("ts");
-    const filePath = path.resolve(process.cwd(), "corde.ts");
-    try {
-      const content = require(filePath);
-      expect(configFile).toEqual(content);
-    } catch (error) {
-      fail();
-    } finally {
-      fs.unlinkSync(filePath);
-    }
+    expect(configFile).toEqual(fs.convertCreatedFileContentToModule());
   });
 
   it("should json file have same values of configFile", () => {
     init("json");
-    const filePath = path.resolve(process.cwd(), "corde.json");
-    try {
-      const content = JSON.parse(fs.readFileSync(filePath).toString());
-      expect(configFile).toEqual(content);
-    } catch (error) {
-      fail();
-    } finally {
-      fs.unlinkSync(filePath);
-    }
+    const content = JSON.parse(fs.getCreatedFileContent.toString());
+    expect(configFile).toEqual(content);
   });
 
   it("Should throw exception due to error in write", () => {
-    fs.writeFileSync = jest.fn().mockImplementationOnce(() => {
-      throw new Error();
+    fs.createMockForWriteFileSync(() => {
+      throw new Error("testing error");
     });
 
     expect(() => init("json")).toThrow(Error);

@@ -28,9 +28,7 @@ interface CliResult {
 
 function cli(args: string[]): Promise<CliResult> {
   return new Promise((resolve) => {
-    console.log(`node ./bin/corde ${args.join(" ")}`);
     exec(`node ./bin/corde ${args.join(" ")}`, (error, stdout, stderr) => {
-      console.log(error);
       resolve({
         code: error && error.code ? error.code : 0,
         error,
