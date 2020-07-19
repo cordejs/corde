@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  node: circleci/node@3.0.0
+
 jobs:
   build:
     docker:
@@ -8,20 +11,15 @@ jobs:
 
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
-            - yarn-packages-v1-{{ .Branch }}-
-            - yarn-packages-v1-
+      - node/install-packages:
+          cache-path: node_modules
+          override-ci-command: yarn --frozen-lockfile
 
-      - run:
-          name: Install dependencies
-          command: yarn --frozen-lockfile --cache-folder ~/.cache/yarn
-
-      - save_cache:
-          key: yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
-          paths:
-            - node_modules
+      # Save workspace for subsequent (test)
+      - persist_to_workspace:
+        root: .
+        paths:
+          - .
 
       - run:
           name: Build Project
@@ -33,6 +31,10 @@ jobs:
     parallelism: 1
 
     steps:
+      # Reuse the workspace from the build job
+      - attach_workspace:
+          at: .
+
       - restore_cache:
           keys:
             - yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
