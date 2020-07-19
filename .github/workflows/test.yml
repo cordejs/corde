@@ -32,4 +32,4 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn install
-      - run: yarn tests
+      - run: yarn test
