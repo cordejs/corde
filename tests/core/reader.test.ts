@@ -6,7 +6,7 @@ import {
 } from "../testHelper";
 import { runtime } from "../../src/common";
 
-import conf from "../../corde";
+const conf = require("../../corde");
 import fs from "fs";
 import path from "path";
 
