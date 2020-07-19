@@ -1,8 +1,8 @@
 import { exec, ExecException } from "child_process";
 import * as pack from "../../package.json";
-import { cliProgram } from "../../src/cli/cli";
-import { program } from "commander";
 import path from "path";
+
+jest.setTimeout(10000);
 
 test("Code should be 0", async () => {
   try {
