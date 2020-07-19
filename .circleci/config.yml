@@ -4,6 +4,7 @@ jobs:
   build:
     docker:
       - image: circleci/node:14
+    parallelism: 4
 
     steps:
       - checkout
@@ -23,7 +24,12 @@ jobs:
       - run:
           name: Build Project
           command: yarn build
+  test:
+    docker:
+      - image: circleci/node:14
+    parallelism: 4
 
+    steps:
       - run:
           name: Tests
           command: yarn test-with-coverage
@@ -34,3 +40,13 @@ jobs:
 
       - store_test_results:
           path: coverage/*.xml
+
+  coverage:
+    docker:
+      - image: circleci/node:14
+    parallelism: 4
+
+    steps:
+      - run:
+          name: Publish coverage
+          command: yarn codecov -f coverage/*.json
