@@ -33,11 +33,6 @@ jobs:
       - restore_cache:
           key: yarn-packages-{{ checksum "yarn.lock" }}
 
-      - save_cache:
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
-
       - run:
           name: Tests
           command: yarn test-with-coverage
@@ -52,11 +47,6 @@ jobs:
     steps:
       - restore_cache:
           key: yarn-packages-{{ checksum "yarn.lock" }}
-
-      - save_cache:
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
 
       - run:
           name: Publish coverage
