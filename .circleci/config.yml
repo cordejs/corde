@@ -9,11 +9,14 @@ jobs:
       - image: circleci/node:14
     parallelism: 1
 
+    executor: node/default
     steps:
       - checkout
+      - node/install-npm
       - node/install-packages:
+          app-dir: ~/corde
           cache-path: node_modules
-          override-ci-command: yarn --frozen-lockfile
+          override-ci-command: npm i
 
       # Save workspace for subsequent (test)
       - persist_to_workspace:
@@ -23,7 +26,7 @@ jobs:
 
       - run:
           name: Build Project
-          command: yarn build
+          command: npm run build
 
   test:
     docker:
@@ -35,15 +38,9 @@ jobs:
       - attach_workspace:
           at: .
 
-      - restore_cache:
-          keys:
-            - yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
-            - yarn-packages-v1-{{ .Branch }}-
-            - yarn-packages-v1-
-
       - run:
           name: Tests
-          command: yarn test-with-coverage
+          command: npm run test-with-coverage
       - store_test_results:
           path: coverage
 
@@ -53,15 +50,13 @@ jobs:
     parallelism: 1
 
     steps:
-      - restore_cache:
-          keys:
-            - yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
-            - yarn-packages-v1-{{ .Branch }}-
-            - yarn-packages-v1-
+      # Reuse the workspace from the build job
+      - attach_workspace:
+        at: .
 
       - run:
           name: Publish coverage
-          command: yarn codecov -f coverage/*.json
+          command: npm run codecov -f coverage/*.json
 
 workflows:
   version: 2
