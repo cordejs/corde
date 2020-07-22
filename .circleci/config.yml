@@ -39,8 +39,15 @@ jobs:
       - run:
           name: Tests
           command: yarn test-with-coverage
+
       - store_test_results:
           path: coverage
+
+      # Save workspace for subsequent (test)
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
 
   publish_coverage:
     executor: node/default
