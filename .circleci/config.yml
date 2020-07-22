@@ -42,6 +42,11 @@ jobs:
 
       - store_test_results:
           path: coverage
+        # Save workspace for subsequent (test)
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
 
   publish_coverage:
     executor: node/default
