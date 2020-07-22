@@ -62,4 +62,12 @@ describe("Testing reader", () => {
     expect(() => reader.loadConfig()).toThrowError();
     fs.unlinkSync(file);
   });
+
+  it("Should throw error due to no file", () => {
+    renameConfigFilesToTempNames();
+    const cwd = process.cwd();
+    process.chdir(".");
+    expect(() => reader.loadConfig()).toThrowError();
+    process.chdir(cwd);
+  });
 });
