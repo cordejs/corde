@@ -30,7 +30,7 @@
     "test": "jest --silent",
     "test-with-coverage": "jest --silent --collect-coverage --collectCoverageFrom=src/**/*.ts --collectCoverageFrom='!src/errors/*.ts'",
     "refresh": "rm -rf ./node_modules ./package-lock.json && yarn install",
-    "tslint": "tslint --fix 'src/**/*.ts' 'tests/**/*.ts",
+    "fix-lint": "tslint --fix 'src/**/*.ts' 'tests/**/*.ts",
     "np": "np --no-cleanup --no-yarn",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint --project tsconfig.json -t stylish",
