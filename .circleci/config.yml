@@ -28,6 +28,21 @@ jobs:
           name: Build Project
           command: yarn build
 
+  lint:
+    docker:
+      - image: circleci/node:14
+
+    executor: node/default
+
+    steps:
+      # Reuse the workspace from the build job
+      - attach_workspace:
+          at: .
+
+      - run:
+          name: lint
+          command: yarn lint
+
   test:
     executor: node/default
 
