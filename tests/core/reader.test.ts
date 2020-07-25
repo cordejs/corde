@@ -3,9 +3,9 @@ import { runtime } from "../../src/common";
 
 import path from "path";
 import fs from "fs";
+import { sampleSingleTestGroup } from "../mocks/sampleSingleTest";
 
 const conf = require("../mocks/jsconfig/corde.js");
-
 const cwd = process.cwd();
 
 afterEach(() => {
@@ -64,6 +64,18 @@ describe("reader class", () => {
         jest.spyOn(fs, "existsSync").mockReturnValue(false);
         expect(() => reader.loadConfig()).toThrowError();
       });
+    });
+  });
+
+  describe("when working with reader.getTestsFromFiles()", () => {
+    it("should throw exception when has no file", () => {
+      expect(() => reader.getTestsFromFiles(null)).toThrowError();
+    });
+
+    it("should read tests from a single group()", () => {
+      const files = [path.resolve(process.cwd(), "tests/mocks/sampleSingleTest")];
+      const groups = reader.getTestsFromFiles(files);
+      expect(groups).toEqual(sampleSingleTestGroup);
     });
   });
 });
