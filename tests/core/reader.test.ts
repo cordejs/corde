@@ -1,9 +1,9 @@
-import reader from "../../src/core/reader";
-import { runtime, testCollector } from "../../src/common";
-import consts from "../mocks/constsNames";
-import path from "path";
 import fs from "fs";
+import path from "path";
+import { runtime, testCollector } from "../../src/common";
+import reader from "../../src/core/reader";
 import { Group } from "../../src/interfaces";
+import consts from "../mocks/constsNames";
 
 const conf = require("../mocks/jsconfig/corde.js");
 const cwd = process.cwd();
@@ -102,6 +102,21 @@ describe("reader class", () => {
         },
       ];
       const files = [path.resolve(process.cwd(), "tests/mocks/sampleWithSingleGroup")];
+      const groups = reader.getTestsFromFiles(files);
+      expect(groups).toEqual(sampleWithSingleGroup);
+    });
+
+    it("should read from isolated functions", () => {
+      const sampleWithSingleGroup: Group[] = [
+        {
+          tests: [
+            {
+              testsFunctions: [expect.any(Function)],
+            },
+          ],
+        },
+      ];
+      const files = [path.resolve(process.cwd(), "tests/mocks/onlyCommands")];
       const groups = reader.getTestsFromFiles(files);
       expect(groups).toEqual(sampleWithSingleGroup);
     });
