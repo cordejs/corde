@@ -9,4 +9,5 @@ module.exports = {
   testMatch: ["**/tests/**/*.test.ts"],
   modulePathIgnorePatterns: ["./tests/mocks", "./tests/manual_test", "./tests/dirTestFiles"],
   restoreMocks: true,
+  forceExit: true,
 };
