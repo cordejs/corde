@@ -11,7 +11,6 @@ const cwd = process.cwd();
 afterEach(() => {
   runtime.configFilePath = null;
   process.chdir(cwd);
-  jest.clearAllMocks();
   testCollector.cleanAll();
 });
 
@@ -25,9 +24,10 @@ describe("reader class", () => {
   describe("when working with reader.loadConfig()", () => {
     describe("and has runtime.configFilePath", () => {
       it("should read configs from configFilePath", () => {
-        jest.spyOn(fs, "readFileSync").mockReturnValueOnce(null);
+        const spy = jest.spyOn(fs, "readFileSync").mockReturnValueOnce(null);
         runtime.configFilePath = path.resolve(process.cwd(), "tests/mocks/jsconfig/corde.js");
         expect(reader.loadConfig()).toEqual(conf);
+        spy.mockClear();
       });
 
       it("should throw error when path in runtime.configFilepath is invalid", () => {
@@ -36,8 +36,14 @@ describe("reader class", () => {
       });
 
       it("should resolve path of config", () => {
-        jest.spyOn(fs, "readFileSync").mockReturnValueOnce(null);
+        const spy = jest.spyOn(fs, "readFileSync").mockReturnValueOnce(null);
         runtime.configFilePath = "tests/mocks/jsconfig/corde.js";
+        expect(reader.loadConfig()).toEqual(conf);
+        spy.mockClear();
+      });
+
+      it("should read json config", () => {
+        runtime.configFilePath = "tests/mocks/jsonconfig/corde.json";
         expect(reader.loadConfig()).toEqual(conf);
       });
     });
@@ -62,14 +68,17 @@ describe("reader class", () => {
 
       it("should throw error when a config file (corde.json) is empty", () => {
         process.chdir(path.resolve(process.cwd(), "tests/mocks/jsconfig"));
-        jest.spyOn(fs, "existsSync").mockReturnValue(true);
-        jest.spyOn(JSON, "parse").mockReturnValue(null);
+        const existsSpy = jest.spyOn(fs, "existsSync").mockReturnValue(true);
+        const parseSpy = jest.spyOn(JSON, "parse").mockReturnValue(null);
         expect(() => reader.loadConfig()).toThrowError();
+        existsSpy.mockClear();
+        parseSpy.mockClear();
       });
 
       it("should throw error if has no config file", () => {
-        jest.spyOn(fs, "existsSync").mockReturnValue(false);
+        const spy = jest.spyOn(fs, "existsSync").mockReturnValue(false);
         expect(() => reader.loadConfig()).toThrowError();
+        spy.mockClear();
       });
     });
   });

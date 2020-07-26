@@ -34,7 +34,8 @@
     "np": "np --no-cleanup --no-yarn",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint --project tsconfig.json -t stylish",
-    "validate-ci": "bash ./scripts/validateCircleciConfig.sh"
+    "validate-ci": "bash ./scripts/validateCircleciConfig.sh",
+    "jestClear": "jest --clearCache"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",
