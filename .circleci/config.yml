@@ -16,17 +16,14 @@ jobs:
           cache-path: ~/corde/node_modules
           override-ci-command: yarn install
 
-      - run: yarn test
-
-      # Save workspace for subsequent (test)
+      - run:
+          name: Build Project
+          command: yarn build
+        # Save workspace for subsequent (test)
       - persist_to_workspace:
           root: .
           paths:
             - .
-
-      - run:
-          name: Build Project
-          command: yarn build
 
   lint:
     docker:

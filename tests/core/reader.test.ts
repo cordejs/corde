@@ -35,6 +35,7 @@ describe("reader class", () => {
 
       it("should throw error when path in runtime.configFilepath is invalid", () => {
         runtime.configFilePath = ".";
+        jest.spyOn(fs, "existsSync").mockReturnValue(false);
         expect(() => reader.loadConfig()).toThrowError();
       });
 
