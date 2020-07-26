@@ -42,12 +42,10 @@ class Reader {
   public getTestsFromFiles(files: string[]) {
     if (files) {
       testCollector.isCollecting = true;
-      testCollector.groups = [];
       for (const file of files) {
         require(file);
       }
       testCollector.isCollecting = false;
-
       addTestsGroupmentToGroupIfExist();
       addTestFuncionsToGroupIfExists();
       return testCollector.groups;
@@ -87,10 +85,10 @@ function addTestsGroupmentToGroupIfExist() {
 }
 
 function addTestFuncionsToGroupIfExists() {
-  if (testCollector.hasTestFunctions()) {
-    const testsCloned = testCollector.cloneTestFunctions();
+  if (testCollector.hasIsolatedTestFunctions()) {
+    const testsCloned = testCollector.cloneIsolatedTestFunctions();
     testCollector.groups.push({ tests: [{ testsFunctions: testsCloned }] });
-    testCollector.cleanTestFunctions();
+    testCollector.clearIsolatedTestFunctions();
   }
 }
 

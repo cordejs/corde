@@ -1,9 +1,9 @@
 import reader from "../../src/core/reader";
-import { runtime } from "../../src/common";
-
+import { runtime, testCollector } from "../../src/common";
+import consts from "../mocks/constsNames";
 import path from "path";
 import fs from "fs";
-import { sampleSingleTestGroup } from "../mocks/sampleSingleTest";
+import { Group } from "../../src/interfaces";
 
 const conf = require("../mocks/jsconfig/corde.js");
 const cwd = process.cwd();
@@ -12,6 +12,7 @@ afterEach(() => {
   runtime.configFilePath = null;
   process.chdir(cwd);
   jest.clearAllMocks();
+  testCollector.cleanAll();
 });
 
 describe("reader class", () => {
@@ -72,10 +73,37 @@ describe("reader class", () => {
       expect(() => reader.getTestsFromFiles(null)).toThrowError();
     });
 
-    it("should read tests from a single group()", () => {
+    it("should read tests from a single test()", () => {
+      const sampleSingleTestGroup: Group[] = [
+        {
+          tests: [
+            {
+              testsFunctions: [expect.any(Function)],
+              name: consts.TEST_1,
+            },
+          ],
+        },
+      ];
       const files = [path.resolve(process.cwd(), "tests/mocks/sampleSingleTest")];
       const groups = reader.getTestsFromFiles(files);
       expect(groups).toEqual(sampleSingleTestGroup);
+    });
+
+    it("should read tests from a single group()", () => {
+      const sampleWithSingleGroup: Group[] = [
+        {
+          name: consts.GROUP_1,
+          tests: [
+            {
+              testsFunctions: [expect.any(Function)],
+              name: consts.TEST_1,
+            },
+          ],
+        },
+      ];
+      const files = [path.resolve(process.cwd(), "tests/mocks/sampleWithSingleGroup")];
+      const groups = reader.getTestsFromFiles(files);
+      expect(groups).toEqual(sampleWithSingleGroup);
     });
   });
 });

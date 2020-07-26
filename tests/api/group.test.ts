@@ -33,13 +33,13 @@ describe("Testing group function", () => {
     }
   });
 
-  it("Should not add a group", () => {
+  it("should add a group", () => {
     group(undefined, () => {});
 
     if (!testCollector.groups) {
       fail();
     } else {
-      expect(testCollector.groups.length).toEqual(0);
+      expect(testCollector.groups.length).toEqual(1);
     }
   });
 

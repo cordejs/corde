@@ -17,9 +17,7 @@ export function test(name: string, action: () => void) {
 
   if (action) {
     action();
-  }
 
-  if (name) {
     testCollector.tests.push({
       name,
       testsFunctions: testCollector.cloneTestFunctions(),
@@ -27,5 +25,4 @@ export function test(name: string, action: () => void) {
   }
 
   testCollector.hasTest = false;
-  testCollector.cleanTestFunctions();
 }

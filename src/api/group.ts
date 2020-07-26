@@ -19,15 +19,13 @@ export function group(name: string, action: () => void) {
 
   if (action) {
     action();
-  }
 
-  if (name) {
     testCollector.groups.push({
       name,
       tests: testCollector.tests.map((test) => test),
     });
-
-    testCollector.tests = [];
-    testCollector.hasGroup = false;
   }
+
+  testCollector.tests = [];
+  testCollector.hasGroup = false;
 }

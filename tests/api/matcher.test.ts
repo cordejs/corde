@@ -4,7 +4,7 @@ import { expectMatchWithNot } from "../../src/api";
 // TODO: Improve this tests
 describe("Testing describe function", () => {
   beforeEach(() => {
-    testCollector.cleanTestFunctions();
+    testCollector.clearIsolatedTestFunctions();
   });
 
   it("Should not return undefined", () => {
@@ -19,23 +19,23 @@ describe("Testing describe function", () => {
 
   it("Should add a function after call toReturn", () => {
     expectMatchWithNot("test").toReturn("empty");
-    expect(testCollector.hasTestFunctions()).toBe(true);
+    expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
   });
 
   it("Should add a function after call toAddReaction", () => {
     expectMatchWithNot("test").toAddReaction("empty");
-    expect(testCollector.hasTestFunctions()).toBe(true);
+    expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
   });
 
   it("Should add toReturn function", () => {
     expectMatchWithNot("test").toReturn("empty");
-    const func = testCollector.cloneTestFunctions()[0];
+    const func = testCollector.cloneIsolatedTestFunctions()[0];
     expect(func.toString()).toContain("toReturn");
   });
 
   it("Should add toAddReaction function", () => {
     expectMatchWithNot("test").toAddReaction("empty");
-    const func = testCollector.cloneTestFunctions()[0];
+    const func = testCollector.cloneIsolatedTestFunctions()[0];
     expect(func.toString()).toContain("toAddReaction");
   });
 });
