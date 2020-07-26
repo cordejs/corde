@@ -4,6 +4,7 @@ import { runtime } from "../common";
 import { testCollector } from "../common/testColletor";
 import { ConfigFileNotFoundError, FilesNotFoundError } from "../errors";
 import ConfigOptions from "../interfaces";
+import { InvalidConfigFileError } from "../errors/invalidConfigFileError";
 
 class Reader {
   /**
@@ -33,7 +34,7 @@ class Reader {
     }
 
     if (!_config || Object.keys(_config).length === 0) {
-      throw new Error("Invalid configuration file");
+      throw new InvalidConfigFileError();
     } else {
       return _config;
     }
@@ -59,7 +60,7 @@ function loadConfigFromConfigFilePath(): ConfigOptions {
   if (fs.existsSync(runtime.configFilePath)) {
     filePath = path.resolve(process.cwd(), runtime.configFilePath);
   } else {
-    throw new Error("File not found");
+    throw new FilesNotFoundError();
   }
   const fileExt = path.extname(filePath);
 
@@ -68,7 +69,7 @@ function loadConfigFromConfigFilePath(): ConfigOptions {
   } else if (fileExt === ".js" || fileExt === ".ts") {
     return require(filePath);
   } else {
-    throw new FilesNotFoundError();
+    throw new FilesNotFoundError("File extension not suported");
   }
 }
 

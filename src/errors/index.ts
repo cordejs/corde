@@ -6,3 +6,4 @@ export * from "./configFileNotFoundError";
 export * from "./missingPropertyError";
 export * from "./runtimeError";
 export * from "./fileParserError";
+export * from "./invalidConfigFileError";
