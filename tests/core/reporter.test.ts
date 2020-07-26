@@ -14,15 +14,9 @@ import { getFullConsoleLog } from "../testHelper";
  *
  */
 
-const spy = jest.spyOn(console, "log");
-
 let group: Group;
 
 describe("Testing log class", () => {
-  afterEach(() => {
-    spy.mockClear();
-  });
-
   beforeEach(() => {
     group = {
       name: "group name",
@@ -36,6 +30,7 @@ describe("Testing log class", () => {
   });
 
   it("Should print group name", () => {
+    const spy = jest.spyOn(console, "log");
     reporter.outPutResult([group]);
     expect(getFullConsoleLogWithoutColors(spy.mock.calls)).toContain(group.name);
   });
@@ -47,6 +42,7 @@ describe("Testing log class", () => {
         name: "group name",
       },
     ];
+    const spy = jest.spyOn(console, "log");
     reporter.outPutResult([group]);
     const fullLog = getFullConsoleLogWithoutColors(spy.mock.calls);
     const count = fullLog.split(group.name).length - 1;
@@ -115,6 +111,7 @@ describe("Testing log class", () => {
 });
 
 function executeOutPutResultAndGetConsoleLogResult(testReport: TestReport) {
+  const spy = jest.spyOn(console, "log");
   const groups = createGroupObject(testReport);
   reporter.outPutResult(groups);
   const stringValue = getFullConsoleLog(spy.mock.calls);

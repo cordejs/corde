@@ -1,3 +1,6 @@
+// Set TEST environment to avoid process to exit with code 1 inside aplicaton
+process.env.ENV = "TEST";
+
 module.exports = {
   rootDir: ".",
   preset: "ts-jest",
