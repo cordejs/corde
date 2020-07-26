@@ -57,15 +57,11 @@ class Reader {
 function loadConfigFromConfigFilePath(): ConfigOptions {
   let filePath = "";
   if (fs.existsSync(runtime.configFilePath)) {
-    filePath = runtime.configFilePath;
-  } else {
     filePath = path.resolve(process.cwd(), runtime.configFilePath);
+  } else {
+    throw new Error("File not found");
   }
   const fileExt = path.extname(filePath);
-
-  if (!fs.existsSync(filePath)) {
-    throw new Error("Path to config not found");
-  }
 
   if (fileExt === ".json") {
     return JSON.parse(fs.readFileSync(filePath).toString());

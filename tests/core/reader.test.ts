@@ -34,6 +34,12 @@ describe("reader class", () => {
         runtime.configFilePath = ".";
         expect(() => reader.loadConfig()).toThrowError();
       });
+
+      it("should resolve path of config", () => {
+        jest.spyOn(fs, "readFileSync").mockReturnValueOnce(null);
+        runtime.configFilePath = "tests/mocks/jsconfig/corde.js";
+        expect(reader.loadConfig()).toEqual(conf);
+      });
     });
 
     describe("when working with auto search for config files (js, ts, json)", () => {
