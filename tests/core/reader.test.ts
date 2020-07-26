@@ -23,11 +23,14 @@ describe("reader class", () => {
 
   describe("when working with reader.loadConfig()", () => {
     describe("and has runtime.configFilePath", () => {
+      beforeEach(() => {
+        jest.resetAllMocks();
+      });
       it("should read configs from configFilePath", () => {
-        const spy = jest.spyOn(fs, "readFileSync").mockReturnValueOnce(null);
+        const spy = jest.spyOn(fs, "readFileSync").mockReturnValue(null);
         runtime.configFilePath = path.resolve(process.cwd(), "tests/mocks/jsconfig/corde.js");
         expect(reader.loadConfig()).toEqual(conf);
-        spy.mockClear();
+        spy.mockReset();
       });
 
       it("should throw error when path in runtime.configFilepath is invalid", () => {
@@ -36,10 +39,10 @@ describe("reader class", () => {
       });
 
       it("should resolve path of config", () => {
-        const spy = jest.spyOn(fs, "readFileSync").mockReturnValueOnce(null);
+        const spy = jest.spyOn(fs, "readFileSync").mockReturnValue(null);
         runtime.configFilePath = "tests/mocks/jsconfig/corde.js";
         expect(reader.loadConfig()).toEqual(conf);
-        spy.mockClear();
+        spy.mockReset();
       });
 
       it("should read json config", () => {
@@ -71,14 +74,14 @@ describe("reader class", () => {
         const existsSpy = jest.spyOn(fs, "existsSync").mockReturnValue(true);
         const parseSpy = jest.spyOn(JSON, "parse").mockReturnValue(null);
         expect(() => reader.loadConfig()).toThrowError();
-        existsSpy.mockClear();
-        parseSpy.mockClear();
+        existsSpy.mockReset();
+        parseSpy.mockReset();
       });
 
       it("should throw error if has no config file", () => {
         const spy = jest.spyOn(fs, "existsSync").mockReturnValue(false);
         expect(() => reader.loadConfig()).toThrowError();
-        spy.mockClear();
+        spy.mockReset();
       });
     });
   });
