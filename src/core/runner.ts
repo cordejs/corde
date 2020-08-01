@@ -4,7 +4,6 @@ import { TestReport } from "../api/interfaces";
 
 export async function executeTestCases(groups: Group[]) {
   const tests = getTestsFromGroup(groups);
-
   for (const i in tests) {
     if (tests.hasOwnProperty(i)) {
       const test = tests[i];

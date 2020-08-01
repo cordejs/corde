@@ -22,8 +22,6 @@ bot.on("message", async (message) => {
   if (message.content.indexOf("") !== 0) return;
   const args = message.content.slice(botPrefix.length).trim().split(" ");
   const command = args.shift().toLowerCase();
-  //   console.log("args: " + args);
-  console.log("command: " + command);
   if (command === "hello" || command === "h") {
     hello(message);
   } else if (command === "hey") {
@@ -41,10 +39,6 @@ bot.on("message", async (message) => {
   } else {
     console.log("No command found");
   }
-});
-
-bot.on("messageReactionRemoveEmoji", (reaction) => {
-  console.log(`a reaction is removed from a message`);
 });
 
 function hello(msg) {

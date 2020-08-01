@@ -23,7 +23,6 @@ export async function toRemoveReaction(
     if (message) {
       const reactions = await cordeBot.waitForRemovedReactions(message, removedReactions.length);
       contains = messageHasReactions(message, removedReactions);
-      console.log(reactions);
       output = reactions.map((v) => v.emoji.name).join();
     }
   } catch (error) {
@@ -44,6 +43,7 @@ export async function toRemoveReaction(
     isNot,
     // Problems in display emojis in windows console
     showExpectAndOutputValue: process.platform === "win32" ? false : true,
+    customReturnMessage: `command ${commandName} removed `,
   } as TestReport;
 }
 

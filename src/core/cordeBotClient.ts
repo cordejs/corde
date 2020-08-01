@@ -283,8 +283,7 @@ export class CordeBot extends Events {
 
   private validateMessageAndChannel(message: string) {
     if (message === undefined) {
-      console.log("No tests were declared");
-      process.exit(1);
+      throw new Error("No tests were declared");
     } else if (this.textChannel === undefined) {
       throw new Error("Channel not found");
     }

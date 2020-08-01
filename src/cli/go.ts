@@ -31,15 +31,16 @@ function loadConfigs() {
 }
 
 async function runTests(files: string[]) {
-  startLoading("Reading cool configs");
+  startLoading("reading configs");
   const testsGroups = reader.getTestsFromFiles(files);
 
-  setMessage("starting bots");
+  spinner.text = "starting bots";
+
   testCollector.beforeStartFunctions.forEach((fn) => fn());
 
   await runtime.bot.login(runtime.configs.cordeTestToken);
 
-  setMessage("Running Tests");
+  spinner.text = "running tests";
   runtime.bot.onStart.subscribe(async (isReady) => {
     if (isReady) {
       await runTestsAndPrint(testsGroups);
@@ -49,7 +50,7 @@ async function runTests(files: string[]) {
 
 async function runTestsAndPrint(groups: Group[]) {
   await executeTestCases(groups);
-  stopLoading();
+  spinner.succeed();
   const hasAllTestsPassed = reporter.outPutResult(groups);
 
   if (hasAllTestsPassed) {
@@ -80,13 +81,9 @@ function finishProcess(code: number, error?: any) {
 function startLoading(initialMessage: string) {
   // dots spinner do not works on windows 😰
   // https://github.com/fossas/fossa-cli/issues/193
-  spinner = ora(`${initialMessage}\n`).start();
+  spinner = ora(initialMessage).start();
   spinner.color = getRandomSpinnerColor() as Color;
   spinner.spinner = "dots";
-}
-
-function setMessage(message: string) {
-  spinner.text = `${message}\n`;
 }
 
 function getRandomSpinnerColor() {
@@ -98,6 +95,7 @@ function getRandomSpinnerColor() {
 
 function stopLoading() {
   spinner.stop();
+  spinner.clear();
 }
 
 /**
