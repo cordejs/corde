@@ -1,6 +1,6 @@
-import { CordeBotClient } from "../core";
-import ConfigOptions, { CordeBot } from "../interfaces";
+import ConfigOptions from "../interfaces";
 import { Config } from "./config";
+import { CordeBot } from "../core";
 
 class Runtime {
   public bot: CordeBot;
@@ -25,7 +25,7 @@ class Runtime {
   }
 
   private loadBot() {
-    this.bot = new CordeBotClient(
+    this.bot = new CordeBot(
       this.configs.botPrefix,
       this.configs.guildId,
       this.configs.channelId,

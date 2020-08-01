@@ -9,7 +9,7 @@
     "skipLibCheck": true,
     "declaration": true,
     "target": "ES2020",
-    "module": "commonjs",
+    "module": "ES2020",
     "moduleResolution": "node",
     "newLine": "LF",
     "noImplicitAny": true,
@@ -22,6 +22,6 @@
     "allowUnreachableCode": false,
     "esModuleInterop": true
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "index.js"],
   "exclude": ["node_modules", "lib", "tests"]
 }

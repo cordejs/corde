@@ -35,7 +35,8 @@
     "validate-ci": "bash tasks.sh validade-ci",
     "jestClear": "jest --clearCache",
     "init-test-bot": "bash tasks.sh init-test-bot",
-    "build-bot": "bash tasks.sh build-test-bot"
+    "build-bot": "bash tasks.sh build-test-bot",
+    "task": "bash tasks.sh"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",

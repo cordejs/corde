@@ -1,6 +1,6 @@
 import { Message } from "discord.js";
-import { CordeBot } from "../../../interfaces";
 import { TestReport } from "../../interfaces/testReport";
+import { CordeBot } from "../../../core";
 
 export async function toAddReaction(
   commandName: string,
@@ -16,7 +16,7 @@ export async function toAddReaction(
 
   try {
     const message = await cordeBot.sendTextMessage(commandName);
-    await cordeBot.waitForReactions(message, reactions);
+    await cordeBot.waitForAddedReactions(message, reactions);
     isEqual = isOutputEqualToExpect(message, reactions);
     output = message.reactions.cache.map((v) => v.emoji.name).join();
   } catch (error) {

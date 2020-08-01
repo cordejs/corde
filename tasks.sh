@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# This file contains all scripts used in package.json
+##########################################
+## Definition of all tasks used in Cord ##
+##########################################
 
 LIB_PATH=lib;
 ROOT_PATH=.;
@@ -21,15 +23,20 @@ function clearAndBuild() {
     tsc -p $2
 }
 
-function watch () {
+function watch() {
+    if [ -n "$1" ];
+    then
+        echo "watching changes for $1"
+        cd $1
+    else
+        echo "watching changes for root dir"        
+    fi 
     tsc -w
 }
 
 function clearAndWatch() {
     clear $1
-
-    echo "Watching for changes..."
-    
+    echo "watching for changes..."
     watch;
 }
 
@@ -49,10 +56,32 @@ function buildAllAndWatch() {
 }
 
 function initTestBot() {
-    clearAndBuild $BOT_LIB_PATH $BOT_PATH;
     echo "starting bot..."
     echo "press ctrl + c to stop";
-    node tests/manual_test/lib/tests/manual_test/index.js
+    node tests/manual_test/index.js
+}
+
+function watchTestBot() {
+    clear $1
+    echo "Watching for changes..." 
+    watch $2;
+}
+
+function help() {
+    if [ -n "$1" ];
+    then
+        echo "You must chose a task to execute";
+    else
+        echo "Task $1 not found";
+    fi
+    echo "available options:";
+    echo "- build:              Clear lib in root and build corde lib.";
+    echo "- build-all-watch:    Clear lib from corde and corde bot(for tests) and build then.";
+    echo "- build-test-bot:     Clear lib folder of corde test bot and build it.";
+    echo "- watch:              Watch for changes in corde lib and rebuild it.";
+    echo "- validate-ci:        Check if circleCi configs are ok.";
+    echo "- build-all:          Clear lib folder for corde and corde bot and build them.";
+    echo "- start-bot:          Execute corde test bot.";
 }
 
 case $1 in
@@ -62,7 +91,7 @@ case $1 in
     "watch") clearAndWatch $LIB_PATH $ROOT_PATH;;
     "validade-ci") validateCi;;
     "build-all") buildAll;;
-    "init-test-bot") initTestBot;;
-
-    *) echo "Task not found";;
+    "start-bot") initTestBot;;
+    "watch-test-bot") watchTestBot $BOT_LIB_PATH $BOT_PATH;;
+    *) help $1;;
 esac

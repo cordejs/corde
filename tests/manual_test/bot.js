@@ -1,11 +1,8 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.embedMsg = exports.loginBot = exports.bot = void 0;
-const discord_js_1 = require("discord.js");
-const corde_1 = require("../../corde");
-const bot = new discord_js_1.Client();
-exports.bot = bot;
-const embedMsg = new discord_js_1.MessageEmbed()
+const { Client, MessageEmbed } = require("discord.js");
+const { botPrefix, botTestToken } = require("../../corde.js");
+
+const bot = new Client();
+const embedMsg = new MessageEmbed()
   .setColor("#0099ff")
   .setTitle("Some title")
   .setURL("https://discord.js.org/")
@@ -20,12 +17,12 @@ const embedMsg = new discord_js_1.MessageEmbed()
   )
   .addField("Inline field title", "Some value here", true)
   .setImage("https://i.imgur.com/wSTFkRM.png");
-exports.embedMsg = embedMsg;
+
 bot.on("message", async (message) => {
   if (message.content.indexOf("") !== 0) return;
-  const args = message.content.slice(corde_1.botPrefix.length).trim().split(" ");
+  const args = message.content.slice(botPrefix.length).trim().split(" ");
   const command = args.shift().toLowerCase();
-  console.log("args: " + args);
+  //   console.log("args: " + args);
   console.log("command: " + command);
   if (command === "hello" || command === "h") {
     hello(message);
@@ -37,39 +34,61 @@ bot.on("message", async (message) => {
     emoji(message);
   } else if (command === "emojis") {
     emojis(message);
-  } else if (command === "removelastmessageemoji") {
-    await removeLastMessageEmoji(message, args[0], args[1]);
+  } else if (command === "removemessagereactionbyid") {
+    await removeMessageReactionById(message, args[0], args[1]);
+  } else if (command === "removemessagereactionbycontent") {
+    await removeMessageReactionByContent(message, args[0], args[1]);
   } else {
     console.log("No command found");
   }
 });
+
+bot.on("messageReactionRemoveEmoji", (reaction) => {
+  console.log(`a reaction is removed from a message`);
+});
+
 function hello(msg) {
   msg.channel.send("hello!!");
 }
+
 function hey(msg) {
   msg.channel.send("hey!!");
 }
+
 function embed(msg) {
   msg.channel.send(embedMsg);
 }
+
 function emoji(msg) {
   msg.react("😄");
 }
-async function removeLastMessageEmoji(msg, messageId, reaction) {
+
+async function removeMessageReactionById(msg, messageId, reaction) {
   try {
-    // const msgFound = await msg.channel.messages.fetch(messageId.trim());
-    const msgFound = await (await msg.channel.messages.fetch()).find(
-      (message) => message.content === messageId,
+    const msgFound = await msg.channel.messages.fetch(messageId.trim());
+    msgFound.reactions.cache.get(reaction).remove();
+  } catch (error) {
+    console.log("Fail: " + error);
+  }
+}
+
+async function removeMessageReactionByContent(msg, messagecontent, reaction) {
+  try {
+    const msgFound = (await msg.channel.messages.fetch()).find(
+      (message) => message.content === messagecontent,
     );
     msgFound.reactions.cache.get(reaction).remove();
   } catch (error) {
     console.log("Fail: " + error);
   }
 }
+
 function emojis(msg) {
   Promise.all([msg.react("😄"), msg.react("🍊")]);
 }
+
 function loginBot() {
-  bot.login(corde_1.botTestToken);
+  bot.login(botTestToken);
 }
-exports.loginBot = loginBot;
+
+module.exports = { bot, loginBot, embedMsg };
