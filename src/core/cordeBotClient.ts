@@ -13,18 +13,21 @@ import { BehaviorSubject } from "rxjs";
 import { DEFAULT_TEST_TIMEOUT } from "../consts";
 import { RuntimeErro } from "../errors";
 import { MessageData } from "../interfaces";
-import { Console } from "console";
+import { Events } from "./events";
 
 /**
  * Encapsulation of Discord Client with all specific
  * functions for corde test.
  */
-export class CordeBot {
+export class CordeBot extends Events {
   /**
    * Observes if corde bot is **ready**
    */
-  public hasInited: BehaviorSubject<boolean>;
+  public get onStart() {
+    return this._onStart.asObservable();
+  }
 
+  private readonly _onStart: BehaviorSubject<boolean>;
   private readonly _prefix: string;
   private readonly _guildId: string;
   private readonly _channelId: string;
@@ -32,7 +35,6 @@ export class CordeBot {
   private readonly _testBotId: string;
 
   private textChannel: TextChannel;
-  private _client: Client;
   private _messageToObserve: Message;
   private _maxTake: number;
   private _reactionsObserved: BehaviorSubject<MessageReaction>;
@@ -53,13 +55,13 @@ export class CordeBot {
     waitTimeOut: number = DEFAULT_TEST_TIMEOUT,
     testBotId: string,
   ) {
+    super();
     this._channelId = channelId;
     this._prefix = prefix;
     this._guildId = guildId;
     this._waitTimeOut = waitTimeOut;
     this._testBotId = testBotId;
-    this._client = new Client();
-    this.hasInited = new BehaviorSubject<boolean>(false);
+    this._onStart = new BehaviorSubject<boolean>(false);
     this._reactionsObserved = new BehaviorSubject<MessageReaction>(null);
     this.loadClientEvents();
   }
@@ -200,7 +202,7 @@ export class CordeBot {
    * Checks if corde bot is connected
    */
   public isLoggedIn() {
-    return !!this._client && !!this._client.readyAt && this.hasInited.value;
+    return !!this._client && !!this._client.readyAt;
   }
 
   public async findMessage(
@@ -263,13 +265,14 @@ export class CordeBot {
   }
 
   private loadClientEvents() {
-    this._client.once("ready", () => {
-      this.loadChannel();
-      // emit to engine that corde bot is connected.
-      this.hasInited.next(true);
+    this.onReady.subscribe((isReady) => {
+      if (isReady) {
+        this.loadChannel();
+        this._onStart.next(true);
+      }
     });
 
-    this._client.on("messageReactionRemoveEmoji", (reaction) => {
+    this.onMessageReactionRemoveEmoji.subscribe((reaction) => {
       this._reactionsObserved.next(reaction);
     });
   }

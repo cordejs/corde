@@ -40,9 +40,9 @@ async function runTests(files: string[]) {
   await runtime.bot.login(runtime.configs.cordeTestToken);
 
   setMessage("Running Tests");
-  runtime.bot.hasInited.subscribe(async (hasConnected) => {
-    if (hasConnected) {
-      runTestsAndPrint(testsGroups);
+  runtime.bot.onStart.subscribe(async (isReady) => {
+    if (isReady) {
+      await runTestsAndPrint(testsGroups);
     }
   });
 }
