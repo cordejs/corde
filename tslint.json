@@ -30,6 +30,7 @@
     "ordered-imports": false,
     "quotemark": [true, "double"],
     "trailing-comma": false,
-    "no-unused-variable": false
+    "no-unused-variable": false,
+    "unified-signatures": false
   }
 }

@@ -2,8 +2,8 @@
   "name": "corde",
   "version": "1.0.2",
   "description": "A simple library for Discord bot tests",
-  "main": "./lib/index.js",
-  "types": "./lib/index.d.ts",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
   "directories": {
     "lib": "bin"
   },
@@ -23,10 +23,8 @@
     "bot"
   ],
   "scripts": {
-    "start": "node bin/corde",
-    "prepublishOnly": "./scripts/publish.sh",
-    "build": "bash ./scripts/build.sh",
-    "watch": "bash ./scripts/watch.sh",
+    "build": "bash tasks.sh build",
+    "watch": "bash tasks.sh watch",
     "test": "jest --silent",
     "test-with-coverage": "jest --silent --collect-coverage --collectCoverageFrom=src/**/*.ts --collectCoverageFrom='!src/errors/*.ts'",
     "refresh": "rm -rf ./node_modules ./package-lock.json && yarn install",
@@ -34,8 +32,10 @@
     "np": "np --no-cleanup --no-yarn",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint --project tsconfig.json -t stylish",
-    "validate-ci": "bash ./scripts/validateCircleciConfig.sh",
-    "jestClear": "jest --clearCache"
+    "validate-ci": "bash tasks.sh validade-ci",
+    "jestClear": "jest --clearCache",
+    "init-test-bot": "bash tasks.sh init-test-bot",
+    "build-bot": "bash tasks.sh build-test-bot"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",

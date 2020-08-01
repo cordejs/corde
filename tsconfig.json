@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "lib",
-    "rootDir": "./",
+    "rootDir": ".",
     "resolveJsonModule": true,
     "allowJs": true,
     "checkJs": true,
@@ -22,6 +22,6 @@
     "allowUnreachableCode": false,
     "esModuleInterop": true
   },
-  "include": ["src/**/*", "index.js"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "lib", "tests"]
 }
