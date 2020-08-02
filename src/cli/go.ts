@@ -38,10 +38,10 @@ async function runTests(files: string[]) {
 
   testCollector.beforeStartFunctions.forEach((fn) => fn());
 
-  await runtime.bot.login(runtime.configs.cordeTestToken);
+  await runtime.loginBot(runtime.configs.cordeTestToken);
 
   spinner.text = "running tests";
-  runtime.bot.onStart.subscribe(async (isReady) => {
+  runtime.onBotStart().subscribe(async (isReady) => {
     if (isReady) {
       await runTestsAndPrint(testsGroups);
     }
@@ -66,9 +66,7 @@ function finishProcess(code: number, error?: any) {
       console.log(error);
     }
 
-    if (runtime && runtime.bot) {
-      runtime.bot.logout();
-    }
+    runtime.logoffBot();
 
     if (testCollector.afterAllFunctions) {
       testCollector.afterAllFunctions.forEach((fn) => fn());

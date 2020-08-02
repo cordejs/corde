@@ -24,8 +24,8 @@ function printErrorAndExit(error: Error) {
     console.error(error);
   }
 
-  if (runtime.bot && runtime.bot.isLoggedIn()) {
-    runtime.bot.logout();
+  if (runtime.isBotLoggedIn()) {
+    runtime.logoffBot();
   }
   if (testCollector.afterAllFunctions) {
     testCollector.afterAllFunctions.forEach((fn) => fn());
