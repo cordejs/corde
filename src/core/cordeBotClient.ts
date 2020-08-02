@@ -35,8 +35,6 @@ export class CordeBot extends Events {
   private readonly _testBotId: string;
 
   private textChannel: TextChannel;
-  private _messageToObserve: Message;
-  private _maxTake: number;
   private _reactionsObserved: BehaviorSubject<MessageReaction>;
 
   /**
@@ -176,8 +174,6 @@ export class CordeBot extends Events {
   }
 
   public waitForRemovedReactions(message: Message, take: number) {
-    this._messageToObserve = message;
-    this._maxTake = take;
     let amount = 0;
     const reactions: MessageReaction[] = [];
     return new Promise<MessageReaction[]>((resolve, reject) => {
