@@ -11,7 +11,6 @@ import {
 } from "discord.js";
 import { BehaviorSubject } from "rxjs";
 import { DEFAULT_TEST_TIMEOUT } from "../consts";
-import { RuntimeErro } from "../errors";
 import { MessageData } from "../interfaces";
 import { Events } from "./events";
 import { CordeClientError } from "../errors/cordeClientError";
@@ -282,9 +281,11 @@ export class CordeBot extends Events {
   }
 
   private validateMessageAndChannel(message: string) {
-    if (message === undefined) {
+    if (!message) {
       throw new CordeClientError("No tests were declared");
-    } else if (this.textChannel === undefined) {
+    }
+
+    if (!this.textChannel) {
       throw new CordeClientError("Channel not found");
     }
   }
