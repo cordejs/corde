@@ -14,6 +14,7 @@ import { DEFAULT_TEST_TIMEOUT } from "../consts";
 import { RuntimeErro } from "../errors";
 import { MessageData } from "../interfaces";
 import { Events } from "./events";
+import { CordeClientError } from "../errors/cordeClientError";
 
 /**
  * Encapsulation of Discord Client with all specific
@@ -21,7 +22,11 @@ import { Events } from "./events";
  */
 export class CordeBot extends Events {
   /**
-   * Observes if corde bot is **ready**
+   * Observes if corde bot is **ready**.
+   * This is invoked after onReady in Discord.Client.
+   * Used to initialize some data for CordeBot.
+   * **Do not use onReady declared in Events if the intention is to ensure that
+   * cordebot is ready for usage**
    */
   public get onStart() {
     return this._onStart.asObservable();
@@ -52,8 +57,9 @@ export class CordeBot extends Events {
     channelId: string,
     waitTimeOut: number = DEFAULT_TEST_TIMEOUT,
     testBotId: string,
+    client: Client,
   ) {
-    super();
+    super(client);
     this._channelId = channelId;
     this._prefix = prefix;
     this._guildId = guildId;
@@ -125,7 +131,7 @@ export class CordeBot extends Events {
     if (msg) {
       return msg.first();
     }
-    throw new Error("No message was send");
+    throw new CordeClientError("No message was send");
   }
 
   /**
@@ -198,7 +204,7 @@ export class CordeBot extends Events {
    * Checks if corde bot is connected
    */
   public isLoggedIn() {
-    return !!this._client && !!this._client.readyAt;
+    return !!this._client && !!this._client.readyAt && this._onStart.value;
   }
 
   public async findMessage(
@@ -261,14 +267,12 @@ export class CordeBot extends Events {
   }
 
   private loadClientEvents() {
-    this.onReady.subscribe((isReady) => {
-      if (isReady) {
-        this.loadChannel();
-        this._onStart.next(true);
-      }
+    this.onReady(() => {
+      this.loadChannel();
+      this._onStart.next(true);
     });
 
-    this.onMessageReactionRemoveEmoji.subscribe((reaction) => {
+    this.onMessageReactionRemoveEmoji((reaction) => {
       this._reactionsObserved.next(reaction);
     });
   }
@@ -279,17 +283,19 @@ export class CordeBot extends Events {
 
   private validateMessageAndChannel(message: string) {
     if (message === undefined) {
-      throw new Error("No tests were declared");
+      throw new CordeClientError("No tests were declared");
     } else if (this.textChannel === undefined) {
-      throw new Error("Channel not found");
+      throw new CordeClientError("Channel not found");
     }
   }
 
-  private findGuild(guildId: string) {
+  public findGuild(guildId: string) {
     if (!this._client.guilds) {
-      throw new Error(`corde bot isn't added in a guild. Please add it to the guild: ${guildId}`);
+      throw new CordeClientError(
+        `corde bot isn't added in a guild. Please add it to the guild: ${guildId}`,
+      );
     } else if (!this._client.guilds.cache.has(guildId)) {
-      throw new RuntimeErro(
+      throw new CordeClientError(
         `Guild ${guildId} doesn't belong to corde bot. change the guild id in corde.config or add the bot to a valid guild`,
       );
     } else {
@@ -302,22 +308,24 @@ export class CordeBot extends Events {
       const availableGuildsIds = this._client.guilds.cache.map(
         (guildAvailable) => guildAvailable.id,
       );
-      throw new Error(
+      throw new CordeClientError(
         `Could not find the guild ${guildId}. this client has conections with the following guilds: ${availableGuildsIds}`,
       );
     }
   }
 
-  private findChannel(guild: Guild, channelId: string) {
+  public findChannel(guild: Guild, channelId: string) {
     if (!guild.channels) {
-      throw new RuntimeErro(`Guild '${guild.name}' do not have any channel.`);
+      throw new CordeClientError(`Guild '${guild.name}' do not have any channel.`);
     } else if (!guild.channels.cache.has(channelId)) {
-      throw new Error(`channel ${channelId} doesn't appear to be a channel of guild ${guild.name}`);
+      throw new CordeClientError(
+        `channel ${channelId} doesn't appear to be a channel of guild ${guild.name}`,
+      );
     } else {
       const channel = guild.channels.cache.find((ch) => ch.id === channelId);
 
       if (channel === undefined) {
-        throw new Error("There is no informed channel to start tests");
+        throw new CordeClientError("There is no informed channel to start tests");
       }
 
       return channel;

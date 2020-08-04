@@ -1,6 +1,7 @@
 import ConfigOptions, { testFunctionType } from "../interfaces";
 import { Config } from "./config";
 import { CordeBot } from "../core";
+import { Client } from "discord.js";
 
 class Runtime {
   private static _instance: Runtime;
@@ -60,6 +61,7 @@ class Runtime {
       this.configs.channelId,
       this.configs.timeOut,
       this.configs.botTestId,
+      new Client(),
     );
   }
 }

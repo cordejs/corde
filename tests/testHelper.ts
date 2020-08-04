@@ -47,3 +47,14 @@ export function renameConfigTempFileNamesToNormal() {
     fs.renameSync(tempJsonPath, normalJsonPath);
   }
 }
+
+/**
+ * Define a new value for a property. Useful for readonly propeties
+ *
+ * @param object Object that contains the property
+ * @param property Object property to be mocked
+ * @param value New value to property
+ */
+export function mockProperty<T extends {}, K extends keyof T>(object: T, property: K, value: T[K]) {
+  Object.defineProperty(object, property, { get: () => value });
+}
