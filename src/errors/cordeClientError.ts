@@ -1,13 +1,11 @@
+import { Errors, ErrorsMessages } from "../consts";
+
 /**
  * Throws when a operation fail on CordeClient
  */
 export class CordeClientError extends Error {
-  constructor(message?: string) {
-    if (message) {
-      super(message);
-    } else {
-      super("There is a problem with cord client");
-    }
-    this.name = "CordeClientError";
+  constructor(message = ErrorsMessages.CORDE_CLIENT_ERROR) {
+    super(message);
+    this.name = Errors.CORDE_CLIENT_ERROR;
   }
 }

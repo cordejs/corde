@@ -1,3 +1,6 @@
+import { FileError } from "./fileError";
+import { Errors, ErrorsMessages } from "../consts";
+
 /**
  * Throws when fail in parse a file.
  *
@@ -8,13 +11,9 @@
  * }
  *
  */
-export class FileParserError extends Error {
-  constructor(message?: string) {
-    if (message) {
-      super(message);
-    } else {
-      super("Failed in parse a file");
-      this.name = "ParseFileError";
-    }
+export class FileParserError extends FileError {
+  constructor(fileName: string) {
+    super(ErrorsMessages.FILE_PARSER_ERROR(fileName));
+    this.name = Errors.FILE_PARSER_ERROR;
   }
 }
