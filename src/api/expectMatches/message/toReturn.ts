@@ -1,7 +1,8 @@
 import assert from "assert";
 import { Message, MessageEmbed } from "discord.js";
-import { CordeBot, messageType, MinifiedEmbedMessage } from "../../../interfaces";
+import { messageType, MinifiedEmbedMessage } from "../../../interfaces";
 import { TestReport } from "../../interfaces";
+import { CordeBot } from "../../../core";
 
 export async function toReturn(
   commandName: string,

@@ -4,7 +4,6 @@ import { TestReport } from "../api/interfaces";
 
 export async function executeTestCases(groups: Group[]) {
   const tests = getTestsFromGroup(groups);
-
   for (const i in tests) {
     if (tests.hasOwnProperty(i)) {
       const test = tests[i];
@@ -18,7 +17,7 @@ async function runTests(testsFunctions: testFunctionType[]) {
   const reports: TestReport[] = [];
   for (const i in testsFunctions) {
     if (testsFunctions.hasOwnProperty(i)) {
-      const report = await testsFunctions[i](runtime.bot);
+      const report = await runtime.injectBot(testsFunctions[i]);
       reports.push(report);
     }
   }

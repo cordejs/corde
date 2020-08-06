@@ -2,6 +2,8 @@ import { MessageEmbed } from "discord.js";
 import { testCollector } from "../common/testColletor";
 import { toReturn, toAddReaction } from "./expectMatches";
 import { MessageMatches } from "./interfaces/messageMatches";
+import { MessageData } from "../interfaces";
+import { toRemoveReaction } from "./expectMatches/message/toRemoveReaction";
 
 /**
  * Defines all functions that can be used
@@ -40,6 +42,11 @@ function expectMatches(commandName: string, isNot: boolean): Matches {
     toAddReaction(...reactions: string[]) {
       testCollector.addTestFunction((cordeBot) =>
         toAddReaction(commandName, isNot, cordeBot, reactions),
+      );
+    },
+    toRemoveReactions(reactions?: string[], message?: MessageData, cache?: boolean) {
+      testCollector.addTestFunction((cordeBot) =>
+        toRemoveReaction(commandName, isNot, cordeBot, reactions, message, cache),
       );
     },
   };

@@ -1,6 +1,7 @@
 import { Collection, Message, MessageEmbed, MessageReaction } from "discord.js";
 import { BehaviorSubject } from "rxjs";
 import { TestReport } from "./api/interfaces";
+import { CordeBot } from "./core";
 
 export type messageType = "text" | "embed";
 export type messageOutputType = Message | MinifiedEmbedMessage;
@@ -114,60 +115,7 @@ export default interface ConfigOptions {
   testFiles: string[];
 }
 
-/**
- * Definition of operations for CordeBot.
- */
-export interface CordeBot {
-  /**
-   * Observes if corde bot is **ready**
-   */
-  hasInited: BehaviorSubject<boolean>;
-
-  /**
-   * Authenticate Corde bot to the instaled bot in Discord server.
-   *
-   * @param token Corde bot token
-   *
-   * @returns Promise resolve for success connection, or a promisse
-   * rejection with a formated message if there was found a error in
-   * connection attempt.
-   */
-  login(token: string): Promise<string>;
-
-  /**
-   * Destroi client connection.
-   */
-  logout(): void;
-
-  /**
-   * Send a message to a channel defined in configs.
-   *
-   * @see Runtime
-   *
-   * @param message Message without prefix that will be sent to defined servers's channel
-   * @description The message is concatened with the stored **prefix** and is sent to the channel.
-   *
-   * @return Promisse rejection if a testing bot does not send any message in the timeout value setted,
-   * or a resolve for the promisse with the message returned by the testing bot.
-   */
-  sendTextMessage(message: string): Promise<Message>;
-
-  /**
-   * Observes for a message send by the testing bot after corde bot
-   * send it's message.
-   */
-  awaitMessagesFromTestingBot(): Promise<Message>;
-
-  /**
-   * Observes for reactions in a message
-   */
-  waitForReactions(
-    message: Message,
-    reactions?: string[],
-  ): Promise<Collection<string, MessageReaction>>;
-
-  /**
-   * Checks if corde bot is connected
-   */
-  isLoggedIn(): boolean;
+export interface MessageData {
+  text?: string;
+  id?: string;
 }

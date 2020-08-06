@@ -1,15 +1,24 @@
-import { CordeBotClient } from "../core";
-import ConfigOptions, { CordeBot } from "../interfaces";
+import ConfigOptions, { testFunctionType } from "../interfaces";
 import { Config } from "./config";
+import { CordeBot } from "../core";
+import { Client } from "discord.js";
 
 class Runtime {
-  public bot: CordeBot;
+  private static _instance: Runtime;
+  private bot: CordeBot;
   public configFilePath: string;
   public files: string[];
   public configs: Config;
 
-  constructor() {
+  private constructor() {
     this.configs = new Config();
+  }
+
+  public static getInstance() {
+    if (!Runtime._instance) {
+      Runtime._instance = new Runtime();
+    }
+    return Runtime._instance;
   }
 
   public setConfigs(configs: ConfigOptions) {
@@ -24,16 +33,41 @@ class Runtime {
     this.loadBot();
   }
 
+  public isBotLoggedIn() {
+    return this.bot && this.bot.isLoggedIn();
+  }
+
+  public logoffBot() {
+    if (this.bot) {
+      this.bot.logout();
+    }
+  }
+
+  public onBotStart() {
+    return this.bot.onStart;
+  }
+
+  public async loginBot(token: string) {
+    return await this.bot.login(token);
+  }
+
+  public injectBot(fn: testFunctionType) {
+    return fn(this.bot);
+  }
   private loadBot() {
-    this.bot = new CordeBotClient(
+    this.bot = new CordeBot(
       this.configs.botPrefix,
       this.configs.guildId,
       this.configs.channelId,
       this.configs.timeOut,
       this.configs.botTestId,
+      new Client(),
     );
   }
 }
 
-const runtime = new Runtime();
+/**
+ * Singleton of Runtime.
+ */
+const runtime = Runtime.getInstance();
 export { runtime };

@@ -1,9 +1,11 @@
-import reader from "../../src/core/reader";
-import { runtime, testCollector } from "../../src/common";
-import consts from "../mocks/constsNames";
-import path from "path";
 import fs from "fs";
+import path from "path";
+import { runtime, testCollector } from "../../src/common";
+import reader from "../../src/core/reader";
 import { Group } from "../../src/interfaces";
+import consts from "../mocks/constsNames";
+import { InvalidConfigFileError } from "../../src/errors/invalidConfigFileError";
+import { FilesNotFoundError } from "../../src/errors";
 
 const conf = require("../mocks/jsconfig/corde.js");
 const cwd = process.cwd();
@@ -11,7 +13,6 @@ const cwd = process.cwd();
 afterEach(() => {
   runtime.configFilePath = null;
   process.chdir(cwd);
-  jest.clearAllMocks();
   testCollector.cleanAll();
 });
 
@@ -24,15 +25,37 @@ describe("reader class", () => {
 
   describe("when working with reader.loadConfig()", () => {
     describe("and has runtime.configFilePath", () => {
+      beforeEach(() => {
+        jest.resetAllMocks();
+      });
       it("should read configs from configFilePath", () => {
-        jest.spyOn(fs, "readFileSync").mockReturnValueOnce(null);
+        const spy = jest.spyOn(fs, "readFileSync").mockReturnValue(null);
         runtime.configFilePath = path.resolve(process.cwd(), "tests/mocks/jsconfig/corde.js");
         expect(reader.loadConfig()).toEqual(conf);
+        spy.mockReset();
       });
 
       it("should throw error when path in runtime.configFilepath is invalid", () => {
         runtime.configFilePath = ".";
+        jest.spyOn(fs, "existsSync").mockReturnValue(false);
         expect(() => reader.loadConfig()).toThrowError();
+      });
+
+      it("should resolve path of config", () => {
+        const spy = jest.spyOn(fs, "readFileSync").mockReturnValue(null);
+        runtime.configFilePath = "tests/mocks/jsconfig/corde.js";
+        expect(reader.loadConfig()).toEqual(conf);
+        spy.mockReset();
+      });
+
+      it("should read json config", () => {
+        runtime.configFilePath = "tests/mocks/jsonconfig/corde.json";
+        expect(reader.loadConfig()).toEqual(conf);
+      });
+
+      it("should throw exception due to invalid file extension (.txt)", () => {
+        runtime.configFilePath = path.resolve(process.cwd(), "tests/mocks/txtconfig/corde.txt");
+        expect(() => reader.loadConfig()).toThrowError(FilesNotFoundError);
       });
     });
 
@@ -55,22 +78,25 @@ describe("reader class", () => {
       });
 
       it("should throw error when a config file (corde.json) is empty", () => {
-        process.chdir(path.resolve(process.cwd(), "tests/mocks/jsconfig"));
-        jest.spyOn(fs, "existsSync").mockReturnValue(true);
-        jest.spyOn(JSON, "parse").mockReturnValue(null);
-        expect(() => reader.loadConfig()).toThrowError();
+        process.chdir(path.resolve(process.cwd(), "tests/mocks/jsonconfig"));
+        const existsSpy = jest.spyOn(fs, "existsSync").mockReturnValue(true);
+        const parseSpy = jest.spyOn(JSON, "parse").mockReturnValue(null);
+        expect(() => reader.loadConfig()).toThrowError(InvalidConfigFileError);
+        existsSpy.mockReset();
+        parseSpy.mockReset();
       });
 
       it("should throw error if has no config file", () => {
-        jest.spyOn(fs, "existsSync").mockReturnValue(false);
+        const spy = jest.spyOn(fs, "existsSync").mockReturnValue(false);
         expect(() => reader.loadConfig()).toThrowError();
+        spy.mockReset();
       });
     });
   });
 
   describe("when working with reader.getTestsFromFiles()", () => {
     it("should throw exception when has no file", () => {
-      expect(() => reader.getTestsFromFiles(null)).toThrowError();
+      expect(() => reader.getTestsFromFiles(null)).toThrowError(FilesNotFoundError);
     });
 
     it("should read tests from a single test()", () => {
@@ -102,6 +128,21 @@ describe("reader class", () => {
         },
       ];
       const files = [path.resolve(process.cwd(), "tests/mocks/sampleWithSingleGroup")];
+      const groups = reader.getTestsFromFiles(files);
+      expect(groups).toEqual(sampleWithSingleGroup);
+    });
+
+    it("should read from isolated functions", () => {
+      const sampleWithSingleGroup: Group[] = [
+        {
+          tests: [
+            {
+              testsFunctions: [expect.any(Function)],
+            },
+          ],
+        },
+      ];
+      const files = [path.resolve(process.cwd(), "tests/mocks/onlyCommands")];
       const groups = reader.getTestsFromFiles(files);
       expect(groups).toEqual(sampleWithSingleGroup);
     });

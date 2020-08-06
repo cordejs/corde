@@ -16,11 +16,16 @@ export function initErrorHandlers() {
 }
 
 function printErrorAndExit(error: Error) {
-  console.error(`- ${error.name}: ${error.message}`);
-  console.error(`${chalk.red("error")} Command failed with exit code 1`);
+  if (error.name) {
+    console.error(`- ${error.name}: ${error.message}`);
+    console.error(`${chalk.red("error")} Command failed with exit code 1`);
+    console.error(error.stack);
+  } else {
+    console.error(error);
+  }
 
-  if (runtime.bot && runtime.bot.isLoggedIn()) {
-    runtime.bot.logout();
+  if (runtime.isBotLoggedIn()) {
+    runtime.logoffBot();
   }
   if (testCollector.afterAllFunctions) {
     testCollector.afterAllFunctions.forEach((fn) => fn());

@@ -1,13 +1,15 @@
+import { Errors, ErrorsMessages } from "../consts";
+
 /**
- * Throws when corde is trying to use a channel type that is not supported
+ * Represents a Error related to [Discord.Channel](https://discord.js.org/#/docs/main/stable/class/Channel)
+ * type
  */
 export class ChannelTypeNotSupportedError extends Error {
-  constructor(message?: string) {
-    if (message) {
-      super(message);
-    } else {
-      super("The informed channel type is not supported");
-    }
-    this.name = "ChannelTypeNotSupportedError";
+  /**
+   * Throws when corde is trying to use a channel type that is not supported.
+   */
+  constructor(message = ErrorsMessages.CHANNEL_TYPE_NOT_SUPPORTED_ERROR) {
+    super(message);
+    this.name = Errors.CHANNEL_TYPE_NOT_SUPPORTED_ERROR;
   }
 }

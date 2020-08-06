@@ -5,4 +5,5 @@ export interface TestReport {
   testSucessfully: boolean;
   isNot: boolean;
   showExpectAndOutputValue: boolean;
+  customReturnMessage?: string;
 }
