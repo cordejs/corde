@@ -1,5 +1,4 @@
-import { Collection, Message, MessageEmbed, MessageReaction } from "discord.js";
-import { BehaviorSubject } from "rxjs";
+import { Message, MessageEmbed } from "discord.js";
 import { TestReport } from "./api/interfaces";
 import { CordeBot } from "./core";
 

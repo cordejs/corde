@@ -2,6 +2,7 @@ import ConfigOptions, { testFunctionType } from "../interfaces";
 import { Config } from "./config";
 import { CordeBot } from "../core";
 import { Client } from "discord.js";
+import { ConfigError } from "../errors";
 
 class Runtime {
   private static _instance: Runtime;
@@ -23,7 +24,7 @@ class Runtime {
 
   public setConfigs(configs: ConfigOptions) {
     if (!configs) {
-      throw new Error("Invalid Configs");
+      throw new ConfigError("Invalid Configs");
     }
 
     if (!this.configs) {

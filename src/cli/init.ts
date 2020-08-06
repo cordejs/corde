@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import prettier from "prettier";
 import ConfigOptions, { configFileType } from "../interfaces";
+import { FileError } from "../errors";
 
 const jsonFile: ConfigOptions = {
   botPrefix: "",
@@ -65,7 +66,7 @@ export default function init(fileType: configFileType = "json") {
       `- ${chalk.green("Successfully")} generated corde config in ${chalk.bold(filePath)}`,
     );
   } catch (error) {
-    throw new Error(
+    throw new FileError(
       " - Fail in config file creation. Check if you have permition to create files in this directory.",
     );
   }

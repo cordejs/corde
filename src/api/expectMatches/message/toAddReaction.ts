@@ -14,14 +14,10 @@ export async function toAddReaction(
 
   expectation = reactions.join();
 
-  try {
-    const message = await cordeBot.sendTextMessage(commandName);
-    await cordeBot.waitForAddedReactions(message, reactions);
-    isEqual = isOutputEqualToExpect(message, reactions);
-    output = message.reactions.cache.map((v) => v.emoji.name).join();
-  } catch (error) {
-    throw new Error(error.message);
-  }
+  const message = await cordeBot.sendTextMessage(commandName);
+  await cordeBot.waitForAddedReactions(message, reactions);
+  isEqual = isOutputEqualToExpect(message, reactions);
+  output = message.reactions.cache.map((v) => v.emoji.name).join();
 
   return {
     commandName,

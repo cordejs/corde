@@ -10,10 +10,11 @@ import {
   TextChannel,
 } from "discord.js";
 import { BehaviorSubject } from "rxjs";
-import { DEFAULT_TEST_TIMEOUT } from "../consts";
 import { MessageData } from "../interfaces";
 import { Events } from "./events";
 import { CordeClientError } from "../errors/cordeClientError";
+
+const DEFAULT_TEST_TIMEOUT = 5000;
 
 /**
  * Encapsulation of Discord Client with all specific

@@ -2,6 +2,7 @@ import chalk from "chalk";
 import ConfigOptions from "../interfaces";
 import fs from "fs";
 import path from "path";
+import { FileError, PropertyError } from "../errors";
 
 /**
  * Check if configs are valid. Throws a exception
@@ -16,7 +17,7 @@ import path from "path";
  */
 export function validate(configs: ConfigOptions) {
   if (!configs) {
-    throw new Error(chalk.red("● configs not informed."));
+    throw new FileError(chalk.red("● configs not informed."));
   }
 
   const errors: string[] = [];
@@ -78,5 +79,5 @@ function isStringValid(value: string) {
 
 function buildMissingPropertiesErrorAndThrow(errorString: string, erros: string[]) {
   erros.forEach((error) => (errorString += `\n${chalk.red(`- ${error}`)}`));
-  throw new Error(errorString);
+  throw new PropertyError(errorString);
 }

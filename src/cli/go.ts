@@ -8,6 +8,7 @@ import { reporter } from "../core/reporter";
 import { executeTestCases } from "../core/runner";
 import { Group } from "../interfaces";
 import { validate } from "./validate";
+import { FileError } from "../errors";
 
 process.on("uncaughtException", () => {
   stopLoading();
@@ -19,7 +20,7 @@ export async function go() {
   loadConfigs();
   const files = readDir(runtime.configs.testFiles);
   if (!files || files.length === 0) {
-    throw new Error(`No test file was found in the path '${runtime.configs.testFiles}'`);
+    throw new FileError(`No test file was found in the path '${runtime.configs.testFiles}'`);
   }
   await runTests(files);
 }
