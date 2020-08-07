@@ -75,7 +75,7 @@ export class CordeBot extends Events {
    *
    * @param token Corde bot token
    *
-   * @returns Promise resolve for success connection, or a promisse
+   * @returns Promise resolve for success connection, or a promise
    * rejection with a formated message if there was found a error in
    * connection attempt.
    */
@@ -261,7 +261,7 @@ export class CordeBot extends Events {
   private createWatchResponseConfigs(max: number = 1): AwaitMessagesOptions {
     return {
       max,
-      time: this._waitTimeOut ?? DEFAULT_TEST_TIMEOUT,
+      time: this._waitTimeOut ? this._waitTimeOut : DEFAULT_TEST_TIMEOUT,
       errors: ["time"],
     };
   }
