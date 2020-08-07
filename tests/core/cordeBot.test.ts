@@ -1,8 +1,9 @@
 import { testCollector } from "../../src/common/testColletor";
 import { toReturn } from "../../src/api/expectMatches";
 import { CordeBot } from "../../src/core";
-import { Client, TextChannel } from "discord.js";
+import { Client, TextChannel, CollectorFilter } from "discord.js";
 import MockDiscord from "../mocks/discordClient";
+import { CordeClientError } from "../../src/errors/cordeClientError";
 
 const DEFAULT_PREFIX = "!";
 const mockDiscord = new MockDiscord();
@@ -14,8 +15,12 @@ describe("Testing CordeBot object", () => {
   beforeEach(() => {
     testCollector.clearIsolatedTestFunctions();
     mockDiscord.resetMocks();
+
     _client = new Client();
     _cordeClient = initCordeClient(_client);
+
+    jest.resetAllMocks();
+    jest.clearAllMocks();
   });
 
   it("should add a test function", () => {
@@ -28,188 +33,260 @@ describe("Testing CordeBot object", () => {
     expect(testCollector.cloneIsolatedTestFunctions().length).toBe(0);
   });
 
-  it("should throw error due to no guildManager(Don't know if it's possible)", (done) => {
-    try {
-      const client = new Client();
-      client.guilds = null;
-      initCordeClient(client);
-      client.emit("ready");
-    } catch (error) {
-      expect(error).toBeTruthy();
-      done();
-    }
-  });
+  describe("testing findGuild()", () => {
+    it("should throw error due to no guildManager(Don't know if it's possible)", (done) => {
+      try {
+        const client = new Client();
+        client.guilds = null;
+        initCordeClient(client);
+        client.emit("ready");
+      } catch (error) {
+        expect(error).toBeTruthy();
+        done();
+      }
+    });
 
-  it("should throw error due guilds.cache.has === false", (done) => {
-    try {
-      const client = new Client();
-      initCordeClient(client);
-      client.emit("ready");
-    } catch (error) {
-      expect(error).toBeTruthy();
-      done();
-    }
-  });
+    it("should throw error due guilds.cache.has === false", (done) => {
+      try {
+        const client = new Client();
+        initCordeClient(client);
+        client.emit("ready");
+      } catch (error) {
+        expect(error).toBeTruthy();
+        done();
+      }
+    });
 
-  it("should throw error due failure in guild.cache.find", (done) => {
-    try {
+    it("should throw error due failure in guild.cache.find", (done) => {
+      try {
+        const client = new Client();
+
+        client.guilds.cache.has = jest.fn().mockReturnValueOnce(true);
+        client.guilds.cache.find = jest.fn().mockReturnValueOnce(null);
+
+        initCordeClient(client);
+        client.emit("ready");
+      } catch (error) {
+        expect(error).toBeTruthy();
+        done();
+      }
+    });
+
+    it("should find a guild", (done) => {
       const client = new Client();
 
       client.guilds.cache.has = jest.fn().mockReturnValueOnce(true);
-      client.guilds.cache.find = jest.fn().mockReturnValueOnce(null);
+      client.guilds.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.guild);
 
-      initCordeClient(client);
+      const corde = initCordeClient(client);
+      const findMock = jest.spyOn(corde, "findGuild");
+
+      try {
+        client.emit("ready");
+      } catch (error) {
+        expect(findMock).toHaveLastReturnedWith(mockDiscord.guild);
+        done();
+      }
+    });
+  });
+
+  describe("testing findChannel()", () => {
+    it("should throw error due to no channelManager(Don't know if it's possible)", (done) => {
+      const client = new Client();
+
+      client.guilds.cache.has = jest.fn().mockReturnValueOnce(true);
+      client.guilds.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.guild);
+
+      mockDiscord.guild.channels = null;
+
+      const corde = initCordeClient(client);
+      const findMock = jest.spyOn(corde, "findChannel");
+
+      try {
+        client.emit("ready");
+      } catch (error) {
+        expect(findMock).toBeCalled();
+        expect(error).toBeTruthy();
+        done();
+      }
+    });
+
+    it("should throw error guild.channels.cache.has === false", (done) => {
+      const client = new Client();
+
+      client.guilds.cache.has = jest.fn().mockReturnValueOnce(true);
+      client.guilds.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.guild);
+
+      mockDiscord.guild.channels.cache.has = jest.fn().mockReturnValueOnce(false);
+
+      const corde = initCordeClient(client);
+      const findMock = jest.spyOn(corde, "findChannel");
+
+      try {
+        client.emit("ready");
+      } catch (error) {
+        expect(findMock).toBeCalled();
+        expect(error).toBeTruthy();
+        done();
+      }
+    });
+
+    it("should throw error due failure in guild.channels.cache.find", (done) => {
+      const client = new Client();
+
+      client.guilds.cache.has = jest.fn().mockReturnValueOnce(true);
+      client.guilds.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.guild);
+
+      mockDiscord.guild.channels.cache.has = jest.fn().mockReturnValueOnce(true);
+
+      const corde = initCordeClient(client);
+      const findMock = jest.spyOn(corde, "findChannel");
+
+      try {
+        client.emit("ready");
+      } catch (error) {
+        expect(findMock).toBeCalled();
+        expect(error).toBeTruthy();
+        done();
+      }
+    });
+
+    it("should find a channel", (done) => {
+      const client = new Client();
+
+      client.guilds.cache.has = jest.fn().mockReturnValueOnce(true);
+      client.guilds.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.guild);
+
+      mockDiscord.guild.channels.cache.has = jest.fn().mockReturnValueOnce(true);
+      mockDiscord.guild.channels.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.channel);
+
+      const corde = initCordeClient(client);
+      const findMock = jest.spyOn(corde, "findChannel");
+
       client.emit("ready");
-    } catch (error) {
-      expect(error).toBeTruthy();
+      expect(findMock).toHaveLastReturnedWith(mockDiscord.channel);
       done();
-    }
+    });
   });
 
-  it("should find a guild", (done) => {
-    const client = new Client();
+  describe("testing login()", () => {
+    it("should fail in login", () => {
+      expect(() => _cordeClient.login("321")).rejects.toBeTruthy();
+    });
 
-    client.guilds.cache.has = jest.fn().mockReturnValueOnce(true);
-    client.guilds.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.guild);
-
-    const corde = initCordeClient(client);
-    const findMock = jest.spyOn(corde, "findGuild");
-
-    try {
-      client.emit("ready");
-    } catch (error) {
-      expect(findMock).toHaveLastReturnedWith(mockDiscord.guild);
-      done();
-    }
+    it("should call Client.login in login", async (done) => {
+      const spy = jest.spyOn(_client, "login");
+      try {
+        await _cordeClient.login("123");
+      } catch (error) {
+        expect(spy).toBeCalled();
+        done();
+      }
+    });
   });
 
-  it("should throw error due to no channelManager(Don't know if it's possible)", (done) => {
-    const client = new Client();
-
-    client.guilds.cache.has = jest.fn().mockReturnValueOnce(true);
-    client.guilds.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.guild);
-
-    mockDiscord.guild.channels = null;
-
-    const corde = initCordeClient(client);
-    const findMock = jest.spyOn(corde, "findChannel");
-
-    try {
-      client.emit("ready");
-    } catch (error) {
-      expect(findMock).toBeCalled();
-      expect(error).toBeTruthy();
-      done();
-    }
-  });
-
-  it("should throw error guild.channels.cache.has === false", (done) => {
-    const client = new Client();
-
-    client.guilds.cache.has = jest.fn().mockReturnValueOnce(true);
-    client.guilds.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.guild);
-
-    mockDiscord.guild.channels.cache.has = jest.fn().mockReturnValueOnce(false);
-
-    const corde = initCordeClient(client);
-    const findMock = jest.spyOn(corde, "findChannel");
-
-    try {
-      client.emit("ready");
-    } catch (error) {
-      expect(findMock).toBeCalled();
-      expect(error).toBeTruthy();
-      done();
-    }
-  });
-
-  it("should throw error due failure in guild.channels.cache.find", (done) => {
-    const client = new Client();
-
-    client.guilds.cache.has = jest.fn().mockReturnValueOnce(true);
-    client.guilds.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.guild);
-
-    mockDiscord.guild.channels.cache.has = jest.fn().mockReturnValueOnce(true);
-
-    const corde = initCordeClient(client);
-    const findMock = jest.spyOn(corde, "findChannel");
-
-    try {
-      client.emit("ready");
-    } catch (error) {
-      expect(findMock).toBeCalled();
-      expect(error).toBeTruthy();
-      done();
-    }
-  });
-
-  it("should find a channel", (done) => {
-    const client = new Client();
-
-    client.guilds.cache.has = jest.fn().mockReturnValueOnce(true);
-    client.guilds.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.guild);
-
-    mockDiscord.guild.channels.cache.has = jest.fn().mockReturnValueOnce(true);
-    mockDiscord.guild.channels.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.channel);
-
-    const corde = initCordeClient(client);
-    const findMock = jest.spyOn(corde, "findChannel");
-
-    client.emit("ready");
-    expect(findMock).toHaveLastReturnedWith(mockDiscord.channel);
-    done();
-  });
-
-  it("should fail in login", () => {
-    expect(() => _cordeClient.login("321")).rejects.toBeTruthy();
-  });
-
-  it("should call Client.login in login", async (done) => {
-    const spy = jest.spyOn(_client, "login");
-    try {
-      await _cordeClient.login("123");
-    } catch (error) {
+  describe("testing logout()", () => {
+    it("should call Client.destroy", () => {
+      const spy = jest.spyOn(_client, "destroy");
+      _cordeClient.logout();
       expect(spy).toBeCalled();
+    });
+
+    it("should call Client.destroy", () => {
+      const spy = jest.spyOn(_client, "destroy");
+      _cordeClient.logout();
+      expect(spy).toBeCalled();
+    });
+  });
+
+  describe("testing onStart", () => {
+    it("should get onStart observable", () => {
+      expect(_cordeClient.onStart).toBeTruthy();
+    });
+  });
+
+  describe("testing sendTextMessage()", () => {
+    it("should fail in sendTextMessage due to no message provided", async (done) => {
+      expect(async () => await _cordeClient.sendTextMessage(null)).rejects.toBeTruthy();
       done();
-    }
-  });
+    });
 
-  it("should call Client.destroy", () => {
-    const spy = jest.spyOn(_client, "destroy");
-    _cordeClient.logout();
-    expect(spy).toBeCalled();
-  });
+    it("should call TextChannel.send() with prefix", async (done) => {
+      const client = new Client();
+      client.guilds.cache.has = jest.fn().mockReturnValueOnce(true);
+      client.guilds.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.guild);
 
-  it("should call Client.destroy", () => {
-    const spy = jest.spyOn(_client, "destroy");
-    _cordeClient.logout();
-    expect(spy).toBeCalled();
-  });
+      mockDiscord.guild.channels.cache.has = jest.fn().mockReturnValueOnce(true);
+      mockDiscord.guild.channels.cache.find = jest
+        .fn()
+        .mockReturnValueOnce(mockDiscord.textChannel);
 
-  it("should fail in sendTextMessage due to no message provided", async (done) => {
-    expect(async () => await _cordeClient.sendTextMessage(null)).rejects.toBeTruthy();
-    done();
-  });
+      const corde = initCordeClient(client);
+      const spy = jest.spyOn(mockDiscord.textChannel, "send");
+      client.emit("ready");
+      try {
+        await corde.sendTextMessage("text");
+      } catch (error) {
+        expect(spy).toBeCalledWith(`${DEFAULT_PREFIX}text`);
+        done();
+      }
+    });
 
-  it("should call TextChannel.send() with prefix", async (done) => {
-    const client = new Client();
-    client.guilds.cache.has = jest.fn().mockReturnValueOnce(true);
-    client.guilds.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.guild);
-
-    mockDiscord.guild.channels.cache.has = jest.fn().mockReturnValueOnce(true);
-    mockDiscord.guild.channels.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.textChannel);
-
-    const corde = initCordeClient(client);
-    const spy = jest.spyOn(mockDiscord.textChannel, "send");
-    client.emit("ready");
-    try {
-      await corde.sendTextMessage("text");
-    } catch (error) {
-      expect(spy).toBeCalledWith(`${DEFAULT_PREFIX}text`);
+    it("should return a Discord.Message when called a valid message", async (done) => {
+      const client = new Client();
+      const corde = initCordeClientWithChannel(client);
+      mockDiscord.textChannel.send = jest.fn().mockReturnValue(mockDiscord.message);
+      client.emit("ready");
+      expect(await corde.sendTextMessage("ok")).toBe(mockDiscord.message);
       done();
-    }
+    });
+  });
+
+  describe("testing awaitMessagesFromTestingBot()", () => {
+    it("should call TextChannel.awaitMessages", async (done) => {
+      const client = new Client();
+      const corde = initCordeClientWithChannel(client);
+      mockDiscord.textChannel.awaitMessages = jest
+        .fn()
+        .mockReturnValue(mockDiscord.messageCollection);
+      client.emit("ready");
+
+      const spy = jest.spyOn(mockDiscord.textChannel, "awaitMessages");
+      await corde.awaitMessagesFromTestingBot();
+      expect(spy).toBeCalledTimes(1);
+      done();
+    });
+
+    it("should fail to get message due to no message author id be equal to the expect", async () => {
+      const client = new Client();
+      const corde = initCordeClientWithChannel(client);
+      mockDiscord.textChannel.awaitMessages = jest
+        .fn()
+        .mockImplementation((filter: CollectorFilter) => {
+          if (filter(mockDiscord.message)) {
+            return mockDiscord.messageCollection;
+          } else {
+            return null;
+          }
+        });
+      client.emit("ready");
+      try {
+        expect(await corde.awaitMessagesFromTestingBot());
+      } catch (error) {
+        expect(error).toBeTruthy();
+      }
+    });
   });
 });
+
+function initCordeClientWithChannel(client: Client) {
+  client.guilds.cache.has = jest.fn().mockReturnValueOnce(true);
+  client.guilds.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.guild);
+
+  mockDiscord.guild.channels.cache.has = jest.fn().mockReturnValueOnce(true);
+  mockDiscord.guild.channels.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.textChannel);
+  return initCordeClient(client);
+}
 
 function initCordeClient(clientInstance: Client) {
   return new CordeBot(

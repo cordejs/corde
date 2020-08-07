@@ -8,6 +8,7 @@ import {
   GuildMember,
   Message,
   GuildManager,
+  Collection,
 } from "discord.js";
 
 /**
@@ -24,7 +25,7 @@ export default class MockDiscord {
   private _user!: User;
   private _guildMember!: GuildMember;
   private _guildManager: GuildManager;
-
+  private _messageCollection!: Collection<string, Message>;
   /**
    * Initialize all mocks
    * @description To reset all. call *resetMocks*
@@ -42,6 +43,7 @@ export default class MockDiscord {
     this.mockUser();
     this.mockGuildMember();
     this.mockMessage();
+    this.mockMessageCollection();
   }
 
   /**
@@ -112,6 +114,14 @@ export default class MockDiscord {
    */
   public get guildManager() {
     return this._guildManager;
+  }
+
+  /**
+   * Get a mocked instance of Collection<string, Message>
+   * the content in this collection is **message**
+   */
+  public get messageCollection() {
+    return this._messageCollection;
   }
 
   private mockClient(): void {
@@ -201,6 +211,11 @@ export default class MockDiscord {
       },
       this._guild,
     );
+  }
+
+  private mockMessageCollection() {
+    this._messageCollection = new Collection<string, Message>();
+    this._messageCollection.set(this._message.id, this._message);
   }
 
   private mockMessage(): void {

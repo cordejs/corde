@@ -261,7 +261,7 @@ export class CordeBot extends Events {
   private createWatchResponseConfigs(max: number = 1): AwaitMessagesOptions {
     return {
       max,
-      time: this._waitTimeOut ? this._waitTimeOut : DEFAULT_TEST_TIMEOUT,
+      time: this._waitTimeOut ?? DEFAULT_TEST_TIMEOUT,
       errors: ["time"],
     };
   }
@@ -298,7 +298,8 @@ export class CordeBot extends Events {
       );
     } else if (!this._client.guilds.cache.has(guildId)) {
       throw new CordeClientError(
-        `Guild ${guildId} doesn't belong to corde bot. change the guild id in corde.config or add the bot to a valid guild`,
+        `Guild ${guildId} doesn't belong to corde bot. change the guild id ` +
+          ` in corde.config or add the bot to a valid guild`,
       );
     } else {
       const guild = this._client.guilds.cache.find((_guild) => _guild.id === guildId);
@@ -311,7 +312,8 @@ export class CordeBot extends Events {
         (guildAvailable) => guildAvailable.id,
       );
       throw new CordeClientError(
-        `Could not find the guild ${guildId}. this client has conections with the following guilds: ${availableGuildsIds}`,
+        `Could not find the guild ${guildId}.` +
+          ` this client has conections with the following guilds: ${availableGuildsIds}`,
       );
     }
   }
