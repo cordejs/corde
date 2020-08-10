@@ -2,7 +2,7 @@ import { testCollector } from "../../src/common/testColletor";
 import { toReturn } from "../../src/api/expectMatches";
 import { CordeBot } from "../../src/core";
 import { Client, TextChannel, CollectorFilter } from "discord.js";
-import MockDiscord from "../mocks/discordClient";
+import MockDiscord from "../mocks/mockDiscord";
 import { CordeClientError } from "../../src/errors/cordeClientError";
 
 const DEFAULT_PREFIX = "!";
@@ -277,6 +277,64 @@ describe("Testing CordeBot object", () => {
       }
     });
   });
+
+  describe("testing waitForAddedReactions", () => {
+    it("should call Message.awaitReactions", async (done) => {
+      const client = new Client();
+      const corde = initCordeClientWithChannel(client);
+      mockDiscord.message.awaitReactions = jest
+        .fn()
+        .mockReturnValue(mockDiscord.messageReactionCollection);
+
+      const spy = jest.spyOn(mockDiscord.message, "awaitReactions");
+      await corde.waitForAddedReactions(mockDiscord.message, 1);
+
+      expect(spy).toBeCalledTimes(1);
+      done();
+    });
+
+    it("should return a message reaction based on amount", async (done) => {
+      const client = new Client();
+      const corde = initCordeClientWithChannel(client);
+      mockDiscord.message.awaitReactions = jest
+        .fn()
+        .mockImplementation((filter: CollectorFilter) => {
+          if (filter(mockDiscord.messageReaction, mockDiscord.userBot)) {
+            return mockDiscord.messageReactionCollection;
+          } else {
+            return null;
+          }
+        });
+
+      jest.spyOn(mockDiscord.message, "awaitReactions");
+      const reactions = await corde.waitForAddedReactions(mockDiscord.message, 1);
+      expect(reactions.first()).toBe(mockDiscord.messageReaction);
+      expect(reactions.size).toBe(1);
+      done();
+    });
+
+    it("should return a message reaction based on the reaction", async (done) => {
+      const client = new Client();
+      const corde = initCordeClientWithChannel(client);
+      mockDiscord.message.awaitReactions = jest
+        .fn()
+        .mockImplementation((filter: CollectorFilter) => {
+          if (filter(mockDiscord.messageReaction, mockDiscord.userBot)) {
+            return mockDiscord.messageReactionCollection;
+          } else {
+            return null;
+          }
+        });
+
+      jest.spyOn(mockDiscord.message, "awaitReactions");
+      const reactions = await corde.waitForAddedReactions(mockDiscord.message, [
+        mockDiscord.messageReactionEmojiName,
+      ]);
+      expect(reactions.first()).toBe(mockDiscord.messageReaction);
+      expect(reactions.size).toBe(1);
+      done();
+    });
+  });
 });
 
 function initCordeClientWithChannel(client: Client) {
@@ -291,10 +349,10 @@ function initCordeClientWithChannel(client: Client) {
 function initCordeClient(clientInstance: Client) {
   return new CordeBot(
     DEFAULT_PREFIX,
-    "12332112321123321",
-    "9876543221123456",
+    mockDiscord.guild.id,
+    mockDiscord.channel.id,
     5000,
-    "098765432112345678",
+    mockDiscord.userBotId,
     clientInstance,
   );
 }

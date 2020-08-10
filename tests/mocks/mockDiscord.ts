@@ -9,13 +9,23 @@ import {
   Message,
   GuildManager,
   Collection,
+  MessageReaction,
+  SnowflakeUtil,
 } from "discord.js";
 
 /**
- * Initialize mock values for Discord.Client
+ * Initialize mock values for Discord namespace
  * This can be used to get dumb data for tests.
+ *
+ * @example
+ * const mockDiscord = new MockDiscord()
+ * mockDiscord.message.awaitReactions = jest
+ *       .fn()
+ *       .mockReturnValue(mockDiscord.messageReactionCollection);
+ *
  */
 export default class MockDiscord {
+  private _id!: string;
   private _message!: Message;
   private _client!: Client;
   private _guild!: Guild;
@@ -23,9 +33,13 @@ export default class MockDiscord {
   private _guildChannel!: GuildChannel;
   private _textChannel!: TextChannel;
   private _user!: User;
+  private _userBot!: User;
   private _guildMember!: GuildMember;
   private _guildManager: GuildManager;
   private _messageCollection!: Collection<string, Message>;
+  private _messageReaction!: MessageReaction;
+  private _messageReactionCollection!: Collection<string, MessageReaction>;
+
   /**
    * Initialize all mocks
    * @description To reset all. call *resetMocks*
@@ -35,15 +49,18 @@ export default class MockDiscord {
   }
 
   private init() {
+    this.mockId();
     this.mockClient();
     this.mockGuild();
     this.mockChannel();
     this.mockGuildChannel();
     this.mockTextChannel();
-    this.mockUser();
+    this.mockUsers();
     this.mockGuildMember();
     this.mockMessage();
     this.mockMessageCollection();
+    this.mockReaction();
+    this.mockMessageReactionCollection();
   }
 
   /**
@@ -54,6 +71,13 @@ export default class MockDiscord {
   }
 
   /**
+   * Shortcut for **this.guild.id**
+   */
+  public get guildId() {
+    return this._guild.id;
+  }
+
+  /**
    * Get a mocked instance of Guild
    */
   public get guild(): Guild {
@@ -61,10 +85,10 @@ export default class MockDiscord {
   }
 
   /**
-   * Recreates all mocks
+   * Shortcut for **this.channel.id**
    */
-  public resetMocks() {
-    this.init();
+  public get channelId() {
+    return this._channel.id;
   }
 
   /**
@@ -93,6 +117,10 @@ export default class MockDiscord {
    */
   public get user(): User {
     return this._user;
+  }
+
+  public get userBot() {
+    return this._userBot;
   }
 
   /**
@@ -124,14 +152,75 @@ export default class MockDiscord {
     return this._messageCollection;
   }
 
+  /**
+   * Get a message reaction mock. The reaction
+   * is for **this.message**
+   */
+  public get messageReaction() {
+    return this._messageReaction;
+  }
+
+  /**
+   * Shortcut for **this.messageReaction.emoji.name**
+   */
+  public get messageReactionEmojiName() {
+    return this._messageReaction.emoji.name;
+  }
+
+  /**
+   * Get a message reaction collection for **this.reaction**
+   */
+  public get messageReactionCollection() {
+    return this._messageReactionCollection;
+  }
+
+  /**
+   * Get a id generated with *SnowflakeUtil.generate()*
+   */
+  public get id() {
+    return this._id;
+  }
+
+  /**
+   * Shortcut for *this.user.id*
+   */
+  public get userId() {
+    return this._user.id;
+  }
+
+  /**
+   * Shortcut for *this.userbot.id*
+   */
+  public get userBotId() {
+    return this._userBot.id;
+  }
+
+  /**
+   * Recreates all mocks
+   */
+  public resetMocks() {
+    this.init();
+  }
+
+  /**
+   * Encapsulation for *SnowflakeUtil.generate()*
+   */
+  public generateId() {
+    return SnowflakeUtil.generate();
+  }
+
   private mockClient(): void {
     this._client = new Client();
+  }
+
+  private mockId() {
+    this._id = SnowflakeUtil.generate();
   }
 
   private mockGuild(): void {
     this._guild = new Guild(this._client, {
       unavailable: false,
-      id: "guild-id",
+      id: SnowflakeUtil.generate(),
       name: "mocked js guild",
       icon: "mocked guild icon url",
       splash: "mocked guild splash url",
@@ -184,13 +273,22 @@ export default class MockDiscord {
     });
   }
 
-  private mockUser(): void {
-    this._user = new User(this._client, {
-      id: "user-id",
-      username: "user username",
-      discriminator: "user#0000",
+  /**
+   * Mock **this.botUser** or **this.user**
+   * @param isBot Define witch user should mock
+   */
+  private mockUsers(): void {
+    this._user = this.createUserMock(false);
+    this._userBot = this.createUserMock(true);
+  }
+
+  private createUserMock(isBot: boolean) {
+    return new User(this._client, {
+      id: SnowflakeUtil.generate(),
+      username: "UserCorde",
+      discriminator: "user#0101",
       avatar: "user avatar url",
-      bot: false,
+      bot: isBot,
     });
   }
 
@@ -218,11 +316,16 @@ export default class MockDiscord {
     this._messageCollection.set(this._message.id, this._message);
   }
 
+  private mockMessageReactionCollection() {
+    this._messageReactionCollection = new Collection<string, MessageReaction>();
+    this._messageReactionCollection.set(this._messageReaction.message.id, this._messageReaction);
+  }
+
   private mockMessage(): void {
     this._message = new Message(
       this._client,
       {
-        id: "message-id",
+        id: SnowflakeUtil.generate(),
         type: "DEFAULT",
         content: "this is the message content",
         author: this._user,
@@ -241,6 +344,23 @@ export default class MockDiscord {
         hit: false,
       },
       this._textChannel,
+    );
+  }
+
+  private mockReaction() {
+    this._messageReaction = new MessageReaction(
+      this._client,
+      {
+        emoji: {
+          animated: false,
+          name: "😀",
+          id: SnowflakeUtil.generate(),
+          deleted: false,
+        },
+        me: false,
+        count: 1,
+      },
+      this._message,
     );
   }
 }

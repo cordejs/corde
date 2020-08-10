@@ -148,26 +148,8 @@ export class CordeBot extends Events {
   public async waitForAddedReactions(message: Message, reactions?: string[] | number) {
     return new Promise<Collection<string, MessageReaction>>(async (resolve, reject) => {
       try {
-        let filter: CollectorFilter = null;
-
-        if (reactions && Array.isArray(reactions)) {
-          filter = (reaction, user) => {
-            return (
-              reactions.includes(reaction.emoji.name) && this.responseAuthorIsTestingBot(user.id)
-            );
-          };
-        } else {
-          filter = (_reaction, user) => {
-            return this.responseAuthorIsTestingBot(user.id);
-          };
-        }
-        let maxReactionsToWait = 1;
-        if (reactions && Array.isArray(reactions)) {
-          maxReactionsToWait = reactions.length;
-        } else if (typeof reactions === "number" && reactions > 0) {
-          maxReactionsToWait = reactions;
-        }
-
+        const filter = this.createWaitForAdedReactionsFilter(reactions);
+        const maxReactionsToWait = this.defineMaxReactionsToWaitForAddedReactions(reactions);
         const collectedReactions = await message.awaitReactions(
           filter,
           this.createWatchResponseConfigs(maxReactionsToWait),
@@ -177,6 +159,28 @@ export class CordeBot extends Events {
         reject("Test timeout");
       }
     });
+  }
+
+  private createWaitForAdedReactionsFilter(reactions: number | string[]): CollectorFilter {
+    if (reactions && Array.isArray(reactions)) {
+      return (reaction, user) => {
+        return reactions.includes(reaction.emoji.name) && this.responseAuthorIsTestingBot(user.id);
+      };
+    }
+
+    return (_reaction, user) => {
+      return this.responseAuthorIsTestingBot(user.id);
+    };
+  }
+
+  private defineMaxReactionsToWaitForAddedReactions(reactions: number | string[]) {
+    if (reactions && Array.isArray(reactions)) {
+      return reactions.length;
+    }
+    if (typeof reactions === "number" && reactions > 0) {
+      return reactions;
+    }
+    return 1;
   }
 
   public waitForRemovedReactions(message: Message, take: number) {
