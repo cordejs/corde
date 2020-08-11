@@ -11,6 +11,7 @@ import {
   Collection,
   MessageReaction,
   SnowflakeUtil,
+  MessageManager,
 } from "discord.js";
 
 /**
@@ -38,29 +39,15 @@ export default class MockDiscord {
   private _guildManager: GuildManager;
   private _messageCollection!: Collection<string, Message>;
   private _messageReaction!: MessageReaction;
+  private _isolatedMessageReaction!: MessageReaction;
   private _messageReactionCollection!: Collection<string, MessageReaction>;
-
+  private _messageManager!: MessageManager;
   /**
    * Initialize all mocks
    * @description To reset all. call *resetMocks*
    */
   constructor() {
     this.init();
-  }
-
-  private init() {
-    this.mockId();
-    this.mockClient();
-    this.mockGuild();
-    this.mockChannel();
-    this.mockGuildChannel();
-    this.mockTextChannel();
-    this.mockUsers();
-    this.mockGuildMember();
-    this.mockMessage();
-    this.mockMessageCollection();
-    this.mockReaction();
-    this.mockMessageReactionCollection();
   }
 
   /**
@@ -161,6 +148,14 @@ export default class MockDiscord {
   }
 
   /**
+   * Get a message reaction mock that is not linked
+   * to *this.message*
+   */
+  public get isolatedMessageReaction() {
+    return this._isolatedMessageReaction;
+  }
+
+  /**
    * Shortcut for **this.messageReaction.emoji.name**
    */
   public get messageReactionEmojiName() {
@@ -209,16 +204,43 @@ export default class MockDiscord {
     return SnowflakeUtil.generate();
   }
 
-  private mockClient(): void {
-    this._client = new Client();
+  public get messageManager() {
+    return this._messageManager;
   }
 
-  private mockId() {
-    this._id = SnowflakeUtil.generate();
+  private init() {
+    this._id = this.createMockId();
+    this._client = this.createMockClient();
+    this._guild = this.createMockGuild();
+
+    this._channel = this.createMockChannel();
+    this._textChannel = this.createMockTextChannel();
+    this._messageManager = this.createMockMessageManager();
+    this.textChannel.messages = this._messageManager;
+
+    this._guildChannel = this.createMockGuildChannel();
+    this._user = this.createUserMock(false);
+    this._userBot = this.createUserMock(true);
+
+    this._guildMember = this.createMockGuildMember();
+    this._message = this.createMockMessage();
+    this._messageCollection = this.createMockMessageCollection();
+
+    this._messageReaction = this.createMockMessageReaction();
+    this._isolatedMessageReaction = this.createIsolatedMockMessageReaction();
+    this._messageReactionCollection = this.createMockMessageReactionCollection();
   }
 
-  private mockGuild(): void {
-    this._guild = new Guild(this._client, {
+  private createMockClient() {
+    return new Client();
+  }
+
+  private createMockId() {
+    return SnowflakeUtil.generate();
+  }
+
+  private createMockGuild() {
+    return new Guild(this._client, {
       unavailable: false,
       id: SnowflakeUtil.generate(),
       name: "mocked js guild",
@@ -246,14 +268,14 @@ export default class MockDiscord {
     });
   }
 
-  private mockChannel(): void {
-    this._channel = new Channel(this._client, {
+  private createMockChannel() {
+    return new Channel(this._client, {
       id: "channel-id",
     });
   }
 
-  private mockGuildChannel(): void {
-    this._guildChannel = new GuildChannel(this._guild, {
+  private createMockGuildChannel() {
+    return new GuildChannel(this._guild, {
       ...this._channel,
       name: "guild-channel",
       position: 1,
@@ -262,8 +284,8 @@ export default class MockDiscord {
     });
   }
 
-  private mockTextChannel(): void {
-    this._textChannel = new TextChannel(this._guild, {
+  private createMockTextChannel() {
+    return new TextChannel(this._guild, {
       ...this._guildChannel,
       topic: "topic",
       nsfw: false,
@@ -271,15 +293,6 @@ export default class MockDiscord {
       lastPinTimestamp: new Date("2019-01-01").getTime(),
       rate_limit_per_user: 0,
     });
-  }
-
-  /**
-   * Mock **this.botUser** or **this.user**
-   * @param isBot Define witch user should mock
-   */
-  private mockUsers(): void {
-    this._user = this.createUserMock(false);
-    this._userBot = this.createUserMock(true);
   }
 
   private createUserMock(isBot: boolean) {
@@ -292,8 +305,8 @@ export default class MockDiscord {
     });
   }
 
-  private mockGuildMember(): void {
-    this._guildMember = new GuildMember(
+  private createMockGuildMember() {
+    return new GuildMember(
       this._client,
       {
         deaf: false,
@@ -311,18 +324,20 @@ export default class MockDiscord {
     );
   }
 
-  private mockMessageCollection() {
-    this._messageCollection = new Collection<string, Message>();
-    this._messageCollection.set(this._message.id, this._message);
+  private createMockMessageCollection() {
+    const collection = new Collection<string, Message>();
+    collection.set(this._message.id, this._message);
+    return collection;
   }
 
-  private mockMessageReactionCollection() {
-    this._messageReactionCollection = new Collection<string, MessageReaction>();
-    this._messageReactionCollection.set(this._messageReaction.message.id, this._messageReaction);
+  private createMockMessageReactionCollection() {
+    const collection = new Collection<string, MessageReaction>();
+    collection.set(this._messageReaction.message.id, this._messageReaction);
+    return collection;
   }
 
-  private mockMessage(): void {
-    this._message = new Message(
+  private createMockMessage() {
+    return new Message(
       this._client,
       {
         id: SnowflakeUtil.generate(),
@@ -347,8 +362,8 @@ export default class MockDiscord {
     );
   }
 
-  private mockReaction() {
-    this._messageReaction = new MessageReaction(
+  private createMockMessageReaction() {
+    return new MessageReaction(
       this._client,
       {
         emoji: {
@@ -362,5 +377,27 @@ export default class MockDiscord {
       },
       this._message,
     );
+  }
+
+  private createIsolatedMockMessageReaction() {
+    const message = this.createMockMessage();
+    return new MessageReaction(
+      this._client,
+      {
+        emoji: {
+          animated: false,
+          name: "😀",
+          id: SnowflakeUtil.generate(),
+          deleted: false,
+        },
+        me: false,
+        count: 1,
+      },
+      message,
+    );
+  }
+
+  private createMockMessageManager() {
+    return new MessageManager(this._textChannel);
   }
 }

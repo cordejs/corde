@@ -193,11 +193,12 @@ export class CordeBot extends Events {
 
       this._reactionsObserved.subscribe((reaction) => {
         if (reaction) {
-          amount++;
+          if (reaction.message.id === message.id) {
+            amount++;
+            reactions.push(reaction);
+          }
           if (amount >= take) {
             resolve(reactions);
-          } else if (reaction.message.id === message.id) {
-            reactions.push(reaction);
           }
         }
       });
@@ -222,18 +223,18 @@ export class CordeBot extends Events {
   ): Promise<Message> {
     const messageData: MessageData = data as MessageData;
 
-    if (cache && messageData && messageData.id) {
-      return await this.textChannel.messages.fetch(messageData.id);
-    }
-
     const manager = await this.getMessageCollection(cache);
 
     if (messageData && messageData.text) {
       return manager.find((m) => m.content === messageData.text);
-    } else if (data) {
+    }
+    if (messageData && messageData.id) {
+      return manager.find((m) => m.id === messageData.id);
+    }
+    if (data) {
       return manager.find(data as (message: Message) => boolean);
     }
-    return this.textChannel.messages.cache.first();
+    return null;
   }
 
   /**

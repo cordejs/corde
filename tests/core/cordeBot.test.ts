@@ -334,6 +334,164 @@ describe("Testing CordeBot object", () => {
       expect(reactions.size).toBe(1);
       done();
     });
+
+    it("should return a rejection due to timeout", async (done) => {
+      const client = new Client();
+      const corde = initCordeClientWithChannel(client);
+
+      jest.spyOn(mockDiscord.message, "awaitReactions");
+      try {
+        await corde.waitForAddedReactions(mockDiscord.message, 1);
+      } catch (error) {
+        expect(error).toBeTruthy();
+        done();
+      }
+    });
+  });
+
+  describe("testing waitForRemovedReactions", () => {
+    it("should get 1 removed reaction from a message", async (done) => {
+      const client = new Client();
+      const corde = initCordeClientWithChannel(client);
+
+      setTimeout(() => {
+        client.emit("messageReactionRemoveEmoji", mockDiscord.messageReaction);
+      }, 250);
+      const reactions = await corde.waitForRemovedReactions(mockDiscord.message, 1);
+
+      expect(reactions[0]).toBe(mockDiscord.messageReaction);
+      expect(reactions.length).toBe(1);
+      done();
+    });
+
+    it("should not get 1 removed reaction from a message", async (done) => {
+      const client = new Client();
+      const corde = initCordeClientWithChannel(client);
+
+      setTimeout(() => {
+        client.emit("messageReactionRemoveEmoji", mockDiscord.isolatedMessageReaction);
+      }, 250);
+
+      try {
+        await corde.waitForRemovedReactions(mockDiscord.message, 1);
+      } catch (error) {
+        expect(error).toBe("Timeout");
+        done();
+      }
+    });
+  });
+
+  describe("testing isLoggedIn", () => {
+    it("should return true due to all properties are filled", () => {
+      const client = new Client();
+      client.readyAt = new Date();
+      const corde = initCordeClientWithChannel(client);
+      client.emit("ready");
+      expect(corde.isLoggedIn()).toBeTruthy();
+    });
+
+    it("should return false due to all properties not filled", () => {
+      const client = new Client();
+      client.readyAt = new Date();
+      const corde = initCordeClientWithChannel(client);
+      expect(corde.isLoggedIn()).toBeFalsy();
+    });
+  });
+
+  describe("testing findMessage", () => {
+    it("should find a not cached message using anonymous filter function", async (done) => {
+      const client = new Client();
+      const corde = initCordeClientWithChannel(client);
+      client.emit("ready");
+
+      mockDiscord.textChannel.messages.fetch = jest
+        .fn()
+        .mockReturnValue(mockDiscord.messageCollection);
+
+      const message = await corde.findMessage((m) => m.id === mockDiscord.message.id);
+      expect(message.id).toBe(mockDiscord.message.id);
+      done();
+    });
+
+    it("should find a cached message using anonymous filter function", async (done) => {
+      const client = new Client();
+      const corde = initCordeClientWithChannel(client);
+      client.emit("ready");
+
+      mockDiscord.textChannel.messages.cache = mockDiscord.messageCollection;
+
+      const message = await corde.findMessage((m) => m.id === mockDiscord.message.id, true);
+      expect(message.id).toBe(mockDiscord.message.id);
+      done();
+    });
+
+    it("should find a cached message using message content", async (done) => {
+      const client = new Client();
+      const corde = initCordeClientWithChannel(client);
+      client.emit("ready");
+
+      mockDiscord.textChannel.messages.cache = mockDiscord.messageCollection;
+
+      const message = await corde.findMessage({ text: mockDiscord.message.content }, true);
+      expect(message.id).toBe(mockDiscord.message.id);
+      done();
+    });
+
+    it("should find a not cached message using message content", async (done) => {
+      const client = new Client();
+      const corde = initCordeClientWithChannel(client);
+      client.emit("ready");
+
+      mockDiscord.textChannel.messages.fetch = jest
+        .fn()
+        .mockReturnValue(mockDiscord.messageCollection);
+
+      const message = await corde.findMessage({ text: mockDiscord.message.content }, false);
+      expect(message.id).toBe(mockDiscord.message.id);
+      done();
+    });
+
+    it("should find a cached message using message id", async (done) => {
+      const client = new Client();
+      const corde = initCordeClientWithChannel(client);
+      client.emit("ready");
+
+      mockDiscord.textChannel.messages.cache = mockDiscord.messageCollection;
+
+      const message = await corde.findMessage({ id: mockDiscord.message.id }, true);
+      expect(message.id).toBe(mockDiscord.message.id);
+      done();
+    });
+
+    it("should find a not cached message using message id", async (done) => {
+      const client = new Client();
+      const corde = initCordeClientWithChannel(client);
+      client.emit("ready");
+
+      mockDiscord.textChannel.messages.fetch = jest
+        .fn()
+        .mockReturnValue(mockDiscord.messageCollection);
+
+      const message = await corde.findMessage({ id: mockDiscord.message.id }, false);
+      expect(message.id).toBe(mockDiscord.message.id);
+      done();
+    });
+
+    it("should not find a message", async (done) => {
+      const client = new Client();
+      const corde = initCordeClientWithChannel(client);
+      client.emit("ready");
+
+      mockDiscord.textChannel.messages.fetch = jest
+        .fn()
+        .mockReturnValue(mockDiscord.messageCollection);
+
+      mockDiscord.textChannel.messages.cache = mockDiscord.messageCollection;
+
+      const message = await corde.findMessage({ id: "123" }, false);
+      expect(message).toBeFalsy();
+      done();
+    });
   });
 });
 
@@ -351,7 +509,7 @@ function initCordeClient(clientInstance: Client) {
     DEFAULT_PREFIX,
     mockDiscord.guild.id,
     mockDiscord.channel.id,
-    5000,
+    500,
     mockDiscord.userBotId,
     clientInstance,
   );
