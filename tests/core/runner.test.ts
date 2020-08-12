@@ -123,4 +123,20 @@ describe("testing executeTestCases", () => {
     expect(groups[0].tests[0].subTests[0].testsReports[0]).toEqual(report);
     expect(groups[0].tests[0].subTests[0].testsReports).toHaveLength(1);
   });
+
+  it("should return empty array when has no groups", async () => {
+    const groups: Group[] = [];
+    await executeTestCases(groups);
+    expect(groups).toHaveLength(0);
+  });
+
+  it("should return empty array when has groups with empty tests", async () => {
+    const groups: Group[] = [
+      {
+        tests: [],
+      },
+    ];
+    await executeTestCases(groups);
+    expect(groups[0].tests).toHaveLength(0);
+  });
 });
