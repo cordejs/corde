@@ -32,4 +32,23 @@ describe("Testing runtime", () => {
     runtime.setConfigs(config);
     expect(runtime.configs).toEqual(config);
   });
+
+  it("should call bot.logout", () => {
+    runtime.setConfigs(config);
+    const spy = jest.spyOn(runtime.bot, "logout");
+    runtime.logoffBot();
+    expect(spy).toBeCalledTimes(1);
+  });
+
+  it("should return bot.onStart", () => {
+    runtime.setConfigs(config);
+    expect(runtime.onBotStart()).toEqual(runtime.bot.onStart);
+  });
+
+  it("should call bot.login", () => {
+    runtime.setConfigs(config);
+    const spy = jest.spyOn(runtime.bot, "login");
+    runtime.loginBot("13");
+    expect(spy).toBeCalledTimes(1);
+  });
 });

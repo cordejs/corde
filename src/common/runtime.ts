@@ -6,10 +6,15 @@ import { ConfigError } from "../errors";
 
 class Runtime {
   private static _instance: Runtime;
-  private bot: CordeBot;
   public configFilePath: string;
   public files: string[];
   public configs: Config;
+
+  public get bot() {
+    return this._bot;
+  }
+
+  private _bot: CordeBot;
 
   private constructor() {
     this.configs = new Config();
@@ -34,29 +39,39 @@ class Runtime {
     this.loadBot();
   }
 
+  /**
+   * Shortcut for *bot.isLoggedIn*
+   */
   public isBotLoggedIn() {
-    return this.bot && this.bot.isLoggedIn();
+    return this._bot && this._bot.isLoggedIn();
   }
 
+  /**
+   * Shortcut for *bot.logout*
+   */
   public logoffBot() {
-    if (this.bot) {
-      this.bot.logout();
+    if (this._bot) {
+      this._bot.logout();
     }
   }
 
+  /**
+   * Shortcut for *bot.onStart*
+   */
   public onBotStart() {
-    return this.bot.onStart;
+    return this._bot.onStart;
   }
 
   public async loginBot(token: string) {
-    return await this.bot.login(token);
+    return await this._bot.login(token);
   }
 
   public injectBot(fn: testFunctionType) {
-    return fn(this.bot);
+    return fn(this._bot);
   }
+
   private loadBot() {
-    this.bot = new CordeBot(
+    this._bot = new CordeBot(
       this.configs.botPrefix,
       this.configs.guildId,
       this.configs.channelId,
