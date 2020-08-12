@@ -1,7 +1,7 @@
 import { Command } from "commander";
 import * as pack from "../../package.json";
 import { go } from "./go";
-import init from "./init";
+import { init } from "./init";
 import { validate } from "./validate";
 import { runtime } from "../common";
 import reader from "../core/reader";
@@ -17,14 +17,14 @@ program
   .name("Corde")
   .usage("to start testings o corde [option] to use a specific command.")
   .description(pack.description)
-  .version(`v${pack.version}`, "-v, --version")
-  .option("-c --config <type>", "Set config file path")
-  .action(async () => {
-    if (program.config) {
-      runtime.configFilePath = program.config;
-    }
-    await go();
-  });
+  .version(`v${pack.version}`, "-v, --version");
+
+program.option("-c --config <type>", "Set config file path").action(async () => {
+  if (program.config) {
+    runtime.configFilePath = program.config;
+  }
+  await go();
+});
 
 program
   .command("init [type]")

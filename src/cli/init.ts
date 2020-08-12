@@ -34,7 +34,7 @@ const tsFile = `
  *
  * @throws Error if could not create the config file
  */
-export default function init(fileType: configFileType = "json") {
+export function init(fileType: configFileType = "json") {
   let fileContent = "";
 
   // No declaration of fileType is consired 'json'
