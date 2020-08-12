@@ -10,9 +10,14 @@ const pathBase = path.resolve(process.cwd(), "bin/corde");
 const commandBase = `node ${pathBase}`;
 
 describe("testing cli", () => {
-  it("should get version", async () => {
-    const { stdout } = await exec(`${commandBase} -v`, { cwd: "." });
-    expect(stdout).toMatch(`v${pack.version}`);
+  it("should get version", async (done) => {
+    try {
+      const { stdout } = await exec(`${commandBase} -v`, { cwd: "." });
+      expect(stdout).toMatch(`v${pack.version}`);
+      done();
+    } catch (error) {
+      fail();
+    }
   });
 
   // it("should call init command", async () => {

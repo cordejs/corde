@@ -1,4 +1,4 @@
-import init from "../../src/cli/init";
+import { init } from "../../src/cli/init";
 import { FsMockUtils } from "../mockUtils/fs";
 import ConfigOptions from "../../src/interfaces";
 

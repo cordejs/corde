@@ -45,10 +45,14 @@ describe("Testing runtime", () => {
     expect(runtime.onBotStart()).toEqual(runtime.bot.onStart);
   });
 
-  it("should call bot.login", () => {
+  it("should call bot.login", async (done) => {
     runtime.setConfigs(config);
     const spy = jest.spyOn(runtime.bot, "login");
-    runtime.loginBot("13");
-    expect(spy).toBeCalledTimes(1);
+    try {
+      await runtime.loginBot("13");
+    } catch (error) {
+      expect(spy).toBeCalledTimes(1);
+      done();
+    }
   });
 });

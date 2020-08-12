@@ -35,9 +35,11 @@ function getTestsFromGroup(groups: Group[]) {
 
 function getAssertionPropsFromGroup(group: Group) {
   const assertions: Test[] = [];
-  group.tests.forEach((test) => {
-    assertions.push(...getAssertionsPropsFromTest(test));
-  });
+  if (group.tests) {
+    group.tests.forEach((test) => {
+      assertions.push(...getAssertionsPropsFromTest(test));
+    });
+  }
 
   if (group.subGroups) {
     group.subGroups.forEach((subGroup) => {
