@@ -7,6 +7,7 @@ import { runtime } from "../common";
 import reader from "../core/reader";
 import { configFileType } from "../interfaces";
 import { initErrorHandlers } from "../errorHandler";
+import { allowedNodeEnvironmentFlags } from "process";
 
 initErrorHandlers();
 
@@ -50,6 +51,6 @@ program
     }
   });
 
-if (module.parent) {
+if (module.parent && process.env.ENV !== "TEST") {
   program.parse(process.argv);
 }

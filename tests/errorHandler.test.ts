@@ -13,7 +13,7 @@ describe("Testing errorHandler", () => {
   });
   it("Should get uncaughtException and print it", () => {
     try {
-      const spy = jest.spyOn(console, "error");
+      const spy = jest.spyOn(console, "log");
       process.emit("uncaughtException", new Error("Error Test"));
       expect(getFullConsoleLog(spy.mock.calls)).toContain("Error Test");
     } catch (error) {
@@ -23,7 +23,7 @@ describe("Testing errorHandler", () => {
 
   it("Should get unhandledRejection and print it", () => {
     try {
-      const spy = jest.spyOn(console, "error");
+      const spy = jest.spyOn(console, "log");
       process.emit("unhandledRejection", new Error("Error Test"), Promise.reject("Fail"));
       expect(getFullConsoleLog(spy.mock.calls)).toContain("Error Test");
     } catch (error) {
@@ -33,7 +33,7 @@ describe("Testing errorHandler", () => {
 
   it("Should get uncaughtExceptionMonitor and print it", () => {
     try {
-      const spy = jest.spyOn(console, "error");
+      const spy = jest.spyOn(console, "log");
       process.emit("uncaughtExceptionMonitor", new Error("Error Test"));
       expect(getFullConsoleLog(spy.mock.calls)).toContain("Error Test");
     } catch (error) {
@@ -53,7 +53,7 @@ describe("Testing errorHandler", () => {
 
   it("Should run all afterAllFunctions", () => {
     try {
-      jest.spyOn(console, "error");
+      jest.spyOn(console, "log");
       let a = 1;
       testCollector.afterAllFunctions = [];
       testCollector.afterAllFunctions.push(() => (a = 2));

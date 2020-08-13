@@ -33,7 +33,7 @@ describe("Testing CordeBot object", () => {
     expect(testCollector.cloneIsolatedTestFunctions().length).toBe(0);
   });
 
-  describe("testing findGuild()", () => {
+  describe("testing findGuild()", async () => {
     it("should throw error due to no guildManager(Don't know if it's possible)", (done) => {
       try {
         const client = new Client();
@@ -46,7 +46,7 @@ describe("Testing CordeBot object", () => {
       }
     });
 
-    it("should throw error due guilds.cache.has === false", (done) => {
+    it("should throw error due guilds.cache.has === false", async (done) => {
       try {
         const client = new Client();
         initCordeClient(client);
@@ -57,7 +57,7 @@ describe("Testing CordeBot object", () => {
       }
     });
 
-    it("should throw error due failure in guild.cache.find", (done) => {
+    it("should throw error due failure in guild.cache.find", async (done) => {
       try {
         const client = new Client();
 
@@ -72,7 +72,7 @@ describe("Testing CordeBot object", () => {
       }
     });
 
-    it("should find a guild", (done) => {
+    it("should find a guild", async (done) => {
       const client = new Client();
 
       client.guilds.cache.has = jest.fn().mockReturnValueOnce(true);
@@ -90,7 +90,7 @@ describe("Testing CordeBot object", () => {
     });
   });
 
-  describe("testing findChannel()", () => {
+  describe("testing findChannel()", async () => {
     it("should throw error due to no channelManager(Don't know if it's possible)", (done) => {
       const client = new Client();
 
@@ -111,7 +111,7 @@ describe("Testing CordeBot object", () => {
       }
     });
 
-    it("should throw error guild.channels.cache.has === false", (done) => {
+    it("should throw error guild.channels.cache.has === false", async (done) => {
       const client = new Client();
 
       client.guilds.cache.has = jest.fn().mockReturnValueOnce(true);
@@ -131,7 +131,7 @@ describe("Testing CordeBot object", () => {
       }
     });
 
-    it("should throw error due failure in guild.channels.cache.find", (done) => {
+    it("should throw error due failure in guild.channels.cache.find", async (done) => {
       const client = new Client();
 
       client.guilds.cache.has = jest.fn().mockReturnValueOnce(true);
@@ -151,7 +151,7 @@ describe("Testing CordeBot object", () => {
       }
     });
 
-    it("should find a channel", (done) => {
+    it("should find a channel", async (done) => {
       const client = new Client();
 
       client.guilds.cache.has = jest.fn().mockReturnValueOnce(true);
@@ -169,7 +169,7 @@ describe("Testing CordeBot object", () => {
     });
   });
 
-  describe("testing login()", () => {
+  describe("testing login()", async () => {
     it("should fail in login", () => {
       expect(() => _cordeClient.login("321")).rejects.toBeTruthy();
     });
@@ -185,7 +185,7 @@ describe("Testing CordeBot object", () => {
     });
   });
 
-  describe("testing logout()", () => {
+  describe("testing logout()", async () => {
     it("should call Client.destroy", () => {
       const spy = jest.spyOn(_client, "destroy");
       _cordeClient.logout();
@@ -199,13 +199,13 @@ describe("Testing CordeBot object", () => {
     });
   });
 
-  describe("testing onStart", () => {
+  describe("testing onStart", async () => {
     it("should get onStart observable", () => {
       expect(_cordeClient.onStart).toBeTruthy();
     });
   });
 
-  describe("testing sendTextMessage()", () => {
+  describe("testing sendTextMessage()", async () => {
     it("should fail in sendTextMessage due to no message provided", async (done) => {
       expect(async () => await _cordeClient.sendTextMessage(null)).rejects.toBeTruthy();
       done();
