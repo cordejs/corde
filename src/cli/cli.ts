@@ -8,13 +8,14 @@ import reader from "../core/reader";
 import { configFileType } from "../interfaces";
 import { initErrorHandlers } from "../errorHandler";
 
-// initErrorHandlers();
+initErrorHandlers();
 
 export const program = new Command();
 
 // Add basic information with default run all command
 program
   .name("Corde")
+  .exitOverride()
   .usage("to start testings o corde [option] to use a specific command.")
   .description(pack.description)
   .version(`v${pack.version}`, "-v, --version");
@@ -33,7 +34,6 @@ program
   .usage("[js ts json] or empty for default type (json)")
   .action((type: configFileType) => {
     init(type);
-    process.exit(0);
   });
 
 program
