@@ -25,7 +25,7 @@
   "scripts": {
     "build": "bash tasks.sh build",
     "watch": "bash tasks.sh watch",
-    "test": "jest --silent",
+    "test": "jest --silent --runInBand --detectOpenHandles",
     "test-with-coverage": "jest --silent --collect-coverage --collectCoverageFrom=src/**/*.ts",
     "refresh": "rm -rf ./node_modules ./package-lock.json && yarn install",
     "fix-lint": "tslint --fix 'src/**/*.ts' 'tests/**/*.ts",
