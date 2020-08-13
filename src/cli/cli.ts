@@ -8,9 +8,9 @@ import reader from "../core/reader";
 import { configFileType } from "../interfaces";
 import { initErrorHandlers } from "../errorHandler";
 
-initErrorHandlers();
+// initErrorHandlers();
 
-const program = new Command();
+export const program = new Command();
 
 // Add basic information with default run all command
 program
@@ -50,6 +50,6 @@ program
     }
   });
 
-program.parse(process.argv);
-
-export { program as cliProgram };
+if (module.parent) {
+  program.parse(process.argv);
+}

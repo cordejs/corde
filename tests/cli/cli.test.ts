@@ -6,23 +6,17 @@ import path from "path";
 
 const exec = util.promisify(childExec);
 
-const pathBase = path.resolve(process.cwd(), "bin/corde");
+const pathBase = path.resolve(process.cwd(), "src/cli/cli.ts");
 const commandBase = `node ${pathBase}`;
 
-describe("testing cli", () => {
-  it("should get version", async (done) => {
-    try {
-      const { stdout } = await exec(`${commandBase} -v`, { cwd: "." });
-      expect(stdout).toMatch(`v${pack.version}`);
-      done();
-    } catch (error) {
-      fail();
-    }
-  });
+import { program } from "../../src/cli/cli";
 
-  // it("should call init command", async () => {
-  //   const spy = jest.spyOn(initFunc, "init");
-  //   await exec(`${commandBase} init`, { cwd: "." });
-  //   expect(spy).toBeCalledTimes(1);
-  // });
+import { Command } from "commander";
+
+describe("testing cli", () => {
+  it("should get version", () => {
+    const spy = jest.spyOn(console, "log");
+    program.parse(["node", "test", "--version"]);
+    expect(spy).toHaveBeenCalled();
+  });
 });
