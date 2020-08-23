@@ -14,6 +14,7 @@ export async function toRemoveReaction(
   let contains = false;
   let expectation = "";
   let output = "";
+  let testSucessfully = false;
 
   expectation = removedReactions.join();
 
@@ -26,10 +27,13 @@ export async function toRemoveReaction(
       output = reactions.map((v) => v.emoji.name).join();
     }
   } catch (error) {
-    throw error;
+    testSucessfully = false;
+    if (error instanceof Error) {
+      output = error.message;
+    } else {
+      output = error;
+    }
   }
-
-  let testSucessfully = false;
 
   if ((!contains && !isNot) || (contains && isNot)) {
     testSucessfully = true;
