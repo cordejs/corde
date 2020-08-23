@@ -1,7 +1,7 @@
 import { Message } from "discord.js";
 import { TestReport } from "../../interfaces/testReport";
 import { CordeBot } from "../../../core";
-import { MessageData } from "../../../interfaces";
+import { MessageData } from "../../../types";
 
 export async function toRemoveReaction(
   commandName: string,
@@ -34,17 +34,16 @@ export async function toRemoveReaction(
   if ((!contains && !isNot) || (contains && isNot)) {
     testSucessfully = true;
   }
-
-  return {
+  return new TestReport({
     commandName,
     expectation,
     output,
-    testSucessfully,
+    isEqual: testSucessfully,
     isNot,
     // Problems in display emojis in windows console
     showExpectAndOutputValue: process.platform === "win32" ? false : true,
     customReturnMessage: `command ${commandName} removed `,
-  } as TestReport;
+  });
 }
 
 function messageHasReactions(message: Message, expectation: string[]) {

@@ -1,4 +1,4 @@
-import ConfigOptions from "../interfaces";
+import ConfigOptions from "../types";
 
 /**
  * Default interface of json config

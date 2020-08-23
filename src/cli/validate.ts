@@ -1,5 +1,5 @@
+import ConfigOptions from "../types";
 import chalk from "chalk";
-import ConfigOptions from "../interfaces";
 import fs from "fs";
 import path from "path";
 import { FileError, PropertyError } from "../errors";

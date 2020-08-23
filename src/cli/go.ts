@@ -6,7 +6,7 @@ import { testCollector } from "../common/testColletor";
 import reader from "../core/reader";
 import { reporter } from "../core/reporter";
 import { executeTestCases } from "../core/runner";
-import { Group } from "../interfaces";
+import { Group } from "../types";
 import { validate } from "./validate";
 import { FileError } from "../errors";
 

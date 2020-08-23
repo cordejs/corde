@@ -5,7 +5,7 @@ import { init } from "./init";
 import { validate } from "./validate";
 import { runtime } from "../common";
 import reader from "../core/reader";
-import { configFileType } from "../interfaces";
+import { configFileType } from "../types";
 import { initErrorHandlers } from "../errorHandler";
 import { allowedNodeEnvironmentFlags } from "process";
 

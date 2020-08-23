@@ -1,4 +1,4 @@
-import { AssertionProps, Group, Test, testFunctionType } from "../interfaces";
+import { AssertionProps, Group, Test, testFunctionType } from "../types";
 
 type voidFunction = () => void;
 

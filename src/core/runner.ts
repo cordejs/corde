@@ -1,5 +1,5 @@
 import { runtime } from "../common";
-import { Group, Test, testFunctionType } from "../interfaces";
+import { Group, Test, testFunctionType } from "../types";
 import { TestReport } from "../api/interfaces";
 
 export async function executeTestCases(groups: Group[]) {

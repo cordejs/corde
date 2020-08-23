@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { runtime } from "../common";
 import { testCollector } from "../common/testColletor";
-import ConfigOptions from "../interfaces";
+import ConfigOptions from "../types";
 import { FileError, PropertyError } from "../errors";
 
 class Reader {

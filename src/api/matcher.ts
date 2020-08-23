@@ -2,7 +2,7 @@ import { MessageEmbed } from "discord.js";
 import { testCollector } from "../common/testColletor";
 import { toReturn, toAddReaction } from "./expectMatches";
 import { MessageMatches } from "./interfaces/messageMatches";
-import { MessageData } from "../interfaces";
+import { MessageData } from "../types";
 import { toRemoveReaction } from "./expectMatches/message/toRemoveReaction";
 
 /**

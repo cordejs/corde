@@ -12,6 +12,7 @@ import {
   MessageReaction,
   SnowflakeUtil,
   MessageManager,
+  MessageEmbed,
 } from "discord.js";
 
 /**
@@ -28,6 +29,7 @@ import {
 export default class MockDiscord {
   private _id!: string;
   private _message!: Message;
+  private _messageEmbed!: MessageEmbed;
   private _client!: Client;
   private _guild!: Guild;
   private _channel!: Channel;
@@ -37,11 +39,13 @@ export default class MockDiscord {
   private _userBot!: User;
   private _guildMember!: GuildMember;
   private _guildManager: GuildManager;
-  private _messageCollection!: Collection<string, Message>;
   private _messageReaction!: MessageReaction;
   private _isolatedMessageReaction!: MessageReaction;
+  private _messageCollection!: Collection<string, Message>;
+  private _messageEmbedCollection!: Collection<string, MessageEmbed>;
   private _messageReactionCollection!: Collection<string, MessageReaction>;
   private _messageManager!: MessageManager;
+
   /**
    * Initialize all mocks
    * @description To reset all. call *resetMocks*
@@ -208,6 +212,18 @@ export default class MockDiscord {
     return this._messageManager;
   }
 
+  public get messageEmbed() {
+    return this._messageEmbed;
+  }
+
+  public get messageEmbedCollection() {
+    return this._messageEmbedCollection;
+  }
+
+  public get<T extends Collection<K, V>, K, V>(collection: T, index: number) {
+    return collection.array()[index];
+  }
+
   private init() {
     this._id = this.createMockId();
     this._client = this.createMockClient();
@@ -229,6 +245,9 @@ export default class MockDiscord {
     this._messageReaction = this.createMockMessageReaction();
     this._isolatedMessageReaction = this.createIsolatedMockMessageReaction();
     this._messageReactionCollection = this.createMockMessageReactionCollection();
+
+    this._messageEmbed = this.createMockMessageEmbed();
+    this._messageEmbedCollection = this.createMockMessageEmbedCollection();
   }
 
   private createMockClient() {
@@ -327,6 +346,10 @@ export default class MockDiscord {
   private createMockMessageCollection() {
     const collection = new Collection<string, Message>();
     collection.set(this._message.id, this._message);
+
+    const msg = this.createMockMessage("Hi");
+    collection.set(msg.id, msg);
+
     return collection;
   }
 
@@ -336,13 +359,13 @@ export default class MockDiscord {
     return collection;
   }
 
-  private createMockMessage() {
+  private createMockMessage(customMessage = "this is the message content") {
     return new Message(
       this._client,
       {
         id: SnowflakeUtil.generate(),
         type: "DEFAULT",
-        content: "this is the message content",
+        content: customMessage,
         author: this._user,
         webhook_id: null,
         member: this._guildMember,
@@ -399,5 +422,30 @@ export default class MockDiscord {
 
   private createMockMessageManager() {
     return new MessageManager(this._textChannel);
+  }
+
+  private createMockMessageEmbedCollection() {
+    const collection = new Collection<string, MessageEmbed>();
+    collection.set(SnowflakeUtil.generate(), this._messageEmbed);
+    collection.set(SnowflakeUtil.generate(), this.createMockMessageEmbed("#0088ff", "test"));
+    return collection;
+  }
+
+  private createMockMessageEmbed(customColor = "#0099ff", customTitle = "Some title") {
+    return new MessageEmbed()
+      .setColor(customColor)
+      .setTitle(customTitle)
+      .setURL("https://discord.js.org/")
+      .setAuthor("Some name", "https://i.imgur.com/wSTFkRM.png", "https://discord.js.org")
+      .setDescription("Some description here")
+      .setThumbnail("https://i.imgur.com/wSTFkRM.png")
+      .addFields(
+        { name: "Regular field title", value: "Some value here" },
+        { name: "\u200B", value: "\u200B" },
+        { name: "Inline field title", value: "Some value here", inline: true },
+        { name: "Inline field title", value: "Some value here", inline: true },
+      )
+      .addField("Inline field title", "Some value here", true)
+      .setImage("https://i.imgur.com/wSTFkRM.png");
   }
 }

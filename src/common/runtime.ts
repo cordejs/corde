@@ -1,4 +1,4 @@
-import ConfigOptions, { testFunctionType } from "../interfaces";
+import ConfigOptions, { testFunctionType } from "../types";
 import { Config } from "./config";
 import { CordeBot } from "../core";
 import { Client } from "discord.js";

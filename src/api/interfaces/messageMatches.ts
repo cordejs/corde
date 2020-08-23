@@ -1,5 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import { MessageData } from "../../interfaces";
+import { MessageData } from "../../types";
 
 /**
  * Defines all functions that can be used

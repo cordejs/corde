@@ -1,6 +1,6 @@
 import assert from "assert";
 import { Message, MessageEmbed } from "discord.js";
-import { messageType, MinifiedEmbedMessage } from "../../../interfaces";
+import { messageType, MinifiedEmbedMessage } from "../../../types";
 import { TestReport } from "../../interfaces";
 import { CordeBot } from "../../../core";
 
@@ -32,14 +32,14 @@ export async function toReturn(
     }
   }
 
-  return {
+  return new TestReport({
     commandName,
     expectation: expect,
+    isEqual,
     output: msg,
-    testSucessfully: isEqual,
     isNot,
     showExpectAndOutputValue,
-  } as TestReport;
+  });
 }
 
 /**

@@ -10,7 +10,7 @@ import {
   TextChannel,
 } from "discord.js";
 import { BehaviorSubject } from "rxjs";
-import { MessageData } from "../interfaces";
+import { MessageData } from "../types";
 import { Events } from "./events";
 import { CordeClientError } from "../errors/cordeClientError";
 

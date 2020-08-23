@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { Group, Test } from "../interfaces";
+import { Group, Test } from "../types";
 import { TestReport } from "../api/interfaces";
 
 const FAIL = "FAIL";

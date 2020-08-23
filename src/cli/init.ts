@@ -2,7 +2,7 @@ import chalk from "chalk";
 import fs from "fs";
 import path from "path";
 import prettier from "prettier";
-import ConfigOptions, { configFileType } from "../interfaces";
+import ConfigOptions, { configFileType } from "../types";
 import { FileError } from "../errors";
 
 const jsonFile: ConfigOptions = {
