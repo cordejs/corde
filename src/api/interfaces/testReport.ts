@@ -5,7 +5,7 @@ interface TestReportModel {
   readonly expectation: messageExpectationType;
   readonly output: string;
   readonly isNot: boolean;
-  readonly testSucessfully?: boolean;
+  readonly hasPassed: boolean;
   readonly showExpectAndOutputValue: boolean;
   readonly customReturnMessage?: string;
 }
@@ -17,8 +17,7 @@ export class TestReport implements TestReport {
   public readonly isNot: boolean;
   public readonly showExpectAndOutputValue: boolean;
   public readonly customReturnMessage?: string;
-
-  private _testSucessfully?: boolean;
+  public readonly hasPassed: boolean;
 
   constructor(model: TestReportModel) {
     this.commandName = model.commandName;
@@ -27,17 +26,6 @@ export class TestReport implements TestReport {
     this.isNot = model.isNot;
     this.showExpectAndOutputValue = model.showExpectAndOutputValue;
     this.customReturnMessage = model.customReturnMessage;
-    this._testSucessfully = model.testSucessfully;
-  }
-
-  public hasPassed() {
-    if (!!this._testSucessfully) {
-      return this._testSucessfully;
-    }
-
-    if (this.isNot) {
-      return this.expectation !== this.output;
-    }
-    return this.expectation === this.output;
+    this.hasPassed = model.hasPassed;
   }
 }

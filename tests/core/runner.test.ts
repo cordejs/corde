@@ -8,7 +8,7 @@ const report = new TestReport({
   isNot: false,
   output: "1",
   showExpectAndOutputValue: false,
-  testSucessfully: true,
+  hasPassed: true,
 });
 
 describe("testing executeTestCases", () => {

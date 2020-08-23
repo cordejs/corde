@@ -60,7 +60,7 @@ describe("testing log class", () => {
             isNot: false,
             output: "2",
             showExpectAndOutputValue: true,
-            testSucessfully: true,
+            hasPassed: true,
           }),
         ],
         testsFunctions: [],
@@ -90,7 +90,7 @@ describe("testing log class", () => {
             isNot: false,
             output: "2",
             showExpectAndOutputValue: true,
-            testSucessfully: true,
+            hasPassed: true,
           }),
         ],
         testsFunctions: [],
@@ -115,7 +115,7 @@ describe("testing log class", () => {
       isNot: false,
       output: "2",
       showExpectAndOutputValue: true,
-      testSucessfully: true,
+      hasPassed: true,
     });
     const fullConsoleLog = executeOutPutResultAndGetConsoleLogResult(report);
     reporter.outPutResult([group]);
@@ -129,7 +129,7 @@ describe("testing log class", () => {
       isNot: false,
       output: "2",
       showExpectAndOutputValue: true,
-      testSucessfully: true,
+      hasPassed: true,
     });
 
     const report2 = new TestReport({
@@ -138,7 +138,7 @@ describe("testing log class", () => {
       isNot: false,
       output: "2",
       showExpectAndOutputValue: true,
-      testSucessfully: false,
+      hasPassed: false,
     });
 
     const fullConsoleLog = executeOutPutResultAndGetConsoleLogResult(report, report2);
@@ -153,7 +153,7 @@ describe("testing log class", () => {
       isNot: false,
       output: "2",
       showExpectAndOutputValue: true,
-      testSucessfully: true,
+      hasPassed: true,
     });
 
     const report2 = new TestReport({
@@ -162,7 +162,7 @@ describe("testing log class", () => {
       isNot: false,
       output: "2",
       showExpectAndOutputValue: true,
-      testSucessfully: false,
+      hasPassed: false,
     });
 
     const fullConsoleLog = executeOutPutResultAndGetConsoleLogResult(report, report2);
@@ -177,7 +177,7 @@ describe("testing log class", () => {
       isNot: false,
       output: "2",
       showExpectAndOutputValue: true,
-      testSucessfully: false,
+      hasPassed: false,
     });
     const fullConsoleLog = executeOutPutResultAndGetConsoleLogResult(report);
     expect(fullConsoleLog).toContain(
@@ -192,7 +192,7 @@ describe("testing log class", () => {
       isNot: true,
       output: "1",
       showExpectAndOutputValue: true,
-      testSucessfully: false,
+      hasPassed: false,
     });
     const fullConsoleLog = executeOutPutResultAndGetConsoleLogResult(report);
     expect(fullConsoleLog).toContain(
@@ -207,7 +207,7 @@ describe("testing log class", () => {
       isNot: false,
       output: "1",
       showExpectAndOutputValue: false,
-      testSucessfully: false,
+      hasPassed: false,
     });
     const fullConsoleLog = executeOutPutResultAndGetConsoleLogResult(report);
     expect(fullConsoleLog).toContain(
@@ -222,7 +222,7 @@ describe("testing log class", () => {
       isNot: true,
       output: "1",
       showExpectAndOutputValue: false,
-      testSucessfully: false,
+      hasPassed: false,
     });
     const fullConsoleLog = executeOutPutResultAndGetConsoleLogResult(report);
     expect(fullConsoleLog).toContain(

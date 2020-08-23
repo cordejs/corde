@@ -32,10 +32,14 @@ export async function toReturn(
     }
   }
 
+  if (isNot) {
+    isEqual = !isEqual;
+  }
+
   return new TestReport({
     commandName,
     expectation: expect,
-    testSucessfully: isEqual,
+    hasPassed: isEqual,
     output: msg,
     isNot,
     showExpectAndOutputValue,

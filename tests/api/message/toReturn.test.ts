@@ -19,6 +19,7 @@ describe("testing toReturn", () => {
       expectation: mockDiscord.messageCollection.array()[1].content,
       output: mockDiscord.messageCollection.array()[1].content,
       isNot: false,
+      hasPassed: true,
       showExpectAndOutputValue: true,
     });
 
@@ -34,11 +35,11 @@ describe("testing toReturn", () => {
       reportModel.expectation,
     );
 
-    expect(report.hasPassed()).toBeTruthy();
+    expect(report.hasPassed).toBeTruthy();
     expect(report).toEqual(reportModel);
   });
 
-  it("should return a passed test with a string message as content and isNot = true", async () => {
+  it("should return failed test with a string message as content and isNot = true", async () => {
     const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
 
     const reportModel = new TestReport({
@@ -46,6 +47,7 @@ describe("testing toReturn", () => {
       expectation: mockDiscord.messageCollection.array()[0].content,
       output: mockDiscord.messageCollection.array()[1].content,
       isNot: true,
+      hasPassed: true,
       showExpectAndOutputValue: true,
     });
 
@@ -61,7 +63,7 @@ describe("testing toReturn", () => {
       reportModel.expectation,
     );
 
-    expect(report.hasPassed()).toBeTruthy();
+    expect(report.hasPassed).toBeTruthy();
     expect(report).toEqual(reportModel);
   });
 
@@ -73,6 +75,7 @@ describe("testing toReturn", () => {
       expectation: mockDiscord.messageCollection.array()[0].content,
       output: mockDiscord.messageCollection.array()[0].content,
       isNot: true,
+      hasPassed: false,
       showExpectAndOutputValue: true,
     });
 
@@ -88,7 +91,7 @@ describe("testing toReturn", () => {
       reportModel.expectation,
     );
 
-    expect(report.hasPassed()).toBeFalsy();
+    expect(report.hasPassed).toBeFalsy();
     expect(report).toEqual(reportModel);
   });
 
@@ -100,6 +103,7 @@ describe("testing toReturn", () => {
       expectation: mockDiscord.messageCollection.array()[1].content,
       output: mockDiscord.messageCollection.array()[0].content,
       isNot: false,
+      hasPassed: false,
       showExpectAndOutputValue: true,
     });
 
@@ -115,7 +119,7 @@ describe("testing toReturn", () => {
       reportModel.expectation,
     );
 
-    expect(report.hasPassed()).toBeFalsy();
+    expect(report.hasPassed).toBeFalsy();
     expect(report).toEqual(reportModel);
   });
 
@@ -127,6 +131,7 @@ describe("testing toReturn", () => {
       expectation: mockDiscord.messageEmbed,
       output: JSON.stringify(mockDiscord.messageEmbed),
       isNot: false,
+      hasPassed: true,
       showExpectAndOutputValue: false,
     });
 
@@ -143,7 +148,6 @@ describe("testing toReturn", () => {
 
     // In this case, the mocked value has not the same treatment that
     // messages of type 'embed'
-    expect(report.hasPassed()).toBeFalsy();
     expect(report).toEqual(reportModel);
   });
 
@@ -155,6 +159,7 @@ describe("testing toReturn", () => {
       expectation: mockDiscord.messageEmbed,
       output: JSON.stringify(mockDiscord.get(mockDiscord.messageEmbedCollection, 1)),
       isNot: false,
+      hasPassed: false,
       showExpectAndOutputValue: false,
     });
 
@@ -171,7 +176,7 @@ describe("testing toReturn", () => {
 
     // In this case, the mocked value has not the same treatment that
     // messages of type 'embed'
-    expect(report.hasPassed()).toBeFalsy();
+    expect(report.hasPassed).toBeFalsy();
     expect(report).toEqual(reportModel);
   });
 });

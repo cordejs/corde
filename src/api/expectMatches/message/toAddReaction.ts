@@ -23,7 +23,7 @@ export async function toAddReaction(
     commandName,
     expectation,
     output,
-    testSucessfully: isEqual,
+    hasPassed: isEqual,
     isNot,
     // Problems in display emojis in windows console
     showExpectAndOutputValue: process.platform === "win32" ? false : true,
