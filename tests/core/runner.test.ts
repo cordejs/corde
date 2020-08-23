@@ -1,15 +1,15 @@
 import { executeTestCases } from "../../src/core/runner";
-import { Group } from "../../src/interfaces";
+import { Group } from "../../src/types";
 import { TestReport } from "../../src/api/interfaces";
 
-const report: TestReport = {
+const report = new TestReport({
   commandName: "comando",
   expectation: "1",
   isNot: false,
   output: "1",
   showExpectAndOutputValue: false,
   testSucessfully: true,
-};
+});
 
 describe("testing executeTestCases", () => {
   it("should execute tests loading its testsReports (without subgroups or subtests)", async () => {
@@ -17,7 +17,7 @@ describe("testing executeTestCases", () => {
       {
         tests: [
           {
-            testsFunctions: [() => Promise.resolve({ ...report })],
+            testsFunctions: [() => Promise.resolve(report)],
           },
         ],
       },
@@ -36,14 +36,14 @@ describe("testing executeTestCases", () => {
           {
             tests: [
               {
-                testsFunctions: [() => Promise.resolve({ ...report })],
+                testsFunctions: [() => Promise.resolve(report)],
               },
             ],
           },
         ],
         tests: [
           {
-            testsFunctions: [() => Promise.resolve({ ...report })],
+            testsFunctions: [() => Promise.resolve(report)],
           },
         ],
       },
@@ -65,14 +65,14 @@ describe("testing executeTestCases", () => {
           {
             tests: [
               {
-                testsFunctions: [() => Promise.resolve({ ...report })],
+                testsFunctions: [() => Promise.resolve(report)],
               },
             ],
           },
         ],
         tests: [
           {
-            testsFunctions: [() => Promise.resolve({ ...report })],
+            testsFunctions: [() => Promise.resolve(report)],
           },
         ],
       },
@@ -94,17 +94,17 @@ describe("testing executeTestCases", () => {
           {
             tests: [
               {
-                testsFunctions: [() => Promise.resolve({ ...report })],
+                testsFunctions: [() => Promise.resolve(report)],
               },
             ],
           },
         ],
         tests: [
           {
-            testsFunctions: [() => Promise.resolve({ ...report })],
+            testsFunctions: [() => Promise.resolve(report)],
             subTests: [
               {
-                testsFunctions: [() => Promise.resolve({ ...report })],
+                testsFunctions: [() => Promise.resolve(report)],
               },
             ],
           },

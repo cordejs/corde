@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { runtime, testCollector } from "../../src/common";
 import reader from "../../src/core/reader";
-import { Group } from "../../src/interfaces";
+import { Group } from "../../src/types";
 import consts from "../mocks/constsNames";
 import { FileError } from "../../src/errors";
 

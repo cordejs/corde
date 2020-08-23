@@ -1,5 +1,5 @@
 import { toReturn } from "../../../src/api/expectMatches/message/toReturn";
-import { Client, CollectorFilter } from "discord.js";
+import { Client } from "discord.js";
 import { TestReport } from "../../../src/api/interfaces";
 import MockDiscord from "../../mocks/mockDiscord";
 import { initCordeClientWithChannel } from "../../testHelper";

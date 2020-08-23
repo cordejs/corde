@@ -38,7 +38,7 @@ export async function toRemoveReaction(
     commandName,
     expectation,
     output,
-    isEqual: testSucessfully,
+    testSucessfully,
     isNot,
     // Problems in display emojis in windows console
     showExpectAndOutputValue: process.platform === "win32" ? false : true,
