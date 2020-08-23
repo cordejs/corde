@@ -1,4 +1,4 @@
-import env from "dotenv";
+const env = require("dotenv");
 
 var result = env.config();
 

@@ -1,4 +1,4 @@
-import { AssertionProps, Group, Test, testFunctionType } from "../models";
+import { AssertionProps, Group, Test, testFunctionType } from "../types";
 
 type voidFunction = () => void;
 
@@ -51,23 +51,42 @@ class TestCollector {
   public afterAllFunctions: voidFunction[] = [];
 
   private testsFunctions: testFunctionType[] = [];
+  private isolatedFunctions: testFunctionType[] = [];
 
   public addTestFunction(testFunction: testFunctionType) {
     if (testFunction) {
-      this.testsFunctions.push(testFunction);
+      if (this.hasGroup || this.hasTest) {
+        this.testsFunctions.push(testFunction);
+      } else {
+        this.isolatedFunctions.push(testFunction);
+      }
     }
   }
 
-  public hasTestFunctions() {
-    return this.testsFunctions && this.testsFunctions.length > 0;
+  public hasIsolatedTestFunctions() {
+    return this.isolatedFunctions && this.isolatedFunctions.length > 0;
   }
 
   public cloneTestFunctions() {
     return this.testsFunctions.map((test) => test);
   }
 
-  public cleanTestFunctions() {
+  public cloneIsolatedTestFunctions() {
+    return this.isolatedFunctions.map((test) => test);
+  }
+
+  public clearTestFunctions() {
     this.testsFunctions = [];
+  }
+
+  public clearIsolatedTestFunctions() {
+    this.isolatedFunctions = [];
+  }
+
+  public cleanAll() {
+    this.tests = [];
+    this.testsFunctions = [];
+    this.groups = [];
   }
 }
 

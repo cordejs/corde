@@ -1,28 +1,26 @@
-import { group, test, command, beforeStart, afterAll } from "../../../lib";
-import { bot, loginBot, embedMsg } from "../bot";
-
+import { beforeStart, afterAll, expect as cordeExpect } from "../../../lib";
+import { bot, loginBot } from "../bot";
 beforeStart(() => {
   loginBot();
 });
-
-group("main commands", () => {
-  test("Hello command should return... hello!!", () => {
-    command("hello").mustReturn("hello!!");
-  });
-
-  test("Embed command should return a embed message!!", () => {
-    command("embed").mustReturn(embedMsg);
-    command("emoji").mustAddReaction("😄");
-    command("emojis").mustAddReaction("😄", "🍊");
-  });
+// group("main commands", () => {
+//   test("Hello command should return... hello!!", () => {
+//     cordeExpect("hello").toReturn("hello!!");
+//   });
+//   test("Embed command should return a embed message!!", () => {
+//     cordeExpect("embed").toReturn(embedMsg);
+//     cordeExpect("emoji").toAddReaction("😄");
+//     cordeExpect("emojis").toAddReaction("😄", "🍊");
+//   });
+// });
+// test("Hello command should return... hello!!", () => {
+//   cordeExpect("hello").toReturn("hello!!");
+// });
+// cordeExpect("hello").toReturn("hello!!");
+cordeExpect("emoji").toAddReaction("😄");
+cordeExpect("removemessagereactionbycontent !emoji 😄").toRemoveReactions(["😄"], {
+  text: "!emoji",
 });
-
-test("Hello command should return... hello!!", () => {
-  command("hello").mustReturn("hello!!");
-});
-
-command("hello").mustReturn("hello!!");
-
 afterAll(() => {
   bot.destroy();
 });

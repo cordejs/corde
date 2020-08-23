@@ -9,25 +9,38 @@ import {
   MessageReaction,
   TextChannel,
 } from "discord.js";
-import { BehaviorSubject } from "rxjs";
-import { DEFAULT_TEST_TIMEOUT } from "../consts";
-import { RuntimeErro } from "../errors";
-import { CordeBot } from "../models";
+import { BehaviorSubject, TimeoutError } from "rxjs";
+import { MessageData } from "../types";
+import { Events } from "./events";
+import { CordeClientError } from "../errors/cordeClientError";
+
+const DEFAULT_TEST_TIMEOUT = 5000;
 
 /**
  * Encapsulation of Discord Client with all specific
  * functions for corde test.
  */
-export class CordeBotClient implements CordeBot {
-  public hasInited: BehaviorSubject<boolean>;
+export class CordeBot extends Events {
+  /**
+   * Observes if corde bot is **ready**.
+   * This is invoked after onReady in Discord.Client.
+   * Used to initialize some data for CordeBot.
+   * **Do not use onReady declared in Events if the intention is to ensure that
+   * cordebot is ready for usage**
+   */
+  public get onStart() {
+    return this._onStart.asObservable();
+  }
+
+  private readonly _onStart: BehaviorSubject<boolean>;
+  private readonly _prefix: string;
+  private readonly _guildId: string;
+  private readonly _channelId: string;
+  private readonly _waitTimeOut: number;
+  private readonly _testBotId: string;
 
   private textChannel: TextChannel;
-  private _client: Client;
-  private _prefix: string;
-  private _guildId: string;
-  private _channelId: string;
-  private _waitTimeOut: number;
-  private _testBotId: string;
+  private _reactionsObserved: BehaviorSubject<MessageReaction>;
 
   /**
    * Starts new instance of Discord client with its events.
@@ -44,17 +57,28 @@ export class CordeBotClient implements CordeBot {
     channelId: string,
     waitTimeOut: number = DEFAULT_TEST_TIMEOUT,
     testBotId: string,
+    client: Client,
   ) {
+    super(client);
     this._channelId = channelId;
     this._prefix = prefix;
     this._guildId = guildId;
     this._waitTimeOut = waitTimeOut;
     this._testBotId = testBotId;
-    this._client = new Client();
-    this.hasInited = new BehaviorSubject<boolean>(false);
+    this._onStart = new BehaviorSubject<boolean>(false);
+    this._reactionsObserved = new BehaviorSubject<MessageReaction>(null);
     this.loadClientEvents();
   }
 
+  /**
+   * Authenticate Corde bot to the instaled bot in Discord server.
+   *
+   * @param token Corde bot token
+   *
+   * @returns Promise resolve for success connection, or a promise
+   * rejection with a formated message if there was found a error in
+   * connection attempt.
+   */
   public async login(token: string) {
     try {
       return await this._client.login(token);
@@ -63,10 +87,24 @@ export class CordeBotClient implements CordeBot {
     }
   }
 
+  /**
+   * Destroy client connection.
+   */
   public logout() {
     this._client.destroy();
   }
 
+  /**
+   * Send a message to a channel defined in configs.
+   *
+   * @see Runtime
+   *
+   * @param message Message without prefix that will be sent to defined servers's channel
+   * @description The message is concatened with the stored **prefix** and is sent to the channel.
+   *
+   * @return Promisse rejection if a testing bot does not send any message in the timeout value setted,
+   * or a resolve for the promisse with the message returned by the testing bot.
+   */
   public async sendTextMessage(message: string): Promise<Message> {
     return new Promise<Message>(async (resolve, reject) => {
       try {
@@ -75,11 +113,15 @@ export class CordeBotClient implements CordeBot {
         const returnedMessage = await this.textChannel.send(formatedMessage);
         resolve(returnedMessage);
       } catch (error) {
-        reject("Test timeout");
+        reject(new TimeoutError());
       }
     });
   }
 
+  /**
+   * Observes for a message send by the testing bot after corde bot
+   * send it's message.
+   */
   public async awaitMessagesFromTestingBot() {
     const msg = await this.textChannel.awaitMessages(
       (responseName) => this.responseAuthorIsTestingBot(responseName.author.id),
@@ -89,35 +131,121 @@ export class CordeBotClient implements CordeBot {
     if (msg) {
       return msg.first();
     }
-    throw new Error("No message was send");
+    throw new CordeClientError("No message was send");
   }
 
-  public async waitForReactions(message: Message, reactions?: string[]) {
+  /**
+   * Observes for reactions in a message
+   */
+  public async waitForAddedReactions(
+    message: Message,
+    totalReactions?: number,
+  ): Promise<Collection<string, MessageReaction>>;
+  public async waitForAddedReactions(
+    message: Message,
+    reactions?: string[],
+  ): Promise<Collection<string, MessageReaction>>;
+  public async waitForAddedReactions(message: Message, reactions?: string[] | number) {
     return new Promise<Collection<string, MessageReaction>>(async (resolve, reject) => {
       try {
-        let filter: CollectorFilter = null;
-
-        if (reactions) {
-          filter = (reaction, user) => {
-            return (
-              reactions.includes(reaction.emoji.name) && this.responseAuthorIsTestingBot(user.id)
-            );
-          };
-        } else {
-          filter = (_reaction, user) => {
-            return this.responseAuthorIsTestingBot(user.id);
-          };
-        }
-        const maxReactionsToWait = reactions ? reactions.length : 1;
+        const filter = this.createWaitForAdedReactionsFilter(reactions);
+        const maxReactionsToWait = this.defineMaxReactionsToWaitForAddedReactions(reactions);
         const collectedReactions = await message.awaitReactions(
           filter,
           this.createWatchResponseConfigs(maxReactionsToWait),
         );
         resolve(collectedReactions);
       } catch (error) {
-        reject("Test timeout");
+        reject(new TimeoutError());
       }
     });
+  }
+
+  private createWaitForAdedReactionsFilter(reactions: number | string[]): CollectorFilter {
+    if (reactions && Array.isArray(reactions)) {
+      return (reaction, user) => {
+        return reactions.includes(reaction.emoji.name) && this.responseAuthorIsTestingBot(user.id);
+      };
+    }
+
+    return (_reaction, user) => {
+      return this.responseAuthorIsTestingBot(user.id);
+    };
+  }
+
+  private defineMaxReactionsToWaitForAddedReactions(reactions: number | string[]) {
+    if (reactions && Array.isArray(reactions)) {
+      return reactions.length;
+    }
+    if (typeof reactions === "number" && reactions > 0) {
+      return reactions;
+    }
+    return 1;
+  }
+
+  public waitForRemovedReactions(message: Message, take: number) {
+    let amount = 0;
+    const reactions: MessageReaction[] = [];
+    return new Promise<MessageReaction[]>((resolve, reject) => {
+      setTimeout(() => {
+        reject(new TimeoutError());
+      }, DEFAULT_TEST_TIMEOUT);
+
+      this._reactionsObserved.subscribe((reaction) => {
+        if (reaction) {
+          if (reaction.message.id === message.id) {
+            amount++;
+            reactions.push(reaction);
+          }
+          if (amount >= take) {
+            resolve(reactions);
+          }
+        }
+      });
+    });
+  }
+
+  /**
+   * Checks if corde bot is connected
+   */
+  public isLoggedIn() {
+    return !!this._client && !!this._client.readyAt && this._onStart.value;
+  }
+
+  public async findMessage(
+    filter: (message: Message) => boolean,
+    cache?: boolean,
+  ): Promise<Message>;
+  public async findMessage(data: MessageData, cache?: boolean): Promise<Message>;
+  public async findMessage(
+    data: MessageData | ((message: Message) => boolean),
+    cache?: boolean,
+  ): Promise<Message> {
+    const messageData: MessageData = data as MessageData;
+
+    const manager = await this.getMessageCollection(cache);
+
+    if (messageData && messageData.text) {
+      return manager.find((m) => m.content === messageData.text);
+    }
+    if (messageData && messageData.id) {
+      return manager.find((m) => m.id === messageData.id);
+    }
+    if (data) {
+      return manager.find(data as (message: Message) => boolean);
+    }
+    return null;
+  }
+
+  /**
+   * Return a collection of message from textChannel based of cache or not cached messages.
+   * @param cache Defines if will get all cached message ou fetch then
+   */
+  private async getMessageCollection(cache?: boolean) {
+    if (cache) {
+      return this.textChannel.messages.cache;
+    }
+    return await this.textChannel.messages.fetch();
   }
 
   /**
@@ -144,10 +272,13 @@ export class CordeBotClient implements CordeBot {
   }
 
   private loadClientEvents() {
-    this._client.once("ready", () => {
+    this.onReady(() => {
       this.loadChannel();
-      // emit to engine that corde bot is connected.
-      this.hasInited.next(true);
+      this._onStart.next(true);
+    });
+
+    this.onMessageReactionRemoveEmoji((reaction) => {
+      this._reactionsObserved.next(reaction);
     });
   }
 
@@ -156,20 +287,24 @@ export class CordeBotClient implements CordeBot {
   }
 
   private validateMessageAndChannel(message: string) {
-    if (message === undefined) {
-      console.log("No tests were declared");
-      process.exit(1);
-    } else if (this.textChannel === undefined) {
-      throw new Error("Channel not found");
+    if (!message) {
+      throw new CordeClientError("No tests were declared");
+    }
+
+    if (!this.textChannel) {
+      throw new CordeClientError("Channel not found");
     }
   }
 
-  private findGuild(guildId: string) {
+  public findGuild(guildId: string) {
     if (!this._client.guilds) {
-      throw new Error(`corde bot isn't added in a guild. Please add it to the guild: ${guildId}`);
+      throw new CordeClientError(
+        `corde bot isn't added in a guild. Please add it to the guild: ${guildId}`,
+      );
     } else if (!this._client.guilds.cache.has(guildId)) {
-      throw new RuntimeErro(
-        `Guild ${guildId} doesn't belong to corde bot. change the guild id in corde.config or add the bot to a valid guild`,
+      throw new CordeClientError(
+        `Guild ${guildId} doesn't belong to corde bot. change the guild id ` +
+          ` in corde.config or add the bot to a valid guild`,
       );
     } else {
       const guild = this._client.guilds.cache.find((_guild) => _guild.id === guildId);
@@ -181,22 +316,25 @@ export class CordeBotClient implements CordeBot {
       const availableGuildsIds = this._client.guilds.cache.map(
         (guildAvailable) => guildAvailable.id,
       );
-      throw new Error(
-        `Could not find the guild ${guildId}. this client has conections with the following guilds: ${availableGuildsIds}`,
+      throw new CordeClientError(
+        `Could not find the guild ${guildId}.` +
+          ` this client has conections with the following guilds: ${availableGuildsIds}`,
       );
     }
   }
 
-  private findChannel(guild: Guild, channelId: string) {
+  public findChannel(guild: Guild, channelId: string) {
     if (!guild.channels) {
-      throw new RuntimeErro(`Guild '${guild.name}' do not have any channel.`);
+      throw new CordeClientError(`Guild '${guild.name}' do not have any channel.`);
     } else if (!guild.channels.cache.has(channelId)) {
-      throw new Error(`channel ${channelId} doesn't appear to be a channel of guild ${guild.name}`);
+      throw new CordeClientError(
+        `channel ${channelId} doesn't appear to be a channel of guild ${guild.name}`,
+      );
     } else {
       const channel = guild.channels.cache.find((ch) => ch.id === channelId);
 
       if (channel === undefined) {
-        throw new Error("There is no informed channel to start tests");
+        throw new CordeClientError("There is no informed channel to start tests");
       }
 
       return channel;

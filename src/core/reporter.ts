@@ -1,18 +1,17 @@
 import chalk from "chalk";
-import { Group, Test } from "../models";
-import { TestReport } from "../testing-api/models";
+import { Group, Test } from "../types";
+import { TestReport } from "../api/interfaces";
 
 const FAIL = "FAIL";
-const SUCESS = "SUCESS";
 const SPACE = "    ";
 const DEFAULT_SPACE_VALUE = 4;
 
 class Reporter {
-  private _bgSucess = chalk.bgRgb(21, 194, 19);
-  private _bgError = chalk.bgRed;
-  private _bold = chalk.bold;
-  private _red = chalk.red;
-  private _bgSucessBold = this._bgSucess.bold;
+  private readonly _bgSucess = chalk.bgRgb(21, 194, 19);
+  private readonly _bgError = chalk.bgRed;
+  private readonly _bold = chalk.bold;
+  private readonly _red = chalk.red;
+  private readonly _bgSucessBold = this._bgSucess.bold;
   private _sucessCount = 0;
   private _failureCount = 0;
 
@@ -71,7 +70,7 @@ class Reporter {
   }
 
   private printAssertion(report: TestReport, tab: string) {
-    if (report.testSucessfully) {
+    if (report.hasPassed) {
       this.printSucess(tab, report);
       this._sucessCount++;
     } else {

@@ -2,8 +2,8 @@
   "name": "corde",
   "version": "1.0.2",
   "description": "A simple library for Discord bot tests",
-  "main": "./lib/index.js",
-  "types": "./lib/index.d.ts",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
   "directories": {
     "lib": "bin"
   },
@@ -23,26 +23,29 @@
     "bot"
   ],
   "scripts": {
-    "start": "node bin/corde",
-    "prepublishOnly": "./scripts/publish.sh",
-    "create": "build && yarn test",
-    "build": "tsc -p .",
-    "watch": "tsc -w",
-    "test": "jest",
-    "test-with-coverage": "jest --collect-coverage --collectCoverageFrom=src/**/*.ts --collectCoverageFrom='!src/errors/*.ts'",
+    "build": "bash tasks.sh build",
+    "watch": "bash tasks.sh watch",
+    "test": "jest --silent --runInBand --detectOpenHandles",
+    "test-with-coverage": "jest --silent --collect-coverage --collectCoverageFrom=src/**/*.ts",
     "refresh": "rm -rf ./node_modules ./package-lock.json && yarn install",
-    "tslint": "tslint --fix 'src/**/*.ts' 'tests/**/*.ts",
+    "fix-lint": "tslint --fix 'src/**/*.ts' 'tests/**/*.ts",
     "np": "np --no-cleanup --no-yarn",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint --project tsconfig.json -t stylish",
-    "kill": "./bin/kill.bat"
+    "validate-ci": "bash tasks.sh validade-ci",
+    "jestClear": "jest --clearCache",
+    "init-test-bot": "bash tasks.sh init-test-bot",
+    "build-bot": "bash tasks.sh build-test-bot",
+    "task": "bash tasks.sh"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",
     "@babel/preset-env": "^7.10.2",
     "@babel/preset-typescript": "^7.10.1",
+    "@types/esm": "^3.2.0",
     "@types/jest": "^26.0.0",
-    "@types/node": "^14.0.9",
+    "@types/node": "^14.0.22",
+    "@types/require-from-string": "^1.2.0",
     "@types/rewire": "^2.5.28",
     "@types/ws": "^7.2.4",
     "babel-jest": "^26.0.1",
@@ -51,16 +54,19 @@
     "dotenv": "^8.2.0",
     "husky": "^4.2.3",
     "jest": "^25.3.0",
+    "jest-mock-process": "^1.4.0",
     "nodemon": "^2.0.0",
     "np": "^6.2.0",
     "prettier": "^2.0.2",
     "pretty-quick": "^3.0.0",
+    "require-from-string": "^2.0.2",
     "rewire": "^5.0.0",
     "source-map-support": "^0.5.16",
     "ts-jest": "^25.3.1",
     "ts-node": "^8.10.2",
     "tslint": "^6.1.1",
     "tslint-config-prettier": "^1.18.0",
+    "typedoc": "^0.17.8",
     "typescript": "^3.9.3"
   },
   "dependencies": {
@@ -74,12 +80,15 @@
     "path": "^0.12.7",
     "rxjs": "^6.5.5"
   },
+  "engines": {
+    "node": ">=12.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lucasgmagalhaes/corde.git"
   },
   "author": {
-    "name": "lucasgmagalhaes",
+    "name": "Lucas Gomes",
     "email": "lucasgsm88@gmail.com",
     "url": "https://github.com/lucasgmagalhaes"
   },

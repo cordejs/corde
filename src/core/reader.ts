@@ -2,8 +2,8 @@ import fs from "fs";
 import path from "path";
 import { runtime } from "../common";
 import { testCollector } from "../common/testColletor";
-import { ConfigFileNotFoundError, FilesNotFoundError } from "../errors";
-import ConfigOptions from "../models";
+import ConfigOptions from "../types";
+import { FileError, PropertyError } from "../errors";
 
 class Reader {
   /**
@@ -29,47 +29,46 @@ class Reader {
     } else if (fs.existsSync(jsFilePath)) {
       _config = require(jsFilePath);
     } else {
-      throw new ConfigFileNotFoundError();
+      throw new FileError("No config file was found");
     }
 
-    if (_config) {
-      return _config;
+    if (!_config || Object.keys(_config).length === 0) {
+      throw new FileError("This appears to be a invalid config file");
     } else {
-      throw new Error("Invalid configuration file");
+      return _config;
     }
   }
 
   public getTestsFromFiles(files: string[]) {
     if (files) {
       testCollector.isCollecting = true;
-      testCollector.groups = [];
       for (const file of files) {
         require(file);
       }
       testCollector.isCollecting = false;
-
       addTestsGroupmentToGroupIfExist();
       addTestFuncionsToGroupIfExists();
       return testCollector.groups;
     }
-    throw new FilesNotFoundError();
+    throw new FileError("No file was informed.");
   }
 }
 
 function loadConfigFromConfigFilePath(): ConfigOptions {
-  const filePath = path.resolve(process.cwd(), runtime.configFilePath);
-  const fileExt = path.extname(filePath);
-
-  if (!fs.existsSync(filePath)) {
-    throw new Error("Path to config not found");
+  let filePath = "";
+  if (fs.existsSync(runtime.configFilePath)) {
+    filePath = path.resolve(process.cwd(), runtime.configFilePath);
+  } else {
+    throw new FileError(`The path '${runtime.configFilePath}' do not appears to be a valid path`);
   }
+  const fileExt = path.extname(filePath);
 
   if (fileExt === ".json") {
     return JSON.parse(fs.readFileSync(filePath).toString());
   } else if (fileExt === ".js" || fileExt === ".ts") {
     return require(filePath);
   } else {
-    throw new FilesNotFoundError();
+    throw new FileError(`Extension '${fileExt}' is not suported`);
   }
 }
 
@@ -82,10 +81,10 @@ function addTestsGroupmentToGroupIfExist() {
 }
 
 function addTestFuncionsToGroupIfExists() {
-  if (testCollector.hasTestFunctions()) {
-    const testsCloned = testCollector.cloneTestFunctions();
+  if (testCollector.hasIsolatedTestFunctions()) {
+    const testsCloned = testCollector.cloneIsolatedTestFunctions();
     testCollector.groups.push({ tests: [{ testsFunctions: testsCloned }] });
-    testCollector.cleanTestFunctions();
+    testCollector.clearIsolatedTestFunctions();
   }
 }
 

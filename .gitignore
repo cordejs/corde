@@ -61,7 +61,7 @@ typings/
 # next.js build output
 .next
 
-lib/
+/lib/
 
 #yarn berry (2.0)
 .yarn/cache/

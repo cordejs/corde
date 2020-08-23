@@ -1,48 +1,127 @@
-import { CordeBotClient } from "../core";
-import ConfigOptions, { CordeBot } from "../models";
+import ConfigOptions, { testFunctionType } from "../types";
 import { Config } from "./config";
+import { CordeBot } from "../core";
+import { Client } from "discord.js";
+import { ConfigError } from "../errors";
 
 class Runtime {
-  public bot: CordeBot;
+  private static _instance: Runtime;
+
   public configFilePath: string;
   public files: string[];
-  public configs: Config;
 
-  constructor() {
-    this.configs = new Config();
+  private readonly _configs: Config;
+  private _bot: CordeBot;
+
+  public get bot() {
+    return this._bot;
   }
 
-  public setConfigs(configs: ConfigOptions) {
-    if (!configs) {
-      throw new Error("Invalid Configs");
+  public get configs() {
+    return this._configs;
+  }
+
+  public get cordeTestToken() {
+    return this._configs.cordeTestToken;
+  }
+
+  public get botTestId() {
+    return this._configs.botTestId;
+  }
+
+  public get botTestToken() {
+    return this._configs.botTestToken;
+  }
+
+  public get channelId() {
+    return this._configs.channelId;
+  }
+
+  public get guildId() {
+    return this._configs.guildId;
+  }
+
+  public get timeOut() {
+    return this._configs.timeOut;
+  }
+
+  public get botPrefix() {
+    return this._configs.botPrefix;
+  }
+
+  public get testFiles() {
+    return this._configs.testFiles;
+  }
+
+  public set testFiles(path: string[]) {
+    this._configs.testFiles = path;
+  }
+
+  private constructor() {
+    this._configs = new Config();
+  }
+
+  public static getInstance() {
+    if (!Runtime._instance) {
+      Runtime._instance = new Runtime();
+    }
+    return Runtime._instance;
+  }
+
+  public setConfigs(_configs: ConfigOptions) {
+    if (!_configs) {
+      throw new ConfigError("Invalid _configs");
     }
 
-    if (!this.configs) {
-      this.configs = new Config();
-    }
-
-    this.configs.botPrefix = configs.botPrefix;
-    this.configs.botTestId = configs.botTestId;
-    this.configs.botTestToken = configs.botTestToken;
-    this.configs.channelId = configs.channelId;
-    this.configs.cordeTestToken = configs.cordeTestToken;
-    this.configs.guildId = configs.guildId;
-    this.configs.testFiles = configs.testFiles;
-    this.configs.timeOut = configs.timeOut;
-
+    this._configs.setNoFiledConfigsOptions(_configs);
     this.loadBot();
   }
 
+  /**
+   * Shortcut for *bot.isLoggedIn*
+   */
+  public isBotLoggedIn() {
+    return this._bot && this._bot.isLoggedIn();
+  }
+
+  /**
+   * Shortcut for *bot.logout*
+   */
+  public logoffBot() {
+    if (this._bot) {
+      this._bot.logout();
+    }
+  }
+
+  /**
+   * Shortcut for *bot.onStart*
+   */
+  public onBotStart() {
+    return this._bot.onStart;
+  }
+
+  public async loginBot(token: string) {
+    return await this._bot.login(token);
+  }
+
+  public injectBot(fn: testFunctionType) {
+    return fn(this._bot);
+  }
+
   private loadBot() {
-    this.bot = new CordeBotClient(
-      this.configs.botPrefix,
-      this.configs.guildId,
-      this.configs.channelId,
-      this.configs.timeOut,
-      this.configs.botTestId,
+    this._bot = new CordeBot(
+      this._configs.botPrefix,
+      this._configs.guildId,
+      this._configs.channelId,
+      this._configs.timeOut,
+      this._configs.botTestId,
+      new Client(),
     );
   }
 }
 
-const runtime = new Runtime();
+/**
+ * Singleton of Runtime.
+ */
+const runtime = Runtime.getInstance();
 export { runtime };
