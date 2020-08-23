@@ -7,7 +7,6 @@ import { runtime } from "../common";
 import reader from "../core/reader";
 import { configFileType } from "../types";
 import { initErrorHandlers } from "../errorHandler";
-import { allowedNodeEnvironmentFlags } from "process";
 
 initErrorHandlers();
 
@@ -16,7 +15,7 @@ export const program = new Command();
 // Add basic information with default run all command
 program
   .name("Corde")
-  .exitOverride()
+  .exitOverride(() => {})
   .usage("to start testings o corde [option] to use a specific command.")
   .description(pack.description)
   .version(`v${pack.version}`, "-v, --version");
