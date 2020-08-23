@@ -21,12 +21,25 @@ program
   .description(pack.description)
   .version(`v${pack.version}`, "-v, --version");
 
-program.option("-c --config <type>", "Set config file path").action(async () => {
-  if (program.config) {
-    runtime.configFilePath = program.config;
-  }
-  await go();
-});
+program
+  .option("-c --config <type>", "Set config file path")
+  .option(
+    "-f --files <path>",
+    "Set the path for all tests. Use this if you wan to specify a single path." +
+      " for Array, use only 'corde <path1> <path2>'",
+  )
+  .action(async (args) => {
+    if (program.config) {
+      runtime.configFilePath = program.config;
+    }
+    if (args) {
+      runtime.files = args;
+    }
+    if (program.files) {
+      runtime.files = [program.files];
+    }
+    await go();
+  });
 
 program
   .command("init [type]")
