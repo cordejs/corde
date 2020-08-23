@@ -35,7 +35,7 @@ export async function toReturn(
   return new TestReport({
     commandName,
     expectation: expect,
-    isEqual,
+    testSucessfully: isEqual,
     output: msg,
     isNot,
     showExpectAndOutputValue,
