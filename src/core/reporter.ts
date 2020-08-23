@@ -70,7 +70,7 @@ class Reporter {
   }
 
   private printAssertion(report: TestReport, tab: string) {
-    if (report.testSucessfully) {
+    if (report.hasPassed()) {
       this.printSucess(tab, report);
       this._sucessCount++;
     } else {

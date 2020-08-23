@@ -38,6 +38,60 @@ describe("testing toReturn", () => {
     expect(report).toEqual(reportModel);
   });
 
+  it("should return a passed test with a string message as content and isNot = true", async () => {
+    const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
+
+    const reportModel = new TestReport({
+      commandName: "hello",
+      expectation: mockDiscord.messageCollection.array()[0].content,
+      output: mockDiscord.messageCollection.array()[1].content,
+      isNot: true,
+      showExpectAndOutputValue: true,
+    });
+
+    cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
+    cordeClient.awaitMessagesFromTestingBot = jest
+      .fn()
+      .mockReturnValue(mockDiscord.messageCollection.array()[1]);
+
+    const report = await toReturn(
+      reportModel.commandName,
+      reportModel.isNot,
+      cordeClient,
+      reportModel.expectation,
+    );
+
+    expect(report.hasPassed()).toBeTruthy();
+    expect(report).toEqual(reportModel);
+  });
+
+  it("should return a failed test with a string message as content and isNot = true", async () => {
+    const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
+
+    const reportModel = new TestReport({
+      commandName: "hello",
+      expectation: mockDiscord.messageCollection.array()[0].content,
+      output: mockDiscord.messageCollection.array()[0].content,
+      isNot: true,
+      showExpectAndOutputValue: true,
+    });
+
+    cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
+    cordeClient.awaitMessagesFromTestingBot = jest
+      .fn()
+      .mockReturnValue(mockDiscord.messageCollection.array()[0]);
+
+    const report = await toReturn(
+      reportModel.commandName,
+      reportModel.isNot,
+      cordeClient,
+      reportModel.expectation,
+    );
+
+    expect(report.hasPassed()).toBeFalsy();
+    expect(report).toEqual(reportModel);
+  });
+
   it("should return a failed test with a string message as content", async () => {
     const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
 
