@@ -15,15 +15,14 @@ export const program = new Command();
 // Add basic information with default run all command
 program
   .name("Corde")
-  .exitOverride(() => {})
   .usage("to start testings o corde [option] to use a specific command.")
   .description(pack.description)
   .version(`v${pack.version}`, "-v, --version");
 
 program
-  .option("-c --config <type>", "Set config file path")
+  .option("-c, --config <type>", "Set config file path")
   .option(
-    "-f --files <path>",
+    "-f, --files <path>",
     "Set the path for all tests. Use this if you wan to specify a single path." +
       " for Array, use only 'corde <path1> <path2>'",
   )
@@ -32,10 +31,10 @@ program
       runtime.configFilePath = program.config;
     }
     if (args) {
-      runtime.files = args;
+      runtime.testFiles = program.args;
     }
     if (program.files) {
-      runtime.files = [program.files];
+      runtime.testFiles = [program.files];
     }
     await go();
   });
@@ -65,4 +64,6 @@ program
 
 if (module.parent && process.env.ENV !== "TEST") {
   program.parse(process.argv);
+} else {
+  program.exitOverride();
 }

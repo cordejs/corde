@@ -6,18 +6,59 @@ import { ConfigError } from "../errors";
 
 class Runtime {
   private static _instance: Runtime;
+
   public configFilePath: string;
   public files: string[];
-  public configs: Config;
+
+  private readonly _configs: Config;
+  private _bot: CordeBot;
 
   public get bot() {
     return this._bot;
   }
 
-  private _bot: CordeBot;
+  public get configs() {
+    return this._configs;
+  }
+
+  public get cordeTestToken() {
+    return this._configs.cordeTestToken;
+  }
+
+  public get botTestId() {
+    return this._configs.botTestId;
+  }
+
+  public get botTestToken() {
+    return this._configs.botTestToken;
+  }
+
+  public get channelId() {
+    return this._configs.channelId;
+  }
+
+  public get guildId() {
+    return this._configs.guildId;
+  }
+
+  public get timeOut() {
+    return this._configs.timeOut;
+  }
+
+  public get botPrefix() {
+    return this._configs.botPrefix;
+  }
+
+  public get testFiles() {
+    return this._configs.testFiles;
+  }
+
+  public set testFiles(path: string[]) {
+    this._configs.testFiles = path;
+  }
 
   private constructor() {
-    this.configs = new Config();
+    this._configs = new Config();
   }
 
   public static getInstance() {
@@ -27,15 +68,12 @@ class Runtime {
     return Runtime._instance;
   }
 
-  public setConfigs(configs: ConfigOptions) {
-    if (!configs) {
-      throw new ConfigError("Invalid Configs");
+  public setConfigs(_configs: ConfigOptions) {
+    if (!_configs) {
+      throw new ConfigError("Invalid _configs");
     }
 
-    if (!this.configs) {
-      this.configs = new Config();
-    }
-    this.configs = configs;
+    this._configs.setNoFiledConfigsOptions(_configs);
     this.loadBot();
   }
 
@@ -72,11 +110,11 @@ class Runtime {
 
   private loadBot() {
     this._bot = new CordeBot(
-      this.configs.botPrefix,
-      this.configs.guildId,
-      this.configs.channelId,
-      this.configs.timeOut,
-      this.configs.botTestId,
+      this._configs.botPrefix,
+      this._configs.guildId,
+      this._configs.channelId,
+      this._configs.timeOut,
+      this._configs.botTestId,
       new Client(),
     );
   }

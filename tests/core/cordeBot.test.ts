@@ -3,6 +3,7 @@ import { toReturn } from "../../src/api/expectMatches";
 import { Client, CollectorFilter } from "discord.js";
 import MockDiscord from "../mocks/mockDiscord";
 import { initCordeClient, initCordeClientWithChannel } from "../testHelper";
+import { TimeoutError } from "rxjs";
 
 const DEFAULT_PREFIX = "!";
 const mockDiscord = new MockDiscord();
@@ -374,7 +375,7 @@ describe("Testing CordeBot object", () => {
       try {
         await corde.waitForRemovedReactions(mockDiscord.message, 1);
       } catch (error) {
-        expect(error).toBe("Timeout");
+        expect(error).toBeInstanceOf(TimeoutError);
         done();
       }
     });

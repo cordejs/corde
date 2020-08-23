@@ -9,7 +9,7 @@ import {
   MessageReaction,
   TextChannel,
 } from "discord.js";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, TimeoutError } from "rxjs";
 import { MessageData } from "../types";
 import { Events } from "./events";
 import { CordeClientError } from "../errors/cordeClientError";
@@ -156,7 +156,7 @@ export class CordeBot extends Events {
         );
         resolve(collectedReactions);
       } catch (error) {
-        reject("Test timeout");
+        reject(new TimeoutError());
       }
     });
   }
@@ -188,7 +188,7 @@ export class CordeBot extends Events {
     const reactions: MessageReaction[] = [];
     return new Promise<MessageReaction[]>((resolve, reject) => {
       setTimeout(() => {
-        reject("Timeout");
+        reject(new TimeoutError());
       }, DEFAULT_TEST_TIMEOUT);
 
       this._reactionsObserved.subscribe((reaction) => {

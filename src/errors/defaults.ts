@@ -6,6 +6,9 @@ export const Errors = {
   CONFIG_ERROR: "ConfigError",
   CONFIG_ERROR_MESSAGE: "Invalid configuration",
 
+  TIMEOUT_ERROR: "TimeoutError",
+  TIMEOUT_ERROR_MESSAGE: "Timeout",
+
   CORDE_CLIENT_ERROR: "CordeClientError",
   CORDE_CLIENT_ERROR_MESSAGE: "There is a problem with corde client",
 

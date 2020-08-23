@@ -5,6 +5,7 @@ import {
   FileError,
   PropertyError,
   TypeError,
+  TimeoutError,
 } from "../../src/errors";
 import { Errors } from "../../src/errors/defaults";
 
@@ -43,5 +44,11 @@ describe("testing errors types", () => {
     const error = new TypeError();
     expect(error.name).toBe(Errors.TYPE_ERROR);
     expect(error.message).toBe(Errors.TYPE_ERROR_MESSAGE);
+  });
+
+  it("Timeout should match expected structure", () => {
+    const error = new TimeoutError();
+    expect(error.name).toBe(Errors.TIMEOUT_ERROR);
+    expect(error.message).toBe(Errors.TIMEOUT_ERROR_MESSAGE);
   });
 });

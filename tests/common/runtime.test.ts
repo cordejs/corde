@@ -28,7 +28,6 @@ describe("Testing runtime", () => {
   });
 
   it("Should create a new instance of config", () => {
-    runtime.configs = null;
     runtime.setConfigs(config);
     expect(runtime.configs).toEqual(config);
   });

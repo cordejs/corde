@@ -18,9 +18,9 @@ let spinner: Ora;
 
 export async function go() {
   loadConfigs();
-  const files = readDir(runtime.configs.testFiles);
+  const files = readDir(runtime.testFiles);
   if (!files || files.length === 0) {
-    throw new FileError(`No test file was found in the path '${runtime.configs.testFiles}'`);
+    throw new FileError(`No test file was found in the path '${runtime.testFiles}'`);
   }
   await runTests(files);
 }
@@ -39,7 +39,7 @@ async function runTests(files: string[]) {
 
   testCollector.beforeStartFunctions.forEach((fn) => fn());
 
-  await runtime.loginBot(runtime.configs.cordeTestToken);
+  await runtime.loginBot(runtime.cordeTestToken);
 
   spinner.text = "running tests";
   runtime.onBotStart().subscribe(async (isReady) => {
