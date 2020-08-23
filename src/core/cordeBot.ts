@@ -113,7 +113,7 @@ export class CordeBot extends Events {
         const returnedMessage = await this.textChannel.send(formatedMessage);
         resolve(returnedMessage);
       } catch (error) {
-        reject("Test timeout");
+        reject(new TimeoutError());
       }
     });
   }

@@ -3,6 +3,7 @@ import { Client } from "discord.js";
 import { TestReport } from "../../../src/api/interfaces";
 import MockDiscord from "../../mocks/mockDiscord";
 import { initCordeClientWithChannel } from "../../testHelper";
+import { TimeoutError } from "rxjs";
 
 let mockDiscord = new MockDiscord();
 
@@ -35,7 +36,79 @@ describe("testing toReturn", () => {
       reportModel.expectation,
     );
 
-    expect(report.hasPassed).toBeTruthy();
+    expect(report).toEqual(reportModel);
+  });
+
+  it("should return a failed test due to timeout with isNot = false", async () => {
+    const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
+
+    const timeout = new TimeoutError();
+    const reportModel = new TestReport({
+      commandName: "hello",
+      expectation: mockDiscord.messageCollection.array()[1].content,
+      output: timeout.message,
+      isNot: false,
+      hasPassed: false,
+      showExpectAndOutputValue: true,
+    });
+
+    const report = await toReturn(
+      reportModel.commandName,
+      false,
+      cordeClient,
+      reportModel.expectation,
+    );
+
+    expect(report).toEqual(reportModel);
+  });
+
+  it("should return a failed test due to timeout with isNot = true", async () => {
+    const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
+
+    const timeout = new TimeoutError();
+    const reportModel = new TestReport({
+      commandName: "hello",
+      expectation: mockDiscord.messageCollection.array()[1].content,
+      output: timeout.message,
+      isNot: true,
+      hasPassed: false,
+      showExpectAndOutputValue: true,
+    });
+
+    const report = await toReturn(
+      reportModel.commandName,
+      reportModel.isNot,
+      cordeClient,
+      reportModel.expectation,
+    );
+
+    expect(report).toEqual(reportModel);
+  });
+
+  it("should return a failed test due to a not known error with isNot = true", async () => {
+    const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
+
+    const unkownError = "unkown";
+    const reportModel = new TestReport({
+      commandName: "hello",
+      expectation: mockDiscord.messageCollection.array()[1].content,
+      output: unkownError,
+      isNot: true,
+      hasPassed: false,
+      showExpectAndOutputValue: true,
+    });
+
+    cordeClient.sendTextMessage = jest.fn().mockImplementation(() => {
+      throw new Error(unkownError);
+    });
+
+    const report = await toReturn(
+      reportModel.commandName,
+      reportModel.isNot,
+      cordeClient,
+      reportModel.expectation,
+    );
+
     expect(report).toEqual(reportModel);
   });
 
@@ -63,7 +136,6 @@ describe("testing toReturn", () => {
       reportModel.expectation,
     );
 
-    expect(report.hasPassed).toBeTruthy();
     expect(report).toEqual(reportModel);
   });
 
@@ -91,7 +163,6 @@ describe("testing toReturn", () => {
       reportModel.expectation,
     );
 
-    expect(report.hasPassed).toBeFalsy();
     expect(report).toEqual(reportModel);
   });
 
@@ -119,7 +190,6 @@ describe("testing toReturn", () => {
       reportModel.expectation,
     );
 
-    expect(report.hasPassed).toBeFalsy();
     expect(report).toEqual(reportModel);
   });
 
@@ -146,8 +216,6 @@ describe("testing toReturn", () => {
       reportModel.expectation,
     );
 
-    // In this case, the mocked value has not the same treatment that
-    // messages of type 'embed'
     expect(report).toEqual(reportModel);
   });
 
@@ -174,9 +242,6 @@ describe("testing toReturn", () => {
       reportModel.expectation,
     );
 
-    // In this case, the mocked value has not the same treatment that
-    // messages of type 'embed'
-    expect(report.hasPassed).toBeFalsy();
     expect(report).toEqual(reportModel);
   });
 });

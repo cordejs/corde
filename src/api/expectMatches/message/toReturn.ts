@@ -13,27 +13,37 @@ export async function toReturn(
   let msg = "";
   let isEqual = false;
   let showExpectAndOutputValue = true;
-  await cordeBot.sendTextMessage(commandName);
-  const returnedMessage = await cordeBot.awaitMessagesFromTestingBot();
-  if (typeof expect === "string") {
-    const formatedMsg = getMessageByType(returnedMessage, "text") as Message;
-    msg = formatedMsg.content;
-    isEqual = msg === expect;
-  } else {
-    const jsonMessage = getMessageByType(returnedMessage, "embed") as MinifiedEmbedMessage;
-    msg = JSON.stringify(jsonMessage);
-    showExpectAndOutputValue = false;
-    try {
-      // tslint:disable-next-line: deprecation
-      assert.deepEqual(expect.toJSON(), jsonMessage);
-      isEqual = true;
-    } catch (error) {
-      isEqual = false;
-    }
-  }
 
-  if (isNot) {
-    isEqual = !isEqual;
+  try {
+    await cordeBot.sendTextMessage(commandName);
+    const returnedMessage = await cordeBot.awaitMessagesFromTestingBot();
+    if (typeof expect === "string") {
+      const formatedMsg = getMessageByType(returnedMessage, "text") as Message;
+      msg = formatedMsg.content;
+      isEqual = msg === expect;
+    } else {
+      const jsonMessage = getMessageByType(returnedMessage, "embed") as MinifiedEmbedMessage;
+      msg = JSON.stringify(jsonMessage);
+      showExpectAndOutputValue = false;
+      try {
+        // tslint:disable-next-line: deprecation
+        assert.deepEqual(expect.toJSON(), jsonMessage);
+        isEqual = true;
+      } catch (error) {
+        isEqual = false;
+      }
+    }
+
+    if (isNot) {
+      isEqual = !isEqual;
+    }
+  } catch (error) {
+    isEqual = false;
+    if (error instanceof Error) {
+      msg = error.message;
+    } else {
+      msg = error;
+    }
   }
 
   return new TestReport({

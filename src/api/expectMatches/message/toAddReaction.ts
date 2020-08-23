@@ -1,6 +1,7 @@
 import { Message } from "discord.js";
 import { TestReport } from "../../interfaces/testReport";
 import { CordeBot } from "../../../core";
+import { TimeoutError } from "rxjs";
 
 export async function toAddReaction(
   commandName: string,
@@ -14,10 +15,23 @@ export async function toAddReaction(
 
   expectation = reactions.join();
 
-  const message = await cordeBot.sendTextMessage(commandName);
-  await cordeBot.waitForAddedReactions(message, reactions);
-  isEqual = isOutputEqualToExpect(message, reactions);
-  output = message.reactions.cache.map((v) => v.emoji.name).join();
+  try {
+    const message = await cordeBot.sendTextMessage(commandName);
+    await cordeBot.waitForAddedReactions(message, reactions);
+    isEqual = isOutputEqualToExpect(message, reactions);
+    output = message.reactions.cache.map((v) => v.emoji.name).join();
+
+    if (isNot) {
+      isEqual = !isEqual;
+    }
+  } catch (error) {
+    isEqual = false;
+    if (error instanceof Error) {
+      output = error.message;
+    } else {
+      output = error;
+    }
+  }
 
   return new TestReport({
     commandName,

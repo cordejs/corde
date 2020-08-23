@@ -355,12 +355,12 @@ export default class MockDiscord {
 
   private createMockMessageReactionCollection() {
     const collection = new Collection<string, MessageReaction>();
-    collection.set(this._messageReaction.message.id, this._messageReaction);
+    collection.set(this._messageReaction.emoji.name, this._messageReaction);
     return collection;
   }
 
   private createMockMessage(customMessage = "this is the message content") {
-    return new Message(
+    const msg = new Message(
       this._client,
       {
         id: SnowflakeUtil.generate(),
@@ -383,15 +383,17 @@ export default class MockDiscord {
       },
       this._textChannel,
     );
+
+    return msg;
   }
 
-  private createMockMessageReaction() {
+  public createMockMessageReaction(cutomEmoji = "😀") {
     return new MessageReaction(
       this._client,
       {
         emoji: {
           animated: false,
-          name: "😀",
+          name: cutomEmoji,
           id: SnowflakeUtil.generate(),
           deleted: false,
         },
