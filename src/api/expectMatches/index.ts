@@ -1,2 +1,1 @@
-export * from "./message/toReturn";
-export * from "./message/toAddReaction";
+export * from "./message";

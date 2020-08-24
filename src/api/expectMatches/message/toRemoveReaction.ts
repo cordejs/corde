@@ -1,4 +1,4 @@
-import { Message } from "discord.js";
+import { Message, MessageReaction } from "discord.js";
 import { TestReport } from "../../interfaces/testReport";
 import { CordeBot } from "../../../core";
 import { MessageData } from "../../../types";
@@ -11,7 +11,6 @@ export async function toRemoveReaction(
   messageData?: MessageData,
   cache?: boolean,
 ): Promise<TestReport> {
-  let contains = false;
   let expectation = "";
   let output = "";
   let testSucessfully = false;
@@ -19,12 +18,16 @@ export async function toRemoveReaction(
   expectation = removedReactions.join();
 
   try {
-    cordeBot.sendTextMessage(commandName);
+    await cordeBot.sendTextMessage(commandName);
     const message = await cordeBot.findMessage(messageData, cache);
     if (message) {
       const reactions = await cordeBot.waitForRemovedReactions(message, removedReactions.length);
-      contains = messageHasReactions(message, removedReactions);
+      testSucessfully = reactionsExistsIn(reactions, removedReactions);
       output = reactions.map((v) => v.emoji.name).join();
+    }
+
+    if (isNot) {
+      testSucessfully = !testSucessfully;
     }
   } catch (error) {
     testSucessfully = false;
@@ -35,26 +38,21 @@ export async function toRemoveReaction(
     }
   }
 
-  if ((!contains && !isNot) || (contains && isNot)) {
-    testSucessfully = true;
-  }
   return new TestReport({
     commandName,
     expectation,
     output,
     hasPassed: testSucessfully,
     isNot,
-    // Problems in display emojis in windows console
-    showExpectAndOutputValue: process.platform === "win32" ? false : true,
-    customReturnMessage: `command ${commandName} removed `,
+    showExpectAndOutputValue: false,
   });
 }
 
-function messageHasReactions(message: Message, expectation: string[]) {
-  for (const i in expectation as string[]) {
-    if (message.reactions.cache.has(expectation[i])) {
-      return true;
+function reactionsExistsIn(reactions: MessageReaction[], expectation: string[]) {
+  for (const expect of expectation) {
+    if (!reactions.find((r) => r.emoji.name === expect)) {
+      return false;
     }
   }
-  return false;
+  return true;
 }
