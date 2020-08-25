@@ -26,8 +26,7 @@ jobs:
       - image: circleci/node:current
     steps:
       - restore_cache:
-          keys:
-            - v1-deps-{{ checksum "yarn.lock" }}
+          key: v1-deps-{{ checksum "yarn.lock" }}
       - run:
           name: lint
           command: yarn lint
@@ -38,8 +37,7 @@ jobs:
       - image: circleci/node:latest
     steps:
       - restore_cache:
-          keys:
-            - v1-deps-{{ checksum "yarn.lock" }}
+          key: v1-deps-{{ checksum "yarn.lock" }}
       - run:
           name: Tests
           command: yarn test-with-coverage
@@ -56,6 +54,8 @@ jobs:
     docker:
       - image: circleci/node:latest
     steps:
+      - restore_cache:
+          key: v1-deps-{{ checksum "yarn.lock" }}
       # Reuse the workspace from the build job
       - attach_workspace:
           at: .
