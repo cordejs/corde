@@ -25,6 +25,7 @@ jobs:
     docker:
       - image: circleci/node:current
     steps:
+      - checkout
       - run:
           name: lint
           command: yarn lint
@@ -34,6 +35,7 @@ jobs:
     docker:
       - image: circleci/node:latest
     steps:
+      - checkout
       - run:
           name: Tests
           command: yarn test-with-coverage
@@ -50,6 +52,7 @@ jobs:
     docker:
       - image: circleci/node:latest
     steps:
+      - checkout
       # Reuse the workspace from the build job
       - attach_workspace:
           at: .
