@@ -1,60 +1,45 @@
 version: 2.1
 
-orbs:
-  node: circleci/node@3.0.1
-
 jobs:
   build:
     docker:
-      - image: circleci/node:current
-
-    executor: node/default
+      - image: circleci/node:latest
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: yarn
-          cache-path: ~/corde/node_modules
-          override-ci-command: yarn install
-          cache-version: v2
-
+      - restore_cache:
+          key: v1-deps-{{ checksum "package-lock.json" }}
+      - run:
+          name: Install dependencies
+          command: npm install
+      - save_cache:
+          key: v1-deps-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
       - run:
           name: Build Project
-          command: |
-            yarn jest --clearCache
-            yarn build
-        # Save workspace for subsequent (test)
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .
+          command: npm build
 
   lint:
     docker:
       - image: circleci/node:current
-
-    executor: node/default
-
     steps:
-      # Reuse the workspace from the build job
-      - attach_workspace:
-          at: .
-
+      - restore_cache:
+          keys:
+            - v1-deps-{{ checksum "package-lock.json" }}
       - run:
           name: lint
-          command: yarn lint
+          command: npm lint
 
   test:
-    executor: node/default
-
+    docker:
+      - image: circleci/node:latest
     steps:
-      # Reuse the workspace from the build job
-      - attach_workspace:
-          at: .
-
+      - restore_cache:
+          keys:
+            - v1-deps-{{ checksum "package-lock.json" }}
       - run:
           name: Tests
-          command: yarn test-with-coverage
-
+          command: npm test-with-coverage
       - store_test_results:
           path: coverage
         # Save workspace for subsequent (test)
@@ -64,20 +49,19 @@ jobs:
             - .
 
   publish_coverage:
-    executor: node/default
-
+    docker:
+      - image: circleci/node:latest
     steps:
       # Reuse the workspace from the build job
       - attach_workspace:
           at: .
-
       - run:
           name: Publish coverage
           command: yarn codecov -f coverage/*.json
 
 workflows:
   version: 2
-  build_test_publish_coverage:
+  build-and-test:
     jobs:
       - build
       - test:
