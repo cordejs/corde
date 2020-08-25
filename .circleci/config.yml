@@ -15,7 +15,7 @@ jobs:
       - save_cache:
           key: v1-deps-{{ checksum "yarn.lock" }}
           paths:
-            - ~/.cache/yarn
+            - node_modules
       - run:
           name: Build Project
           command: yarn build
