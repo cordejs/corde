@@ -8,12 +8,12 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: v1-deps-{{ checksum "package-lock.json" }}
+          key: v1-deps-{{ checksum "yarn.lock" }}
       - run:
           name: Install dependencies
           command: yarn
       - save_cache:
-          key: v1-deps-{{ checksum "package-lock.json" }}
+          key: v1-deps-{{ checksum "yarn.lock" }}
       - run:
           name: Build Project
           command: yarn build
@@ -25,7 +25,7 @@ jobs:
     steps:
       - restore_cache:
           keys:
-            - v1-deps-{{ checksum "package-lock.json" }}
+            - v1-deps-{{ checksum "yarn.lock" }}
       - run:
           name: lint
           command: yarn lint
@@ -37,7 +37,7 @@ jobs:
     steps:
       - restore_cache:
           keys:
-            - v1-deps-{{ checksum "package-lock.json" }}
+            - v1-deps-{{ checksum "yarn.lock" }}
       - run:
           name: Tests
           command: yarn test-with-coverage
