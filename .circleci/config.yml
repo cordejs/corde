@@ -29,6 +29,9 @@ jobs:
       - restore_cache:
           key: v1-deps-{{ checksum "yarn.lock" }}
       - run:
+          name: Install dependencies
+          command: yarn
+      - run:
           name: lint
           command: yarn lint
 
@@ -40,6 +43,9 @@ jobs:
       - checkout
       - restore_cache:
           key: v1-deps-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install dependencies
+          command: yarn
       - run:
           name: Tests
           command: yarn test-with-coverage
@@ -59,6 +65,9 @@ jobs:
       - checkout
       - restore_cache:
           key: v1-deps-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install dependencies
+          command: yarn
       # Reuse the workspace from the build job
       - attach_workspace:
           at: .
