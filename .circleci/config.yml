@@ -14,8 +14,6 @@ jobs:
           command: yarn
       - save_cache:
           key: v1-deps-{{ checksum "package-lock.json" }}
-          paths:
-            - ~/corde
       - run:
           name: Build Project
           command: yarn build
