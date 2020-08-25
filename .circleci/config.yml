@@ -11,14 +11,14 @@ jobs:
           key: v1-deps-{{ checksum "package-lock.json" }}
       - run:
           name: Install dependencies
-          command: npm install
+          command: yarn
       - save_cache:
           key: v1-deps-{{ checksum "package-lock.json" }}
           paths:
-            - node_modules
+            - ~/corde
       - run:
           name: Build Project
-          command: npm build
+          command: yarn build
 
   lint:
     working_directory: ~/corde
@@ -30,7 +30,7 @@ jobs:
             - v1-deps-{{ checksum "package-lock.json" }}
       - run:
           name: lint
-          command: npm lint
+          command: yarn lint
 
   test:
     working_directory: ~/corde
@@ -42,7 +42,7 @@ jobs:
             - v1-deps-{{ checksum "package-lock.json" }}
       - run:
           name: Tests
-          command: npm test-with-coverage
+          command: yarn test-with-coverage
       - store_test_results:
           path: coverage
         # Save workspace for subsequent (test)
