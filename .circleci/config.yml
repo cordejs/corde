@@ -2,6 +2,7 @@ version: 2.1
 
 jobs:
   build:
+    working_directory: ~/corde
     docker:
       - image: circleci/node:latest
     steps:
@@ -20,6 +21,7 @@ jobs:
           command: npm build
 
   lint:
+    working_directory: ~/corde
     docker:
       - image: circleci/node:current
     steps:
@@ -31,6 +33,7 @@ jobs:
           command: npm lint
 
   test:
+    working_directory: ~/corde
     docker:
       - image: circleci/node:latest
     steps:
@@ -49,6 +52,7 @@ jobs:
             - .
 
   publish_coverage:
+    working_directory: ~/corde
     docker:
       - image: circleci/node:latest
     steps:
