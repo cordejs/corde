@@ -15,6 +15,7 @@ jobs:
           pkg-manager: yarn
           cache-path: ~/corde/node_modules
           override-ci-command: yarn install
+          cache-version: v2
 
       - run:
           name: Build Project
