@@ -39,8 +39,7 @@ export async function toAddReaction(
     output,
     hasPassed: isEqual,
     isNot,
-    // Problems in display emojis in windows console
-    showExpectAndOutputValue: process.platform === "win32" ? false : true,
+    showExpectAndOutputValue: false,
   });
 }
 
