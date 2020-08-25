@@ -8,14 +8,14 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: v1-deps-{{ checksum "package-lock.json" }}
+          key: v1-deps-{{ checksum "yarn.lock" }}
       - run:
           name: Install dependencies
           command: yarn
       - save_cache:
-          key: v1-deps-{{ checksum "package-lock.json" }}
+          key: v1-deps-{{ checksum "yarn.lock" }}
           paths:
-            - ~/corde
+            - node_modules
       - run:
           name: Build Project
           command: yarn build
@@ -25,9 +25,12 @@ jobs:
     docker:
       - image: circleci/node:current
     steps:
+      - checkout
       - restore_cache:
-          keys:
-            - v1-deps-{{ checksum "package-lock.json" }}
+          key: v1-deps-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install dependencies
+          command: yarn
       - run:
           name: lint
           command: yarn lint
@@ -37,9 +40,12 @@ jobs:
     docker:
       - image: circleci/node:latest
     steps:
+      - checkout
       - restore_cache:
-          keys:
-            - v1-deps-{{ checksum "package-lock.json" }}
+          key: v1-deps-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install dependencies
+          command: yarn
       - run:
           name: Tests
           command: yarn test-with-coverage
@@ -56,6 +62,12 @@ jobs:
     docker:
       - image: circleci/node:latest
     steps:
+      - checkout
+      - restore_cache:
+          key: v1-deps-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install dependencies
+          command: yarn
       # Reuse the workspace from the build job
       - attach_workspace:
           at: .
