@@ -1,7 +1,6 @@
 import { Message } from "discord.js";
 import { TestReport } from "../../interfaces/testReport";
 import { CordeBot } from "../../../core";
-import { TimeoutError } from "rxjs";
 
 export async function toAddReaction(
   commandName: string,

@@ -44,9 +44,9 @@ function expectMatches(commandName: string, isNot: boolean): Matches {
         toAddReaction(commandName, isNot, cordeBot, reactions),
       );
     },
-    toRemoveReactions(reactions?: string[], message?: MessageData, cache?: boolean) {
+    toRemoveReactions(reactions?: string[], message?: MessageData) {
       testCollector.addTestFunction((cordeBot) =>
-        toRemoveReaction(commandName, isNot, cordeBot, reactions, message, cache),
+        toRemoveReaction(commandName, isNot, cordeBot, reactions, message),
       );
     },
   };

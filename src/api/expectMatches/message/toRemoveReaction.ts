@@ -9,7 +9,6 @@ export async function toRemoveReaction(
   cordeBot: CordeBot,
   removedReactions: string[],
   messageData?: MessageData,
-  cache?: boolean,
 ): Promise<TestReport> {
   let expectation = "";
   let output = "";
@@ -19,7 +18,7 @@ export async function toRemoveReaction(
 
   try {
     await cordeBot.sendTextMessage(commandName);
-    const message = await cordeBot.findMessage(messageData, cache);
+    const message = await cordeBot.findMessage(messageData);
     if (message) {
       const reactions = await cordeBot.waitForRemovedReactions(message, removedReactions.length);
       testSucessfully = reactionsExistsIn(reactions, removedReactions);

@@ -212,40 +212,39 @@ export class CordeBot extends Events {
     return !!this._client && !!this._client.readyAt && this._onStart.value;
   }
 
-  public async findMessage(
-    filter: (message: Message) => boolean,
-    cache?: boolean,
-  ): Promise<Message>;
-  public async findMessage(data: MessageData, cache?: boolean): Promise<Message>;
-  public async findMessage(
-    data: MessageData | ((message: Message) => boolean),
-    cache?: boolean,
-  ): Promise<Message> {
+  public async findMessage(filter: (message: Message) => boolean): Promise<Message>;
+  public async findMessage(data: MessageData): Promise<Message>;
+  public async findMessage(data: MessageData | ((message: Message) => boolean)): Promise<Message> {
     const messageData: MessageData = data as MessageData;
 
-    const manager = await this.getMessageCollection(cache);
-
     if (messageData && messageData.text) {
-      return manager.find((m) => m.content === messageData.text);
+      return this._findMessage((m) => m.content === messageData.text);
     }
     if (messageData && messageData.id) {
-      return manager.find((m) => m.id === messageData.id);
+      return this._findMessage((m) => m.id === messageData.id);
     }
     if (data) {
-      return manager.find(data as (message: Message) => boolean);
+      return this._findMessage(data as (message: Message) => boolean);
     }
     return null;
   }
 
   /**
-   * Return a collection of message from textChannel based of cache or not cached messages.
-   * @param cache Defines if will get all cached message ou fetch then
+   * Search for messages based in a filter query.
    */
-  private async getMessageCollection(cache?: boolean) {
-    if (cache) {
-      return this.textChannel.messages.cache;
+  private async _findMessage(
+    fn: (value: Message, key: string, collection: Collection<string, Message>) => boolean,
+  ) {
+    const data = this.textChannel.messages.cache.find(fn);
+    if (data) {
+      return data;
     }
-    return await this.textChannel.messages.fetch();
+
+    const collection = await this.textChannel.messages.fetch();
+    if (collection) {
+      return collection.find(fn);
+    }
+    return null;
   }
 
   /**
