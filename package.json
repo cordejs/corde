@@ -49,7 +49,7 @@
     "@types/rewire": "^2.5.28",
     "@types/ws": "^7.2.4",
     "babel-jest": "^26.0.1",
-    "cli-spinners": "^2.3.0",
+    "cli-spinners": "^2.4.0",
     "codecov": "^3.6.5",
     "dotenv": "^8.2.0",
     "husky": "^4.2.3",

@@ -10,6 +10,12 @@ import { Group } from "../types";
 import { validate } from "./validate";
 import { FileError } from "../errors";
 
+declare module "ora" {
+  interface Ora {
+    _spinner: object;
+  }
+}
+
 process.on("uncaughtException", () => {
   stopLoading();
 });
@@ -81,8 +87,11 @@ function startLoading(initialMessage: string) {
   // dots spinner do not works on windows 😰
   // https://github.com/fossas/fossa-cli/issues/193
   spinner = ora(initialMessage).start();
+  spinner._spinner = {
+    interval: 80,
+    frames: ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"],
+  };
   spinner.color = getRandomSpinnerColor() as Color;
-  spinner.spinner = "dots";
 }
 
 function getRandomSpinnerColor() {
