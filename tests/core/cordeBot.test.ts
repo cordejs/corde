@@ -420,7 +420,7 @@ describe("Testing CordeBot object", () => {
 
       mockDiscord.textChannel.messages.cache = mockDiscord.messageCollection;
 
-      const message = await corde.findMessage((m) => m.id === mockDiscord.message.id, true);
+      const message = await corde.findMessage((m) => m.id === mockDiscord.message.id);
       expect(message.id).toBe(mockDiscord.message.id);
       done();
     });
@@ -432,7 +432,7 @@ describe("Testing CordeBot object", () => {
 
       mockDiscord.textChannel.messages.cache = mockDiscord.messageCollection;
 
-      const message = await corde.findMessage({ text: mockDiscord.message.content }, true);
+      const message = await corde.findMessage({ text: mockDiscord.message.content });
       expect(message.id).toBe(mockDiscord.message.id);
       done();
     });
@@ -446,7 +446,7 @@ describe("Testing CordeBot object", () => {
         .fn()
         .mockReturnValue(mockDiscord.messageCollection);
 
-      const message = await corde.findMessage({ text: mockDiscord.message.content }, false);
+      const message = await corde.findMessage({ text: mockDiscord.message.content });
       expect(message.id).toBe(mockDiscord.message.id);
       done();
     });
@@ -458,7 +458,7 @@ describe("Testing CordeBot object", () => {
 
       mockDiscord.textChannel.messages.cache = mockDiscord.messageCollection;
 
-      const message = await corde.findMessage({ id: mockDiscord.message.id }, true);
+      const message = await corde.findMessage({ id: mockDiscord.message.id });
       expect(message.id).toBe(mockDiscord.message.id);
       done();
     });
@@ -472,7 +472,7 @@ describe("Testing CordeBot object", () => {
         .fn()
         .mockReturnValue(mockDiscord.messageCollection);
 
-      const message = await corde.findMessage({ id: mockDiscord.message.id }, false);
+      const message = await corde.findMessage({ id: mockDiscord.message.id });
       expect(message.id).toBe(mockDiscord.message.id);
       done();
     });
@@ -488,7 +488,7 @@ describe("Testing CordeBot object", () => {
 
       mockDiscord.textChannel.messages.cache = mockDiscord.messageCollection;
 
-      const message = await corde.findMessage({ id: "123" }, false);
+      const message = await corde.findMessage({ id: "123" });
       expect(message).toBeFalsy();
       done();
     });

@@ -1,7 +1,8 @@
-const { Client, MessageEmbed } = require("discord.js");
+const { Client, MessageEmbed, Message } = require("discord.js");
 const { botPrefix, botTestToken } = require("../../corde.js");
 
 const bot = new Client();
+
 const embedMsg = new MessageEmbed()
   .setColor("#0099ff")
   .setTitle("Some title")
@@ -36,6 +37,8 @@ bot.on("message", async (message) => {
     await removeMessageReactionById(message, args[0], args[1]);
   } else if (command === "removemessagereactionbycontent") {
     await removeMessageReactionByContent(message, args[0], args[1]);
+  } else if (command === "setrolecolor") {
+    await changeColorForRole(message, args[0]);
   } else {
     console.log("No command found");
   }
@@ -75,6 +78,14 @@ async function removeMessageReactionByContent(msg, messagecontent, reaction) {
   } catch (error) {
     console.log("Fail: " + error);
   }
+}
+
+/**
+ *
+ * @param {Message} msg
+ */
+async function changeColorForRole(msg, roleName) {
+  await msg.guild.roles.cache.find((r) => r.name === roleName).setColor("BLUE");
 }
 
 function emojis(msg) {

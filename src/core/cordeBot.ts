@@ -10,7 +10,7 @@ import {
   TextChannel,
 } from "discord.js";
 import { BehaviorSubject, TimeoutError } from "rxjs";
-import { MessageData } from "../types";
+import { MessageData, RoleData } from "../types";
 import { Events } from "./events";
 import { CordeClientError } from "../errors/cordeClientError";
 
@@ -68,6 +68,10 @@ export class CordeBot extends Events {
     this._onStart = new BehaviorSubject<boolean>(false);
     this._reactionsObserved = new BehaviorSubject<MessageReaction>(null);
     this.loadClientEvents();
+  }
+
+  private get guild() {
+    return this.textChannel.guild;
   }
 
   /**
@@ -225,6 +229,16 @@ export class CordeBot extends Events {
     }
     if (data) {
       return this._findMessage(data as (message: Message) => boolean);
+    }
+    return null;
+  }
+
+  public async findRole(roleData: RoleData) {
+    const data = await this.guild.roles.fetch();
+    if (roleData.id) {
+      return data.cache.find((r) => r.id === roleData.id);
+    } else if (roleData.name) {
+      return data.cache.find((r) => r.name === roleData.name);
     }
     return null;
   }

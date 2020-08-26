@@ -1,4 +1,4 @@
-import { expectMatchWithNot, MatchesWithNot } from "./matcher";
+import { MatchesWithNot } from "./matcher";
 
 /**
  * Receives wich command will be tested.
@@ -12,5 +12,5 @@ import { expectMatchWithNot, MatchesWithNot } from "./matcher";
  * the type of response is expected.
  */
 export function expect(commandName: string): MatchesWithNot {
-  return expectMatchWithNot(commandName);
+  return new MatchesWithNot(commandName);
 }

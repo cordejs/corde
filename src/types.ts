@@ -1,4 +1,4 @@
-import { Message, MessageEmbed } from "discord.js";
+import { Message, MessageEmbed, Snowflake } from "discord.js";
 import { TestReport } from "./api/interfaces";
 import { CordeBot } from "./core";
 
@@ -117,4 +117,9 @@ export default interface ConfigOptions {
 export interface MessageData {
   text?: string;
   id?: string;
+}
+
+export interface RoleData {
+  name?: string;
+  id?: Snowflake;
 }
