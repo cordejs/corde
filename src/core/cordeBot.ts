@@ -233,6 +233,10 @@ export class CordeBot extends Events {
     return null;
   }
 
+  public async fetchRole(id: string) {
+    return await this.guild.roles.fetch(id);
+  }
+
   public async findRole(roleData: RoleData) {
     const data = await this.guild.roles.fetch();
     if (roleData.id) {

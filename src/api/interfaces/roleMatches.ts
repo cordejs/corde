@@ -25,8 +25,13 @@ export interface RoleMatches {
    *
    * expect("commandThatChangeColorOf player-one").toSetRoleColor(Colors.GREEN, {name: "player-one"})
    */
-  toSetRoleColor(color: ColorResolvable, name: Snowflake): void;
+  toSetRoleColor(color: ColorResolvable, id: Snowflake): void;
   toSetRoleColor(color: ColorResolvable, roleData: RoleData): void;
-  toSetRoleColor(color: Colors, name: Snowflake): void;
+  toSetRoleColor(color: Colors, id: Snowflake): void;
   toSetRoleColor(color: Colors, roleData: RoleData): void;
+
+  toDeleteRole(id: Snowflake): void;
+  toDeleteRole(name: RoleData): void;
+
+  toDeleteRoleByName(name: string): void;
 }

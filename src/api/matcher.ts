@@ -1,6 +1,6 @@
 import { MessageEmbed, ColorResolvable, Snowflake } from "discord.js";
 import { testCollector } from "../common/testColletor";
-import { toReturn, toAddReaction, toSetRoleColor } from "./expectMatches";
+import { toReturn, toAddReaction, toSetRoleColor, toDeleteRole } from "./expectMatches";
 import { MessageMatches } from "./interfaces/messageMatches";
 import { MessageData, RoleData } from "../types";
 import { toRemoveReaction } from "./expectMatches/message/toRemoveReaction";
@@ -13,6 +13,20 @@ import { Colors } from "../utils/colors";
  */
 type Matches = MessageMatches & RoleMatches;
 
+/**
+ * Defines the initial value of expectations from
+ * **command** function. It includes all matches and
+ * the *not* statement. Witch will deny the executed match
+ */
+export interface MatchWithNot extends Matches {
+  /**
+   * Defines that a command should **not** do something.
+   * Use this if you can not precise what response a command will throw,
+   * But know what it **can not** throw.
+   */
+  not: Matches;
+}
+
 class ExpectMatches implements Matches {
   protected _commandName: string;
   protected _isNot: boolean;
@@ -20,7 +34,6 @@ class ExpectMatches implements Matches {
     this._commandName = commandName;
     this._isNot = isNot;
   }
-
   public toReturn(expect: string | MessageEmbed): void {
     testCollector.addTestFunction((cordeBot) =>
       toReturn(this._commandName, this._isNot, cordeBot, expect),
@@ -36,6 +49,7 @@ class ExpectMatches implements Matches {
       toRemoveReaction(this._commandName, this._isNot, cordeBot, reactions, message),
     );
   }
+
   public toSetRoleColor(color: Colors, id: Snowflake): void;
   public toSetRoleColor(color: Colors, name: RoleData): void;
   public toSetRoleColor(color: ColorResolvable, id: Snowflake): void;
@@ -51,19 +65,31 @@ class ExpectMatches implements Matches {
       return toSetRoleColor(this._commandName, this._isNot, cordeBot, color, data);
     });
   }
+
+  public toDeleteRole(id: string): void;
+  public toDeleteRole(name: RoleData): void;
+  public toDeleteRole(role: string | RoleData) {
+    this._toDeleteRole(role);
+  }
+
+  public toDeleteRoleByName(name: string): void {
+    this._toDeleteRole({ name });
+  }
+
+  private _toDeleteRole(role: string | RoleData) {
+    testCollector.addTestFunction((cordeBot) => {
+      let data: RoleData;
+      if (typeof role === "string") {
+        data = { id: role };
+      } else {
+        data = role as RoleData;
+      }
+      return toDeleteRole(this._commandName, this._isNot, cordeBot, data);
+    });
+  }
 }
 
-/**
- * Defines the initial value of expectations from
- * **command** function. It includes all matches and
- * the *not* statement. Witch will deny the executed match
- */
-export class MatchesWithNot extends ExpectMatches {
-  /**
-   * Defines that a command should **not** do something.
-   * Use this if you are can not precise what response a command will throw,
-   * But know and responde it **can not** throw.
-   */
+export class ExpectMatchesWithNot extends ExpectMatches implements MatchWithNot {
   public not: ExpectMatches;
 
   constructor(commandName: string) {

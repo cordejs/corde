@@ -39,6 +39,10 @@ bot.on("message", async (message) => {
     await removeMessageReactionByContent(message, args[0], args[1]);
   } else if (command === "setrolecolor") {
     await changeColorForRole(message, args[0]);
+  } else if (command === "deleterole") {
+    deleteRole(message, args[0]);
+  } else if (command === "addrole") {
+    addRole(message, args[0]);
   } else {
     console.log("No command found");
   }
@@ -81,11 +85,29 @@ async function removeMessageReactionByContent(msg, messagecontent, reaction) {
 }
 
 /**
- *
  * @param {Message} msg
  */
 async function changeColorForRole(msg, roleName) {
   await msg.guild.roles.cache.find((r) => r.name === roleName).setColor("BLUE");
+}
+
+/**
+ * @param {Message} msg
+ */
+async function deleteRole(msg, roleName) {
+  const data = msg.guild.roles.cache.find((r) => r.name === roleName);
+  await data.delete();
+}
+
+/**
+ * @param {Message} msg
+ */
+async function addRole(msg, roleName) {
+  await msg.guild.roles.create({
+    data: {
+      name: roleName,
+    },
+  });
 }
 
 function emojis(msg) {
