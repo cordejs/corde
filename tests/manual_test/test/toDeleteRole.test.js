@@ -4,7 +4,7 @@ beforeStart(() => {
   loginBot();
 });
 
-cordeExpect("deleteRole test-role").toDeleteRoleByName("test-role");
+cordeExpect("deleteRole test-role").toDeleteRole({ name: "test-role" });
 
 afterAll(() => {
   bot.destroy();

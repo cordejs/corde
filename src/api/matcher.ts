@@ -69,14 +69,6 @@ class ExpectMatches implements Matches {
   public toDeleteRole(id: string): void;
   public toDeleteRole(name: RoleData): void;
   public toDeleteRole(role: string | RoleData) {
-    this._toDeleteRole(role);
-  }
-
-  public toDeleteRoleByName(name: string): void {
-    this._toDeleteRole({ name });
-  }
-
-  private _toDeleteRole(role: string | RoleData) {
     testCollector.addTestFunction((cordeBot) => {
       let data: RoleData;
       if (typeof role === "string") {
