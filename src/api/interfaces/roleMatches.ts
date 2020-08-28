@@ -9,6 +9,7 @@ export interface RoleMatches {
    *
    * @param color The new color for the role.
    * @param name Identifier of the role. It can be its it or it's name.
+   * Can also use RoleData to filter it.
    *
    * @example
    *
@@ -31,7 +32,7 @@ export interface RoleMatches {
 
   /**
    * Defines a role that should be removed.
-   * @param id Id of the role.
+   * @param id Id of the role. Can also use RoleData to filter it.
    *
    * @example
    *
@@ -46,5 +47,14 @@ export interface RoleMatches {
    *
    */
   toDeleteRole(id: Snowflake): void;
-  toDeleteRole(name: RoleData): void;
+  toDeleteRole(roleData: RoleData): void;
+
+  /**
+   * Defines a role that should have his *mentionable* property state.
+   *
+   * @param mentionable If the role can or can not be mentionable.
+   * @param id Id of the role. Can also use RoleData to filter it.
+   */
+  toSetRoleMentionable(mentionable: boolean, id: Snowflake): void;
+  toSetRoleMentionable(mentionable: boolean, roleData: RoleData): void;
 }

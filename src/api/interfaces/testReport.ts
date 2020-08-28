@@ -1,19 +1,17 @@
-import { messageExpectationType } from "../../types";
-
-interface TestReportModel {
-  readonly commandName: string;
-  readonly expectation: messageExpectationType;
-  readonly output: string;
-  readonly isNot: boolean;
-  readonly hasPassed: boolean;
-  readonly showExpectAndOutputValue: boolean;
-  readonly customReturnMessage?: string;
+export interface TestReportModel {
+  commandName: string;
+  expectation: any;
+  output: any;
+  isNot: boolean;
+  hasPassed: boolean;
+  showExpectAndOutputValue: boolean;
+  customReturnMessage?: string;
 }
 
 export class TestReport implements TestReport {
   public readonly commandName: string;
-  public readonly expectation: messageExpectationType;
-  public readonly output: string;
+  public readonly expectation: any;
+  public readonly output: any;
   public readonly isNot: boolean;
   public readonly showExpectAndOutputValue: boolean;
   public readonly customReturnMessage?: string;

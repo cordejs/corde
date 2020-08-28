@@ -6,6 +6,7 @@ import { MessageData, RoleData } from "../types";
 import { toRemoveReaction } from "./expectMatches/message/toRemoveReaction";
 import { RoleMatches } from "./interfaces";
 import { Colors } from "../utils/colors";
+import { ToSetRoleMentionable } from "./expectMatches/role/toSetRoleMentionable";
 
 /**
  * Defines all functions that can be used
@@ -34,6 +35,7 @@ class ExpectMatches implements Matches {
     this._commandName = commandName;
     this._isNot = isNot;
   }
+
   public toReturn(expect: string | MessageEmbed): void {
     testCollector.addTestFunction((cordeBot) =>
       toReturn(this._commandName, this._isNot, cordeBot, expect),
@@ -77,6 +79,21 @@ class ExpectMatches implements Matches {
         data = role as RoleData;
       }
       return toDeleteRole(this._commandName, this._isNot, cordeBot, data);
+    });
+  }
+
+  public toSetRoleMentionable(mentionable: boolean, id: string): void;
+  public toSetRoleMentionable(mentionable: boolean, roleData: RoleData): void;
+  public toSetRoleMentionable(mentionable: boolean, roleData: string | RoleData) {
+    testCollector.addTestFunction((cordeBot) => {
+      let data: RoleData;
+      if (typeof roleData === "string") {
+        data = { id: roleData };
+      } else {
+        data = roleData as RoleData;
+      }
+      const operation = new ToSetRoleMentionable(cordeBot, this._commandName, this._isNot);
+      return operation.action(mentionable, data);
     });
   }
 }
