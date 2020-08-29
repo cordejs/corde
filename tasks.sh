@@ -1,8 +1,8 @@
 #!/bin/bash
 
-##########################################
-## Definition of all tasks used in Cord ##
-##########################################
+###########################################
+## Definition of all tasks used in Corde ##
+###########################################
 
 LIB_PATH=lib;
 ROOT_PATH=.;
@@ -84,6 +84,21 @@ function help() {
     echo "- start-bot:          Execute corde test bot.";
 }
 
+function publish() {
+    echo "rebuilding project...";
+    clearAndBuild $LIB_PATH $ROOT_PATH
+    node ./scripts/checkVersion.js
+
+    if [ $? -eq 0 ]; then
+        echo "publishing using 'yarn publish'..."            
+        yarn publish
+
+        if [ $? -eq 0 ]; then
+            echo 'done'
+        fi
+    fi
+}
+
 case $1 in
     "build") clearAndBuild $LIB_PATH $ROOT_PATH;;
     "build-all-watch") buildAllWatch;;
@@ -93,5 +108,6 @@ case $1 in
     "build-all") buildAll;;
     "start-bot") initTestBot;;
     "watch-test-bot") watchTestBot $BOT_LIB_PATH $BOT_PATH;;
+    "publish-corde") publishCorde;;
     *) help $1;;
 esac
