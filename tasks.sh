@@ -91,11 +91,18 @@ function publish() {
 
     if [ $? -eq 0 ]; then
         echo "publishing using 'yarn publish'..."            
-        yarn publish
+       
+       if [ $1 = "release"]; then
+            yarn publish
+       else 
+            yarn publish --tag beta
+       fi
 
-        if [ $? -eq 0 ]; then
+        if [ $? = 0 ]; then
             echo 'done'
         fi
+    else
+        echo 'fail'
     fi
 }
 
@@ -108,6 +115,7 @@ case $1 in
     "build-all") buildAll;;
     "start-bot") initTestBot;;
     "watch-test-bot") watchTestBot $BOT_LIB_PATH $BOT_PATH;;
-    "publish-corde") publishCorde;;
+    "publish-beta") publishCorde beta;;
+    "publish-release") publishCorde release;;
     *) help $1;;
 esac
