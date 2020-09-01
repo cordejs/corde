@@ -1,7 +1,7 @@
 <div align="center">
   <br />
   <p>
-    <img width="300" height="300" src="./docs/logo.png" />
+    <img width="200" height="200" src="./docs/logo.png" />
   </p>
   <p>
     <a href="https://circleci.com/gh/lucasgmagalhaes/corde">
