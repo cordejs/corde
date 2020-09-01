@@ -35,3 +35,15 @@
   height: 200px;
   width: 200px;
 }
+
+.npmDownloadContainer {
+  margin-top: 47px;
+}
+
+.npmDownloadContainer span {
+  padding: 13px 40px;
+  background: white;
+  border-radius: 5px;
+  color: #4c4c4c;
+  font-weight: 600;
+}

@@ -1,0 +1,34 @@
+{
+  "version-1.0/someSidebar": [
+    {
+      "collapsed": true,
+      "type": "category",
+      "label": "Introduction",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.0/GettingStarted"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.0/doc2"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.0/doc3"
+        }
+      ]
+    },
+    {
+      "collapsed": true,
+      "type": "category",
+      "label": "Features",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.0/mdx"
+        }
+      ]
+    }
+  ]
+}
