@@ -7,15 +7,15 @@
       "items": [
         {
           "type": "doc",
-          "id": "version-1.0/getting-started"
+          "id": "version-2.0/getting-started"
         },
         {
           "type": "doc",
-          "id": "version-1.0/cli"
+          "id": "version-2.0/cli"
         },
         {
           "type": "doc",
-          "id": "version-1.0/configurations"
+          "id": "version-2.0/configurations"
         }
       ]
     }
