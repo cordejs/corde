@@ -7,26 +7,15 @@
       "items": [
         {
           "type": "doc",
-          "id": "version-1.0/GettingStarted"
+          "id": "version-1.0/getting-started"
         },
         {
           "type": "doc",
-          "id": "version-1.0/CLI"
+          "id": "version-1.0/cli"
         },
         {
           "type": "doc",
-          "id": "version-1.0/doc3"
-        }
-      ]
-    },
-    {
-      "collapsed": true,
-      "type": "category",
-      "label": "Features",
-      "items": [
-        {
-          "type": "doc",
-          "id": "version-1.0/mdx"
+          "id": "version-1.0/configurations"
         }
       ]
     }

@@ -1,7 +1,8 @@
 ---
-id: GettingStarted
+id: getting-started
 title: Getting Started
 sidebar_label: Getting Started
+custom_edit_url: https://github.com/lucasgmagalhaes/corde/blob/master/website/versioned_docs/version-1.0/GettingStarted.md
 slug: /
 ---
 
