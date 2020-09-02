@@ -11,8 +11,8 @@ module.exports = {
     navbar: {
       title: "Corde",
       logo: {
-        alt: "My Site Logo",
-        src: "img/logo.svg",
+        alt: "corde logo",
+        src: "img/logo.png",
       },
       items: [
         {
@@ -21,7 +21,6 @@ module.exports = {
           label: "Docs",
           position: "left",
         },
-        { to: "blog", label: "Blog", position: "left" },
         {
           href: "https://github.com/lucasgmagalhaes/corde",
           label: "GitHub",
@@ -54,19 +53,6 @@ module.exports = {
             },
           ],
         },
-        {
-          title: "More",
-          items: [
-            {
-              label: "Blog",
-              to: "blog",
-            },
-            {
-              label: "GitHub",
-              href: "https://github.com/lucasgmagalhaes/corde",
-            },
-          ],
-        },
       ],
       copyright: `Corde ${new Date().getFullYear()} `,
     },
@@ -77,11 +63,6 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
-          // Please change this to your repo.
-          editUrl: "https://github.com/lucasgmagalhaes/corde",
-        },
-        blog: {
-          showReadingTime: true,
           // Please change this to your repo.
           editUrl: "https://github.com/lucasgmagalhaes/corde",
         },
