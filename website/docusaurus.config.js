@@ -1,12 +1,12 @@
 module.exports = {
   title: "Corde",
   tagline: "A simple library for Discord bot tests",
-  url: "https://github.com/lucasgmagalhaes/corde",
+  url: "https://lucasgmagalhaes.github.io/corde",
   baseUrl: "/",
   onBrokenLinks: "throw",
   favicon: "img/favicon.ico",
   organizationName: "lucasgmagalhaes",
-  projectName: "Corde",
+  projectName: "corde",
   themeConfig: {
     navbar: {
       title: "Corde",
