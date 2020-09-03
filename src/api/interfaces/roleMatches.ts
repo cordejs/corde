@@ -57,4 +57,21 @@ export interface RoleMatches {
    */
   toSetRoleMentionable(mentionable: boolean, id: Snowflake): void;
   toSetRoleMentionable(mentionable: boolean, roleData: RoleData): void;
+
+  /**
+   * Defines if a role should be hoist or not.
+   *
+   * @param hoist if this role is pinned in the user listing.
+   *
+   * @description Discord provides two methods of displaying roles; hoisted and standard.
+   * The role hierarchy is visibly clear to server members; roles are sorted and displayed
+   * based on which role is higher in the role management menu.
+   *
+   * However, in a standard configuration, users are sorted alphabetically, meaning someone
+   * with the highest role will be sorted wherever their name exists in the alphabet.
+   *
+   * Source from [discord support](https://support.discord.com/hc/en-us/community/posts/360060076751-Un-hoisted-Role-Hierarchy).
+   * @see https://discord.com/developers/docs/topics/permissions
+   */
+  toSetHoist(hoist: boolean): void;
 }

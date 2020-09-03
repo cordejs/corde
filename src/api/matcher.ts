@@ -4,9 +4,12 @@ import { toReturn, toAddReaction, toSetRoleColor, toDeleteRole } from "./expectM
 import { MessageMatches } from "./interfaces/messageMatches";
 import { MessageData, RoleData } from "../types";
 import { toRemoveReaction } from "./expectMatches/message/toRemoveReaction";
-import { RoleMatches } from "./interfaces";
+import { RoleMatches, TestReport } from "./interfaces";
 import { Colors } from "../utils/colors";
 import { ToSetRoleMentionable } from "./expectMatches/role/toSetRoleMentionable";
+import { ExpectOperation } from "./expectMatches/operation";
+import { CordeBot } from "../core";
+import { ToSetHoist } from "./expectMatches/role/toSetHoist";
 
 /**
  * Defines all functions that can be used
@@ -92,9 +95,36 @@ class ExpectMatches implements Matches {
       } else {
         data = roleData as RoleData;
       }
-      const operation = new ToSetRoleMentionable(cordeBot, this._commandName, this._isNot);
-      return operation.action(mentionable, data);
+      return this.operationFactory(ToSetRoleMentionable, cordeBot, mentionable, data);
     });
+  }
+
+  public toSetHoist(hoist: boolean) {
+    testCollector.addTestFunction((cordeBot) => {
+      return this.operationFactory(ToSetHoist, cordeBot, hoist);
+    });
+  }
+
+  protected operationFactory<T extends ExpectOperation<P1>, P1>(
+    type: new (cordeBot: CordeBot, command: string, isNot: boolean) => T,
+    cordeBot: CordeBot,
+    p1: P1,
+  ): Promise<TestReport>;
+  protected operationFactory<T extends ExpectOperation<P1, P2>, P1, P2>(
+    type: new (cordeBot: CordeBot, command: string, isNot: boolean) => T,
+    cordeBot: CordeBot,
+    p1: P1,
+    p2: P2,
+  ): Promise<TestReport>;
+  protected operationFactory<T extends ExpectOperation<P1, P2, P3>, P1, P2, P3>(
+    type: new (cordeBot: CordeBot, command: string, isNot: boolean) => T,
+    cordeBot: CordeBot,
+    p1?: P1,
+    p2?: P2,
+    p3?: P3,
+  ): Promise<TestReport> {
+    const op = new type(cordeBot, this._commandName, this._isNot);
+    return op.action(p1, p2, p3);
   }
 }
 
