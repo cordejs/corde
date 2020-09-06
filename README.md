@@ -67,6 +67,10 @@
 
 Corde is a small testing library for Discord.js. As there is a tool to create bots for Discord, it's cool to also have a tool to test then. Corde objective is to be simple, fast and readable to delevopers, such as many others unity test tool around the web.
 
+## Documentation
+
+The bellow documentation is a resume of what you can find in [Corde's site](https://corde.netlify.app)
+
 ## 🚀 Getting started
 
 **Node.js 12.0.0 or newer is required**
