@@ -445,6 +445,31 @@ describe("Testing CordeBot object", () => {
       done();
     });
 
+    it("should return null due to no parameter", async (done) => {
+      const client = new Client();
+      const corde = initCordeClientWithChannel(mockDiscord, client);
+      client.emit("ready");
+
+      mockDiscord.textChannel.messages.cache = mockDiscord.messageCollection;
+
+      const message = await corde.findMessage(null);
+      expect(message).toBeFalsy();
+      done();
+    });
+
+    it("should return null due to no no fetch data", async (done) => {
+      const client = new Client();
+      const corde = initCordeClientWithChannel(mockDiscord, client);
+      client.emit("ready");
+
+      mockDiscord.textChannel.messages.cache.find = jest.fn().mockReturnValue(null);
+
+      mockDiscord.textChannel.messages.fetch = jest.fn().mockReturnValue(null);
+      const message = await corde.findMessage((m) => m.id === mockDiscord.message.id);
+      expect(message).toBeFalsy();
+      done();
+    });
+
     it("should find a cached message using message content", async (done) => {
       const client = new Client();
       const corde = initCordeClientWithChannel(mockDiscord, client);
