@@ -3,7 +3,7 @@ module.exports = {
   tagline: "A simple library for Discord bot tests",
   url: "https://lucasgmagalhaes.github.io/corde",
   baseUrl: "/",
-  onBrokenLinks: "throw",
+  onBrokenLinks: "log",
   favicon: "img/favicon.ico",
   organizationName: "lucasgmagalhaes",
   projectName: "corde",
@@ -37,10 +37,6 @@ module.exports = {
             {
               label: "Style Guide",
               to: "docs/",
-            },
-            {
-              label: "Second Doc",
-              to: "docs/doc2/",
             },
           ],
         },
