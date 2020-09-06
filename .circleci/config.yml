@@ -81,6 +81,7 @@ jobs:
       - image: circleci/node:latest
     steps:
       - checkout
+      - run: cd website
       - restore_cache:
           key: v1-website-deps-{{ checksum "yarn.lock" }}
       - run:
@@ -90,9 +91,10 @@ jobs:
           key: v1-website-deps-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
+      - run: cd ..
       - run:
           name: Deploy Corde website if needed
-          command: ./.circleci/website.sh
+          command: sh ./.circleci/website.sh
 
 workflows:
   version: 2
