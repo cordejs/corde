@@ -9,12 +9,12 @@ if ! grep -E "(^website\/.*)|(^\.circleci/website\.sh$)" files_changed.txt; then
     echo "Skipping website deploy. No relevant website files have changed"
 else
     echo "Relevant website files have changed"
-    # configure Docusaurus bot
+    # configure git user
     git config --global user.email "lucasgsm88@gmail.com"
     git config --global user.name "Corde deployment script"
     echo "machine github.com login $LOCAL_USER password $GH_TOKEN" >~/.netrc
-    # install Docusaurus and generate file of English strings
     cd website
+    yarn
     # build and publish website
-    yarn publish $LOCAL_USER
+    yarn deploy $LOCAL_USER
 fi
