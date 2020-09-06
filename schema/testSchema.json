@@ -6,5 +6,6 @@
   "guildId": "",
   "channelId": "",
   "botPrefix": "+",
-  "testFiles": ["./test"]
+  "testFiles": ["./test"],
+  "timeOut": 5000
 }

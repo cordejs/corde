@@ -57,8 +57,7 @@
       "additionalItems": true
     },
     "timeOut": {
-      "default": 0,
-      "examples": [1000],
+      "default": 5000,
       "title": "Timeout for each test. Value mesuared in miliseconds."
     }
   },
