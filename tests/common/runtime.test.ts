@@ -54,4 +54,39 @@ describe("Testing runtime", () => {
       done();
     }
   });
+
+  it("should get cordeTestToken", () => {
+    runtime.setConfigs(config);
+    expect(runtime.cordeTestToken).toBe(config.cordeTestToken);
+  });
+
+  it("should get botTestId", () => {
+    runtime.setConfigs(config);
+    expect(runtime.botTestId).toBe(config.botTestId);
+  });
+
+  it("should get botTestToken", () => {
+    runtime.setConfigs(config);
+    expect(runtime.botTestToken).toBe(config.botTestToken);
+  });
+
+  it("should get channelId", () => {
+    runtime.setConfigs(config);
+    expect(runtime.channelId).toBe(config.channelId);
+  });
+
+  it("should get guildId", () => {
+    runtime.setConfigs(config);
+    expect(runtime.guildId).toBe(config.guildId);
+  });
+
+  it("should get timeOut", () => {
+    runtime.setConfigs(config);
+    expect(runtime.timeOut).toBe(config.timeOut);
+  });
+
+  it("should get botPrefix", () => {
+    runtime.setConfigs(config);
+    expect(runtime.botPrefix).toBe(config.botPrefix);
+  });
 });
