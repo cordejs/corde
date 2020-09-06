@@ -493,4 +493,61 @@ describe("Testing CordeBot object", () => {
       done();
     });
   });
+
+  it("should fetchRole by it's id", async () => {
+    const corde = initCordeBot();
+    mockDiscord.guild.roles.fetch = jest.fn().mockReturnValue(mockDiscord.role);
+    const role = await corde.fetchRole(mockDiscord.role.id);
+    expect(role).toEqual(mockDiscord.role);
+    expect(mockDiscord.guild.roles.fetch).toBeCalledWith(mockDiscord.role.id);
+  });
+
+  it("should find a role by it's id", async () => {
+    const corde = initCordeBot();
+    mockDiscord.guild.roles.fetch = jest.fn().mockReturnValue(mockDiscord.roleManager);
+    const role = await corde.findRole({ id: mockDiscord.role.id });
+    expect(role).toEqual(mockDiscord.role);
+  });
+
+  it("should find a role by it's name", async () => {
+    const corde = initCordeBot();
+    mockDiscord.guild.roles.fetch = jest.fn().mockReturnValue(mockDiscord.roleManager);
+    const role = await corde.findRole({ name: mockDiscord.role.name });
+    expect(role).toEqual(mockDiscord.role);
+  });
+
+  it("should not find a role by it's name", async () => {
+    const corde = initCordeBot();
+    mockDiscord.guild.roles.fetch = jest.fn().mockReturnValue(mockDiscord.roleManager);
+    const role = await corde.findRole({ name: "ba" });
+    expect(role).toBeFalsy();
+  });
+
+  it("should not find a role by it's id", async () => {
+    const corde = initCordeBot();
+    mockDiscord.guild.roles.fetch = jest.fn().mockReturnValue(mockDiscord.roleManager);
+    const role = await corde.findRole({ id: "123" });
+    expect(role).toBeFalsy();
+  });
+
+  it("should not find a role due to no option", async () => {
+    const corde = initCordeBot();
+    mockDiscord.guild.roles.fetch = jest.fn().mockReturnValue(mockDiscord.roleManager);
+    const role = await corde.findRole({});
+    expect(role).toBeFalsy();
+  });
+
+  it("should find a role by it's id if pass both id and name", async () => {
+    const corde = initCordeBot();
+    mockDiscord.guild.roles.fetch = jest.fn().mockReturnValue(mockDiscord.roleManager);
+    const role = await corde.findRole({ id: mockDiscord.role.id, name: "bata" });
+    expect(role).toEqual(mockDiscord.role);
+  });
 });
+
+function initCordeBot() {
+  const client = new Client();
+  const corde = initCordeClientWithChannel(mockDiscord, client);
+  client.emit("ready");
+  return corde;
+}

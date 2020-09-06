@@ -13,6 +13,8 @@ import {
   SnowflakeUtil,
   MessageManager,
   MessageEmbed,
+  Role,
+  RoleManager,
 } from "discord.js";
 
 /**
@@ -27,24 +29,26 @@ import {
  *
  */
 export default class MockDiscord {
-  private _id!: string;
-  private _message!: Message;
-  private _messageEmbed!: MessageEmbed;
-  private _client!: Client;
-  private _guild!: Guild;
-  private _channel!: Channel;
-  private _guildChannel!: GuildChannel;
-  private _textChannel!: TextChannel;
-  private _user!: User;
-  private _userBot!: User;
-  private _guildMember!: GuildMember;
+  private _id: string;
+  private _message: Message;
+  private _messageEmbed: MessageEmbed;
+  private _client: Client;
+  private _guild: Guild;
+  private _channel: Channel;
+  private _guildChannel: GuildChannel;
+  private _textChannel: TextChannel;
+  private _user: User;
+  private _userBot: User;
+  private _guildMember: GuildMember;
   private _guildManager: GuildManager;
-  private _messageReaction!: MessageReaction;
-  private _isolatedMessageReaction!: MessageReaction;
-  private _messageCollection!: Collection<string, Message>;
-  private _messageEmbedCollection!: Collection<string, MessageEmbed>;
-  private _messageReactionCollection!: Collection<string, MessageReaction>;
-  private _messageManager!: MessageManager;
+  private _messageReaction: MessageReaction;
+  private _isolatedMessageReaction: MessageReaction;
+  private _messageCollection: Collection<string, Message>;
+  private _messageEmbedCollection: Collection<string, MessageEmbed>;
+  private _messageReactionCollection: Collection<string, MessageReaction>;
+  private _messageManager: MessageManager;
+  private _role: Role;
+  private _roleManager: RoleManager;
 
   /**
    * Initialize all mocks
@@ -220,6 +224,14 @@ export default class MockDiscord {
     return this._messageEmbedCollection;
   }
 
+  public get role() {
+    return this._role;
+  }
+
+  public get roleManager() {
+    return this._roleManager;
+  }
+
   public get<T extends Collection<K, V>, K, V>(collection: T, index: number) {
     return collection.array()[index];
   }
@@ -248,6 +260,9 @@ export default class MockDiscord {
 
     this._messageEmbed = this.createMockMessageEmbed();
     this._messageEmbedCollection = this.createMockMessageEmbedCollection();
+
+    this._role = this.createMockRole();
+    this._roleManager = this.createMockRoleManager();
   }
 
   private createMockClient() {
@@ -449,5 +464,37 @@ export default class MockDiscord {
       )
       .addField("Inline field title", "Some value here", true)
       .setImage("https://i.imgur.com/wSTFkRM.png");
+  }
+
+  private createMockRole(customName = "WE DEM BOYZZ!!!!!! 1") {
+    return new Role(
+      this._client,
+      {
+        id: SnowflakeUtil.generate(),
+        name: customName,
+        color: 3447003,
+        hoist: true,
+        position: 1,
+        permissions: 66321471,
+        permissions_new: "66321471",
+        managed: false,
+        mentionable: false,
+      },
+      this._guild,
+    );
+  }
+
+  private createMockRoleManager() {
+    const manager = new RoleManager(this._guild);
+    manager.add(this._role, true);
+
+    // Workaround for rawPosition change after add to manager
+    manager.cache.first().rawPosition = 1;
+    const newRole = this.createMockRole("batata 2");
+
+    manager.add(newRole, true);
+    const cachedNewRole = manager.cache.find((r) => r.id === newRole.id);
+    cachedNewRole.rawPosition = 2;
+    return manager;
   }
 }
