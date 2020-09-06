@@ -1,7 +1,7 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema",
   "$id": "https://github.com/lucasgmagalhaes/corde/blob/master/schema/corde.json",
-  "default": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
   "description": "",
   "examples": [
     {
