@@ -313,6 +313,26 @@ describe("Testing CordeBot object", () => {
       done();
     });
 
+    it("should return a message reaction without inform a amount", async (done) => {
+      const client = new Client();
+      const corde = initCordeClientWithChannel(mockDiscord, client);
+      mockDiscord.message.awaitReactions = jest
+        .fn()
+        .mockImplementation((filter: CollectorFilter) => {
+          if (filter(mockDiscord.messageReaction, mockDiscord.userBot)) {
+            return mockDiscord.messageReactionCollection;
+          } else {
+            return null;
+          }
+        });
+
+      jest.spyOn(mockDiscord.message, "awaitReactions");
+      const reactions = await corde.waitForAddedReactions(mockDiscord.message);
+      expect(reactions.first()).toBe(mockDiscord.messageReaction);
+      expect(reactions.size).toBe(1);
+      done();
+    });
+
     it("should return a message reaction based on the reaction", async (done) => {
       const client = new Client();
       const corde = initCordeClientWithChannel(mockDiscord, client);
