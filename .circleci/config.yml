@@ -2,9 +2,6 @@ version: 2.1
 
 jobs:
   build:
-    branches:
-      ignore:
-        - gh-pages
     working_directory: ~/corde
     docker:
       - image: circleci/node:latest
@@ -24,9 +21,6 @@ jobs:
           command: yarn build
 
   lint:
-    branches:
-      ignore:
-        - gh-pages
     working_directory: ~/corde
     docker:
       - image: circleci/node:current
@@ -42,9 +36,6 @@ jobs:
           command: yarn lint
 
   test:
-    branches:
-      ignore:
-        - gh-pages
     working_directory: ~/corde
     docker:
       - image: circleci/node:latest
@@ -67,9 +58,6 @@ jobs:
             - .
 
   publish_coverage:
-    branches:
-      ignore:
-        - gh-pages
     working_directory: ~/corde
     docker:
       - image: circleci/node:latest
@@ -87,14 +75,52 @@ jobs:
           name: Publish coverage
           command: yarn codecov -f coverage/*.json
 
+  publish_website:
+    working_directory: ~/corde
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - restore_cache:
+          key: v1-website-deps-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install dependencies
+          command: yarn
+      - save_cache:
+          key: v1-website-deps-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+      - run:
+          name: Deploy Corde website if needed
+          command: ./.circleci/website.sh
+
 workflows:
   version: 2
+
   build-and-test:
     jobs:
-      - build
+      - build:
+          filters:
+            branches:
+              ignore: gh-pages
+
       - test:
           requires:
             - build
+          filters:
+            branches:
+              ignore: gh-pages
+
       - publish_coverage:
           requires:
             - test
+          filters:
+            branches:
+              ignore: gh-pages
+
+  website-build-deploy:
+    jobs:
+      - publish_website:
+        filters:
+          branches:
+            only: master # Restrict website deploy to only master branch

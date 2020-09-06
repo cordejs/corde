@@ -8,13 +8,13 @@ slug: /
 Install Corde using [`yarn`](https://yarnpkg.com/en/package/corde):
 
 ```bash
-yarn add --dev jest
+yarn add --dev corde
 ```
 
 Or [`npm`](https://www.npmjs.com/package/corde):
 
 ```bash
-npm install --save-dev jest
+npm install --save-dev corde
 ```
 
 Note: Corde documentation uses `yarn` commands, but `npm` will also work. You can compare `yarn` and `npm` commands in the [yarn docs, here](https://yarnpkg.com/en/docs/migrating-from-npm#toc-cli-commands-comparison).
