@@ -21,7 +21,7 @@ function printErrorAndExit(error: Error) {
     console.log(`${chalk.red("error")} Command failed with exit code 1`);
     console.log(error.stack);
   } else {
-    console.log(error);
+    console.log("Unkown error");
   }
 
   if (runtime.isBotLoggedIn()) {
