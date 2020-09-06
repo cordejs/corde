@@ -1,0 +1,10 @@
+{
+  "$schema": "./corde.schema.json",
+  "cordeTestToken": "",
+  "botTestId": "",
+  "botTestToken": "",
+  "guildId": "",
+  "channelId": "",
+  "botPrefix": "+",
+  "testFiles": ["./test"]
+}

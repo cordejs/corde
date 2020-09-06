@@ -1,6 +1,7 @@
 {
   "$id": "https://raw.githubusercontent.com/lucasgmagalhaes/corde/master/schema/corde.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Schema for Corde config",
   "type": "object",
   "description": "",
   "examples": [
@@ -24,54 +25,39 @@
     "botPrefix",
     "testFiles"
   ],
-  "title": "Schema for Corde config",
   "properties": {
     "cordeTestToken": {
       "default": "",
       "description": "",
-      "examples": ["YaA4MDMiOTY2O4I2MjAwODMy.X2iRwg.Rf3-TqLExWuPQjxnVaDCGv9V7cB"],
       "title": "The bot token that Corde will use to simulate a user."
     },
     "botTestId": {
       "default": "",
-      "description": "An explanation about the purpose of this instance.",
-      "examples": ["12412142412"],
       "title": "Your bot's id."
     },
     "botTestToken": {
       "default": "",
-      "description": "An explanation about the purpose of this instance.",
-      "examples": ["YaA4MDMiOTY2O4I2MjAwODMy.X2iRwg.Rf3-TqLExWuPQjxnVaDCGv9V7cB"],
       "title": "Your bot's Token."
     },
     "guildId": {
       "default": "",
-      "description": "An explanation about the purpose of this instance.",
-      "examples": ["514212632960122287894"],
       "title": "The id of the guild where both bots are."
     },
     "channelId": {
       "default": "",
-      "description": "An explanation about the purpose of this instance.",
-      "examples": ["514212632960122287894"],
       "title": "The id of the channel where both bots are."
     },
     "botPrefix": {
       "default": "",
-      "description": "An explanation about the purpose of this instance.",
-      "examples": ["!"],
       "title": "Prefix for call your bot."
     },
     "testFiles": {
       "default": [],
-      "description": "An explanation about the purpose of this instance.",
-      "examples": [["./test"]],
       "title": "Array with the path of test folders | files.",
       "additionalItems": true
     },
     "timeOut": {
       "default": 0,
-      "description": "An explanation about the purpose of this instance.",
       "examples": [1000],
       "title": "Timeout for each test. Value mesuared in miliseconds."
     }
