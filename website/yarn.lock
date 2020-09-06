@@ -1126,7 +1126,7 @@
     "@francoischalifour/autocomplete-preset-algolia" "^1.0.0-alpha.28"
     algoliasearch "^4.0.0"
 
-"@docusaurus/core@2.0.0-alpha.63", "@docusaurus/core@^2.0.0-alpha.63":
+"@docusaurus/core@2.0.0-alpha.63", "@docusaurus/core@^2.0.0-alpha.62":
   version "2.0.0-alpha.63"
   resolved "https://registry.yarnpkg.com/@docusaurus/core/-/core-2.0.0-alpha.63.tgz#e0b1db9b7a14773c6e0a56d48ba9ab85fe322ee4"
   integrity sha512-IVSL29ZQAB7wuBTPgtJAvHUfmQRBY/MS2ypxPTwlhPqTORPIqeEaLFgyeWQ0RgZ5iqzB5WVQiEUk2Kx0WI3/Qw==
