@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
-  "$id": "http://example.com/corde.json",
+  "$id": "https://github.com/lucasgmagalhaes/corde/blob/master/schema/schema.json",
   "default": {},
   "description": "",
   "examples": [
