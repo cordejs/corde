@@ -7,6 +7,8 @@ custom_edit_url: https://github.com/lucasgmagalhaes/corde/blob/master/website/ve
 Corde's configuration can be defined through a `corde.js|json|ts` file. This file must be in the root of your application,
 or you can declare a custom path for it with the cli option [--config](CLI.mdx#--config).
 
+teste
+
 This is the full config file for Corde:
 
 ```javascript
