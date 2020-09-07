@@ -10,23 +10,6 @@
         src="https://img.shields.io/circleci/build/github/lucasgmagalhaes/corde?style=flat-square"
       />
     </a>
-    <a
-      href="https://app.fossa.com/projects/git%2Bgithub.com%2Flucasgmagalhaes%2Fcorde?ref=badge_shield"
-      alt="FOSSA Status"
-    >
-      <img
-        src="https://app.fossa.com/api/projects/git%2Bgithub.com%2Flucasgmagalhaes%2Fcorde.svg?type=shield"
-      />
-    </a>
-    <a href="https://codeclimate.com/github/lucasgmagalhaes/corde/maintainability">
-	    <img src="https://api.codeclimate.com/v1/badges/bd6aa1e8cc90223a399d/maintainability" />
-    </a>
-    <a href="https://www.codefactor.io/repository/github/lucasgmagalhaes/corde">
-      <img
-        alt="CodeFactor"
-        src="https://www.codefactor.io/repository/github/lucasgmagalhaes/corde/badge?style=flat-square&s=70989af6ce2fa5361a2fdd19db2224fa2820b89e"
-      />
-    </a>
     <a href="https://codecov.io/gh/lucasgmagalhaes/corde">
       <img
         alt="Codecov"
@@ -36,22 +19,6 @@
     <a href="https://www.npmjs.com/package/corde">
       <img alt="Npm version" src="https://img.shields.io/npm/v/corde?style=flat-square" />
     </a>
-  </p>
-  <p>
-    <a href="https://david-dm.org/lucasgmagalhaes/corde">
-      <img
-        alt="Dependencies Status"
-        src="https://david-dm.org/lucasgmagalhaes/corde/status.svg?style=flat-square"
-      />
-    </a>
-    <a href="https://david-dm.org/lucasgmagalhaes/corde?type=dev">
-      <img
-        alt="DevDependencies Status"
-        src="https://david-dm.org/lucasgmagalhaes/corde/dev-status.svg?style=flat-square"
-      />
-    </a>
-  </p>
-  <p>
     <a href="https://nodei.co/npm/corde/">
       <img alt="npm" src="https://img.shields.io/npm/dt/corde?style=flat-square"></a>
   </p>
