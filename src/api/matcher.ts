@@ -44,6 +44,7 @@ class ExpectMatches implements Matches {
       toReturn(this._commandName, this._isNot, cordeBot, expect),
     );
   }
+
   public toAddReaction(...reaction: string[]): void {
     testCollector.addTestFunction((cordeBot) =>
       toAddReaction(this._commandName, this._isNot, cordeBot, reaction),
@@ -141,6 +142,6 @@ export class ExpectMatchesWithNot extends ExpectMatches implements MatchWithNot 
 
   constructor(commandName: string) {
     super(commandName, false);
-    this.not = new ExpectMatches(super._commandName, true);
+    this.not = new ExpectMatches(commandName, true);
   }
 }
