@@ -34,7 +34,7 @@ program
       runtime.testFiles = program.args;
     }
     if (program.files) {
-      runtime.testFiles = [program.files];
+      runtime.testFiles = program.files.split(" ");
     }
     await go();
   });
@@ -54,12 +54,8 @@ program
   .description("Search for corde configs and check if all data are valid")
   .action(() => {
     const configs = reader.loadConfig();
-    try {
-      validate(configs);
-      console.log("All configs are ok!");
-    } catch (error) {
-      process.exit(1);
-    }
+    validate(configs);
+    console.log("All configs are ok!");
   });
 
 if (module.parent && process.env.ENV !== "TEST") {

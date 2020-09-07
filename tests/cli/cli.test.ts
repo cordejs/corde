@@ -40,6 +40,38 @@ describe("testing cli", () => {
     expect(runtime.configFilePath).toBe(testPath);
   });
 
+  it("should call go command with -f option (single file)", () => {
+    const spy = jest.spyOn(goFunc, "go").mockImplementation(null);
+    const testFiles = "./tests";
+    program.parse(["node", "test", "-f", testFiles]);
+    expect(spy).toBeCalled();
+    expect(runtime.testFiles).toEqual(testFiles.split(" "));
+  });
+
+  it("should call go command with -f option (multiple files)", () => {
+    const spy = jest.spyOn(goFunc, "go").mockImplementation(null);
+    const testFiles = "./tests ./tests2";
+    program.parse(["node", "test", "-f", testFiles]);
+    expect(spy).toBeCalled();
+    expect(runtime.testFiles).toEqual(testFiles.split(" "));
+  });
+
+  it("should call go command with --files option (single file)", () => {
+    const spy = jest.spyOn(goFunc, "go").mockImplementation(null);
+    const testFiles = "./tests";
+    program.parse(["node", "test", "--files", testFiles]);
+    expect(spy).toBeCalled();
+    expect(runtime.testFiles).toEqual(testFiles.split(" "));
+  });
+
+  it("should call go command with --files option (multiple files)", () => {
+    const spy = jest.spyOn(goFunc, "go").mockImplementation(null);
+    const testFiles = "./tests ./tests2";
+    program.parse(["node", "test", "--files", testFiles]);
+    expect(spy).toBeCalled();
+    expect(runtime.testFiles).toEqual(testFiles.split(" "));
+  });
+
   it("should call go command with --config option", () => {
     const spy = jest.spyOn(goFunc, "go").mockImplementation(null);
     const testPath = "potatoe";
