@@ -5,6 +5,7 @@ import * as toReturnFn from "../../src/api/expectMatches/message/toReturn";
 import * as toAddReactionFn from "../../src/api/expectMatches/message/toAddReaction";
 import * as toRemoveReactionFn from "../../src/api/expectMatches/message/toRemoveReaction";
 import * as toSetRoleColorFn from "../../src/api/expectMatches/role/toSetRoleColor";
+import { Colors } from "../../src/utils/colors";
 
 let toReturnSpy: jest.SpyInstance;
 let toAddReactionSpy: jest.SpyInstance;
@@ -128,6 +129,62 @@ describe("Testing describe function", () => {
       const expectReaction = "😀";
       const con = "test";
       new ExpectMatchesWithNot(con).not.toRemoveReaction(expectReaction);
+      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(toRemoveReactionSpy).toBeCalledWith(
+        con,
+        true,
+        runtime.bot,
+        [expectReaction],
+        undefined,
+      );
+    });
+  });
+
+  describe("testing toSetRoleColor function", () => {
+    it("should add a function to hasIsolatedTestFunctions after call toSetRoleColor", () => {
+      new ExpectMatchesWithNot("test").toSetRoleColor(Colors.DARK_AQUA, "123");
+      expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
+    });
+
+    it("should add a toRemoveReaction function", () => {
+      new ExpectMatchesWithNot("con").toSetRoleColor(Colors.DARK_AQUA, "123");
+      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(toRemoveReactionSpy).toBeCalled();
+    });
+
+    it("should add a toRemoveReaction function with correct values (isNot false)", () => {
+      const expectReaction = "😀";
+      const con = "test";
+      new ExpectMatchesWithNot(con).toSetRoleColor(Colors.DARK_AQUA, "123");
+      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(toRemoveReactionSpy).toBeCalledWith(
+        con,
+        false,
+        runtime.bot,
+        [expectReaction],
+        undefined,
+      );
+    });
+
+    it("should add a toRemoveReaction function with message data", () => {
+      const expectReaction = "😀";
+      const con = "test";
+      const messageData = { id: "12312312" };
+      new ExpectMatchesWithNot(con).toSetRoleColor(Colors.DARK_AQUA, "123");
+      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(toRemoveReactionSpy).toBeCalledWith(
+        con,
+        false,
+        runtime.bot,
+        [expectReaction],
+        messageData,
+      );
+    });
+
+    it("should add a toRemoveReaction function with correct values (isNot true)", () => {
+      const expectReaction = "😀";
+      const con = "test";
+      new ExpectMatchesWithNot(con).not.toSetRoleColor(Colors.DARK_AQUA, "123");
       runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(toRemoveReactionSpy).toBeCalledWith(
         con,
