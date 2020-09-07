@@ -38,4 +38,11 @@ describe("Testing describe function", () => {
     const func = testCollector.cloneIsolatedTestFunctions()[0];
     expect(func.toString()).toContain("toAddReaction");
   });
+
+  it("should add toRemoveReactions function", () => {
+    new ExpectMatchesWithNot("test").toRemoveReaction(["😀"]);
+    const func = testCollector.cloneIsolatedTestFunctions()[0];
+    expect(func.toString()).toContain("toRemoveReactions");
+    expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
+  });
 });

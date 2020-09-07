@@ -46,5 +46,8 @@ export interface MessageMatches {
    * @param message Values that will be used to find the message. **do not use all filters**, just one.
    * message ID is the main object used to filter, so, if all filters are filled, only ID will be considered.
    */
-  toRemoveReactions(reactions: string[], message?: MessageData): void;
+  toRemoveReaction(reactions: string[]): void;
+  toRemoveReaction(...reactions: string[]): void;
+  toRemoveReaction(reactions: string, message: MessageData): void;
+  toRemoveReaction(reactions: string[], message: MessageData): void;
 }

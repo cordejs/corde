@@ -49,10 +49,18 @@ class ExpectMatches implements Matches {
       toAddReaction(this._commandName, this._isNot, cordeBot, reaction),
     );
   }
-  public toRemoveReactions(reactions: string[], message?: MessageData): void {
-    testCollector.addTestFunction((cordeBot) =>
-      toRemoveReaction(this._commandName, this._isNot, cordeBot, reactions, message),
-    );
+
+  public toRemoveReaction(...reactions: string[]): void;
+  public toRemoveReaction(reactions: string[]): void;
+  public toRemoveReaction(reactions: string, message: MessageData): void;
+  public toRemoveReaction(reactions: string[], message: MessageData): void;
+  public toRemoveReaction(reactions: string | string[], message?: any) {
+    testCollector.addTestFunction((cordeBot) => {
+      if (Array.isArray(reactions)) {
+        return toRemoveReaction(this._commandName, this._isNot, cordeBot, reactions, message);
+      }
+      return toRemoveReaction(this._commandName, this._isNot, cordeBot, [reactions], message);
+    });
   }
 
   public toSetRoleColor(color: Colors, id: Snowflake): void;
