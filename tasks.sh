@@ -84,7 +84,7 @@ function help() {
     echo "- start-bot:          Execute corde test bot.";
 }
 
-function publish() {
+function publishCorde() {
     echo "rebuilding project...";
     clearAndBuild $LIB_PATH $ROOT_PATH
     node ./scripts/checkVersion.js
