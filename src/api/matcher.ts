@@ -6,7 +6,7 @@ import { MessageData, RoleData } from "../types";
 import { toRemoveReaction } from "./expectMatches/message/toRemoveReaction";
 import { RoleMatches, TestReport } from "./interfaces";
 import { Colors } from "../utils/colors";
-import { ToSetRoleMentionable } from "./expectMatches/role/toSetRoleMentionable";
+import ToSetRoleMentionable from "./expectMatches/role/toSetRoleMentionable";
 import { ExpectOperation } from "./expectMatches/operation";
 import { CordeBot } from "../core";
 import { ToSetHoist } from "./expectMatches/role/toSetHoist";
