@@ -91,7 +91,7 @@ the user call **!hello** (`!` is the prefix for bot. Always use a prefix for you
 Let's implement the `bot.test.js`:
 
 ```javascript title="./tests/bot.test.js"
-const { group, test, command, beforeStart, afterAll } = require("corde");
+const { group, test, command, beforeStart, afterAll, expect } = require("corde");
 const { client, loginBot } = require("..");
 
 beforeStart(() => {
