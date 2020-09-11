@@ -1,5 +1,4 @@
 import { Command } from "commander";
-import * as pack from "../../package.json";
 import { go } from "./go";
 import { init } from "./init";
 import { validate } from "./validate";
@@ -7,6 +6,7 @@ import { runtime } from "../common";
 import reader from "../core/reader";
 import { configFileType } from "../types";
 import { initErrorHandlers } from "../errorHandler";
+import pack from "../package";
 
 initErrorHandlers();
 
