@@ -1,4 +1,4 @@
-import { testCollector } from "../../src/common/testColletor";
+import { testCollector } from "../../src/common/testCollector";
 import { toReturn } from "../../src/api/expectMatches";
 import { Client, CollectorFilter } from "discord.js";
 import MockDiscord from "../mocks/mockDiscord";

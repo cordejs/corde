@@ -1,4 +1,4 @@
-import { testCollector } from "../../src/common/testColletor";
+import { testCollector } from "../../src/common/testCollector";
 import { Test } from "../../src/types";
 import { test } from "../../src/api";
 
