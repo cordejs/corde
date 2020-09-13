@@ -15,7 +15,7 @@ class TestCollector {
   public isCollecting: boolean;
 
   /**
-   * Defines if the thread running has a **gruop** function.
+   * Defines if the thread running has a **group** function.
    */
   public hasGroup: boolean;
 
@@ -26,7 +26,7 @@ class TestCollector {
 
   /**
    * List of assertions found in running file.
-   * @description Assetions are the minor type of object in
+   * @description Assertions are the minor type of object in
    * position tree, but being the most important of all them.
    */
   public assertions: AssertionProps[] = [];

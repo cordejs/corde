@@ -73,5 +73,6 @@ export interface RoleMatches {
    * Source from [discord support](https://support.discord.com/hc/en-us/community/posts/360060076751-Un-hoisted-Role-Hierarchy).
    * @see https://discord.com/developers/docs/topics/permissions
    */
-  toSetHoist(hoist: boolean): void;
+  toSetRoleHoist(hoist: boolean, id: string): void;
+  toSetRoleHoist(hoist: boolean, roleData: RoleData): void;
 }

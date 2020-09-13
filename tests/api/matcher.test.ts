@@ -1,4 +1,4 @@
-import { testCollector } from "../../src/common/testColletor";
+import { testCollector } from "../../src/common/testCollector";
 import { runtime } from "../../src/common/runtime";
 import { ExpectMatchesWithNot } from "../../src/api";
 import * as toReturnFn from "../../src/api/expectMatches/message/toReturn";
@@ -8,8 +8,10 @@ import * as toSetRoleColorFn from "../../src/api/expectMatches/role/toSetRoleCol
 import * as toDeleteRoleFn from "../../src/api/expectMatches/role/toDeleteRole";
 import { Colors } from "../../src/utils/colors";
 import ToSetRoleMentionable from "../../src/api/expectMatches/role/toSetRoleMentionable";
+import { ToSetRoleHoist } from "../../src/api/expectMatches/role/toSetRoleHoist";
 
 jest.mock("../../src/api/expectMatches/role/toSetRoleMentionable");
+jest.mock("../../src/api/expectMatches/role/toSetRoleHoist");
 
 let toReturnSpy: jest.SpyInstance;
 let toAddReactionSpy: jest.SpyInstance;
@@ -17,7 +19,10 @@ let toRemoveReactionSpy: jest.SpyInstance;
 let toSetRoleColorSpy: jest.SpyInstance;
 let toDeleteRoleSpy: jest.SpyInstance;
 let toSetRoleMentionableSpy: jest.SpyInstance<any, any>;
-const actionMock = jest.fn();
+let toSetHoistSpy: jest.SpyInstance<any, any>;
+
+const toSetRoleMentionableActionMock = jest.fn();
+const toSetHoistActionMock = jest.fn();
 const con = "test";
 
 describe("Testing describe function", () => {
@@ -31,7 +36,13 @@ describe("Testing describe function", () => {
 
     toSetRoleMentionableSpy = (ToSetRoleMentionable as jest.Mock).mockImplementation(() => {
       return {
-        action: actionMock,
+        action: toSetRoleMentionableActionMock,
+      };
+    });
+
+    toSetHoistSpy = (ToSetRoleHoist as jest.Mock).mockImplementation(() => {
+      return {
+        action: toSetHoistActionMock,
       };
     });
   });
@@ -138,6 +149,20 @@ describe("Testing describe function", () => {
       );
     });
 
+    it("should add a toRemoveReaction function with array of emojis", () => {
+      const expectReaction = ["😀"];
+      const messageData = { id: "12312312" };
+      new ExpectMatchesWithNot(con).toRemoveReaction(expectReaction, messageData);
+      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(toRemoveReactionSpy).toBeCalledWith(
+        con,
+        false,
+        runtime.bot,
+        expectReaction,
+        messageData,
+      );
+    });
+
     it("should add a toRemoveReaction function with correct values (isNot true)", () => {
       const expectReaction = "😀";
       new ExpectMatchesWithNot(con).not.toRemoveReaction(expectReaction);
@@ -163,25 +188,25 @@ describe("Testing describe function", () => {
       expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
     });
 
-    it("should add a toRemoveReaction function", () => {
+    it("should add a toSetRoleColor function", () => {
       new ExpectMatchesWithNot("con").toSetRoleColor(color, "123");
       runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(toSetRoleColorSpy).toBeCalled();
     });
 
-    it("should add a toRemoveReaction function with correct values (isNot false)", () => {
+    it("should add a toSetRoleColor function with correct values (isNot false)", () => {
       new ExpectMatchesWithNot(con).toSetRoleColor(color, "123");
       runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(toSetRoleColorSpy).toBeCalledWith(con, false, runtime.bot, color, roleId);
     });
 
-    it("should add a toRemoveReaction function with message data", () => {
-      new ExpectMatchesWithNot(con).toSetRoleColor(Colors.DARK_AQUA, "123");
+    it("should add a toSetRoleColor function with message data", () => {
+      new ExpectMatchesWithNot(con).toSetRoleColor(Colors.DARK_AQUA, { id: "123" });
       runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
-      expect(toSetRoleColorSpy).toBeCalledWith(con, false, runtime.bot, color, roleId);
+      expect(toSetRoleColorSpy).toBeCalledWith(con, false, runtime.bot, color, { id: "123" });
     });
 
-    it("should add a toRemoveReaction function with correct values (isNot true)", () => {
+    it("should add a toSetRoleColor function with correct values (isNot true)", () => {
       new ExpectMatchesWithNot(con).not.toSetRoleColor(color, "123");
       runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(toSetRoleColorSpy).toBeCalledWith(con, true, runtime.bot, color, roleId);
@@ -236,7 +261,6 @@ describe("Testing describe function", () => {
   });
 
   describe("testing toSetRoleMentionable function", () => {
-    const color = Colors.DARK_AQUA;
     const roleId = {
       id: "123",
     };
@@ -257,14 +281,52 @@ describe("Testing describe function", () => {
       new ExpectMatchesWithNot(con).toSetRoleMentionable(mentionableTrue, roleId);
       runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToSetRoleMentionable).toBeCalledWith(runtime.bot, con, false);
-      expect(actionMock).toBeCalledWith(mentionableTrue, roleId, undefined);
+      expect(toSetRoleMentionableActionMock).toBeCalledWith(mentionableTrue, roleId, undefined);
     });
 
     it("should add a toSetRoleMentionable function with correct values (isNot true)", () => {
       new ExpectMatchesWithNot(con).not.toSetRoleMentionable(mentionableTrue, roleId);
       runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToSetRoleMentionable).toBeCalledWith(runtime.bot, con, true);
-      expect(actionMock).toBeCalledWith(mentionableTrue, roleId, undefined);
+      expect(toSetRoleMentionableActionMock).toBeCalledWith(mentionableTrue, roleId, undefined);
+    });
+  });
+
+  describe("testing toSetRoleHoist function", () => {
+    const roleId = {
+      id: "123",
+    };
+    const mentionableTrue = true;
+    it("should add a function to hasIsolatedTestFunctions after call toSetRoleHoist", () => {
+      new ExpectMatchesWithNot("test").toSetRoleHoist(mentionableTrue, roleId);
+      expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
+    });
+
+    it("should add a toSetRoleHoist function", () => {
+      new ExpectMatchesWithNot("con").toSetRoleHoist(mentionableTrue, roleId);
+      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(toSetHoistSpy).toBeCalled();
+    });
+
+    it("should add a toSetRoleHoist function with correct values using id", () => {
+      new ExpectMatchesWithNot(con).toSetRoleHoist(mentionableTrue, "123");
+      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToSetRoleHoist).toBeCalledWith(runtime.bot, con, false);
+      expect(toSetHoistActionMock).toBeCalledWith(true, roleId, undefined);
+    });
+
+    it("should add a toSetRoleHoist function with correct values (isNot false)", () => {
+      new ExpectMatchesWithNot(con).toSetRoleHoist(mentionableTrue, roleId);
+      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToSetRoleHoist).toBeCalledWith(runtime.bot, con, false);
+      expect(toSetHoistActionMock).toBeCalledWith(true, roleId, undefined);
+    });
+
+    it("should add a toSetRoleHoist function with correct values (isNot true)", () => {
+      new ExpectMatchesWithNot(con).not.toSetRoleHoist(mentionableTrue, roleId);
+      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToSetRoleHoist).toBeCalledWith(runtime.bot, con, true);
+      expect(toSetHoistActionMock).toBeCalledWith(mentionableTrue, roleId, undefined);
     });
   });
 });

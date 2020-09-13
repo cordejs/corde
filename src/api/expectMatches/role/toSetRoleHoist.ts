@@ -2,7 +2,7 @@ import { ExpectOperation } from "../operation";
 import { RoleData } from "discord.js";
 import { TestReport } from "../..";
 
-export class ToSetHoist extends ExpectOperation<boolean, RoleData> {
+export class ToSetRoleHoist extends ExpectOperation<boolean, RoleData> {
   public async action(hoist: boolean, roleData: RoleData): Promise<TestReport> {
     try {
       await super.cordeBot.sendTextMessage(super.command);

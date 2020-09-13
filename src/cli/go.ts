@@ -2,7 +2,7 @@ import fs from "fs";
 import ora, { Color, Ora } from "ora";
 import path from "path";
 import { runtime } from "../common/runtime";
-import { testCollector } from "../common/testColletor";
+import { testCollector } from "../common/testCollector";
 import reader from "../core/reader";
 import { reporter } from "../core/reporter";
 import { executeTestCases } from "../core/runner";

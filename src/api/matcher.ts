@@ -1,5 +1,5 @@
 import { MessageEmbed, ColorResolvable, Snowflake } from "discord.js";
-import { testCollector } from "../common/testColletor";
+import { testCollector } from "../common/testCollector";
 import { toReturn, toAddReaction, toSetRoleColor, toDeleteRole } from "./expectMatches";
 import { MessageMatches } from "./interfaces/messageMatches";
 import { MessageData, RoleData } from "../types";
@@ -9,7 +9,7 @@ import { Colors } from "../utils/colors";
 import ToSetRoleMentionable from "./expectMatches/role/toSetRoleMentionable";
 import { ExpectOperation } from "./expectMatches/operation";
 import { CordeBot } from "../core";
-import { ToSetHoist } from "./expectMatches/role/toSetHoist";
+import { ToSetRoleHoist } from "./expectMatches/role/toSetRoleHoist";
 
 /**
  * Defines all functions that can be used
@@ -34,6 +34,7 @@ export interface MatchWithNot extends Matches {
 class ExpectMatches implements Matches {
   protected _commandName: string;
   protected _isNot: boolean;
+
   constructor(commandName: string, isNot: boolean) {
     this._commandName = commandName;
     this._isNot = isNot;
@@ -69,13 +70,8 @@ class ExpectMatches implements Matches {
   public toSetRoleColor(color: ColorResolvable, id: Snowflake): void;
   public toSetRoleColor(color: ColorResolvable, name: RoleData): void;
   public toSetRoleColor(color: ColorResolvable | Colors, role: Snowflake | RoleData) {
+    const data = this.getRoleData(role);
     testCollector.addTestFunction((cordeBot) => {
-      let data: RoleData;
-      if (typeof role === "string") {
-        data = { id: role };
-      } else {
-        data = role as RoleData;
-      }
       return toSetRoleColor(this._commandName, this._isNot, cordeBot, color, data);
     });
   }
@@ -83,13 +79,8 @@ class ExpectMatches implements Matches {
   public toDeleteRole(id: string): void;
   public toDeleteRole(name: RoleData): void;
   public toDeleteRole(role: string | RoleData) {
+    const data = this.getRoleData(role);
     testCollector.addTestFunction((cordeBot) => {
-      let data: RoleData;
-      if (typeof role === "string") {
-        data = { id: role };
-      } else {
-        data = role as RoleData;
-      }
       return toDeleteRole(this._commandName, this._isNot, cordeBot, data);
     });
   }
@@ -97,21 +88,29 @@ class ExpectMatches implements Matches {
   public toSetRoleMentionable(mentionable: boolean, id: string): void;
   public toSetRoleMentionable(mentionable: boolean, roleData: RoleData): void;
   public toSetRoleMentionable(mentionable: boolean, roleData: string | RoleData) {
+    const data = this.getRoleData(roleData);
     testCollector.addTestFunction((cordeBot) => {
-      let data: RoleData;
-      if (typeof roleData === "string") {
-        data = { id: roleData };
-      } else {
-        data = roleData as RoleData;
-      }
       return this.operationFactory(ToSetRoleMentionable, cordeBot, mentionable, data);
     });
   }
 
-  public toSetHoist(hoist: boolean) {
+  public toSetRoleHoist(hoist: boolean, id: string): void;
+  public toSetRoleHoist(hoist: boolean, roleData: RoleData): void;
+  public toSetRoleHoist(hoist: boolean, roleData: string | RoleData) {
+    const data = this.getRoleData(roleData);
     testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(ToSetHoist, cordeBot, hoist);
+      return this.operationFactory(ToSetRoleHoist, cordeBot, hoist, data);
     });
+  }
+
+  protected getRoleData(roleData: string | RoleData) {
+    let data: RoleData;
+    if (typeof roleData === "string") {
+      data = { id: roleData };
+    } else {
+      data = roleData as RoleData;
+    }
+    return data;
   }
 
   protected operationFactory<T extends ExpectOperation<P1>, P1>(

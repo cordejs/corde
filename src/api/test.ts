@@ -1,4 +1,4 @@
-import { testCollector } from "../common/testColletor";
+import { testCollector } from "../common/testCollector";
 
 /**
  * Represents a group of commands.
