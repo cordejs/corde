@@ -8,7 +8,7 @@ import { TestReport } from "../interfaces";
  * what are the data that the test function will receive.
  *
  * These data will be used in action() command, witch will be implemented
- * by the inherated class.
+ * by the inherited class.
  *
  */
 export abstract class ExpectOperation<P1 = any, P2 = any, P3 = any> {
@@ -33,6 +33,7 @@ export abstract class ExpectOperation<P1 = any, P2 = any, P3 = any> {
     this.isNot = isNot;
     this.command = command;
     this.cordeBot = cordeBot;
+    this.isEqual = false;
   }
 
   /**
@@ -42,7 +43,7 @@ export abstract class ExpectOperation<P1 = any, P2 = any, P3 = any> {
    * @param p2 Second parameter of the test.
    * @param p3 Thirty parameter of the test.
    *
-   * @returns A report of the runned command.
+   * @returns A report of the executed command.
    */
   public abstract async action(p1: P1, p2: P2, p3: P3): Promise<TestReport>;
 
