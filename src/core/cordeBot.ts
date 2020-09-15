@@ -9,10 +9,11 @@ import {
   MessageReaction,
   TextChannel,
 } from "discord.js";
-import { BehaviorSubject, TimeoutError } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 import { MessageData, RoleData } from "../types";
 import { Events } from "./events";
 import { CordeClientError } from "../errors/cordeClientError";
+import { TimeoutError } from "../errors";
 
 const DEFAULT_TEST_TIMEOUT = 5000;
 
@@ -75,19 +76,19 @@ export class CordeBot extends Events {
   }
 
   /**
-   * Authenticate Corde bot to the instaled bot in Discord server.
+   * Authenticate Corde bot to the installed bot in Discord server.
    *
    * @param token Corde bot token
    *
    * @returns Promise resolve for success connection, or a promise
-   * rejection with a formated message if there was found a error in
+   * rejection with a formatted message if there was found a error in
    * connection attempt.
    */
   public async login(token: string) {
     try {
       return await this._client.login(token);
     } catch (error) {
-      return Promise.reject(this.buildLoginErroMessage(token, error));
+      return Promise.reject(this.buildLoginErrorMessage(token, error));
     }
   }
 
@@ -103,18 +104,18 @@ export class CordeBot extends Events {
    *
    * @see Runtime
    *
-   * @param message Message without prefix that will be sent to defined servers's channel
-   * @description The message is concatened with the stored **prefix** and is sent to the channel.
+   * @param message Message without prefix that will be sent to defined server's channel
+   * @description The message is concatenated with the stored **prefix** and is sent to the channel.
    *
-   * @return Promisse rejection if a testing bot does not send any message in the timeout value setted,
-   * or a resolve for the promisse with the message returned by the testing bot.
+   * @return Promise rejection if a testing bot does not send any message in the timeout value setted,
+   * or a resolve for the promise with the message returned by the testing bot.
    */
   public async sendTextMessage(message: string): Promise<Message> {
     return new Promise<Message>(async (resolve, reject) => {
       try {
         this.validateMessageAndChannel(message);
-        const formatedMessage = this._prefix + message;
-        const returnedMessage = await this.textChannel.send(formatedMessage);
+        const formattedMessage = this._prefix + message;
+        const returnedMessage = await this.textChannel.send(formattedMessage);
         resolve(returnedMessage);
       } catch (error) {
         reject(new TimeoutError());
@@ -299,7 +300,7 @@ export class CordeBot extends Events {
     });
   }
 
-  private buildLoginErroMessage(token: string, error: object) {
+  private buildLoginErrorMessage(token: string, error: object) {
     return `Error trying to login with token ${token}. \n` + error;
   }
 
@@ -335,7 +336,7 @@ export class CordeBot extends Events {
       );
       throw new CordeClientError(
         `Could not find the guild ${guildId}.` +
-          ` this client has conections with the following guilds: ${availableGuildsIds}`,
+          ` this client has connections with the following guilds: ${availableGuildsIds}`,
       );
     }
   }

@@ -88,18 +88,18 @@ describe("testing toReturn", () => {
   it("should return a failed test due to a not known error with isNot = true", async () => {
     const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
 
-    const unkownError = "unkown";
+    const unknownError = "unknown";
     const reportModel = new TestReport({
       commandName: "hello",
       expectation: mockDiscord.messageCollection.array()[1].content,
-      output: unkownError,
+      output: unknownError,
       isNot: true,
       hasPassed: false,
       showExpectAndOutputValue: true,
     });
 
     cordeClient.sendTextMessage = jest.fn().mockImplementation(() => {
-      throw new Error(unkownError);
+      throw new Error(unknownError);
     });
 
     const report = await toReturn(

@@ -8,7 +8,7 @@ export interface TestReportModel {
   customReturnMessage?: string;
 }
 
-export class TestReport implements TestReport {
+export class TestReport {
   public readonly commandName: string;
   public readonly expectation: any;
   public readonly output: any;
