@@ -3,7 +3,7 @@ import { toReturn } from "../../src/api/expectMatches";
 import { Client, CollectorFilter } from "discord.js";
 import MockDiscord from "../mocks/mockDiscord";
 import { initCordeClient, initCordeClientWithChannel } from "../testHelper";
-import { TimeoutError } from "rxjs";
+import { TimeoutError } from "../../src/errors";
 
 const DEFAULT_PREFIX = "!";
 const mockDiscord = new MockDiscord();
