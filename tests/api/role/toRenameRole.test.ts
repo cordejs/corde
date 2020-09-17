@@ -75,4 +75,22 @@ describe("testing ToRenameRole operation", () => {
     });
     expect(report).toEqual(matchReport);
   });
+
+  it("should find a role and return a failed report due", async () => {
+    const corde = initCordeClientWithChannel(mockDiscord, new Client());
+    corde.findRole = jest.fn().mockImplementation(() => {
+      throw new Error();
+    });
+
+    const toRename = new ToRenameRole(corde, "test", false);
+    const report = await toRename.action("egg", { id: "123" });
+    const matchReport = new TestReport({
+      commandName,
+      hasPassed: false,
+      isNot: false,
+      showExpectAndOutputValue: false,
+      output: "",
+    });
+    expect(report).toEqual(matchReport);
+  });
 });
