@@ -1,7 +1,7 @@
 export interface TestReportModel {
   commandName: string;
-  expectation: any;
-  output: any;
+  expectation?: any;
+  output?: any;
   isNot: boolean;
   hasPassed: boolean;
   showExpectAndOutputValue: boolean;
@@ -10,8 +10,8 @@ export interface TestReportModel {
 
 export class TestReport {
   public readonly commandName: string;
-  public readonly expectation: any;
-  public readonly output: any;
+  public readonly expectation?: any;
+  public readonly output?: any;
   public readonly isNot: boolean;
   public readonly showExpectAndOutputValue: boolean;
   public readonly customReturnMessage?: string;

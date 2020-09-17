@@ -5,15 +5,15 @@ import { TestReport } from "../..";
 export class ToSetRoleHoist extends ExpectOperation<boolean, RoleData> {
   public async action(hoist: boolean, roleData: RoleData): Promise<TestReport> {
     try {
-      await super.cordeBot.sendTextMessage(super.command);
-      const role = await super.cordeBot.findRole(roleData);
+      await this.cordeBot.sendTextMessage(this.command);
+      const role = await this.cordeBot.findRole(roleData);
       if (role.hoist === hoist) {
-        super.isEqual = true;
+        this.isEqual = true;
       }
     } catch (error) {
-      super.catchExecutionError(error);
+      this.catchExecutionError(error);
     }
 
-    return super.generateReport();
+    return this.generateReport();
   }
 }

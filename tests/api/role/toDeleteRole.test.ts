@@ -84,4 +84,21 @@ describe("testing toDeleteRole function", () => {
     };
     expect(report).toEqual(model);
   });
+
+  it("should fail due to inexistent role", async () => {
+    const corde = initCordeClientWithChannel(mockDiscord, new Client());
+
+    corde.findRole = jest.fn().mockReturnValue(null);
+
+    const report = await toDeleteRole("test", true, corde, { id: "123" });
+    const model: TestReportModel = {
+      commandName: "test",
+      expectation: "",
+      output: "No role found",
+      hasPassed: false,
+      isNot: true,
+      showExpectAndOutputValue: false,
+    };
+    expect(report).toEqual(model);
+  });
 });

@@ -53,7 +53,7 @@ export interface RoleMatches {
    * Defines a role that should have his *mentionable* property state.
    *
    * @param mentionable If the role can or can not be mentionable.
-   * @param id Id of the role. Can also use RoleData to filter it.
+   * @param id Identifier of the role. Can also use RoleData to filter it.
    */
   toSetRoleMentionable(mentionable: boolean, id: Snowflake): void;
   toSetRoleMentionable(mentionable: boolean, roleData: RoleData): void;
@@ -62,6 +62,7 @@ export interface RoleMatches {
    * Defines if a role should be hoist or not.
    *
    * @param hoist if this role is pinned in the user listing.
+   * @param id Identifier of the role. Can also use RoleData to filter it.
    *
    * @description Discord provides two methods of displaying roles; hoisted and standard.
    * The role hierarchy is visibly clear to server members; roles are sorted and displayed
@@ -75,4 +76,14 @@ export interface RoleMatches {
    */
   toSetRoleHoist(hoist: boolean, id: string): void;
   toSetRoleHoist(hoist: boolean, roleData: RoleData): void;
+
+  /**
+   * Defines a new name for a role.
+   *
+   * @param newName new name of the role
+   * @param id Identifier of the role. Can also use RoleData to filter it.
+   *
+   */
+  toRenameRole(newName: string, id: string): void;
+  toRenameRole(newName: string, roleData: RoleData): void;
 }

@@ -10,6 +10,7 @@ import ToSetRoleMentionable from "./expectMatches/role/toSetRoleMentionable";
 import { ExpectOperation } from "./expectMatches/operation";
 import { CordeBot } from "../core";
 import { ToSetRoleHoist } from "./expectMatches/role/toSetRoleHoist";
+import ToRenameRole from "./expectMatches/role/toRenameRole";
 
 /**
  * Defines all functions that can be used
@@ -100,6 +101,15 @@ class ExpectMatches implements Matches {
     const data = this.getRoleData(roleData);
     testCollector.addTestFunction((cordeBot) => {
       return this.operationFactory(ToSetRoleHoist, cordeBot, hoist, data);
+    });
+  }
+
+  public toRenameRole(newName: string, id: string): void;
+  public toRenameRole(newName: string, roleData: RoleData): void;
+  public toRenameRole(newName: string, roleData: string | RoleData) {
+    const data = this.getRoleData(roleData);
+    testCollector.addTestFunction((cordeBot) => {
+      return this.operationFactory(ToRenameRole, cordeBot, newName, data);
     });
   }
 
