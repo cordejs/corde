@@ -41,7 +41,7 @@ export interface RoleMatches {
    * const data = msg.guild.roles.cache.find((r) => r.name === roleName);
    * await data.delete();
    *
-   * //The test operation shuld be
+   * //The test operation should be
    *
    * expect("commandThatChangeColorOf player-one").toDeleteRole({name: "player-one"})
    *

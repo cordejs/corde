@@ -16,10 +16,6 @@ declare module "ora" {
   }
 }
 
-process.on("uncaughtException", () => {
-  stopLoading();
-});
-
 let spinner: Ora;
 
 export async function go() {

@@ -1,3 +1,4 @@
+const arg = require("arg");
 const { Client, MessageEmbed, Message } = require("discord.js");
 const { botPrefix, botTestToken } = require("../../corde.js");
 
@@ -43,6 +44,8 @@ bot.on("message", async (message) => {
     deleteRole(message, args[0]);
   } else if (command === "addrole") {
     addRole(message, args[0]);
+  } else if (command === "rename-role") {
+    renameRole(message, args[0], args[1]);
   } else {
     console.log("No command found");
   }
@@ -108,6 +111,17 @@ async function addRole(msg, roleName) {
       name: roleName,
     },
   });
+}
+
+/**
+ * @param {Message} msg
+ * @param {string} roleName
+ * @param {string} newName
+ */
+async function renameRole(msg, roleName, newName) {
+  console.log(roleName);
+  const role = msg.guild.roles.cache.find((r) => r.name === roleName);
+  await role.setName(newName);
 }
 
 function emojis(msg) {
