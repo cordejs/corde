@@ -588,6 +588,11 @@ describe("Testing CordeBot object", () => {
     const role = await corde.findRole({ id: mockDiscord.role.id, name: "bata" });
     expect(role).toEqual(mockDiscord.role);
   });
+
+  it("should list all roles of the guild", async () => {
+    const corde = initCordeBot();
+    expect(corde.getRoles()).toEqual(mockDiscord.guild.roles.cache);
+  });
 });
 
 function initCordeBot() {
