@@ -1,5 +1,7 @@
 // Cannot be `import` as it's not under TS root dir
-const { version: VERSION, description: DESCRIPTION } = require("../../package.json");
+const { version: VERSION, description: DESCRIPTION } = require(process.env.ENV !== "TEST"
+  ? "../../package.json"
+  : "../package.json");
 
 /**
  * Corde's package.json data
