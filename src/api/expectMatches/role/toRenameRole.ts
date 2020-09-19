@@ -2,7 +2,7 @@ import { ExpectOperation } from "../operation";
 import { TestReport } from "../..";
 import { RoleData } from "../../../types";
 
-export default class ToRenameRole extends ExpectOperation<string, RoleData> {
+export class ToRenameRole extends ExpectOperation<string, RoleData> {
   public async action(newName: string, roleData: RoleData): Promise<TestReport> {
     try {
       let role = await this.cordeBot.findRole(roleData);

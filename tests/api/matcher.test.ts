@@ -9,9 +9,11 @@ import * as toDeleteRoleFn from "../../src/api/expectMatches/role/toDeleteRole";
 import { Colors } from "../../src/utils/colors";
 import ToSetRoleMentionable from "../../src/api/expectMatches/role/toSetRoleMentionable";
 import { ToSetRoleHoist } from "../../src/api/expectMatches/role/toSetRoleHoist";
+import { ToRenameRole } from "../../src/api/expectMatches/role/toRenameRole";
 
 jest.mock("../../src/api/expectMatches/role/toSetRoleMentionable");
 jest.mock("../../src/api/expectMatches/role/toSetRoleHoist");
+jest.mock("../../src/api/expectMatches/role/ToRenameRole");
 
 let toReturnSpy: jest.SpyInstance;
 let toAddReactionSpy: jest.SpyInstance;
@@ -20,12 +22,14 @@ let toSetRoleColorSpy: jest.SpyInstance;
 let toDeleteRoleSpy: jest.SpyInstance;
 let toSetRoleMentionableSpy: jest.SpyInstance<any, any>;
 let toSetHoistSpy: jest.SpyInstance<any, any>;
+let toRenameRoleSpy: jest.SpyInstance<any, any>;
 
 const toSetRoleMentionableActionMock = jest.fn();
 const toSetHoistActionMock = jest.fn();
+const toRenameRoleActionMock = jest.fn();
 const con = "test";
 
-describe("Testing describe function", () => {
+describe("Testing matches class", () => {
   beforeEach(() => {
     testCollector.clearIsolatedTestFunctions();
     toReturnSpy = jest.spyOn(toReturnFn, "toReturn").mockReturnValue(null);
@@ -43,6 +47,12 @@ describe("Testing describe function", () => {
     toSetHoistSpy = (ToSetRoleHoist as jest.Mock).mockImplementation(() => {
       return {
         action: toSetHoistActionMock,
+      };
+    });
+
+    toRenameRoleSpy = (ToRenameRole as jest.Mock).mockImplementation(() => {
+      return {
+        action: toRenameRoleActionMock,
       };
     });
   });
@@ -329,4 +339,46 @@ describe("Testing describe function", () => {
       expect(toSetHoistActionMock).toBeCalledWith(mentionableTrue, roleId, undefined);
     });
   });
+
+  describe("testing toRenameRole function", () => {
+    const roleId = {
+      id: "123",
+    };
+    const mentionableTrue = true;
+    it("should add a function to hasIsolatedTestFunctions after call toRenameRole", () => {
+      initExpectMatch().toRenameRole("newName", roleId);
+      expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
+    });
+
+    it("should add a toRenameRole function", () => {
+      initExpectMatch().toRenameRole("newName", roleId);
+      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(toSetHoistSpy).toBeCalled();
+    });
+
+    it("should add a toRenameRole function with correct values using id", () => {
+      initExpectMatch().toRenameRole("newName", "123");
+      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToRenameRole).toBeCalledWith(runtime.bot, con, false);
+      expect(toRenameRoleActionMock).toBeCalledWith("newName", { id: "123" }, undefined);
+    });
+
+    it("should add a toRenameRole function with correct values (isNot false)", () => {
+      initExpectMatch().toRenameRole("newName", roleId);
+      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToRenameRole).toBeCalledWith(runtime.bot, con, false);
+      expect(toRenameRoleActionMock).toBeCalledWith("newName", roleId, undefined);
+    });
+
+    it("should add a toRenameRole function with correct values (isNot true)", () => {
+      initExpectMatch().not.toRenameRole("newName", roleId);
+      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToRenameRole).toBeCalledWith(runtime.bot, con, true);
+      expect(toRenameRoleActionMock).toBeCalledWith("newName", roleId, undefined);
+    });
+  });
 });
+
+function initExpectMatch() {
+  return new ExpectMatchesWithNot(con);
+}

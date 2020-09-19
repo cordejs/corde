@@ -1,6 +1,6 @@
 import { Client } from "discord.js";
 import { TestReport } from "../../../src/api";
-import ToRenameRole from "../../../src/api/expectMatches/role/toRenameRole";
+import { ToRenameRole } from "../../../src/api/expectMatches/role/toRenameRole";
 import MockDiscord from "../../mocks/mockDiscord";
 import { initCordeClientWithChannel } from "../../testHelper";
 

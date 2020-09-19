@@ -10,7 +10,7 @@ import ToSetRoleMentionable from "./expectMatches/role/toSetRoleMentionable";
 import { ExpectOperation } from "./expectMatches/operation";
 import { CordeBot } from "../core";
 import { ToSetRoleHoist } from "./expectMatches/role/toSetRoleHoist";
-import ToRenameRole from "./expectMatches/role/toRenameRole";
+import { ToRenameRole } from "./expectMatches/role/toRenameRole";
 
 /**
  * Defines all functions that can be used
