@@ -12,7 +12,7 @@ export async function toRemoveReaction(
 ): Promise<TestReport> {
   let expectation = "";
   let output = "";
-  let testSucessfully = false;
+  let testSuccessfully = false;
 
   expectation = removedReactions.join();
 
@@ -21,15 +21,15 @@ export async function toRemoveReaction(
     const message = await cordeBot.findMessage(messageData);
     if (message) {
       const reactions = await cordeBot.waitForRemovedReactions(message, removedReactions.length);
-      testSucessfully = reactionsExistsIn(reactions, removedReactions);
+      testSuccessfully = reactionsExistsIn(reactions, removedReactions);
       output = reactions.map((v) => v.emoji.name).join();
     }
 
     if (isNot) {
-      testSucessfully = !testSucessfully;
+      testSuccessfully = !testSuccessfully;
     }
   } catch (error) {
-    testSucessfully = false;
+    testSuccessfully = false;
     if (error instanceof Error) {
       output = error.message;
     } else {
@@ -41,7 +41,7 @@ export async function toRemoveReaction(
     commandName,
     expectation,
     output,
-    hasPassed: testSucessfully,
+    hasPassed: testSuccessfully,
     isNot,
     showExpectAndOutputValue: false,
   });

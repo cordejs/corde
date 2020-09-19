@@ -10,15 +10,15 @@ import { Group } from "../types";
 import { validate } from "./validate";
 import { FileError } from "../errors";
 
+process.on("uncaughtException", () => {
+  stopLoading();
+});
+
 declare module "ora" {
   interface Ora {
     _spinner: object;
   }
 }
-
-process.on("uncaughtException", () => {
-  stopLoading();
-});
 
 let spinner: Ora;
 
