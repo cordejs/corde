@@ -13,7 +13,7 @@ import { ToRenameRole } from "../../src/api/expectMatches/role/toRenameRole";
 
 jest.mock("../../src/api/expectMatches/role/toSetRoleMentionable");
 jest.mock("../../src/api/expectMatches/role/toSetRoleHoist");
-jest.mock("../../src/api/expectMatches/role/ToRenameRole");
+jest.mock("../../src/api/expectMatches/role/toRenameRole");
 
 let toReturnSpy: jest.SpyInstance;
 let toAddReactionSpy: jest.SpyInstance;
