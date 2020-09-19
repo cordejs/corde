@@ -1,6 +1,6 @@
 import { ExpectOperation } from "../operation";
-import { RoleData } from "discord.js";
 import { TestReport } from "../..";
+import { RoleData } from "../../../types";
 
 export class ToSetRolePosition extends ExpectOperation<number, RoleData> {
   public async action(newPosition: number, roleData: RoleData): Promise<TestReport> {
@@ -14,8 +14,9 @@ export class ToSetRolePosition extends ExpectOperation<number, RoleData> {
       if (!role) {
         this.isEqual = false;
         this.forceIsEqualValue = true;
-        this.output = "No role found";
+        this.output = "Role not found";
       } else if (newPosition > lastRole.position) {
+        this.forceIsEqualValue = true;
         this.customReturnMessage = `the maximum position possible is ${lastRole.position}. Attempted value: ${newPosition}`;
       } else {
         await this.cordeBot.sendTextMessage(this.command);

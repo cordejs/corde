@@ -62,7 +62,7 @@ export abstract class ExpectOperation<P1 = any, P2 = any, P3 = any> {
     }
   }
 
-  protected generateReport(showExpectAndOutputValue = false, customReturnMessage?: string) {
+  protected generateReport(showExpectAndOutputValue = false) {
     return new TestReport({
       commandName: this.command,
       expectation: this.expectation,
@@ -70,7 +70,7 @@ export abstract class ExpectOperation<P1 = any, P2 = any, P3 = any> {
       isNot: this.isNot,
       output: this.output,
       showExpectAndOutputValue,
-      customReturnMessage,
+      customReturnMessage: this.customReturnMessage,
     });
   }
 

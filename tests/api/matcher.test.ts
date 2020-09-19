@@ -7,13 +7,17 @@ import * as toRemoveReactionFn from "../../src/api/expectMatches/message/toRemov
 import * as toSetRoleColorFn from "../../src/api/expectMatches/role/toSetRoleColor";
 import * as toDeleteRoleFn from "../../src/api/expectMatches/role/toDeleteRole";
 import { Colors } from "../../src/utils/colors";
-import { ToSetRoleMentionable } from "../../src/api/expectMatches/role/toSetRoleMentionable";
-import { ToSetRoleHoist } from "../../src/api/expectMatches/role/toSetRoleHoist";
-import { ToRenameRole } from "../../src/api/expectMatches/role/toRenameRole";
+import {
+  ToSetRolePosition,
+  ToRenameRole,
+  ToSetRoleHoist,
+  ToSetRoleMentionable,
+} from "../../src/api/expectMatches";
 
 jest.mock("../../src/api/expectMatches/role/toSetRoleMentionable");
 jest.mock("../../src/api/expectMatches/role/toSetRoleHoist");
 jest.mock("../../src/api/expectMatches/role/toRenameRole");
+jest.mock("../../src/api/expectMatches/role/toSetRolePosition");
 
 let toReturnSpy: jest.SpyInstance;
 let toAddReactionSpy: jest.SpyInstance;
@@ -23,10 +27,13 @@ let toDeleteRoleSpy: jest.SpyInstance;
 let toSetRoleMentionableSpy: jest.SpyInstance<any, any>;
 let toSetHoistSpy: jest.SpyInstance<any, any>;
 let toRenameRoleSpy: jest.SpyInstance<any, any>;
+let toSetRolePositionSpy: jest.SpyInstance<any, any>;
 
 const toSetRoleMentionableActionMock = jest.fn();
 const toSetHoistActionMock = jest.fn();
 const toRenameRoleActionMock = jest.fn();
+const toSetRolePositionActionMock = jest.fn();
+
 const con = "test";
 
 describe("Testing matches class", () => {
@@ -53,6 +60,12 @@ describe("Testing matches class", () => {
     toRenameRoleSpy = (ToRenameRole as jest.Mock).mockImplementation(() => {
       return {
         action: toRenameRoleActionMock,
+      };
+    });
+
+    toSetRolePositionSpy = (ToSetRolePosition as jest.Mock).mockImplementation(() => {
+      return {
+        action: toSetRolePositionActionMock,
       };
     });
   });
@@ -344,7 +357,7 @@ describe("Testing matches class", () => {
     const roleId = {
       id: "123",
     };
-    const mentionableTrue = true;
+
     it("should add a function to hasIsolatedTestFunctions after call toRenameRole", () => {
       initExpectMatch().toRenameRole("newName", roleId);
       expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
@@ -375,6 +388,45 @@ describe("Testing matches class", () => {
       runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToRenameRole).toBeCalledWith(runtime.bot, con, true);
       expect(toRenameRoleActionMock).toBeCalledWith("newName", roleId, undefined);
+    });
+  });
+
+  describe("testing toSetRolePosition function", () => {
+    const roleId = {
+      id: "123",
+    };
+
+    const newPosition = 1;
+    it("should add a function to hasIsolatedTestFunctions after call toSetRolePosition", () => {
+      initExpectMatch().toSetRolePosition(newPosition, roleId);
+      expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
+    });
+
+    it("should add a toRenameRole function", () => {
+      initExpectMatch().toSetRolePosition(newPosition, roleId);
+      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(toSetRolePositionSpy).toBeCalled();
+    });
+
+    it("should add a toSetRolePosition function with correct values using id", () => {
+      initExpectMatch().toSetRolePosition(newPosition, roleId);
+      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToSetRolePosition).toBeCalledWith(runtime.bot, con, false);
+      expect(toSetRolePositionActionMock).toBeCalledWith(newPosition, { id: "123" }, undefined);
+    });
+
+    it("should add a toSetRolePosition function with correct values (isNot false)", () => {
+      initExpectMatch().toSetRolePosition(newPosition, roleId);
+      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToSetRolePosition).toBeCalledWith(runtime.bot, con, false);
+      expect(toSetRolePositionActionMock).toBeCalledWith(newPosition, roleId, undefined);
+    });
+
+    it("should add a toSetRolePosition function with correct values (isNot true)", () => {
+      initExpectMatch().not.toSetRolePosition(newPosition, roleId);
+      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToSetRolePosition).toBeCalledWith(runtime.bot, con, true);
+      expect(toSetRolePositionActionMock).toBeCalledWith(newPosition, roleId, undefined);
     });
   });
 });
