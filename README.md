@@ -7,20 +7,20 @@
     <a href="https://circleci.com/gh/lucasgmagalhaes/corde">
       <img
         alt="CircleCi"
-        src="https://img.shields.io/circleci/build/github/lucasgmagalhaes/corde?style=flat-square"
+        src="https://img.shields.io/circleci/build/github/lucasgmagalhaes/corde"
       />
     </a>
     <a href="https://codecov.io/gh/lucasgmagalhaes/corde">
       <img
         alt="Codecov"
-        src="https://img.shields.io/codecov/c/github/lucasgmagalhaes/corde?style=flat-square"
+        src="https://img.shields.io/codecov/c/github/lucasgmagalhaes/corde"
       />
     </a>
     <a href="https://www.npmjs.com/package/corde">
-      <img alt="Npm version" src="https://img.shields.io/npm/v/corde?style=flat-square" />
+      <img alt="Npm version" src="https://img.shields.io/npm/v/corde" />
     </a>
     <a href="https://nodei.co/npm/corde/">
-      <img alt="npm" src="https://img.shields.io/npm/dt/corde?style=flat-square"></a>
+      <img alt="npm" src="https://img.shields.io/npm/dt/corde"></a>
   </p>
 </div>
 
