@@ -12,15 +12,21 @@ import { TestReport } from "../interfaces";
  *
  */
 export abstract class ExpectOperation<P1 = any, P2 = any, P3 = any> {
-  protected isNot: boolean;
-  protected command: string;
-  protected cordeBot: CordeBot;
   protected isEqual: boolean;
   protected output: any;
   protected expectation: any;
   protected hasPassed: boolean;
   protected showExpectAndOutputValue: boolean;
   protected customReturnMessage?: string;
+  /**
+   * Defines if the definition of **isEqual** should be
+   * kept independent of **isNot** value.
+   */
+  protected forceIsEqualValue: boolean;
+
+  protected readonly isNot: boolean;
+  protected readonly command: string;
+  protected readonly cordeBot: CordeBot;
 
   /**
    * Initialize the match class with its default values.
@@ -69,7 +75,7 @@ export abstract class ExpectOperation<P1 = any, P2 = any, P3 = any> {
   }
 
   private defineIsEqual(actualIsEqual: boolean) {
-    if (this.isNot) {
+    if (this.isNot && !this.forceIsEqualValue) {
       return !actualIsEqual;
     }
     return actualIsEqual;
