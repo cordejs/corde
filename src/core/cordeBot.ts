@@ -248,6 +248,10 @@ export class CordeBot extends Events {
     return null;
   }
 
+  public getRoles() {
+    return this.guild.roles.cache;
+  }
+
   /**
    * Search for messages based in a filter query.
    */

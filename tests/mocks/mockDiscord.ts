@@ -467,7 +467,7 @@ export default class MockDiscord {
   }
 
   private createMockRole(customName = "WE DEM BOYZZ!!!!!! 1") {
-    return new Role(
+    const role = new Role(
       this._client,
       {
         id: SnowflakeUtil.generate(),
@@ -475,6 +475,7 @@ export default class MockDiscord {
         color: 3447003,
         hoist: true,
         position: 1,
+        rawPosition: 1,
         permissions: 66321471,
         permissions_new: "66321471",
         managed: false,
@@ -482,6 +483,7 @@ export default class MockDiscord {
       },
       this._guild,
     );
+    return role;
   }
 
   private createMockRoleManager() {
