@@ -7,7 +7,7 @@ import * as toRemoveReactionFn from "../../src/api/expectMatches/message/toRemov
 import * as toSetRoleColorFn from "../../src/api/expectMatches/role/toSetRoleColor";
 import * as toDeleteRoleFn from "../../src/api/expectMatches/role/toDeleteRole";
 import { Colors } from "../../src/utils/colors";
-import ToSetRoleMentionable from "../../src/api/expectMatches/role/toSetRoleMentionable";
+import { ToSetRoleMentionable } from "../../src/api/expectMatches/role/toSetRoleMentionable";
 import { ToSetRoleHoist } from "../../src/api/expectMatches/role/toSetRoleHoist";
 import { ToRenameRole } from "../../src/api/expectMatches/role/toRenameRole";
 

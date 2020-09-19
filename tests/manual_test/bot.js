@@ -46,6 +46,8 @@ bot.on("message", async (message) => {
     addRole(message, args[0]);
   } else if (command === "rename-role") {
     renameRole(message, args[0], args[1]);
+  } else if (command === "set-role-position") {
+    setRolePosition(message, args[0], args[1]);
   } else {
     console.log("No command found");
   }
@@ -119,13 +121,22 @@ async function addRole(msg, roleName) {
  * @param {string} newName
  */
 async function renameRole(msg, roleName, newName) {
-  console.log(roleName);
   const role = msg.guild.roles.cache.find((r) => r.name === roleName);
   await role.setName(newName);
 }
 
 function emojis(msg) {
   Promise.all([msg.react("😄"), msg.react("🍊")]);
+}
+
+/**
+ * @param {Message} msg
+ * @param {string} roleName
+ * @param {number} newName
+ */
+async function setRolePosition(msg, roleName, newPosition) {
+  const role = msg.guild.roles.cache.find((r) => r.name === roleName);
+  await role.setPosition(newPosition);
 }
 
 function loginBot() {

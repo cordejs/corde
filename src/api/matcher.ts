@@ -1,16 +1,22 @@
-import { MessageEmbed, ColorResolvable, Snowflake } from "discord.js";
+import { ColorResolvable, MessageEmbed, Snowflake } from "discord.js";
 import { testCollector } from "../common/testCollector";
-import { toReturn, toAddReaction, toSetRoleColor, toDeleteRole } from "./expectMatches";
-import { MessageMatches } from "./interfaces/messageMatches";
-import { MessageData, RoleData } from "../types";
-import { toRemoveReaction } from "./expectMatches/message/toRemoveReaction";
-import { RoleMatches, TestReport } from "./interfaces";
-import { Colors } from "../utils/colors";
-import ToSetRoleMentionable from "./expectMatches/role/toSetRoleMentionable";
-import { ExpectOperation } from "./expectMatches/operation";
 import { CordeBot } from "../core";
-import { ToSetRoleHoist } from "./expectMatches/role/toSetRoleHoist";
-import { ToRenameRole } from "./expectMatches/role/toRenameRole";
+import { MessageData, RoleData } from "../types";
+import { Colors } from "../utils/colors";
+import {
+  toAddReaction,
+  toDeleteRole,
+  ToRenameRole,
+  toReturn,
+  toSetRoleColor,
+  ToSetRoleHoist,
+  ToSetRoleMentionable,
+  ToSetRolePosition,
+} from "./expectMatches";
+import { toRemoveReaction } from "./expectMatches/message/toRemoveReaction";
+import { ExpectOperation } from "./expectMatches/operation";
+import { RoleMatches, TestReport } from "./interfaces";
+import { MessageMatches } from "./interfaces/messageMatches";
 
 /**
  * Defines all functions that can be used
@@ -113,6 +119,15 @@ class ExpectMatches implements Matches {
     });
   }
 
+  public toSetRolePosition(newPosition: number, id: string): void;
+  public toSetRolePosition(newPosition: number, roleData: RoleData): void;
+  public toSetRolePosition(newPosition: number, roleData: string | RoleData) {
+    const data = this.getRoleData(roleData);
+    testCollector.addTestFunction((cordeBot) => {
+      return this.operationFactory(ToSetRolePosition, cordeBot, newPosition, data);
+    });
+  }
+
   protected getRoleData(roleData: string | RoleData) {
     let data: RoleData;
     if (typeof roleData === "string") {
@@ -126,23 +141,23 @@ class ExpectMatches implements Matches {
   protected operationFactory<T extends ExpectOperation<P1>, P1>(
     type: new (cordeBot: CordeBot, command: string, isNot: boolean) => T,
     cordeBot: CordeBot,
-    p1: P1,
+    parameter1: P1,
   ): Promise<TestReport>;
   protected operationFactory<T extends ExpectOperation<P1, P2>, P1, P2>(
     type: new (cordeBot: CordeBot, command: string, isNot: boolean) => T,
     cordeBot: CordeBot,
-    p1: P1,
-    p2: P2,
+    parameter1: P1,
+    parameter2: P2,
   ): Promise<TestReport>;
   protected operationFactory<T extends ExpectOperation<P1, P2, P3>, P1, P2, P3>(
     type: new (cordeBot: CordeBot, command: string, isNot: boolean) => T,
     cordeBot: CordeBot,
-    p1?: P1,
-    p2?: P2,
-    p3?: P3,
+    parameter1?: P1,
+    parameter2?: P2,
+    parameter3?: P3,
   ): Promise<TestReport> {
     const op = new type(cordeBot, this._commandName, this._isNot);
-    return op.action(p1, p2, p3);
+    return op.action(parameter1, parameter2, parameter3);
   }
 }
 

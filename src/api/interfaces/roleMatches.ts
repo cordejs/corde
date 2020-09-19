@@ -86,4 +86,19 @@ export interface RoleMatches {
    */
   toRenameRole(newName: string, id: string): void;
   toRenameRole(newName: string, roleData: RoleData): void;
+
+  /**
+   * Defines a new position for the role.
+   *
+   * @param newPosition The new position of the role.
+   * @param id Identifier of the role. Can also use RoleData to filter it.
+   *
+   * @description Role's maximum value depends of the amount of roles the guid Have.
+   * So, if there is only 3 roles (including the default *everyone*), the maximum
+   * position that a role can have is 2 (The count begins with 0, So: 0, 1, 2).
+   *
+   * @see https://discord.com/developers/docs/topics/permissions
+   */
+  toSetRolePosition(newPosition: number, id: string): void;
+  toSetRolePosition(newPosition: number, roleData: RoleData): void;
 }
