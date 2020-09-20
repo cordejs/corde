@@ -65,10 +65,8 @@ jobs:
     docker:
       - image: cimg/ruby:2.7-node
     steps:
-      - checkout
-      - run:
-          name: Build corde
-          command: ls
+      - checkout:
+          path: ~/corde
       - run:
           name: Build corde
           command: sh ./configureCorde.sh
