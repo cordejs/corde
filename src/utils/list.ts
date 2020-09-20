@@ -3,8 +3,8 @@
  * It's contains some others functions that are no present in Array itself
  * While provide access direct to main Array functions.
  *
- * The main goal is to reduce the acess to no relevant functions provided by Array and
- * specialize this class in iteration adition, reduction and search of elements.
+ * The main goal is to reduce the access to no relevant functions provided by Array and
+ * specialize this class in iteration addition, reduction and search of elements.
  */
 export class List<T> {
   private _data: T[];
@@ -181,7 +181,7 @@ export class List<T> {
    * Get a list of elements based in their **index**.
    * @param index Position of each element in list.
    * @returns A list with each element informed in array.
-   * No existing elements will be ignored in adition on list.
+   * No existing elements will be ignored in addition on list.
    */
   public get(...index: number[]): List<T>;
   public get(index: number | number[]): T | List<T> {
@@ -200,7 +200,7 @@ export class List<T> {
   }
 
   /**
-   * Returns the index of the first element that matchs with the informed element.
+   * Returns the index of the first element that matches with the informed element.
    * Same of [Array.indexOf](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf).
    * @param element Element to have its index searched.
    * @returns Index of the searched element.
