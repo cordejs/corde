@@ -67,6 +67,9 @@ jobs:
     steps:
       - checkout
       - run:
+        name: Build corde
+        command: ls
+      - run:
           name: Build corde
           command: sh ./configureCorde.sh
       - run:
