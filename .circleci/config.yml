@@ -64,9 +64,13 @@ jobs:
     working_directory: ~/corde/e2e
     docker:
       - image: cimg/ruby:2.7-node
+      - image: circleci/node:latest
     steps:
       - checkout:
           path: ~/corde
+      - run:
+          name: Install dependencies
+          command: yarn
       - run:
           name: Build corde
           command: sh ./configureCorde.sh
