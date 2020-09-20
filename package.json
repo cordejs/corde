@@ -25,6 +25,7 @@
   "scripts": {
     "build": "bash tasks.sh build",
     "watch": "bash tasks.sh watch",
+    "corde": "node ./bin/corde",
     "test": "jest --silent --runInBand --detectOpenHandles",
     "test-with-coverage": "jest --silent --runInBand --detectOpenHandles --collect-coverage --collectCoverageFrom=src/**/*.ts",
     "refresh": "rm -rf ./node_modules ./package-lock.json && yarn install",
