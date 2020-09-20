@@ -161,3 +161,12 @@ export enum Permission {
    */
   VIEW_GUILD_INSIGHTS = 0x00080000,
 }
+
+/**
+ * Convert a list of permissions into an integer value.
+ * @param permissions Permissions to be converted
+ */
+export function calcPermissionsValue(...permissions: Permission[]) {
+  // tslint:disable-next-line: no-bitwise
+  return permissions.reduce((p1, p2) => p1 | p2);
+}
