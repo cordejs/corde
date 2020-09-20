@@ -2,10 +2,9 @@ import fs from "fs";
 import path from "path";
 import { runtime, testCollector } from "../../src/common";
 import reader from "../../src/core/reader";
-import { Group } from "../../src/interfaces";
+import { Group } from "../../src/types";
 import consts from "../mocks/constsNames";
-import { InvalidConfigFileError } from "../../src/errors/invalidConfigFileError";
-import { FilesNotFoundError } from "../../src/errors";
+import { FileError } from "../../src/errors";
 
 const conf = require("../mocks/jsconfig/corde.js");
 const cwd = process.cwd();
@@ -55,7 +54,7 @@ describe("reader class", () => {
 
       it("should throw exception due to invalid file extension (.txt)", () => {
         runtime.configFilePath = path.resolve(process.cwd(), "tests/mocks/txtconfig/corde.txt");
-        expect(() => reader.loadConfig()).toThrowError(FilesNotFoundError);
+        expect(() => reader.loadConfig()).toThrowError(FileError);
       });
     });
 
@@ -81,7 +80,7 @@ describe("reader class", () => {
         process.chdir(path.resolve(process.cwd(), "tests/mocks/jsonconfig"));
         const existsSpy = jest.spyOn(fs, "existsSync").mockReturnValue(true);
         const parseSpy = jest.spyOn(JSON, "parse").mockReturnValue(null);
-        expect(() => reader.loadConfig()).toThrowError(InvalidConfigFileError);
+        expect(() => reader.loadConfig()).toThrowError(FileError);
         existsSpy.mockReset();
         parseSpy.mockReset();
       });
@@ -96,7 +95,7 @@ describe("reader class", () => {
 
   describe("when working with reader.getTestsFromFiles()", () => {
     it("should throw exception when has no file", () => {
-      expect(() => reader.getTestsFromFiles(null)).toThrowError(FilesNotFoundError);
+      expect(() => reader.getTestsFromFiles(null)).toThrowError(FileError);
     });
 
     it("should read tests from a single test()", () => {

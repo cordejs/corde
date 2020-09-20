@@ -1,7 +1,7 @@
-import { Message } from "discord.js";
+import { Message, MessageReaction } from "discord.js";
 import { TestReport } from "../../interfaces/testReport";
 import { CordeBot } from "../../../core";
-import { MessageData } from "../../../interfaces";
+import { MessageData } from "../../../types";
 
 export async function toRemoveReaction(
   commandName: string,
@@ -9,49 +9,49 @@ export async function toRemoveReaction(
   cordeBot: CordeBot,
   removedReactions: string[],
   messageData?: MessageData,
-  cache?: boolean,
 ): Promise<TestReport> {
-  let contains = false;
   let expectation = "";
   let output = "";
+  let testSuccessfully = false;
 
   expectation = removedReactions.join();
 
   try {
-    cordeBot.sendTextMessage(commandName);
-    const message = await cordeBot.findMessage(messageData, cache);
+    await cordeBot.sendTextMessage(commandName);
+    const message = await cordeBot.findMessage(messageData);
     if (message) {
       const reactions = await cordeBot.waitForRemovedReactions(message, removedReactions.length);
-      contains = messageHasReactions(message, removedReactions);
+      testSuccessfully = reactionsExistsIn(reactions, removedReactions);
       output = reactions.map((v) => v.emoji.name).join();
     }
+
+    if (isNot) {
+      testSuccessfully = !testSuccessfully;
+    }
   } catch (error) {
-    throw error;
+    testSuccessfully = false;
+    if (error instanceof Error) {
+      output = error.message;
+    } else {
+      output = error;
+    }
   }
 
-  let testSucessfully = false;
-
-  if ((!contains && !isNot) || (contains && isNot)) {
-    testSucessfully = true;
-  }
-
-  return {
+  return new TestReport({
     commandName,
     expectation,
     output,
-    testSucessfully,
+    hasPassed: testSuccessfully,
     isNot,
-    // Problems in display emojis in windows console
-    showExpectAndOutputValue: process.platform === "win32" ? false : true,
-    customReturnMessage: `command ${commandName} removed `,
-  } as TestReport;
+    showExpectAndOutputValue: false,
+  });
 }
 
-function messageHasReactions(message: Message, expectation: string[]) {
-  for (const i in expectation as string[]) {
-    if (message.reactions.cache.has(expectation[i])) {
-      return true;
+function reactionsExistsIn(reactions: MessageReaction[], expectation: string[]) {
+  for (const expect of expectation) {
+    if (!reactions.find((r) => r.emoji.name === expect)) {
+      return false;
     }
   }
-  return false;
+  return true;
 }

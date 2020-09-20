@@ -1,9 +1,7 @@
-export * from "./channelTypeNotSupportedError";
-export * from "./guildNotFoundError";
-export * from "./parameterNotFoundError";
-export * from "./fileNotFoundError";
-export * from "./missingPropertyError";
-export * from "./runtimeError";
-export * from "./fileParserError";
-export * from "./invalidConfigFileError";
-export * from "./channelTypeNotSupportedError";
+export { CordeClientError } from "./cordeClientError";
+export { DiscordError } from "./discordError";
+export { FileError } from "./fileError";
+export { ConfigError } from "./configError";
+export { PropertyError } from "./propertyError";
+export { TypeError } from "./typeError";
+export { TimeoutError } from "./timeoutError";

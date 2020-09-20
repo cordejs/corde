@@ -1,6 +1,6 @@
 import assert from "assert";
 import { Message, MessageEmbed } from "discord.js";
-import { messageType, MinifiedEmbedMessage } from "../../../interfaces";
+import { messageType, MinifiedEmbedMessage } from "../../../types";
 import { TestReport } from "../../interfaces";
 import { CordeBot } from "../../../core";
 
@@ -13,33 +13,47 @@ export async function toReturn(
   let msg = "";
   let isEqual = false;
   let showExpectAndOutputValue = true;
-  await cordeBot.sendTextMessage(commandName);
-  const returnedMessage = await cordeBot.awaitMessagesFromTestingBot();
-  if (typeof expect === "string") {
-    const formatedMsg = getMessageByType(returnedMessage, "text") as Message;
-    msg = formatedMsg.content;
-    isEqual = msg === expect;
-  } else {
-    const jsonMessage = getMessageByType(returnedMessage, "embed") as MinifiedEmbedMessage;
-    msg = JSON.stringify(jsonMessage);
-    showExpectAndOutputValue = false;
-    try {
-      // tslint:disable-next-line: deprecation
-      assert.deepEqual(expect.toJSON(), jsonMessage);
-      isEqual = true;
-    } catch (error) {
-      isEqual = false;
+
+  try {
+    await cordeBot.sendTextMessage(commandName);
+    const returnedMessage = await cordeBot.awaitMessagesFromTestingBot();
+    if (typeof expect === "string") {
+      const formatedMsg = getMessageByType(returnedMessage, "text") as Message;
+      msg = formatedMsg.content;
+      isEqual = msg === expect;
+    } else {
+      const jsonMessage = getMessageByType(returnedMessage, "embed") as MinifiedEmbedMessage;
+      msg = JSON.stringify(jsonMessage);
+      showExpectAndOutputValue = false;
+      try {
+        // tslint:disable-next-line: deprecation
+        assert.deepEqual(expect.toJSON(), jsonMessage);
+        isEqual = true;
+      } catch (error) {
+        isEqual = false;
+      }
+    }
+
+    if (isNot) {
+      isEqual = !isEqual;
+    }
+  } catch (error) {
+    isEqual = false;
+    if (error instanceof Error) {
+      msg = error.message;
+    } else {
+      msg = error;
     }
   }
 
-  return {
+  return new TestReport({
     commandName,
     expectation: expect,
+    hasPassed: isEqual,
     output: msg,
-    testSucessfully: isEqual,
     isNot,
     showExpectAndOutputValue,
-  } as TestReport;
+  });
 }
 
 /**

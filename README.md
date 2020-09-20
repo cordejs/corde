@@ -1,59 +1,26 @@
 <div align="center">
   <br />
   <p>
-    <img width="300" height="300" src="./docs/logo.png" />
+    <img width="200" height="200" src="./docs/logo.png" />
   </p>
   <p>
     <a href="https://circleci.com/gh/lucasgmagalhaes/corde">
       <img
         alt="CircleCi"
-        src="https://img.shields.io/circleci/build/github/lucasgmagalhaes/corde?style=flat-square"
-      />
-    </a>
-    <a
-      href="https://app.fossa.com/projects/git%2Bgithub.com%2Flucasgmagalhaes%2Fcorde?ref=badge_shield"
-      alt="FOSSA Status"
-    >
-      <img
-        src="https://app.fossa.com/api/projects/git%2Bgithub.com%2Flucasgmagalhaes%2Fcorde.svg?type=shield"
-      />
-    </a>
-    <a href="https://codeclimate.com/github/lucasgmagalhaes/corde/maintainability">
-	    <img src="https://api.codeclimate.com/v1/badges/bd6aa1e8cc90223a399d/maintainability" />
-    </a>
-    <a href="https://www.codefactor.io/repository/github/lucasgmagalhaes/corde">
-      <img
-        alt="CodeFactor"
-        src="https://www.codefactor.io/repository/github/lucasgmagalhaes/corde/badge?style=flat-square&s=70989af6ce2fa5361a2fdd19db2224fa2820b89e"
+        src="https://img.shields.io/circleci/build/github/lucasgmagalhaes/corde"
       />
     </a>
     <a href="https://codecov.io/gh/lucasgmagalhaes/corde">
       <img
         alt="Codecov"
-        src="https://img.shields.io/codecov/c/github/lucasgmagalhaes/corde?style=flat-square"
+        src="https://img.shields.io/codecov/c/github/lucasgmagalhaes/corde"
       />
     </a>
     <a href="https://www.npmjs.com/package/corde">
-      <img alt="Npm version" src="https://img.shields.io/npm/v/corde?style=flat-square" />
+      <img alt="Npm version" src="https://img.shields.io/npm/v/corde" />
     </a>
-  </p>
-  <p>
-    <a href="https://david-dm.org/lucasgmagalhaes/corde">
-      <img
-        alt="Dependencies Status"
-        src="https://david-dm.org/lucasgmagalhaes/corde/status.svg?style=flat-square"
-      />
-    </a>
-    <a href="https://david-dm.org/lucasgmagalhaes/corde?type=dev">
-      <img
-        alt="DevDependencies Status"
-        src="https://david-dm.org/lucasgmagalhaes/corde/dev-status.svg?style=flat-square"
-      />
-    </a>
-  </p>
-  <p>
     <a href="https://nodei.co/npm/corde/">
-      <img alt="npm" src="https://img.shields.io/npm/dt/corde?style=flat-square"></a>
+      <img alt="npm" src="https://img.shields.io/npm/dt/corde"></a>
   </p>
 </div>
 
@@ -66,6 +33,10 @@
 ## 👀 About
 
 Corde is a small testing library for Discord.js. As there is a tool to create bots for Discord, it's cool to also have a tool to test then. Corde objective is to be simple, fast and readable to delevopers, such as many others unity test tool around the web.
+
+## Documentation
+
+The bellow documentation is a resume of what you can find in [Corde's site](https://corde.netlify.app)
 
 ## 🚀 Getting started
 

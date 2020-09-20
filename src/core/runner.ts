@@ -1,25 +1,20 @@
 import { runtime } from "../common";
-import { Group, Test, testFunctionType } from "../interfaces";
+import { Group, Test, testFunctionType } from "../types";
 import { TestReport } from "../api/interfaces";
 
 export async function executeTestCases(groups: Group[]) {
   const tests = getTestsFromGroup(groups);
-  for (const i in tests) {
-    if (tests.hasOwnProperty(i)) {
-      const test = tests[i];
-      const reports = await runTests(test.testsFunctions);
-      test.testsReports = reports;
-    }
+  for (const test of tests) {
+    const reports = await runTests(test.testsFunctions);
+    test.testsReports = reports;
   }
 }
 
 async function runTests(testsFunctions: testFunctionType[]) {
   const reports: TestReport[] = [];
-  for (const i in testsFunctions) {
-    if (testsFunctions.hasOwnProperty(i)) {
-      const report = await runtime.injectBot(testsFunctions[i]);
-      reports.push(report);
-    }
+  for (const test of testsFunctions) {
+    const report = await runtime.injectBot(test);
+    reports.push(report);
   }
   return reports;
 }
@@ -40,9 +35,11 @@ function getTestsFromGroup(groups: Group[]) {
 
 function getAssertionPropsFromGroup(group: Group) {
   const assertions: Test[] = [];
-  group.tests.forEach((test) => {
-    assertions.push(...getAssertionsPropsFromTest(test));
-  });
+  if (group.tests) {
+    group.tests.forEach((test) => {
+      assertions.push(...getAssertionsPropsFromTest(test));
+    });
+  }
 
   if (group.subGroups) {
     group.subGroups.forEach((subGroup) => {

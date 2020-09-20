@@ -1,5 +1,5 @@
 import { testCollector } from "../../src/common";
-import { Group } from "../../src/interfaces";
+import { Group } from "../../src/types";
 import { group, test } from "../../src/api";
 
 describe("Testing group function", () => {

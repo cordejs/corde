@@ -2,7 +2,8 @@ import chalk from "chalk";
 import fs from "fs";
 import path from "path";
 import prettier from "prettier";
-import ConfigOptions, { configFileType } from "../interfaces";
+import ConfigOptions, { configFileType } from "../types";
+import { FileError } from "../errors";
 
 const jsonFile: ConfigOptions = {
   botPrefix: "",
@@ -33,7 +34,7 @@ const tsFile = `
  *
  * @throws Error if could not create the config file
  */
-export default function init(fileType: configFileType = "json") {
+export function init(fileType: configFileType = "json") {
   let fileContent = "";
 
   // No declaration of fileType is consired 'json'
@@ -65,7 +66,7 @@ export default function init(fileType: configFileType = "json") {
       `- ${chalk.green("Successfully")} generated corde config in ${chalk.bold(filePath)}`,
     );
   } catch (error) {
-    throw new Error(
+    throw new FileError(
       " - Fail in config file creation. Check if you have permition to create files in this directory.",
     );
   }

@@ -2,24 +2,31 @@ import fs from "fs";
 import ora, { Color, Ora } from "ora";
 import path from "path";
 import { runtime } from "../common/runtime";
-import { testCollector } from "../common/testColletor";
+import { testCollector } from "../common/testCollector";
 import reader from "../core/reader";
 import { reporter } from "../core/reporter";
 import { executeTestCases } from "../core/runner";
-import { Group } from "../interfaces";
+import { Group } from "../types";
 import { validate } from "./validate";
+import { FileError } from "../errors";
 
 process.on("uncaughtException", () => {
   stopLoading();
 });
 
+declare module "ora" {
+  interface Ora {
+    _spinner: object;
+  }
+}
+
 let spinner: Ora;
 
 export async function go() {
   loadConfigs();
-  const files = readDir(runtime.configs.testFiles);
+  const files = readDir(runtime.testFiles);
   if (!files || files.length === 0) {
-    throw new Error(`No test file was found in the path '${runtime.configs.testFiles}'`);
+    throw new FileError(`No test file was found in the path '${runtime.testFiles}'`);
   }
   await runTests(files);
 }
@@ -38,7 +45,7 @@ async function runTests(files: string[]) {
 
   testCollector.beforeStartFunctions.forEach((fn) => fn());
 
-  await runtime.loginBot(runtime.configs.cordeTestToken);
+  await runtime.loginBot(runtime.cordeTestToken);
 
   spinner.text = "running tests";
   runtime.onBotStart().subscribe(async (isReady) => {
@@ -80,8 +87,11 @@ function startLoading(initialMessage: string) {
   // dots spinner do not works on windows 😰
   // https://github.com/fossas/fossa-cli/issues/193
   spinner = ora(initialMessage).start();
+  spinner._spinner = {
+    interval: 80,
+    frames: ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"],
+  };
   spinner.color = getRandomSpinnerColor() as Color;
-  spinner.spinner = "dots";
 }
 
 function getRandomSpinnerColor() {

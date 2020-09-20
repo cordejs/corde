@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { Group, Test } from "../interfaces";
+import { Group, Test } from "../types";
 import { TestReport } from "../api/interfaces";
 
 const FAIL = "FAIL";
@@ -7,12 +7,12 @@ const SPACE = "    ";
 const DEFAULT_SPACE_VALUE = 4;
 
 class Reporter {
-  private readonly _bgSucess = chalk.bgRgb(21, 194, 19);
+  private readonly _bgSuccess = chalk.bgRgb(21, 194, 19);
   private readonly _bgError = chalk.bgRed;
   private readonly _bold = chalk.bold;
   private readonly _red = chalk.red;
-  private readonly _bgSucessBold = this._bgSucess.bold;
-  private _sucessCount = 0;
+  private readonly _bgSuccessBold = this._bgSuccess.bold;
+  private _successCount = 0;
   private _failureCount = 0;
 
   /**
@@ -70,9 +70,9 @@ class Reporter {
   }
 
   private printAssertion(report: TestReport, tab: string) {
-    if (report.testSucessfully) {
-      this.printSucess(tab, report);
-      this._sucessCount++;
+    if (report.hasPassed) {
+      this.printSuccess(tab, report);
+      this._successCount++;
     } else {
       this._failureCount++;
       this.printFailure(tab, report);
@@ -91,22 +91,22 @@ class Reporter {
   }
 
   private doesAllTestsPassed() {
-    return this._failureCount === 0 && this._sucessCount > 0;
+    return this._failureCount === 0 && this._successCount > 0;
   }
 
   private doesSomeTestsPassed() {
-    return this._failureCount > 0 && this._sucessCount > 0;
+    return this._failureCount > 0 && this._successCount > 0;
   }
 
   private printFullSuccess() {
     console.log("All tests passed!");
-    console.log(`${this._bgSucess(" TOTAL: ")} ${chalk.bold(this._sucessCount)}`);
+    console.log(`${this._bgSuccess(" TOTAL: ")} ${chalk.bold(this._successCount)}`);
   }
 
   private printPartialSuccess() {
     console.log("Tests passed with errors.");
     console.log(`${this._bgError(" FAILURES: ")} ${chalk.bold(this._failureCount)}`);
-    console.log(`${this._bgSucess(" SUCESS: ")} ${chalk.bold(this._sucessCount)}`);
+    console.log(`${this._bgSuccess(" SUCCESS: ")} ${chalk.bold(this._successCount)}`);
   }
 
   private printFullFailure() {
@@ -115,18 +115,27 @@ class Reporter {
   }
 
   private printFailure(tabSpace: string, report: TestReport) {
-    if (report.showExpectAndOutputValue) {
-      this.printFailureWithValues(tabSpace, report);
+    console.log(report);
+    if (report.customReturnMessage) {
+      console.log(
+        `${tabSpace}  ${this._bgSuccess.bold(" PASS ")} command ${chalk.bold(report.commandName)} ${
+          report.customReturnMessage
+        }`,
+      );
     } else {
-      this.printFailureOnlyWithCommandName(tabSpace, report.commandName);
+      if (report.showExpectAndOutputValue) {
+        this.printFailureWithValues(tabSpace, report);
+      } else {
+        this.printFailureOnlyWithCommandName(tabSpace, report.commandName);
+      }
     }
   }
 
-  private printSucess(tabSpace: string, report: TestReport) {
+  private printSuccess(tabSpace: string, report: TestReport) {
     if (report.showExpectAndOutputValue) {
-      this.printSucessWithValues(tabSpace, report);
+      this.printSuccessWithValues(tabSpace, report);
     } else {
-      this.printSucessOnlyWithCommandName(tabSpace, report.commandName);
+      this.printSuccessOnlyWithCommandName(tabSpace, report.commandName);
     }
   }
 
@@ -144,16 +153,16 @@ class Reporter {
 
   private printFailureOnlyWithCommandName(tabSpace: string, commandName: string) {
     console.log(
-      `${tabSpace}  ${this._bgSucess.bgRed(" FAIL ")} command ${this._bold(
+      `${tabSpace}  ${this._bgSuccess.bgRed(" FAIL ")} command ${this._bold(
         commandName,
       )} not returned what was expected`,
     );
   }
 
-  private printSucessWithValues(tabSpace: string, report: TestReport) {
+  private printSuccessWithValues(tabSpace: string, report: TestReport) {
     const notWord = this.getNotWordIfTrue(report.isNot);
     console.log(
-      `${tabSpace} ${this._bgSucessBold(" PASS ")} expected ${chalk.bold(
+      `${tabSpace} ${this._bgSuccessBold(" PASS ")} expected ${chalk.bold(
         report.commandName,
       )} to${notWord}return '${chalk.bold(
         this.getPrintingValueByType(report.expectation),
@@ -161,9 +170,9 @@ class Reporter {
     );
   }
 
-  private printSucessOnlyWithCommandName(tabSpace: string, commandName: string) {
+  private printSuccessOnlyWithCommandName(tabSpace: string, commandName: string) {
     console.log(
-      `${tabSpace}  ${this._bgSucess.bold(" PASS ")} command ${chalk.bold(
+      `${tabSpace}  ${this._bgSuccess.bold(" PASS ")} command ${chalk.bold(
         commandName,
       )} returned what was expected`,
     );

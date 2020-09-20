@@ -1,5 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import { MessageData } from "../../interfaces";
+import { MessageData } from "../../types";
 
 /**
  * Defines all functions that can be used
@@ -45,10 +45,9 @@ export interface MessageMatches {
    *
    * @param message Values that will be used to find the message. **do not use all filters**, just one.
    * message ID is the main object used to filter, so, if all filters are filled, only ID will be considered.
-   *
-   * @param cache Defines if the message should be found using the cached messages, or be fetch in Discord API.
-   * Not using cache the test should me slower thean using cache. Check
-   * [Discord.js Guide Cache](https://discordjs.guide/additional-info/changes-in-v12.html#commonly-used-methods-that-changed)
    */
-  toRemoveReactions(reactions: string[], message?: MessageData, cache?: boolean): void;
+  toRemoveReaction(reactions: string[]): void;
+  toRemoveReaction(...reactions: string[]): void;
+  toRemoveReaction(reactions: string, message: MessageData): void;
+  toRemoveReaction(reactions: string[], message: MessageData): void;
 }

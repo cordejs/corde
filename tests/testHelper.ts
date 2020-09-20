@@ -1,5 +1,8 @@
 import path from "path";
 import fs from "fs";
+import MockDiscord from "./mocks/mockDiscord";
+import { Client } from "discord.js";
+import { CordeBot } from "../src/core";
 
 export const normalTsPath = path.resolve(process.cwd(), "corde.ts");
 export const tempTsPath = path.resolve(process.cwd(), "__corde.ts");
@@ -57,4 +60,30 @@ export function renameConfigTempFileNamesToNormal() {
  */
 export function mockProperty<T extends {}, K extends keyof T>(object: T, property: K, value: T[K]) {
   Object.defineProperty(object, property, { get: () => value });
+}
+
+export function initCordeClientWithChannel(
+  mockDiscord: MockDiscord,
+  client: Client,
+  timeout = 500,
+) {
+  client.guilds.cache.has = jest.fn().mockReturnValueOnce(true);
+  client.guilds.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.guild);
+
+  mockDiscord.guild.channels.cache.has = jest.fn().mockReturnValueOnce(true);
+  mockDiscord.guild.channels.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.textChannel);
+  return initCordeClient(mockDiscord, client, timeout);
+}
+
+export const DEFAULT_PREFIX = "!";
+
+export function initCordeClient(mockDiscord: MockDiscord, clientInstance: Client, timeout = 500) {
+  return new CordeBot(
+    DEFAULT_PREFIX,
+    mockDiscord.guild.id,
+    mockDiscord.channel.id,
+    timeout,
+    mockDiscord.userBotId,
+    clientInstance,
+  );
 }

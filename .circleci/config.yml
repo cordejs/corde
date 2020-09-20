@@ -1,57 +1,54 @@
 version: 2.1
 
-orbs:
-  node: circleci/node@3.0.1
-
 jobs:
   build:
+    working_directory: ~/corde
     docker:
-      - image: circleci/node:14
-
-    executor: node/default
+      - image: circleci/node:latest
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: yarn
-          cache-path: ~/corde/node_modules
-          override-ci-command: yarn install
-
+      - restore_cache:
+          key: v1-deps-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install dependencies
+          command: yarn
+      - save_cache:
+          key: v1-deps-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
       - run:
           name: Build Project
           command: yarn build
-        # Save workspace for subsequent (test)
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .
 
   lint:
+    working_directory: ~/corde
     docker:
-      - image: circleci/node:14
-
-    executor: node/default
-
+      - image: circleci/node:current
     steps:
-      # Reuse the workspace from the build job
-      - attach_workspace:
-          at: .
-
+      - checkout
+      - restore_cache:
+          key: v1-deps-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install dependencies
+          command: yarn
       - run:
           name: lint
           command: yarn lint
 
   test:
-    executor: node/default
-
+    working_directory: ~/corde
+    docker:
+      - image: circleci/node:latest
     steps:
-      # Reuse the workspace from the build job
-      - attach_workspace:
-          at: .
-
+      - checkout
+      - restore_cache:
+          key: v1-deps-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install dependencies
+          command: yarn
       - run:
           name: Tests
           command: yarn test-with-coverage
-
       - store_test_results:
           path: coverage
         # Save workspace for subsequent (test)
@@ -61,25 +58,60 @@ jobs:
             - .
 
   publish_coverage:
-    executor: node/default
-
+    working_directory: ~/corde
+    docker:
+      - image: circleci/node:latest
     steps:
+      - checkout
+      - restore_cache:
+          key: v1-deps-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install dependencies
+          command: yarn
       # Reuse the workspace from the build job
       - attach_workspace:
           at: .
-
       - run:
           name: Publish coverage
           command: yarn codecov -f coverage/*.json
 
+  publish_website:
+    working_directory: ~/corde
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - run:
+          name: Deploy Corde website if needed
+          command: sh ./.circleci/website.sh
+
 workflows:
   version: 2
-  build_test_publish_coverage:
+
+  build-and-test:
     jobs:
-      - build
+      - build:
+          filters:
+            branches:
+              ignore: gh-pages
+
       - test:
           requires:
             - build
+          filters:
+            branches:
+              ignore: gh-pages
+
       - publish_coverage:
           requires:
             - test
+          filters:
+            branches:
+              ignore: gh-pages
+
+  website-build-deploy:
+    jobs:
+      - publish_website:
+        filters:
+          branches:
+            only: master # Restrict website deploy to only master branch

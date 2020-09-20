@@ -1,10 +1,9 @@
 import fs from "fs";
 import path from "path";
 import { runtime } from "../common";
-import { testCollector } from "../common/testColletor";
-import { ConfigFileNotFoundError, FilesNotFoundError } from "../errors";
-import ConfigOptions from "../interfaces";
-import { InvalidConfigFileError } from "../errors/invalidConfigFileError";
+import { testCollector } from "../common/testCollector";
+import ConfigOptions from "../types";
+import { FileError, PropertyError } from "../errors";
 
 class Reader {
   /**
@@ -30,11 +29,11 @@ class Reader {
     } else if (fs.existsSync(jsFilePath)) {
       _config = require(jsFilePath);
     } else {
-      throw new ConfigFileNotFoundError();
+      throw new FileError("No config file was found");
     }
 
     if (!_config || Object.keys(_config).length === 0) {
-      throw new InvalidConfigFileError();
+      throw new FileError("This appears to be a invalid config file");
     } else {
       return _config;
     }
@@ -51,7 +50,7 @@ class Reader {
       addTestFuncionsToGroupIfExists();
       return testCollector.groups;
     }
-    throw new FilesNotFoundError();
+    throw new FileError("No file was informed.");
   }
 }
 
@@ -60,7 +59,7 @@ function loadConfigFromConfigFilePath(): ConfigOptions {
   if (fs.existsSync(runtime.configFilePath)) {
     filePath = path.resolve(process.cwd(), runtime.configFilePath);
   } else {
-    throw new FilesNotFoundError();
+    throw new FileError(`The path '${runtime.configFilePath}' do not appears to be a valid path`);
   }
   const fileExt = path.extname(filePath);
 
@@ -69,7 +68,7 @@ function loadConfigFromConfigFilePath(): ConfigOptions {
   } else if (fileExt === ".js" || fileExt === ".ts") {
     return require(filePath);
   } else {
-    throw new FilesNotFoundError("File extension not suported");
+    throw new FileError(`Extension '${fileExt}' is not suported`);
   }
 }
 

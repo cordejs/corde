@@ -19,19 +19,27 @@ export async function toAddReaction(
     await cordeBot.waitForAddedReactions(message, reactions);
     isEqual = isOutputEqualToExpect(message, reactions);
     output = message.reactions.cache.map((v) => v.emoji.name).join();
+
+    if (isNot) {
+      isEqual = !isEqual;
+    }
   } catch (error) {
-    throw new Error(error.message);
+    isEqual = false;
+    if (error instanceof Error) {
+      output = error.message;
+    } else {
+      output = error;
+    }
   }
 
-  return {
+  return new TestReport({
     commandName,
     expectation,
     output,
-    testSucessfully: isEqual,
+    hasPassed: isEqual,
     isNot,
-    // Problems in display emojis in windows console
-    showExpectAndOutputValue: process.platform === "win32" ? false : true,
-  } as TestReport;
+    showExpectAndOutputValue: false,
+  });
 }
 
 function isOutputEqualToExpect(message: Message, expectation: string | string[]) {

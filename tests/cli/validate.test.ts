@@ -1,4 +1,4 @@
-import ConfigOptions from "../../src/interfaces";
+import ConfigOptions from "../../src/types";
 import { validate } from "../../src/cli/validate";
 
 let configs: ConfigOptions;

@@ -1,3 +1,3 @@
 export * from "./runtime";
-export * from "./testColletor";
+export * from "./testCollector";
 export * from "./config";

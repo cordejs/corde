@@ -1,7 +1,9 @@
-const { Client, MessageEmbed } = require("discord.js");
+const arg = require("arg");
+const { Client, MessageEmbed, Message } = require("discord.js");
 const { botPrefix, botTestToken } = require("../../corde.js");
 
 const bot = new Client();
+
 const embedMsg = new MessageEmbed()
   .setColor("#0099ff")
   .setTitle("Some title")
@@ -36,6 +38,16 @@ bot.on("message", async (message) => {
     await removeMessageReactionById(message, args[0], args[1]);
   } else if (command === "removemessagereactionbycontent") {
     await removeMessageReactionByContent(message, args[0], args[1]);
+  } else if (command === "setrolecolor") {
+    await changeColorForRole(message, args[0]);
+  } else if (command === "deleterole") {
+    deleteRole(message, args[0]);
+  } else if (command === "addrole") {
+    addRole(message, args[0]);
+  } else if (command === "rename-role") {
+    renameRole(message, args[0], args[1]);
+  } else if (command === "set-role-position") {
+    setRolePosition(message, args[0], args[1]);
   } else {
     console.log("No command found");
   }
@@ -77,8 +89,54 @@ async function removeMessageReactionByContent(msg, messagecontent, reaction) {
   }
 }
 
+/**
+ * @param {Message} msg
+ */
+async function changeColorForRole(msg, roleName) {
+  await msg.guild.roles.cache.find((r) => r.name === roleName).setColor("BLUE");
+}
+
+/**
+ * @param {Message} msg
+ */
+async function deleteRole(msg, roleName) {
+  const data = msg.guild.roles.cache.find((r) => r.name === roleName);
+  await data.delete();
+}
+
+/**
+ * @param {Message} msg
+ */
+async function addRole(msg, roleName) {
+  await msg.guild.roles.create({
+    data: {
+      name: roleName,
+    },
+  });
+}
+
+/**
+ * @param {Message} msg
+ * @param {string} roleName
+ * @param {string} newName
+ */
+async function renameRole(msg, roleName, newName) {
+  const role = msg.guild.roles.cache.find((r) => r.name === roleName);
+  await role.setName(newName);
+}
+
 function emojis(msg) {
   Promise.all([msg.react("😄"), msg.react("🍊")]);
+}
+
+/**
+ * @param {Message} msg
+ * @param {string} roleName
+ * @param {number} newName
+ */
+async function setRolePosition(msg, roleName, newPosition) {
+  const role = msg.guild.roles.cache.find((r) => r.name === roleName);
+  await role.setPosition(newPosition);
 }
 
 function loginBot() {

@@ -1,0 +1,23 @@
+{
+  "version-1.0/someSidebar": [
+    {
+      "collapsed": true,
+      "type": "category",
+      "label": "Introduction",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-2.0/getting-started"
+        },
+        {
+          "type": "doc",
+          "id": "version-2.0/cli"
+        },
+        {
+          "type": "doc",
+          "id": "version-2.0/configurations"
+        }
+      ]
+    }
+  ]
+}

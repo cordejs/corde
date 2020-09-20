@@ -1,5 +1,5 @@
-import { testCollector } from "../../src/common/testColletor";
-import { Test } from "../../src/interfaces";
+import { testCollector } from "../../src/common/testCollector";
+import { Test } from "../../src/types";
 import { test } from "../../src/api";
 
 describe("Testing test function", () => {
