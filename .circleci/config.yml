@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  ruby: circleci/ruby@1.0
+
 jobs:
   build:
     working_directory: ~/corde
@@ -56,6 +59,27 @@ jobs:
           root: .
           paths:
             - .
+
+  e2e_tests:
+    working_directory: ~/corde/e2e
+    docker:
+      - image: cimg/ruby:2.7-node
+      - image: circleci/node:latest
+    steps:
+      - checkout:
+          path: ~/corde
+      - run:
+          name: Install dependencies
+          command: yarn
+      - run:
+          name: Build corde
+          command: sh ./configureCorde.sh
+      - run:
+          name: Install cucumber Aruba
+          command: bundle
+      - run:
+          name: Run tests
+          command: bundle exec cucumber
 
   publish_coverage:
     working_directory: ~/corde
@@ -115,3 +139,7 @@ workflows:
         filters:
           branches:
             only: master # Restrict website deploy to only master branch
+
+  e2e-tests:
+    jobs:
+      - e2e_tests
