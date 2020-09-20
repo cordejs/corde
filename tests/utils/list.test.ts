@@ -1,4 +1,4 @@
-import { List } from "../src/list";
+import { List } from "../../src/utils/list";
 
 let list: List<number>;
 describe("testing list structure", () => {
