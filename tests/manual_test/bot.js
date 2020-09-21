@@ -147,7 +147,7 @@ async function setRolePosition(msg, roleName, newPosition) {
  */
 async function changeRolePermission(msg, roleId) {
   const role = msg.guild.roles.cache.get(roleId);
-  await role.setPermissions(["ADD_REACTIONS", "MANAGE_EMOJIS"]);
+  await role.setPermissions(["ADMINISTRATOR"]);
 }
 
 function loginBot() {
