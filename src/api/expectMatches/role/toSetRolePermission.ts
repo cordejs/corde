@@ -18,12 +18,7 @@ export class ToSetRolePermission extends ExpectOperation<Permission[], RoleData>
       }
 
       const expectedPermissionsValue = calcPermissionsValue(...permissions);
-      const permissionsRole = role.permissions
-        .toArray()
-        .map((p) => this.resolvePermissionString(p));
-
-      const permissionsValue = calcPermissionsValue(...permissionsRole);
-      if (permissionsValue === expectedPermissionsValue) {
+      if (role.permissions.bitfield === expectedPermissionsValue) {
         this.isEqual = true;
       }
     } catch (error) {
@@ -38,9 +33,5 @@ export class ToSetRolePermission extends ExpectOperation<Permission[], RoleData>
     this.forceIsEqualValue = true;
     this.output = "Role not found";
     return this.generateReport();
-  }
-
-  private resolvePermissionString(permission: string) {
-    return Permission[permission as keyof typeof Permission];
   }
 }

@@ -9,7 +9,7 @@ cordeExpect(`change-role-permission 756939347936411739`).toSetRolePermission(
   {
     id: "756939347936411739",
   },
-  "ADMINISTRATOR",
+  Permission.ADMINISTRATOR,
 );
 
 afterAll(() => {
