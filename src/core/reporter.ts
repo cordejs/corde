@@ -115,7 +115,6 @@ class Reporter {
   }
 
   private printFailure(tabSpace: string, report: TestReport) {
-    console.log(report);
     if (report.customReturnMessage) {
       console.log(
         `${tabSpace}  ${this._bgSuccess.bold(" PASS ")} command ${chalk.bold(report.commandName)} ${
