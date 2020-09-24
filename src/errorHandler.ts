@@ -16,13 +16,8 @@ export function initErrorHandlers() {
 }
 
 function printErrorAndExit(error: Error) {
-  if (error.name) {
-    console.log(`- ${error.name}: ${error.message}`);
-    console.log(`${chalk.red("error")} Command failed with exit code 1`);
-    console.log(error.stack);
-  } else {
-    console.log("Unkown error");
-  }
+  console.log(error.stack);
+  console.log(`${chalk.red("error")} Command failed with exit code 1`);
 
   if (runtime.isBotLoggedIn()) {
     runtime.logoffBot();
