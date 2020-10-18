@@ -1,7 +1,7 @@
 /**
  * Enum with of all current permissions of Discord, their integer values in hexadecimal.
  *
- * @see https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags
+ * https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags
  */
 export enum Permission {
   /**
