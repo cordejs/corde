@@ -12,12 +12,15 @@ import {
   ToRenameRole,
   ToSetRoleHoist,
   ToSetRoleMentionable,
+  ToSetRolePermission,
 } from "../../src/api/expectMatches";
+import { Permission } from "../../src/utils/permission";
 
 jest.mock("../../src/api/expectMatches/role/toSetRoleMentionable");
 jest.mock("../../src/api/expectMatches/role/toSetRoleHoist");
 jest.mock("../../src/api/expectMatches/role/toRenameRole");
 jest.mock("../../src/api/expectMatches/role/toSetRolePosition");
+jest.mock("../../src/api/expectMatches/role/toSetRolePermission.ts");
 
 let toReturnSpy: jest.SpyInstance;
 let toAddReactionSpy: jest.SpyInstance;
@@ -28,11 +31,13 @@ let toSetRoleMentionableSpy: jest.SpyInstance<any, any>;
 let toSetHoistSpy: jest.SpyInstance<any, any>;
 let toRenameRoleSpy: jest.SpyInstance<any, any>;
 let toSetRolePositionSpy: jest.SpyInstance<any, any>;
+let toSetRolePermissionSpy: jest.SpyInstance<any, any>;
 
 const toSetRoleMentionableActionMock = jest.fn();
 const toSetHoistActionMock = jest.fn();
 const toRenameRoleActionMock = jest.fn();
 const toSetRolePositionActionMock = jest.fn();
+const toSetRolePermissionMock = jest.fn();
 
 const con = "test";
 
@@ -68,10 +73,17 @@ describe("Testing matches class", () => {
         action: toSetRolePositionActionMock,
       };
     });
+
+    toSetRolePermissionSpy = (ToSetRolePermission as jest.Mock).mockImplementation(() => {
+      return {
+        action: toSetRolePermissionMock,
+      };
+    });
   });
 
   afterEach(() => {
     toSetRoleMentionableSpy.mockClear();
+    toSetRolePermissionSpy.mockClear();
   });
 
   it("should not return a function", () => {
@@ -402,7 +414,7 @@ describe("Testing matches class", () => {
       expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
     });
 
-    it("should add a toRenameRole function", () => {
+    it("should add a toSetRolePosition function", () => {
       initExpectMatch().toSetRolePosition(newPosition, roleId);
       runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(toSetRolePositionSpy).toBeCalled();
@@ -427,6 +439,48 @@ describe("Testing matches class", () => {
       runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToSetRolePosition).toBeCalledWith(runtime.bot, con, true);
       expect(toSetRolePositionActionMock).toBeCalledWith(newPosition, roleId, undefined);
+    });
+  });
+
+  describe("testing toSetRolePermission function", () => {
+    const roleId = {
+      id: "123",
+    };
+
+    function toSetRolePermission() {
+      initExpectMatch().toSetRolePermission(roleId, Permission.ADMINISTRATOR);
+    }
+
+    it("should add a function to hasIsolatedTestFunctions after call toSetRolePermission", () => {
+      toSetRolePermission();
+      expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
+    });
+
+    it("should add a toSetRolePermission function", () => {
+      toSetRolePermission();
+      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(toSetRolePermissionSpy).toBeCalled();
+    });
+
+    it("should add a toSetRolePermission function with correct values using id", () => {
+      toSetRolePermission();
+      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToSetRolePermission).toBeCalledWith(runtime.bot, con, false);
+      expect(toSetRolePermissionMock).toBeCalledWith([Permission.ADMINISTRATOR], roleId, undefined);
+    });
+
+    it("should add a toSetRolePermission function with correct values (isNot false)", () => {
+      toSetRolePermission();
+      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToSetRolePermission).toBeCalledWith(runtime.bot, con, false);
+      expect(toSetRolePermissionMock).toBeCalledWith([Permission.ADMINISTRATOR], roleId, undefined);
+    });
+
+    it("should add a toSetRolePermission function with correct values (isNot true)", () => {
+      initExpectMatch().not.toSetRolePermission(roleId, Permission.ADMINISTRATOR);
+      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToSetRolePermission).toBeCalledWith(runtime.bot, con, true);
+      expect(toSetRolePermissionMock).toBeCalledWith([Permission.ADMINISTRATOR], roleId, undefined);
     });
   });
 });
