@@ -140,7 +140,7 @@ class ExpectMatches implements Matches {
   ) {
     const data = this.getRoleData(roleData);
     let _permissions: Permission[];
-    if (permissions && typeof permissions[0] === "string") {
+    if (typeof permissions[0] === "string") {
       _permissions = (permissions as (keyof typeof Permission)[]).map((p) => Permission[p]);
     } else {
       _permissions = permissions as Permission[];
