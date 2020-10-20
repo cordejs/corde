@@ -238,6 +238,10 @@ export class CordeBot extends Events {
     return await this.guild.roles.fetch(id);
   }
 
+  public async hasRole(roleData: RoleData) {
+    return !!(await this.findRole(roleData));
+  }
+
   public async findRole(roleData: RoleData) {
     const data = await this.guild.roles.fetch();
     if (roleData.id) {
@@ -250,10 +254,6 @@ export class CordeBot extends Events {
 
   public getRoles() {
     return this.guild.roles.cache;
-  }
-
-  public hasRole(roleData: RoleData) {
-    return !!this.findRole(roleData);
   }
 
   /**
