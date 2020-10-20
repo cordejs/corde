@@ -48,6 +48,8 @@ bot.on("message", async (message) => {
     renameRole(message, args[0], args[1]);
   } else if (command === "set-role-position") {
     setRolePosition(message, args[0], args[1]);
+  } else if (command === "change-role-permission") {
+    changeRolePermission(message, args[0]);
   } else {
     console.log("No command found");
   }
@@ -137,6 +139,15 @@ function emojis(msg) {
 async function setRolePosition(msg, roleName, newPosition) {
   const role = msg.guild.roles.cache.find((r) => r.name === roleName);
   await role.setPosition(newPosition);
+}
+
+/**
+ * @param {Message} msg
+ * @param {string} roleId
+ */
+async function changeRolePermission(msg, roleId) {
+  const role = msg.guild.roles.cache.get(roleId);
+  await role.setPermissions(["ADMINISTRATOR"]);
 }
 
 function loginBot() {

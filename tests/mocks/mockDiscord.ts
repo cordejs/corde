@@ -402,13 +402,13 @@ export default class MockDiscord {
     return msg;
   }
 
-  public createMockMessageReaction(cutomEmoji = "😀") {
+  public createMockMessageReaction(customEmoji = "😀") {
     return new MessageReaction(
       this._client,
       {
         emoji: {
           animated: false,
-          name: cutomEmoji,
+          name: customEmoji,
           id: SnowflakeUtil.generate(),
           deleted: false,
         },
@@ -466,7 +466,7 @@ export default class MockDiscord {
       .setImage("https://i.imgur.com/wSTFkRM.png");
   }
 
-  private createMockRole(customName = "WE DEM BOYZZ!!!!!! 1") {
+  public createMockRole(customName = "WE DEM BOYZZ!!!!!! 1", permissionBitField = 66321471) {
     const role = new Role(
       this._client,
       {
@@ -476,8 +476,8 @@ export default class MockDiscord {
         hoist: true,
         position: 1,
         rawPosition: 1,
-        permissions: 66321471,
-        permissions_new: "66321471",
+        permissions: permissionBitField,
+        permissions_new: permissionBitField,
         managed: false,
         mentionable: false,
       },

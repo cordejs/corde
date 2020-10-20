@@ -1,6 +1,7 @@
 import { ColorResolvable, Snowflake } from "discord.js";
 import { RoleData } from "../../types";
 import { Colors } from "../../utils/colors";
+import { Permission } from "../../utils/permission";
 
 export interface RoleMatches {
   /**
@@ -101,4 +102,18 @@ export interface RoleMatches {
    */
   toSetRolePosition(newPosition: number, id: string): void;
   toSetRolePosition(newPosition: number, roleData: RoleData): void;
+
+  /**
+   * Defines a list of
+   * [Permissions](https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags)
+   * that a role should have.
+   * @param id Identifier of the role. Can also use RoleData to filter it.
+   * @param permissions List of permissions allowed by Discord.
+   *
+   * @see https://discord.com/developers/docs/topics/permissions#permissions
+   */
+  toSetRolePermission(id: string, ...permissions: Permission[]): void;
+  toSetRolePermission(id: string, ...permissions: (keyof typeof Permission)[]): void;
+  toSetRolePermission(roleData: RoleData, ...permissions: Permission[]): void;
+  toSetRolePermission(roleData: RoleData, ...permissions: (keyof typeof Permission)[]): void;
 }
