@@ -1126,7 +1126,7 @@
     "@francoischalifour/autocomplete-preset-algolia" "^1.0.0-alpha.28"
     algoliasearch "^4.0.0"
 
-"@docusaurus/core@2.0.0-alpha.66", "@docusaurus/core@^2.0.0-alpha.64":
+"@docusaurus/core@2.0.0-alpha.66", "@docusaurus/core@^2.0.0-alpha.66":
   version "2.0.0-alpha.66"
   resolved "https://registry.yarnpkg.com/@docusaurus/core/-/core-2.0.0-alpha.66.tgz#4e1d4296322df48c331f6051a8c0d39d99bd356b"
   integrity sha512-9HKqObYoyArpzSTIDguyUXm7z54bpV3dSWSc0PbKGu0Us6zP1TiOuhRDX1diFsKyvjNy7VbCe8XH8LJIdKi5dQ==
@@ -1405,18 +1405,6 @@
     "@docusaurus/utils" "2.0.0-alpha.66"
     "@hapi/joi" "17.1.1"
     chalk "^3.0.0"
-
-"@docusaurus/utils@2.0.0-alpha.66":
-  version "2.0.0-alpha.66"
-  resolved "https://registry.yarnpkg.com/@docusaurus/utils/-/utils-2.0.0-alpha.66.tgz#ef679896e7d7e536cc8196cc303f5f2ced1f5ebb"
-  integrity sha512-47jGB+Z3YVM6Xf1hxyNbJLMmc1qoTLmfwSf7NseKSkpjucbc5Ueivr+oVYp5yWoZw5sT5bObmdJYfJoD/RrbOg==
-  dependencies:
-    escape-string-regexp "^2.0.0"
-    fs-extra "^8.1.0"
-    gray-matter "^4.0.2"
-    lodash.camelcase "^4.3.0"
-    lodash.kebabcase "^4.1.1"
-    resolve-pathname "^3.0.0"
 
 "@docusaurus/utils@2.0.0-alpha.66":
   version "2.0.0-alpha.66"
