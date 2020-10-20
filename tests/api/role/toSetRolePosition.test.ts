@@ -88,10 +88,11 @@ describe("testing ToSetRolePosition operation", () => {
   });
 
   it("should not find a role and return a failed report", async () => {
-    const corde = createCordeBotWithMockedFunctions(() => {
+    const corde = createCordeBotWithMockedFunctions();
+
+    corde.findRole = jest.fn().mockImplementation(() => {
       throw new Error();
     });
-
     const toRename = new ToSetRolePosition(corde, "test", false);
     const report = await toRename.action(1, { id: "123" });
     const matchReport = new TestReport({
@@ -99,7 +100,7 @@ describe("testing ToSetRolePosition operation", () => {
       hasPassed: false,
       isNot: false,
       showExpectAndOutputValue: false,
-      customReturnMessage: "the maximum position possible is -1. Attempted value: 1",
+      output: "",
     });
     expect(report).toEqual(matchReport);
   });
