@@ -1,6 +1,6 @@
 {
   "name": "corde",
-  "version": "2.0.0-beta.4",
+  "version": "2.0.0-beta.6",
   "description": "A simple library for Discord bot tests",
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
@@ -25,6 +25,7 @@
   "scripts": {
     "build": "bash tasks.sh build",
     "watch": "bash tasks.sh watch",
+    "corde": "node ./bin/corde",
     "test": "jest --silent --runInBand --detectOpenHandles",
     "test-with-coverage": "jest --silent --runInBand --detectOpenHandles --collect-coverage --collectCoverageFrom=src/**/*.ts",
     "refresh": "rm -rf ./node_modules ./package-lock.json && yarn install",

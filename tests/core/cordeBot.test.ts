@@ -593,6 +593,22 @@ describe("Testing CordeBot object", () => {
     const corde = initCordeBot();
     expect(corde.getRoles()).toEqual(mockDiscord.guild.roles.cache);
   });
+
+  describe("testing hasRole", () => {
+    it("should return true due to a existing role", async () => {
+      const corde = initCordeBot();
+      mockDiscord.guild.roles.fetch = jest.fn().mockReturnValue(mockDiscord.roleManager);
+      const role = await corde.hasRole({ id: mockDiscord.role.id });
+      expect(role).toBeTruthy();
+    });
+
+    it("should return false due to a existing role", async () => {
+      const corde = initCordeBot();
+      mockDiscord.guild.roles.fetch = jest.fn().mockReturnValue(mockDiscord.roleManager);
+      const role = await corde.hasRole({ id: "9879" });
+      expect(role).toBeFalsy();
+    });
+  });
 });
 
 function initCordeBot() {

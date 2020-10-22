@@ -51,7 +51,7 @@ export abstract class ExpectOperation<P1 = any, P2 = any, P3 = any> {
    *
    * @returns A report of the executed command.
    */
-  public abstract async action(p1: P1, p2: P2, p3: P3): Promise<TestReport>;
+  public abstract action(p1: P1, p2: P2, p3: P3): Promise<TestReport>;
 
   protected catchExecutionError<T extends Error | unknown>(error: T) {
     this.isEqual = false;

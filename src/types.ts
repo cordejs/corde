@@ -81,7 +81,7 @@ export interface MinifiedEmbedMessage {
  */
 export default interface ConfigOptions {
   /**
-   * Fake bot used to test the realy one
+   * Fake bot used to test the really one
    */
   cordeTestToken: string;
   /**
@@ -105,7 +105,7 @@ export default interface ConfigOptions {
    */
   timeOut?: number;
   /**
-   * Defines how indentify bot calls
+   * Defines how identify bot calls
    */
   botPrefix: string;
   /**

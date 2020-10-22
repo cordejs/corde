@@ -163,15 +163,15 @@ delayed-stream@~1.0.0:
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
   integrity sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
 
-discord.js@^12.2.0, discord.js@^12.3.1:
-  version "12.3.1"
-  resolved "https://registry.yarnpkg.com/discord.js/-/discord.js-12.3.1.tgz#8f58ac17d29b068dbfeb6c01fc7777bacd5324cf"
-  integrity sha512-mSFyV/mbvzH12UXdS4zadmeUf8IMQOo/YdunubG1wWt1xjWvtaJz/s9CGsFD2B5pTw1W/LXxxUbrQjIZ/xlUdw==
+discord.js@^12.2.0, discord.js@^12.4.0:
+  version "12.4.0"
+  resolved "https://registry.yarnpkg.com/discord.js/-/discord.js-12.4.0.tgz#a96864495ec766fab25225b2123a9704c667280b"
+  integrity sha512-Lc+/vKzih1DPEya/0MO0BAp4Ru/4+MfDsOJkfbyzGoyIlFqiWSQ78RdyRk4tqAtabl6d5QR4Ygo0Ub0TGEsXBg==
   dependencies:
     "@discordjs/collection" "^0.1.6"
     "@discordjs/form-data" "^3.0.1"
     abort-controller "^3.0.0"
-    node-fetch "^2.6.0"
+    node-fetch "^2.6.1"
     prism-media "^1.2.2"
     setimmediate "^1.0.5"
     tweetnacl "^1.0.3"
@@ -251,7 +251,7 @@ mute-stream@0.0.8:
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.8.tgz#1630c42b2251ff81e2a283de96a5497ea92e5e0d"
   integrity sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==
 
-node-fetch@^2.6.0:
+node-fetch@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
   integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
@@ -351,10 +351,10 @@ tweetnacl@^1.0.3:
   resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-1.0.3.tgz#ac0af71680458d8a6378d0d0d050ab1407d35596"
   integrity sha512-6rt+RN7aOi1nGMyC4Xa5DdYiukl2UWCbcJft7YhxReBGQD7OAM8Pbxw6YMo4r2diNEA8FEmu32YOn9rhaiE5yw==
 
-typescript@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.2.tgz#7ea7c88777c723c681e33bf7988be5d008d05ac2"
-  integrity sha512-e4ERvRV2wb+rRZ/IQeb3jm2VxBsirQLpQhdxplZ2MEzGvDkkMmPglecnNDfSUBivMjP93vRbngYYDQqQ/78bcQ==
+typescript@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.3.tgz#153bbd468ef07725c1df9c77e8b453f8d36abba5"
+  integrity sha512-tEu6DGxGgRJPb/mVPIZ48e69xCn2yRmCgYmDugAVwmJ6o+0u1RI18eO7E7WBTLYLaEVVOhwQmcdhQHweux/WPg==
 
 util@^0.10.3:
   version "0.10.4"

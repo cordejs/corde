@@ -3,6 +3,7 @@ import { testCollector } from "../common/testCollector";
 import { CordeBot } from "../core";
 import { MessageData, RoleData } from "../types";
 import { Colors } from "../utils/colors";
+import { Permission } from "../utils/permission";
 import {
   toAddReaction,
   toDeleteRole,
@@ -15,6 +16,7 @@ import {
 } from "./expectMatches";
 import { toRemoveReaction } from "./expectMatches/message/toRemoveReaction";
 import { ExpectOperation } from "./expectMatches/operation";
+import { ToSetRolePermission } from "./expectMatches/role/toSetRolePermission";
 import { RoleMatches, TestReport } from "./interfaces";
 import { MessageMatches } from "./interfaces/messageMatches";
 
@@ -125,6 +127,27 @@ class ExpectMatches implements Matches {
     const data = this.getRoleData(roleData);
     testCollector.addTestFunction((cordeBot) => {
       return this.operationFactory(ToSetRolePosition, cordeBot, newPosition, data);
+    });
+  }
+
+  public toSetRolePermission(id: string, ...permissions: Permission[]): void;
+  public toSetRolePermission(id: string, ...permissions: (keyof typeof Permission)[]): void;
+  public toSetRolePermission(roleData: RoleData, ...permissions: Permission[]): void;
+  public toSetRolePermission(roleData: RoleData, ...permissions: (keyof typeof Permission)[]): void;
+  public toSetRolePermission(
+    roleData: string | RoleData,
+    ...permissions: (keyof typeof Permission)[] | Permission[]
+  ) {
+    const data = this.getRoleData(roleData);
+    let _permissions: Permission[];
+    if (typeof permissions[0] === "string") {
+      _permissions = (permissions as (keyof typeof Permission)[]).map((p) => Permission[p]);
+    } else {
+      _permissions = permissions as Permission[];
+    }
+
+    testCollector.addTestFunction((cordeBot) => {
+      return this.operationFactory(ToSetRolePermission, cordeBot, _permissions, data);
     });
   }
 
