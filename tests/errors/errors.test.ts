@@ -6,6 +6,7 @@ import {
   PropertyError,
   TypeError,
   TimeoutError,
+  QueueFunctionError,
 } from "../../src/errors";
 import { Errors } from "../../src/errors/defaults";
 
@@ -50,5 +51,11 @@ describe("testing errors types", () => {
     const error = new TimeoutError();
     expect(error.name).toBe(Errors.TIMEOUT_ERROR);
     expect(error.message).toBe(Errors.TIMEOUT_ERROR_MESSAGE);
+  });
+
+  it("QueueError should match expected structure", () => {
+    const error = new QueueFunctionError();
+    expect(error.name).toBe(Errors.QUEUE_FUNCTION_ERROR);
+    expect(error.message).toBe(Errors.QUEUE_FUNCTION_ERROR_MESSAGE);
   });
 });

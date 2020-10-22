@@ -9,6 +9,9 @@ export const Errors = {
   TIMEOUT_ERROR: "TimeoutError",
   TIMEOUT_ERROR_MESSAGE: "Timeout has occurred",
 
+  QUEUE_FUNCTION_ERROR: "QueueFunctionError",
+  QUEUE_FUNCTION_ERROR_MESSAGE: "A error occurred when executing a queued function",
+
   CORDE_CLIENT_ERROR: "CordeClientError",
   CORDE_CLIENT_ERROR_MESSAGE: "There is a problem with corde client",
 

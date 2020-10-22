@@ -8,12 +8,17 @@
  */
 export class List<T> {
   private _data: T[];
-
   /**
    * Initialize a new List.
    */
   constructor() {
     this._data = [];
+  }
+
+  public *[Symbol.iterator](): Iterator<T> {
+    for (const key of this._data) {
+      yield key;
+    }
   }
 
   /**
