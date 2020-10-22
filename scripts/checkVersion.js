@@ -9,4 +9,4 @@ if (!semver.valid(jsonPack.version)) {
   );
   process.exit(1);
 }
-console.log(`${chalk.green("sucess")} valid version dectected...`);
+console.log(`${chalk.green("success")} valid version detected...`);
