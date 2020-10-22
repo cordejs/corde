@@ -7,3 +7,4 @@ export * from "./matcher";
 export * from "./interfaces";
 export * from "./test";
 export * from "./afterEach";
+export * from "./beforeEach";

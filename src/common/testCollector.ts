@@ -49,6 +49,7 @@ class TestCollector {
   public groups: Group[] = [];
   public beforeStartFunctions: voidFunction[] = [];
   public afterAllFunctions: voidFunction[] = [];
+  public beforeEachFunctions: voidFunction[] = [];
   public afterEachFunctions: voidFunction[] = [];
 
   private testsFunctions: testFunctionType[] = [];
