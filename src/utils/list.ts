@@ -1,36 +1,22 @@
 /**
- * List if an encapsulation of [Array](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array).
+ * List if an extension of [Array](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array).
  * It's contains some others functions that are no present in Array itself
  * While provide access direct to main Array functions.
  *
  * The main goal is to reduce the access to no relevant functions provided by Array and
  * specialize this class in iteration addition, reduction and search of elements.
  */
-export class List<T> {
-  private _data: T[];
-  /**
-   * Initialize a new List.
-   */
-  constructor() {
-    this._data = [];
-  }
-
-  public *[Symbol.iterator](): Iterator<T> {
-    for (const key of this._data) {
-      yield key;
-    }
-  }
-
+export class List<T> extends Array<T> {
   /**
    * Converts a array to List.
    * It do not modify the current values of the list.
    * @param data Array with values to be converted.
    * @returns A new instance of List. (The list has no references this instance).
    */
-  public arrayToList(data: T[]): List<T> {
-    const newList = new List<T>();
+  public arrayToList<U extends any>(data: U[]): List<U> {
+    const newList = new List<U>();
     for (const val of data) {
-      newList.add(val);
+      newList.push(val);
     }
     return newList;
   }
@@ -43,20 +29,7 @@ export class List<T> {
    * or null.
    */
   public single(predicate: (value: T) => boolean): T {
-    return this._data.find(predicate) ?? null;
-  }
-
-  /**
-   * Same of
-   * [Array.filter](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/filtro).
-   * Finds a List of elements that match with a predicate.
-   * @param predicate Comparator to find the elements.
-   * @returns An list of all elements that match with the predicate.
-   * returns an empty list if no element was found.
-   */
-  public filter(predicate: (value: T) => boolean): List<T> {
-    const arr = this._data.filter(predicate);
-    return this.arrayToList(arr);
+    return this.find(predicate) ?? null;
   }
 
   /**
@@ -64,7 +37,7 @@ export class List<T> {
    * @returns The first element or undefined if no element exists.
    */
   public first(): T | undefined {
-    return this._data[0];
+    return this[0];
   }
 
   /**
@@ -72,7 +45,7 @@ export class List<T> {
    * @returns The last element of the list of undefined if no element exists.
    */
   public last(): T | undefined {
-    return this._data[this._data.length - 1];
+    return this[this.length - 1];
   }
 
   /**
@@ -80,7 +53,9 @@ export class List<T> {
    * @returns This instance.
    */
   public clear(): List<T> {
-    this._data = [];
+    while (this.length > 0) {
+      this.pop();
+    }
     return this;
   }
 
@@ -89,20 +64,7 @@ export class List<T> {
    * @returns The cloned list.
    */
   public clone(): List<T> {
-    return this.arrayToList(this._data.map((d) => d));
-  }
-
-  /**
-   * Do a operation for each element of the list.
-   * Same of [Array.foreach](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach).
-   * @param operation Operation to execute in each element.
-   * @returns this instance.
-   */
-  public each(operation: (val: T) => void): List<T> {
-    for (const obj of this._data) {
-      operation(obj);
-    }
-    return this;
+    return this.arrayToList(this.map((d) => d));
   }
 
   /**
@@ -112,29 +74,14 @@ export class List<T> {
    * @returns All picked properties of T in a new List.
    * Returns an empty list of no element was found.
    */
-  public select<K extends keyof T>(...keys: K[]): List<Pick<T, K>> {
+  public pick<K extends keyof T>(...keys: K[]): List<Pick<T, K>> {
     const newList = new List<Pick<T, K>>();
-    for (const obj of this._data) {
+    for (const obj of this) {
       const copy = {} as Pick<T, K>;
       keys.forEach((key) => (copy[key] = obj[key]));
-      newList.add(copy);
+      newList.push(copy);
     }
     return newList;
-  }
-
-  /**
-   * Add a new element to list.
-   * Note: undefined or null elements are not added.
-   * @param values The new element.
-   * @returns This instance.
-   */
-  public add(...values: T[]): List<T> {
-    for (const val of values) {
-      if (val) {
-        this._data.push(val);
-      }
-    }
-    return this;
   }
 
   /**
@@ -142,7 +89,7 @@ export class List<T> {
    * @returns True if there are elements in list, false if don't.
    */
   public any() {
-    return this._data.length > 0;
+    return this.length > 0;
   }
 
   /**
@@ -193,35 +140,42 @@ export class List<T> {
     if (this._isArray(index)) {
       const values = new List<T>();
       for (const i of index) {
-        const element = this._data[i];
+        const element = this[i];
         if (element) {
-          values.add(element);
+          values.push(element);
         }
       }
       return values;
     } else {
-      return this._data[index];
+      return this[index];
     }
   }
 
-  /**
-   * Returns the index of the first element that matches with the informed element.
-   * Same of [Array.indexOf](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf).
-   * @param element Element to have its index searched.
-   * @returns Index of the searched element.
-   */
-  public indexOf(element: T): number {
-    return this._data.indexOf(element);
+  public has(element: T) {
+    return !!this.find((d) => d === element);
   }
 
-  public has(element: T) {
-    return !!this._data.find((d) => d === element);
+  public size() {
+    return this.length;
+  }
+
+  public take(from?: number, amount?: number) {
+    if (from && amount > 0) {
+      const returnList = new List<T>();
+      for (let i = from; i < this.length; i++) {
+        if (returnList.size() === amount) {
+          return returnList;
+        }
+        returnList.push(this[i]);
+      }
+    }
+    return this;
   }
 
   private _removeItem(data: T) {
-    const index = this._data.indexOf(data, 0);
+    const index = this.indexOf(data, 0);
     if (index > -1) {
-      this._data.slice(index, 1);
+      this.slice(index, 1);
     }
   }
 
