@@ -7,23 +7,33 @@
  * specialize this class in iteration addition, reduction and search of elements.
  */
 export class List<T> extends Array<T> {
+  constructor(...values: T[]) {
+    super();
+    if (values) {
+      values.forEach((val) => this.push(val));
+    }
+  }
+
   /**
    * Converts a array to List.
    * It do not modify the current values of the list.
+   *
    * @param data Array with values to be converted.
    * @returns A new instance of List. (The list has no references this instance).
    */
-  public arrayToList<U extends any>(data: U[]): List<U> {
+  public toList<U extends any>(data: U[]): List<U> {
     const newList = new List<U>();
-    for (const val of data) {
-      newList.push(val);
+    if (data) {
+      for (const val of data) {
+        newList.push(val);
+      }
     }
     return newList;
   }
 
   /**
-   * Get the first elements that match with the predicate
-   * does the same of [Array.find](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/find).
+   * Get the first elements that match with the predicate.
+   * Does the same of [Array.find](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/find).
    * @param predicate Comparator to find the element.
    * @returns The first element of the list that match with the predicate,
    * or null.
@@ -64,7 +74,7 @@ export class List<T> extends Array<T> {
    * @returns The cloned list.
    */
   public clone(): List<T> {
-    return this.arrayToList(this.map((d) => d));
+    return this.toList([...this]);
   }
 
   /**
@@ -155,15 +165,20 @@ export class List<T> extends Array<T> {
     return !!this.find((d) => d === element);
   }
 
-  public size() {
-    return this.length;
+  /**
+   * Calls a defined callback function on each element of an array, and returns an **list** that contains the results.
+   *
+   * Same of Array.map
+   */
+  public map<U>(callbackfn: (value: T, index: number, array: T[]) => U, arg?: any): List<U> {
+    return super.map(callbackfn, arg) as List<U>;
   }
 
   public take(from?: number, amount?: number) {
     if (from && amount > 0) {
       const returnList = new List<T>();
       for (let i = from; i < this.length; i++) {
-        if (returnList.size() === amount) {
+        if (returnList.length === amount) {
           return returnList;
         }
         returnList.push(this[i]);
@@ -173,9 +188,9 @@ export class List<T> extends Array<T> {
   }
 
   private _removeItem(data: T) {
-    const index = this.indexOf(data, 0);
+    const index = this.indexOf(data);
     if (index > -1) {
-      this.slice(index, 1);
+      this.splice(index, 1);
     }
   }
 
