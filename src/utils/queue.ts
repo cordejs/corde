@@ -86,18 +86,20 @@ export class Queue<T extends (...args: any[]) => any> {
    * @param params Parameters to the functions.
    */
   public tryExecuteSync<K extends Parameters<T>, U extends ReturnType<T>>(
-    catchAction: (error: any) => any,
+    catchAction?: (error: any) => any,
     ...params: K
   ) {
     const returnValues = new List<U>();
     this._funcs.forEach((fn) => {
       try {
-        const value = fn(params);
+        const value = fn(...params);
         if (value) {
           returnValues.push(value);
         }
       } catch (error) {
-        catchAction(error);
+        if (catchAction) {
+          catchAction(error);
+        }
       }
     });
     return returnValues;
@@ -111,18 +113,20 @@ export class Queue<T extends (...args: any[]) => any> {
    * @param params Parameters to the functions.
    */
   public async tryExecuteAsync<K extends Parameters<T>, U extends ReturnType<T>>(
-    catchAction: (error: any) => any,
+    catchAction?: (error: any) => any,
     ...params: K
   ) {
     const returnValues = new List<U>();
     this._funcs.forEach(async (fn) => {
       try {
-        const value = await fn(params);
+        const value = await fn(...params);
         if (value) {
           returnValues.push(value);
         }
       } catch (error) {
-        catchAction(error);
+        if (catchAction) {
+          catchAction(error);
+        }
       }
     });
     return returnValues;
