@@ -1086,17 +1086,6 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@jest/types@^26.6.0":
-  version "26.6.0"
-  resolved "https://registry.yarnpkg.com/@jest/types/-/types-26.6.0.tgz#2c045f231bfd79d52514cda3fbc93ef46157fa6a"
-  integrity sha512-8pDeq/JVyAYw7jBGU83v8RMYAkdrRxLG3BGnAJuqaQAUd6GWBmND2uyl+awI88+hit48suLoLjNFtR+ZXxWaYg==
-  dependencies:
-    "@types/istanbul-lib-coverage" "^2.0.0"
-    "@types/istanbul-reports" "^3.0.0"
-    "@types/node" "*"
-    "@types/yargs" "^15.0.0"
-    chalk "^4.0.0"
-
 "@microsoft/tsdoc@^0.12.20":
   version "0.12.21"
   resolved "https://registry.yarnpkg.com/@microsoft/tsdoc/-/tsdoc-0.12.21.tgz#1098c393634826ed47386862a1241ce8b7c0cf0d"
@@ -1206,9 +1195,9 @@
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
 
 "@types/node@*", "@types/node@^14.0.22":
-  version "14.14.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.0.tgz#f1091b6ad5de18e8e91bdbd43ec63f13de372538"
-  integrity sha512-BfbIHP9IapdupGhq/hc+jT5dyiBVZ2DdeC5WwJWQWDb0GijQlzUFAeIQn/2GtvZcd2HVUU7An8felIICFTC2qg==
+  version "14.14.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.2.tgz#d25295f9e4ca5989a2c610754dc02a9721235eeb"
+  integrity sha512-jeYJU2kl7hL9U5xuI/BhKPZ4vqGM/OmK6whiFAXVhlstzZhVamWhDSmHyGLIp+RVyuF9/d0dqr2P85aFj4BvJg==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
