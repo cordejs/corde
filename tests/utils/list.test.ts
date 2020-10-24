@@ -139,7 +139,7 @@ describe("testing list structure", () => {
   });
 
   it("should create a list from array", () => {
-    expect(List.fromArray(1, 2, 3)).toEqual(new List(1, 2, 3));
+    expect(List.fromArray([1, 2, 3])).toEqual(new List(1, 2, 3));
   });
 
   it("should create a empty list from array", () => {

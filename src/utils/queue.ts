@@ -137,7 +137,7 @@ export class Queue<T extends (...args: any[]) => any> {
    * occur.
    * @param params Parameters to the functions.
    */
-  public executeWithCatchCollectSync(...params: any[]) {
+  public executeWithCatchCollectSync<K extends Parameters<T>>(...params: K) {
     const errors = new List<any>();
     this._funcs.forEach((fn) => {
       try {
@@ -154,7 +154,7 @@ export class Queue<T extends (...args: any[]) => any> {
    * occur.
    * @param params Parameters to the functions.
    */
-  public executeWithCatchCollectAsync(...params: any[]) {
+  public executeWithCatchCollectAsync<K extends Parameters<T>>(...params: K) {
     const errors = new List<any>();
     this._funcs.forEach(async (fn) => {
       try {

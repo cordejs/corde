@@ -49,7 +49,7 @@ describe("testing queue structure", () => {
     const queueParams = new Queue<(sum: number) => number>();
     queueParams.enqueue(fn);
     const returned = queueParams.executeSync(2);
-    expect(returned).toEqual(List.fromArray(4));
+    expect(returned).toEqual(new List(4));
   });
 
   it("should execute async all functions with parameters", async () => {
@@ -72,7 +72,7 @@ describe("testing queue structure", () => {
     const queueParams = new Queue<(sum: number) => number>();
     queueParams.enqueue(fn);
     const returned = await queueParams.executeAsync(2);
-    expect(returned).toEqual(List.fromArray(4));
+    expect(returned).toEqual(new List(4));
   });
 
   it("should safe execute function that throws error and not provide catchFunction", () => {
@@ -89,7 +89,7 @@ describe("testing queue structure", () => {
       return 1;
     });
     const values = queueWithReturn.tryExecuteSync();
-    expect(values).toEqual(List.fromArray(1));
+    expect(values).toEqual(new List(1));
   });
 
   it("should safe execute function that throws error and provide catchFunction", () => {
@@ -126,6 +126,15 @@ describe("testing queue structure", () => {
       return 1;
     });
     const values = await queueWithReturn.tryExecuteAsync();
-    expect(values).toEqual(List.fromArray(1));
+    expect(values).toEqual(new List(1));
+  });
+
+  it("should execute sync function handling error and returning it", () => {
+    queue.enqueue(() => {
+      throw new Error("Test Error");
+    });
+
+    const errors = queue.executeWithCatchCollectSync();
+    expect(errors[0]).toEqual(new Error("Test Error"));
   });
 });

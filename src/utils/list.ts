@@ -11,19 +11,12 @@ export class List<T> extends Array<T> {
    * Static function to create a new list based on an array.
    * @param array Collection to be in list.
    */
-  public static fromArray<U extends any>(...array: U[]): List<U>;
-  public static fromArray<U extends any>(array: U[]): List<U>;
-  public static fromArray<U extends any>(array: U | U[]) {
+  public static fromArray<U extends any>(array?: U[]) {
     if (array === null || array === undefined) {
       return new List<U>();
     }
     const newList = new List<U>();
-    if (Array.isArray(array)) {
-      array.forEach((val) => newList.push(val));
-    } else {
-      newList.push(array);
-    }
-
+    array.forEach((val) => newList.push(val));
     return newList;
   }
 
