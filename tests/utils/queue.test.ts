@@ -137,4 +137,13 @@ describe("testing queue structure", () => {
     const errors = queue.executeWithCatchCollectSync();
     expect(errors[0]).toEqual(new Error("Test Error"));
   });
+
+  it("should execute async function handling error and returning it", async () => {
+    queue.enqueue(() => {
+      throw new Error("Test Error");
+    });
+
+    const errors = await queue.executeWithCatchCollectAsync();
+    expect(errors[0]).toEqual(new Error("Test Error"));
+  });
 });

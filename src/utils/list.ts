@@ -1,5 +1,5 @@
 /**
- * List if an extension of [Array](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array).
+ * List is an extension of [Array](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array).
  * It's contains some others functions that are no present in Array itself
  * While provide access direct to main Array functions.
  *
@@ -9,6 +9,7 @@
 export class List<T> extends Array<T> {
   /**
    * Static function to create a new list based on an array.
+   * Can also be used to create a empty list.
    * @param array Collection to be in list.
    */
   public static fromArray<U extends any>(array?: U[]) {
@@ -20,6 +21,10 @@ export class List<T> extends Array<T> {
     return newList;
   }
 
+  /**
+   * Initialize a new List.
+   * @param values Initial values of the list
+   */
   constructor(...values: T[]) {
     super();
     if (values) {
@@ -93,9 +98,13 @@ export class List<T> extends Array<T> {
   /**
    * Select all properties informed in parameter that are contained in
    * the List object.
+   *
    * @param keys Properties of T to be picked.
+   *
    * @returns All picked properties of T in a new List.
    * Returns an empty list of no element was found.
+   *
+   * @see [Pick](https://www.typescriptlang.org/docs/handbook/utility-types.html#picktype-keys)
    */
   public pick<K extends keyof T>(...keys: K[]): List<Pick<T, K>> {
     const newList = new List<Pick<T, K>>();
@@ -181,11 +190,6 @@ export class List<T> extends Array<T> {
     return !!this.find((d) => d === element);
   }
 
-  /**
-   * Calls a defined callback function on each element of an array, and returns an **list** that contains the results.
-   *
-   * Same of Array.map
-   */
   public map<U>(callbackfn: (value: T, index: number, array: T[]) => U, arg?: any): List<U> {
     return super.map(callbackfn, arg) as List<U>;
   }
