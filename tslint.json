@@ -29,6 +29,7 @@
     "object-literal-sort-keys": false,
     "ordered-imports": false,
     "quotemark": [true, "double"],
+    "prefer-for-of": false,
     "trailing-comma": false,
     "no-unused-variable": false,
     "unified-signatures": false
