@@ -146,4 +146,16 @@ describe("testing queue structure", () => {
     const errors = await queue.executeWithCatchCollectAsync();
     expect(errors[0]).toEqual(new Error("Test Error"));
   });
+
+  it("should clear the queue", () => {
+    queue.enqueue(() => {});
+    queue.clear();
+    expect(queue.size()).toBe(0);
+  });
+
+  it("should get default parameters", () => {
+    const numberQueue = new Queue<(value: number) => void>();
+    numberQueue.addDefaultParameters(1);
+    expect(numberQueue.defaultParameters).toEqual(new List(1));
+  });
 });

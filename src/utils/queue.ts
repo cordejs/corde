@@ -7,7 +7,7 @@ import { List } from "./list";
  */
 export class Queue<T extends (...args: any[]) => any> {
   private readonly _funcs: Map<string, T>;
-  private readonly _defaultParameters: List<any>;
+  private readonly _defaultParameters: List<Parameters<T>>;
 
   /**
    * Gets default parameters added.
@@ -18,7 +18,7 @@ export class Queue<T extends (...args: any[]) => any> {
 
   constructor() {
     this._funcs = new Map<string, T>();
-    this._defaultParameters = new List<any>();
+    this._defaultParameters = new List<Parameters<T>>();
   }
 
   /**
@@ -164,6 +164,16 @@ export class Queue<T extends (...args: any[]) => any> {
       }
     });
     return errors;
+  }
+
+  /**
+   * Add parameters to be injected on queued functions
+   * @param parameter Parameter value
+   */
+  public addDefaultParameters<K extends Parameters<T>>(...parameter: K) {
+    if (parameter) {
+      this._defaultParameters.push(...parameter);
+    }
   }
 
   public size() {
