@@ -7,6 +7,19 @@
  * specialize this class in iteration addition, reduction and search of elements.
  */
 export class List<T> extends Array<T> {
+  /**
+   * Static function to create a new list based on an array.
+   * @param array Collection to be in list.
+   */
+  public static fromArray<U extends any>(...array: U[]) {
+    if (array === null || array === undefined) {
+      return new List<U>();
+    }
+    const newList = new List<U>();
+    array.forEach((val) => newList.push(val));
+    return newList;
+  }
+
   constructor(...values: T[]) {
     super();
     if (values) {
@@ -145,8 +158,12 @@ export class List<T> extends Array<T> {
    * @returns A list with each element informed in array.
    * No existing elements will be ignored in addition on list.
    */
-  public get(...index: number[]): List<T>;
+  public get(index: number[]): List<T>;
   public get(index: number | number[]): T | List<T> {
+    if (index === undefined || index === null) {
+      return null;
+    }
+
     if (this._isArray(index)) {
       const values = new List<T>();
       for (const i of index) {
@@ -156,9 +173,8 @@ export class List<T> extends Array<T> {
         }
       }
       return values;
-    } else {
-      return this[index];
     }
+    return this[index];
   }
 
   public has(element: T) {
@@ -175,15 +191,11 @@ export class List<T> extends Array<T> {
   }
 
   public take(from?: number, amount?: number) {
-    if (from && amount > 0) {
-      const returnList = new List<T>();
-      for (let i = from; i < this.length; i++) {
-        if (returnList.length === amount) {
-          return returnList;
-        }
-        returnList.push(this[i]);
-      }
-    }
+    return this.slice(from, amount) as List<T>;
+  }
+
+  public forEach(callbackfn: (value: T, index: number, array: T[]) => void, thisArg?: any) {
+    super.forEach(callbackfn, thisArg);
     return this;
   }
 
