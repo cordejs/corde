@@ -82,7 +82,7 @@ export class Queue<T extends (...args: any[]) => any> {
   }
 
   public size() {
-    return this._list.size();
+    return this._list.length;
   }
 
   public clear() {
