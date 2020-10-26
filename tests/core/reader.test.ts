@@ -16,7 +16,7 @@ afterEach(() => {
 });
 
 describe("reader class", () => {
-  describe("when instantializing it", () => {
+  describe("when instantiating it", () => {
     it("should create the instance", () => {
       expect(reader).toBeTruthy();
     });
