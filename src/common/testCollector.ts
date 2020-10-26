@@ -1,5 +1,5 @@
 import { AssertionProps, Group, Test, testFunctionType } from "../types";
-import { List, Queue } from "../utils";
+import { Queue } from "../utils";
 
 type voidFunction = () => void;
 
@@ -30,7 +30,7 @@ class TestCollector {
    * @description Assertions are the minor type of object in
    * position tree, but being the most important of all them.
    */
-  public assertions: List<AssertionProps>;
+  public assertions: AssertionProps[];
 
   /**
    * List of tests found in running file.
@@ -63,7 +63,7 @@ class TestCollector {
     this.beforeEachFunctions = new Queue();
     this.afterEachFunctions = new Queue();
     this.tests = [];
-    this.assertions = new List();
+    this.assertions = [];
     this.isolatedFunctions = [];
     this.testsFunctions = [];
   }

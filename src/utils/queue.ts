@@ -7,7 +7,7 @@ import { List } from "./list";
  */
 export class Queue<T extends (...args: any[]) => any> {
   private readonly _funcs: Map<string, T>;
-  private readonly _defaultParameters: List<Parameters<T>>;
+  private readonly _defaultParameters: Parameters<T>[];
 
   /**
    * Gets default parameters added.
@@ -18,7 +18,7 @@ export class Queue<T extends (...args: any[]) => any> {
 
   constructor() {
     this._funcs = new Map<string, T>();
-    this._defaultParameters = new List<Parameters<T>>();
+    this._defaultParameters = [];
   }
 
   /**
@@ -47,9 +47,9 @@ export class Queue<T extends (...args: any[]) => any> {
    */
   public async executeAsync<K extends Parameters<T>, U extends ReturnType<T>>(
     ...params: K
-  ): Promise<List<U>> {
+  ): Promise<U[]> {
     const parameters = [...params, ...this._defaultParameters];
-    const returnList = new List<U>();
+    const returnList: U[] = [];
 
     for (const [guid, fn] of this._funcs) {
       const value = await fn(...parameters);
@@ -64,9 +64,9 @@ export class Queue<T extends (...args: any[]) => any> {
    * Execute functions with parameters.
    * @param params Parameters to be injected on function in queue.
    */
-  public executeSync<K extends Parameters<T>, U extends ReturnType<T>>(...params: K): List<U> {
+  public executeSync<K extends Parameters<T>, U extends ReturnType<T>>(...params: K): U[] {
     const parameters = [...params, ...this._defaultParameters];
-    const returnList = new List<U>();
+    const returnList: U[] = [];
 
     for (const [guid, fn] of this._funcs) {
       const value = fn(...parameters);
@@ -89,7 +89,7 @@ export class Queue<T extends (...args: any[]) => any> {
     catchAction?: (error: any) => any,
     ...params: K
   ) {
-    const returnValues = new List<U>();
+    const returnValues: U[] = [];
     this._funcs.forEach((fn) => {
       try {
         const value = fn(...params);
@@ -116,7 +116,7 @@ export class Queue<T extends (...args: any[]) => any> {
     catchAction?: (error: any) => any,
     ...params: K
   ) {
-    const returnValues = new List<U>();
+    const returnValues: U[] = [];
     this._funcs.forEach(async (fn) => {
       try {
         const value = await fn(...params);
@@ -138,7 +138,7 @@ export class Queue<T extends (...args: any[]) => any> {
    * @param params Parameters to the functions.
    */
   public executeWithCatchCollectSync<K extends Parameters<T>>(...params: K) {
-    const errors = new List<any>();
+    const errors: any[] = [];
     this._funcs.forEach((fn) => {
       try {
         fn(params);
@@ -155,7 +155,7 @@ export class Queue<T extends (...args: any[]) => any> {
    * @param params Parameters to the functions.
    */
   public async executeWithCatchCollectAsync<K extends Parameters<T>>(...params: K) {
-    const errors = new List<any>();
+    const errors: any[] = [];
     this._funcs.forEach(async (fn) => {
       try {
         await fn(params);

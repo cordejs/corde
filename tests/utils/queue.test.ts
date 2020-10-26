@@ -1,4 +1,3 @@
-import { List } from "../../src/utils/list";
 import { Queue } from "../../src/utils/queue";
 
 describe("testing queue structure", () => {
@@ -49,7 +48,7 @@ describe("testing queue structure", () => {
     const queueParams = new Queue<(sum: number) => number>();
     queueParams.enqueue(fn);
     const returned = queueParams.executeSync(2);
-    expect(returned).toEqual(new List(4));
+    expect(returned).toEqual([4]);
   });
 
   it("should execute async all functions with parameters", async () => {
@@ -72,7 +71,7 @@ describe("testing queue structure", () => {
     const queueParams = new Queue<(sum: number) => number>();
     queueParams.enqueue(fn);
     const returned = await queueParams.executeAsync(2);
-    expect(returned).toEqual(new List(4));
+    expect(returned).toEqual([4]);
   });
 
   it("should safe execute function that throws error and not provide catchFunction", () => {
@@ -89,7 +88,7 @@ describe("testing queue structure", () => {
       return 1;
     });
     const values = queueWithReturn.tryExecuteSync();
-    expect(values).toEqual(new List(1));
+    expect(values).toEqual([1]);
   });
 
   it("should safe execute function that throws error and provide catchFunction", () => {
@@ -126,7 +125,7 @@ describe("testing queue structure", () => {
       return 1;
     });
     const values = await queueWithReturn.tryExecuteAsync();
-    expect(values).toEqual(new List(1));
+    expect(values).toEqual([1]);
   });
 
   it("should execute sync function handling error and returning it", () => {
@@ -156,6 +155,6 @@ describe("testing queue structure", () => {
   it("should get default parameters", () => {
     const numberQueue = new Queue<(value: number) => void>();
     numberQueue.addDefaultParameters(1);
-    expect(numberQueue.defaultParameters).toEqual(new List(1));
+    expect(numberQueue.defaultParameters).toEqual([1]);
   });
 });
