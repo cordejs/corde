@@ -43,8 +43,7 @@ async function runTests(files: string[]) {
 
   spinner.text = "starting bots";
 
-  testCollector.beforeStartFunctions.forEach((fn) => fn());
-
+  await testCollector.beforeStartFunctions.executeAsync();
   await runtime.loginBot(runtime.cordeTestToken);
 
   spinner.text = "running tests";
@@ -61,13 +60,13 @@ async function runTestsAndPrint(groups: Group[]) {
   const hasAllTestsPassed = reporter.outPutResult(groups);
 
   if (hasAllTestsPassed) {
-    finishProcess(0);
+    await finishProcess(0);
   } else {
-    finishProcess(1);
+    await finishProcess(1);
   }
 }
 
-function finishProcess(code: number, error?: any) {
+async function finishProcess(code: number, error?: any) {
   try {
     if (error) {
       console.log(error);
@@ -76,7 +75,7 @@ function finishProcess(code: number, error?: any) {
     runtime.logoffBot();
 
     if (testCollector.afterAllFunctions) {
-      testCollector.afterAllFunctions.forEach((fn) => fn());
+      await testCollector.afterAllFunctions.executeAsync();
     }
   } finally {
     process.exit(code);

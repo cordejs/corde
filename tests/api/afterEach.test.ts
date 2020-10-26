@@ -1,9 +1,10 @@
 import { testCollector } from "../../src/common";
 import { afterEach } from "../../src/api";
+import { Queue } from "../../src/utils";
 
 describe("Testing afterEach function", () => {
   beforeEach(() => {
-    testCollector.afterEachFunctions = [];
+    testCollector.afterEachFunctions = new Queue();
   });
 
   it("Should add a function", () => {
@@ -12,14 +13,14 @@ describe("Testing afterEach function", () => {
       a = 2;
     });
 
-    testCollector.afterEachFunctions.map((fn) => fn());
+    testCollector.afterEachFunctions.executeSync();
     expect(a).toBe(2);
   });
 
   it("Should do nothing", () => {
     afterEach(undefined);
 
-    const length = testCollector.afterEachFunctions.length;
+    const length = testCollector.afterEachFunctions.size();
     expect(length).toBe(0);
   });
 });

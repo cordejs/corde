@@ -1,4 +1,5 @@
 import { AssertionProps, Group, Test, testFunctionType } from "../types";
+import { List, Queue } from "../utils";
 
 type voidFunction = () => void;
 
@@ -29,14 +30,14 @@ class TestCollector {
    * @description Assertions are the minor type of object in
    * position tree, but being the most important of all them.
    */
-  public assertions: AssertionProps[] = [];
+  public assertions: List<AssertionProps>;
 
   /**
    * List of tests found in running file.
    * @description Tests are the second in position of objects,
    * all tests are encapsulated inside groups in the end of processing.
    */
-  public tests: Test[] = [];
+  public tests: Test[];
 
   /**
    * List of groups found in running file.
@@ -46,14 +47,26 @@ class TestCollector {
    * but not necessary all assertions need a group or a test, that is why
    * group name are optional
    */
-  public groups: Group[] = [];
-  public beforeStartFunctions: voidFunction[] = [];
-  public afterAllFunctions: voidFunction[] = [];
-  public beforeEachFunctions: voidFunction[] = [];
-  public afterEachFunctions: voidFunction[] = [];
+  public groups: Group[];
+  public beforeStartFunctions: Queue<voidFunction>;
+  public afterAllFunctions: Queue<voidFunction>;
+  public beforeEachFunctions: Queue<voidFunction>;
 
-  private testsFunctions: testFunctionType[] = [];
-  private isolatedFunctions: testFunctionType[] = [];
+  public afterEachFunctions: Queue<voidFunction>;
+  public testsFunctions: testFunctionType[];
+  public isolatedFunctions: testFunctionType[];
+
+  constructor() {
+    this.groups = [];
+    this.beforeEachFunctions = new Queue();
+    this.afterAllFunctions = new Queue();
+    this.beforeEachFunctions = new Queue();
+    this.afterEachFunctions = new Queue();
+    this.tests = [];
+    this.assertions = new List();
+    this.isolatedFunctions = [];
+    this.testsFunctions = [];
+  }
 
   public addTestFunction(testFunction: testFunctionType) {
     if (testFunction) {
@@ -70,11 +83,11 @@ class TestCollector {
   }
 
   public cloneTestFunctions() {
-    return this.testsFunctions.map((test) => test);
+    return this.testsFunctions.map((m) => m);
   }
 
   public cloneIsolatedTestFunctions() {
-    return this.isolatedFunctions.map((test) => test);
+    return this.isolatedFunctions.map((m) => m);
   }
 
   public clearTestFunctions() {

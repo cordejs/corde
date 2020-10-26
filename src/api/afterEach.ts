@@ -11,6 +11,6 @@ import { testCollector } from "../common";
  */
 export function afterEach(fn: () => void) {
   if (fn) {
-    testCollector.afterEachFunctions.push(fn);
+    testCollector.afterEachFunctions.enqueue(fn);
   }
 }

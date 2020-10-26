@@ -1,7 +1,7 @@
 import { testCollector } from "../common/testCollector";
 
 /**
- * Declare a bunch of code that will be executed before tests beging.
+ * Declare a bunch of code that will be executed before tests begins.
  *
  * More than one declaration of this code results in a list
  * of functions to run.
@@ -21,6 +21,6 @@ import { testCollector } from "../common/testCollector";
  */
 export function beforeStart(fn: () => void) {
   if (fn) {
-    testCollector.beforeStartFunctions.push(fn);
+    testCollector.beforeStartFunctions.enqueue(fn);
   }
 }

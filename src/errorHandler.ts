@@ -2,20 +2,20 @@ import chalk from "chalk";
 import { runtime, testCollector } from "./common";
 
 export function initErrorHandlers() {
-  process.on("uncaughtException", (err: Error) => {
-    printErrorAndExit(err);
+  process.on("uncaughtException", async (err: Error) => {
+    await printErrorAndExit(err);
   });
 
-  process.on("unhandledRejection", (err: Error) => {
-    printErrorAndExit(err);
+  process.on("unhandledRejection", async (err: Error) => {
+    await printErrorAndExit(err);
   });
 
-  process.on("uncaughtExceptionMonitor", (err) => {
-    printErrorAndExit(err);
+  process.on("uncaughtExceptionMonitor", async (err) => {
+    await printErrorAndExit(err);
   });
 }
 
-function printErrorAndExit(error: Error) {
+async function printErrorAndExit(error: Error) {
   console.log(error.stack);
   console.log(`${chalk.red("error")} Command failed with exit code 1`);
 
@@ -23,7 +23,7 @@ function printErrorAndExit(error: Error) {
     runtime.logoffBot();
   }
   if (testCollector.afterAllFunctions) {
-    testCollector.afterAllFunctions.forEach((fn) => fn());
+    await testCollector.afterAllFunctions.executeAsync();
   }
 
   if (process.env.ENV !== "TEST") {

@@ -21,6 +21,6 @@ import { testCollector } from "../common/testCollector";
  */
 export function afterAll(fn: () => void) {
   if (fn) {
-    testCollector.afterAllFunctions.push(fn);
+    testCollector.afterAllFunctions.enqueue(fn);
   }
 }

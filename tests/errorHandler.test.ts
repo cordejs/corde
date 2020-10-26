@@ -2,6 +2,7 @@ import { initErrorHandlers } from "../src/errorHandler";
 import { getFullConsoleLog } from "./testHelper";
 import { mockProcessExit } from "jest-mock-process";
 import { testCollector, runtime } from "../src/common";
+import { Queue } from "../src/utils";
 
 initErrorHandlers();
 describe("Testing errorHandler", () => {
@@ -47,13 +48,13 @@ describe("Testing errorHandler", () => {
       const spy = jest.spyOn(console, "log");
       process.emit("uncaughtException", new Error("Error Test"));
       expect(mockExit).toHaveBeenCalledWith(1);
-      expect(getFullConsoleLog(spy.mock.calls)).toContain("Unkown error");
+      expect(getFullConsoleLog(spy.mock.calls)).toContain("Unknown error");
     } catch (error) {
       console.log(error);
     }
   });
 
-  it("should call logout when a error is throwed", () => {
+  it("should call logout when a error is thrown", () => {
     runtime.isBotLoggedIn = jest.fn().mockReturnValue(true);
     const spy = jest.spyOn(runtime, "logoffBot");
     process.emit("uncaughtException", new Error("Error Test"));
@@ -85,8 +86,8 @@ describe("Testing errorHandler", () => {
     try {
       jest.spyOn(console, "log");
       let a = 1;
-      testCollector.afterAllFunctions = [];
-      testCollector.afterAllFunctions.push(() => (a = 2));
+      testCollector.afterAllFunctions = new Queue();
+      testCollector.afterAllFunctions.enqueue(() => (a = 2));
       process.emit("uncaughtException", new Error("Error Test"));
       expect(a).toEqual(2);
     } catch (error) {

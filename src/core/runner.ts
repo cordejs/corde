@@ -13,9 +13,9 @@ export async function executeTestCases(groups: Group[]) {
 async function runTests(testsFunctions: testFunctionType[]) {
   const reports: TestReport[] = [];
   for (const test of testsFunctions) {
-    testCollector.beforeEachFunctions.forEach((testFunction) => testFunction());
+    await testCollector.beforeEachFunctions.executeAsync();
     const report = await runtime.injectBot(test);
-    testCollector.afterEachFunctions.forEach((testFunction) => testFunction());
+    await testCollector.afterEachFunctions.executeAsync();
     reports.push(report);
   }
   return reports;

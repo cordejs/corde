@@ -1,9 +1,10 @@
 import { testCollector } from "../../src/common";
 import { afterAll } from "../../src/api";
+import { Queue } from "../../src/utils";
 
 describe("Testing afterAll function", () => {
   beforeEach(() => {
-    testCollector.afterAllFunctions = [];
+    testCollector.afterAllFunctions = new Queue<() => void>();
   });
 
   it("Should add a function", () => {
@@ -12,14 +13,14 @@ describe("Testing afterAll function", () => {
       a = 2;
     });
 
-    testCollector.afterAllFunctions.map((fn) => fn());
+    testCollector.afterAllFunctions.executeSync();
     expect(a).toBe(2);
   });
 
   it("Should do nothing", () => {
     afterAll(undefined);
 
-    const length = testCollector.afterAllFunctions.length;
+    const length = testCollector.afterAllFunctions.size();
     expect(length).toBe(0);
   });
 });

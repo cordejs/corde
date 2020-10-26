@@ -10,6 +10,6 @@ import { testCollector } from "../common";
  */
 export function beforeEach(fn: () => void) {
   if (fn) {
-    testCollector.beforeEachFunctions.push(fn);
+    testCollector.beforeEachFunctions.enqueue(fn);
   }
 }

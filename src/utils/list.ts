@@ -5,6 +5,7 @@
  *
  * The main goal is to reduce the access to no relevant functions provided by Array and
  * specialize this class in iteration addition, reduction and search of elements.
+ * @deprecated
  */
 export class List<T> extends Array<T> {
   /**

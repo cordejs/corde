@@ -1,9 +1,10 @@
 import { testCollector } from "../../src/common/testCollector";
 import { beforeStart } from "../../src/api";
+import { Queue } from "../../src/utils";
 
 describe("Testing beforeStart function", () => {
   beforeEach(() => {
-    testCollector.beforeStartFunctions = [];
+    testCollector.beforeStartFunctions = new Queue();
   });
   it("Should add a function", () => {
     let a = 1;
@@ -11,14 +12,14 @@ describe("Testing beforeStart function", () => {
       a = 2;
     });
 
-    testCollector.beforeStartFunctions.map((fn) => fn());
+    testCollector.beforeStartFunctions.executeSync();
     expect(a).toBe(2);
   });
 
   it("Should do nothing", () => {
     beforeStart(undefined);
 
-    const length = testCollector.beforeStartFunctions.length;
+    const length = testCollector.beforeStartFunctions.size();
     expect(length).toBe(0);
   });
 });
