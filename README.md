@@ -4,9 +4,9 @@
     <img width="200" height="200" src="./docs/logo.png" />
   </p>
   <p>
-    <a href="https://discord.gg/f3Gs7uU">
+   <!-- <a href="https://discord.gg/f3Gs7uU">
       <img src="https://img.shields.io/discord/768647567461449778?color=7289da&logo=discord&logoColor=white" alt="Discord server" />
-    </a>
+    </a> -->
     <a href="https://circleci.com/gh/lucasgmagalhaes/corde">
       <img
         alt="CircleCi"
