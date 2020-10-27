@@ -3,7 +3,7 @@ import { beforeStart } from "../../src/api";
 import { Queue } from "../../src/utils";
 
 describe("Testing beforeStart function", () => {
-  beforeEach(() => {
+  afterEach(() => {
     testCollector.beforeStartFunctions = new Queue();
   });
   it("Should add a function", () => {

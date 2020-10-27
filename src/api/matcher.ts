@@ -14,6 +14,7 @@ import {
   ToSetRoleMentionable,
   ToSetRolePosition,
 } from "./expectMatches";
+import { ToPinMessage } from "./expectMatches/message/toPinMessage";
 import { toRemoveReaction } from "./expectMatches/message/toRemoveReaction";
 import { ExpectOperation } from "./expectMatches/operation";
 import { ToSetRolePermission } from "./expectMatches/role/toSetRolePermission";
@@ -47,6 +48,12 @@ class ExpectMatches implements Matches {
   constructor(commandName: string, isNot: boolean) {
     this._commandName = commandName;
     this._isNot = isNot;
+  }
+
+  public toPin(message: MessageData): void {
+    testCollector.addTestFunction((cordeBot) => {
+      return this.operationFactory(ToPinMessage, cordeBot, message);
+    });
   }
 
   public toReturn(expect: string | MessageEmbed): void {

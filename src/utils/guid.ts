@@ -1,7 +1,4 @@
 import * as uuid from "uuid";
-
-jest.mock("uuid");
-
 class GuidManager {
   public new() {
     return uuid.v4();

@@ -50,4 +50,11 @@ export interface MessageMatches {
   toRemoveReaction(...reactions: string[]): void;
   toRemoveReaction(reactions: string, message: MessageData): void;
   toRemoveReaction(reactions: string[], message: MessageData): void;
+
+  /**
+   * Verify if a command pinned a message.
+   *
+   * @param message Data used for message fetch.
+   */
+  toPin(message: MessageData): void;
 }

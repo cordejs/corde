@@ -50,6 +50,8 @@ bot.on("message", async (message) => {
     setRolePosition(message, args[0], args[1]);
   } else if (command === "change-role-permission") {
     changeRolePermission(message, args[0]);
+  } else if (command === "pin") {
+    pinMessage(message, args[0]);
   } else {
     console.log("No command found");
   }
@@ -148,6 +150,16 @@ async function setRolePosition(msg, roleName, newPosition) {
 async function changeRolePermission(msg, roleId) {
   const role = msg.guild.roles.cache.get(roleId);
   await role.setPermissions(["ADMINISTRATOR"]);
+}
+
+/**
+ * @param {Message} msg
+ * @param {string} msgId
+ */
+async function pinMessage(msg, msgId) {
+  await msg.channel.messages.fetch();
+  const toPinMessage = msg.channel.messages.cache.get(msgId);
+  await toPinMessage.pin();
 }
 
 function loginBot() {
