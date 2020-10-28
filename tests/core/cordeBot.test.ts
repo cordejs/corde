@@ -438,6 +438,9 @@ describe("Testing CordeBot object", () => {
       const corde = initCordeClientWithChannel(mockDiscord, client);
       client.emit("ready");
 
+      mockDiscord.textChannel.messages.fetch = jest
+        .fn()
+        .mockReturnValue(mockDiscord.messageCollection);
       mockDiscord.textChannel.messages.cache = mockDiscord.messageCollection;
 
       const message = await corde.findMessage((m) => m.id === mockDiscord.message.id);
@@ -451,6 +454,9 @@ describe("Testing CordeBot object", () => {
       client.emit("ready");
 
       mockDiscord.textChannel.messages.cache = mockDiscord.messageCollection;
+      mockDiscord.textChannel.messages.fetch = jest
+        .fn()
+        .mockReturnValue(mockDiscord.messageCollection);
 
       const message = await corde.findMessage(null);
       expect(message).toBeFalsy();
@@ -463,6 +469,9 @@ describe("Testing CordeBot object", () => {
       client.emit("ready");
 
       mockDiscord.textChannel.messages.cache.find = jest.fn().mockReturnValue(null);
+      mockDiscord.textChannel.messages.fetch = jest
+        .fn()
+        .mockReturnValue(mockDiscord.messageCollection);
 
       mockDiscord.textChannel.messages.fetch = jest.fn().mockReturnValue(null);
       const message = await corde.findMessage((m) => m.id === mockDiscord.message.id);
@@ -476,6 +485,9 @@ describe("Testing CordeBot object", () => {
       client.emit("ready");
 
       mockDiscord.textChannel.messages.cache = mockDiscord.messageCollection;
+      mockDiscord.textChannel.messages.fetch = jest
+        .fn()
+        .mockReturnValue(mockDiscord.messageCollection);
 
       const message = await corde.findMessage({ text: mockDiscord.message.content });
       expect(message.id).toBe(mockDiscord.message.id);
@@ -502,6 +514,9 @@ describe("Testing CordeBot object", () => {
       client.emit("ready");
 
       mockDiscord.textChannel.messages.cache = mockDiscord.messageCollection;
+      mockDiscord.textChannel.messages.fetch = jest
+        .fn()
+        .mockReturnValue(mockDiscord.messageCollection);
 
       const message = await corde.findMessage({ id: mockDiscord.message.id });
       expect(message.id).toBe(mockDiscord.message.id);
