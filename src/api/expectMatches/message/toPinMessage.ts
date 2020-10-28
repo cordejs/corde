@@ -2,6 +2,21 @@ import { MessageData } from "../../../types";
 import { TestReport } from "../../interfaces";
 import { ExpectOperation } from "../operation";
 
+let TO_PIN_FETCH_DELAY = 800;
+
+/**
+ * There are a delay to fetch function in this tests because if
+ * a message is sent and immediately
+ * fetch this message pinned, Discord.js return that the message
+ * is not pinned. :(
+ *
+ * This is in a variable and not directly inject in the class due to
+ * tests purposes.
+ */
+export function setToPinFetchDelay(value: number) {
+  TO_PIN_FETCH_DELAY = value;
+}
+
 export class ToPinMessage extends ExpectOperation<MessageData> {
   public async action(messageData: MessageData): Promise<TestReport> {
     await this.cordeBot.sendTextMessage(this.command);
@@ -12,7 +27,7 @@ export class ToPinMessage extends ExpectOperation<MessageData> {
           // TODO: make use of hasPassed
           this.isEqual = false;
           this.forceIsEqualValue = true;
-          resolve(this.generateReport());
+          return resolve(this.generateReport());
         }
 
         if (msg.pinned) {
@@ -20,10 +35,7 @@ export class ToPinMessage extends ExpectOperation<MessageData> {
         }
 
         resolve(this.generateReport());
-        // I had to put this because if I send a message and immediately
-        // fetch this message pinned, Discord.js return that the message
-        // is not pinned. :(
-      }, 800);
+      }, TO_PIN_FETCH_DELAY);
     });
   }
 }
