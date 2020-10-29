@@ -3,7 +3,7 @@ import { beforeEach as CordeBeforeEach } from "../../src/api";
 import { Queue } from "../../src/utils";
 
 describe("Testing beforeEach function", () => {
-  beforeEach(() => {
+  afterEach(() => {
     testCollector.beforeEachFunctions = new Queue();
   });
   it("Should add a function", () => {

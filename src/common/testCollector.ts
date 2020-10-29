@@ -60,7 +60,7 @@ class TestCollector {
     this.groups = [];
     this.beforeEachFunctions = new Queue();
     this.afterAllFunctions = new Queue();
-    this.beforeEachFunctions = new Queue();
+    this.beforeStartFunctions = new Queue();
     this.afterEachFunctions = new Queue();
     this.tests = [];
     this.assertions = [];

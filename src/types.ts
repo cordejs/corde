@@ -115,6 +115,9 @@ export default interface ConfigOptions {
 }
 
 export interface MessageData {
+  /**
+   * We recommend to use **id** for message search.
+   */
   text?: string;
   id?: string;
 }

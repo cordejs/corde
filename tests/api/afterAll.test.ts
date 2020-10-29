@@ -3,7 +3,7 @@ import { afterAll } from "../../src/api";
 import { Queue } from "../../src/utils";
 
 describe("Testing afterAll function", () => {
-  beforeEach(() => {
+  afterEach(() => {
     testCollector.afterAllFunctions = new Queue<() => void>();
   });
 

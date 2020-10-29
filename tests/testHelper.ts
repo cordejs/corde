@@ -87,3 +87,14 @@ export function initCordeClient(mockDiscord: MockDiscord, clientInstance: Client
     clientInstance,
   );
 }
+
+export function createCordeBotWithMockedFunctions(
+  mockDiscord: MockDiscord,
+  findRoleMock: any = mockDiscord.role,
+) {
+  const corde = initCordeClientWithChannel(mockDiscord, new Client());
+  corde.getRoles = jest.fn().mockReturnValue(mockDiscord.roleManager.cache);
+  corde.findRole = jest.fn().mockReturnValue(findRoleMock);
+  corde.sendTextMessage = jest.fn().mockImplementation(() => {});
+  return corde;
+}
