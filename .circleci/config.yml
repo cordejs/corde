@@ -136,9 +136,9 @@ workflows:
   website-build-deploy:
     jobs:
       - publish_website:
-        filters:
-          branches:
-            only: master # Restrict website deploy to only master branch
+          filters:
+            branches:
+              only: master # Restrict website deploy to only master branch
 
   e2e-tests:
     jobs:
