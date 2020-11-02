@@ -3,7 +3,7 @@
   "version": "2.0.0-beta.8",
   "description": "A simple library for Discord bot tests",
   "main": "./index.js",
-  "types": "./src/index.d.ts",
+  "types": "./index.d.ts",
   "directories": {
     "lib": "bin"
   },
@@ -103,6 +103,7 @@
   "files": [
     "lib/**",
     "bin/",
-    "index.js"
+    "index.js",
+    "index.d.ts"
   ]
 }

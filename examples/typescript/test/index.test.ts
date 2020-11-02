@@ -1,4 +1,4 @@
-import { beforeStart } from "corde";
+import { beforeStart, group, afterAll, test, expect } from "corde";
 import { client, loginBot } from "../";
 
 beforeStart(() => {
@@ -7,7 +7,7 @@ beforeStart(() => {
 
 group("main commands", () => {
   test("Hello command should return... hello!!", () => {
-    expect("ping").to("Ping?");
+    expect("ping").toReturn("Ping?");
   });
 });
 
