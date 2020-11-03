@@ -111,17 +111,22 @@ function stopLoading() {
 function readDir(directories: string[]) {
   const files: string[] = [];
   for (const dir of directories) {
-    if (fs.existsSync(dir)) {
-      const stats = fs.lstatSync(dir);
+    let resolvedPath = dir;
+    if (!fs.existsSync(dir)) {
+      resolvedPath = path.resolve(process.cwd(), dir);
+    }
+
+    if (fs.existsSync(resolvedPath)) {
+      const stats = fs.lstatSync(resolvedPath);
       if (stats.isDirectory()) {
-        const dirContent = fs.readdirSync(dir);
+        const dirContent = fs.readdirSync(resolvedPath);
         const dirContentPaths = [];
         for (const singleDirContent of dirContent) {
           dirContentPaths.push(path.resolve(dir, singleDirContent));
         }
         files.push(...readDir(dirContentPaths));
       } else if (stats.isFile() && dir.includes(".test.")) {
-        files.push(path.resolve(dir));
+        files.push(resolvedPath);
       }
     }
   }

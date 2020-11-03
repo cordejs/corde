@@ -65,7 +65,7 @@ export class Config implements ConfigOptions {
       this.botPrefix = config.botPrefix;
     }
 
-    if (!this.testFiles) {
+    if (!this.testFiles || this.testFiles.length === 0) {
       this.testFiles = config.testFiles;
     }
   }

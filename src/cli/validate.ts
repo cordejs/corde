@@ -11,7 +11,7 @@ import { FileError, PropertyError } from "../errors";
  *
  * @version 1.0
  *
- * @param configs Config paramater that will be validated
+ * @param configs Config parameter that will be validated
  *
  * @throws Error if any config is invalid.
  */

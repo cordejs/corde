@@ -67,7 +67,7 @@ export function init(fileType: configFileType = "json") {
     );
   } catch (error) {
     throw new FileError(
-      " - Fail in config file creation. Check if you have permition to create files in this directory.",
+      " - Fail in config file creation. Check if you have permission to create files in this directory.",
     );
   }
 }
