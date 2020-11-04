@@ -101,8 +101,10 @@ function getRandomSpinnerColor() {
 }
 
 function stopLoading() {
-  spinner.stop();
-  spinner.clear();
+  if (spinner) {
+    spinner.stop();
+    spinner.clear();
+  }
 }
 
 /**

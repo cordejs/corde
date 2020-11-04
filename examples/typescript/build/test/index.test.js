@@ -7,7 +7,7 @@ corde_1.beforeStart(() => {
 });
 corde_1.group("main commands", () => {
   corde_1.test("Hello command should return... hello!!", () => {
-    corde_1.expect("ping").shouldReturn("Ping?");
+    corde_1.expect("ping").toReturn("Ping?");
   });
 });
 corde_1.afterAll(() => {
