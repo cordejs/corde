@@ -6,7 +6,7 @@ import { Group } from "../../src/types";
 import consts from "../mocks/constsNames";
 import { FileError } from "../../src/errors";
 
-const conf = require("../mocks/jsconfig/corde.js");
+const conf = require("../mocks/jsconfig/corde.config.js");
 const cwd = process.cwd();
 
 afterEach(() => {
@@ -29,7 +29,10 @@ describe("reader class", () => {
       });
       it("should read configs from configFilePath", () => {
         const spy = jest.spyOn(fs, "readFileSync").mockReturnValue(null);
-        runtime.configFilePath = path.resolve(process.cwd(), "tests/mocks/jsconfig/corde.js");
+        runtime.configFilePath = path.resolve(
+          process.cwd(),
+          "tests/mocks/jsconfig/corde.config.js",
+        );
         expect(reader.loadConfig()).toEqual(conf);
         spy.mockReset();
       });
@@ -42,18 +45,21 @@ describe("reader class", () => {
 
       it("should resolve path of config", () => {
         const spy = jest.spyOn(fs, "readFileSync").mockReturnValue(null);
-        runtime.configFilePath = "tests/mocks/jsconfig/corde.js";
+        runtime.configFilePath = "tests/mocks/jsconfig/corde.config.js";
         expect(reader.loadConfig()).toEqual(conf);
         spy.mockReset();
       });
 
       it("should read json config", () => {
-        runtime.configFilePath = "tests/mocks/jsonconfig/corde.json";
+        runtime.configFilePath = "tests/mocks/jsonconfig/corde.config.json";
         expect(reader.loadConfig()).toEqual(conf);
       });
 
       it("should throw exception due to invalid file extension (.txt)", () => {
-        runtime.configFilePath = path.resolve(process.cwd(), "tests/mocks/txtconfig/corde.txt");
+        runtime.configFilePath = path.resolve(
+          process.cwd(),
+          "tests/mocks/txtconfig/corde.config.txt",
+        );
         expect(() => reader.loadConfig()).toThrowError(FileError);
       });
     });
@@ -70,7 +76,7 @@ describe("reader class", () => {
       });
 
       it("should read configs from corde.json", () => {
-        const jsonPath = path.resolve(process.cwd(), "tests/mocks/jsonconfig/corde.json");
+        const jsonPath = path.resolve(process.cwd(), "tests/mocks/jsonconfig/corde.config.json");
         const jsonConfig = JSON.parse(fs.readFileSync(jsonPath).toString());
         process.chdir(path.resolve(process.cwd(), "tests/mocks/jsonconfig"));
         expect(reader.loadConfig()).toEqual(jsonConfig);

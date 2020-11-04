@@ -3,7 +3,7 @@ import path from "path";
 import { runtime } from "../common";
 import { testCollector } from "../common/testCollector";
 import ConfigOptions from "../types";
-import { FileError, PropertyError } from "../errors";
+import { FileError } from "../errors";
 
 class Reader {
   /**
@@ -14,9 +14,9 @@ class Reader {
   public loadConfig(): ConfigOptions {
     let _config: ConfigOptions;
 
-    const jsonFilePath = path.resolve(process.cwd(), "corde.json");
-    const tsFilePath = path.resolve(process.cwd(), "corde.ts");
-    const jsFilePath = path.resolve(process.cwd(), "corde.js");
+    const jsonFilePath = path.resolve(process.cwd(), "corde.config.json");
+    const tsFilePath = path.resolve(process.cwd(), "corde.config.ts");
+    const jsFilePath = path.resolve(process.cwd(), "corde.config.js");
 
     if (runtime.configFilePath) {
       return loadConfigFromConfigFilePath();
@@ -47,7 +47,7 @@ class Reader {
       }
       testCollector.isCollecting = false;
       addTestsGroupmentToGroupIfExist();
-      addTestFuncionsToGroupIfExists();
+      addTestFunctionsToGroupIfExists();
       return testCollector.groups;
     }
     throw new FileError("No file was informed.");
@@ -80,7 +80,7 @@ function addTestsGroupmentToGroupIfExist() {
   }
 }
 
-function addTestFuncionsToGroupIfExists() {
+function addTestFunctionsToGroupIfExists() {
   if (testCollector.hasIsolatedTestFunctions()) {
     const testsCloned = testCollector.cloneIsolatedTestFunctions();
     testCollector.groups.push({ tests: [{ testsFunctions: testsCloned }] });

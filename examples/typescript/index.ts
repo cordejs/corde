@@ -11,7 +11,7 @@ import { Client } from "discord.js";
 
 // Here we load the config.json file that contains our token and our prefix values.
 // @ts-ignore
-import * as config from "./corde";
+import * as config from "./corde.config";
 
 // Load up the discord.js library
 // This is your client. Some people call it `bot`, some people call it `self`,
