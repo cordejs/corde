@@ -68,3 +68,5 @@ typings/
 .yarn/unplugged/
 .yarn/install-state.gz
 .yarn/build-state.yml
+
+/examples/typescript/.env
