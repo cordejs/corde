@@ -1,11 +1,9 @@
+"use strict";
 const env = require("dotenv");
-
-var result = env.config();
-
+const result = env.config();
 if (result.error) {
   throw result.error;
 }
-
 module.exports = {
   botPrefix: process.env.BOT_PREFIX,
   botTestId: process.env.BOT_TEST_ID,

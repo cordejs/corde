@@ -1,4 +1,4 @@
-import { beforeStart, group, afterAll, test, expect } from "corde";
+import { beforeStart, group, afterAll, expect, test } from "corde";
 import { client, loginBot } from "../";
 
 beforeStart(() => {

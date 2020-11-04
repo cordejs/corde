@@ -10,7 +10,8 @@ dotenv.config();
 import { Client } from "discord.js";
 
 // Here we load the config.json file that contains our token and our prefix values.
-const config = require("./corde");
+// @ts-ignore
+import * as config from "./corde";
 
 // Load up the discord.js library
 // This is your client. Some people call it `bot`, some people call it `self`,
@@ -49,33 +50,14 @@ client.on("guildDelete", (guild) => {
 });
 
 client.on("message", async (message) => {
-  // This event will run on every single message received, from any channel or DM.
-
-  // It's good practice to ignore other bots. This also makes your bot ignore itself
-  // and not get into a spam loop (we call that "botception").
-  // You can use environment variables to define if must accept or not bot messages.
-  // to only testing propurse, we will accept.
-  if (process.env.NODE_ENV !== "TESTING") {
-    if (message.author.bot) return;
+  if (message.content.indexOf("") !== 0) return;
+  const args = message.content.slice(config.botPrefix.length).trim().split(" ");
+  let command;
+  if (args) {
+    command = args.shift()?.toLowerCase();
   }
 
-  // Also good practice to ignore any message that does not start with our prefix,
-  // which is set in the configuration file.
-  if (message.content.indexOf(config.botPrefix) !== 0) return;
-
-  // Here we separate our "command" name, and our "arguments" for the command.
-  // e.g. if we have the message "+say Is this the real life?" , we'll get the following:
-  // command = say
-  // args = ["Is", "this", "the", "real", "life?"]
-  const args = message.content.slice(config.botPrefix.length).trim().split(/ +/g);
-  if (args.shift() === undefined) return;
-  const command = (<string>args.shift()).toLowerCase();
-
-  // Let's go with a few common example commands! Feel free to delete or change those.
-
-  if (command === "ping") {
-    await message.channel.send("Ping?");
-  }
+  await message.channel.send("Ping?");
 });
 
 export function loginBot() {
