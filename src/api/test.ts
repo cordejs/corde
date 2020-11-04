@@ -24,5 +24,6 @@ export function test(name: string, action: () => void) {
     });
   }
 
+  testCollector.testsFunctions = [];
   testCollector.hasTest = false;
 }
