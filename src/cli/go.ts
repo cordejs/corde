@@ -113,10 +113,7 @@ function stopLoading() {
 function readDir(directories: string[]) {
   const files: string[] = [];
   for (const dir of directories) {
-    let resolvedPath = dir;
-    if (!fs.existsSync(dir)) {
-      resolvedPath = path.resolve(process.cwd(), dir);
-    }
+    const resolvedPath = path.resolve(process.cwd(), dir);
 
     if (fs.existsSync(resolvedPath)) {
       const stats = fs.lstatSync(resolvedPath);
