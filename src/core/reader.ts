@@ -45,6 +45,7 @@ class Reader {
       for (const file of files) {
         require(file);
       }
+
       testCollector.isCollecting = false;
       addTestsGroupmentToGroupIfExist();
       addTestFunctionsToGroupIfExists();
@@ -68,7 +69,7 @@ function loadConfigFromConfigFilePath(): ConfigOptions {
   } else if (fileExt === ".js" || fileExt === ".ts") {
     return require(filePath);
   } else {
-    throw new FileError(`Extension '${fileExt}' is not suported`);
+    throw new FileError(`Extension '${fileExt}' is not supported`);
   }
 }
 
