@@ -559,7 +559,7 @@ describe("Testing CordeBot object", () => {
     mockDiscord.guild.roles.fetch = jest.fn().mockReturnValue(mockDiscord.role);
     const role = await corde.fetchRole(mockDiscord.role.id);
     expect(role).toEqual(mockDiscord.role);
-    expect(mockDiscord.guild.roles.fetch).toBeCalledWith(mockDiscord.role.id);
+    expect(mockDiscord.guild.roles.fetch).toBeCalledWith(mockDiscord.role.id, false, true);
   });
 
   it("should find a role by it's id", async () => {

@@ -1,6 +1,7 @@
 import { CordeBot } from "../../../core";
 import { TestReport } from "../..";
 import { RoleData } from "../../../types";
+import { Role } from "discord.js";
 
 export async function toDeleteRole(
   commandName: string,
@@ -17,11 +18,14 @@ export async function toDeleteRole(
       output = "No role found";
     } else {
       await cordeBot.sendTextMessage(commandName);
-      // It must to fetch the role based on it's id
-      // If make just fetch() the deleted role will still be there
-      // and deleted property will be false.
-      // fetch the role using the id is a workaround for it.
-      role = await cordeBot.fetchRole(role.id);
+      const promiseRole = new Promise<Role>(async (resolve) => {
+        setTimeout(async () => {
+          role = await cordeBot.fetchRole(role.id);
+          resolve(role);
+        }, 600);
+      });
+
+      role = await promiseRole;
       if (!role) {
         isEqual = true;
       }
