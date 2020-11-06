@@ -13,10 +13,6 @@ import { Client } from "discord.js";
 // @ts-ignore
 import * as config from "./corde.config";
 
-// Load up the discord.js library
-// This is your client. Some people call it `bot`, some people call it `self`,
-// some might call it `cootchie`. Either way, when you see `client.something`, or `bot.something`,
-// this is what we're refering to. Your client.
 export const client = new Client();
 
 // config.token contains the bot's token
@@ -51,13 +47,14 @@ client.on("guildDelete", (guild) => {
 
 client.on("message", async (message) => {
   if (message.content.indexOf("") !== 0) return;
-  const args = message.content.slice(config.botPrefix.length).trim().split(" ");
-  let command;
-  if (args) {
-    command = args.shift()?.toLowerCase();
+  const command = message.content.slice(config.botPrefix.length).trim();
+  if (command === "ping") {
+    message.channel.send("Pong?");
+  } else if (command.includes("remove-role")) {
+    const roleName = command.split(" ")[1];
+    const role = message.guild?.roles.cache.find((r) => r.name === roleName);
+    await role?.delete();
   }
-
-  await message.channel.send("Ping?");
 });
 
 export function loginBot() {

@@ -7,7 +7,12 @@ beforeStart(() => {
 
 group("main commands", () => {
   test("Hello command should return... hello!!", () => {
-    expect("ping").toReturn("Ping?");
+    expect("ping").toReturn("Pong?");
+  });
+
+  test("should remove a role", () => {
+    const roleName = "test-role";
+    expect(`remove-role ${roleName}`).toDeleteRole({ name: roleName });
   });
 });
 

@@ -1,6 +1,6 @@
 const arg = require("arg");
 const { Client, MessageEmbed, Message } = require("discord.js");
-const { botPrefix, botTestToken } = require("../../corde.js");
+const { botPrefix, botTestToken } = require("../../corde.config.js");
 
 const bot = new Client();
 
@@ -21,39 +21,62 @@ const embedMsg = new MessageEmbed()
   .setImage("https://i.imgur.com/wSTFkRM.png");
 
 bot.on("message", async (message) => {
+  // if (message.content.indexOf("") !== 0) return;
+  // const args = message.content.slice(botPrefix.length).trim().split(" ");
+  // const command = args.shift().toLowerCase();
+  // if (command === "hello" || command === "h") {
+  //   hello(message);
+  // } else if (command === "hey") {
+  //   hey(message);
+  // } else if (command === "embed") {
+  //   embed(message);
+  // } else if (command === "emoji") {
+  //   emoji(message);
+  // } else if (command === "emojis") {
+  //   emojis(message);
+  // } else if (command === "removemessagereactionbyid") {
+  //   await removeMessageReactionById(message, args[0], args[1]);
+  // } else if (command === "removemessagereactionbycontent") {
+  //   await removeMessageReactionByContent(message, args[0], args[1]);
+  // } else if (command === "setrolecolor") {
+  //   await changeColorForRole(message, args[0]);
+  // } else if (command === "deleterole") {
+  //   deleteRole(message, args[0]);
+  // } else if (command === "addrole") {
+  //   addRole(message, args[0]);
+  // } else if (command === "rename-role") {
+  //   renameRole(message, args[0], args[1]);
+  // } else if (command === "set-role-position") {
+  //   setRolePosition(message, args[0], args[1]);
+  // } else if (command === "change-role-permission") {
+  //   changeRolePermission(message, args[0]);
+  // } else if (command === "pin") {
+  //   pinMessage(message, args[0]);
+  // } else {
+  //   console.log("No command found");
+  // }
+
   if (message.content.indexOf("") !== 0) return;
-  const args = message.content.slice(botPrefix.length).trim().split(" ");
-  const command = args.shift().toLowerCase();
-  if (command === "hello" || command === "h") {
-    hello(message);
-  } else if (command === "hey") {
-    hey(message);
-  } else if (command === "embed") {
-    embed(message);
-  } else if (command === "emoji") {
-    emoji(message);
-  } else if (command === "emojis") {
-    emojis(message);
-  } else if (command === "removemessagereactionbyid") {
-    await removeMessageReactionById(message, args[0], args[1]);
-  } else if (command === "removemessagereactionbycontent") {
-    await removeMessageReactionByContent(message, args[0], args[1]);
-  } else if (command === "setrolecolor") {
-    await changeColorForRole(message, args[0]);
-  } else if (command === "deleterole") {
-    deleteRole(message, args[0]);
-  } else if (command === "addrole") {
-    addRole(message, args[0]);
-  } else if (command === "rename-role") {
-    renameRole(message, args[0], args[1]);
-  } else if (command === "set-role-position") {
-    setRolePosition(message, args[0], args[1]);
-  } else if (command === "change-role-permission") {
-    changeRolePermission(message, args[0]);
-  } else if (command === "pin") {
-    pinMessage(message, args[0]);
-  } else {
-    console.log("No command found");
+  const command = message.content.slice(botPrefix.length).trim();
+  if (command === "ping") {
+    message.channel.send("Pong?");
+  } else if (command.includes("remove-role")) {
+    const roleName = command.split(" ")[1];
+    const role = message.guild?.roles.cache.find((r) => r.name === roleName);
+    await role?.delete();
+  } else if (command.includes("rename-role")) {
+    const split = command.split(" ");
+    const oldName = split[1];
+    const newName = split[2];
+    const role = message.guild?.roles.cache.find((r) => r.name === oldName);
+    await role.setName(newName);
+  } else if (command.includes("change-role-color")) {
+    const split = command.split(" ");
+    const roleName = split[1];
+    const color = split[2];
+    const role = message.guild?.roles.cache.find((r) => r.name === roleName);
+    console.log("BATATA", color);
+    await role?.setColor(color);
   }
 });
 

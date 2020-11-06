@@ -22,10 +22,6 @@ describe("testing colors", () => {
   });
 
   it("shouldreturn invalid color due to invalid string number", () => {
-    expect(resolveColor(123)).toBe(-1);
-  });
-
-  it("should return invalid color due to invalid number", () => {
-    expect(resolveColor(123)).toBe(-1);
+    expect(resolveColor(123)).toBe(291);
   });
 });

@@ -7,7 +7,11 @@ corde_1.beforeStart(() => {
 });
 corde_1.group("main commands", () => {
   corde_1.test("Hello command should return... hello!!", () => {
-    corde_1.expect("ping").toReturn("Ping?");
+    corde_1.expect("ping").toReturn("Pong?");
+  });
+  corde_1.test("should remove a role", () => {
+    const roleName = "test-role";
+    corde_1.expect(`remove-role ${roleName}`).toDeleteRole({ name: roleName });
   });
 });
 corde_1.afterAll(() => {

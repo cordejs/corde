@@ -11,11 +11,7 @@ dotenv.config();
 const discord_js_1 = require("discord.js");
 // Here we load the config.json file that contains our token and our prefix values.
 // @ts-ignore
-const config = require("./corde");
-// Load up the discord.js library
-// This is your client. Some people call it `bot`, some people call it `self`,
-// some might call it `cootchie`. Either way, when you see `client.something`, or `bot.something`,
-// this is what we're refering to. Your client.
+const config = require("./corde.config");
 exports.client = new discord_js_1.Client();
 // config.token contains the bot's token
 // config.prefix contains the message prefix.
@@ -46,12 +42,17 @@ exports.client.on("guildDelete", (guild) => {
 exports.client.on("message", async (message) => {
   var _a;
   if (message.content.indexOf("") !== 0) return;
-  const args = message.content.slice(config.botPrefix.length).trim().split(" ");
-  let command;
-  if (args) {
-    command = (_a = args.shift()) === null || _a === void 0 ? void 0 : _a.toLowerCase();
+  const command = message.content.slice(config.botPrefix.length).trim();
+  if (command === "ping") {
+    message.channel.send("Pong?");
+  } else if (command.includes("remove-role")) {
+    const roleName = command.split(" ")[1];
+    const role =
+      (_a = message.guild) === null || _a === void 0
+        ? void 0
+        : _a.roles.cache.find((r) => r.name === roleName);
+    await (role === null || role === void 0 ? void 0 : role.delete());
   }
-  await message.channel.send("Ping?");
 });
 function loginBot() {
   exports.client.login(config.botTestToken);
