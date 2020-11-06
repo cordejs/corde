@@ -75,8 +75,13 @@ bot.on("message", async (message) => {
     const roleName = split[1];
     const color = split[2];
     const role = message.guild?.roles.cache.find((r) => r.name === roleName);
-    console.log("BATATA", color);
     await role?.setColor(color);
+  } else if (command.includes("change-role-permission")) {
+    const split = command.split(" ");
+    const roleId = split[1];
+    const permission = split[2];
+    const role = message.guild?.roles.cache.find((r) => r.id === roleId);
+    await role?.setPermissions([permission]);
   }
 });
 
