@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import fs from "fs";
 import path from "path";
-import prettier from "prettier";
+import * as prettier from "prettier";
 import ConfigOptions, { configFileType } from "../types";
 import { FileError } from "../errors";
 
@@ -26,7 +26,7 @@ const tsFile = `
 
 /**
  * Initialize a config file with all available options.
- * Formated using **prettier**
+ * Formatted using **prettier**
  *
  * @version 1.0
  *
@@ -37,7 +37,7 @@ const tsFile = `
 export function init(fileType: configFileType = "json") {
   let fileContent = "";
 
-  // No declaration of fileType is consired 'json'
+  // No declaration of fileType is considered 'json'
 
   if (!fileType) {
     fileType = "json";
