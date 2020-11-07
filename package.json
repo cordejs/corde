@@ -1,6 +1,6 @@
 {
   "name": "corde",
-  "version": "2.0.0-beta-19",
+  "version": "2.0.0-beta-20",
   "description": "A simple library for Discord bot tests",
   "main": "./index.js",
   "types": "./index.d.ts",
