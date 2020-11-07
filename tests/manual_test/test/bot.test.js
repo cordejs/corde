@@ -1,5 +1,4 @@
-import { beforeStart, afterAll, test, expect } from "../../../lib";
-import { Colors, Permission } from "../../../lib/src/utils";
+import { beforeStart, afterAll, test, expect, Colors } from "../../../lib";
 import { bot, loginBot } from "../bot";
 beforeStart(() => {
   loginBot();
@@ -29,11 +28,8 @@ test("should set role color", () => {
 
 test("should set permission", () => {
   const roleId = "774072155058077706";
-  const permission = Permission.BAN_MEMBERS;
-  expect(`change-role-permission ${roleId} ${permission}`).toSetRolePermission(
-    roleId,
-    Permission.BAN_MEMBERS,
-  );
+  const permission = "ADMINISTRATOR";
+  expect(`change-role-permission ${roleId} ${permission}`).toSetRolePermission(roleId, permission);
 });
 
 afterAll(() => {

@@ -81,7 +81,7 @@ bot.on("message", async (message) => {
     const roleId = split[1];
     const permission = split[2];
     const role = message.guild?.roles.cache.find((r) => r.id === roleId);
-    await role?.setPermissions([permission]);
+    await role?.setPermissions(permission);
   }
 });
 

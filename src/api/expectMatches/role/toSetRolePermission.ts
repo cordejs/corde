@@ -1,10 +1,10 @@
 import { ExpectOperation } from "../operation";
 import { TestReport } from "../..";
 import { RoleData } from "../../../types";
-import { calcPermissionsValue, Permission } from "../../../utils/permission";
+import { calcPermissionsValue, Permission, RolePermission } from "../../../utils/permission";
 
-export class ToSetRolePermission extends ExpectOperation<Permission[], RoleData> {
-  public async action(permissions: Permission[], roleData: RoleData): Promise<TestReport> {
+export class ToSetRolePermission extends ExpectOperation<RolePermission[], RoleData> {
+  public async action(permissions: RolePermission[], roleData: RoleData): Promise<TestReport> {
     try {
       if (!this.cordeBot.hasRole(roleData)) {
         return this.setDataForNotFoundRoleAndGenerateReport();
@@ -17,7 +17,8 @@ export class ToSetRolePermission extends ExpectOperation<Permission[], RoleData>
         return this.setDataForNotFoundRoleAndGenerateReport();
       }
 
-      const expectedPermissionsValue = calcPermissionsValue(...permissions);
+      const valuePermissions = permissions.map((p) => Permission[p]);
+      const expectedPermissionsValue = calcPermissionsValue(...valuePermissions);
       if (role.permissions.bitfield === expectedPermissionsValue) {
         this.isEqual = true;
       }

@@ -1,7 +1,7 @@
 import { ColorResolvable, Snowflake } from "discord.js";
 import { RoleData } from "../../types";
 import { Colors } from "../../utils/colors";
-import { Permission } from "../../utils/permission";
+import { Permission, RolePermission } from "../../utils/permission";
 
 export interface RoleMatches {
   /**
@@ -112,8 +112,6 @@ export interface RoleMatches {
    *
    * @see https://discord.com/developers/docs/topics/permissions#permissions
    */
-  toSetRolePermission(id: string, ...permissions: Permission[]): void;
-  toSetRolePermission(id: string, ...permissions: (keyof typeof Permission)[]): void;
-  toSetRolePermission(roleData: RoleData, ...permissions: Permission[]): void;
-  toSetRolePermission(roleData: RoleData, ...permissions: (keyof typeof Permission)[]): void;
+  toSetRolePermission(id: string, ...permissions: RolePermission[]): void;
+  toSetRolePermission(roleData: RoleData, ...permissions: RolePermission[]): void;
 }
