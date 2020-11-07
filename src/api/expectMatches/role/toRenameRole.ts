@@ -1,7 +1,7 @@
 import { ExpectOperation } from "../operation";
 import { TestReport } from "../..";
 import { RoleData } from "../../../types";
-import { Role } from "discord.js";
+import Utils from "../../../utils/utils";
 
 export class ToRenameRole extends ExpectOperation<string, RoleData> {
   public async action(newName: string, roleData: RoleData): Promise<TestReport> {
@@ -13,14 +13,8 @@ export class ToRenameRole extends ExpectOperation<string, RoleData> {
         this.output = "No role found";
       } else {
         await this.cordeBot.sendTextMessage(this.command);
-        const promiseRole = new Promise<Role>(async (resolve) => {
-          setTimeout(async () => {
-            role = await this.cordeBot.fetchRole(role.id);
-            resolve(role);
-          }, 600);
-        });
-
-        role = await promiseRole;
+        await Utils.wait(600);
+        role = await this.cordeBot.fetchRole(role.id);
         if (role.name === newName) {
           super.isEqual = true;
         }

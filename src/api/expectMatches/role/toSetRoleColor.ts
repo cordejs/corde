@@ -1,8 +1,9 @@
 import { CordeBot } from "../../../core";
 import { TestReport } from "../..";
-import { ColorResolvable, Role } from "discord.js";
+import { ColorResolvable } from "discord.js";
 import { RoleData } from "../../../types";
 import { Colors, resolveColor } from "../../../utils/colors";
+import Utils from "../../../utils/utils";
 
 export async function toSetRoleColor(
   commandName: string,
@@ -16,12 +17,9 @@ export async function toSetRoleColor(
   try {
     await cordeBot.sendTextMessage(commandName);
 
-    const role = await new Promise<Role>((resolve) => {
-      setTimeout(async () => {
-        const _role = await cordeBot.findRole(roleData);
-        resolve(_role);
-      }, 500);
-    });
+    await Utils.wait(600);
+    const role = await cordeBot.findRole(roleData);
+
     const numberColor = resolveColor(color);
     if (numberColor > 0) {
       isEqual = numberColor === role.color;
