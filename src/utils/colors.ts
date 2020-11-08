@@ -60,14 +60,23 @@ export enum Colors {
 }
 
 export function resolveColor(color: ColorResolvable) {
-  if (typeof color === "string" || typeof color === "number") {
-    if (color === "DEFAULT") return 0;
-    return (
-      ColorsHex[color as keyof typeof ColorsHex] || parseInt(color.toString().replace("#", ""), 16)
-    );
-  } else if (Array.isArray(color)) {
+  if (color > 0 && color < 0xffffff) {
+    return +color;
+  }
+
+  if (typeof color === "string" && color.includes("#")) {
+    return parseInt(color.toString().replace("#", ""), 16);
+  }
+
+  if (Array.isArray(color)) {
     // tslint:disable-next-line: no-bitwise
     return (color[0] << 16) + (color[1] << 8) + color[2];
   }
+
+  const value = ColorsHex[color as keyof typeof ColorsHex];
+  if (value) {
+    return value;
+  }
+
   return -1;
 }
