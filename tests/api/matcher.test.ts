@@ -13,10 +13,11 @@ import {
   ToSetRoleHoist,
   ToSetRoleMentionable,
   ToSetRolePermission,
+  ToPinMessage,
 } from "../../src/api/expectMatches";
-import { Permission } from "../../src/utils/permission";
 
 jest.mock("../../src/api/expectMatches/role/toSetRoleMentionable");
+jest.mock("../../src/api/expectMatches/message/toPinMessage.ts");
 jest.mock("../../src/api/expectMatches/role/toSetRoleHoist");
 jest.mock("../../src/api/expectMatches/role/toRenameRole");
 jest.mock("../../src/api/expectMatches/role/toSetRolePosition");
@@ -32,12 +33,14 @@ let toSetHoistSpy: jest.SpyInstance<any, any>;
 let toRenameRoleSpy: jest.SpyInstance<any, any>;
 let toSetRolePositionSpy: jest.SpyInstance<any, any>;
 let toSetRolePermissionSpy: jest.SpyInstance<any, any>;
+let toPinMessageSpy: jest.SpyInstance<any, any>;
 
 const toSetRoleMentionableActionMock = jest.fn();
 const toSetHoistActionMock = jest.fn();
 const toRenameRoleActionMock = jest.fn();
 const toSetRolePositionActionMock = jest.fn();
 const toSetRolePermissionMock = jest.fn();
+const toPinMessageMock = jest.fn();
 
 const con = "test";
 
@@ -88,11 +91,18 @@ describe("Testing matches class", () => {
         action: toSetRolePermissionMock,
       };
     });
+
+    toPinMessageSpy = (ToPinMessage as jest.Mock).mockImplementation(() => {
+      return {
+        action: toPinMessageMock,
+      };
+    });
   });
 
   afterEach(() => {
     toSetRoleMentionableSpy.mockClear();
     toSetRolePermissionSpy.mockClear();
+    toPinMessageSpy.mockClear();
   });
 
   it("should not return a function", () => {
@@ -475,21 +485,59 @@ describe("Testing matches class", () => {
       toSetRolePermission();
       runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToSetRolePermission).toBeCalledWith(runtime.bot, con, false);
-      expect(toSetRolePermissionMock).toBeCalledWith([Permission.ADMINISTRATOR], roleId, undefined);
+      expect(toSetRolePermissionMock).toBeCalledWith(["ADMINISTRATOR"], roleId, undefined);
     });
 
     it("should add a toSetRolePermission function with correct values (isNot false)", () => {
       toSetRolePermission();
       runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToSetRolePermission).toBeCalledWith(runtime.bot, con, false);
-      expect(toSetRolePermissionMock).toBeCalledWith([Permission.ADMINISTRATOR], roleId, undefined);
+      expect(toSetRolePermissionMock).toBeCalledWith(["ADMINISTRATOR"], roleId, undefined);
     });
 
     it("should add a toSetRolePermission function with correct values (isNot true)", () => {
       initExpectMatch().not.toSetRolePermission(roleId, "ADMINISTRATOR");
       runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToSetRolePermission).toBeCalledWith(runtime.bot, con, true);
-      expect(toSetRolePermissionMock).toBeCalledWith([Permission.ADMINISTRATOR], roleId, undefined);
+      expect(toSetRolePermissionMock).toBeCalledWith(["ADMINISTRATOR"], roleId, undefined);
+    });
+  });
+
+  describe("testing to pinMessage", () => {
+    const messageId = {
+      id: "123",
+    };
+
+    it("should add a function to hasIsolatedTestFunctions after call toRenameRole", () => {
+      initExpectMatch().toPin(messageId);
+      expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
+    });
+
+    it("should add a toRenameRole function", () => {
+      initExpectMatch().toPin(messageId);
+      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(toPinMessageSpy).toBeCalled();
+    });
+
+    it("should add a toRenameRole function with correct values using id", () => {
+      initExpectMatch().toPin(messageId);
+      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToPinMessage).toBeCalledWith(runtime.bot, con, false);
+      expect(toPinMessageMock).toBeCalledWith(messageId, undefined, undefined);
+    });
+
+    it("should add a toRenameRole function with correct values (isNot false)", () => {
+      initExpectMatch().toPin(messageId);
+      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToPinMessage).toBeCalledWith(runtime.bot, con, false);
+      expect(toPinMessageMock).toBeCalledWith(messageId, undefined, undefined);
+    });
+
+    it("should add a toRenameRole function with correct values (isNot true)", () => {
+      initExpectMatch().not.toPin(messageId);
+      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToPinMessage).toBeCalledWith(runtime.bot, con, true);
+      expect(toPinMessageMock).toBeCalledWith(messageId, undefined, undefined);
     });
   });
 });
