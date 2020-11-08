@@ -140,6 +140,7 @@ workflows:
             branches:
               only: master # Restrict website deploy to only master branch
 
-  e2e-tests:
-    jobs:
-      - e2e_tests
+
+  # e2e-tests:
+  #   jobs:
+  #     - e2e_tests
