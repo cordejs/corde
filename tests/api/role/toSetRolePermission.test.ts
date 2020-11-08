@@ -21,7 +21,7 @@ describe("testing ToSetRolePosition operation", () => {
         false,
       );
       const report = await new ToSetRolePermission(corde, commandName, false).action(
-        [Permission.ADMINISTRATOR],
+        ["ADMINISTRATOR"],
         { id: "123" },
       );
 
@@ -41,7 +41,7 @@ describe("testing ToSetRolePosition operation", () => {
         mockDiscord.createMockRole("", Permission.ADMINISTRATOR),
       );
       const report = await new ToSetRolePermission(corde, commandName, false).action(
-        [Permission.ADMINISTRATOR],
+        ["ADMINISTRATOR"],
         { id: "123" },
       );
 
@@ -63,7 +63,7 @@ describe("testing ToSetRolePosition operation", () => {
       corde.sendTextMessage = jest.fn().mockImplementation(() => {});
 
       const report = await new ToSetRolePermission(corde, commandName, false).action(
-        [Permission.ADMINISTRATOR],
+        ["ADMINISTRATOR"],
         { id: "123" },
       );
 
@@ -88,7 +88,7 @@ describe("testing ToSetRolePosition operation", () => {
       corde.sendTextMessage = jest.fn().mockImplementation(() => {});
 
       const report = await new ToSetRolePermission(corde, commandName, false).action(
-        [Permission.ADMINISTRATOR],
+        ["ADMINISTRATOR"],
         { id: "123" },
       );
 
@@ -111,7 +111,7 @@ describe("testing ToSetRolePosition operation", () => {
         false,
       );
       const report = await new ToSetRolePermission(corde, commandName, true).action(
-        [Permission.ATTACH_FILES],
+        ["ATTACH_FILES"],
         { id: "123" },
       );
 
@@ -131,7 +131,7 @@ describe("testing ToSetRolePosition operation", () => {
         mockDiscord.createMockRole("", Permission.ADMINISTRATOR),
       );
       const report = await new ToSetRolePermission(corde, commandName, true).action(
-        [Permission.ATTACH_FILES],
+        ["ATTACH_FILES"],
         { id: "123" },
       );
 
@@ -153,7 +153,7 @@ describe("testing ToSetRolePosition operation", () => {
       corde.sendTextMessage = jest.fn().mockImplementation(() => {});
 
       const report = await new ToSetRolePermission(corde, commandName, true).action(
-        [Permission.ADMINISTRATOR],
+        ["ADMINISTRATOR"],
         { id: "123" },
       );
 
@@ -178,7 +178,7 @@ describe("testing ToSetRolePosition operation", () => {
       corde.sendTextMessage = jest.fn().mockImplementation(() => {});
 
       const report = await new ToSetRolePermission(corde, commandName, true).action(
-        [Permission.ADMINISTRATOR],
+        ["ADMINISTRATOR"],
         { id: "123" },
       );
 

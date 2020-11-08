@@ -1,11 +1,15 @@
 import { Client } from "discord.js";
 import { TestReport } from "../../../src/api";
 import { ToRenameRole } from "../../../src/api/expectMatches/role/toRenameRole";
+import Utils from "../../../src/utils/utils";
 import MockDiscord from "../../mocks/mockDiscord";
 import { initCordeClientWithChannel } from "../../testHelper";
 
 let mockDiscord = new MockDiscord();
 const commandName = "test";
+
+Utils.setDelayValue(10);
+
 describe("testing ToRenameRole operation", () => {
   afterEach(() => {
     mockDiscord = new MockDiscord();
@@ -13,6 +17,7 @@ describe("testing ToRenameRole operation", () => {
   it("should find and must return passed report due to renamed role (isNot false)", async () => {
     const corde = initCordeClientWithChannel(mockDiscord, new Client());
     corde.findRole = jest.fn().mockReturnValue(mockDiscord.role);
+    corde.fetchRole = jest.fn().mockReturnValue(mockDiscord.role);
     corde.sendTextMessage = jest.fn().mockImplementation(() => {});
 
     const toRename = new ToRenameRole(corde, "test", false);
@@ -29,6 +34,7 @@ describe("testing ToRenameRole operation", () => {
   it("should find and must return passed report due not to renamed role (isNot true)", async () => {
     const corde = initCordeClientWithChannel(mockDiscord, new Client());
     corde.findRole = jest.fn().mockReturnValue(mockDiscord.role);
+    corde.fetchRole = jest.fn().mockReturnValue(mockDiscord.role);
     corde.sendTextMessage = jest.fn().mockImplementation(() => {});
 
     const toRename = new ToRenameRole(corde, "test", true);

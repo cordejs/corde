@@ -1,6 +1,6 @@
 import { testCollector } from "../../src/common/testCollector";
 import { runtime } from "../../src/common/runtime";
-import { ExpectMatchesWithNot } from "../../src/api";
+import { ExpectMatchesWithNot, TestReport } from "../../src/api";
 import * as toReturnFn from "../../src/api/expectMatches/message/toReturn";
 import * as toAddReactionFn from "../../src/api/expectMatches/message/toAddReaction";
 import * as toRemoveReactionFn from "../../src/api/expectMatches/message/toRemoveReaction";
@@ -44,11 +44,20 @@ const con = "test";
 describe("Testing matches class", () => {
   beforeEach(() => {
     testCollector.clearIsolatedTestFunctions();
-    toReturnSpy = jest.spyOn(toReturnFn, "toReturn").mockReturnValue(null);
-    toAddReactionSpy = jest.spyOn(toAddReactionFn, "toAddReaction").mockReturnValue(null);
-    toRemoveReactionSpy = jest.spyOn(toRemoveReactionFn, "toRemoveReaction").mockReturnValue(null);
-    toSetRoleColorSpy = jest.spyOn(toSetRoleColorFn, "toSetRoleColor").mockReturnValue(null);
-    toDeleteRoleSpy = jest.spyOn(toDeleteRoleFn, "toDeleteRole").mockReturnValue(null);
+    const testReportPromiseResponse = Promise.resolve({} as TestReport);
+    toReturnSpy = jest.spyOn(toReturnFn, "toReturn").mockReturnValue(testReportPromiseResponse);
+    toAddReactionSpy = jest
+      .spyOn(toAddReactionFn, "toAddReaction")
+      .mockReturnValue(testReportPromiseResponse);
+    toRemoveReactionSpy = jest
+      .spyOn(toRemoveReactionFn, "toRemoveReaction")
+      .mockReturnValue(testReportPromiseResponse);
+    toSetRoleColorSpy = jest
+      .spyOn(toSetRoleColorFn, "toSetRoleColor")
+      .mockReturnValue(testReportPromiseResponse);
+    toDeleteRoleSpy = jest
+      .spyOn(toDeleteRoleFn, "toDeleteRole")
+      .mockReturnValue(testReportPromiseResponse);
 
     toSetRoleMentionableSpy = (ToSetRoleMentionable as jest.Mock).mockImplementation(() => {
       return {
@@ -448,7 +457,7 @@ describe("Testing matches class", () => {
     };
 
     function toSetRolePermission() {
-      initExpectMatch().toSetRolePermission(roleId, Permission.ADMINISTRATOR);
+      initExpectMatch().toSetRolePermission(roleId, "ADMINISTRATOR");
     }
 
     it("should add a function to hasIsolatedTestFunctions after call toSetRolePermission", () => {
@@ -477,7 +486,7 @@ describe("Testing matches class", () => {
     });
 
     it("should add a toSetRolePermission function with correct values (isNot true)", () => {
-      initExpectMatch().not.toSetRolePermission(roleId, Permission.ADMINISTRATOR);
+      initExpectMatch().not.toSetRolePermission(roleId, "ADMINISTRATOR");
       runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToSetRolePermission).toBeCalledWith(runtime.bot, con, true);
       expect(toSetRolePermissionMock).toBeCalledWith([Permission.ADMINISTRATOR], roleId, undefined);
