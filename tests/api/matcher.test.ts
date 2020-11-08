@@ -14,10 +14,12 @@ import {
   ToSetRoleMentionable,
   ToSetRolePermission,
   ToPinMessage,
+  ToUnpinMessage,
 } from "../../src/api/expectMatches";
 
 jest.mock("../../src/api/expectMatches/role/toSetRoleMentionable");
 jest.mock("../../src/api/expectMatches/message/toPinMessage.ts");
+jest.mock("../../src/api/expectMatches/message/toUnpinMessage.ts");
 jest.mock("../../src/api/expectMatches/role/toSetRoleHoist");
 jest.mock("../../src/api/expectMatches/role/toRenameRole");
 jest.mock("../../src/api/expectMatches/role/toSetRolePosition");
@@ -34,6 +36,7 @@ let toRenameRoleSpy: jest.SpyInstance<any, any>;
 let toSetRolePositionSpy: jest.SpyInstance<any, any>;
 let toSetRolePermissionSpy: jest.SpyInstance<any, any>;
 let toPinMessageSpy: jest.SpyInstance<any, any>;
+let toUnpinMessageSpy: jest.SpyInstance<any, any>;
 
 const toSetRoleMentionableActionMock = jest.fn();
 const toSetHoistActionMock = jest.fn();
@@ -41,6 +44,7 @@ const toRenameRoleActionMock = jest.fn();
 const toSetRolePositionActionMock = jest.fn();
 const toSetRolePermissionMock = jest.fn();
 const toPinMessageMock = jest.fn();
+const toUnpinMessageMock = jest.fn();
 
 const con = "test";
 
@@ -95,6 +99,12 @@ describe("Testing matches class", () => {
     toPinMessageSpy = (ToPinMessage as jest.Mock).mockImplementation(() => {
       return {
         action: toPinMessageMock,
+      };
+    });
+
+    toUnpinMessageSpy = (ToUnpinMessage as jest.Mock).mockImplementation(() => {
+      return {
+        action: toUnpinMessageMock,
       };
     });
   });
@@ -508,36 +518,74 @@ describe("Testing matches class", () => {
       id: "123",
     };
 
-    it("should add a function to hasIsolatedTestFunctions after call toRenameRole", () => {
+    it("should add a function to hasIsolatedTestFunctions after call toPin", () => {
       initExpectMatch().toPin(messageId);
       expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
     });
 
-    it("should add a toRenameRole function", () => {
+    it("should add a toPin function", () => {
       initExpectMatch().toPin(messageId);
       runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(toPinMessageSpy).toBeCalled();
     });
 
-    it("should add a toRenameRole function with correct values using id", () => {
+    it("should add a toPin function with correct values using id", () => {
       initExpectMatch().toPin(messageId);
       runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToPinMessage).toBeCalledWith(runtime.bot, con, false);
       expect(toPinMessageMock).toBeCalledWith(messageId, undefined, undefined);
     });
 
-    it("should add a toRenameRole function with correct values (isNot false)", () => {
+    it("should add a toPin function with correct values (isNot false)", () => {
       initExpectMatch().toPin(messageId);
       runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToPinMessage).toBeCalledWith(runtime.bot, con, false);
       expect(toPinMessageMock).toBeCalledWith(messageId, undefined, undefined);
     });
 
-    it("should add a toRenameRole function with correct values (isNot true)", () => {
+    it("should add a toPin function with correct values (isNot true)", () => {
       initExpectMatch().not.toPin(messageId);
       runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToPinMessage).toBeCalledWith(runtime.bot, con, true);
       expect(toPinMessageMock).toBeCalledWith(messageId, undefined, undefined);
+    });
+  });
+
+  describe("testing to unPinMessage", () => {
+    const messageId = {
+      id: "123",
+    };
+
+    it("should add a function to hasIsolatedTestFunctions after call toUnpin", () => {
+      initExpectMatch().toUnpin(messageId);
+      expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
+    });
+
+    it("should add a toUnpin function", () => {
+      initExpectMatch().toUnpin(messageId);
+      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(toUnpinMessageSpy).toBeCalled();
+    });
+
+    it("should add a toUnpin function with correct values using id", () => {
+      initExpectMatch().toUnpin(messageId);
+      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToUnpinMessage).toBeCalledWith(runtime.bot, con, false);
+      expect(toUnpinMessageMock).toBeCalledWith(messageId, undefined, undefined);
+    });
+
+    it("should add a toUnpin function with correct values (isNot false)", () => {
+      initExpectMatch().toUnpin(messageId);
+      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToUnpinMessage).toBeCalledWith(runtime.bot, con, false);
+      expect(toUnpinMessageMock).toBeCalledWith(messageId, undefined, undefined);
+    });
+
+    it("should add a toUnpin function with correct values (isNot true)", () => {
+      initExpectMatch().not.toUnpin(messageId);
+      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToUnpinMessage).toBeCalledWith(runtime.bot, con, true);
+      expect(toUnpinMessageMock).toBeCalledWith(messageId, undefined, undefined);
     });
   });
 });

@@ -3,7 +3,7 @@ import { testCollector } from "../common/testCollector";
 import { CordeBot } from "../core";
 import { MessageData, RoleData } from "../types";
 import { Colors } from "../utils/colors";
-import { Permission, RolePermission } from "../utils/permission";
+import { RolePermission } from "../utils/permission";
 import {
   toAddReaction,
   toDeleteRole,
@@ -16,6 +16,7 @@ import {
 } from "./expectMatches";
 import { ToPinMessage } from "./expectMatches/message/toPinMessage";
 import { toRemoveReaction } from "./expectMatches/message/toRemoveReaction";
+import { ToUnpinMessage } from "./expectMatches/message/toUnpinMessage";
 import { ExpectOperation } from "./expectMatches/operation";
 import { ToSetRolePermission } from "./expectMatches/role/toSetRolePermission";
 import { RoleMatches, TestReport } from "./interfaces";
@@ -53,6 +54,12 @@ class ExpectMatches implements Matches {
   public toPin(message: MessageData): void {
     testCollector.addTestFunction((cordeBot) => {
       return this.operationFactory(ToPinMessage, cordeBot, message);
+    });
+  }
+
+  public toUnpin(message: MessageData): void {
+    testCollector.addTestFunction((cordeBot) => {
+      return this.operationFactory(ToUnpinMessage, cordeBot, message);
     });
   }
 

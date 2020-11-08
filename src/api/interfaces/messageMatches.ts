@@ -57,4 +57,11 @@ export interface MessageMatches {
    * @param message Data used for message fetch.
    */
   toPin(message: MessageData): void;
+
+  /**
+   * Verify if a command unpinned a message.
+   *
+   * @param message Data used for message fetch.
+   */
+  toUnpin(message: MessageData): void;
 }
