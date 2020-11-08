@@ -1,9 +1,7 @@
 import { command } from "commander";
 import { TestReport } from "../../../src/api";
-import {
-  ToPinMessage,
-  setToPinFetchDelay,
-} from "../../../src/api/expectMatches/message/toPinMessage";
+import { ToPinMessage } from "../../../src/api/expectMatches/message/toPinMessage";
+import Utils from "../../../src/utils/utils";
 import MockDiscord from "../../mocks/mockDiscord";
 import { createCordeBotWithMockedFunctions } from "../../testHelper";
 
@@ -11,7 +9,7 @@ let mockDiscord = new MockDiscord();
 const commandName = "test";
 
 // Tests purpose
-setToPinFetchDelay(1);
+Utils.setDelayValue(1);
 
 describe("testing pin message test", () => {
   afterEach(() => {
