@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import fs from "fs";
 import path from "path";
-import * as prettier from "prettier";
+import { format, BuiltInParserName } from "prettier";
 import ConfigOptions, { configFileType } from "../types";
 import { FileError } from "../errors";
 
@@ -73,14 +73,14 @@ export function init(fileType: configFileType = "json") {
 }
 
 function formatFile(file: string, type: configFileType) {
-  let fileParser: prettier.BuiltInParserName = "babel";
+  let fileParser: BuiltInParserName = "babel";
 
   // Attempt to format a json with babel parse results in error
   if (type === "json") {
     fileParser = "json";
   }
 
-  return prettier.format(file, {
+  return format(file, {
     printWidth: 100,
     singleQuote: true,
     trailingComma: "all",
