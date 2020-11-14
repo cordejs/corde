@@ -52,7 +52,7 @@ export function renameConfigTempFileNamesToNormal() {
 }
 
 /**
- * Define a new value for a property. Useful for readonly propeties
+ * Define a new value for a property. Useful for readonly properties
  *
  * @param object Object that contains the property
  * @param property Object property to be mocked
@@ -60,6 +60,17 @@ export function renameConfigTempFileNamesToNormal() {
  */
 export function mockProperty<T extends {}, K extends keyof T>(object: T, property: K, value: T[K]) {
   Object.defineProperty(object, property, { get: () => value });
+}
+
+export function createCordeBotWithMockedFunctions(
+  mockDiscord: MockDiscord,
+  findRoleMock: any = mockDiscord.role,
+) {
+  const corde = initCordeClientWithChannel(mockDiscord, new Client());
+  corde.getRoles = jest.fn().mockReturnValue(mockDiscord.roleManager.cache);
+  corde.findRole = jest.fn().mockReturnValue(findRoleMock);
+  corde.sendTextMessage = jest.fn().mockImplementation(() => {});
+  return corde;
 }
 
 export function initCordeClientWithChannel(
@@ -86,15 +97,4 @@ export function initCordeClient(mockDiscord: MockDiscord, clientInstance: Client
     mockDiscord.userBotId,
     clientInstance,
   );
-}
-
-export function createCordeBotWithMockedFunctions(
-  mockDiscord: MockDiscord,
-  findRoleMock: any = mockDiscord.role,
-) {
-  const corde = initCordeClientWithChannel(mockDiscord, new Client());
-  corde.getRoles = jest.fn().mockReturnValue(mockDiscord.roleManager.cache);
-  corde.findRole = jest.fn().mockReturnValue(findRoleMock);
-  corde.sendTextMessage = jest.fn().mockImplementation(() => {});
-  return corde;
 }
