@@ -10,10 +10,9 @@ const majorVer = +ver.split(".")[0];
 if (majorVer < MINIMAL_NODE_VERSION) {
   console.error(
     `Node version '${ver}' is not supported. Please use Node.js ${MINIMAL_NODE_VERSION} or higher.`,
-    `\nsee https://nodejs.org/en/download`
+    `\nsee https://nodejs.org/en/download`,
   );
   process.exit(1);
 } else {
-  require = require("esm")(module);
   require("../lib/src/cli/cli");
 }
