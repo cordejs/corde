@@ -491,12 +491,20 @@ export default class MockDiscord {
     manager.add(this._role, true);
 
     // Workaround for rawPosition change after add to manager
-    manager.cache.first().rawPosition = 1;
-    const newRole = this.createMockRole("batata 2");
+    const rawPosition = manager.cache.first();
+    if (rawPosition) {
+      rawPosition.rawPosition = 1;
+    }
 
+    const newRole = this.createMockRole("batata 2");
     manager.add(newRole, true);
+
     const cachedNewRole = manager.cache.find((r) => r.id === newRole.id);
-    cachedNewRole.rawPosition = 2;
+
+    if (cachedNewRole) {
+      cachedNewRole.rawPosition = 2;
+    }
+
     return manager;
   }
 }
