@@ -1,0 +1,26 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: "/./examples/typescript"
+    schedule:
+      interval: daily
+      time: "08:00"
+    open-pull-requests-limit: 10
+  - package-ecosystem: npm
+    directory: "/./examples/javascript"
+    schedule:
+      interval: daily
+      time: "08:00"
+    open-pull-requests-limit: 10
+  - package-ecosystem: npm
+    directory: "/."
+    schedule:
+      interval: daily
+      time: "08:00"
+    open-pull-requests-limit: 10
+  - package-ecosystem: npm
+    directory: "/./website"
+    schedule:
+      interval: daily
+      time: "08:00"
+    open-pull-requests-limit: 10
