@@ -192,9 +192,12 @@ export class CordeBot extends Events {
     let amount = 0;
     const reactions: MessageReaction[] = [];
     return new Promise<MessageReaction[]>((resolve, reject) => {
-      setTimeout(() => {
-        reject(new TimeoutError());
-      }, DEFAULT_TEST_TIMEOUT);
+      setTimeout(
+        () => {
+          reject(new TimeoutError());
+        },
+        this._waitTimeOut ? this._waitTimeOut : DEFAULT_TEST_TIMEOUT,
+      );
 
       this._reactionsObserved.subscribe((reaction) => {
         if (reaction) {

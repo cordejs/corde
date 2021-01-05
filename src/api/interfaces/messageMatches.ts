@@ -1,4 +1,4 @@
-import { MessageEmbed } from "discord.js";
+import { Message, MessageEmbed } from "discord.js";
 import { MessageData } from "../../types";
 
 /**
@@ -64,4 +64,11 @@ export interface MessageMatches {
    * @param message Data used for message fetch.
    */
   toUnpin(message: MessageData): void;
+
+  /**
+   * Verify if a command edited a message.
+   * @param message Message to be edited.
+   * @param newValue New value for the message.
+   */
+  toEditMessage(message: MessageData, newValue: string | MessageEmbed): void;
 }

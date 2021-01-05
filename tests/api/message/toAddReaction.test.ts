@@ -275,7 +275,8 @@ describe("testing toAddReaction function", () => {
   });
 
   it("should return a failed test due to timeout and isNot = false", async () => {
-    const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
+    const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 100);
+    cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
 
     const timeout = new TimeoutError();
     const reportModel = new TestReport({
@@ -320,6 +321,7 @@ describe("testing toAddReaction function", () => {
 
   it("should return a failed test due to timeout and isNot = true", async () => {
     const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
+    cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
 
     const timeout = new TimeoutError();
     const reportModel = new TestReport({

@@ -87,6 +87,7 @@ describe("testing toRemoveReaction", () => {
 
   it("should return a failed test due to timeout and isNot = false", async () => {
     const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
+    cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
 
     const timeout = new TimeoutError();
     const reportModel = new TestReport({
@@ -107,6 +108,7 @@ describe("testing toRemoveReaction", () => {
 
   it("should return a failed test due to timeout and isNot = true", async () => {
     const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
+    cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
 
     const timeout = new TimeoutError();
     const reportModel = new TestReport({
@@ -127,6 +129,8 @@ describe("testing toRemoveReaction", () => {
 
   it("should return a failed test due to timeout and isNot = true", async () => {
     const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
+    cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
+    cordeClient.findMessage = jest.fn().mockReturnValue(mockDiscord.message);
 
     const timeout = new TimeoutError();
     const reportModel = new TestReport({
@@ -146,7 +150,9 @@ describe("testing toRemoveReaction", () => {
   });
 
   it("should return a failed test due to timeout and isNot = true", async () => {
-    const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
+    const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 500);
+    cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
+    cordeClient.findMessage = jest.fn().mockReturnValue(mockDiscord.message);
 
     const timeout = new TimeoutError();
     const reportModel = new TestReport({
@@ -167,20 +173,28 @@ describe("testing toRemoveReaction", () => {
 
   it("should return a passed test with isNot = false and 2 emojis", async () => {
     const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
+    cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
+    cordeClient.findMessage = jest.fn().mockReturnValue(mockDiscord.message);
+    cordeClient.waitForRemovedReactions = jest
+      .fn()
+      .mockReturnValue(mockDiscord.messageReactionCollection.array());
 
-    const timeout = new TimeoutError();
     const reportModel = new TestReport({
       commandName: "hello",
       expectation: mockDiscord.messageReaction.emoji.name,
-      output: timeout.message,
+      output: mockDiscord.messageReaction.emoji.name,
       isNot: true,
       hasPassed: false,
       showExpectAndOutputValue: false,
     });
 
-    const report = await toRemoveReaction(reportModel.commandName, reportModel.isNot, cordeClient, [
-      reportModel.expectation as string,
-    ]);
+    const report = await toRemoveReaction(
+      reportModel.commandName,
+      reportModel.isNot,
+      cordeClient,
+      [reportModel.expectation as string],
+      { id: "123" },
+    );
 
     expect(report).toEqual(reportModel);
   });
