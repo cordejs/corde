@@ -26,6 +26,7 @@
     "build": "bash tasks.sh build",
     "watch": "bash tasks.sh watch",
     "corde": "node ./bin/corde",
+    "e2e": "jest ./e2e --config=./e2e/jest.config.ts",
     "test": "jest --silent --runInBand --detectOpenHandles",
     "test-with-coverage": "jest --silent --runInBand --detectOpenHandles --collect-coverage --collectCoverageFrom=src/**/*.ts",
     "refresh": "rm -rf ./node_modules ./package-lock.json && yarn install",
@@ -88,6 +89,12 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lucasgmagalhaes/corde.git"
+  },
+  "jest": {
+    "projects": [
+      "./jest.config.js",
+      "./e2e/jest.config.js"
+    ]
   },
   "author": {
     "name": "Lucas Gomes",

@@ -1,5 +1,6 @@
 // Cannot be `import` as it's not under TS root dir
-const { version: VERSION, description: DESCRIPTION } = require(process.env.ENV === "TEST"
+const { version: VERSION, description: DESCRIPTION } = require(process.env.ENV === "TEST" ||
+  process.env.ENV === "E2E"
   ? "../package.json"
   : "../../package.json");
 

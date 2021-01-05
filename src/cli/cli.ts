@@ -59,7 +59,7 @@ program
   });
 
 // tslint:disable-next-line: deprecation
-if (module.parent && process.env.ENV !== "TEST") {
+if (process.env.ENV !== "TEST") {
   program.parse(process.argv);
 } else {
   program.exitOverride();

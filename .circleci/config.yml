@@ -63,7 +63,6 @@ jobs:
   e2e_tests:
     working_directory: ~/corde/e2e
     docker:
-      - image: cimg/ruby:2.7-node
       - image: circleci/node:latest
     steps:
       - checkout:
@@ -75,11 +74,8 @@ jobs:
           name: Build corde
           command: sh ./configureCorde.sh
       - run:
-          name: Install cucumber Aruba
-          command: bundle
-      - run:
           name: Run tests
-          command: bundle exec cucumber
+          command: yarn e2e
 
   publish_coverage:
     working_directory: ~/corde
