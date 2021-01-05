@@ -100,10 +100,10 @@ commander@^6.0.0:
   resolved "https://registry.yarnpkg.com/commander/-/commander-6.2.0.tgz#b990bfb8ac030aedc6d11bc04d1488ffef56db75"
   integrity sha512-zP4jEKbe8SHzKJYQmq8Y9gYjtO/POJLgIdKgV7B9qNmABVFVc+ctqSX6iXh4mCpJfRBOabiZ2YKPg8ciDw6C+Q==
 
-corde@^2.0.0-beta.15:
-  version "2.0.0-beta-15"
-  resolved "https://registry.yarnpkg.com/corde/-/corde-2.0.0-beta-15.tgz#7e7f9ffed3cf1958339f3f436786e1647d935031"
-  integrity sha512-akyMRLCq/DwgKvth2Sq4WnTtzBUz4mq5yxUL7sjixdG5xEmK7HxlwrQjwVse2unWJk9D0xrxgI48xIKc8767Kg==
+corde@^2.0.0-beta.10:
+  version "2.0.0-beta.10"
+  resolved "https://registry.yarnpkg.com/corde/-/corde-2.0.0-beta.10.tgz#de8b7b0ee10b51818c2c0b8cb507994f25794342"
+  integrity sha512-1N04k1+75atZGFeve2ejYjrCKQ7WJIMoFgWa4fSpRwvTRFH10tsEI/90ZSTefuZp4sKiY3v7ZQGLYPSZ6H/Ygw==
   dependencies:
     arg "^4.1.3"
     chalk "^4.0.0"
