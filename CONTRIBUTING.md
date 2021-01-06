@@ -1,8 +1,9 @@
 ## Instaling
 
 - clone the repo: **git clone https://github.com/lucasgmagalhaes/corde.git**
-- intall all dependencies with: `yarn install`
+- install all dependencies with: `yarn install`
 - create a link for the project to make it easy to test: **npm link**
+- in the root of the project, there is a `.env.example` file. Rename it to `.env` and put all configuration needed to run the project.
 
 ## How to Commit
 
