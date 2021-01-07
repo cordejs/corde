@@ -16,7 +16,7 @@ export class ToRenameRole extends ExpectOperation<string, RoleData> {
         await Utils.wait(600);
         role = await this.cordeBot.fetchRole(role.id);
         if (role.name === newName) {
-          super.isEqual = true;
+          this.isEqual = true;
         }
       }
     } catch (error) {

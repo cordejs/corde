@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "rootDir": ".",
     "resolveJsonModule": true,
     "allowJs": true,
     "checkJs": true,
