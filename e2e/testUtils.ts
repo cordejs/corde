@@ -6,4 +6,8 @@ export default class Utils {
     const args = message.content.slice(prefix.length).trim().split(" ");
     return args.shift().toLowerCase();
   }
+
+  static buildCommandWithConfigPath(command: string) {
+    return "yarn corde --config ./e2e/corde.config.ts " + command;
+  }
 }

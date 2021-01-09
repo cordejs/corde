@@ -1,5 +1,4 @@
 import { Guid } from "./guid";
-import { List } from "./list";
 
 /**
  * Structure to handle a collection of functions and execute then.
@@ -51,7 +50,7 @@ export class Queue<T extends (...args: any[]) => any> {
     const parameters = [...params, ...this._defaultParameters];
     const returnList: U[] = [];
 
-    for (const [guid, fn] of this._funcs) {
+    for (const [, fn] of this._funcs) {
       const value = await fn(...parameters);
       if (value) {
         returnList.push(value);

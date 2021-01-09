@@ -1,6 +1,8 @@
 import chalk from "chalk";
 import { Group, Test } from "../types";
 import { TestReport } from "../api/interfaces";
+import { messages } from "../messages";
+import { Message } from "discord.js";
 
 const FAIL = "FAIL";
 const SPACE = "    ";
@@ -99,19 +101,19 @@ class Reporter {
   }
 
   private printFullSuccess() {
-    console.log("All tests passed!");
-    console.log(`${this._bgSuccess(" TOTAL: ")} ${chalk.bold(this._successCount)}`);
+    console.log(messages.ALL_TESTS_PASSED);
+    console.log(`${this._bgSuccess(messages.TOTAL)} ${chalk.bold(this._successCount)}`);
   }
 
   private printPartialSuccess() {
-    console.log("Tests passed with errors.");
-    console.log(`${this._bgError(" FAILURES: ")} ${chalk.bold(this._failureCount)}`);
-    console.log(`${this._bgSuccess(" SUCCESS: ")} ${chalk.bold(this._successCount)}`);
+    console.log(messages.TESTS_PASSED_WITH_ERRORS);
+    console.log(`${this._bgError(messages.FAILURES)} ${chalk.bold(this._failureCount)}`);
+    console.log(`${this._bgSuccess(messages.SUCCESS)} ${chalk.bold(this._successCount)}`);
   }
 
   private printFullFailure() {
-    console.log("All tests fail.");
-    console.log(`${chalk.bgRed(" FAILURES: ")} ${chalk.bold(this._failureCount)}`);
+    console.log(messages.ALL_TESTS_FAIL);
+    console.log(`${chalk.bgRed(messages.FAILURES)} ${chalk.bold(this._failureCount)}`);
   }
 
   private printFailure(tabSpace: string, report: TestReport) {
