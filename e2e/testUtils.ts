@@ -7,7 +7,7 @@ export default class Utils {
     return args.shift().toLowerCase();
   }
 
-  static buildCommandWithConfigPath(command: string) {
-    return "yarn corde --config ./e2e/corde.config.ts " + command;
+  static buildCommandWithConfigPath(folderName: string, testFileName: string) {
+    return `--files ./e2e/${folderName}/__cordeTest__/${testFileName}`;
   }
 }
