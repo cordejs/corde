@@ -1,4 +1,5 @@
 import { Message } from "discord.js";
+import { testCollector } from "../lib/src/common/testCollector";
 
 export default class Utils {
   static parseCommand(message: Message, prefix: string) {
@@ -9,5 +10,9 @@ export default class Utils {
 
   static buildCommandWithConfigPath(folderName: string, testFileName: string) {
     return `--files ./e2e/${folderName}/__cordeTest__/${testFileName}`;
+  }
+
+  static addEmptyTest() {
+    testCollector.addTestFunction(() => null);
   }
 }

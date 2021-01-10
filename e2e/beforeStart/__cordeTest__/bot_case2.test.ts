@@ -1,14 +1,20 @@
-import { beforeStart } from "../../../lib";
+import { corde } from "../../../lib";
+import { testCollector } from "../../../lib/src/common/testCollector";
 
 async function asyncFunction() {
-  return new Promise<void>((resolve) => {
+  return new Promise((resolve) => {
     setTimeout(() => {
-      resolve();
-    }, 400);
+      resolve(null);
+    }, 50);
   });
 }
 
-beforeStart(async () => {
+corde.beforeStart(async () => {
   await asyncFunction();
   console.log("test beforeStart");
+});
+
+corde.test("", () => {
+  // @ts-expect-error
+  testCollector.addTestFunction(() => Promise.resolve({ hasPassed: true }));
 });

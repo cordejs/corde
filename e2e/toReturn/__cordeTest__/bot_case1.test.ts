@@ -1,5 +1,5 @@
-import { expect as cordeExpect, test as cordeTest } from "../../../lib";
+import { corde } from "../../../lib";
 
-cordeTest("Hello command should return... hello!!", () => {
-  cordeExpect("hello").toReturn("Hello!!");
+corde.test("Hello command should return... hello!!", () => {
+  corde.expect("hello").toReturn("Hello!!");
 });

@@ -1,8 +1,8 @@
 import { corde } from "../../../lib";
 import { testCollector } from "../../../lib/src/common/testCollector";
 
-corde.beforeStart(() => {
-  console.log("test beforeStart");
+corde.afterAll(() => {
+  console.log("test afterAll");
 });
 
 corde.test("", () => {

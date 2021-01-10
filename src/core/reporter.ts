@@ -10,10 +10,13 @@ const DEFAULT_SPACE_VALUE = 4;
 
 class Reporter {
   private readonly _bgSuccess = chalk.bgRgb(21, 194, 19);
+  private readonly _bgInfo = chalk.bgYellow;
   private readonly _bgError = chalk.bgRed;
   private readonly _bold = chalk.bold;
   private readonly _red = chalk.red;
+  private readonly _black = chalk.black;
   private readonly _bgSuccessBold = this._bgSuccess.bold;
+
   private _successCount = 0;
   private _failureCount = 0;
 
@@ -33,6 +36,10 @@ class Reporter {
     this.showSummary();
 
     return this._failureCount === 0;
+  }
+
+  public printNoTestFound() {
+    console.log(`${this._bgInfo(messages.INFO)}: ${messages.EMPTY_TEST_FILE}`);
   }
 
   private breakLine() {

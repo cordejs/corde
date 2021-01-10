@@ -28,7 +28,7 @@
     "corde": "node ./bin/corde",
     "e2e": "jest ./e2e --config=./e2e/jest.config.ts --runInBand",
     "test": "jest --silent --detectOpenHandles",
-    "test-with-coverage": "jest --silent --runInBand --detectOpenHandles --collect-coverage --collectCoverageFrom=src/**/*.ts",
+    "test-with-coverage": "jest --silent --detectOpenHandles --collect-coverage --collectCoverageFrom=src/**/*.ts",
     "refresh": "rm -rf ./node_modules ./package-lock.json && yarn install",
     "fix-lint": "tslint --fix 'src/**/*.ts' 'tests/**/*.ts",
     "np": "np --no-cleanup --no-yarn",

@@ -5,10 +5,11 @@ import { runtime } from "../common/runtime";
 import { testCollector } from "../common/testCollector";
 import reader from "../core/reader";
 import { reporter } from "../core/reporter";
-import { executeTestCases } from "../core/runner";
-import { Group } from "../types";
+import { executeTestCases, executeTests, getTestsFromGroup } from "../core/runner";
+import { Group, Test } from "../types";
 import { validate } from "./validate";
 import { FileError } from "../errors";
+import { runner } from "cli-spinners";
 
 process.on("uncaughtException", () => {
   stopLoading();
@@ -39,9 +40,16 @@ function loadConfigs() {
 
 async function runTests(files: string[]) {
   startLoading("reading configs");
-  const testsGroups = reader.getTestsFromFiles(files);
+  const groups = reader.getTestsFromFiles(files);
 
   spinner.text = "starting bots";
+
+  const tests = getTestsFromGroup(groups);
+  if (!hasTestsToBeExecuted(tests)) {
+    spinner.succeed();
+    reporter.printNoTestFound();
+    process.exit(0);
+  }
 
   await testCollector.beforeStartFunctions.executeAsync();
   await runtime.loginBot(runtime.cordeTestToken);
@@ -49,13 +57,13 @@ async function runTests(files: string[]) {
   spinner.text = "running tests";
   runtime.onBotStart().subscribe(async (isReady) => {
     if (isReady) {
-      await runTestsAndPrint(testsGroups);
+      await runTestsAndPrint(groups, tests);
     }
   });
 }
 
-async function runTestsAndPrint(groups: Group[]) {
-  await executeTestCases(groups);
+async function runTestsAndPrint(groups: Group[], tests: Test[]) {
+  await executeTests(tests);
   spinner.succeed();
   const hasAllTestsPassed = reporter.outPutResult(groups);
 
@@ -131,4 +139,21 @@ function readDir(directories: string[]) {
   }
 
   return files;
+}
+
+function hasTestsToBeExecuted(tests: Test[]) {
+  if (!tests) {
+    return false;
+  }
+
+  for (const test of tests) {
+    if (test && test.testsFunctions) {
+      for (const fn of test.testsFunctions) {
+        if (fn) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
 }
