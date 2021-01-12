@@ -56,6 +56,7 @@ export class Queue<T extends (...args: any[]) => any> {
         returnList.push(value);
       }
     }
+    this.clear();
     return returnList;
   }
 
@@ -73,7 +74,7 @@ export class Queue<T extends (...args: any[]) => any> {
         returnList.push(value);
       }
     }
-
+    this.clear();
     return returnList;
   }
 
@@ -101,6 +102,7 @@ export class Queue<T extends (...args: any[]) => any> {
         }
       }
     });
+    this.clear();
     return returnValues;
   }
 
@@ -128,6 +130,7 @@ export class Queue<T extends (...args: any[]) => any> {
         }
       }
     });
+    this.clear();
     return returnValues;
   }
 
@@ -145,6 +148,7 @@ export class Queue<T extends (...args: any[]) => any> {
         errors.push(error);
       }
     });
+    this.clear();
     return errors;
   }
 
@@ -162,6 +166,7 @@ export class Queue<T extends (...args: any[]) => any> {
         errors.push(error);
       }
     });
+    this.clear();
     return errors;
   }
 

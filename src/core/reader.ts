@@ -39,19 +39,22 @@ class Reader {
     }
   }
 
-  public getTestsFromFiles(files: string[]) {
-    if (files) {
-      testCollector.isCollecting = true;
-      for (const file of files) {
-        require(file);
-      }
-
-      testCollector.isCollecting = false;
-      addTestsGroupmentToGroupIfExist();
-      addTestFunctionsToGroupIfExists();
-      return testCollector.groups;
+  public async getTestsFromFiles(files: string[]) {
+    if (!files) {
+      throw new FileError("No file was informed.");
     }
-    throw new FileError("No file was informed.");
+
+    testCollector.isCollecting = true;
+    for (const file of files) {
+      require(file);
+      await testCollector.executeGroupClojure();
+      await testCollector.executeTestClojure();
+    }
+
+    testCollector.isCollecting = false;
+    addTestsGroupmentToGroupIfExist();
+    addTestFunctionsToGroupIfExists();
+    return testCollector.groups;
   }
 }
 

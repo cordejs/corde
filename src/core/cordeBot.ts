@@ -6,6 +6,7 @@ import {
   CollectorFilter,
   Guild,
   Message,
+  MessageEmbed,
   MessageReaction,
   TextChannel,
 } from "discord.js";
@@ -97,6 +98,14 @@ export class CordeBot extends Events {
    */
   public logout() {
     this._client.destroy();
+  }
+
+  /**
+   * Sends a pure message without prefix it.
+   * @param message Data to be send to channel
+   */
+  public async sendMessage(message: string | number | MessageEmbed) {
+    return await this.textChannel.send(message);
   }
 
   /**

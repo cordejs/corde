@@ -39,24 +39,26 @@ function loadConfigs() {
 }
 
 async function runTests(files: string[]) {
-  startLoading("reading configs");
-  const groups = reader.getTestsFromFiles(files);
-
-  spinner.text = "starting bots";
-
-  const tests = getTestsFromGroup(groups);
-  if (!hasTestsToBeExecuted(tests)) {
-    spinner.succeed();
-    reporter.printNoTestFound();
-    process.exit(0);
-  }
-
+  startLoading("executing before start functions");
   await testCollector.beforeStartFunctions.executeAsync();
+
+  spinner.text = "login to corde bot";
   await runtime.loginBot(runtime.cordeTestToken);
 
-  spinner.text = "running tests";
   runtime.onBotStart().subscribe(async (isReady) => {
     if (isReady) {
+      const groups = await reader.getTestsFromFiles(files);
+
+      spinner.text = "starting bots";
+
+      const tests = getTestsFromGroup(groups);
+      if (!hasTestsToBeExecuted(tests)) {
+        spinner.succeed();
+        reporter.printNoTestFound();
+        process.exit(0);
+      }
+
+      spinner.text = "running tests";
       await runTestsAndPrint(groups, tests);
     }
   });

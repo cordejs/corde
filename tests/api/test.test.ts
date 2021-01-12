@@ -8,16 +8,17 @@ describe("Testing test function", () => {
     testCollector.tests = [];
   });
 
-  it("Should execute test function", () => {
+  it("Should execute test function", async () => {
     let a = 1;
     test("test group", () => {
       a = 2;
     });
 
+    await testCollector.executeTestClojure();
     expect(a).toBe(2);
   });
 
-  it("Should add a test", () => {
+  it("Should add a test", async () => {
     const testName = "test group";
     const testObj: Test = {
       testsFunctions: [],
@@ -25,6 +26,8 @@ describe("Testing test function", () => {
     };
 
     test(testName, () => {});
+
+    await testCollector.executeTestClojure();
 
     if (testCollector.tests.length === 0) {
       fail();
@@ -34,8 +37,9 @@ describe("Testing test function", () => {
     }
   });
 
-  it("should not add a group", () => {
+  it("should not add a group", async () => {
     test(undefined, () => {});
+    await testCollector.executeTestClojure();
 
     if (!testCollector.tests) {
       fail();
@@ -44,7 +48,7 @@ describe("Testing test function", () => {
     }
   });
 
-  it("add two tests with single cases inside then should return two tests with single cases inside then", () => {
+  it("add two tests with single cases inside then should return two tests with single cases inside then", async () => {
     test("case 1", () => {
       cordeExpect("").toPin({ id: "1" });
     });
@@ -52,11 +56,12 @@ describe("Testing test function", () => {
       cordeExpect("").toPin({ id: "1" });
     });
 
+    await testCollector.executeTestClojure();
     expect(testCollector.tests[0].testsFunctions.length).toEqual(1);
     expect(testCollector.tests[1].testsFunctions.length).toEqual(1);
   });
 
-  it("should add cases", () => {
+  it("should add cases", async () => {
     test("case 1", () => {
       cordeExpect("").toPin({ id: "1" });
       cordeExpect("").toPin({ id: "1" });
@@ -67,6 +72,7 @@ describe("Testing test function", () => {
       cordeExpect("").toPin({ id: "1" });
     });
 
+    await testCollector.executeTestClojure();
     expect(testCollector.tests[0].testsFunctions.length).toEqual(2);
     expect(testCollector.tests[1].testsFunctions.length).toEqual(3);
   });

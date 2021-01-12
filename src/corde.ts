@@ -1,4 +1,3 @@
-export * as api from "./api";
 import {
   afterAll as _afterAll,
   beforeStart as _beforeStart,
@@ -7,14 +6,16 @@ import {
   expect as _expect,
   group as _group,
   test as _test,
+  sendMessage as _sendMessage,
 } from "./api";
 
 export namespace corde {
-  export var afterAll = _afterAll;
-  export var beforeStart = _beforeStart;
-  export var afterEach = _afterEach;
-  export var beforeEach = _beforeEach;
-  export var expect = _expect;
-  export var group = _group;
-  export var test = _test;
+  export const afterAll = _afterAll;
+  export const beforeStart = _beforeStart;
+  export const afterEach = _afterEach;
+  export const beforeEach = _beforeEach;
+  export const expect = _expect;
+  export const group = _group;
+  export const test = _test;
+  export const sendMessage = _sendMessage;
 }
