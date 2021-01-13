@@ -56,6 +56,7 @@ export interface MessageMatches {
    *
    * @param message Data used for message fetch.
    */
+  toPin(messageId: string): void;
   toPin(message: MessageData): void;
 
   /**
@@ -63,7 +64,8 @@ export interface MessageMatches {
    *
    * @param message Data used for message fetch.
    */
-  toUnpin(message: MessageData): void;
+  toUnPin(messageId: string): void;
+  toUnPin(message: MessageData): void;
 
   /**
    * Verify if a command edited a message.
