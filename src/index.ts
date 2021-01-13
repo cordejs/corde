@@ -1,5 +1,3 @@
-import { test } from "./api";
-
 export {
   afterAll,
   beforeStart,
@@ -12,4 +10,6 @@ export {
 } from "./api";
 export { RolePermission } from "./utils/permission";
 export { Colors } from "./utils/colors";
-export { corde } from "./corde";
+
+import { corde } from "./corde";
+export default corde;

@@ -1,4 +1,4 @@
-import { corde } from "../../../lib";
+import corde from "../../../lib";
 import { testCollector } from "../../../lib/src/common/testCollector";
 
 corde.beforeEach(async () => {});
