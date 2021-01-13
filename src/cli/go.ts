@@ -82,11 +82,11 @@ async function finishProcess(code: number, error?: any) {
       console.log(error);
     }
 
-    runtime.logoffBot();
-
     if (testCollector.afterAllFunctions) {
       await testCollector.afterAllFunctions.executeAsync();
     }
+
+    runtime.logoffBot();
   } finally {
     process.exit(code);
   }
