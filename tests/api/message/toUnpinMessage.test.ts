@@ -15,14 +15,14 @@ describe("testing pin message test", () => {
     mockDiscord = new MockDiscord();
   });
 
-  it("should assume that the message is pinned", async () => {
+  it("should return false due to not found message", async () => {
     const corde = createCordeBotWithMockedFunctions(mockDiscord);
-    corde.findPinnedMessage = jest.fn().mockReturnValue(null);
+    corde.findMessage = jest.fn().mockReturnValue(null);
     const toPin = new ToUnpinMessage(corde, commandName, false);
     const returned = await toPin.action({ id: mockDiscord.message.id });
     const expected = new TestReport({
       commandName,
-      hasPassed: true,
+      hasPassed: false,
       isNot: false,
       showExpectAndOutputValue: false,
     });
@@ -31,7 +31,7 @@ describe("testing pin message test", () => {
 
   it("should assume that the message was not pinned", async () => {
     const corde = createCordeBotWithMockedFunctions(mockDiscord);
-    corde.findPinnedMessage = jest.fn().mockReturnValue(mockDiscord.message);
+    corde.findMessage = jest.fn().mockReturnValue(mockDiscord.message);
     mockDiscord.message.pinned = false;
     const toPin = new ToUnpinMessage(corde, commandName, false);
     const returned = await toPin.action({ id: mockDiscord.message.id });
@@ -46,7 +46,7 @@ describe("testing pin message test", () => {
 
   it("should assume that the message was not pinned (isNot true)", async () => {
     const corde = createCordeBotWithMockedFunctions(mockDiscord);
-    corde.findPinnedMessage = jest.fn().mockReturnValue(mockDiscord.message);
+    corde.findMessage = jest.fn().mockReturnValue(mockDiscord.message);
     mockDiscord.message.pinned = false;
     const toPin = new ToUnpinMessage(corde, commandName, true);
     const returned = await toPin.action({ id: mockDiscord.message.id });
@@ -61,7 +61,7 @@ describe("testing pin message test", () => {
 
   it("should assume that the message was not pinned (isNot true)", async () => {
     const corde = createCordeBotWithMockedFunctions(mockDiscord);
-    corde.findPinnedMessage = jest.fn().mockReturnValue(mockDiscord.message);
+    corde.findMessage = jest.fn().mockReturnValue(mockDiscord.message);
     mockDiscord.message.pinned = true;
     const toPin = new ToUnpinMessage(corde, commandName, true);
     const returned = await toPin.action({ id: mockDiscord.message.id });
@@ -76,7 +76,7 @@ describe("testing pin message test", () => {
 
   it("should assume that the message was not found (isNot true)", async () => {
     const corde = createCordeBotWithMockedFunctions(mockDiscord);
-    corde.findPinnedMessage = jest.fn().mockReturnValue(null);
+    corde.findMessage = jest.fn().mockReturnValue(null);
     const toPin = new ToUnpinMessage(corde, commandName, true);
     const returned = await toPin.action({ id: mockDiscord.message.id });
     const expected = new TestReport({
@@ -90,12 +90,12 @@ describe("testing pin message test", () => {
 
   it("should assume that the message was not found (isNot true)", async () => {
     const corde = createCordeBotWithMockedFunctions(mockDiscord);
-    corde.findPinnedMessage = jest.fn().mockReturnValue(null);
+    corde.findMessage = jest.fn().mockReturnValue(null);
     const toPin = new ToUnpinMessage(corde, commandName, false);
     const returned = await toPin.action({ id: mockDiscord.message.id });
     const expected = new TestReport({
       commandName,
-      hasPassed: true,
+      hasPassed: false,
       isNot: false,
       showExpectAndOutputValue: false,
     });

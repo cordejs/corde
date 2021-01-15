@@ -32,9 +32,11 @@ export class CliRunner {
    * There is no need of inform *yarn corde* for instance.
    *
    * @param command Corde cli command. Put only the sufix of the command.
+   * @param showStdout Display stout on test end.
+   *
    * This function will complete *-v* with *yarn corde -v* for instance.
    */
-  async exec(command: string) {
+  async exec(command: string, showStdout: boolean = false) {
     return new Promise<CliResult>((resolve) => {
       if (!command) {
         throw new Error("No command provided for test");
@@ -63,6 +65,11 @@ export class CliRunner {
       child.on("close", (exitCode) => {
         let stdout = Buffer.concat(stdoutData).toString();
         const stderr = Buffer.concat(stderrData).toString();
+
+        if (showStdout) {
+          console.log(stdout);
+        }
+
         if (error) {
           return resolve({ stdout, statusCode: exitCode, stderr, error });
         }
