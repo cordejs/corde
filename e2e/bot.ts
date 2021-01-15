@@ -1,24 +1,38 @@
 import { Client, Message } from "discord.js";
-import Utils from "./testUtils";
 import * as config from "./corde.config";
 
 export const bot = new Client();
 
 bot.on("message", async (message) => {
-  const command = Utils.parseCommand(message, config.botPrefix);
+  const args = message.content.slice(config.botPrefix.length).trim().split(" ");
+  const command = args.shift().toLowerCase();
   if (command === "hello" || command === "h") {
-    message.channel.send("Hello!!");
+    await message.channel.send("Hello!!");
   } else if (command === "emoji") {
-    emoji(message);
+    await emoji(message);
   } else if (command === "edit") {
     edit(message);
+  } else if (command === "pin") {
+    await pin(message, args[0]);
+  } else if (command === "unPin") {
+    await unPin(message, args[0]);
   }
 });
 
-function emoji(msg: Message) {
-  msg.react("😄");
+async function emoji(msg: Message) {
+  await msg.react("😄");
 }
 
-function edit(msg: Message) {
-  msg.edit("newValue");
+async function edit(msg: Message) {
+  await msg.edit("newValue");
+}
+
+async function pin(msg: Message, msgId: string) {
+  const messageToPin = await msg.channel.messages.fetch(msgId);
+  await messageToPin.pin();
+}
+
+async function unPin(msg: Message, msgId: string) {
+  const messageToPin = await msg.channel.messages.fetch(msgId);
+  await messageToPin.unpin();
 }
