@@ -1,5 +1,11 @@
+// TODO: In some tests, when a function from another module is called,
+// Corde reader fail in import the test file because Node.js can not
+// import the submodule. To avoid the problem, this file is here is root of the project,
+// but it should be in ./e2e
+// Bug to fix: https://github.com/lucasgmagalhaes/corde/issues/490
+
 import { Client, Message } from "discord.js";
-import * as config from "./corde.config";
+import * as config from "./e2e/corde.config";
 
 export const bot = new Client();
 
@@ -20,6 +26,8 @@ bot.on("message", async (message) => {
     await removeReaction(message, args[0], args[1]);
   } else if (command === "unPin") {
     await unPin(message, args[0]);
+  } else if (command === "editMessage") {
+    await editMessage(message, args[0], args[1]);
   }
 });
 
@@ -46,6 +54,11 @@ async function addReaction(msg: Message, msgId: string, reaction: string) {
   await message.react(reaction);
 }
 
+async function editMessage(msg: Message, msgId: string, msgNewValue: string) {
+  const message = await msg.channel.messages.fetch(msgId);
+  await message.edit(msgNewValue);
+}
+
 async function removeReaction(msg: Message, msgId: string, reaction: string) {
   const message = await msg.channel.messages.fetch(msgId);
   const react = message.reactions.cache.get(reaction);
@@ -54,4 +67,12 @@ async function removeReaction(msg: Message, msgId: string, reaction: string) {
     await react.remove();
   }
   console.log("reaction not found");
+}
+
+export async function sendMessage(message: string) {
+  const channel = bot.channels.cache.get(config.channelId);
+  if (channel.isText()) {
+    return await channel.send(message);
+  }
+  return null;
 }
