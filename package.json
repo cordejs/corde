@@ -75,7 +75,7 @@
   "dependencies": {
     "arg": "^5.0.0",
     "chalk": "^4.0.0",
-    "commander": "^6.0.0",
+    "commander": "^7.0.0",
     "discord.js": "^12.2.0",
     "figlet": "^1.2.4",
     "ora": "^5.0.0",
