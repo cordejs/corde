@@ -3,6 +3,10 @@ using System.Diagnostics;
 
 namespace KillNodeProcess
 {
+    /// <summary>
+    /// Simple program used to kill trash instances of Node.js 
+    /// created by testing process of Corde.
+    /// </summary>
     class Program
     {
         static void Main(string[] args)
@@ -35,7 +39,7 @@ namespace KillNodeProcess
                 }
             }
 
-            Console.WriteLine("Process killed with success");
+            Console.WriteLine("Processeses killed with success.");
         }
     }
 }
