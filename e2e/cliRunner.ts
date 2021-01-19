@@ -42,7 +42,7 @@ export class CliRunner {
         throw new Error("No command provided for test");
       }
 
-      const child = _spawn("node ./bin/corde --config ./e2e/corde.config.ts " + command, {
+      const child = _spawn("node ./bin/corde --config ./e2e/corde.config.js " + command, {
         cwd: process.cwd(),
       });
       const stdoutData: any[] = [];
@@ -68,6 +68,7 @@ export class CliRunner {
 
         if (showStdout) {
           console.log(stdout);
+          console.log(stderr);
         }
 
         if (error) {
