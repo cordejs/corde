@@ -7,6 +7,7 @@ export {
   group,
   test,
   sendMessage,
+  withClient,
 } from "./api";
 export { RolePermission } from "./utils/permission";
 export { Colors } from "./utils/colors";
