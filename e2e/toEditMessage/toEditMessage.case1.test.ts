@@ -1,7 +1,6 @@
 import Utils from "../testUtils";
 import { messages } from "../../src/messages";
 import cli from "../cliRunner";
-import { login } from "../bot";
 
 describe("testing toEditMessage", () => {
   test("should edit a message", async (done) => {

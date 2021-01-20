@@ -4,7 +4,7 @@ module.exports = {
   preset: "ts-jest",
   testEnvironment: "node",
   testMatch: ["**/*.test.ts"],
-  testTimeout: 15000,
+  testTimeout: 20000,
   globalSetup: "./setup.ts",
   globalTeardown: "./teardown.ts",
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
