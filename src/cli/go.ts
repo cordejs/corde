@@ -34,8 +34,8 @@ export async function go() {
 
 function loadConfigs() {
   const configs = reader.loadConfig();
-  validate(configs);
   runtime.setConfigs(configs);
+  validate(runtime.configs);
 }
 
 async function runTests(files: string[]) {
