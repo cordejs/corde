@@ -11,13 +11,13 @@ import {
 } from "./api";
 
 export namespace corde {
-  export var afterAll = _afterAll;
-  export var beforeStart = _beforeStart;
-  export var afterEach = _afterEach;
-  export var beforeEach = _beforeEach;
-  export var expect = _expect;
-  export var group = _group;
-  export var test = _test;
-  export var sendMessage = _sendMessage;
-  export var withClient = _withClient;
+  export let afterAll = _afterAll;
+  export let beforeStart = _beforeStart;
+  export let afterEach = _afterEach;
+  export let beforeEach = _beforeEach;
+  export let expect = _expect;
+  export let group = _group;
+  export let test = _test;
+  export let sendMessage = _sendMessage;
+  export let withClient = _withClient;
 }
