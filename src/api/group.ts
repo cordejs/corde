@@ -13,6 +13,7 @@ import { testCollector } from "../common/testCollector";
  *
  * @param name Name of the group
  * @param action Tests related to this group
+ * @since 1.0
  */
 export function group(name: string, action: () => void | Promise<void>) {
   testCollector.addToGroupClousure(async () => {

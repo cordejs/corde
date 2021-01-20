@@ -12,6 +12,7 @@ const AsyncFunction = (async () => {}).constructor;
  *
  * @param name Name of the test
  * @param action Commands related to this test
+ * @since 1.0
  */
 export function test(name: string, action: () => void | Promise<void>) {
   testCollector.addToTestClousure(async () => {

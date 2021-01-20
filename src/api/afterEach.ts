@@ -8,6 +8,7 @@ import { testCollector } from "../common";
  * reads and the positions of each `afterEach` call.
  *
  * @param fn code that will be executed **after each** tests finish
+ * @since 2.0
  */
 export function afterEach(fn: () => void) {
   if (fn) {

@@ -10,6 +10,8 @@ import { ExpectMatchesWithNot, MatchWithNot } from "./matcher";
  *
  * @returns The **Compare** object, where will handle
  * the type of response is expected.
+ *
+ * @since 1.0
  */
 export function expect(commandName: string): MatchWithNot {
   return new ExpectMatchesWithNot(commandName);

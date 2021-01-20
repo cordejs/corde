@@ -93,6 +93,7 @@ class WithOptionImpl implements WithOption {
  * Define actions to be done by the testing bot.
  * @param client Cliente instance to be used to execute actions.
  * @returns instance of actions for the client.
+ * @since 2.0
  */
 export function withClient(client: Client): WithOption {
   return new WithOptionImpl(client);

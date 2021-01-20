@@ -27,6 +27,8 @@ import { CordeClientError } from "../errors";
  *
  * @returns null if message is empty, null or undefined.
  * Message if **message** is not empty and it was send to Discord.
+ *
+ * @since 2.0
  */
 export function sendMessage(message: string | number | MessageEmbed): Promise<Message> {
   if (!message) {

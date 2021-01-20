@@ -7,6 +7,7 @@ import { testCollector } from "../common";
  * reads and the positions of each `beforeEach` call.
  *
  * @param fn code that will be executed **before** tests start
+ * @since 2.0
  */
 export function beforeEach(fn: () => void) {
   if (fn) {
