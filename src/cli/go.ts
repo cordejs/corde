@@ -39,18 +39,17 @@ function loadConfigs() {
 }
 
 async function runTests(files: string[]) {
-  startLoading("executing before start functions");
-  await testCollector.beforeStartFunctions.executeAsync();
-
-  spinner.text = "login to corde bot";
+  startLoading("login to corde bot");
   await runtime.loginBot(runtime.cordeTestToken);
 
   runtime.onBotStart().subscribe(async (isReady) => {
     if (isReady) {
       const groups = await reader.getTestsFromFiles(files);
 
-      spinner.text = "starting bots";
+      spinner.text = "executing before start functions";
+      await testCollector.beforeStartFunctions.executeAsync();
 
+      spinner.text = "starting bots";
       const tests = getTestsFromGroup(groups);
       if (!hasTestsToBeExecuted(tests)) {
         spinner.succeed();
@@ -93,8 +92,6 @@ async function finishProcess(code: number, error?: any) {
 }
 
 function startLoading(initialMessage: string) {
-  // dots spinner do not works on windows 😰
-  // https://github.com/fossas/fossa-cli/issues/193
   spinner = ora(initialMessage).start();
   spinner._spinner = {
     interval: 80,
