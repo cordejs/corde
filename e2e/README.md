@@ -8,11 +8,11 @@ as each test must be sequential, witch make execution of all test cases prettier
 Each api function have it's own folder where is tested different cases.
 Take the following structure as example:
 
-.
-├── toReturn
-│ ├── **cordeTest** # Contains scripts of Corde tests
-│ ├── bot_case1.test.ts # Naming convention for test file
-└── toReturn.case1.test.ts # Test case for Jest to run
+    .
+    ├── toReturn
+    │ ├── __cordeTest__             # Contains scripts of Corde tests
+    │     ├── bot_case1.test.ts         # Naming convention for test file
+    └── toReturn.case1.test.ts      # Test case for Jest to run
 
 About the others files, they can be decribed as:
 
