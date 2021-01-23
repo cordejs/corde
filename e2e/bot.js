@@ -18,7 +18,6 @@ export const bot = new Client();
 export async function sendMessage(message) {
   const channel = bot.channels.cache.get(config.channelId);
 
-  console.log(bot.channels);
   if (channel === undefined) {
     throw new Error("Channelds not loaded");
   }
@@ -30,11 +29,23 @@ export async function sendMessage(message) {
 }
 
 /**
+ * @param {string} name
+ */
+export function getRole(name) {
+  return bot.guilds.cache.get(config.guildId).roles.cache.find((r) => r.name === name);
+}
+
+/**
  * Use this functions before use sendMessage (add it to **corde.beforeStart**)
  */
 export async function login() {
-  console.log(config.botTestToken);
+  const readyPromise = new Promise((resolve) => {
+    bot.on("ready", () => {
+      resolve();
+    });
+  });
   await bot.login(config.botTestToken);
+  await readyPromise;
 }
 
 bot.on("message", async (message) => {
@@ -56,6 +67,8 @@ bot.on("message", async (message) => {
     await unPin(message, args[0]);
   } else if (command === "editMessage") {
     await editMessage(message, args[0], args[1]);
+  } else if (command === "renameRole") {
+    await renameRole(message, args[0], args[1]);
   }
 });
 
@@ -124,4 +137,15 @@ async function removeReaction(msg, msgId, reaction) {
     await react.remove();
   }
   console.log("reaction not found");
+}
+
+/**
+ *
+ * @param {Message} msg
+ * @param {string} roleId
+ * @param {string} newName
+ */
+async function renameRole(msg, roleId, newName) {
+  const role = msg.guild.roles.cache.get(roleId);
+  await role.setName(newName);
 }
