@@ -6,6 +6,8 @@ import { Group } from "../../src/types";
 import consts from "../mocks/constsNames";
 import { FileError } from "../../src/errors";
 
+//TODO: This class must have more tests
+
 const conf = require("../mocks/jsconfig/corde.config.js");
 const cwd = process.cwd();
 
@@ -153,6 +155,22 @@ describe("reader class", () => {
         },
       ];
       const files = [path.resolve(process.cwd(), "tests/mocks/onlyCommands")];
+      const groups = await reader.getTestsFromFiles(files);
+      expect(groups).toEqual(sampleWithSingleGroup);
+    });
+
+    it("should read from groups functions", async () => {
+      const sampleWithSingleGroup: Group[] = [
+        {
+          name: consts.GROUP_1,
+          tests: [
+            {
+              testsFunctions: [expect.any(Function)],
+            },
+          ],
+        },
+      ];
+      const files = [path.resolve(process.cwd(), "tests/mocks/sampleOnlyWithGroup.ts")];
       const groups = await reader.getTestsFromFiles(files);
       expect(groups).toEqual(sampleWithSingleGroup);
     });

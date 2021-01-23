@@ -17,34 +17,19 @@ describe("Testing group function", () => {
     expect(a).toBe(2);
   });
 
-  it("Should add a group", async () => {
+  it("Should not add group", async () => {
     const groupName = "test group";
-    const groupObj: Group = {
-      tests: [],
-      name: groupName,
-    };
 
     group(groupName, () => {});
 
     await testCollector.executeGroupClojure();
-
-    if (testCollector.groups && testCollector.groups.length === 0) {
-      fail();
-    } else {
-      const gp = testCollector.groups[0];
-      expect(gp).toEqual(groupObj);
-    }
+    expect(testCollector.groups.length).toBe(0);
   });
 
   it("should add a group", async () => {
     group(undefined, () => {});
-
     await testCollector.executeGroupClojure();
-    if (!testCollector.groups) {
-      fail();
-    } else {
-      expect(testCollector.groups.length).toEqual(1);
-    }
+    expect(testCollector.groups.length).toBe(0);
   });
 
   it("Should add group with test inside", async () => {

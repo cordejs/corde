@@ -85,6 +85,10 @@ class TestCollector {
     }
   }
 
+  public hasTestFunctions() {
+    return this.testsFunctions && this.testsFunctions.length > 0;
+  }
+
   public hasIsolatedTestFunctions() {
     return this.isolatedFunctions && this.isolatedFunctions.length > 0;
   }

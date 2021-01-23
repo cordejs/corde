@@ -53,6 +53,7 @@ class Reader {
 
     testCollector.isCollecting = false;
     addTestsGroupmentToGroupIfExist();
+    addIsolatedTestFunctionsToGroupIfExists();
     addTestFunctionsToGroupIfExists();
     return testCollector.groups;
   }
@@ -84,11 +85,19 @@ function addTestsGroupmentToGroupIfExist() {
   }
 }
 
-function addTestFunctionsToGroupIfExists() {
+function addIsolatedTestFunctionsToGroupIfExists() {
   if (testCollector.hasIsolatedTestFunctions()) {
     const testsCloned = testCollector.cloneIsolatedTestFunctions();
     testCollector.groups.push({ tests: [{ testsFunctions: testsCloned }] });
     testCollector.clearIsolatedTestFunctions();
+  }
+}
+
+function addTestFunctionsToGroupIfExists() {
+  if (testCollector.hasTestFunctions()) {
+    const testsCloned = testCollector.cloneTestFunctions();
+    testCollector.groups.push({ tests: [{ testsFunctions: testsCloned }] });
+    testCollector.clearTestFunctions();
   }
 }
 
