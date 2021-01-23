@@ -20,7 +20,7 @@ import { testCollector } from "../common/testCollector";
  * @param fn code that will be executed **before** tests start
  * @since 1.0
  */
-export function beforeStart(fn: () => void) {
+export function beforeStart(fn: () => void | Promise<void>) {
   if (fn) {
     testCollector.beforeStartFunctions.enqueue(fn);
   }
