@@ -3,6 +3,18 @@
 Here you will find all real tests of corde api. All tests are executed against Discord, so
 as each test must be sequential, witch make execution of all test cases prettier slow.
 
+to execute all tests run in terminal:
+
+```shell
+yarn e2e
+```
+
+Repeting, this is a slower testing process, to testing only what you want run:
+
+```shell
+yarn jest ./e2e/toReturn --config=./e2e/jest.config.ts
+```
+
 ### Tests structure
 
 Each api function have it's own folder where is tested different cases.
