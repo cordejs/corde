@@ -84,6 +84,8 @@ async function handleCommands(message, command, args) {
     await renameRole(message, args[0], args[1]);
   } else if (command === "changeRoleColor") {
     await changeRoleColor(message, args[0], args[1]);
+  } else if (command === "setRoleHoist") {
+    await setRoleHoist(message, args[0]);
   }
 }
 
@@ -151,7 +153,6 @@ async function removeReaction(msg, msgId, reaction) {
   if (react) {
     await react.remove();
   }
-  console.log("reaction not found");
 }
 
 /**
@@ -173,4 +174,13 @@ async function renameRole(msg, roleId, newName) {
 async function changeRoleColor(msg, roleId, newColor) {
   const role = msg.guild.roles.cache.get(roleId);
   await role.setColor(newColor);
+}
+
+/**
+ * @param {Message} msg
+ * @param {string} roleId
+ */
+async function setRoleHoist(msg, roleId) {
+  const role = msg.guild.roles.cache.get(roleId);
+  await role.setHoist(true);
 }

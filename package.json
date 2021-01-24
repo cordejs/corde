@@ -27,7 +27,7 @@
     "watch": "bash tasks.sh watch",
     "corde": "node ./bin/corde",
     "killProcess": "cd ./etc && bash ./build_and_kill.sh",
-    "e2e": "jest ./e2e --config=./e2e/jest.config.ts --runInBand",
+    "e2e": "jest ./e2e --config=./e2e/jest.config.ts --runInBand --detectOpenHandles",
     "test": "jest --silent --detectOpenHandles",
     "test-with-coverage": "jest --silent --detectOpenHandles --collect-coverage --collectCoverageFrom=src/**/*.ts",
     "refresh": "rm -rf ./node_modules ./package-lock.json && yarn install",
