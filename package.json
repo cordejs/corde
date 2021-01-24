@@ -24,6 +24,7 @@
   ],
   "scripts": {
     "build": "bash tasks.sh build",
+    "build:prod": "bash task.sh build && yarn prettier --write ./lib",
     "watch": "bash tasks.sh watch",
     "corde": "node ./bin/corde",
     "killProcess": "cd ./etc && bash ./build_and_kill.sh",
