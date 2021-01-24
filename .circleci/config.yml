@@ -51,7 +51,7 @@ jobs:
           command: yarn
       - run:
           name: Tests
-          command: yarn test-coverage
+          command: yarn test
       - store_test_results:
           path: coverage
         # Save workspace for subsequent (test)
