@@ -49,8 +49,21 @@ export async function login() {
 }
 
 bot.on("message", async (message) => {
-  const args = message.content.slice(config.botPrefix.length).trim().split(" ");
-  const command = args.shift();
+  try {
+    const args = message.content.slice(config.botPrefix.length).trim().split(" ");
+    const command = args.shift();
+    handleCommands(message, command, args);
+  } catch (error) {
+    message.channel.send("Fail in execute command: " + error);
+  }
+});
+
+/**
+ * @param {Message} message
+ * @param {string} command
+ * @param {string[]} args
+ */
+async function handleCommands(message, command, args) {
   if (command === "hello" || command === "h") {
     await message.channel.send("Hello!!");
   } else if (command === "emoji") {
@@ -69,8 +82,10 @@ bot.on("message", async (message) => {
     await editMessage(message, args[0], args[1]);
   } else if (command === "renameRole") {
     await renameRole(message, args[0], args[1]);
+  } else if (command === "changeRoleColor") {
+    await changeRoleColor(message, args[0], args[1]);
   }
-});
+}
 
 /**
  * @param {Message} msg
@@ -148,4 +163,14 @@ async function removeReaction(msg, msgId, reaction) {
 async function renameRole(msg, roleId, newName) {
   const role = msg.guild.roles.cache.get(roleId);
   await role.setName(newName);
+}
+
+/**
+ * @param {Message} msg
+ * @param {string} roleId
+ * @param {string} newColor
+ */
+async function changeRoleColor(msg, roleId, newColor) {
+  const role = msg.guild.roles.cache.get(roleId);
+  await role.setColor(newColor);
 }
