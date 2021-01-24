@@ -106,7 +106,14 @@ workflows:
 
   build-and-test:
     jobs:
+      - install-dependencies:
+          filters:
+            branches:
+              ignore: gh-pages
+
       - build:
+          requires:
+            - install-dependencies
           filters:
             branches:
               ignore: gh-pages
