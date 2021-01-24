@@ -121,7 +121,7 @@ workflows:
               ignore: gh-pages
 
       - lint:
-          requries:
+          requires:
             - build
           filters:
             branches:
