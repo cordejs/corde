@@ -5,6 +5,7 @@ orbs:
 
 jobs:
   build:
+    name: "build"
     working_directory: ~/corde
     docker:
       - image: circleci/node:latest
@@ -24,6 +25,7 @@ jobs:
           command: yarn build
 
   lint:
+    name: "tslint"
     working_directory: ~/corde
     docker:
       - image: circleci/node:current
@@ -39,6 +41,7 @@ jobs:
           command: yarn lint
 
   test:
+    name: "unit-testing"
     working_directory: ~/corde
     docker:
       - image: circleci/node:latest
@@ -61,7 +64,8 @@ jobs:
             - .
 
   e2e_tests:
-    working_directory: ~/corde/e2e
+    name: "e2e-testing"
+    working_directory: ~/corde
     docker:
       - image: circleci/node:latest
     steps:
