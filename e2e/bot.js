@@ -64,6 +64,7 @@ bot.on("message", async (message) => {
  * @param {string[]} args
  */
 async function handleCommands(message, command, args) {
+  // TODO: Refact this. '-'
   if (command === "hello" || command === "h") {
     await message.channel.send("Hello!!");
   } else if (command === "emoji") {
@@ -86,6 +87,8 @@ async function handleCommands(message, command, args) {
     await changeRoleColor(message, args[0], args[1]);
   } else if (command === "setRoleHoist") {
     await setRoleHoist(message, args[0]);
+  } else if (command === "setRoleMentionable") {
+    await setRoleMentionable(message, args[0]);
   }
 }
 
@@ -183,4 +186,13 @@ async function changeRoleColor(msg, roleId, newColor) {
 async function setRoleHoist(msg, roleId) {
   const role = msg.guild.roles.cache.get(roleId);
   await role.setHoist(true);
+}
+
+/**
+ * @param {Message} msg
+ * @param {string} roleId
+ */
+async function setRoleMentionable(msg, roleId) {
+  const role = msg.guild.roles.cache.get(roleId);
+  await role.setMentionable(true);
 }
