@@ -89,6 +89,8 @@ async function handleCommands(message, command, args) {
     await setRoleHoist(message, args[0]);
   } else if (command === "setRoleMentionable") {
     await setRoleMentionable(message, args[0]);
+  } else if (command === "increaseRolePosition") {
+    await increaseRolePosition(message, args[0]);
   }
 }
 
@@ -195,4 +197,13 @@ async function setRoleHoist(msg, roleId) {
 async function setRoleMentionable(msg, roleId) {
   const role = msg.guild.roles.cache.get(roleId);
   await role.setMentionable(true);
+}
+
+/**
+ * @param {Message} msg
+ * @param {string} roleId
+ */
+async function increaseRolePosition(msg, roleId) {
+  const role = msg.guild.roles.cache.get(roleId);
+  await role.setPosition(role.position + 1);
 }
