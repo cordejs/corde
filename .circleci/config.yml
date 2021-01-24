@@ -5,7 +5,6 @@ orbs:
 
 jobs:
   build:
-    name: "build"
     working_directory: ~/corde
     docker:
       - image: circleci/node:latest
@@ -25,10 +24,9 @@ jobs:
           command: yarn build
 
   lint:
-    name: "tslint"
     working_directory: ~/corde
     docker:
-      - image: circleci/node:current
+      - image: circleci/node:12
     steps:
       - checkout
       - restore_cache:
@@ -40,11 +38,32 @@ jobs:
           name: lint
           command: yarn lint
 
-  test:
-    name: "unit-testing"
+  unit-node-12:
     working_directory: ~/corde
     docker:
-      - image: circleci/node:latest
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - restore_cache:
+          key: v1-deps-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install dependencies
+          command: yarn
+      - run:
+          name: Tests
+          command: yarn test-coverage
+      - store_test_results:
+          path: coverage
+        # Save workspace for subsequent (test)
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  unit-node-14:
+    working_directory: ~/corde
+    docker:
+      - image: circleci/node:14
     steps:
       - checkout
       - restore_cache:
@@ -62,24 +81,6 @@ jobs:
           root: .
           paths:
             - .
-
-  e2e_tests:
-    name: "e2e-testing"
-    working_directory: ~/corde
-    docker:
-      - image: circleci/node:latest
-    steps:
-      - checkout:
-          path: ~/corde
-      - run:
-          name: Install dependencies
-          command: yarn
-      - run:
-          name: Build corde
-          command: sh ./configureCorde.sh
-      - run:
-          name: Run tests
-          command: yarn e2e
 
   publish_coverage:
     working_directory: ~/corde
@@ -119,7 +120,21 @@ workflows:
             branches:
               ignore: gh-pages
 
-      - test:
+      - lint:
+          requries:
+            - build
+          filters:
+            branches:
+              ignore: gh-pages
+
+      - unit-node-12:
+          requires:
+            - build
+          filters:
+            branches:
+              ignore: gh-pages
+
+      - unit-node-14:
           requires:
             - build
           filters:
@@ -128,7 +143,8 @@ workflows:
 
       - publish_coverage:
           requires:
-            - test
+            - unit-node-12
+            - unit-node-14
           filters:
             branches:
               ignore: gh-pages
@@ -139,9 +155,3 @@ workflows:
           filters:
             branches:
               only: master # Restrict website deploy to only master branch
-
-
-  # To slow to be executed here
-  # e2e-tests:
-  #   jobs:
-  #     - e2e_tests
