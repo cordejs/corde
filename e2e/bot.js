@@ -35,6 +35,10 @@ export function getRole(name) {
   return bot.guilds.cache.get(config.guildId).roles.cache.find((r) => r.name === name);
 }
 
+export function getRoleManager() {
+  return bot.guilds.cache.get(config.guildId).roles;
+}
+
 /**
  * Use this functions before use sendMessage (add it to **corde.beforeStart**)
  */
@@ -52,7 +56,7 @@ bot.on("message", async (message) => {
   try {
     const args = message.content.slice(config.botPrefix.length).trim().split(" ");
     const command = args.shift();
-    handleCommands(message, command, args);
+    await handleCommands(message, command, args);
   } catch (error) {
     message.channel.send("Fail in execute command: " + error);
   }
@@ -94,6 +98,8 @@ async function handleCommands(message, command, args) {
   } else if (command === "setRolePermission") {
     const id = args.shift();
     await setRolePermission(message, id, args);
+  } else if (command === "deleteRole") {
+    await deleteRole(message, args[0]);
   }
 }
 
@@ -219,6 +225,18 @@ async function increaseRolePosition(msg, roleId) {
 async function setRolePermission(msg, roleId, permissions) {
   const role = getRoleById(msg, roleId);
   await role.setPermissions(permissions);
+}
+
+/**
+ * @param {Message} msg
+ * @param {string} roleId
+ */
+async function deleteRole(msg, roleId) {
+  const role = getRoleById(msg, roleId);
+
+  if (!role.deleted) {
+    await role.delete();
+  }
 }
 
 /** --------------------- Utility functions  --------------------- */

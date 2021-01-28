@@ -1,7 +1,7 @@
 import { CordeBot } from "../../../core";
 import { TestReport } from "../..";
 import { RoleData } from "../../../types";
-import { Role } from "discord.js";
+import Utils from "../../../utils/utils";
 
 export async function toDeleteRole(
   commandName: string,
@@ -18,15 +18,9 @@ export async function toDeleteRole(
       output = "No role found";
     } else {
       await cordeBot.sendTextMessage(commandName);
-      const promiseRole = new Promise<Role>(async (resolve) => {
-        setTimeout(async () => {
-          role = await cordeBot.fetchRole(role.id);
-          resolve(role);
-        }, 600);
-      });
-
-      role = await promiseRole;
-      if (!role) {
+      await Utils.wait(Utils.delayValue);
+      role = await cordeBot.fetchRole(role.id);
+      if (!role || role.deleted) {
         isEqual = true;
       }
 
