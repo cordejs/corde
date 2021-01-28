@@ -116,7 +116,7 @@ async function edit(msg) {
  * @param {string} msgId
  */
 async function pin(msg, msgId) {
-  const messageToPin = await msg.channel.messages.fetch(msgId);
+  const messageToPin = await fetchMessageById(msg, msgId);
   await messageToPin.pin();
 }
 
@@ -125,7 +125,7 @@ async function pin(msg, msgId) {
  * @param {string} msgId
  */
 async function unPin(msg, msgId) {
-  const messageToPin = await msg.channel.messages.fetch(msgId);
+  const messageToPin = await fetchMessageById(msg, msgId);
   await messageToPin.unpin();
 }
 
@@ -135,7 +135,7 @@ async function unPin(msg, msgId) {
  * @param {string} reaction
  */
 async function addReaction(msg, msgId, reaction) {
-  const message = await msg.channel.messages.fetch(msgId);
+  const message = await fetchMessageById(msg, msgId);
   await message.react(reaction);
 }
 
@@ -145,7 +145,7 @@ async function addReaction(msg, msgId, reaction) {
  * @param {string} msgNewValue
  */
 async function editMessage(msg, msgId, msgNewValue) {
-  const message = await msg.channel.messages.fetch(msgId);
+  const message = await fetchMessageById(msg, msgId);
   await message.edit(msgNewValue);
 }
 
@@ -155,7 +155,7 @@ async function editMessage(msg, msgId, msgNewValue) {
  * @param {string} reaction
  */
 async function removeReaction(msg, msgId, reaction) {
-  const message = await msg.channel.messages.fetch(msgId);
+  const message = await fetchMessageById(msg, msgId);
   const react = message.reactions.cache.get(reaction);
 
   if (react) {
@@ -170,7 +170,7 @@ async function removeReaction(msg, msgId, reaction) {
  * @param {string} newName
  */
 async function renameRole(msg, roleId, newName) {
-  const role = msg.guild.roles.cache.get(roleId);
+  const role = getRoleById(msg, roleId);
   await role.setName(newName);
 }
 
@@ -180,7 +180,7 @@ async function renameRole(msg, roleId, newName) {
  * @param {string} newColor
  */
 async function changeRoleColor(msg, roleId, newColor) {
-  const role = msg.guild.roles.cache.get(roleId);
+  const role = getRoleById(msg, roleId);
   await role.setColor(newColor);
 }
 
@@ -189,7 +189,7 @@ async function changeRoleColor(msg, roleId, newColor) {
  * @param {string} roleId
  */
 async function setRoleHoist(msg, roleId) {
-  const role = msg.guild.roles.cache.get(roleId);
+  const role = getRoleById(msg, roleId);
   await role.setHoist(true);
 }
 
@@ -198,7 +198,7 @@ async function setRoleHoist(msg, roleId) {
  * @param {string} roleId
  */
 async function setRoleMentionable(msg, roleId) {
-  const role = msg.guild.roles.cache.get(roleId);
+  const role = getRoleById(msg, roleId);
   await role.setMentionable(true);
 }
 
@@ -207,7 +207,7 @@ async function setRoleMentionable(msg, roleId) {
  * @param {string} roleId
  */
 async function increaseRolePosition(msg, roleId) {
-  const role = msg.guild.roles.cache.get(roleId);
+  const role = getRoleById(msg, roleId);
   await role.setPosition(role.position + 1);
 }
 
@@ -221,6 +221,8 @@ async function setRolePermission(msg, roleId, permissions) {
   await role.setPermissions(permissions);
 }
 
+/** --------------------- Utility functions  --------------------- */
+
 /**
  * @param {Message} msg
  * @param {string} roleId
@@ -229,8 +231,22 @@ function getRoleById(msg, roleId) {
   const role = msg.guild.roles.cache.get(roleId);
 
   if (!role) {
-    throw new Error("Role not found");
+    throw new Error(`Role with id ${roleId} was not found`);
   }
 
   return role;
+}
+
+/**
+ * @param {Message} msg
+ * @param {string} messageId
+ */
+async function fetchMessageById(msg, messageId) {
+  const message = await msg.channel.messages.fetch(messageId);
+
+  if (!message) {
+    throw new Error(`Message with id ${messageId} was not found`);
+  }
+
+  return message;
 }
