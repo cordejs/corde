@@ -10,18 +10,14 @@ export async function executeTestCases(groups: Group[]) {
   }
 }
 
-async function runTests(testsFunctions: testFunctionType[]) {
-  const reports: TestReport[] = [];
-  for (const test of testsFunctions) {
-    await testCollector.beforeEachFunctions.executeAsync();
-    const report = await runtime.injectBot(test);
-    await testCollector.afterEachFunctions.executeAsync();
-    reports.push(report);
+export async function executeTests(tests: Test[]) {
+  for (const test of tests) {
+    const reports = await runTests(test.testsFunctions);
+    test.testsReports = reports;
   }
-  return reports;
 }
 
-function getTestsFromGroup(groups: Group[]) {
+export function getTestsFromGroup(groups: Group[]) {
   const tests: Test[] = [];
 
   if (!groups) {
@@ -33,6 +29,17 @@ function getTestsFromGroup(groups: Group[]) {
   });
 
   return tests;
+}
+
+async function runTests(testsFunctions: testFunctionType[]) {
+  const reports: TestReport[] = [];
+  for (const test of testsFunctions) {
+    await testCollector.beforeEachFunctions.executeAsync();
+    const report = await runtime.injectBot(test);
+    await testCollector.afterEachFunctions.executeAsync();
+    reports.push(report);
+  }
+  return reports;
 }
 
 function getAssertionPropsFromGroup(group: Group) {

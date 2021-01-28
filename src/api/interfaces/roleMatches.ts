@@ -25,6 +25,8 @@ export interface RoleMatches {
    * // You can also use the Colors helper.
    *
    * expect("commandThatChangeColorOf player-one").toSetRoleColor(Colors.GREEN, {name: "player-one"})
+   *
+   * @since 2.0
    */
   toSetRoleColor(color: ColorResolvable, id: Snowflake): void;
   toSetRoleColor(color: ColorResolvable, roleData: RoleData): void;
@@ -46,6 +48,7 @@ export interface RoleMatches {
    *
    * expect("commandThatChangeColorOf player-one").toDeleteRole({name: "player-one"})
    *
+   * @since 2.0
    */
   toDeleteRole(id: Snowflake): void;
   toDeleteRole(roleData: RoleData): void;
@@ -55,6 +58,7 @@ export interface RoleMatches {
    *
    * @param mentionable If the role can or can not be mentionable.
    * @param id Identifier of the role. Can also use RoleData to filter it.
+   * @since 2.0
    */
   toSetRoleMentionable(mentionable: boolean, id: Snowflake): void;
   toSetRoleMentionable(mentionable: boolean, roleData: RoleData): void;
@@ -74,6 +78,7 @@ export interface RoleMatches {
    *
    * Source from [discord support](https://support.discord.com/hc/en-us/community/posts/360060076751-Un-hoisted-Role-Hierarchy).
    * @see https://discord.com/developers/docs/topics/permissions
+   * @since 2.0
    */
   toSetRoleHoist(hoist: boolean, id: string): void;
   toSetRoleHoist(hoist: boolean, roleData: RoleData): void;
@@ -83,7 +88,7 @@ export interface RoleMatches {
    *
    * @param newName new name of the role
    * @param id Identifier of the role. Can also use RoleData to filter it.
-   *
+   * @since 2.0
    */
   toRenameRole(newName: string, id: string): void;
   toRenameRole(newName: string, roleData: RoleData): void;
@@ -99,6 +104,7 @@ export interface RoleMatches {
    * position that a role can have is 2 (The count begins with 0, So: 0, 1, 2).
    *
    * @see https://discord.com/developers/docs/topics/permissions
+   * @since 2.0
    */
   toSetRolePosition(newPosition: number, id: string): void;
   toSetRolePosition(newPosition: number, roleData: RoleData): void;
@@ -107,10 +113,19 @@ export interface RoleMatches {
    * Defines a list of
    * [Permissions](https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags)
    * that a role should have.
+   *
    * @param id Identifier of the role. Can also use RoleData to filter it.
    * @param permissions List of permissions allowed by Discord.
    *
+   * @example
+   *
+   * corde.test("change role color", () => {
+   *    const role = getRole();
+   *    expect("changeRole " + role.id).toSetRolePermission(role.id, "ADMINISTRATOR", "BAN_MEMBERS");
+   * });
+   *
    * @see https://discord.com/developers/docs/topics/permissions#permissions
+   * @since 2.0
    */
   toSetRolePermission(id: string, ...permissions: RolePermission[]): void;
   toSetRolePermission(roleData: RoleData, ...permissions: RolePermission[]): void;

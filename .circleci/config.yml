@@ -1,54 +1,75 @@
 version: 2.1
 
-orbs:
-  ruby: circleci/ruby@1.0
+references:
+  x-workdir: &work-dir
+    working_directory: ~/corde
+
+  x-save-workspace: &persist-step
+    persist_to_workspace:
+      root: ~/corde
+      paths:
+        - .
+
+  x-attach: &attach-step
+    attach_workspace:
+      at: .
 
 jobs:
-  build:
-    working_directory: ~/corde
+  install-dependencies:
+    <<: *work-dir
     docker:
-      - image: circleci/node:latest
+      - image: circleci/node:12
+    environment:
+      HUSKY_SKIP_INSTALL: 1
     steps:
       - checkout
       - restore_cache:
           key: v1-deps-{{ checksum "yarn.lock" }}
       - run:
           name: Install dependencies
-          command: yarn
+          command: yarn install
       - save_cache:
           key: v1-deps-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
+      - *persist-step
+
+  build:
+    <<: *work-dir
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - *attach-step
       - run:
           name: Build Project
           command: yarn build
 
   lint:
-    working_directory: ~/corde
+    <<: *work-dir
     docker:
-      - image: circleci/node:current
+      - image: circleci/node:12
     steps:
-      - checkout
-      - restore_cache:
-          key: v1-deps-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install dependencies
-          command: yarn
+      - *attach-step
       - run:
           name: lint
           command: yarn lint
 
-  test:
-    working_directory: ~/corde
+  unitary-test-node-12:
+    <<: *work-dir
     docker:
-      - image: circleci/node:latest
+      - image: circleci/node:12
     steps:
-      - checkout
-      - restore_cache:
-          key: v1-deps-{{ checksum "yarn.lock" }}
+      - *attach-step
       - run:
-          name: Install dependencies
-          command: yarn
+          name: Tests
+          command: yarn test
+
+  unitary-test-node-14:
+    <<: *work-dir
+    docker:
+      - image: circleci/node:14
+    steps:
+      - *attach-step
       - run:
           name: Tests
           command: yarn test-with-coverage
@@ -60,43 +81,18 @@ jobs:
           paths:
             - .
 
-  e2e_tests:
-    working_directory: ~/corde/e2e
-    docker:
-      - image: circleci/node:latest
-    steps:
-      - checkout:
-          path: ~/corde
-      - run:
-          name: Install dependencies
-          command: yarn
-      - run:
-          name: Build corde
-          command: sh ./configureCorde.sh
-      - run:
-          name: Run tests
-          command: yarn e2e
-
   publish_coverage:
-    working_directory: ~/corde
+    <<: *work-dir
     docker:
       - image: circleci/node:latest
     steps:
-      - checkout
-      - restore_cache:
-          key: v1-deps-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install dependencies
-          command: yarn
-      # Reuse the workspace from the build job
-      - attach_workspace:
-          at: .
+      - *attach-step
       - run:
           name: Publish coverage
           command: yarn codecov -f coverage/*.json
 
   publish_website:
-    working_directory: ~/corde
+    <<: *work-dir
     docker:
       - image: circleci/node:latest
     steps:
@@ -110,12 +106,33 @@ workflows:
 
   build-and-test:
     jobs:
-      - build:
+      - install-dependencies:
           filters:
             branches:
               ignore: gh-pages
 
-      - test:
+      - build:
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              ignore: gh-pages
+
+      - lint:
+          requires:
+            - build
+          filters:
+            branches:
+              ignore: gh-pages
+
+      - unitary-test-node-12:
+          requires:
+            - build
+          filters:
+            branches:
+              ignore: gh-pages
+
+      - unitary-test-node-14:
           requires:
             - build
           filters:
@@ -124,7 +141,8 @@ workflows:
 
       - publish_coverage:
           requires:
-            - test
+            - unitary-test-node-12
+            - unitary-test-node-14
           filters:
             branches:
               ignore: gh-pages
@@ -135,8 +153,3 @@ workflows:
           filters:
             branches:
               only: master # Restrict website deploy to only master branch
-
-
-  # e2e-tests:
-  #   jobs:
-  #     - e2e_tests

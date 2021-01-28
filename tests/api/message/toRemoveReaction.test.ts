@@ -4,8 +4,12 @@ import MockDiscord from "../../mocks/mockDiscord";
 import { Client } from "discord.js";
 import { toRemoveReaction } from "../../../src/api/expectMatches";
 import { TimeoutError } from "rxjs";
+import Utils from "../../../src/utils/utils";
 
 let mockDiscord = new MockDiscord();
+
+Utils.setDelayValue(100);
+
 describe("testing toRemoveReaction", () => {
   beforeEach(() => {
     mockDiscord = new MockDiscord();

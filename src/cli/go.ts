@@ -5,10 +5,11 @@ import { runtime } from "../common/runtime";
 import { testCollector } from "../common/testCollector";
 import reader from "../core/reader";
 import { reporter } from "../core/reporter";
-import { executeTestCases } from "../core/runner";
-import { Group } from "../types";
+import { executeTestCases, executeTests, getTestsFromGroup } from "../core/runner";
+import { Group, Test } from "../types";
 import { validate } from "./validate";
 import { FileError } from "../errors";
+import { runner } from "cli-spinners";
 
 process.on("uncaughtException", () => {
   stopLoading();
@@ -33,29 +34,37 @@ export async function go() {
 
 function loadConfigs() {
   const configs = reader.loadConfig();
-  validate(configs);
   runtime.setConfigs(configs);
+  validate(runtime.configs);
 }
 
 async function runTests(files: string[]) {
-  startLoading("reading configs");
-  const testsGroups = reader.getTestsFromFiles(files);
-
-  spinner.text = "starting bots";
-
-  await testCollector.beforeStartFunctions.executeAsync();
+  startLoading("login to corde bot");
   await runtime.loginBot(runtime.cordeTestToken);
 
-  spinner.text = "running tests";
   runtime.onBotStart().subscribe(async (isReady) => {
     if (isReady) {
-      await runTestsAndPrint(testsGroups);
+      const groups = await reader.getTestsFromFiles(files);
+
+      spinner.text = "executing before start functions";
+      await testCollector.beforeStartFunctions.executeAsync();
+
+      spinner.text = "starting bots";
+      const tests = getTestsFromGroup(groups);
+      if (!hasTestsToBeExecuted(tests)) {
+        spinner.succeed();
+        reporter.printNoTestFound();
+        process.exit(0);
+      }
+
+      spinner.text = "running tests";
+      await runTestsAndPrint(groups, tests);
     }
   });
 }
 
-async function runTestsAndPrint(groups: Group[]) {
-  await executeTestCases(groups);
+async function runTestsAndPrint(groups: Group[], tests: Test[]) {
+  await executeTests(tests);
   spinner.succeed();
   const hasAllTestsPassed = reporter.outPutResult(groups);
 
@@ -72,19 +81,17 @@ async function finishProcess(code: number, error?: any) {
       console.log(error);
     }
 
-    runtime.logoffBot();
-
     if (testCollector.afterAllFunctions) {
       await testCollector.afterAllFunctions.executeAsync();
     }
+
+    runtime.logoffBot();
   } finally {
     process.exit(code);
   }
 }
 
 function startLoading(initialMessage: string) {
-  // dots spinner do not works on windows 😰
-  // https://github.com/fossas/fossa-cli/issues/193
   spinner = ora(initialMessage).start();
   spinner._spinner = {
     interval: 80,
@@ -131,4 +138,21 @@ function readDir(directories: string[]) {
   }
 
   return files;
+}
+
+function hasTestsToBeExecuted(tests: Test[]) {
+  if (!tests) {
+    return false;
+  }
+
+  for (const test of tests) {
+    if (test && test.testsFunctions) {
+      for (const fn of test.testsFunctions) {
+        if (fn) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
 }

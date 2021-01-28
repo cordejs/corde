@@ -7,8 +7,15 @@ export class ToUnpinMessage extends ExpectOperation<MessageData> {
   public async action(messageData: MessageData): Promise<TestReport> {
     await this.cordeBot.sendTextMessage(this.command);
     await Utils.wait(Utils.delayValue);
-    const msg = await this.cordeBot.findPinnedMessage(messageData);
-    if (!msg || (msg && !msg.pinned)) {
+    const msg = await this.cordeBot.findMessage(messageData);
+
+    if (!msg) {
+      // TODO: make use of hasPassed
+      this.forceIsEqualValue = true;
+      return this.generateReport();
+    }
+
+    if (msg && !msg.pinned) {
       this.isEqual = true;
     }
 

@@ -1,6 +1,8 @@
 import chalk from "chalk";
 import { Group, Test } from "../types";
 import { TestReport } from "../api/interfaces";
+import { messages } from "../messages";
+import { Message } from "discord.js";
 
 const FAIL = "FAIL";
 const SPACE = "    ";
@@ -8,10 +10,13 @@ const DEFAULT_SPACE_VALUE = 4;
 
 class Reporter {
   private readonly _bgSuccess = chalk.bgRgb(21, 194, 19);
+  private readonly _bgInfo = chalk.bgYellow;
   private readonly _bgError = chalk.bgRed;
   private readonly _bold = chalk.bold;
   private readonly _red = chalk.red;
+  private readonly _black = chalk.black;
   private readonly _bgSuccessBold = this._bgSuccess.bold;
+
   private _successCount = 0;
   private _failureCount = 0;
 
@@ -31,6 +36,10 @@ class Reporter {
     this.showSummary();
 
     return this._failureCount === 0;
+  }
+
+  public printNoTestFound() {
+    console.log(`${this._bgInfo(messages.INFO)}: ${messages.EMPTY_TEST_FILE}`);
   }
 
   private breakLine() {
@@ -99,19 +108,19 @@ class Reporter {
   }
 
   private printFullSuccess() {
-    console.log("All tests passed!");
-    console.log(`${this._bgSuccess(" TOTAL: ")} ${chalk.bold(this._successCount)}`);
+    console.log(messages.ALL_TESTS_PASSED);
+    console.log(`${this._bgSuccess(messages.TOTAL)} ${chalk.bold(this._successCount)}`);
   }
 
   private printPartialSuccess() {
-    console.log("Tests passed with errors.");
-    console.log(`${this._bgError(" FAILURES: ")} ${chalk.bold(this._failureCount)}`);
-    console.log(`${this._bgSuccess(" SUCCESS: ")} ${chalk.bold(this._successCount)}`);
+    console.log(messages.TESTS_PASSED_WITH_ERRORS);
+    console.log(`${this._bgError(messages.FAILURES)} ${chalk.bold(this._failureCount)}`);
+    console.log(`${this._bgSuccess(messages.SUCCESS)} ${chalk.bold(this._successCount)}`);
   }
 
   private printFullFailure() {
-    console.log("All tests fail.");
-    console.log(`${chalk.bgRed(" FAILURES: ")} ${chalk.bold(this._failureCount)}`);
+    console.log(messages.ALL_TESTS_FAIL);
+    console.log(`${chalk.bgRed(messages.FAILURES)} ${chalk.bold(this._failureCount)}`);
   }
 
   private printFailure(tabSpace: string, report: TestReport) {

@@ -58,15 +58,33 @@ class ExpectMatches implements Matches {
     });
   }
 
-  public toPin(message: MessageData): void {
+  public toPin(messageId: string): void;
+  public toPin(message: MessageData): void;
+  public toPin(message: string | MessageData): void {
+    let data: MessageData;
+    if (typeof message === "string") {
+      data = { id: message };
+    } else {
+      data = message;
+    }
+
     testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(ToPinMessage, cordeBot, message);
+      return this.operationFactory(ToPinMessage, cordeBot, data);
     });
   }
 
-  public toUnpin(message: MessageData): void {
+  public toUnPin(messageId: string): void;
+  public toUnPin(message: MessageData): void;
+  public toUnPin(message: string | MessageData): void {
+    let data: MessageData;
+    if (typeof message === "string") {
+      data = { id: message };
+    } else {
+      data = message;
+    }
+
     testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(ToUnpinMessage, cordeBot, message);
+      return this.operationFactory(ToUnpinMessage, cordeBot, data);
     });
   }
 

@@ -4,6 +4,7 @@ import { MessageData } from "../../types";
 /**
  * Defines all functions that can be used
  * to check a bot reaction of a command.
+ *
  */
 export interface MessageMatches {
   /**
@@ -11,7 +12,7 @@ export interface MessageMatches {
    * command.
    *
    * @param expect A message returned by a bot after invoke a command
-   *
+   * @since 1.0
    */
   toReturn(expect: string | MessageEmbed): void;
   /**
@@ -35,6 +36,8 @@ export interface MessageMatches {
    *
    *  expect('emoji').toAddReaction('😄');
    *  expect('emojis').toAddReaction('😄', '🍊');
+   *
+   * @since 1.0
    */
   toAddReaction(...reaction: string[]): void;
 
@@ -42,9 +45,9 @@ export interface MessageMatches {
    * Remove a list of reactions from a message.
    *
    * @param reactions Witch reactions will be removed.
-   *
    * @param message Values that will be used to find the message. **do not use all filters**, just one.
    * message ID is the main object used to filter, so, if all filters are filled, only ID will be considered.
+   * @since 2.0
    */
   toRemoveReaction(reactions: string[]): void;
   toRemoveReaction(...reactions: string[]): void;
@@ -55,20 +58,26 @@ export interface MessageMatches {
    * Verify if a command pinned a message.
    *
    * @param message Data used for message fetch.
+   * @since 2.0
    */
+  toPin(messageId: string): void;
   toPin(message: MessageData): void;
 
   /**
    * Verify if a command unpinned a message.
    *
    * @param message Data used for message fetch.
+   * @since 2.0
    */
-  toUnpin(message: MessageData): void;
+  toUnPin(messageId: string): void;
+  toUnPin(message: MessageData): void;
 
   /**
    * Verify if a command edited a message.
+   *
    * @param message Message to be edited.
    * @param newValue New value for the message.
+   * @since 1.0
    */
   toEditMessage(message: MessageData, newValue: string | MessageEmbed): void;
 }

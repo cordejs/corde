@@ -13,13 +13,14 @@ import { testCollector } from "../common/testCollector";
  * // The main function of this is for start a bot if you haven't started it yet
  *
  * const bot = new Discord.Client();
- * beforeStart(() => {
- *   bot.login(config.botTestToken);
+ * beforeStart(async () => {
+ *   await bot.login(config.botTestToken);
  * });
  *
  * @param fn code that will be executed **before** tests start
+ * @since 1.0
  */
-export function beforeStart(fn: () => void) {
+export function beforeStart(fn: () => void | Promise<void>) {
   if (fn) {
     testCollector.beforeStartFunctions.enqueue(fn);
   }

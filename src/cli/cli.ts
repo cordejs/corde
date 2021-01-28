@@ -27,14 +27,15 @@ program
       " for Array, use only 'corde <path1> <path2>'",
   )
   .action(async (args) => {
-    if (program.config) {
-      runtime.configFilePath = program.config;
+    const options = program.opts();
+    if (options.config) {
+      runtime.configFilePath = options.config;
     }
     if (args) {
       runtime.testFiles = program.args;
     }
-    if (program.files) {
-      runtime.testFiles = program.files.split(" ");
+    if (options.files) {
+      runtime.testFiles = options.files.split(" ");
     }
     await go();
   });

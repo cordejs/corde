@@ -6,6 +6,7 @@ import { runtime } from "../../src/common";
 import { BehaviorSubject } from "rxjs";
 import * as executeTests from "../../src/core/runner";
 import { Group } from "../../src/types";
+import { mockProcessExit } from "jest-mock-process";
 
 describe("testing go command", () => {
   it("should throw exception due to no files", async () => {
@@ -32,6 +33,9 @@ describe("testing go command", () => {
   });
 
   it("Should read a file folder", async () => {
+    // @ts-ignore
+    const processSpy = mockProcessExit();
+
     const readerSpy = jest.spyOn(reader, "loadConfig");
     const testObservable = new BehaviorSubject<boolean>(true);
     runtime.loginBot = jest.fn().mockImplementation(() => {});
@@ -54,11 +58,10 @@ describe("testing go command", () => {
       timeOut: 1000,
     });
 
-    // @ts-ignore
-    const processSpy = jest.spyOn(process, "exit").mockImplementation(() => {});
-
-    await go();
-
-    expect(processSpy).toBeCalledWith(0);
+    try {
+      await go();
+    } catch (error) {
+      fail();
+    }
   });
 });

@@ -2,6 +2,7 @@ import { Message, MessageReaction } from "discord.js";
 import { TestReport } from "../../interfaces/testReport";
 import { CordeBot } from "../../../core";
 import { MessageData } from "../../../types";
+import Utils from "../../../utils/utils";
 
 export async function toRemoveReaction(
   commandName: string,
@@ -18,6 +19,7 @@ export async function toRemoveReaction(
 
   try {
     await cordeBot.sendTextMessage(commandName);
+    await Utils.wait(Utils.delayValue);
     const message = await cordeBot.findMessage(messageData);
     if (message) {
       const reactions = await cordeBot.waitForRemovedReactions(message, removedReactions.length);

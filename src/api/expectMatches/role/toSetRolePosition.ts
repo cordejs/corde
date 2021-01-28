@@ -1,6 +1,7 @@
 import { ExpectOperation } from "../operation";
 import { TestReport } from "../..";
 import { RoleData } from "../../../types";
+import Utils from "../../../utils/utils";
 
 export class ToSetRolePosition extends ExpectOperation<number, RoleData> {
   public async action(newPosition: number, roleData: RoleData): Promise<TestReport> {
@@ -20,6 +21,8 @@ export class ToSetRolePosition extends ExpectOperation<number, RoleData> {
         this.customReturnMessage = `the maximum position possible is ${lastRole.position}. Attempted value: ${newPosition}`;
       } else {
         await this.cordeBot.sendTextMessage(this.command);
+        // TODO: Fix this required wait to avoid inconsistence
+        await Utils.wait(400);
         role = await this.cordeBot.findRole(roleData);
         if (role.position === newPosition) {
           this.isEqual = true;

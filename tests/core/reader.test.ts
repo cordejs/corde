@@ -6,6 +6,8 @@ import { Group } from "../../src/types";
 import consts from "../mocks/constsNames";
 import { FileError } from "../../src/errors";
 
+//TODO: This class must have more tests
+
 const conf = require("../mocks/jsconfig/corde.config.js");
 const cwd = process.cwd();
 
@@ -100,11 +102,15 @@ describe("reader class", () => {
   });
 
   describe("when working with reader.getTestsFromFiles()", () => {
-    it("should throw exception when has no file", () => {
-      expect(() => reader.getTestsFromFiles(null)).toThrowError(FileError);
+    it("should throw exception when has no file", async () => {
+      try {
+        await reader.getTestsFromFiles(null);
+      } catch (error) {
+        expect(error instanceof FileError).toBeTruthy();
+      }
     });
 
-    it("should read tests from a single test()", () => {
+    it("should read tests from a single test()", async () => {
       const sampleSingleTestGroup: Group[] = [
         {
           tests: [
@@ -116,16 +122,17 @@ describe("reader class", () => {
         },
       ];
       const files = [path.resolve(process.cwd(), "tests/mocks/sampleSingleTest")];
-      const groups = reader.getTestsFromFiles(files);
+      const groups = await reader.getTestsFromFiles(files);
       expect(groups).toEqual(sampleSingleTestGroup);
     });
 
-    it("should read tests from a single group()", () => {
-      const sampleWithSingleGroup: Group[] = [
+    it("should read tests from a single group()", async () => {
+      const sample: Group[] = [
         {
           name: consts.GROUP_1,
           tests: [
             {
+              // @ts-ignore
               testsFunctions: [expect.any(Function)],
               name: consts.TEST_1,
             },
@@ -133,11 +140,11 @@ describe("reader class", () => {
         },
       ];
       const files = [path.resolve(process.cwd(), "tests/mocks/sampleWithSingleGroup")];
-      const groups = reader.getTestsFromFiles(files);
-      expect(groups).toEqual(sampleWithSingleGroup);
+      const groups = await reader.getTestsFromFiles(files);
+      expect(groups).toEqual(sample);
     });
 
-    it("should read from isolated functions", () => {
+    it("should read from isolated functions", async () => {
       const sampleWithSingleGroup: Group[] = [
         {
           tests: [
@@ -148,7 +155,23 @@ describe("reader class", () => {
         },
       ];
       const files = [path.resolve(process.cwd(), "tests/mocks/onlyCommands")];
-      const groups = reader.getTestsFromFiles(files);
+      const groups = await reader.getTestsFromFiles(files);
+      expect(groups).toEqual(sampleWithSingleGroup);
+    });
+
+    it("should read from groups functions", async () => {
+      const sampleWithSingleGroup: Group[] = [
+        {
+          name: consts.GROUP_1,
+          tests: [
+            {
+              testsFunctions: [expect.any(Function)],
+            },
+          ],
+        },
+      ];
+      const files = [path.resolve(process.cwd(), "tests/mocks/sampleOnlyWithGroup.ts")];
+      const groups = await reader.getTestsFromFiles(files);
       expect(groups).toEqual(sampleWithSingleGroup);
     });
   });

@@ -18,6 +18,7 @@ import { testCollector } from "../common/testCollector";
  * });
  *
  * @param fn code that will be executed **after** tests start
+ * @since 1.0
  */
 export function afterAll(fn: () => void) {
   if (fn) {

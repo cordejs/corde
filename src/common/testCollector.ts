@@ -1,8 +1,6 @@
 import { AssertionProps, Group, Test, testFunctionType } from "../types";
 import { Queue } from "../utils";
 
-type voidFunction = () => void;
-
 /**
  * Contain all information of data collected from files in runtime test
  * collection.
@@ -48,20 +46,29 @@ class TestCollector {
    * group name are optional
    */
   public groups: Group[];
-  public beforeStartFunctions: Queue<voidFunction>;
-  public afterAllFunctions: Queue<voidFunction>;
-  public beforeEachFunctions: Queue<voidFunction>;
 
-  public afterEachFunctions: Queue<voidFunction>;
+  public beforeStartFunctions: Queue<VoidFunction>;
+  public afterAllFunctions: Queue<VoidFunction>;
+  public beforeEachFunctions: Queue<VoidFunction>;
+
+  public afterEachFunctions: Queue<VoidFunction>;
   public testsFunctions: testFunctionType[];
   public isolatedFunctions: testFunctionType[];
 
+  private testClousureFunction: Queue<VoidFunction>;
+  private groupClousureFunction: Queue<VoidFunction>;
+
   constructor() {
     this.groups = [];
+
     this.beforeEachFunctions = new Queue();
     this.afterAllFunctions = new Queue();
     this.beforeStartFunctions = new Queue();
     this.afterEachFunctions = new Queue();
+
+    this.testClousureFunction = new Queue();
+    this.groupClousureFunction = new Queue();
+
     this.tests = [];
     this.assertions = [];
     this.isolatedFunctions = [];
@@ -76,6 +83,10 @@ class TestCollector {
         this.isolatedFunctions.push(testFunction);
       }
     }
+  }
+
+  public hasTestFunctions() {
+    return this.testsFunctions && this.testsFunctions.length > 0;
   }
 
   public hasIsolatedTestFunctions() {
@@ -102,6 +113,22 @@ class TestCollector {
     this.tests = [];
     this.testsFunctions = [];
     this.groups = [];
+  }
+
+  public addToGroupClousure(fn: () => void | Promise<void>) {
+    this.groupClousureFunction.enqueue(fn);
+  }
+
+  public async executeGroupClojure() {
+    await this.groupClousureFunction.executeAsync();
+  }
+
+  public addToTestClousure(fn: () => void | Promise<void>) {
+    this.testClousureFunction.enqueue(fn);
+  }
+
+  public async executeTestClojure() {
+    await this.testClousureFunction.executeAsync();
   }
 }
 

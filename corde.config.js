@@ -2,7 +2,8 @@ const env = require("dotenv");
 
 var result = env.config();
 
-if (result.error) {
+// Do not throw any error if the project in running inside CI.
+if (!process.env.CI && result.error) {
   throw result.error;
 }
 
