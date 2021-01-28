@@ -91,6 +91,9 @@ async function handleCommands(message, command, args) {
     await setRoleMentionable(message, args[0]);
   } else if (command === "increaseRolePosition") {
     await increaseRolePosition(message, args[0]);
+  } else if (command === "setRolePermission") {
+    const id = args.shift();
+    await setRolePermission(message, id, args);
   }
 }
 
@@ -206,4 +209,28 @@ async function setRoleMentionable(msg, roleId) {
 async function increaseRolePosition(msg, roleId) {
   const role = msg.guild.roles.cache.get(roleId);
   await role.setPosition(role.position + 1);
+}
+
+/**
+ * @param {Message} msg
+ * @param {string} roleId
+ * @param {any} permissions
+ */
+async function setRolePermission(msg, roleId, permissions) {
+  const role = getRoleById(msg, roleId);
+  await role.setPermissions(permissions);
+}
+
+/**
+ * @param {Message} msg
+ * @param {string} roleId
+ */
+function getRoleById(msg, roleId) {
+  const role = msg.guild.roles.cache.get(roleId);
+
+  if (!role) {
+    throw new Error("Role not found");
+  }
+
+  return role;
 }
