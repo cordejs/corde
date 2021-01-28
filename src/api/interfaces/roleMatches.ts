@@ -113,8 +113,16 @@ export interface RoleMatches {
    * Defines a list of
    * [Permissions](https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags)
    * that a role should have.
+   *
    * @param id Identifier of the role. Can also use RoleData to filter it.
    * @param permissions List of permissions allowed by Discord.
+   *
+   * @example
+   *
+   * corde.test("change role color", () => {
+   *    const role = getRole();
+   *    expect("changeRole " + role.id).toSetRolePermission(role.id, "ADMINISTRATOR", "BAN_MEMBERS");
+   * });
    *
    * @see https://discord.com/developers/docs/topics/permissions#permissions
    * @since 2.0
