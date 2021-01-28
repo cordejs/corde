@@ -1,7 +1,7 @@
 <div align="center">
   <br />
   <p>
-    <img width="420" height="300" src="./website/static/img/logo.png" />
+    <img width="420" height="300" src="./website/static/img/logo/logo.png" />
   </p>
   <p>
    <!-- <a href="https://discord.gg/f3Gs7uU">
