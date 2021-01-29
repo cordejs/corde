@@ -4,7 +4,7 @@ module.exports = {
   url: "https://lucasgmagalhaes.github.io/corde",
   baseUrl: "/",
   onBrokenLinks: "log",
-  favicon: "img/favicon.ico",
+  favicon: "img/logo/favicon.ico",
   organizationName: "lucasgmagalhaes",
   projectName: "corde",
   themeConfig: {
@@ -12,7 +12,7 @@ module.exports = {
       title: "Corde",
       logo: {
         alt: "corde logo",
-        src: "img/logo.png",
+        src: "img/logo/logo.png",
       },
       items: [
         {

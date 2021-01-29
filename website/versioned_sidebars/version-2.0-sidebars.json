@@ -1,7 +1,7 @@
 {
-  "version-1.0/someSidebar": [
+  "version-2.0/someSidebar": [
     {
-      "collapsed": true,
+      "collapsed": false,
       "type": "category",
       "label": "Introduction",
       "items": [
@@ -16,6 +16,17 @@
         {
           "type": "doc",
           "id": "version-2.0/configurations"
+        }
+      ]
+    },
+    {
+      "collapsed": false,
+      "type": "category",
+      "label": "API Reference",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-2.0/expect"
         }
       ]
     }
