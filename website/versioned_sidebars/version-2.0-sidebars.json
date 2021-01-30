@@ -27,6 +27,10 @@
         {
           "type": "doc",
           "id": "version-2.0/expect"
+        },
+        {
+          "type": "doc",
+          "id": "version-2.0/hooks"
         }
       ]
     }

@@ -24,7 +24,7 @@ module.exports = {
         {
           href: "https://github.com/lucasgmagalhaes/corde",
           label: "GitHub",
-          position: "right",
+          position: "left",
         },
       ],
     },
