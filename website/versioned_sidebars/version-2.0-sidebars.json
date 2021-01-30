@@ -31,6 +31,18 @@
         {
           "type": "doc",
           "id": "version-2.0/hooks"
+        },
+        {
+          "type": "doc",
+          "id": "version-2.0/utilities"
+        },
+        {
+          "type": "doc",
+          "id": "version-2.0/colors"
+        },
+        {
+          "type": "doc",
+          "id": "version-2.0/permissions"
         }
       ]
     }

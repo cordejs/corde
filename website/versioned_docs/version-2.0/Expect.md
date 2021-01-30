@@ -7,21 +7,21 @@ custom_edit_url: https://github.com/lucasgmagalhaes/corde/blob/master/website/ve
 When testing functionalities with an bot, `expect` will let you define what a bot should do
 given a command passed to it. All tests current available in this version(2.0) are listed bellow:
 
-- [expect](/docs/expect#expectcommandname-string)
+- [expect(value)](/docs/expect#expectcommandname-string)
 - [not](/docs/expect#not)
-- [toAddReaction](/docs/expect#toaddreactionreaction-string)
-- [toEditMessage](/docs/expect#toeditmessagemessagedata-string--messageembed)
-- [toPin](/docs/expect#topinstring--messagedata)
-- [toRemoveReaction](/docs/expect#toremovereactionstring--string-messagedata)
-- [toReturn](/docs/expect#toreturn)
-- [toUnPin](/docs/expect#tounpinstring--messagedata)
-- [toDeleteRole](/docs/expect#todeleterolestring--roledata)
-- [toRenameRole](/docs/expect#torenamerolestring-roledata)
-- [toSetRoleColor](/docs/expect#tosetrolecolorcolorresolvable--colors-string--roledata)
-- [toSetRoleHoist](/docs/expect#tosetrolehoistboolean-string--roledata)
-- [toSetRoleMentionable](/docs/expect#tosetrolementionableboolean-string--roledata)
-- [toSetRolePermission](/docs/expect#tosetrolementionableboolean-string--roledata)
-- [toSetRolePosition](/docs/expect#tosetrolepermissionstring--roledata-rolepermission--rolepermission)
+- [toAddReaction(value)](/docs/expect#toaddreactionreaction-string)
+- [toEditMessage(value)](/docs/expect#toeditmessagemessagedata-string--messageembed)
+- [toPin(value)](/docs/expect#topinstring--messagedata)
+- [toRemoveReaction(value)](/docs/expect#toremovereactionstring--string-messagedata)
+- [toReturn(value)](/docs/expect#toreturn)
+- [toUnPin(value)](/docs/expect#tounpinstring--messagedata)
+- [toDeleteRole(value)](/docs/expect#todeleterolestring--roledata)
+- [toRenameRole(value)](/docs/expect#torenamerolestring-roledata)
+- [toSetRoleColor(value)](/docs/expect#tosetrolecolorcolorresolvable--colors-string--roledata)
+- [toSetRoleHoist(value)](/docs/expect#tosetrolehoistboolean-string--roledata)
+- [toSetRoleMentionable(value)](/docs/expect#tosetrolementionableboolean-string--roledata)
+- [toSetRolePermission(value)](/docs/expect#tosetrolementionableboolean-string--roledata)
+- [toSetRolePosition(value)](/docs/expect#tosetrolepermissionstring--roledata-rolepermission--rolepermission)
 
 :::note
 All examples bellow are only to ilustrate the functions called after
