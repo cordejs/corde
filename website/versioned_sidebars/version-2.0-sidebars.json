@@ -22,6 +22,17 @@
     {
       "collapsed": false,
       "type": "category",
+      "label": "Guides",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-2.0/creatingdiscordbot"
+        }
+      ]
+    },
+    {
+      "collapsed": false,
+      "type": "category",
       "label": "API Reference",
       "items": [
         {

@@ -1,0 +1,83 @@
+---
+id: creatingdiscordbot
+title: Creating a Discord bot
+custom_edit_url: https://github.com/lucasgmagalhaes/corde/blob/master/website/versioned_docs/version-2.0/Configuration.md
+---
+
+To use Corde, there must be two bots in the a guild. The first one is your bot, the one that you want to test,
+the other is a bot that Corde to comunicate with your bot.
+
+The first step to create a bot is go to [Discord Developer Portal](https://discord.com/login?redirect_to=%2Fdevelopers%2Fapplications).
+
+After login (if you are not already loged in) you will see a page like the picture bellow:
+
+![Discord developers home page](/img/discord_developers_home.png)
+
+There, you go to `New Application`. Click that button, you will be promped to define a name
+of the bot, choose a nice name and click `Create`.
+
+<div style={{textAlign: 'center'}}>
+
+![image](/img/bot_name_prompt.png)
+
+</div>
+
+Now that we created an application. Is time to create the real bot entity.
+Go to the `Bot` menu on left and click `Add bot`.
+
+![create a bot](/img/create_bot.png)
+
+Will be promped to you a note message and you can click in `Yes, do it!`.
+
+<div style={{textAlign: 'center'}}>
+
+![message add bot](/img/message_add_bot.png)
+
+</div>
+
+After click in the button, you now has your own `A Great Bot`.
+
+![created bot](/img/created_bot.png)
+
+:::note
+Each bot has a `token`, it is unique and must be protected. Do not share the token
+with other people, or expose it to any source of internet. If you unintentionally
+commit the token to [Github](https://github.com/) for instance, Discord detect it and
+invalidate your token. After doing this you will receive a message to you on discord announcing
+that security operation. But don't worry, if this happen, you just have to generate a new
+token to the bot and make sure to now commit it again 😄.
+:::
+
+Bot `token` is bot used to Corde [botTestToken](/docs/configurations#bottesttoken) and
+for [cordeTestToken](/docs/configurations#cordetesttoken). Pay attention about the
+usage of each one.
+
+Now that we have the bot and his token, let's add for his [admin permission](/docs/permissions#administrator):
+To do that, go to bottom of the page that we are now and mark the checkbox `Administrator`
+
+Now we are going to mark our bot scope as `bot` and generate a link to add the bot to a server.
+Go to `OAuth2` in the left side of the page and mark the checkbox `bot`.
+
+![define bot scope](/img/define_bot_scope.png)
+
+After that a new field will appear in the bottom wih a list of possible permissions
+for the bot. Check `Administrator` to allow our bot to have [admin permission](/docs/permissions#administrator)
+and copy the link that appear above the permissions block.
+
+![define bot scope](/img/scope_and_permissions.png)
+
+After paste the generated link and press enter, you will see a prompt asking where to add the bot:
+
+<div style={{textAlign: 'center'}}>
+
+![define bot scope](/img/where_put_bot_prompt.png)
+
+</div>
+
+Choose a server and voialá, the bot is in your server!
+
+<div style={{textAlign: 'center'}}>
+
+![bot in server](/img/bot_in_server.png)
+
+</div>
