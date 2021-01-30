@@ -9,4 +9,3 @@ export * from "./test";
 export * from "./afterEach";
 export * from "./beforeEach";
 export * from "./sendMessage";
-export * from "./withClient";
