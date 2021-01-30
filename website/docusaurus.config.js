@@ -1,3 +1,9 @@
+const versions = require("./versions.json");
+
+function getLastVersion() {
+  return versions[0];
+}
+
 module.exports = {
   title: "Corde",
   tagline: "A simple library for Discord bot tests",
@@ -23,8 +29,20 @@ module.exports = {
         },
         {
           href: "https://github.com/lucasgmagalhaes/corde",
-          label: "GitHub",
-          position: "left",
+          position: "right",
+          className: "header-github-link",
+          "aria-label": "GitHub repository",
+        },
+        {
+          type: "docsVersionDropdown",
+          position: "right",
+          dropdownActiveClassDisabled: true,
+          dropdownItemsAfter: [
+            // {
+            //   to: "/versions",
+            //   label: "All versions",
+            // },
+          ],
         },
       ],
     },
@@ -53,6 +71,7 @@ module.exports = {
       copyright: `Corde ${new Date().getFullYear()} `,
     },
   },
+  themes: ["@docusaurus/theme-live-codeblock"],
   presets: [
     [
       "@docusaurus/preset-classic",
@@ -60,11 +79,33 @@ module.exports = {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
-          editUrl: "https://github.com/lucasgmagalhaes/corde",
+          editUrl: "https://github.com/lucasgmagalhaes/corde/edit/master/website/docs",
+
+          showLastUpdateAuthor: true,
+          showLastUpdateTime: true,
+          lastVersion: undefined,
+          disableVersioning: false,
+          onlyIncludeVersions: versions,
+          versions: {
+            current: {
+              label: `${getLastVersion()} 🚧`,
+            },
+          },
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
+      },
+    ],
+  ],
+  plugins: [
+    [
+      "@docusaurus/plugin-sitemap",
+      {
+        cacheTime: 600 * 1000, // 600 sec - cache purge period
+        changefreq: "weekly",
+        priority: 0.5,
+        trailingSlash: false,
       },
     ],
   ],

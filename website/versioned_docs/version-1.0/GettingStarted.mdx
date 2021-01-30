@@ -91,7 +91,7 @@ the user call **!hello** (`!` is the prefix for bot. Always use a prefix for you
 Let's implement the `bot.test.js`:
 
 ```javascript title="./tests/bot.test.js"
-const { group, test, command, beforeStart, afterAll, expect } = require("corde");
+const { group, test, command, beforeStart, afterAll } = require("corde");
 const { client, loginBot } = require("..");
 
 beforeStart(() => {
@@ -100,7 +100,7 @@ beforeStart(() => {
 
 group("main commands", () => {
   test("hello command should return 'Hello!!'", () => {
-    expect("hello").toReturn("Hello!!");
+    command("hello").mustReturn("Hello!!");
   });
 });
 
@@ -119,12 +119,12 @@ The first thing that we do is call `beforeStart` function. This function is main
 init our bot connection (remember the `loginBot()`?).
 
 Then we can declare the `group` function. Be clare that `group` and `test` functions are optional.
-You can use just the `expect` function. That is what make the magic happens. (uuuh)
+You can use just the `command` function. That is what make the magic happens. (uuuh)
 
-`expect` wait for the _command name_. Pay attemtion that we do not put the bot prefix. Corde already do it
+`command` wait for the _command name_. Pay attemtion that we do not put the bot prefix. Corde already do it
 for us. If we put it, we will se Corde sending `!!hello` to Discord (we do not want this).
 
-After that, we call `toReturn` with the parameter `Hello!!`. So, we are telling Corde that we expect that after sending `!hello`,
+After that, we call `mustReturn` with the parameter `Hello!!`. So, we are telling Corde that we expect that after sending `!hello`,
 our bot should send `Hello!!`. And that is it.
 
 To execute this test, we just need to call:
