@@ -1,6 +1,6 @@
 {
   "name": "corde",
-  "version": "2.0.0-beta-28",
+  "version": "2.0.0",
   "description": "A simple library for Discord bot tests",
   "main": "./index.js",
   "types": "./index.d.ts",
@@ -24,7 +24,7 @@
   ],
   "scripts": {
     "build": "bash tasks.sh build",
-    "build:prod": "bash task.sh build && yarn prettier --write ./lib",
+    "prettier-lib": "prettier --write ./lib",
     "watch": "bash tasks.sh watch",
     "corde": "node ./bin/corde",
     "killProcess": "cd ./etc && bash ./build_and_kill.sh",
@@ -41,6 +41,9 @@
     "init-test-bot": "bash tasks.sh init-test-bot",
     "build-bot": "bash tasks.sh build-test-bot",
     "task": "bash tasks.sh"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",
