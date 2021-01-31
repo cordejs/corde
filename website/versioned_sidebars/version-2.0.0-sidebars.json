@@ -1,5 +1,5 @@
 {
-  "version-2.0/someSidebar": [
+  "version-2.0.0/sidebar": [
     {
       "collapsed": false,
       "type": "category",
@@ -7,15 +7,15 @@
       "items": [
         {
           "type": "doc",
-          "id": "version-2.0/getting-started"
+          "id": "version-2.0.0/getting-started"
         },
         {
           "type": "doc",
-          "id": "version-2.0/cli"
+          "id": "version-2.0.0/cli"
         },
         {
           "type": "doc",
-          "id": "version-2.0/configurations"
+          "id": "version-2.0.0/configurations"
         }
       ]
     },
@@ -26,7 +26,7 @@
       "items": [
         {
           "type": "doc",
-          "id": "version-2.0/creatingdiscordbot"
+          "id": "version-2.0.0/creatingdiscordbot"
         }
       ]
     },
@@ -37,23 +37,23 @@
       "items": [
         {
           "type": "doc",
-          "id": "version-2.0/expect"
+          "id": "version-2.0.0/expect"
         },
         {
           "type": "doc",
-          "id": "version-2.0/hooks"
+          "id": "version-2.0.0/hooks"
         },
         {
           "type": "doc",
-          "id": "version-2.0/utilities"
+          "id": "version-2.0.0/utilities"
         },
         {
           "type": "doc",
-          "id": "version-2.0/colors"
+          "id": "version-2.0.0/colors"
         },
         {
           "type": "doc",
-          "id": "version-2.0/permissions"
+          "id": "version-2.0.0/permissions"
         }
       ]
     }

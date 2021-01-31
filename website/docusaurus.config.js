@@ -1,7 +1,8 @@
 const versions = require("./versions.json");
+const pack = require("../package.json");
 
 function getLastVersion() {
-  return versions[0];
+  return pack.version;
 }
 
 module.exports = {
@@ -77,15 +78,16 @@ module.exports = {
       "@docusaurus/preset-classic",
       {
         docs: {
+          path: "docs",
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
           editUrl: "https://github.com/lucasgmagalhaes/corde/edit/master/website/docs",
 
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
-          lastVersion: undefined,
+          lastVersion: "current",
           disableVersioning: false,
-          onlyIncludeVersions: versions,
+          onlyIncludeVersions: ["current", ...versions],
           versions: {
             current: {
               label: `${getLastVersion()} 🚧`,
