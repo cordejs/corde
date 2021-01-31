@@ -29,21 +29,16 @@ module.exports = {
           position: "left",
         },
         {
+          type: "docsVersionDropdown",
+          position: "right",
+          dropdownActiveClassDisabled: true,
+          dropdownItemsAfter: [],
+        },
+        {
           href: "https://github.com/lucasgmagalhaes/corde",
           position: "right",
           className: "header-github-link",
           "aria-label": "GitHub repository",
-        },
-        {
-          type: "docsVersionDropdown",
-          position: "right",
-          dropdownActiveClassDisabled: true,
-          dropdownItemsAfter: [
-            // {
-            //   to: "/versions",
-            //   label: "All versions",
-            // },
-          ],
         },
       ],
     },
