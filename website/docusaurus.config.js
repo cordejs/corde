@@ -1,9 +1,4 @@
 const versions = require("./versions.json");
-const pack = require("../package.json");
-
-function getLastVersion() {
-  return pack.version;
-}
 
 module.exports = {
   title: "Corde",
@@ -32,7 +27,12 @@ module.exports = {
           type: "docsVersionDropdown",
           position: "right",
           dropdownActiveClassDisabled: true,
-          dropdownItemsAfter: [],
+          dropdownItemsAfter: [
+            {
+              to: "/versions",
+              label: "All versions",
+            },
+          ],
         },
         {
           href: "https://github.com/lucasgmagalhaes/corde",
@@ -82,10 +82,10 @@ module.exports = {
           showLastUpdateTime: true,
           lastVersion: "current",
           disableVersioning: false,
-          onlyIncludeVersions: ["current", ...versions],
+          onlyIncludeVersions: ["current", ...versions.slice(1)],
           versions: {
             current: {
-              label: `${getLastVersion()} 🚧`,
+              label: versions[0],
             },
           },
         },
