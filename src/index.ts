@@ -7,9 +7,8 @@ export {
   group,
   test,
   sendMessage,
-  withClient,
 } from "./api";
-export { RolePermission } from "./utils/permission";
+export { RolePermission, Permission } from "./utils/permission";
 export { Colors } from "./utils/colors";
 
 import { corde } from "./corde";

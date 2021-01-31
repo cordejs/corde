@@ -53,6 +53,15 @@ class UtilsManager {
       }, timeMilliseconds);
     });
   }
+
+  public isValuePrimitive(value: unknown): value is string | boolean | number {
+    return (
+      typeof value === "number" ||
+      typeof value === "string" ||
+      typeof value === "boolean" ||
+      typeof value === "bigint"
+    );
+  }
 }
 
 const Utils = new UtilsManager();

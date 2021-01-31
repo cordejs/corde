@@ -7,7 +7,6 @@ import {
   group as _group,
   test as _test,
   sendMessage as _sendMessage,
-  withClient as _withClient,
 } from "./api";
 
 export namespace corde {
@@ -19,5 +18,4 @@ export namespace corde {
   export let group = _group;
   export let test = _test;
   export let sendMessage = _sendMessage;
-  export let withClient = _withClient;
 }

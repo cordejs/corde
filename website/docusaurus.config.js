@@ -1,10 +1,12 @@
+const versions = require("./versions.json");
+
 module.exports = {
   title: "Corde",
   tagline: "A simple library for Discord bot tests",
   url: "https://lucasgmagalhaes.github.io/corde",
   baseUrl: "/",
   onBrokenLinks: "log",
-  favicon: "img/favicon.ico",
+  favicon: "img/logo/favicon.ico",
   organizationName: "lucasgmagalhaes",
   projectName: "corde",
   themeConfig: {
@@ -12,7 +14,7 @@ module.exports = {
       title: "Corde",
       logo: {
         alt: "corde logo",
-        src: "img/logo.png",
+        src: "img/logo/logo.png",
       },
       items: [
         {
@@ -22,9 +24,21 @@ module.exports = {
           position: "left",
         },
         {
-          href: "https://github.com/lucasgmagalhaes/corde",
-          label: "GitHub",
+          type: "docsVersionDropdown",
           position: "right",
+          dropdownActiveClassDisabled: true,
+          dropdownItemsAfter: [
+            {
+              to: "/versions",
+              label: "All versions",
+            },
+          ],
+        },
+        {
+          href: "https://github.com/lucasgmagalhaes/corde",
+          position: "right",
+          className: "header-github-link",
+          "aria-label": "GitHub repository",
         },
       ],
     },
@@ -53,18 +67,42 @@ module.exports = {
       copyright: `Corde ${new Date().getFullYear()} `,
     },
   },
+  themes: ["@docusaurus/theme-live-codeblock"],
   presets: [
     [
       "@docusaurus/preset-classic",
       {
         docs: {
+          path: "docs",
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
-          editUrl: "https://github.com/lucasgmagalhaes/corde",
+          editUrl: "https://github.com/lucasgmagalhaes/corde/edit/master/website/docs",
+
+          showLastUpdateAuthor: true,
+          showLastUpdateTime: true,
+          lastVersion: "current",
+          disableVersioning: false,
+          onlyIncludeVersions: ["current", ...versions.slice(1)],
+          versions: {
+            current: {
+              label: versions[0],
+            },
+          },
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
+      },
+    ],
+  ],
+  plugins: [
+    [
+      "@docusaurus/plugin-sitemap",
+      {
+        cacheTime: 600 * 1000, // 600 sec - cache purge period
+        changefreq: "weekly",
+        priority: 0.5,
+        trailingSlash: false,
       },
     ],
   ],

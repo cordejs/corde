@@ -1,0 +1,70 @@
+---
+id: command
+title: Command
+custom_edit_url: https://github.com/lucasgmagalhaes/corde/blob/master/website/versioned_docs/version-1.0.0/expect.md
+---
+
+When testing functionalities with an bot, `expect` will let you define what a bot should do
+given a command passed to it. All tests current available in this version(2.0) are listed bellow:
+
+- [command(value)](/docs/expect#expectcommandname-string)
+- [not](/docs/expect#not)
+- [mustAddReaction(value)](/docs/expect#toaddreactionreaction-string)
+- [mustReturn(value)](/docs/expect#toreturn)
+
+:::note
+All examples bellow are only to ilustrate the functions called after
+`command`. These examples are not used exatly show they are described
+in a real use case.
+:::
+
+## Reference
+
+### mustReturn(string)
+
+Expect is a function that receives a command as argument. The same argument that you would send to
+Discord to invoke some action from your bot. As there is a [prefix](/docs/configurations#botprefix) witch can
+be passed in config file, there is no need to pass that prefix in `command` function.
+
+I.E:
+
+Suposing that there is a bot with prefix **!** and that bot has a command called **createAGuild**, you can
+use `command` like the example bellow:
+
+```javascript
+command("createAGuild");
+```
+
+This function returns a several other functions to define what Corde should check after that command be invoke.
+
+:::note
+If for some reason you what to pass the bot prefix in `command`, do not use the config variable [prefix](/docs/configuration#botprefix).
+:::
+
+### not
+
+Use `not` to deny some test after this keyword. It can be used to check if a operation
+made by a bot command is anything but **not** something.
+
+I.E:
+
+```javascript
+test("command hello should not return 1", () => {
+  command("hello").not.mustReturn(1);
+});
+```
+
+### mustAddReaction(string | string[])
+
+Use `mustAddReaction` to check if the bot added an reaction or an list of reactions to **the last message sent by someone who is not a bot**.
+
+I.E:
+
+Given a bot who has a command called `addReactions` and add the reactions 😄 and 🍊,
+you can write a test like:
+
+```typescript
+test("bot should return Hello!!", () => {
+  command("addReactions").mustAddReaction("😄", "🍊");
+});
+```

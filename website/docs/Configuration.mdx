@@ -1,0 +1,108 @@
+---
+id: configurations
+title: Configuring Corde
+custom_edit_url: https://github.com/lucasgmagalhaes/corde/blob/master/website/docs/Configuration.md
+---
+
+Corde's configuration can be defined through a `corde.js|json|ts` file. This file must be in the root of your application,
+or you can declare a custom path for it with the cli option [--config](CLI.mdx#--config).
+
+This is the full config file for Corde:
+
+```javascript
+{
+	"cordeTestToken":  "YOUR_TESTING_BOT_TOKEN_HERE",
+	"botTestId":  "YOUR_TESTING_BOT_ID_HERE",
+	"botTestToken":  "YOUR_BOT_TOKEN_HERE",
+	"guildId":  "THE_GUID_OF_BOT_HERE",
+	"channelId":  "CHANNELS_ID_HERE",
+	"botPrefix":  "+",
+    "testFiles":  ["./test"],
+    "timeOut": 1000
+}
+```
+
+:::note
+both `cordeTestToken` and `botTestToken` can be found in [Discord Developers portal](https://discord.com/developers/applications)
+:::
+
+## Configuration Options
+
+### `cordeTestToken`
+
+**Required: `true`**  
+**Type: `string`**  
+**Example: `YaA4MDMiOTY2O4I2MjAwODMy.X2iRwg.Rf3-TqLExWuPQjxnVaDCGv9V7cB`**
+
+The bot token that Corde will use to simulate a user.
+
+---
+
+### `botTestId`
+
+**Required: `true`**  
+**Type: `string`**  
+**Example: `514212632960122287894`**
+
+Your bot's id.
+
+---
+
+### `botTestToken`
+
+**Required: `true`**  
+**Type: `string`**  
+**Example: `YaA4MDMiOTY2O4I2MjAwODMy.X2iRwg.Rf3-TqLExWuPQjxnVaDCGv9V7cB`**
+
+Your bot's Token.
+
+---
+
+### `guildId`
+
+**Required: `true`**  
+**Type: `string`**  
+**Example: `514212632960122287894`**
+
+The id of the `guild` where both bots are.
+
+---
+
+### `channelId`
+
+**Required: `true`**  
+**Type: `string`**  
+**Example: `514212632960122287894`**
+
+The id of the `channel` where both bots are.
+
+---
+
+### `botPrefix`
+
+**Required: `true`**  
+**Type: `string`**  
+**Example: `!`**
+
+Prefix for call your bot.
+
+---
+
+### `testFiles`
+
+**Required: `true`**  
+**Type: `string`**  
+**Example: `[./tests]`**
+
+Array with the path of test folders | files.
+
+---
+
+### `timeOut`
+
+**Required: `false`**  
+**Type: `number`**  
+**Example: `1000`**  
+**Default: `5000`**
+
+Timeout for each test. Value mesuared in miliseconds.

@@ -4,9 +4,12 @@ import { messageType, MinifiedEmbedMessage } from "../../../types";
 import Utils from "../../../utils/utils";
 
 class MessageUtilsManager {
-  public messagesMatches(returnedMessage: Message, expectation: string | MessageEmbed) {
+  public messagesMatches(
+    returnedMessage: Message,
+    expectation: string | number | boolean | MessageEmbed,
+  ) {
     let msg = "";
-    if (typeof expectation === "string") {
+    if (Utils.isValuePrimitive(expectation)) {
       const formattedMsg = this.getMessageByType(returnedMessage, "text") as Message;
       msg = formattedMsg.content;
       return msg === expectation;

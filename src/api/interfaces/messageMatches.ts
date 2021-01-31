@@ -14,7 +14,7 @@ export interface MessageMatches {
    * @param expect A message returned by a bot after invoke a command
    * @since 1.0
    */
-  toReturn(expect: string | MessageEmbed): void;
+  toReturn(expect: string | number | boolean | MessageEmbed): void;
   /**
    * Defines reactions that must be add to command message.
    *

@@ -88,7 +88,7 @@ class ExpectMatches implements Matches {
     });
   }
 
-  public toReturn(expect: string | MessageEmbed): void {
+  public toReturn(expect: string | number | boolean | MessageEmbed): void {
     testCollector.addTestFunction((cordeBot) =>
       toReturn(this._commandName, this._isNot, cordeBot, expect),
     );
