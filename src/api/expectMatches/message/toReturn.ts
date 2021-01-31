@@ -3,12 +3,13 @@ import { TestReport } from "../../interfaces";
 import { CordeBot } from "../../../core";
 import MessageUtils from "./messageUtils";
 import { MinifiedEmbedMessage } from "../../../types";
+import Utils from "../../../utils/utils";
 
 export async function toReturn(
   commandName: string,
   isNot: boolean,
   cordeBot: CordeBot,
-  expect: string | MessageEmbed,
+  expect: string | number | boolean | MessageEmbed,
 ): Promise<TestReport> {
   let msg = "";
   let isEqual = false;
@@ -47,8 +48,11 @@ export async function toReturn(
   });
 }
 
-function getMessageValue(returnedMessage: Message, expect: string | MessageEmbed) {
-  if (typeof expect === "string") {
+function getMessageValue(
+  returnedMessage: Message,
+  expect: string | number | boolean | MessageEmbed,
+) {
+  if (Utils.isValuePrimitive(expect)) {
     const formattedMsg = MessageUtils.getMessageByType(returnedMessage, "text") as Message;
     return formattedMsg.content;
   } else {
