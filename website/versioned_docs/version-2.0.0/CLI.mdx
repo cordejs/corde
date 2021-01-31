@@ -49,14 +49,14 @@ Set config file path for the next execution. I.E:
   <TabItem value="long">
 
 ```bash
-corde --config ../corde.js
+corde --config ../corde.config.js
 ```
 
   </TabItem>
   <TabItem value="alias">
 
 ```bash
-corde -c ../corde.js
+corde -c ../corde.config.js
 ```
 
   </TabItem>
@@ -115,7 +115,7 @@ corde ./tests/test1.js
 **Default: `json`**  
 **Options: `js json ts`**
 
-Initialize a config file. The available file formats are: `.js`, `.json`, `.ts`.
+Initialize a config (`corde.config.*`) file. The available file formats are: `.js`, `.json`, `.ts`.
 
 <Tabs
   defaultValue="long"

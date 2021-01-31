@@ -1,7 +1,7 @@
 ---
 id: getting-started
 title: Getting Started
-custom_edit_url: https://github.com/lucasgmagalhaes/corde/blob/master/website/docs/GettingStarted.md
+custom_edit_url: https://github.com/lucasgmagalhaes/corde/blob/master/website/versioned_docs/version-2.0.0/GettingStarted.md
 slug: /
 ---
 
@@ -31,7 +31,7 @@ First, we need the `corde` config file. The fastest way to do that is by calling
 yarn corde --init
 ```
 
-This command will create the `corde.json` file in the root of your project. For more details about the `init` command
+This command will create the `corde.config.json` file in the root of your project. For more details about the `init` command
 check the CLI documentation here.
 
 This file will have the following structure:
@@ -92,6 +92,8 @@ Let's implement the `bot.test.js`:
 
 ```javascript title="./tests/bot.test.js"
 const { group, test, command, beforeStart, afterAll, expect } = require("corde");
+// You can also import const corde = require("corde"); This is a default export with all others
+// functions.
 const { client, loginBot } = require("..");
 
 beforeStart(() => {
