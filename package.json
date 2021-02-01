@@ -42,9 +42,6 @@
     "build-bot": "bash tasks.sh build-test-bot",
     "task": "bash tasks.sh"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
   "devDependencies": {
     "@babel/core": "^7.10.2",
     "@babel/preset-env": "^7.10.2",

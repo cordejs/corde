@@ -14,7 +14,7 @@ module.exports = {
       title: "Corde",
       logo: {
         alt: "corde logo",
-        src: "img/logo/logo.png",
+        src: "img/logo/apple-icon-114x114.png",
       },
       items: [
         {

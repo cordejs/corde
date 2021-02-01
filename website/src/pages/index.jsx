@@ -7,7 +7,7 @@ import styles from "./styles.module.css";
 function Home() {
   const context = useDocusaurusContext();
   const { siteConfig = {} } = context;
-  const imgUrl = useBaseUrl("img/logo/logo.png");
+  const imgUrl = useBaseUrl("img/logo/apple-icon-144x144.png");
   return (
     <Layout description="Description will go into a meta tag in <head />">
       <header className={styles.heroBanner}>
