@@ -30,7 +30,7 @@ jobs:
 
       # Temporarily disabled
       # - name: Run tests
-      #   run: yarn e2e
+      #   run: ts-node ./e2e/pipeline.ts
       #   env:
       #     BOT_PREFIX: ${{ secrets.BOT_PREFIX }}
       #     CORDE_TEST_TOKEN: ${{ secrets.CORDE_TEST_TOKEN }}
