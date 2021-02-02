@@ -8,6 +8,9 @@
  *
  */
 
+// todo: process.env should be using NODE_ENV
+process.env.ENV = "E2E";
+
 import { login, bot } from "./bot";
 import glob from "glob";
 import path from "path";
@@ -60,7 +63,11 @@ class AssertionMatch<T> {
    * @private
    */
   toEqual<T>(toMatchValue: T) {
-    return (this.value as any) === toMatchValue;
+    if ((this.value as any) === toMatchValue) {
+      success++;
+    } else {
+      failues++;
+    }
   }
 }
 
@@ -77,6 +84,9 @@ export function assert<T>(value: T) {
  * @private
  */
 export function spec(name: string, action: () => void | Promise<void>) {
+  if (!name) {
+    throw new Error("testName can not be empty!");
+  }
   operations.push({ testName: name, fn: action });
 }
 
