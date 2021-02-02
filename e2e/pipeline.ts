@@ -73,6 +73,9 @@ export function assert<T>(value: T) {
   return new AssertionMatch<T>(value);
 }
 
+/**
+ * @private
+ */
 export function spec(name: string, action: () => void | Promise<void>) {
   operations.push({ testName: name, fn: action });
 }
@@ -100,38 +103,43 @@ function print(stdout: any) {
 }
 
 async function main() {
-  const testsMeasureName = "tests end";
-  console.time(testsMeasureName);
+  try {
+    const testsMeasureName = "tests end";
+    console.time(testsMeasureName);
 
-  print("loading test files...");
-  const files = await loadTests();
+    print("loading test files...");
+    const files = await loadTests();
 
-  print(`loaded ${files.length}\n`);
+    print(`loaded ${files.length}\n`);
 
-  print("requiring files...");
-  for (const file of files) {
-    const absPath = path.resolve(process.cwd(), file);
-    require(absPath);
-  }
-  print(" Done\n");
+    print("requiring files...");
+    for (const file of files) {
+      const absPath = path.resolve(process.cwd(), file);
+      require(absPath);
+    }
+    print(" Done\n");
 
-  print("loging example bot...");
-  await login();
-  print(" Done\n");
+    print("loging example bot...");
+    await login();
+    print(" Done\n");
 
-  for (const operation of operations) {
-    console.time(operation.testName);
-    await operation.fn();
-    console.timeEnd(operation.testName);
+    for (const operation of operations) {
+      console.time(operation.testName);
+      await operation.fn();
+      console.timeEnd(operation.testName);
+      print("\n");
+    }
+
+    bot.destroy();
+    console.time(testsMeasureName);
     print("\n");
-  }
+    print(`Results: success: ${success}, fails: ${failues}`);
 
-  bot.destroy();
-  console.time(testsMeasureName);
-  print("\n");
-  print(`Results: success: ${success}, fails: ${failues}`);
-
-  if (failues > 0) {
+    if (failues > 0) {
+      process.exit(1);
+    }
+  } catch (error) {
+    console.log(error);
     process.exit(1);
   }
 }
