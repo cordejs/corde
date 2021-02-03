@@ -37,7 +37,7 @@ export class CliRunner {
    * This function will complete *-v* with *yarn corde -v* for instance.
    */
   async exec(command: string, showStdout: boolean = false) {
-    return new Promise<CliResult>((resolve) => {
+    return new Promise<CliResult>((resolve, reject) => {
       if (!command) {
         throw new Error("No command provided for test");
       }
@@ -72,7 +72,7 @@ export class CliRunner {
         }
 
         if (error) {
-          return resolve({ stdout, statusCode: exitCode, stderr, error });
+          return reject({ stdout, statusCode: exitCode, stderr, error });
         }
         // remove trash data
         stdout = stdout.replace("node ./bin/corde --version", "");

@@ -9,11 +9,12 @@
  */
 
 // todo: process.env should be using NODE_ENV
-process.env.ENV = "E2E";
+// process.env.ENV = "E2E";
 
 import { login, bot } from "./bot";
 import glob from "glob";
 import path from "path";
+import chalk from "chalk";
 
 let failues = 0;
 let success = 0;
@@ -22,6 +23,7 @@ const operations = new Array<Operation>();
 
 interface Operation {
   testName: string;
+  filePath?: string;
   fn: () => void | Promise<void>;
 }
 
@@ -51,7 +53,9 @@ class AssertionMatch<T> {
     ) {
       success++;
     } else {
-      failues++;
+      throw new Error(
+        `testing value ${chalk.red(this.value)} do not contains ${chalk.red(toMatchValue)}`,
+      );
     }
   }
 
@@ -66,7 +70,9 @@ class AssertionMatch<T> {
     if ((this.value as any) === toMatchValue) {
       success++;
     } else {
-      failues++;
+      throw new Error(
+        `testing value ${chalk.red(this.value)} is not equal to ${chalk.red(toMatchValue)}`,
+      );
     }
   }
 }
@@ -112,9 +118,11 @@ function print(stdout: any) {
   process.stdout.write(stdout);
 }
 
+let actualTestingFile = "";
+
 async function main() {
+  const testsMeasureName = "tests end";
   try {
-    const testsMeasureName = "tests end";
     console.time(testsMeasureName);
 
     print("loading test files...");
@@ -126,7 +134,10 @@ async function main() {
     for (const file of files) {
       const absPath = path.resolve(process.cwd(), file);
       require(absPath);
+      operations[operations.length - 1].filePath = file;
     }
+
+    await operations[0].fn();
     print(" Done\n");
 
     print("loging example bot...");
@@ -134,23 +145,21 @@ async function main() {
     print(" Done\n");
 
     for (const operation of operations) {
-      console.time(operation.testName);
+      actualTestingFile = operation.filePath;
+      const label = `${chalk.bgGreen.black(" SUCESS ")} ${operation.filePath}`;
+      console.time(label);
       await operation.fn();
-      console.timeEnd(operation.testName);
-      print("\n");
+      console.timeEnd(label);
     }
 
     bot.destroy();
     console.time(testsMeasureName);
     print("\n");
     print(`Results: success: ${success}, fails: ${failues}`);
-
-    if (failues > 0) {
-      process.exit(1);
-    }
   } catch (error) {
-    console.log(error);
-    process.exit(1);
+    bot.destroy();
+    console.log(`${chalk.bgRed.black(" FAIL ")} ${actualTestingFile}`);
+    throw error;
   }
 }
 
