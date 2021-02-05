@@ -1,3 +1,5 @@
+#!/usr/bin/env ts-node-script
+
 /**
  * Corde script for end-to-end tests. In comparation with Jest, this script,
  * runs tests with avarage of ~5 seconds faster.
@@ -15,11 +17,19 @@ import { login, bot } from "./bot";
 import glob from "glob";
 import path from "path";
 import chalk from "chalk";
+import fs from "fs";
+import { fstatSync } from "fs";
 
-let failues = 0;
 let success = 0;
+let filesPatern = "./e2e/**/*.test.ts";
 
 const operations = new Array<Operation>();
+
+const args = process.argv.slice(2);
+
+if (args.length) {
+  filesPatern = args[0];
+}
 
 interface Operation {
   testName: string;
@@ -99,15 +109,26 @@ export function spec(name: string, action: () => void | Promise<void>) {
 function loadTests() {
   return new Promise<string[]>((resolve, reject) => {
     glob(
-      "./e2e/**/*.test.ts",
+      filesPatern,
       {
         ignore: ["./e2e/**/__cordeTest__/**"],
       },
-      function (error, files) {
+      function (error, matches) {
         if (error) {
           reject(error);
         } else {
-          resolve(files);
+          const result: string[] = [];
+          matches.forEach((m) => {
+            if (fs.lstatSync(m).isDirectory()) {
+              const files = fs.readdirSync(path.resolve(process.cwd(), m));
+              result.push(
+                ...files.filter((f) => !f.includes("__cordeTest__")).map((f) => path.resolve(m, f)),
+              );
+            } else {
+              result.push(m);
+            }
+          });
+          resolve(result);
         }
       },
     );
@@ -118,31 +139,32 @@ function print(stdout: any) {
   process.stdout.write(stdout);
 }
 
-let actualTestingFile = "";
-
 async function main() {
   const testsMeasureName = "tests end";
+  let actualTestingFile = "";
+  let exitCode = 0;
   try {
     console.time(testsMeasureName);
 
     print("loading test files...");
     const files = await loadTests();
 
-    print(`loaded ${files.length}\n`);
+    if (!files.length) {
+      console.log("no test file(s) founded");
+      process.exit(0);
+    }
 
-    print("requiring files...");
+    print(`loaded ${files.length}\n`);
+    print("loging example bot...");
+    await login();
+    print(" Done\n");
+    console.log(bot);
+
     for (const file of files) {
       const absPath = path.resolve(process.cwd(), file);
       require(absPath);
       operations[operations.length - 1].filePath = file;
     }
-
-    await operations[0].fn();
-    print(" Done\n");
-
-    print("loging example bot...");
-    await login();
-    print(" Done\n");
 
     for (const operation of operations) {
       actualTestingFile = operation.filePath;
@@ -155,11 +177,14 @@ async function main() {
     bot.destroy();
     console.time(testsMeasureName);
     print("\n");
-    print(`Results: success: ${success}, fails: ${failues}`);
+    print(`Results: success: ${success}`);
   } catch (error) {
     bot.destroy();
+    console.log(error.message);
     console.log(`${chalk.bgRed.black(" FAIL ")} ${actualTestingFile}`);
-    throw error;
+    exitCode = 1;
+  } finally {
+    process.exit(exitCode);
   }
 }
 

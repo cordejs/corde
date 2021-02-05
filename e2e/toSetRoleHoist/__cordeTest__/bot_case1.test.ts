@@ -7,7 +7,6 @@ let role = null;
 const roleName = "role-color";
 
 corde.test("", async () => {
-  await login();
   role = getRole(roleName);
   corde.expect(`setRoleHoist ${role.id}`).toSetRoleHoist(true, role.id);
 });
