@@ -7,15 +7,17 @@ import {
   group as _group,
   test as _test,
   sendMessage as _sendMessage,
+  getRole as _getRole,
 } from "./api";
 
 export namespace corde {
-  export let afterAll = _afterAll;
-  export let beforeStart = _beforeStart;
-  export let afterEach = _afterEach;
-  export let beforeEach = _beforeEach;
-  export let expect = _expect;
-  export let group = _group;
-  export let test = _test;
-  export let sendMessage = _sendMessage;
+  export const afterAll = _afterAll;
+  export const beforeStart = _beforeStart;
+  export const afterEach = _afterEach;
+  export const beforeEach = _beforeEach;
+  export const expect = _expect;
+  export const group = _group;
+  export const test = _test;
+  export const sendMessage = _sendMessage;
+  export const getRole = _getRole;
 }

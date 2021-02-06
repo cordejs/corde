@@ -15,6 +15,7 @@ import { MessageData, RoleData } from "../types";
 import { Events } from "./events";
 import { CordeClientError } from "../errors/cordeClientError";
 import { TimeoutError } from "../errors";
+import { Role } from "../structures/role";
 
 const DEFAULT_TEST_TIMEOUT = 5000;
 
@@ -72,8 +73,12 @@ export class CordeBot extends Events {
     this.loadClientEvents();
   }
 
-  private get guild() {
+  public get guild() {
     return this.textChannel.guild;
+  }
+
+  public get channel() {
+    return this.textChannel;
   }
 
   /**
@@ -276,7 +281,11 @@ export class CordeBot extends Events {
   }
 
   public getRoles() {
-    return this.guild.roles.cache;
+    const roles: Role[] = [];
+    this.guild.roles.cache.forEach((r) => {
+      roles.push(new Role(r));
+    });
+    return roles;
   }
 
   /**

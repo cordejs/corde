@@ -1,7 +1,7 @@
 <div align="center">
   <br />
   <p>
-    <img width="200" height="200" src="./website/static/img/logo/android-icon-192x192.png" />
+    <img width="180" height="180" src="./website/static/img/logo/android-icon-192x192.png" />
   </p>
   <p>
    <!-- <a href="https://discord.gg/f3Gs7uU">
