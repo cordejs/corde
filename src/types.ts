@@ -1,4 +1,5 @@
-import { Message, MessageEmbed, Snowflake } from "discord.js";
+import { ColorResolvable, Message, MessageEmbed, Snowflake } from "discord.js";
+import { Colors, RolePermission } from ".";
 import { TestReport } from "./api/interfaces";
 import { CordeBot } from "./core";
 
@@ -125,4 +126,13 @@ export interface MessageData {
 export interface RoleData {
   name?: string;
   id?: Snowflake;
+}
+
+export interface BaseRole {
+  name?: string;
+  color?: ColorResolvable | Colors;
+  isHoist?: boolean;
+  position?: number;
+  permissions?: RolePermission;
+  isMentionable?: boolean;
 }
