@@ -158,7 +158,6 @@ async function main() {
     print("loging example bot...");
     await login();
     print(" Done\n");
-    console.log(bot);
 
     for (const file of files) {
       const absPath = path.resolve(process.cwd(), file);
@@ -168,7 +167,7 @@ async function main() {
 
     for (const operation of operations) {
       actualTestingFile = operation.filePath;
-      const label = `${chalk.bgGreen.black(" SUCESS ")} ${operation.filePath}`;
+      const label = `${chalk.bgGreen.black(" OK ")} ${operation.filePath}`;
       console.time(label);
       await operation.fn();
       console.timeEnd(label);
@@ -177,7 +176,7 @@ async function main() {
     bot.destroy();
     console.time(testsMeasureName);
     print("\n");
-    print(`Results: success: ${success}`);
+    print(`Results: ${success} tests pass`);
   } catch (error) {
     bot.destroy();
     console.log(error.message);
