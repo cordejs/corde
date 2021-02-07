@@ -1,3 +1,4 @@
+import { DEFAULT_TEST_TIMEOUT } from "../consts";
 import ConfigOptions from "../types";
 
 /**
@@ -16,6 +17,10 @@ export class Config implements ConfigOptions {
   public timeOut?: number;
   public botPrefix: string;
   public testFiles: string[];
+
+  constructor() {
+    this.timeOut = DEFAULT_TEST_TIMEOUT;
+  }
 
   /**
    * Set values to config options that are not **filed** yet

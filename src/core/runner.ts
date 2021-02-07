@@ -1,18 +1,19 @@
 import { runtime, testCollector } from "../common";
-import { Group, Test, testFunctionType } from "../types";
+import { Group, Test } from "../types";
 import { TestReport } from "../api/interfaces";
+import { executeWithTimeout } from "../utils/executeWithTimeout";
 
 export async function executeTestCases(groups: Group[]) {
   const tests = getTestsFromGroup(groups);
   for (const test of tests) {
-    const reports = await runTests(test.testsFunctions);
+    const reports = await runTests(test);
     test.testsReports = reports;
   }
 }
 
 export async function executeTests(tests: Test[]) {
   for (const test of tests) {
-    const reports = await runTests(test.testsFunctions);
+    const reports = await runTests(test);
     test.testsReports = reports;
   }
 }
@@ -31,11 +32,21 @@ export function getTestsFromGroup(groups: Group[]) {
   return tests;
 }
 
-async function runTests(testsFunctions: testFunctionType[]) {
+async function runTests(test: Test) {
   const reports: TestReport[] = [];
-  for (const test of testsFunctions) {
+  for (const testfn of test.testsFunctions) {
     await testCollector.beforeEachFunctions.executeAsync();
-    const report = await runtime.injectBot(test);
+    let report: TestReport;
+    try {
+      report = await executeWithTimeout(
+        async () => await runtime.injectBot(testfn),
+        runtime.configs.timeOut,
+      );
+    } catch (error) {
+      report = {
+        hasPassed: false,
+      };
+    }
     await testCollector.afterEachFunctions.executeAsync();
     reports.push(report);
   }

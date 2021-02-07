@@ -1,5 +1,6 @@
 import ConfigOptions from "../../src/types";
 import { Config } from "../../src/common";
+import { DEFAULT_TEST_TIMEOUT } from "../../src/consts";
 
 describe("testing config", () => {
   it("should set all values to configs", () => {
@@ -16,6 +17,6 @@ describe("testing config", () => {
 
     const config = new Config();
     config.setNoFiledConfigsOptions(configOptions);
-    expect(config).toEqual(configOptions);
+    expect(config).toEqual({ ...configOptions, timeOut: DEFAULT_TEST_TIMEOUT });
   });
 });
