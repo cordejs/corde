@@ -1,5 +1,12 @@
 import { BitFieldResolvable } from "../discordTypes";
 
+/**
+ * As we're encapsulating all Discord.js structures,
+ * this one is not an exception. So this code is basically
+ * the same found in Discord.js repository
+ *
+ * @see https://github.com/discordjs/discord.js/blob/master/src/util/BitField.js
+ */
 export class BitField<T extends string> {
   public bitfield: number;
   public static FLAGS: any = {};

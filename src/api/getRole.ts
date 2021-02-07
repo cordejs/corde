@@ -27,7 +27,7 @@ export function getRole(id: string): Role;
 export function getRole(data: RoleData): Role;
 export function getRole(data: string | RoleData) {
   if (!runtime.isBotLoggedIn()) {
-    throw new CordeClientError("bot is not connected yet. No role can be searched");
+    throw new CordeClientError("Bot is not connected yet. No role can be searched");
   }
 
   if (typeof data === "string") {

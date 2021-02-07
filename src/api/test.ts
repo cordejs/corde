@@ -1,5 +1,4 @@
 import { testCollector } from "../common/testCollector";
-const AsyncFunction = (async () => {}).constructor;
 
 /**
  * Represents a group of commands.
