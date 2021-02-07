@@ -17,6 +17,12 @@ describe("testing executeWithTimeout function", () => {
     expect(executeWithTimeout(null, 1)).rejects.toThrow();
   });
 
+  test("should execute ok", async () => {
+    const fn = () => Promise.resolve(2);
+    const response = await executeWithTimeout(async () => await fn(), 100);
+    expect(response).toEqual(2);
+  });
+
   test("should fail in execution of async function", async () => {
     expect(
       executeWithTimeout(
