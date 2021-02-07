@@ -46,9 +46,6 @@ async function runTests(files: string[]) {
     if (isReady) {
       const groups = await reader.getTestsFromFiles(files);
 
-      spinner.text = "executing before start functions";
-      await testCollector.beforeStartFunctions.executeAsync();
-
       spinner.text = "starting bots";
       const tests = getTestsFromGroup(groups);
       if (!hasTestsToBeExecuted(tests)) {
@@ -82,7 +79,11 @@ async function finishProcess(code: number, error?: any) {
     }
 
     if (testCollector.afterAllFunctions) {
-      await testCollector.afterAllFunctions.executeAsync();
+      const exceptions = await testCollector.afterAllFunctions.executeWithCatchCollectAsync();
+      if (exceptions.length) {
+        console.log(exceptions);
+        code = 1;
+      }
     }
 
     runtime.logoffBot();
