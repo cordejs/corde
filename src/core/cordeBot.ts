@@ -77,6 +77,10 @@ export class CordeBot extends Events {
     return this.textChannel.guild;
   }
 
+  public get roleManager() {
+    return this.guild.roles;
+  }
+
   public get channel() {
     return this.textChannel;
   }
@@ -264,6 +268,10 @@ export class CordeBot extends Events {
 
   public async fetchRole(id: string) {
     return await this.guild.roles.fetch(id, false, true);
+  }
+
+  public async fetchRoles() {
+    return await this.guild.roles.fetch();
   }
 
   public async hasRole(roleData: RoleData) {

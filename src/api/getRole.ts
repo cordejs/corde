@@ -30,8 +30,12 @@ export function getRole(data: string | RoleData) {
     throw new CordeClientError("Bot is not connected yet. No role can be searched");
   }
 
-  if (typeof data === "string") {
-    return runtime.bot.getRoles().find((r) => r.id === data);
+  try {
+    if (typeof data === "string") {
+      return runtime.bot.getRoles().find((r) => r.id === data);
+    }
+    return runtime.bot.getRoles().find((r) => r.id === data.id || r.name === data.name);
+  } catch (error) {
+    throw new Error(`Could not find role ${data}`);
   }
-  return runtime.bot.getRoles().find((r) => r.id === data.id || r.name === data.name);
 }
