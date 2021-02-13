@@ -255,7 +255,7 @@ async function setRolePermission(msg, roleId, permissions) {
 async function deleteRole(msg, roleId) {
   const role = getRoleById(msg, roleId);
 
-  if (!role.deleted) {
+  if (role && !role.deleted) {
     await role.delete();
   }
 }
@@ -275,5 +275,10 @@ function getRoleById(msg, roleId) {
  * @param {string} messageId
  */
 async function fetchMessageById(msg, messageId) {
-  return await msg.channel.messages.fetch(messageId);
+  try {
+    return await msg.channel.messages.fetch(messageId);
+  } catch (error) {
+    console.log("message not found");
+    return null;
+  }
 }
