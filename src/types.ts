@@ -7,6 +7,7 @@ export type messageType = "text" | "embed";
 export type messageOutputType = Message | MinifiedEmbedMessage;
 export type messageExpectationType = string | MessageEmbed;
 export type testFunctionType = (cordeBot: CordeBot) => Promise<TestReport>;
+export type VoidPromiseFunction = () => void | Promise<void>;
 
 /**
  * Available types of config files

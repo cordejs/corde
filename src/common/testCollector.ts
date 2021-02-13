@@ -1,4 +1,4 @@
-import { AssertionProps, Group, Test, testFunctionType } from "../types";
+import { AssertionProps, Group, Test, testFunctionType, VoidPromiseFunction } from "../types";
 import { Queue } from "../utils";
 
 /**
@@ -47,16 +47,16 @@ class TestCollector {
    */
   public groups: Group[];
 
-  public beforeStartFunctions: Queue<VoidFunction>;
-  public afterAllFunctions: Queue<VoidFunction>;
-  public beforeEachFunctions: Queue<VoidFunction>;
+  public beforeStartFunctions: Queue<VoidPromiseFunction>;
+  public afterAllFunctions: Queue<VoidPromiseFunction>;
+  public beforeEachFunctions: Queue<VoidPromiseFunction>;
 
-  public afterEachFunctions: Queue<VoidFunction>;
+  public afterEachFunctions: Queue<VoidPromiseFunction>;
   public testsFunctions: testFunctionType[];
   public isolatedFunctions: testFunctionType[];
 
-  private testClousureFunction: Queue<VoidFunction>;
-  private groupClousureFunction: Queue<VoidFunction>;
+  private testClousureFunction: Queue<VoidPromiseFunction>;
+  private groupClousureFunction: Queue<VoidPromiseFunction>;
 
   constructor() {
     this.groups = [];

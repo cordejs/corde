@@ -9,11 +9,11 @@ export interface TestReportModel {
 }
 
 export class TestReport {
-  public readonly commandName: string;
+  public readonly commandName?: string;
   public readonly expectation?: any;
   public readonly output?: any;
-  public readonly isNot: boolean;
-  public readonly showExpectAndOutputValue: boolean;
+  public readonly isNot?: boolean;
+  public readonly showExpectAndOutputValue?: boolean;
   public readonly customReturnMessage?: string;
   public readonly hasPassed: boolean;
 

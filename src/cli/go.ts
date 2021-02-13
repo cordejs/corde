@@ -9,7 +9,6 @@ import { executeTestCases, executeTests, getTestsFromGroup } from "../core/runne
 import { Group, Test } from "../types";
 import { validate } from "./validate";
 import { FileError } from "../errors";
-import { runner } from "cli-spinners";
 
 process.on("uncaughtException", () => {
   stopLoading();

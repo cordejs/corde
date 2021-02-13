@@ -6,6 +6,5 @@ corde.afterAll(() => {
 });
 
 corde.test("", () => {
-  // @ts-expect-error
   testCollector.addTestFunction(() => Promise.resolve({ hasPassed: true }));
 });
