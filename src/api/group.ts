@@ -20,28 +20,23 @@ export function group(name: string, action: () => void | Promise<void>) {
     testCollector.hasGroup = true;
 
     if (action) {
-      try {
-        await action();
-        await testCollector.executeTestClojure();
+      await action();
+      await testCollector.executeTestClojure();
 
-        // In case of expect() be added in test clausure
-        // that is contained in action()
-        if (testCollector.tests && testCollector.tests.length > 0) {
-          testCollector.groups.push({
-            name,
-            tests: testCollector.tests.map((test) => test),
-          });
-        }
+      // In case of expect() be added in test clausure
+      // that is contained in action()
+      if (testCollector.tests && testCollector.tests.length > 0) {
+        testCollector.groups.push({
+          name,
+          tests: testCollector.tests.map((test) => test),
+        });
+      }
 
-        // Case expect() be added inside the group clausure
-        if (testCollector.hasTestFunctions()) {
-          const testsCloned = testCollector.cloneTestFunctions();
-          testCollector.groups.push({ name, tests: [{ testsFunctions: testsCloned }] });
-          testCollector.clearTestFunctions();
-        }
-      } catch (error) {
-        console.error(error);
-        return;
+      // Case expect() be added inside the group clausure
+      if (testCollector.hasTestFunctions()) {
+        const testsCloned = testCollector.cloneTestFunctions();
+        testCollector.groups.push({ name, tests: [{ testsFunctions: testsCloned }] });
+        testCollector.clearTestFunctions();
       }
     }
 

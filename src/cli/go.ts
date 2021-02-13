@@ -43,18 +43,24 @@ async function runTests(files: string[]) {
 
   runtime.onBotStart().subscribe(async (isReady) => {
     if (isReady) {
-      const groups = await reader.getTestsFromFiles(files);
+      try {
+        const groups = await reader.getTestsFromFiles(files);
 
-      spinner.text = "starting bots";
-      const tests = getTestsFromGroup(groups);
-      if (!hasTestsToBeExecuted(tests)) {
-        spinner.succeed();
-        reporter.printNoTestFound();
-        process.exit(0);
+        spinner.text = "starting bots";
+        const tests = getTestsFromGroup(groups);
+        if (!hasTestsToBeExecuted(tests)) {
+          spinner.succeed();
+          reporter.printNoTestFound();
+          process.exit(0);
+        }
+
+        spinner.text = "running tests";
+        await runTestsAndPrint(groups, tests);
+      } catch (error) {
+        spinner.stop();
+        console.error(error);
+        finishProcess(1);
       }
-
-      spinner.text = "running tests";
-      await runTestsAndPrint(groups, tests);
     }
   });
 }
