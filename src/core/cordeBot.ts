@@ -224,6 +224,7 @@ export class CordeBot extends Events {
             reactions.push(reaction);
           }
           if (amount >= take) {
+            this._reactionsObserved.unsubscribe();
             resolve(reactions);
           }
         }
