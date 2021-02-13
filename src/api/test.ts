@@ -18,12 +18,17 @@ export function test(name: string, action: () => void | Promise<void>) {
     testCollector.hasTest = true;
 
     if (action) {
-      await action();
+      try {
+        await action();
 
-      testCollector.tests.push({
-        name,
-        testsFunctions: testCollector.cloneTestFunctions(),
-      });
+        testCollector.tests.push({
+          name,
+          testsFunctions: testCollector.cloneTestFunctions(),
+        });
+      } catch (error) {
+        console.error(error);
+        return;
+      }
     }
 
     testCollector.testsFunctions = [];
