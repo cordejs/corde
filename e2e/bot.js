@@ -115,7 +115,9 @@ async function emoji(msg) {
  * @param {Message} msg
  */
 async function edit(msg) {
-  await msg.edit("newValue");
+  if (msg) {
+    await msg.edit("newValue");
+  }
 }
 
 /**
@@ -171,6 +173,11 @@ async function editMessage(msg, msgId, msgNewValue) {
  */
 async function removeReaction(msg, msgId, reaction) {
   const message = await fetchMessageById(msg, msgId);
+
+  if (!message) {
+    return;
+  }
+
   const react = message.reactions.cache.get(reaction);
 
   if (react) {
@@ -267,7 +274,9 @@ async function deleteRole(msg, roleId) {
  * @param {string} roleId
  */
 function getRoleById(msg, roleId) {
-  return msg.guild.roles.cache.get(roleId);
+  if (msg) {
+    return msg.guild.roles.cache.get(roleId);
+  }
 }
 
 /**

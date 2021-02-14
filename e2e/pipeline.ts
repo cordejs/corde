@@ -18,7 +18,6 @@ import glob from "glob";
 import path from "path";
 import chalk from "chalk";
 import fs from "fs";
-import { fstatSync } from "fs";
 
 let success = 0;
 let filesPatern = "./e2e/**/*.test.ts";
@@ -111,7 +110,7 @@ function loadTests() {
     glob(
       filesPatern,
       {
-        ignore: ["./e2e/**/__cordeTest__/**"],
+        ignore: ["./e2e/**/__cordeTest__/**", "./e2e/log/**"],
       },
       function (error, matches) {
         if (error) {
@@ -165,9 +164,11 @@ async function main() {
       operations[operations.length - 1].filePath = file;
     }
 
+    // STUCK TEST: ./e2e/toDeleteRole/toDeleteRole.case1.test.ts
     for (const operation of operations) {
       actualTestingFile = operation.filePath;
-      const label = `${chalk.bgGreen.black(" OK ")} ${operation.filePath}`;
+      const label = `${chalk.bgGreen.black(" DONE ")}`;
+      print(`testing ${operation.filePath} `);
       console.time(label);
       await operation.fn();
       console.timeEnd(label);

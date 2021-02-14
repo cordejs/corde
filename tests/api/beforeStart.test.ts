@@ -20,7 +20,7 @@ describe("Testing beforeStart function", () => {
   it("Should do nothing", () => {
     beforeStart(undefined);
 
-    const length = testCollector.beforeStartFunctions.size();
+    const length = testCollector.beforeStartFunctions.size;
     expect(length).toBe(0);
   });
 

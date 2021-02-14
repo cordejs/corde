@@ -19,7 +19,7 @@ describe("Testing beforeEach function", () => {
   it("Should do nothing", () => {
     CordeBeforeEach(undefined);
 
-    const length = testCollector.beforeEachFunctions.size();
+    const length = testCollector.beforeEachFunctions.size;
     expect(length).toBe(0);
   });
 });

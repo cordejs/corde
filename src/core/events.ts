@@ -19,6 +19,8 @@ import {
   VoiceState,
 } from "discord.js";
 import { once } from "events";
+import { RolePermission } from "..";
+import { RoleData } from "../types";
 
 interface EventResume {
   count: number;
@@ -634,6 +636,25 @@ export class Events {
    */
   public onceRoleUpdate() {
     return this._once<[Role, Role]>("roleUpdate");
+  }
+
+  /**
+   * Waits for changes in permission of a specific role.
+   * @param roleData `id` or `name` to identify the role.
+   * @returns Specified role that had his permissions updated.
+   */
+  public waitRolePermissionUpdate(roleData: RoleData) {
+    return new Promise<Role>((resolve) => {
+      this.onRoleUpdate((oldRole, newRole) => {
+        if (newRole.id !== roleData.id && newRole.name !== roleData.name) {
+          return;
+        }
+
+        if (!oldRole.permissions.equals(newRole.permissions)) {
+          resolve(newRole);
+        }
+      });
+    });
   }
 
   /**

@@ -1,22 +1,31 @@
 // @ts-nocheck
 
 import corde from "../../../lib";
-import { login, getRole, bot, getRoleManager } from "../../bot";
 
 let role = null;
 const roleName = "role-to-delete";
 
+corde.beforeStart(async () => {
+  role = corde.getRole({ name: roleName });
+  if (!role) {
+    role = await corde.createRole({
+      name: roleName,
+    });
+  }
+});
+
 corde.test("", async () => {
-  await login();
-  role = getRole(roleName);
+  role = role || corde.getRole({ name: roleName });
+
+  if (!role) {
+    throw new Error("Role not found");
+  }
+
   corde.expect(`deleteRole ${role.id}`).toDeleteRole(role.id);
 });
 
 corde.afterAll(async () => {
-  await getRoleManager().create({
-    data: {
-      name: roleName,
-    },
+  await corde.createRole({
+    name: roleName,
   });
-  bot.destroy();
 });
