@@ -12,7 +12,7 @@ export class ToSetRolePosition extends ExpectOperation<number, RoleData> {
         .sort((r1, r2) => r2.position - r1.position)
         .first();
 
-      if (!role) {
+      if (!role || !lastRole) {
         this.isEqual = false;
         this.forceIsEqualValue = true;
         this.output = "Role not found";

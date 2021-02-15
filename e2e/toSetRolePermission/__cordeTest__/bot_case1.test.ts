@@ -1,14 +1,12 @@
 // @ts-nocheck
 
 import corde from "../../../lib";
-import { login, getRole, bot } from "../../bot";
 
 let role = null;
 const roleName = "role-color";
 
 corde.test("", async () => {
-  await login();
-  role = getRole(roleName);
+  role = corde.getRole({ name: roleName });
   corde
     .expect(`setRolePermission ${role.id} ADMINISTRATOR BAN_MEMBERS`)
     .toSetRolePermission(role.id, "ADMINISTRATOR", "BAN_MEMBERS");
@@ -16,7 +14,6 @@ corde.test("", async () => {
 
 corde.afterAll(async () => {
   if (role) {
-    await role.setPermissions([]);
+    await role.updatePermissions([]);
   }
-  bot.destroy();
 });

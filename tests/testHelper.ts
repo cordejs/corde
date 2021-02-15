@@ -98,3 +98,9 @@ export function initCordeClient(mockDiscord: MockDiscord, clientInstance: Client
     clientInstance,
   );
 }
+
+export function executeWithDelay(fn: () => void, delay: number) {
+  setTimeout(() => {
+    fn();
+  }, delay);
+}

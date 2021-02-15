@@ -486,6 +486,10 @@ export default class MockDiscord {
     return role;
   }
 
+  public emitRoleDelete(role?: Role) {
+    this._client.emit("roleDelete", role ?? this.role);
+  }
+
   private createMockRoleManager() {
     const manager = new RoleManager(this._guild);
     manager.add(this._role, true);

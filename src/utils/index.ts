@@ -4,3 +4,6 @@ export * from "./queue";
 export * from "./colors";
 export * from "./permission";
 export * from "./utils";
+export * from "./executeWithTimeout";
+export * from "./isFunction";
+export * from "./bitfield";

@@ -87,7 +87,9 @@ describe("Testing errorHandler", () => {
       jest.spyOn(console, "log");
       let a = 1;
       testCollector.afterAllFunctions = new Queue();
-      testCollector.afterAllFunctions.enqueue(() => (a = 2));
+      testCollector.afterAllFunctions.enqueue(() => {
+        a = 2;
+      });
       process.emit("uncaughtException", new Error("Error Test"));
       expect(a).toEqual(2);
     } catch (error) {

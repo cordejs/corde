@@ -1,4 +1,5 @@
-import { Message, MessageEmbed, Snowflake } from "discord.js";
+import { ColorResolvable, Message, MessageEmbed, Snowflake } from "discord.js";
+import { Colors, RolePermission } from ".";
 import { TestReport } from "./api/interfaces";
 import { CordeBot } from "./core";
 
@@ -6,6 +7,7 @@ export type messageType = "text" | "embed";
 export type messageOutputType = Message | MinifiedEmbedMessage;
 export type messageExpectationType = string | MessageEmbed;
 export type testFunctionType = (cordeBot: CordeBot) => Promise<TestReport>;
+export type VoidPromiseFunction = () => void | Promise<void>;
 
 /**
  * Available types of config files
@@ -125,4 +127,13 @@ export interface MessageData {
 export interface RoleData {
   name?: string;
   id?: Snowflake;
+}
+
+export interface BaseRole {
+  name?: string;
+  color?: ColorResolvable | Colors;
+  isHoist?: boolean;
+  position?: number;
+  permissions?: RolePermission;
+  isMentionable?: boolean;
 }

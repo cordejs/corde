@@ -47,6 +47,13 @@ class Reader {
     testCollector.isCollecting = true;
     for (const file of files) {
       require(file);
+      const exceptions = await testCollector.beforeStartFunctions.executeWithCatchCollectAsync();
+
+      if (exceptions.length) {
+        console.log(exceptions);
+        process.exit(1);
+      }
+
       await testCollector.executeGroupClojure();
       await testCollector.executeTestClojure();
     }

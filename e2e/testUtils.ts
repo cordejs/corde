@@ -1,5 +1,5 @@
 import { Message } from "discord.js";
-import { testCollector } from "../lib/src/common/testCollector";
+import { testCollector } from "../src/common/testCollector";
 
 export default class Utils {
   static parseCommand(message: Message, prefix: string) {

@@ -19,7 +19,6 @@ export async function toRemoveReaction(
 
   try {
     await cordeBot.sendTextMessage(commandName);
-    await Utils.wait(Utils.delayValue);
     const message = await cordeBot.findMessage(messageData);
     if (message) {
       const reactions = await cordeBot.waitForRemovedReactions(message, removedReactions.length);

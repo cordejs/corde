@@ -1,21 +1,17 @@
 // @ts-nocheck
 
 import corde from "../../../lib";
-import { login, getRole, bot } from "../../bot";
 
 let role = null;
-const roleName = "role-color";
+const roleName = "random-role";
 
 corde.test("", async () => {
-  await login();
-  role = getRole(roleName);
+  role = corde.getRole({ name: roleName });
   corde.expect(`setRoleHoist ${role.id}`).toSetRoleHoist(true, role.id);
 });
 
 corde.afterAll(async () => {
   if (role) {
-    await role.setHoist(false);
+    await role.updateHoist(false);
   }
-
-  bot.destroy();
 });

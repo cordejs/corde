@@ -20,7 +20,7 @@ describe("Testing afterEach function", () => {
   it("Should do nothing", () => {
     afterEach(undefined);
 
-    const length = testCollector.afterEachFunctions.size();
+    const length = testCollector.afterEachFunctions.size;
     expect(length).toBe(0);
   });
 });

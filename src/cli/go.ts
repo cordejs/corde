@@ -9,7 +9,6 @@ import { executeTestCases, executeTests, getTestsFromGroup } from "../core/runne
 import { Group, Test } from "../types";
 import { validate } from "./validate";
 import { FileError } from "../errors";
-import { runner } from "cli-spinners";
 
 process.on("uncaughtException", () => {
   stopLoading();
@@ -44,21 +43,24 @@ async function runTests(files: string[]) {
 
   runtime.onBotStart().subscribe(async (isReady) => {
     if (isReady) {
-      const groups = await reader.getTestsFromFiles(files);
+      try {
+        const groups = await reader.getTestsFromFiles(files);
 
-      spinner.text = "executing before start functions";
-      await testCollector.beforeStartFunctions.executeAsync();
+        spinner.text = "starting bots";
+        const tests = getTestsFromGroup(groups);
+        if (!hasTestsToBeExecuted(tests)) {
+          spinner.succeed();
+          reporter.printNoTestFound();
+          process.exit(0);
+        }
 
-      spinner.text = "starting bots";
-      const tests = getTestsFromGroup(groups);
-      if (!hasTestsToBeExecuted(tests)) {
-        spinner.succeed();
-        reporter.printNoTestFound();
-        process.exit(0);
+        spinner.text = "running tests";
+        await runTestsAndPrint(groups, tests);
+      } catch (error) {
+        spinner.stop();
+        console.error(error);
+        finishProcess(1);
       }
-
-      spinner.text = "running tests";
-      await runTestsAndPrint(groups, tests);
     }
   });
 }
@@ -82,7 +84,11 @@ async function finishProcess(code: number, error?: any) {
     }
 
     if (testCollector.afterAllFunctions) {
-      await testCollector.afterAllFunctions.executeAsync();
+      const exceptions = await testCollector.afterAllFunctions.executeWithCatchCollectAsync();
+      if (exceptions.length) {
+        console.log(exceptions);
+        code = 1;
+      }
     }
 
     runtime.logoffBot();

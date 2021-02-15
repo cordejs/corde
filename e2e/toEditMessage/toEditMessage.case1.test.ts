@@ -1,14 +1,12 @@
 import Utils from "../testUtils";
 import { messages } from "../../src/messages";
 import cli from "../cliRunner";
+import { assert, spec } from "../pipeline";
 
-describe("testing toEditMessage", () => {
-  test("should edit a message", async (done) => {
-    const command = Utils.buildCommandWithConfigPath("toEditMessage", "bot_case1.test.ts");
-    const results = await cli.exec(command, true);
-    expect(results.stdout).toContain(messages.ALL_TESTS_PASSED);
-    expect(results.stdout).toContain(messages.TOTAL + " 1");
-    expect(results.statusCode).toEqual(0);
-    done();
-  });
+spec("should edit a message", async () => {
+  const command = Utils.buildCommandWithConfigPath("toEditMessage", "bot_case1.test.ts");
+  const results = await cli.exec(command);
+  assert(results.stdout).toContain(messages.ALL_TESTS_PASSED);
+  assert(results.stdout).toContain(messages.TOTAL + " 1");
+  assert(results.statusCode).toEqual(0);
 });

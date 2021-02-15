@@ -18,7 +18,7 @@ export async function toDeleteRole(
       output = "No role found";
     } else {
       await cordeBot.sendTextMessage(commandName);
-      await Utils.wait(Utils.delayValue);
+      await cordeBot.onceRoleDelete();
       role = await cordeBot.fetchRole(role.id);
       if (!role || role.deleted) {
         isEqual = true;

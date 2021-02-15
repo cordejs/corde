@@ -15,6 +15,7 @@ import { MessageData, RoleData } from "../types";
 import { Events } from "./events";
 import { CordeClientError } from "../errors/cordeClientError";
 import { TimeoutError } from "../errors";
+import { Role } from "../structures/role";
 
 const DEFAULT_TEST_TIMEOUT = 5000;
 
@@ -72,8 +73,16 @@ export class CordeBot extends Events {
     this.loadClientEvents();
   }
 
-  private get guild() {
+  public get guild() {
     return this.textChannel.guild;
+  }
+
+  public get roleManager() {
+    return this.guild.roles;
+  }
+
+  public get channel() {
+    return this.textChannel;
   }
 
   /**
@@ -215,6 +224,7 @@ export class CordeBot extends Events {
             reactions.push(reaction);
           }
           if (amount >= take) {
+            this._reactionsObserved.unsubscribe();
             resolve(reactions);
           }
         }
@@ -259,6 +269,10 @@ export class CordeBot extends Events {
 
   public async fetchRole(id: string) {
     return await this.guild.roles.fetch(id, false, true);
+  }
+
+  public async fetchRoles() {
+    return await this.guild.roles.fetch();
   }
 
   public async hasRole(roleData: RoleData) {

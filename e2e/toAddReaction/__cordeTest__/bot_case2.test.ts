@@ -1,5 +1,6 @@
 import corde from "../../../lib";
 
 corde.test("", () => {
-  corde.expect("emoji").toAddReaction("😎");
+  // Intentionally wrong command
+  corde.expect("emoj").toAddReaction("😎");
 });

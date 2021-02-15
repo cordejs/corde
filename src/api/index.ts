@@ -9,3 +9,5 @@ export * from "./test";
 export * from "./afterEach";
 export * from "./beforeEach";
 export * from "./sendMessage";
+export * from "./getRole";
+export * from "./createRole";

@@ -1,4 +1,5 @@
 import { runtime } from "../../src/common/runtime";
+import { DEFAULT_TEST_TIMEOUT } from "../../src/consts";
 
 import ConfigOptions from "../../src/types";
 
@@ -9,7 +10,7 @@ const config: ConfigOptions = {
   cordeTestToken: "",
   guildId: "123",
   testFiles: ["123"],
-  timeOut: undefined,
+  timeOut: DEFAULT_TEST_TIMEOUT,
   botTestToken: undefined,
 };
 

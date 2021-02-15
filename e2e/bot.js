@@ -44,7 +44,7 @@ export function getRoleManager() {
  */
 export async function login() {
   const readyPromise = new Promise((resolve) => {
-    bot.on("ready", () => {
+    bot.once("ready", () => {
       resolve();
     });
   });
@@ -58,7 +58,8 @@ bot.on("message", async (message) => {
     const command = args.shift();
     await handleCommands(message, command, args);
   } catch (error) {
-    message.channel.send("Fail in execute command: " + error);
+    console.error(error);
+    throw new Error("Could not execute operation");
   }
 });
 
@@ -114,7 +115,9 @@ async function emoji(msg) {
  * @param {Message} msg
  */
 async function edit(msg) {
-  await msg.edit("newValue");
+  if (msg) {
+    await msg.edit("newValue");
+  }
 }
 
 /**
@@ -123,7 +126,9 @@ async function edit(msg) {
  */
 async function pin(msg, msgId) {
   const messageToPin = await fetchMessageById(msg, msgId);
-  await messageToPin.pin();
+  if (messageToPin) {
+    await messageToPin.pin();
+  }
 }
 
 /**
@@ -132,7 +137,9 @@ async function pin(msg, msgId) {
  */
 async function unPin(msg, msgId) {
   const messageToPin = await fetchMessageById(msg, msgId);
-  await messageToPin.unpin();
+  if (messageToPin) {
+    await messageToPin.unpin();
+  }
 }
 
 /**
@@ -142,7 +149,9 @@ async function unPin(msg, msgId) {
  */
 async function addReaction(msg, msgId, reaction) {
   const message = await fetchMessageById(msg, msgId);
-  await message.react(reaction);
+  if (message) {
+    await message.react(reaction);
+  }
 }
 
 /**
@@ -152,7 +161,9 @@ async function addReaction(msg, msgId, reaction) {
  */
 async function editMessage(msg, msgId, msgNewValue) {
   const message = await fetchMessageById(msg, msgId);
-  await message.edit(msgNewValue);
+  if (message) {
+    await message.edit(msgNewValue);
+  }
 }
 
 /**
@@ -162,6 +173,11 @@ async function editMessage(msg, msgId, msgNewValue) {
  */
 async function removeReaction(msg, msgId, reaction) {
   const message = await fetchMessageById(msg, msgId);
+
+  if (!message) {
+    return;
+  }
+
   const react = message.reactions.cache.get(reaction);
 
   if (react) {
@@ -177,7 +193,9 @@ async function removeReaction(msg, msgId, reaction) {
  */
 async function renameRole(msg, roleId, newName) {
   const role = getRoleById(msg, roleId);
-  await role.setName(newName);
+  if (role) {
+    await role.setName(newName);
+  }
 }
 
 /**
@@ -187,7 +205,9 @@ async function renameRole(msg, roleId, newName) {
  */
 async function changeRoleColor(msg, roleId, newColor) {
   const role = getRoleById(msg, roleId);
-  await role.setColor(newColor);
+  if (role) {
+    await role.setColor(newColor);
+  }
 }
 
 /**
@@ -196,7 +216,9 @@ async function changeRoleColor(msg, roleId, newColor) {
  */
 async function setRoleHoist(msg, roleId) {
   const role = getRoleById(msg, roleId);
-  await role.setHoist(true);
+  if (role) {
+    await role.setHoist(true);
+  }
 }
 
 /**
@@ -205,7 +227,9 @@ async function setRoleHoist(msg, roleId) {
  */
 async function setRoleMentionable(msg, roleId) {
   const role = getRoleById(msg, roleId);
-  await role.setMentionable(true);
+  if (role) {
+    await role.setMentionable(true);
+  }
 }
 
 /**
@@ -214,7 +238,9 @@ async function setRoleMentionable(msg, roleId) {
  */
 async function increaseRolePosition(msg, roleId) {
   const role = getRoleById(msg, roleId);
-  await role.setPosition(role.position + 1);
+  if (role) {
+    await role.setPosition(role.position + 1);
+  }
 }
 
 /**
@@ -224,7 +250,9 @@ async function increaseRolePosition(msg, roleId) {
  */
 async function setRolePermission(msg, roleId, permissions) {
   const role = getRoleById(msg, roleId);
-  await role.setPermissions(permissions);
+  if (role) {
+    await role.setPermissions(permissions);
+  }
 }
 
 /**
@@ -234,7 +262,7 @@ async function setRolePermission(msg, roleId, permissions) {
 async function deleteRole(msg, roleId) {
   const role = getRoleById(msg, roleId);
 
-  if (!role.deleted) {
+  if (role && !role.deleted) {
     await role.delete();
   }
 }
@@ -246,13 +274,10 @@ async function deleteRole(msg, roleId) {
  * @param {string} roleId
  */
 function getRoleById(msg, roleId) {
-  const role = msg.guild.roles.cache.get(roleId);
-
-  if (!role) {
-    throw new Error(`Role with id ${roleId} was not found`);
+  if (msg) {
+    return msg.guild.roles.cache.get(roleId);
   }
-
-  return role;
+  return null;
 }
 
 /**
@@ -260,11 +285,10 @@ function getRoleById(msg, roleId) {
  * @param {string} messageId
  */
 async function fetchMessageById(msg, messageId) {
-  const message = await msg.channel.messages.fetch(messageId);
-
-  if (!message) {
-    throw new Error(`Message with id ${messageId} was not found`);
+  try {
+    return await msg.channel.messages.fetch(messageId);
+  } catch (error) {
+    console.log("message not found");
+    return null;
   }
-
-  return message;
 }
