@@ -8,6 +8,7 @@ export {
   test,
   sendMessage,
   getRole,
+  createRole,
 } from "./api";
 export { RolePermission, Permission } from "./utils/permission";
 export { Colors } from "./utils/colors";

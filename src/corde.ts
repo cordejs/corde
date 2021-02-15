@@ -8,8 +8,13 @@ import {
   test as _test,
   sendMessage as _sendMessage,
   getRole as _getRole,
+  createRole as _createRole,
 } from "./api";
 
+/**
+ * Corde's utility namespace to call it's API functions.
+ * You can also import each function desconstructing in corde lib import
+ */
 export namespace corde {
   export const afterAll = _afterAll;
   export const beforeStart = _beforeStart;
@@ -20,4 +25,5 @@ export namespace corde {
   export const test = _test;
   export const sendMessage = _sendMessage;
   export const getRole = _getRole;
+  export const createRole = _createRole;
 }
