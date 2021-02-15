@@ -277,6 +277,7 @@ function getRoleById(msg, roleId) {
   if (msg) {
     return msg.guild.roles.cache.get(roleId);
   }
+  return null;
 }
 
 /**
