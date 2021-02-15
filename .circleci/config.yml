@@ -140,9 +140,6 @@ workflows:
               ignore: gh-pages
 
       - publish_coverage:
-          requires:
-            - unitary-test-node-12
-            - unitary-test-node-14
           filters:
             branches:
               ignore: gh-pages

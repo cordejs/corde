@@ -1,3 +1,6 @@
+// Bitwise are allowed here
+/* tslint:disable:no-bitwise */
+
 import { BitFieldResolvable } from "../discordTypes";
 
 /**
@@ -8,8 +11,21 @@ import { BitFieldResolvable } from "../discordTypes";
  * @see https://github.com/discordjs/discord.js/blob/master/src/util/BitField.js
  */
 export class BitField<T extends string> {
-  public bitfield: number;
   public static FLAGS: any = {};
+  public bitfield: number;
+
+  /**
+   * Resolves bitfields to their numeric form.
+   * @param bit to resolve
+   */
+  static resolve(bit: BitFieldResolvable<any> = 0): number {
+    if (typeof bit === "number" && bit >= 0) return bit;
+    if (bit instanceof BitField) return bit.bitfield;
+    if (Array.isArray(bit)) return bit.map((p) => this.resolve(p)).reduce((prev, p) => prev | p, 0);
+    if (typeof bit === "string" && typeof BitField.FLAGS[bit] !== "undefined")
+      return BitField.FLAGS[bit];
+    throw new RangeError("BITFIELD_INVALID");
+  }
 
   constructor(bits: BitFieldResolvable<T>) {
     this.bitfield = BitField.resolve(bits);
@@ -55,7 +71,7 @@ export class BitField<T extends string> {
     if (!Array.isArray(bits)) {
       bitsArray = new BitField(bits).toArray();
     }
-    return bitsArray.filter((p) => !this.has(<T>p)) as T[];
+    return bitsArray.filter((p) => !this.has(p as T)) as T[];
   }
 
   /**
@@ -107,7 +123,7 @@ export class BitField<T extends string> {
    */
   serialize(): Record<T, boolean> {
     const serialized: any = {};
-    for (const [flag, bit] of Object.entries(BitField.FLAGS)) serialized[flag] = this.has(<T>bit);
+    for (const [flag, bit] of Object.entries(BitField.FLAGS)) serialized[flag] = this.has(bit as T);
     return serialized;
   }
 
@@ -116,7 +132,7 @@ export class BitField<T extends string> {
    * @param hasParams Additional parameters for the has method, if any
    */
   toArray(): T[] {
-    return Object.keys(BitField.FLAGS).filter((bit) => this.has(<T>bit)) as T[];
+    return Object.keys(BitField.FLAGS).filter((bit) => this.has(bit as T)) as T[];
   }
 
   *[Symbol.iterator]() {
@@ -129,18 +145,5 @@ export class BitField<T extends string> {
 
   valueOf(): number {
     return this.bitfield;
-  }
-
-  /**
-   * Resolves bitfields to their numeric form.
-   * @param bit to resolve
-   */
-  static resolve(bit: BitFieldResolvable<any> = 0): number {
-    if (typeof bit === "number" && bit >= 0) return bit;
-    if (bit instanceof BitField) return bit.bitfield;
-    if (Array.isArray(bit)) return bit.map((p) => this.resolve(p)).reduce((prev, p) => prev | p, 0);
-    if (typeof bit === "string" && typeof BitField.FLAGS[bit] !== "undefined")
-      return BitField.FLAGS[bit];
-    throw new RangeError("BITFIELD_INVALID");
   }
 }
