@@ -290,11 +290,7 @@ export class CordeBot extends Events {
   }
 
   public getRoles() {
-    const roles: Role[] = [];
-    this.guild.roles.cache.forEach((r) => {
-      roles.push(new Role(r));
-    });
-    return roles;
+    return this.guild.roles.cache;
   }
 
   /**

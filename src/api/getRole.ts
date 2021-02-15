@@ -2,6 +2,7 @@ import { runtime } from "../common";
 import { CordeClientError } from "../errors";
 import { Role } from "../structures/role";
 import { RoleData } from "../types";
+import { Role as JSRole } from "discord.js";
 
 /**
  * Reach for a `role` in the informed guild in settings,
@@ -24,18 +25,27 @@ export function getRole(id: string): Role;
  * @throws CordeClientError if corde's bot is not connected.
  * @returns Role that matches the provided **id** or **name**
  */
-export function getRole(data: RoleData): Role;
-export function getRole(data: string | RoleData) {
+export function getRole(id: string): Role;
+export function getRole(data: string | RoleData): Role {
   if (!runtime.isBotLoggedIn()) {
     throw new CordeClientError("Bot is not connected yet. No role can be searched");
   }
 
   try {
     if (typeof data === "string") {
-      return runtime.bot.getRoles().find((r) => r.id === data);
+      return convertToCordeRole(runtime.bot.getRoles().find((r) => r.id === data));
     }
-    return runtime.bot.getRoles().find((r) => r.id === data.id || r.name === data.name);
+    return convertToCordeRole(
+      runtime.bot.getRoles().find((r) => r.id === data.id || r.name === data.name),
+    );
   } catch (error) {
     throw new Error(`Could not find role ${data}`);
   }
+}
+
+function convertToCordeRole(role: JSRole) {
+  if (role) {
+    return new Role(role);
+  }
+  return null;
 }

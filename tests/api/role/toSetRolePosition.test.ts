@@ -1,6 +1,7 @@
 import { Client } from "discord.js";
 import { TestReport } from "../../../src/api";
 import { ToSetRolePosition } from "../../../src/api/expectMatches/role";
+import { Role } from "../../../src/structures/role";
 import MockDiscord from "../../mocks/mockDiscord";
 import { initCordeClientWithChannel } from "../../testHelper";
 
@@ -18,8 +19,8 @@ describe("testing ToSetRolePosition operation", () => {
   it("should find and must return passed report due to 'changed position' (isNot false)", async () => {
     const corde = createCordeBotWithMockedFunctions();
 
-    const toRename = new ToSetRolePosition(corde, "test", false);
-    const report = await toRename.action(-1, { id: "123" });
+    const toSetPosition = new ToSetRolePosition(corde, "test", false);
+    const report = await toSetPosition.action(-1, { id: "123" });
     const matchReport = new TestReport({
       commandName,
       hasPassed: true,
@@ -32,8 +33,8 @@ describe("testing ToSetRolePosition operation", () => {
   it("should find and must return passed report due to 'changed position' (isNot true)", async () => {
     const corde = createCordeBotWithMockedFunctions();
 
-    const toRename = new ToSetRolePosition(corde, "test", true);
-    const report = await toRename.action(-2, { id: "123" });
+    const toSetPosition = new ToSetRolePosition(corde, "test", true);
+    const report = await toSetPosition.action(-2, { id: "123" });
     const matchReport = new TestReport({
       commandName,
       hasPassed: true,
@@ -47,8 +48,8 @@ describe("testing ToSetRolePosition operation", () => {
   it("should not find a role and must return not passed (isNot true)", async () => {
     const corde = createCordeBotWithMockedFunctions(null);
 
-    const toRename = new ToSetRolePosition(corde, "test", true);
-    const report = await toRename.action(1, { id: "123" });
+    const toSetPosition = new ToSetRolePosition(corde, "test", true);
+    const report = await toSetPosition.action(1, { id: "123" });
     const matchReport = new TestReport({
       commandName,
       hasPassed: false,
@@ -61,8 +62,8 @@ describe("testing ToSetRolePosition operation", () => {
 
   it("should not find a role and must return not passed (isNot false)", async () => {
     const corde = createCordeBotWithMockedFunctions(null);
-    const toRename = new ToSetRolePosition(corde, "test", false);
-    const report = await toRename.action(2, { id: "123" });
+    const toSetPosition = new ToSetRolePosition(corde, "test", false);
+    const report = await toSetPosition.action(2, { id: "123" });
     const matchReport = new TestReport({
       commandName,
       hasPassed: false,
@@ -75,8 +76,8 @@ describe("testing ToSetRolePosition operation", () => {
 
   it("should return a not passed test due to new position be higher than the permitted (isNot false)", async () => {
     const corde = createCordeBotWithMockedFunctions();
-    const toRename = new ToSetRolePosition(corde, "test", false);
-    const report = await toRename.action(2, { id: "123" });
+    const toSetPosition = new ToSetRolePosition(corde, "test", false);
+    const report = await toSetPosition.action(2, { id: "123" });
     const matchReport = new TestReport({
       commandName,
       hasPassed: false,
@@ -93,8 +94,8 @@ describe("testing ToSetRolePosition operation", () => {
     corde.findRole = jest.fn().mockImplementation(() => {
       throw new Error();
     });
-    const toRename = new ToSetRolePosition(corde, "test", false);
-    const report = await toRename.action(1, { id: "123" });
+    const toSetPosition = new ToSetRolePosition(corde, "test", false);
+    const report = await toSetPosition.action(1, { id: "123" });
     const matchReport = new TestReport({
       commandName,
       hasPassed: false,
