@@ -11,11 +11,9 @@ import {
   TextChannel,
 } from "discord.js";
 import { BehaviorSubject } from "rxjs";
-import { MessageData, RoleData } from "../types";
+import { CordeClientError, TimeoutError } from "../errors";
+import { MessageData, RoleData } from "../types/types";
 import { Events } from "./events";
-import { CordeClientError } from "../errors/cordeClientError";
-import { TimeoutError } from "../errors";
-import { Role } from "../structures/role";
 
 const DEFAULT_TEST_TIMEOUT = 5000;
 

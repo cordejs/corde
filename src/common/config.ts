@@ -1,5 +1,5 @@
 import { DEFAULT_TEST_TIMEOUT } from "../consts";
-import ConfigOptions from "../types";
+import { ConfigOptions } from "../types";
 
 /**
  * Default interface of json config

@@ -1,7 +1,6 @@
 import { runtime, testCollector } from "../common";
-import { Group, Test } from "../types";
-import { TestReport } from "../api/interfaces";
-import { executeWithTimeout } from "../utils/executeWithTimeout";
+import { Group, Test, TestReport } from "../types";
+import { executeWithTimeout } from "../utils";
 
 export async function executeTestCases(groups: Group[]) {
   const tests = getTestsFromGroup(groups);

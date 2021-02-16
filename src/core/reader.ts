@@ -2,8 +2,8 @@ import fs from "fs";
 import path from "path";
 import { runtime } from "../common";
 import { testCollector } from "../common/testCollector";
-import ConfigOptions from "../types";
 import { FileError } from "../errors";
+import { ConfigOptions } from "../types";
 
 class Reader {
   /**
@@ -109,4 +109,4 @@ function addTestFunctionsToGroupIfExists() {
 }
 
 const reader = new Reader();
-export default reader;
+export { reader };

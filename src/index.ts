@@ -1,15 +1,8 @@
-export {
-  afterAll,
-  beforeStart,
-  afterEach,
-  beforeEach,
-  expect,
-  group,
-  test,
-  sendMessage,
-  getRole,
-  createRole,
-} from "./api";
+export { group, test } from "./clausures";
+export { expect } from "./expect";
+export { sendMessage, getRole, createRole } from "./api-utilities";
+export { afterAll, beforeStart, afterEach, beforeEach } from "./hooks";
+
 export { RolePermission, Permission } from "./utils/permission";
 export { Colors } from "./utils/colors";
 

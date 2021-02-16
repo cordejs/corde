@@ -1,14 +1,11 @@
 import fs from "fs";
 import ora, { Color, Ora } from "ora";
 import path from "path";
-import { runtime } from "../common/runtime";
-import { testCollector } from "../common/testCollector";
-import reader from "../core/reader";
-import { reporter } from "../core/reporter";
-import { executeTestCases, executeTests, getTestsFromGroup } from "../core/runner";
-import { Group, Test } from "../types";
-import { validate } from "./validate";
+import { runtime, testCollector } from "../common";
+import { reader, getTestsFromGroup, reporter, executeTests } from "../core";
 import { FileError } from "../errors";
+import { Group, Test } from "../types/types";
+import { validate } from "./validate";
 
 process.on("uncaughtException", () => {
   stopLoading();
