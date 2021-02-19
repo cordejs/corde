@@ -1,8 +1,8 @@
-import ConfigOptions from "../types";
 import chalk from "chalk";
 import fs from "fs";
 import path from "path";
 import { FileError, PropertyError } from "../errors";
+import { ConfigOptions } from "../types";
 
 /**
  * Check if configs are valid. Throws a exception

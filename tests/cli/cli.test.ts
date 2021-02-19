@@ -5,7 +5,7 @@ import * as goFunc from "../../src/cli/go";
 
 import { program } from "../../src/cli/cli";
 import { runtime } from "../../src/common";
-import reader from "../../src/core/reader";
+import { reader } from "../../src/core";
 
 describe("testing cli", () => {
   it("should get version", () => {

@@ -2,7 +2,7 @@ import { initErrorHandlers } from "../src/errorHandler";
 import { getFullConsoleLog } from "./testHelper";
 import { mockProcessExit } from "jest-mock-process";
 import { testCollector, runtime } from "../src/common";
-import { Queue } from "../src/utils";
+import { Queue } from "../src/data-structures";
 
 initErrorHandlers();
 describe("Testing errorHandler", () => {

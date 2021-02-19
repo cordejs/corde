@@ -1,7 +1,7 @@
 import { runtime } from "../../src/common/runtime";
 import { DEFAULT_TEST_TIMEOUT } from "../../src/consts";
 
-import ConfigOptions from "../../src/types";
+import { ConfigOptions } from "../../src/types";
 
 const config: ConfigOptions = {
   botPrefix: "!",

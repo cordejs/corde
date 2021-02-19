@@ -3,13 +3,16 @@ import {
   beforeStart as _beforeStart,
   afterEach as _afterEach,
   beforeEach as _beforeEach,
-  expect as _expect,
-  group as _group,
-  test as _test,
+} from "./hooks";
+
+import {
   sendMessage as _sendMessage,
   getRole as _getRole,
   createRole as _createRole,
-} from "./api";
+} from "./api-utilities";
+
+import { expect as _expect } from "./expect";
+import { group as _group, test as _test } from "./clausures";
 
 /**
  * Corde's utility namespace to call it's API functions.

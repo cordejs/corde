@@ -1,4 +1,4 @@
-import ConfigOptions from "../../src/types";
+import { ConfigOptions } from "../../src/types";
 import { Config } from "../../src/common";
 import { DEFAULT_TEST_TIMEOUT } from "../../src/consts";
 

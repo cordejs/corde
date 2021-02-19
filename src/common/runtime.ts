@@ -1,7 +1,7 @@
-import ConfigOptions, { testFunctionType } from "../types";
+import { ConfigOptions, testFunctionType } from "../types/types";
 import { Config } from "./config";
-import { CordeBot } from "../core";
 import { Client } from "discord.js";
+import { CordeBot } from "../core";
 import { ConfigError } from "../errors";
 
 class Runtime {

@@ -1,8 +1,6 @@
 import chalk from "chalk";
-import { Group, Test } from "../types";
-import { TestReport } from "../api/interfaces";
+import { Group, Test, TestReport } from "../types";
 import { messages } from "../messages";
-import { Message } from "discord.js";
 
 const FAIL = "FAIL";
 const SPACE = "    ";

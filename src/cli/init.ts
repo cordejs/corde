@@ -2,8 +2,8 @@ import chalk from "chalk";
 import fs from "fs";
 import path from "path";
 import { format, BuiltInParserName } from "prettier";
-import ConfigOptions, { configFileType } from "../types";
 import { FileError } from "../errors";
+import { ConfigOptions, configFileType } from "../types";
 
 const jsonFile: ConfigOptions = {
   botPrefix: "",

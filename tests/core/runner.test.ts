@@ -1,15 +1,14 @@
 import { executeTestCases } from "../../src/core/runner";
-import { Group } from "../../src/types";
-import { TestReport } from "../../src/api/interfaces";
+import { Group, TestReport } from "../../src/types";
 
-const report = new TestReport({
+const report: TestReport = {
   commandName: "comando",
   expectation: "1",
   isNot: false,
   output: "1",
   showExpectAndOutputValue: false,
   hasPassed: true,
-});
+};
 
 describe("testing executeTestCases", () => {
   it("should execute tests loading its testsReports (without subgroups or subtests)", async () => {

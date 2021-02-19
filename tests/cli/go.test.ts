@@ -1,4 +1,4 @@
-import reader from "../../src/core/reader";
+import { reader } from "../../src/core/reader";
 import * as validateFn from "../../src/cli/validate";
 import { go } from "../../src/cli/go";
 import { FileError } from "../../src/errors";

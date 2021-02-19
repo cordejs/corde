@@ -2,8 +2,9 @@ import fs from "fs";
 import path from "path";
 import { runtime } from "../common";
 import { testCollector } from "../common/testCollector";
-import ConfigOptions from "../types";
 import { FileError } from "../errors";
+import { ConfigOptions } from "../types";
+import { tryImport } from "../utils";
 
 class Reader {
   /**
@@ -46,12 +47,11 @@ class Reader {
 
     testCollector.isCollecting = true;
     for (const file of files) {
-      require(file);
+      tryImport(file);
       const exceptions = await testCollector.beforeStartFunctions.executeWithCatchCollectAsync();
 
       if (exceptions.length) {
         console.log(exceptions);
-        process.exit(1);
       }
 
       await testCollector.executeGroupClojure();
@@ -109,4 +109,4 @@ function addTestFunctionsToGroupIfExists() {
 }
 
 const reader = new Reader();
-export default reader;
+export { reader };

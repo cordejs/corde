@@ -19,7 +19,6 @@ import {
   VoiceState,
 } from "discord.js";
 import { once } from "events";
-import { RolePermission } from "..";
 import { RoleData } from "../types";
 
 interface EventResume {

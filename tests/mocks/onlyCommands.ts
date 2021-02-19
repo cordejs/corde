@@ -1,4 +1,4 @@
-import { expect } from "../../src/api";
+import corde from "../../src";
 import consts from "./constsNames";
 
-expect(consts.COMMAND_1).toReturn(consts.COMMAND_RESPONSE_1);
+corde.expect(consts.COMMAND_1).toReturn(consts.COMMAND_RESPONSE_1);

@@ -1,6 +1,5 @@
 import { reporter } from "../../src/core/reporter";
-import { Group } from "../../src/types";
-import { TestReport } from "../../src/api/interfaces";
+import { Group, TestReport } from "../../src/types";
 import { getFullConsoleLog } from "../testHelper";
 /**
  * About log.test
@@ -54,14 +53,14 @@ describe("testing log class", () => {
       {
         name: "test name",
         testsReports: [
-          new TestReport({
+          {
             commandName: "commandName",
             expectation: "1",
             isNot: false,
             output: "2",
             showExpectAndOutputValue: true,
             hasPassed: true,
-          }),
+          },
         ],
         testsFunctions: [],
         subTests: [
@@ -84,14 +83,14 @@ describe("testing log class", () => {
       {
         name: "test name",
         testsReports: [
-          new TestReport({
+          {
             commandName: "commandName",
             expectation: "1",
             isNot: false,
             output: "2",
             showExpectAndOutputValue: true,
             hasPassed: true,
-          }),
+          },
         ],
         testsFunctions: [],
         subTests: [
@@ -109,37 +108,37 @@ describe("testing log class", () => {
   });
 
   it("should run print all tests with sucessfully", () => {
-    const report = new TestReport({
+    const report: TestReport = {
       commandName: "commandName",
       expectation: "1",
       isNot: false,
       output: "2",
       showExpectAndOutputValue: true,
       hasPassed: true,
-    });
+    };
     const fullConsoleLog = executeOutPutResultAndGetConsoleLogResult(report);
     reporter.outPutResult([group]);
     expect(fullConsoleLog).toContain("All tests passed!");
   });
 
   it("should run print all tests with patial sucess", () => {
-    const report = new TestReport({
+    const report: TestReport = {
       commandName: "commandName",
       expectation: "1",
       isNot: false,
       output: "2",
       showExpectAndOutputValue: true,
       hasPassed: true,
-    });
+    };
 
-    const report2 = new TestReport({
+    const report2: TestReport = {
       commandName: "commandName",
       expectation: "1",
       isNot: false,
       output: "2",
       showExpectAndOutputValue: true,
       hasPassed: false,
-    });
+    };
 
     const fullConsoleLog = executeOutPutResultAndGetConsoleLogResult(report, report2);
     reporter.outPutResult([group]);
@@ -147,23 +146,23 @@ describe("testing log class", () => {
   });
 
   it("should printing expect and output values", () => {
-    const report = new TestReport({
+    const report: TestReport = {
       commandName: "commandName",
       expectation: "1",
       isNot: false,
       output: "2",
       showExpectAndOutputValue: true,
       hasPassed: true,
-    });
+    };
 
-    const report2 = new TestReport({
+    const report2: TestReport = {
       commandName: "commandName",
       expectation: "1",
       isNot: false,
       output: "2",
       showExpectAndOutputValue: true,
       hasPassed: false,
-    });
+    };
 
     const fullConsoleLog = executeOutPutResultAndGetConsoleLogResult(report, report2);
     reporter.outPutResult([group]);
@@ -171,14 +170,15 @@ describe("testing log class", () => {
   });
 
   it("should print fail, showing expectation and output value. And not show 'not' statement", () => {
-    const report = new TestReport({
+    const report: TestReport = {
       commandName: "commandName",
       expectation: "1",
       isNot: false,
       output: "2",
       showExpectAndOutputValue: true,
       hasPassed: false,
-    });
+    };
+
     const fullConsoleLog = executeOutPutResultAndGetConsoleLogResult(report);
     expect(fullConsoleLog).toContain(
       `FAIL  expected ${report.commandName} to return '${report.expectation}'. Returned: '${report.output}'`,
@@ -186,14 +186,15 @@ describe("testing log class", () => {
   });
 
   it("should print fail, showing expectation and output value. And show 'not' statement", () => {
-    const report = new TestReport({
+    const report: TestReport = {
       commandName: "commandName",
       expectation: "1",
       isNot: true,
       output: "1",
       showExpectAndOutputValue: true,
       hasPassed: false,
-    });
+    };
+
     const fullConsoleLog = executeOutPutResultAndGetConsoleLogResult(report);
     expect(fullConsoleLog).toContain(
       `FAIL  expected ${report.commandName} to not return '${report.expectation}'. Returned: '${report.output}'`,
@@ -201,14 +202,15 @@ describe("testing log class", () => {
   });
 
   it("should print fail. Without expectation and output value. And not show 'not' statement", () => {
-    const report = new TestReport({
+    const report: TestReport = {
       commandName: "commandName",
       expectation: "1",
       isNot: false,
       output: "1",
       showExpectAndOutputValue: false,
       hasPassed: false,
-    });
+    };
+
     const fullConsoleLog = executeOutPutResultAndGetConsoleLogResult(report);
     expect(fullConsoleLog).toContain(
       `FAIL  command ${report.commandName} not returned what was expected`,
@@ -216,14 +218,14 @@ describe("testing log class", () => {
   });
 
   it("should print fail, without expectation and output value. And do nothing with 'isNot' statement as true", () => {
-    const report = new TestReport({
+    const report: TestReport = {
       commandName: "commandName",
       expectation: "1",
       isNot: true,
       output: "1",
       showExpectAndOutputValue: false,
       hasPassed: false,
-    });
+    };
     const fullConsoleLog = executeOutPutResultAndGetConsoleLogResult(report);
     expect(fullConsoleLog).toContain(
       `FAIL  command ${report.commandName} not returned what was expected`,
