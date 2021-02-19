@@ -1,20 +1,19 @@
 import { testCollector } from "../../src/common";
-import { TestReport } from "../../src/api";
+import { TestReport } from "../../src/types";
 
 describe("testing testCollector", () => {
   it("should clear testsFunctions", () => {
     testCollector.hasGroup = true;
     testCollector.addTestFunction((corde) => {
-      return Promise.resolve(
-        new TestReport({
-          commandName: "",
-          expectation: "",
-          hasPassed: true,
-          isNot: true,
-          output: "",
-          showExpectAndOutputValue: false,
-        }),
-      );
+      const report: TestReport = {
+        commandName: "",
+        expectation: "",
+        hasPassed: true,
+        isNot: true,
+        output: "",
+        showExpectAndOutputValue: false,
+      };
+      return Promise.resolve(report);
     });
     expect(testCollector.cloneTestFunctions().length).toBe(1);
     testCollector.clearTestFunctions();

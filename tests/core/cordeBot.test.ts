@@ -1,9 +1,9 @@
 import { testCollector } from "../../src/common/testCollector";
-import { toReturn } from "../../src/api/expectMatches";
 import { Client, CollectorFilter } from "discord.js";
 import MockDiscord from "../mocks/mockDiscord";
 import { initCordeClient, initCordeClientWithChannel } from "../testHelper";
 import { TimeoutError } from "../../src/errors";
+import { ToReturn } from "../../src/expect/matches";
 
 const DEFAULT_PREFIX = "!";
 const mockDiscord = new MockDiscord();
@@ -24,7 +24,10 @@ describe("Testing CordeBot object", () => {
   });
 
   it("should add a test function", () => {
-    testCollector.addTestFunction((corde) => toReturn("test", false, corde, "com"));
+    testCollector.addTestFunction((corde) => {
+      const testCase = new ToReturn(corde, "test", false);
+      return testCase.action("");
+    });
     expect(testCollector.cloneIsolatedTestFunctions().length).toBe(1);
   });
 

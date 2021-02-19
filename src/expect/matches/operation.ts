@@ -12,17 +12,11 @@ import { TestReport } from "../../types/types";
  *
  */
 export abstract class ExpectOperation<P1 = any, P2 = any, P3 = any> {
-  protected isEqual: boolean;
   protected output: any;
   protected expectation: any;
   protected hasPassed: boolean;
   protected showExpectAndOutputValue: boolean;
   protected customReturnMessage?: string;
-  /**
-   * Defines if the definition of **isEqual** should be
-   * kept independent of **isNot** value.
-   */
-  protected forceIsEqualValue: boolean;
 
   protected readonly isNot: boolean;
   protected readonly command: string;
@@ -39,7 +33,7 @@ export abstract class ExpectOperation<P1 = any, P2 = any, P3 = any> {
     this.isNot = isNot;
     this.command = command;
     this.cordeBot = cordeBot;
-    this.isEqual = false;
+    this.hasPassed = false;
   }
 
   /**
@@ -54,7 +48,7 @@ export abstract class ExpectOperation<P1 = any, P2 = any, P3 = any> {
   public abstract action(p1: P1, p2: P2, p3: P3): Promise<TestReport>;
 
   protected catchExecutionError<T extends Error | unknown>(error: T) {
-    this.isEqual = false;
+    this.hasPassed = false;
     if (error instanceof Error) {
       this.output = error.message;
     } else {
@@ -62,22 +56,21 @@ export abstract class ExpectOperation<P1 = any, P2 = any, P3 = any> {
     }
   }
 
+  protected invertHasPassedIfIsNot() {
+    if (this.isNot) {
+      this.hasPassed = !this.hasPassed;
+    }
+  }
+
   protected generateReport(showExpectAndOutputValue = false) {
     return {
       commandName: this.command,
       expectation: this.expectation,
-      hasPassed: this.defineIsEqual(this.isEqual),
+      hasPassed: this.hasPassed,
       isNot: this.isNot,
       output: this.output,
-      showExpectAndOutputValue,
+      showExpectAndOutputValue: this.showExpectAndOutputValue,
       customReturnMessage: this.customReturnMessage,
     };
-  }
-
-  private defineIsEqual(actualIsEqual: boolean) {
-    if (this.isNot && !this.forceIsEqualValue) {
-      return !actualIsEqual;
-    }
-    return actualIsEqual;
   }
 }

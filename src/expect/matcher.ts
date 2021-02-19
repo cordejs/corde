@@ -1,26 +1,25 @@
 import { ColorResolvable, MessageEmbed, Snowflake } from "discord.js";
 import { testCollector } from "../common/testCollector";
 import { CordeBot } from "../core";
-import { MessageData, RoleData, TestReport } from "../types/types";
+import { GenericFunction, MessageData, RoleData, TestReport } from "../types/types";
 import { Colors } from "../utils/colors";
 import { RolePermission } from "../utils/permission";
 import {
-  toAddReaction,
-  toDeleteRole,
+  ToAddReaction,
+  ToDeleteRole,
   ToRenameRole,
-  toReturn,
-  toSetRoleColor,
+  ToReturn,
+  ToSetRoleColor,
   ToSetRoleHoist,
   ToSetRoleMentionable,
   ToSetRolePosition,
+  ToEditMessage,
+  ToPinMessage,
+  ToRemoveReaction,
+  ToUnpinMessage,
+  ToSetRolePermission,
 } from "./matches";
-import { ToEditMessage } from "./matches/message/toEditMessage";
-import { ToPinMessage } from "./matches/message/toPinMessage";
-import { toRemoveReaction } from "./matches/message/toRemoveReaction";
-import { ToUnpinMessage } from "./matches/message/toUnpinMessage";
 import { ExpectOperation } from "./matches/operation";
-import { ToSetRolePermission } from "./matches/role/toSetRolePermission";
-
 import { MessageMatches } from "./matches/messageMatches.interface";
 import { RoleMatches } from "./matches/roleMatches";
 
@@ -90,14 +89,12 @@ class ExpectMatches implements Matches {
   }
 
   public toReturn(expect: string | number | boolean | MessageEmbed): void {
-    testCollector.addTestFunction((cordeBot) =>
-      toReturn(this._commandName, this._isNot, cordeBot, expect),
-    );
+    testCollector.addTestFunction((cordeBot) => this.operationFactory(ToReturn, cordeBot, expect));
   }
 
   public toAddReaction(...reaction: string[]): void {
     testCollector.addTestFunction((cordeBot) =>
-      toAddReaction(this._commandName, this._isNot, cordeBot, reaction),
+      this.operationFactory(ToAddReaction, cordeBot, reaction),
     );
   }
 
@@ -108,9 +105,9 @@ class ExpectMatches implements Matches {
   public toRemoveReaction(reactions: string | string[], message?: any) {
     testCollector.addTestFunction((cordeBot) => {
       if (Array.isArray(reactions)) {
-        return toRemoveReaction(this._commandName, this._isNot, cordeBot, reactions, message);
+        return this.operationFactory(ToRemoveReaction, cordeBot, reactions, message);
       }
-      return toRemoveReaction(this._commandName, this._isNot, cordeBot, [reactions], message);
+      return this.operationFactory(ToRemoveReaction, cordeBot, [reactions], message);
     });
   }
 
@@ -121,7 +118,7 @@ class ExpectMatches implements Matches {
   public toSetRoleColor(color: ColorResolvable | Colors, role: Snowflake | RoleData) {
     const data = this.getRoleData(role);
     testCollector.addTestFunction((cordeBot) => {
-      return toSetRoleColor(this._commandName, this._isNot, cordeBot, color, data);
+      return this.operationFactory(ToSetRoleColor, cordeBot, color, data);
     });
   }
 
@@ -130,7 +127,7 @@ class ExpectMatches implements Matches {
   public toDeleteRole(role: string | RoleData) {
     const data = this.getRoleData(role);
     testCollector.addTestFunction((cordeBot) => {
-      return toDeleteRole(this._commandName, this._isNot, cordeBot, data);
+      return this.operationFactory(ToDeleteRole, cordeBot, data);
     });
   }
 
@@ -189,26 +186,13 @@ class ExpectMatches implements Matches {
     return data;
   }
 
-  protected operationFactory<T extends ExpectOperation<P1>, P1>(
+  protected operationFactory<T extends ExpectOperation>(
     type: new (cordeBot: CordeBot, command: string, isNot: boolean) => T,
     cordeBot: CordeBot,
-    parameter1: P1,
-  ): Promise<TestReport>;
-  protected operationFactory<T extends ExpectOperation<P1, P2>, P1, P2>(
-    type: new (cordeBot: CordeBot, command: string, isNot: boolean) => T,
-    cordeBot: CordeBot,
-    parameter1: P1,
-    parameter2: P2,
-  ): Promise<TestReport>;
-  protected operationFactory<T extends ExpectOperation<P1, P2, P3>, P1, P2, P3>(
-    type: new (cordeBot: CordeBot, command: string, isNot: boolean) => T,
-    cordeBot: CordeBot,
-    parameter1?: P1,
-    parameter2?: P2,
-    parameter3?: P3,
+    ...params: Parameters<T["action"]>
   ): Promise<TestReport> {
     const op = new type(cordeBot, this._commandName, this._isNot);
-    return op.action(parameter1, parameter2, parameter3);
+    return (op.action as GenericFunction)(...params);
   }
 }
 

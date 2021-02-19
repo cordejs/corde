@@ -1,45 +1,28 @@
 import { Message } from "discord.js";
-import { CordeBot } from "../../../core";
 import { TestReport } from "../../../types";
+import { ExpectOperation } from "../operation";
 
-export async function toAddReaction(
-  commandName: string,
-  isNot: boolean,
-  cordeBot: CordeBot,
-  reactions: string[],
-): Promise<TestReport> {
-  let isEqual = false;
-  let expectation = "";
-  let output = "";
+export class ToAddReaction extends ExpectOperation<string[]> {
+  public async action(reactions: string[]): Promise<TestReport> {
+    this.expectation = reactions.join();
 
-  expectation = reactions.join();
+    try {
+      const message = await this.cordeBot.sendTextMessage(this.command);
+      await this.cordeBot.waitForAddedReactions(message, reactions);
+      this.hasPassed = isOutputEqualToExpect(message, reactions);
+      this.output = message.reactions.cache.map((v) => v.emoji.name).join();
 
-  try {
-    const message = await cordeBot.sendTextMessage(commandName);
-    await cordeBot.waitForAddedReactions(message, reactions);
-    isEqual = isOutputEqualToExpect(message, reactions);
-    output = message.reactions.cache.map((v) => v.emoji.name).join();
-
-    if (isNot) {
-      isEqual = !isEqual;
+      this.invertHasPassedIfIsNot();
+    } catch (error) {
+      this.hasPassed = false;
+      if (error instanceof Error) {
+        this.output = error.message;
+      } else {
+        this.output = error;
+      }
     }
-  } catch (error) {
-    isEqual = false;
-    if (error instanceof Error) {
-      output = error.message;
-    } else {
-      output = error;
-    }
+    return this.generateReport();
   }
-
-  return {
-    commandName,
-    expectation,
-    output,
-    hasPassed: isEqual,
-    isNot,
-    showExpectAndOutputValue: false,
-  };
 }
 
 function isOutputEqualToExpect(message: Message, expectation: string | string[]) {

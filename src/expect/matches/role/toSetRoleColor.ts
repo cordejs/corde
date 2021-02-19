@@ -1,56 +1,41 @@
-import { CordeBot } from "../../../core";
 import { ColorResolvable } from "../../../discordTypes";
 import { RoleData, TestReport } from "../../../types";
 import { Colors, resolveColor, wait } from "../../../utils";
+import { ExpectOperation } from "../operation";
 
-export async function toSetRoleColor(
-  commandName: string,
-  isNot: boolean,
-  cordeBot: CordeBot,
-  color: ColorResolvable | Colors,
-  roleData: RoleData,
-): Promise<TestReport> {
-  let isEqual = false;
-  let output = "";
-  try {
-    await cordeBot.sendTextMessage(commandName);
+export class ToSetRoleColor extends ExpectOperation<ColorResolvable | Colors, RoleData> {
+  public async action(color: ColorResolvable, roleData: RoleData): Promise<TestReport> {
+    try {
+      await this.cordeBot.sendTextMessage(this.command);
 
-    await wait(600);
-    const role = await cordeBot.findRole(roleData);
+      await wait(600);
+      const role = await this.cordeBot.findRole(roleData);
 
-    const numberColor = resolveColor(color);
-    if (numberColor > 0) {
-      isEqual = numberColor === role.color;
+      const numberColor = resolveColor(color);
+      if (numberColor > 0) {
+        this.hasPassed = numberColor === role.color;
+      }
+
+      if (!role) {
+        this.output = "Role not found";
+      } else {
+        this.output = role.color.toString();
+      }
+
+      if (role.color === color) {
+        this.hasPassed = true;
+      }
+
+      this.invertHasPassedIfIsNot();
+    } catch (error) {
+      this.hasPassed = false;
+      if (error instanceof Error) {
+        this.output = error.message;
+      } else {
+        this.output = error;
+      }
     }
 
-    if (!role) {
-      output = "Role not found";
-    } else {
-      output = role.color.toString();
-    }
-
-    if (role.color === color) {
-      isEqual = true;
-    }
-
-    if (isNot) {
-      isEqual = !isEqual;
-    }
-  } catch (error) {
-    isEqual = false;
-    if (error instanceof Error) {
-      output = error.message;
-    } else {
-      output = error;
-    }
+    return this.generateReport();
   }
-
-  return {
-    commandName,
-    expectation: color.toString(),
-    hasPassed: isEqual,
-    isNot,
-    output,
-    showExpectAndOutputValue: false,
-  };
 }

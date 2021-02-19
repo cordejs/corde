@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { runtime, testCollector } from "../../src/common";
-import reader from "../../src/core/reader";
+import { reader } from "../../src/core/reader";
 import { Group } from "../../src/types";
 import consts from "../mocks/constsNames";
 import { FileError } from "../../src/errors";
@@ -98,81 +98,6 @@ describe("reader class", () => {
         expect(() => reader.loadConfig()).toThrowError();
         spy.mockReset();
       });
-    });
-  });
-
-  describe("when working with reader.getTestsFromFiles()", () => {
-    it("should throw exception when has no file", async () => {
-      try {
-        await reader.getTestsFromFiles(null);
-      } catch (error) {
-        expect(error instanceof FileError).toBeTruthy();
-      }
-    });
-
-    it("should read tests from a single test()", async () => {
-      const sampleSingleTestGroup: Group[] = [
-        {
-          tests: [
-            {
-              testsFunctions: [expect.any(Function)],
-              name: consts.TEST_1,
-            },
-          ],
-        },
-      ];
-      const files = [path.resolve(process.cwd(), "tests/mocks/sampleSingleTest")];
-      const groups = await reader.getTestsFromFiles(files);
-      expect(groups).toEqual(sampleSingleTestGroup);
-    });
-
-    it("should read tests from a single group()", async () => {
-      const sample: Group[] = [
-        {
-          name: consts.GROUP_1,
-          tests: [
-            {
-              // @ts-ignore
-              testsFunctions: [expect.any(Function)],
-              name: consts.TEST_1,
-            },
-          ],
-        },
-      ];
-      const files = [path.resolve(process.cwd(), "tests/mocks/sampleWithSingleGroup")];
-      const groups = await reader.getTestsFromFiles(files);
-      expect(groups).toEqual(sample);
-    });
-
-    it("should read from isolated functions", async () => {
-      const sampleWithSingleGroup: Group[] = [
-        {
-          tests: [
-            {
-              testsFunctions: [expect.any(Function)],
-            },
-          ],
-        },
-      ];
-      const files = [path.resolve(process.cwd(), "tests/mocks/onlyCommands")];
-      const groups = await reader.getTestsFromFiles(files);
-      expect(groups).toEqual(sampleWithSingleGroup);
-    });
-
-    it("should read from groups functions", async () => {
-      const sampleWithSingleGroup: Group[] = [
-        {
-          name: consts.GROUP_1,
-          tests: [
-            {
-              testsFunctions: [expect.any(Function)],
-            },
-          ],
-        },
-      ];
-      const files = [path.resolve(process.cwd(), "tests/mocks/sampleOnlyWithGroup.ts")];
-      const groups = await reader.getTestsFromFiles(files);
-      expect(groups).toEqual(sampleWithSingleGroup);
     });
   });
 });

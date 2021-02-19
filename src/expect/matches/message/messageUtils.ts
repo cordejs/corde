@@ -1,13 +1,11 @@
 import assert from "assert";
 import { Message, MessageEmbed } from "discord.js";
-import { messageType, MinifiedEmbedMessage } from "../../../types";
-import { isPrimitiveValue, pick } from "../../../utils";
+import { messageType, MinifiedEmbedMessage, Primitive } from "../../../types";
+import { pick } from "../../../utils/pick";
+import { isPrimitiveValue } from "../../../utils/isPrimitiveValue";
 
 class MessageUtilsManager {
-  public messagesMatches(
-    returnedMessage: Message,
-    expectation: string | number | boolean | MessageEmbed,
-  ) {
+  public messagesMatches(returnedMessage: Message, expectation: Primitive | MessageEmbed) {
     let msg = "";
     if (isPrimitiveValue(expectation)) {
       const formattedMsg = this.getMessageByType(returnedMessage, "text") as Message;

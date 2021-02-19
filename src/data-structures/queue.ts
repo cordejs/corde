@@ -1,12 +1,5 @@
+import { GenericFunction, ParametersAsOptional } from "../types";
 import { Guid } from "../utils";
-
-type GenericFunction = (...args: any[]) => any;
-
-/**
- * Get all function `T` parameters as they may be
- * optional.
- */
-type ParametersAsOptional<T extends GenericFunction> = Parameters<T> | void[];
 
 /**
  * Structure to handle a collection of functions and execute then.

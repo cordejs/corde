@@ -13,13 +13,12 @@ export class ToEditMessage extends ExpectOperation<MessageData, string | Message
     await wait(600);
     const msg = await this.cordeBot.findMessage(messageData);
     if (!msg) {
-      this.isEqual = false;
-      this.forceIsEqualValue = true;
       return this.generateReport();
     }
 
     if (MessageUtils.messagesMatches(msg, newValue)) {
-      this.isEqual = true;
+      this.hasPassed = true;
+      this.invertHasPassedIfIsNot();
     }
 
     return this.generateReport();

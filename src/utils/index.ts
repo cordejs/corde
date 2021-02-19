@@ -1,4 +1,3 @@
-export * from "./list";
 export * from "./guid";
 export * from "./colors";
 export * from "./permission";
@@ -8,3 +7,4 @@ export * from "./bitfield";
 export * from "./isPrimitiveValue";
 export * from "./wait";
 export * from "./pick";
+export * from "./tryImport";

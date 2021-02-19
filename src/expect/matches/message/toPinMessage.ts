@@ -8,16 +8,15 @@ export class ToPinMessage extends ExpectOperation<MessageData> {
     await wait(600);
     const msg = await this.cordeBot.findPinnedMessage(messageData);
     if (!msg) {
-      // TODO: make use of hasPassed
-      this.isEqual = false;
-      this.forceIsEqualValue = true;
+      this.hasPassed = false;
       return this.generateReport();
     }
 
     if (msg.pinned) {
-      this.isEqual = true;
+      this.hasPassed = true;
     }
 
+    this.invertHasPassedIfIsNot();
     return this.generateReport();
   }
 }

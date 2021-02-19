@@ -9,15 +9,14 @@ export class ToUnpinMessage extends ExpectOperation<MessageData> {
     const msg = await this.cordeBot.findMessage(messageData);
 
     if (!msg) {
-      // TODO: make use of hasPassed
-      this.forceIsEqualValue = true;
       return this.generateReport();
     }
 
     if (msg && !msg.pinned) {
-      this.isEqual = true;
+      this.hasPassed = true;
     }
 
+    this.invertHasPassedIfIsNot();
     return this.generateReport();
   }
 }

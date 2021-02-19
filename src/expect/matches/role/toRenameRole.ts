@@ -7,16 +7,16 @@ export class ToRenameRole extends ExpectOperation<string, RoleData> {
     try {
       let role = await this.cordeBot.findRole(roleData);
       if (!role) {
-        this.isEqual = false;
-        this.forceIsEqualValue = true;
         this.output = "No role found";
+        return this.generateReport();
       } else {
         await this.cordeBot.sendTextMessage(this.command);
         await wait(600);
         role = await this.cordeBot.fetchRole(role.id);
         if (role.name === newName) {
-          this.isEqual = true;
+          this.hasPassed = true;
         }
+        this.invertHasPassedIfIsNot();
       }
     } catch (error) {
       this.catchExecutionError(error);

@@ -1,49 +1,34 @@
 import { MessageReaction } from "discord.js";
-import { CordeBot } from "../../../core";
 import { MessageData, TestReport } from "../../../types";
+import { ExpectOperation } from "../operation";
 
-export async function toRemoveReaction(
-  commandName: string,
-  isNot: boolean,
-  cordeBot: CordeBot,
-  removedReactions: string[],
-  messageData?: MessageData,
-): Promise<TestReport> {
-  let expectation = "";
-  let output = "";
-  let testSuccessfully = false;
+export class ToRemoveReaction extends ExpectOperation<string[], MessageData> {
+  public async action(removedReactions: string[], messageData?: MessageData): Promise<TestReport> {
+    this.expectation = removedReactions.join();
 
-  expectation = removedReactions.join();
+    try {
+      await this.cordeBot.sendTextMessage(this.command);
+      const message = await this.cordeBot.findMessage(messageData);
+      if (message) {
+        const reactions = await this.cordeBot.waitForRemovedReactions(
+          message,
+          removedReactions.length,
+        );
+        this.hasPassed = reactionsExistsIn(reactions, removedReactions);
+        this.output = reactions.map((v) => v.emoji.name).join();
+      }
 
-  try {
-    await cordeBot.sendTextMessage(commandName);
-    const message = await cordeBot.findMessage(messageData);
-    if (message) {
-      const reactions = await cordeBot.waitForRemovedReactions(message, removedReactions.length);
-      testSuccessfully = reactionsExistsIn(reactions, removedReactions);
-      output = reactions.map((v) => v.emoji.name).join();
+      this.invertHasPassedIfIsNot();
+    } catch (error) {
+      this.hasPassed = false;
+      if (error instanceof Error) {
+        this.output = error.message;
+      } else {
+        this.output = error;
+      }
     }
-
-    if (isNot) {
-      testSuccessfully = !testSuccessfully;
-    }
-  } catch (error) {
-    testSuccessfully = false;
-    if (error instanceof Error) {
-      output = error.message;
-    } else {
-      output = error;
-    }
+    return this.generateReport();
   }
-
-  return {
-    commandName,
-    expectation,
-    output,
-    hasPassed: testSuccessfully,
-    isNot,
-    showExpectAndOutputValue: false,
-  };
 }
 
 function reactionsExistsIn(reactions: MessageReaction[], expectation: string[]) {

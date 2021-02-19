@@ -7,6 +7,14 @@ export type messageOutputType = Message | MinifiedEmbedMessage;
 export type messageExpectationType = string | MessageEmbed;
 export type testFunctionType = (cordeBot: CordeBot) => Promise<TestReport>;
 export type VoidPromiseFunction = () => void | Promise<void>;
+export type GenericFunction = (...args: any[]) => any;
+export type Primitive = number | bigint | string | boolean;
+
+/**
+ * Get all function `T` parameters as they may be
+ * optional.
+ */
+export type ParametersAsOptional<T extends GenericFunction> = Parameters<T> | void[];
 
 /**
  * Available types of config files

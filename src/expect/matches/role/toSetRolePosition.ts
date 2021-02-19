@@ -12,27 +12,29 @@ export class ToSetRolePosition extends ExpectOperation<number, RoleData> {
         .first();
 
       if (!role || !lastRole) {
-        this.isEqual = false;
-        this.forceIsEqualValue = true;
+        this.hasPassed = false;
         this.output = "Role not found";
+        return this.generateReport();
       } else if (newPosition > lastRole.position) {
-        this.forceIsEqualValue = true;
         this.customReturnMessage = `the maximum position possible is ${lastRole.position}. Attempted value: ${newPosition}`;
+        return this.generateReport();
       } else {
         await this.cordeBot.sendTextMessage(this.command);
         // TODO: Fix this required wait to avoid inconsistence
         await wait(400);
         role = await this.cordeBot.findRole(roleData);
         if (role.position === newPosition) {
-          this.isEqual = true;
+          this.hasPassed = true;
         } else {
           this.customReturnMessage = `expected position: ${newPosition}, actual position: ${role.position}`;
         }
       }
     } catch (error) {
       this.catchExecutionError(error);
+      return this.generateReport();
     }
 
+    this.invertHasPassedIfIsNot();
     return this.generateReport();
   }
 }

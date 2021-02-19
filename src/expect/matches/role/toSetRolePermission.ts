@@ -19,18 +19,19 @@ export class ToSetRolePermission extends ExpectOperation<RolePermission[], RoleD
       const valuePermissions = permissions.map((p) => Permission[p]);
       const expectedPermissionsValue = calcPermissionsValue(...valuePermissions);
       if (role.permissions.bitfield === expectedPermissionsValue) {
-        this.isEqual = true;
+        this.hasPassed = true;
       }
     } catch (error) {
       this.catchExecutionError(error);
+      return this.generateReport();
     }
 
+    this.invertHasPassedIfIsNot();
     return this.generateReport();
   }
 
   private setDataForNotFoundRoleAndGenerateReport() {
-    this.isEqual = false;
-    this.forceIsEqualValue = true;
+    this.hasPassed = false;
     this.output = "Role not found";
     return this.generateReport();
   }

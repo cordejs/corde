@@ -9,8 +9,9 @@ export class ToSetRoleHoist extends ExpectOperation<boolean, RoleData> {
       await this.cordeBot.onceRoleUpdate();
       const role = await this.cordeBot.findRole(roleData);
       if (role.hoist === hoist) {
-        this.isEqual = true;
+        this.hasPassed = true;
       }
+      this.invertHasPassedIfIsNot();
     } catch (error) {
       this.catchExecutionError(error);
     }

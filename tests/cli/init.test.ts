@@ -1,6 +1,6 @@
 import { init } from "../../src/cli/init";
 import { FsMockUtils } from "../mockUtils/fs";
-import ConfigOptions from "../../src/types";
+import { ConfigOptions } from "../../src/types";
 
 // As there are a local config file for manual tests,
 // These files are renamed to avoid remotion after finish
