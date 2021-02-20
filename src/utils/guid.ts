@@ -1,4 +1,8 @@
 import * as uuid from "uuid";
+
+/**
+ * @internal
+ */
 class GuidManager {
   public new() {
     return uuid.v4();
