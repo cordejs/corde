@@ -51,13 +51,13 @@ After installed, add the file `corde.json` in root of your application with the 
 
 ```javascript
 {
-	"cordeTestToken":  "YOUR_TESTING_BOT_TOKEN_HERE",
-	"botTestId":  "YOUR_TESTING_BOT_ID_HERE",
-	"botTestToken":  "YOUR_BOT_TOKEN_HERE",
-	"guildId":  "THE_GUID_OF_BOT_HERE",
-	"channelId":  "CHANNELS_ID_HERE",
-	"botPrefix":  "+",
-	"testFiles":  ["./test"]
+   "cordeTestToken":  "YOUR_TESTING_BOT_TOKEN_HERE",
+   "botTestId":  "YOUR_TESTING_BOT_ID_HERE",
+   "botTestToken":  "YOUR_BOT_TOKEN_HERE",
+   "guildId":  "THE_GUID_OF_BOT_HERE",
+   "channelId":  "CHANNELS_ID_HERE",
+   "botPrefix":  "+",
+   "testFiles":  ["./test"]
 }
 ```
 
