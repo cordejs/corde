@@ -10,7 +10,7 @@ export class ToDeleteRole extends ExpectOperation<RoleData> {
         return this.generateReport();
       } else {
         await this.cordeBot.sendTextMessage(this.command);
-        await this.cordeBot.onceRoleDelete();
+        await this.cordeBot.events.onceRoleDelete();
         role = await this.cordeBot.fetchRole(role.id);
         if (!role || role.deleted) {
           this.hasPassed = true;

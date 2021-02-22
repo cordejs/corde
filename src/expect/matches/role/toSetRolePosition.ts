@@ -16,7 +16,7 @@ export class ToSetRolePosition extends ExpectOperation<number, RoleData> {
         this.output = "Role not found";
         return this.generateReport();
       } else if (newPosition > lastRole.position) {
-        this.customReturnMessage = `the maximum position possible is ${lastRole.position}. Attempted value: ${newPosition}`;
+        this.message = `the maximum position possible is ${lastRole.position}. Attempted value: ${newPosition}`;
         return this.generateReport();
       } else {
         await this.cordeBot.sendTextMessage(this.command);
@@ -26,7 +26,7 @@ export class ToSetRolePosition extends ExpectOperation<number, RoleData> {
         if (role.position === newPosition) {
           this.hasPassed = true;
         } else {
-          this.customReturnMessage = `expected position: ${newPosition}, actual position: ${role.position}`;
+          this.message = `expected position: ${newPosition}, actual position: ${role.position}`;
         }
       }
     } catch (error) {

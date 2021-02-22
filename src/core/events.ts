@@ -31,6 +31,7 @@ interface EventResume {
 
 /**
  * Encapsulation of Discord.js events.
+ * @internal
  */
 export class Events {
   protected readonly _client: Client;
@@ -42,6 +43,7 @@ export class Events {
   /**
    * Execute an event `once` returning it's response.
    * @param event event's name.
+   * @internal
    */
   private async _once<T extends any>(event: keyof ClientEvents): Promise<T> {
     const response = await once(this._client, event);
@@ -55,62 +57,71 @@ export class Events {
   /**
    * Emitted when the client becomes ready to start working.
    * @param fn Operation to be executed after client becomes ready.
+   * @internal
    */
-  public onReady(fn: () => void) {
+  public onReady(fn: () => void): void {
     this._client.on("ready", fn);
   }
 
   /**
    * Emitted once the client becomes ready to start working.
+   * @internal
    */
-  public onceReady() {
-    return this._once<void>("ready");
+  public async onceReady(): Promise<void> {
+    await this._once<void>("ready");
+    return;
   }
 
   /**
    * Emitted when a **bot** removes a emoji from a message.
+   * @internal
    */
-  public onMessageReactionRemoveEmoji(fn: (reaction: MessageReaction) => void) {
+  public onMessageReactionRemoveEmoji(fn: (reaction: MessageReaction) => void): void {
     this._client.on("messageReactionRemoveEmoji", fn);
   }
 
   /**
    * Emitted once a **bot** removes a emoji from a message.
    * @returns Reaction removed.
+   * @internal
    */
-  public onceMessageReactionRemoveEmoji() {
+  public onceMessageReactionRemoveEmoji(): Promise<MessageReaction> {
     return this._once<MessageReaction>("messageReactionRemoveEmoji");
   }
 
   /**
    * Emitted when a channel is created.
    * @param fn function to receive the event.
+   * @internal
    */
-  public onChannelCreate(fn: (channel: Channel) => void) {
+  public onChannelCreate(fn: (channel: Channel) => void): void {
     this._client.on("channelCreate", fn);
   }
 
   /**
    * Emitted once a channel is created.
    * @returns Created channel.
+   * @internal
    */
-  public onceChannelCreate() {
+  public onceChannelCreate(): Promise<Channel> {
     return this._once<Channel>("channelCreate");
   }
 
   /**
    * Emitted whenever a channel is deleted.
-   * @param fn function to receive the deleted channel
+   * @param fn function to receive the deleted channel.
+   * @internal
    */
-  public onChannelDelete(fn: (deletedChannel: Channel) => void) {
+  public onChannelDelete(fn: (deletedChannel: Channel) => void): void {
     this._client.on("channelDelete", fn);
   }
 
   /**
    * Emitted once a channel is deleted.
    * @returns Deleted channel.
+   * @internal
    */
-  public onceChannelDelete() {
+  public onceChannelDelete(): Promise<Channel> {
     return this._once<Channel>("channelDelete");
   }
 
@@ -120,8 +131,9 @@ export class Events {
    * you need to manually check the pins yourself.
    *
    * @param fn function to receive the channel and the time that it was updated.
+   * @internal
    */
-  public onChannelPinsUpdate(fn: (channel: Channel, updateTime: Date) => void) {
+  public onChannelPinsUpdate(fn: (channel: Channel, updateTime: Date) => void): void {
     this._client.on("channelPinsUpdate", fn);
   }
 
@@ -131,6 +143,7 @@ export class Events {
    * you need to manually check the pins yourself.
    *
    * @returns `Channel` and `date` of it's change.
+   * @internal
    */
   public async onceChannelPinsUpdate(): Promise<[Channel, Date]> {
     return this._once<[Channel, Date]>("channelPinsUpdate");
@@ -139,6 +152,7 @@ export class Events {
   /**
    * Emitted whenever a channel is updated - e.g. name change, topic change.
    * @param fn function to receive the channel change
+   * @internal
    */
   public onChannelUpdate(fn: (oldChannel: Channel, newChannel: Channel) => void) {
     this._client.on("channelUpdate", fn);
@@ -147,6 +161,7 @@ export class Events {
   /**
    * Emitted once a channel is updated - e.g. name change, topic change.
    * @returns `Old channel` and `new value` of the channel.
+   * @internal
    */
   public async onceChannelUpdate(): Promise<[Channel, Channel]> {
     return this._once<[Channel, Channel]>("channelUpdate");
@@ -154,7 +169,8 @@ export class Events {
 
   /**
    * Emitted for general debugging information.
-   * @param fn
+   * @param fn Function to handle debug info.
+   * @internal
    */
   public onDebug(fn: (arg: string) => void) {
     this._client.on("debug", fn);
@@ -162,86 +178,97 @@ export class Events {
 
   /**
    * Emitted once for general debugging information.
+   * @internal
    */
-  public onceDebug() {
-    return this._once<void>("debug");
+  public async onceDebug(): Promise<string> {
+    return await this._once<string>("debug");
   }
 
   /**
    * Emitted whenever a guild role is deleted.
    * @param fn function to receive the deleted role.
+   * @internal
    */
-  public onRoleDelete(fn: (role: Role) => void) {
+  public onRoleDelete(fn: (role: Role) => void): void {
     this._client.on("roleDelete", fn);
   }
 
   /**
    * Emitted once a guild role is deleted.
    * @returns Deleted role.
+   * @internal
    */
-  public onceRoleDelete() {
+  public onceRoleDelete(): Promise<Role> {
     return this._once<Role>("roleDelete");
   }
 
   /**
    * Emitted whenever the client's WebSocket disconnects and will no longer attempt to reconnect.
    * @param fn function to receive the event.
+   * @internal
    */
-  public onDisconnect(fn: (closeEvent: CloseEvent) => void) {
+  public onDisconnect(fn: (closeEvent: CloseEvent, code: number) => void): void {
     this._client.on("disconnect", fn);
   }
 
   /**
    * Emitted once the client's WebSocket disconnects and will no longer attempt to reconnect.
    * @returns Close event.
+   * @internal
    */
-  public onceDisconnect() {
-    return this._once<CloseEvent>("disconnect");
+  public onceDisconnect(): Promise<[CloseEvent, number]> {
+    return this._once<[CloseEvent, number]>("disconnect");
   }
 
   /**
    * Emitted whenever a custom emoji is created in a guild.
-   * @param fn function to receive the created emoji
+   * @param fn function to receive the created emoji.
+   * @internal
    */
-  public onEmojiCreate(fn: (createdEmoji: GuildEmoji) => void) {
+  public onEmojiCreate(fn: (createdEmoji: GuildEmoji) => void): void {
     this._client.on("emojiCreate", fn);
   }
 
   /**
    * Emitted once a custom emoji is created in a guild.
    * @returns Created emoji.
+   * @internal
    */
-  public onceEmojiCreate() {
+  public onceEmojiCreate(): Promise<GuildEmoji> {
     return this._once<GuildEmoji>("emojiCreate");
   }
 
   /**
    * Emitted whenever a custom guild emoji is deleted.
    * @param fn function to receive the deleted emoji.
+   * @internal
    */
-  public onEmojiDelete(fn: (emojiDeleted: GuildEmoji) => void) {
+  public onEmojiDelete(fn: (emojiDeleted: GuildEmoji) => void): void {
     this._client.on("emojiDelete", fn);
   }
 
   /**
    * Emitted once a custom guild emoji is deleted.
-   * @returns The emoji that was deleted
+   * @returns The emoji that was deleted.
+   * @internal
    */
-  public onceEmojiDelete() {
+  public onceEmojiDelete(): Promise<GuildEmoji> {
     return this._once<GuildEmoji>("emojiDelete");
   }
 
   /**
    * Emitted whenever a custom guild emoji is updated.
    * @param fn function to receice the old and the new value of the emoji.
+   * @internal
    */
-  public onEmojiUpdate(fn: (oldEmoji: GuildEmoji, newEmoji: GuildEmoji) => void) {
+  public onEmojiUpdate(fn: (oldEmoji: GuildEmoji, newEmoji: GuildEmoji) => void): void {
     this._client.on("emojiUpdate", fn);
   }
 
   /**
    * Emitted once a custom guild emoji is updated.
    * @returns `Old` and `new` role value.
+   * @internal
    */
   public onceEmojiUpdate(): Promise<[GuildEmoji, GuildEmoji]> {
     return this._once<[GuildEmoji, GuildEmoji]>("emojiUpdate");
@@ -250,16 +277,18 @@ export class Events {
   /**
    * Emitted whenever the client's WebSocket encounters a connection error.
    * @param fn function to receive the error.
+   * @internal
    */
-  public onError(fn: (error: Error) => void) {
+  public onError(fn: (error: Error) => void): void {
     this._client.on("error", fn);
   }
 
   /**
    * Emitted once the client's WebSocket encounters a connection error.
    * @return Found error.
+   * @internal
    */
-  public onceError() {
+  public onceError(): Promise<Error> {
     return this._once<Error>("error");
   }
 

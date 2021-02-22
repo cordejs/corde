@@ -1,6 +1,6 @@
 import assert from "assert";
 import { Message, MessageEmbed } from "discord.js";
-import { messageType, MinifiedEmbedMessage, Primitive } from "../../../types";
+import { MessageData, messageType, MinifiedEmbedMessage, Primitive } from "../../../types";
 import { pick } from "../../../utils/pick";
 import { isPrimitiveValue } from "../../../utils/isPrimitiveValue";
 
@@ -79,7 +79,30 @@ class MessageUtilsManager {
       return answer;
     }
   }
+
+  public createNotFoundMessageForMessageData(msgData: MessageData): string | null {
+    if (!msgData) {
+      return null;
+    }
+
+    if (msgData.id && msgData.text) {
+      return `Message with id ${msgData.id} or content '${msgData.text}' not found.`;
+    }
+
+    if (msgData.id) {
+      return `Message with id ${msgData.id} not found.`;
+    }
+
+    if (msgData.text) {
+      return `Message with content '${msgData.text}' not found.`;
+    }
+
+    return null;
+  }
 }
 
+/**
+ * @internal
+ */
 const MessageUtils = new MessageUtilsManager();
 export default MessageUtils;

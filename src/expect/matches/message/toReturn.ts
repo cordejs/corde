@@ -13,12 +13,8 @@ export class ToReturn extends ExpectOperation<string | number | boolean | Messag
   public async action(expect: string | number | boolean | MessageEmbed): Promise<TestReport> {
     try {
       this.expectation = expect;
-      this.showExpectAndOutputValue = true;
       await this.cordeBot.sendTextMessage(this.command);
       const returnedMessage = await this.cordeBot.awaitMessagesFromTestingBot();
-      if (!isPrimitiveValue(expect)) {
-        this.showExpectAndOutputValue = false;
-      }
 
       this.hasPassed = MessageUtils.messagesMatches(returnedMessage, expect);
       this.output = this.getMessageValue(returnedMessage, expect);

@@ -10,7 +10,7 @@ export class ToSetRolePermission extends ExpectOperation<RolePermission[], RoleD
       }
 
       this.cordeBot.sendTextMessage(this.command);
-      const role = await this.cordeBot.waitRolePermissionUpdate(roleData);
+      const role = await this.cordeBot.events.waitRolePermissionUpdate(roleData);
 
       if (!role) {
         return this.setDataForNotFoundRoleAndGenerateReport();

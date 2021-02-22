@@ -9,10 +9,12 @@ export class ToEditMessage extends ExpectOperation<MessageData, string | Message
     messageData: MessageData,
     newValue: string | MessageEmbed,
   ): Promise<TestReport> {
+    this.expectation = newValue;
     await this.cordeBot.sendTextMessage(this.command);
     await wait(600);
     const msg = await this.cordeBot.findMessage(messageData);
     if (!msg) {
+      this.message = MessageUtils.createNotFoundMessageForMessageData(messageData);
       return this.generateReport();
     }
 

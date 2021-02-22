@@ -12,11 +12,10 @@ import { TestReport } from "../../types/types";
  *
  */
 export abstract class ExpectOperation<P1 = any, P2 = any, P3 = any> {
-  protected output: any;
+  protected output: unknown;
   protected expectation: any;
   protected hasPassed: boolean;
-  protected showExpectAndOutputValue: boolean;
-  protected customReturnMessage?: string;
+  protected message: string;
 
   protected readonly isNot: boolean;
   protected readonly command: string;
@@ -62,15 +61,13 @@ export abstract class ExpectOperation<P1 = any, P2 = any, P3 = any> {
     }
   }
 
-  protected generateReport(showExpectAndOutputValue = false) {
+  protected generateReport(message?: string): TestReport {
     return {
       commandName: this.command,
       expectation: this.expectation,
       hasPassed: this.hasPassed,
       isNot: this.isNot,
-      output: this.output,
-      showExpectAndOutputValue: this.showExpectAndOutputValue,
-      customReturnMessage: this.customReturnMessage,
+      message: message ?? this.message,
     };
   }
 }

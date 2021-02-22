@@ -21,7 +21,7 @@ const DEFAULT_TEST_TIMEOUT = 5000;
  * Encapsulation of Discord Client with all specific
  * functions for corde test.
  */
-export class CordeBot extends Events {
+export class CordeBot {
   /**
    * Observes if corde bot is **ready**.
    * This is invoked after onReady in Discord.Client.
@@ -33,12 +33,15 @@ export class CordeBot extends Events {
     return this._onStart.asObservable();
   }
 
+  public readonly events: Events;
+
   private readonly _onStart: BehaviorSubject<boolean>;
   private readonly _prefix: string;
   private readonly _guildId: string;
   private readonly _channelId: string;
   private readonly _waitTimeOut: number;
   private readonly _testBotId: string;
+  private readonly _client: Client;
 
   private textChannel: TextChannel;
   private _reactionsObserved: BehaviorSubject<MessageReaction>;
@@ -60,7 +63,8 @@ export class CordeBot extends Events {
     testBotId: string,
     client: Client,
   ) {
-    super(client);
+    this.events = new Events(client);
+    this._client = client;
     this._channelId = channelId;
     this._prefix = prefix;
     this._guildId = guildId;
@@ -328,12 +332,12 @@ export class CordeBot extends Events {
   }
 
   private loadClientEvents() {
-    this.onReady(() => {
+    this.events.onReady(() => {
       this.loadChannel();
       this._onStart.next(true);
     });
 
-    this.onMessageReactionRemoveEmoji((reaction) => {
+    this.events.onMessageReactionRemoveEmoji((reaction) => {
       this._reactionsObserved.next(reaction);
     });
   }

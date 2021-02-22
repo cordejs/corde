@@ -6,7 +6,7 @@ export class ToSetRoleHoist extends ExpectOperation<boolean, RoleData> {
   public async action(hoist: boolean, roleData: RoleData): Promise<TestReport> {
     try {
       this.cordeBot.sendTextMessage(this.command);
-      await this.cordeBot.onceRoleUpdate();
+      await this.cordeBot.events.onceRoleUpdate();
       const role = await this.cordeBot.findRole(roleData);
       if (role.hoist === hoist) {
         this.hasPassed = true;
