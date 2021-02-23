@@ -21,7 +21,7 @@ import {
 import { once } from "events";
 import { RoleData } from "../types";
 
-interface EventResume {
+export interface EventResume {
   count: number;
   index: number;
   nonce: string;
@@ -296,6 +296,7 @@ export class Events {
    * Emitted whenever a member is banned from a guild.
    * @param fn function to receive the guild where the user was removed from,
    * and the user itself.
+   * @internal
    */
   public onGuildBan(fn: (guild: Guild, user: User) => void) {
     this._client.on("guildBanAdd", fn);
@@ -304,6 +305,7 @@ export class Events {
   /**
    * Emitted once a member is banned from a guild.
    * @returns `guild` where the user was banned from, and the `user` itself
+   * @internal
    */
   public onceGuildBan() {
     return this._once<[Guild, User]>("guildBanAdd");
@@ -313,8 +315,9 @@ export class Events {
    * Emitted whenever a member is unbanned from a guild.
    * @param fn function to receive the guild that the user was removed
    * from ban, and the user.
+   * @internal
    */
-  public onGuilBanRemove(fn: (guild: Guild, user: User) => void) {
+  public onGuildBanRemove(fn: (guild: Guild, user: User) => void) {
     this._client.on("guildBanRemove", fn);
   }
 
@@ -322,14 +325,16 @@ export class Events {
    * Emitted once a member is unbanned from a guild.
    * @returns the `guild` that the user was removed
    * from ban, and the `user`.
+   * @internal
    */
-  public onceGuilBanRemove() {
+  public onceGuildBanRemove() {
     return this._once<[Guild, User]>("guildBanRemove");
   }
 
   /**
    * Emitted whenever the client joins a guild.
    * @param fn function to receive the created guild.
+   * @internal
    */
   public onGuildCreate(fn: (createdGuild: Guild) => void) {
     this._client.on("guildCreate", fn);
@@ -338,6 +343,7 @@ export class Events {
   /**
    * Emitted once the client joins a guild.
    * @returns Created guild.
+   * @internal
    */
   public onceGuildCreate() {
     return this._once<Guild>("guildCreate");
@@ -346,6 +352,7 @@ export class Events {
   /**
    * Emitted whenever a guild is deleted/left.
    * @param fn function to receive the deleted guild.
+   * @internal
    */
   public onGuildDelete(fn: (deletedGuild: Guild) => void) {
     this._client.on("guildDelete", fn);
@@ -354,6 +361,7 @@ export class Events {
   /**
    * Emitted once a guild is deleted/left.
    * @returns Deleted guild.
+   * @internal
    */
   public onceGuildDelete() {
     return this._once<Guild>("guildDelete");
@@ -362,6 +370,7 @@ export class Events {
   /**
    * Emitted whenever a user joins a guild.
    * @param fn function to receive the member who was added to guild.
+   * @internal
    */
   public onGuildMemberAdd(fn: (member: GuildMember) => void) {
     this._client.on("guildMemberAdd", fn);
@@ -370,6 +379,7 @@ export class Events {
   /**
    * Emitted once a user joins a guild.
    * @returns Member who was added to guild.
+   * @internal
    */
   public onceGuildMemberAdd() {
     return this._once<GuildMember>("guildMemberAdd");
@@ -378,6 +388,7 @@ export class Events {
   /**
    * Emitted whenever a member becomes available in a large guild.
    * @param fn function to receive the guild who is available.
+   * @internal
    */
   public onGuildMemberAvailable(fn: (member: GuildMember | PartialGuildMember) => void) {
     this._client.on("guildMemberAvailable", fn);
@@ -386,6 +397,7 @@ export class Events {
   /**
    * Emitted once a member becomes available in a large guild.
    * @returns Guild who is available.
+   * @internal
    */
   public onceGuildMemberAvailable() {
     return this._once<GuildMember | PartialGuildMember>("guildMemberAvailable");
@@ -394,6 +406,7 @@ export class Events {
   /**
    * Emitted whenever a member leaves a guild, or is kicked.
    * @param fn function to receive the member of guild who kicked.
+   * @internal
    */
   public onGuildMemberRemove(fn: (member: GuildMember | PartialGuildMember) => void) {
     this._client.on("guildMemberRemove", fn);
@@ -402,6 +415,7 @@ export class Events {
   /**
    * Emitted once a member leaves a guild, or is kicked.
    * @returns Member of guild who kicked.
+   * @internal
    */
   public onceGuildMemberRemove() {
     return this._once<GuildMember | PartialGuildMember>("guildMemberRemove");
@@ -410,6 +424,7 @@ export class Events {
   /**
    * Emitted whenever a chunk of guild members is received (all members come from the same guild).
    * @param fn function to receive the collection of members that the guild received.
+   * @internal
    */
   public onGuildMemberChunk(
     fn: (members: Collection<string, GuildMember>, guild: Guild, eventResume: EventResume) => void,

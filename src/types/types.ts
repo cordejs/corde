@@ -147,8 +147,8 @@ export interface MessageData {
 
 export interface TestReport {
   readonly commandName?: string;
-  readonly expectation?: unknown;
-  readonly output?: unknown;
+  readonly expectation?: any;
+  readonly output?: any;
   readonly isNot?: boolean;
   readonly hasPassed: boolean;
   readonly message?: string;

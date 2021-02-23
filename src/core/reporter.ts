@@ -122,14 +122,14 @@ class Reporter {
   }
 
   private printFailure(tabSpace: string, report: TestReport) {
-    if (report.customReturnMessage) {
+    if (report.message) {
       console.log(
         `${tabSpace}  ${this._bgSuccess.bold(" PASS ")} command ${chalk.bold(report.commandName)} ${
-          report.customReturnMessage
+          report.message
         }`,
       );
     } else {
-      if (report.showExpectAndOutputValue) {
+      if (!report.hasPassed) {
         this.printFailureWithValues(tabSpace, report);
       } else {
         this.printFailureOnlyWithCommandName(tabSpace, report.commandName);
@@ -138,7 +138,7 @@ class Reporter {
   }
 
   private printSuccess(tabSpace: string, report: TestReport) {
-    if (report.showExpectAndOutputValue) {
+    if (!report.hasPassed) {
       this.printSuccessWithValues(tabSpace, report);
     } else {
       this.printSuccessOnlyWithCommandName(tabSpace, report.commandName);

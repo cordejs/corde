@@ -16,6 +16,7 @@ import {
   Role,
   RoleManager,
   GuildEmoji,
+  GuildMemberManager,
 } from "discord.js";
 
 /**
@@ -60,6 +61,7 @@ export default class MockDiscord {
   private _messageCollection: Collection<string, Message>;
   private _messageEmbedCollection: Collection<string, MessageEmbed>;
   private _messageReactionCollection: Collection<string, MessageReaction>;
+  private _guildMemberCollection: Collection<string, GuildMember>;
   private _messageManager: MessageManager;
   private _role: Role;
   private _roleManager: RoleManager;
@@ -250,6 +252,10 @@ export default class MockDiscord {
     return this._guildEmoji;
   }
 
+  get guildMemberCollection() {
+    return this._guildMemberCollection;
+  }
+
   get<T extends Collection<K, V>, K, V>(collection: T, index: number) {
     return collection.array()[index];
   }
@@ -283,6 +289,7 @@ export default class MockDiscord {
     this._roleManager = this.createMockRoleManager();
 
     this._guildEmoji = this.createGuildEmoji();
+    this._guildMemberCollection = this.createGuildMemberCollection();
   }
 
   createMockClient() {
@@ -346,6 +353,12 @@ export default class MockDiscord {
       deleted: false,
     };
     return new GuildEmoji(this._client, emojiData ?? data, this.guild);
+  }
+
+  createGuildMemberCollection() {
+    const col = new Collection<string, GuildMember>();
+    col.set(this.guildMember.id, this.guildMember);
+    return col;
   }
 
   createMockTextChannel() {
