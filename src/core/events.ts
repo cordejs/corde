@@ -1,3 +1,4 @@
+import { rejects } from "assert";
 import {
   Channel,
   Client,
@@ -19,6 +20,7 @@ import {
   VoiceState,
 } from "discord.js";
 import { once } from "events";
+import { DEFAULT_TEST_TIMEOUT } from "../consts";
 import { RoleData } from "../types";
 
 export interface EventResume {
@@ -435,6 +437,7 @@ export class Events {
   /**
    * Emitted once a chunk of guild members is received (all members come from the same guild).
    * @returns The collection of members that the guild received.
+   * @internal
    */
   public onceGuildMemberChunk() {
     return this._once<[Collection<string, GuildMember>, Guild, EventResume]>("guildMembersChunk");
@@ -443,16 +446,18 @@ export class Events {
   /**
    * Emitted whenever a guild member starts/stops speaking.
    * @param fn function to receive the guild's member who is speaking.
+   * @internal
    */
   public onGuildMemberSpeaking(
     fn: (member: GuildMember | PartialGuildMember, speaking: Readonly<Speaking>) => void,
-  ) {
+  ): void {
     this._client.on("guildMemberSpeaking", fn);
   }
 
   /**
    * Emitted once a guild member starts/stops speaking.
    * @returns The guild's member who is speaking.
+   * @internal
    */
   public onceGuildMemberSpeaking() {
     return this._once<[GuildMember | PartialGuildMember, Readonly<Speaking>]>(
@@ -463,6 +468,7 @@ export class Events {
   /**
    * Emitted whenever a guild member changes - i.e. new role, removed role, nickname.
    * @param fn function to receive the old and the new value of the guild member.
+   * @internal
    */
   public onGuildMemberUpdate(
     fn: (oldMember: GuildMember | PartialGuildMember, newMember: GuildMember) => void,
@@ -473,6 +479,7 @@ export class Events {
   /**
    * Emitted once a guild member changes - i.e. new role, removed role, nickname.
    * @returns Old and the new value of the guild member.
+   * @internal
    */
   public onceGuildMemberUpdate() {
     return this._once<[GuildMember | PartialGuildMember, GuildMember]>("guildMemberUpdate");
@@ -481,6 +488,7 @@ export class Events {
   /**
    * Emitted whenever a guild becomes unavailable, likely due to a server outage.
    * @param fn function to receive the unvailable guild.
+   * @internal
    */
   public onGuildUnavailable(fn: (guild: Guild) => void) {
     this._client.on("guildUnavailable", fn);
@@ -489,6 +497,7 @@ export class Events {
   /**
    * Emitted once a guild becomes unavailable, likely due to a server outage.
    * @returns Unvailable guild.
+   * @internal
    */
   public onceGuildUnavailable() {
     return this._once<Guild>("guildUnavailable");
@@ -497,6 +506,7 @@ export class Events {
   /**
    * Emitted whenever a guild is updated - e.g. name change.
    * @param fn function to receive the old and new value of the updated guild.
+   * @internal
    */
   public onGuildUpdate(fn: (oldGuild: Guild, newGuild: Guild) => void) {
     this._client.on("guildUpdate", fn);
@@ -505,6 +515,7 @@ export class Events {
   /**
    * Emitted once a guild is updated - e.g. name change.
    * @returns The old and new value of the updated guild.
+   * @internal
    */
   public onceGuildUpdate() {
     return this._once<[Guild, Guild]>("guildUpdate");
@@ -513,6 +524,7 @@ export class Events {
   /**
    * Emitted whenever a message is created.
    * @param fn function to receive the created message.
+   * @internal
    */
   public onMessage(fn: (message: Message) => void) {
     this._client.on("message", fn);
@@ -521,6 +533,7 @@ export class Events {
   /**
    * Emitted once a message is created.
    * @returns Created message.
+   * @internal
    */
   public onceMessage() {
     return this._once<Message>("message");
@@ -529,6 +542,7 @@ export class Events {
   /**
    * Emitted whenever a message is deleted.
    * @param fn function to receive the deleted message.
+   * @internal
    */
   public onMessageDelete(fn: (deletedMessage: Message | PartialMessage) => void) {
     this._client.on("messageDelete", fn);
@@ -537,6 +551,7 @@ export class Events {
   /**
    * Emitted once a message is deleted.
    * @returns Deleted message.
+   * @internal
    */
   public onceMessageDelete() {
     return this._once<Message | PartialMessage>("messageDelete");
@@ -546,6 +561,7 @@ export class Events {
    * Emitted whenever messages are deleted in bulk.
    * @param fn function to receive the collection of messages that
    * was deleted.
+   * @internal
    */
   public onMessageDeleteBulk(
     fn: (deletedMessages: Collection<string, Message | PartialMessage>) => void,
@@ -556,6 +572,7 @@ export class Events {
   /**
    * Emitted once messages are deleted in bulk.
    * @returns Collection of messages that was deleted.
+   * @internal
    */
   public onceMessageDeleteBulk() {
     return this._once<Collection<string, Message | PartialMessage>>("messageDeleteBulk");
@@ -564,6 +581,7 @@ export class Events {
   /**
    * Emitted whenever a reaction is added to a message.
    * @param fn function to receive the added reaction and it's author.
+   * @internal
    */
   public onMessageReactionAdd(
     fn: (addedReaction: MessageReaction, author: User | PartialUser) => void,
@@ -574,6 +592,7 @@ export class Events {
   /**
    * Emitted once a reaction is added to a message.
    * @returns Added reaction and it's author.
+   * @internal
    */
   public onceMessageReactionAdd() {
     return this._once<[MessageReaction, User | PartialUser]>("messageReactionAdd");
@@ -583,6 +602,7 @@ export class Events {
    * Emitted whenever a reaction is removed from a message.
    * @param fn function to receive the removed reaction and the author
    * of the remotion.
+   * @internal
    */
   public onMessageReactionRemove(
     fn: (removedReaction: MessageReaction, author: User | PartialUser) => void,
@@ -593,6 +613,7 @@ export class Events {
   /**
    * Emitted once a reaction is removed from a message.
    * @returns Removed reaction and the author of the remotion.
+   * @internal
    */
   public onceMessageReactionRemove() {
     return this._once<[MessageReaction, User | PartialUser]>("messageReactionRemove");
@@ -602,6 +623,7 @@ export class Events {
    * Emitted whenever all reactions are removed from a message.
    * @param fn function to receive the message who had it's reactions
    * removed.
+   * @internal
    */
   public onMessageReactionRemoveAll(fn: (message: Message | PartialMessage) => void) {
     this._client.on("messageReactionRemoveAll", fn);
@@ -610,6 +632,7 @@ export class Events {
   /**
    * Emitted whenever all reactions are removed from a message.
    * @param fn Message who had it's reactions removed.
+   * @internal
    */
   public onceMessageReactionRemoveAll() {
     return this._once<Message | PartialMessage>("messageReactionRemoveAll");
@@ -618,6 +641,7 @@ export class Events {
   /**
    * Emitted whenever a message is updated - e.g. embed or content change.
    * @param fn function to receive the old and new value of a message.
+   * @internal
    */
   public onMessageUpdate(
     fn: (oldMessage: Message | PartialMessage, newMessage: Message | PartialMessage) => void,
@@ -628,6 +652,7 @@ export class Events {
   /**
    * Emitted once a message is updated - e.g. embed or content change.
    * @returns `Old` and `new` value of a message.
+   * @internal
    */
   public onceMessageUpdate() {
     return this._once<[Message | PartialMessage, Message | PartialMessage]>("messageUpdate");
@@ -636,6 +661,7 @@ export class Events {
   /**
    * Emitted whenever a guild member's presence changes, or they change one of their details.
    * @param fn function to receive the old and new presence values.
+   * @internal
    */
   public onPresenceUpdate(fn: (oldMember: Presence, newMember: Presence) => void) {
     this._client.on("presenceUpdate", fn);
@@ -644,6 +670,7 @@ export class Events {
   /**
    * Emitted once a guild member's presence changes, or they change one of their details.
    * @returns Old and new presence values.
+   * @internal
    */
   public oncePresenceUpdate() {
     return this._once<[Presence, Presence]>("presenceUpdate");
@@ -652,6 +679,7 @@ export class Events {
   /**
    * Emitted whenever a role is created.
    * @param fn function to receive the created role.
+   * @internal
    */
   public onRoleCreate(fn: (createdRole: Role) => void) {
     this._client.on("roleCreate", fn);
@@ -660,6 +688,7 @@ export class Events {
   /**
    * Emitted once a role is created.
    * @returns Created role.
+   * @internal
    */
   public onceRoleCreate() {
     return this._once<Role>("roleCreate");
@@ -668,6 +697,7 @@ export class Events {
   /**
    * Emitted whenever a guild role is updated.
    * @param fn function to receive the old and the new role value.
+   * @internal
    */
   public onRoleUpdate(fn: (oldRole: Role, newRole: Role) => void) {
     this._client.on("roleUpdate", fn);
@@ -676,6 +706,7 @@ export class Events {
   /**
    * Emitted once a guild role is updated.
    * @returns `old` and the `new` role value.
+   * @internal
    */
   public onceRoleUpdate() {
     return this._once<[Role, Role]>("roleUpdate");
@@ -686,8 +717,12 @@ export class Events {
    * @param roleData `id` or `name` to identify the role.
    * @returns Specified role that had his permissions updated.
    */
-  public waitRolePermissionUpdate(roleData: RoleData) {
-    return new Promise<Role>((resolve) => {
+  public waitRolePermissionUpdate(roleData: RoleData, timeout = DEFAULT_TEST_TIMEOUT) {
+    return new Promise<Role>((resolve, reject) => {
+      setTimeout(() => {
+        reject();
+      }, timeout);
+
       this.onRoleUpdate((oldRole, newRole) => {
         if (newRole.id !== roleData.id && newRole.name !== roleData.name) {
           return;

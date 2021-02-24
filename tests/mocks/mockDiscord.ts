@@ -16,17 +16,39 @@ import {
   Role,
   RoleManager,
   GuildEmoji,
-  GuildMemberManager,
+  Speaking,
+  Presence,
+  PresenceStatus,
+  ActivityType,
+  Activity,
 } from "discord.js";
 
 /**
  * @private
  */
-interface GuildEmojiData {
+export interface GuildEmojiData {
   animated: boolean;
   name: string;
   id: string;
   deleted: boolean;
+}
+
+export interface ActivityData {
+  name: string;
+  type: ActivityType;
+  url?: string;
+  details?: string;
+  state?: string;
+  application_id: string;
+  timestamp: Date;
+  party?: Object;
+}
+
+export interface PresenceData {
+  user: User;
+  guild?: Guild;
+  status: PresenceStatus;
+  activities: ActivityData[];
 }
 
 /**
@@ -43,28 +65,30 @@ interface GuildEmojiData {
  * @internal
  */
 export default class MockDiscord {
-  private _id: string;
-  private _message: Message;
-  private _messageEmbed: MessageEmbed;
-  private _client: Client;
-  private _guild: Guild;
-  private _guildEmoji: GuildEmoji;
-  private _channel: Channel;
-  private _guildChannel: GuildChannel;
-  private _textChannel: TextChannel;
-  private _user: User;
-  private _userBot: User;
-  private _guildMember: GuildMember;
-  private _guildManager: GuildManager;
-  private _messageReaction: MessageReaction;
-  private _isolatedMessageReaction: MessageReaction;
-  private _messageCollection: Collection<string, Message>;
-  private _messageEmbedCollection: Collection<string, MessageEmbed>;
-  private _messageReactionCollection: Collection<string, MessageReaction>;
-  private _guildMemberCollection: Collection<string, GuildMember>;
-  private _messageManager: MessageManager;
-  private _role: Role;
-  private _roleManager: RoleManager;
+  private _id!: string;
+  private _message!: Message;
+  private _messageEmbed!: MessageEmbed;
+  private _client!: Client;
+  private _guild!: Guild;
+  private _guildEmoji!: GuildEmoji;
+  private _channel!: Channel;
+  private _guildChannel!: GuildChannel;
+  private _textChannel!: TextChannel;
+  private _user!: User;
+  private _userBot!: User;
+  private _guildMember!: GuildMember;
+  private _guildManager!: GuildManager;
+  private _messageReaction!: MessageReaction;
+  private _isolatedMessageReaction!: MessageReaction;
+  private _messageCollection!: Collection<string, Message>;
+  private _messageEmbedCollection!: Collection<string, MessageEmbed>;
+  private _messageReactionCollection!: Collection<string, MessageReaction>;
+  private _guildMemberCollection!: Collection<string, GuildMember>;
+  private _messageManager!: MessageManager;
+  private _role!: Role;
+  private _roleManager!: RoleManager;
+  private _speaking!: Speaking;
+  private _presence!: Presence;
 
   /**
    * Initialize all mocks
@@ -214,6 +238,10 @@ export default class MockDiscord {
     return this._userBot.id;
   }
 
+  get presence() {
+    return this._presence;
+  }
+
   /**
    * Recreates all mocks
    */
@@ -256,6 +284,10 @@ export default class MockDiscord {
     return this._guildMemberCollection;
   }
 
+  get speaking() {
+    return this._speaking;
+  }
+
   get<T extends Collection<K, V>, K, V>(collection: T, index: number) {
     return collection.array()[index];
   }
@@ -284,12 +316,13 @@ export default class MockDiscord {
 
     this._messageEmbed = this.createMockMessageEmbed();
     this._messageEmbedCollection = this.createMockMessageEmbedCollection();
-
     this._role = this.createMockRole();
-    this._roleManager = this.createMockRoleManager();
 
+    this._roleManager = this.createMockRoleManager();
     this._guildEmoji = this.createGuildEmoji();
     this._guildMemberCollection = this.createGuildMemberCollection();
+
+    this._presence = this.createPresence();
   }
 
   createMockClient() {
@@ -527,6 +560,32 @@ export default class MockDiscord {
       this._guild,
     );
     return role;
+  }
+
+  createSpeaking() {
+    return new Speaking(1);
+  }
+
+  createPresence() {
+    const activityData: ActivityData = {
+      application_id: this.generateId(),
+      name: "test",
+      timestamp: new Date(),
+      type: "COMPETING",
+      details: null,
+      party: null,
+      state: null,
+      url: null,
+    };
+
+    const presenceData: PresenceData = {
+      status: "online",
+      activities: [activityData],
+      user: this._user,
+      guild: this._guild,
+    };
+
+    return new Presence(this._client, presenceData);
   }
 
   emitRoleDelete(role?: Role) {
