@@ -6,7 +6,6 @@ const report: TestReport = {
   expectation: "1",
   isNot: false,
   output: "1",
-  showExpectAndOutputValue: false,
   hasPassed: true,
 };
 

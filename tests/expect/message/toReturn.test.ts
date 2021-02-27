@@ -24,7 +24,6 @@ describe("testing toReturn", () => {
       output: mockDiscord.messageCollection.array()[1].content,
       isNot: false,
       hasPassed: true,
-      showExpectAndOutputValue: true,
     };
 
     cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
@@ -47,7 +46,6 @@ describe("testing toReturn", () => {
       output: timeout.message,
       isNot: false,
       hasPassed: false,
-      showExpectAndOutputValue: true,
     };
 
     jest.spyOn(cordeClient, "awaitMessagesFromTestingBot").mockImplementation(() => {
@@ -70,7 +68,6 @@ describe("testing toReturn", () => {
       output: unknownError,
       isNot: isNot,
       hasPassed: false,
-      showExpectAndOutputValue: true,
     };
 
     cordeClient.sendTextMessage = jest.fn().mockImplementation(() => {
@@ -96,7 +93,6 @@ describe("testing toReturn", () => {
       output: mockDiscord.messageCollection.array()[1].content,
       isNot: isNot,
       hasPassed: true,
-      showExpectAndOutputValue: true,
     };
 
     cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
@@ -119,7 +115,6 @@ describe("testing toReturn", () => {
       output: mockDiscord.messageCollection.array()[0].content,
       isNot: isNot,
       hasPassed: false,
-      showExpectAndOutputValue: true,
     };
 
     cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
@@ -141,7 +136,6 @@ describe("testing toReturn", () => {
       output: mockDiscord.messageCollection.array()[0].content,
       isNot: false,
       hasPassed: false,
-      showExpectAndOutputValue: true,
     };
 
     cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
@@ -164,7 +158,6 @@ describe("testing toReturn", () => {
       output: JSON.stringify(mockDiscord.messageEmbed),
       isNot: false,
       hasPassed: true,
-      showExpectAndOutputValue: false,
     };
 
     cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
@@ -185,7 +178,6 @@ describe("testing toReturn", () => {
       output: JSON.stringify(mockDiscord.get(mockDiscord.messageEmbedCollection, 1)),
       isNot: false,
       hasPassed: false,
-      showExpectAndOutputValue: false,
     };
 
     cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);

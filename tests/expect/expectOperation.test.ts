@@ -5,7 +5,7 @@ class TestClass extends ExpectOperation {
   public action(p1: any, p2: any, p3: any): Promise<TestReport> {
     super.expectation = 1;
     super.output = 1;
-    return Promise.resolve(super.generateReport(false));
+    return Promise.resolve(super.generateReport());
   }
 }
 
@@ -44,7 +44,7 @@ describe("testing ExpectOperation class", () => {
         super.expectation = 1;
         super.output = 1;
         super.catchExecutionError(new Error("test error"));
-        return Promise.resolve(super.generateReport(false));
+        return Promise.resolve(super.generateReport());
       }
     }
 
@@ -67,7 +67,7 @@ describe("testing ExpectOperation class", () => {
         super.expectation = 1;
         super.output = 1;
         super.catchExecutionError("test error");
-        return Promise.resolve(super.generateReport(false));
+        return Promise.resolve(super.generateReport());
       }
     }
 

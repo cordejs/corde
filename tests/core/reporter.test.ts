@@ -58,7 +58,7 @@ describe("testing log class", () => {
             expectation: "1",
             isNot: false,
             output: "2",
-            showExpectAndOutputValue: true,
+            message: undefined,
             hasPassed: true,
           },
         ],
@@ -88,7 +88,7 @@ describe("testing log class", () => {
             expectation: "1",
             isNot: false,
             output: "2",
-            showExpectAndOutputValue: true,
+            message: undefined,
             hasPassed: true,
           },
         ],
@@ -113,7 +113,6 @@ describe("testing log class", () => {
       expectation: "1",
       isNot: false,
       output: "2",
-      showExpectAndOutputValue: true,
       hasPassed: true,
     };
     const fullConsoleLog = executeOutPutResultAndGetConsoleLogResult(report);
@@ -127,7 +126,6 @@ describe("testing log class", () => {
       expectation: "1",
       isNot: false,
       output: "2",
-      showExpectAndOutputValue: true,
       hasPassed: true,
     };
 
@@ -136,7 +134,6 @@ describe("testing log class", () => {
       expectation: "1",
       isNot: false,
       output: "2",
-      showExpectAndOutputValue: true,
       hasPassed: false,
     };
 
@@ -151,7 +148,6 @@ describe("testing log class", () => {
       expectation: "1",
       isNot: false,
       output: "2",
-      showExpectAndOutputValue: true,
       hasPassed: true,
     };
 
@@ -160,7 +156,6 @@ describe("testing log class", () => {
       expectation: "1",
       isNot: false,
       output: "2",
-      showExpectAndOutputValue: true,
       hasPassed: false,
     };
 
@@ -175,7 +170,6 @@ describe("testing log class", () => {
       expectation: "1",
       isNot: false,
       output: "2",
-      showExpectAndOutputValue: true,
       hasPassed: false,
     };
 
@@ -191,7 +185,6 @@ describe("testing log class", () => {
       expectation: "1",
       isNot: true,
       output: "1",
-      showExpectAndOutputValue: true,
       hasPassed: false,
     };
 
@@ -207,14 +200,11 @@ describe("testing log class", () => {
       expectation: "1",
       isNot: false,
       output: "1",
-      showExpectAndOutputValue: false,
       hasPassed: false,
     };
 
     const fullConsoleLog = executeOutPutResultAndGetConsoleLogResult(report);
-    expect(fullConsoleLog).toContain(
-      `FAIL  command ${report.commandName} not returned what was expected`,
-    );
+    expect(fullConsoleLog).toContain(`FAIL  expected commandName to return '1'. Returned: '1'·`);
   });
 
   it("should print fail, without expectation and output value. And do nothing with 'isNot' statement as true", () => {
@@ -223,13 +213,10 @@ describe("testing log class", () => {
       expectation: "1",
       isNot: true,
       output: "1",
-      showExpectAndOutputValue: false,
       hasPassed: false,
     };
     const fullConsoleLog = executeOutPutResultAndGetConsoleLogResult(report);
-    expect(fullConsoleLog).toContain(
-      `FAIL  command ${report.commandName} not returned what was expected`,
-    );
+    expect(fullConsoleLog).toContain(`FAIL  expected commandName to return '1'. Returned: '1'·`);
   });
 });
 

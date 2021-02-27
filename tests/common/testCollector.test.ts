@@ -11,7 +11,6 @@ describe("testing testCollector", () => {
         hasPassed: true,
         isNot: true,
         output: "",
-        showExpectAndOutputValue: false,
       };
       return Promise.resolve(report);
     });

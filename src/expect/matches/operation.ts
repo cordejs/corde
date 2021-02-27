@@ -65,6 +65,7 @@ export abstract class ExpectOperation<P1 = any, P2 = any, P3 = any> {
     return {
       commandName: this.command,
       expectation: this.expectation,
+      output: this.output,
       hasPassed: this.hasPassed,
       isNot: this.isNot,
       message: message ?? this.message,

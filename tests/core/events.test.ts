@@ -7,6 +7,7 @@ import {
   GuildMember,
   Message,
   MessageReaction,
+  PartialDMChannel,
   PartialGuildMember,
   PartialMessage,
   PartialUser,
@@ -14,6 +15,7 @@ import {
   Role,
   Speaking,
   User,
+  VoiceState,
 } from "discord.js";
 import { EventResume, Events } from "../../src/core/events";
 import MockDiscord from "../mocks/mockDiscord";
@@ -850,13 +852,97 @@ describe("testing events event", () => {
       expect(newRole).toEqual(updatedRole);
     });
 
-    it("should throw timeout for waiting", async () => {
+    it("should throw timeout for waiting", () => {
       executeWithDelay(() => {
         client.emit(eventName, mockDiscord.role, updatedRole);
       }, DEFAULT_DELAY);
 
-      const newRole = await events.waitRolePermissionUpdate({ name: "potatoe" }, 100);
-      expect(newRole).toEqual(updatedRole);
+      expect(() => events.waitRolePermissionUpdate({ name: "potatoe" }, 100)).rejects.toBeTruthy();
+    });
+  });
+
+  describe("testing typingStart event", () => {
+    const eventName = "typingStart";
+    it("should get callback", () => {
+      let _channel: Channel | PartialDMChannel;
+      let _user: User | PartialUser;
+      events.onTypingStart((channel, user) => {
+        _channel = channel;
+        _user = user;
+      });
+      client.emit(eventName, mockDiscord.channel, mockDiscord.user);
+      expect(_channel).toEqual(mockDiscord.channel);
+      expect(_user).toEqual(mockDiscord.user);
+    });
+
+    it("should get async once", async () => {
+      executeWithDelay(() => {
+        client.emit(eventName, mockDiscord.channel, mockDiscord.user);
+      }, DEFAULT_DELAY);
+
+      const [_channel, _user] = await events.onceTypingStart();
+      expect(_channel).toEqual(mockDiscord.channel);
+      expect(_user).toEqual(mockDiscord.user);
+    });
+  });
+
+  describe("testing userUpdate event", () => {
+    const eventName = "userUpdate";
+    const updatedUser = Object.assign({}, mockDiscord.user);
+    updatedUser.avatar = "online";
+
+    it("should get callback", () => {
+      let _oldUser: User | PartialUser;
+      let _newUser: User;
+      events.onUserUpdate((oldUser, newUser) => {
+        _oldUser = oldUser;
+        _newUser = newUser;
+      });
+
+      client.emit(eventName, mockDiscord.user, updatedUser);
+      expect(_oldUser).toEqual(mockDiscord.user);
+      expect(_newUser).toEqual(updatedUser);
+    });
+
+    it("should get async once", async () => {
+      executeWithDelay(() => {
+        client.emit(eventName, mockDiscord.user, updatedUser);
+      }, DEFAULT_DELAY);
+
+      const [_oldUser, _newUser] = await events.onceUserUpdate();
+      expect(_oldUser).toEqual(mockDiscord.user);
+      expect(_newUser).toEqual(updatedUser);
+    });
+  });
+
+  describe("testing voiceStateUpdate event", () => {
+    const eventName = "voiceStateUpdate";
+    const updatedVoiceState = Object.assign({}, mockDiscord.voiceState);
+    updatedVoiceState.selfDeaf = true;
+    it("should get callback", () => {
+      let _oldVoiceState: VoiceState;
+      let _newVoiceState: VoiceState;
+      events.onVoiceStateUpdate((oldMember, newMember) => {
+        _oldVoiceState = oldMember;
+        _newVoiceState = newMember;
+      });
+
+      client.emit(eventName, mockDiscord.voiceState, updatedVoiceState);
+      expect(_oldVoiceState).toEqual(mockDiscord.voiceState);
+      expect(_newVoiceState).toEqual(updatedVoiceState);
+    });
+
+    it("should get async once", async () => {
+      const updatedRole = Object.assign({}, mockDiscord.role);
+      updatedRole.name = "online";
+
+      executeWithDelay(() => {
+        client.emit(eventName, mockDiscord.voiceState, updatedVoiceState);
+      }, DEFAULT_DELAY);
+
+      const [_oldRole, _newRole] = await events.onceVoiceStateUpdate();
+      expect(_oldRole).toEqual(mockDiscord.voiceState);
+      expect(_newRole).toEqual(updatedVoiceState);
     });
   });
 });

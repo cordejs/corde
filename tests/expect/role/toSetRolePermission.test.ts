@@ -20,7 +20,7 @@ describe("testing ToSetRolePosition operation", () => {
         false,
       );
 
-      corde.waitRolePermissionUpdate = jest.fn().mockReturnValue(mockDiscord.role);
+      corde.events.waitRolePermissionUpdate = jest.fn().mockReturnValue(mockDiscord.role);
       const toSetRolePermission = new ToSetRolePermission(corde, commandName, false);
       const report = await toSetRolePermission.action(["ADMINISTRATOR"], { id: "123" });
 
@@ -41,7 +41,7 @@ describe("testing ToSetRolePosition operation", () => {
       );
 
       const role = mockDiscord.createMockRole("", Permission.ADMINISTRATOR);
-      corde.waitRolePermissionUpdate = jest.fn().mockReturnValue(role);
+      corde.events.waitRolePermissionUpdate = jest.fn().mockReturnValue(role);
 
       const report = await new ToSetRolePermission(corde, commandName, false).action(
         ["ADMINISTRATOR"],
@@ -64,7 +64,7 @@ describe("testing ToSetRolePosition operation", () => {
       corde.findRole = jest.fn().mockReturnValue(null);
       corde.sendTextMessage = jest.fn().mockImplementation(() => {});
 
-      corde.waitRolePermissionUpdate = jest.fn().mockImplementation();
+      corde.events.waitRolePermissionUpdate = jest.fn().mockImplementation();
 
       const report = await new ToSetRolePermission(corde, commandName, false).action(
         ["ADMINISTRATOR"],
@@ -131,7 +131,7 @@ describe("testing ToSetRolePosition operation", () => {
       const corde = createCordeBotWithMockedFunctions(
         mockDiscord.createMockRole("", Permission.ADMINISTRATOR),
       );
-      corde.waitRolePermissionUpdate = jest.fn().mockReturnValue(mockDiscord.role);
+      corde.events.waitRolePermissionUpdate = jest.fn().mockReturnValue(mockDiscord.role);
 
       const report = await new ToSetRolePermission(corde, commandName, true).action(
         ["ATTACH_FILES"],
@@ -154,7 +154,7 @@ describe("testing ToSetRolePosition operation", () => {
       corde.findRole = jest.fn().mockReturnValue(null);
       corde.sendTextMessage = jest.fn().mockImplementation(() => {});
 
-      corde.waitRolePermissionUpdate = jest.fn().mockImplementation();
+      corde.events.waitRolePermissionUpdate = jest.fn().mockImplementation();
 
       const report = await new ToSetRolePermission(corde, commandName, true).action(
         ["ADMINISTRATOR"],

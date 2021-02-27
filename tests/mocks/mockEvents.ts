@@ -6,6 +6,6 @@ export class MockEvents {
   constructor(private _corde: CordeBot, private _mockDiscord: MockDiscord) {}
 
   mockOnceRoleDelete(role?: Role) {
-    this._corde.onceRoleDelete = jest.fn().mockReturnValue(role ?? this._mockDiscord.role);
+    this._corde.events.onceRoleDelete = jest.fn().mockReturnValue(role ?? this._mockDiscord.role);
   }
 }

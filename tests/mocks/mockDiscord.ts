@@ -21,6 +21,7 @@ import {
   PresenceStatus,
   ActivityType,
   Activity,
+  VoiceState,
 } from "discord.js";
 
 /**
@@ -49,6 +50,17 @@ export interface PresenceData {
   guild?: Guild;
   status: PresenceStatus;
   activities: ActivityData[];
+}
+
+export interface VoiceStateData {
+  user_id: string;
+  deaf?: boolean;
+  mute?: boolean;
+  self_deaf?: boolean;
+  self_mute?: boolean;
+  self_video?: boolean;
+  session_id?: string;
+  self_streaming?: boolean;
 }
 
 /**
@@ -89,6 +101,7 @@ export default class MockDiscord {
   private _roleManager!: RoleManager;
   private _speaking!: Speaking;
   private _presence!: Presence;
+  private _voiceState!: VoiceState;
 
   /**
    * Initialize all mocks
@@ -286,6 +299,10 @@ export default class MockDiscord {
 
   get speaking() {
     return this._speaking;
+  }
+
+  get voiceState() {
+    return this._voiceState;
   }
 
   get<T extends Collection<K, V>, K, V>(collection: T, index: number) {
@@ -590,6 +607,14 @@ export default class MockDiscord {
 
   emitRoleDelete(role?: Role) {
     this._client.emit("roleDelete", role ?? this.role);
+  }
+
+  createVoiceState() {
+    const voiceData: VoiceStateData = {
+      user_id: this.generateId(),
+    };
+
+    return new VoiceState(this.guild, voiceData);
   }
 
   createMockRoleManager() {

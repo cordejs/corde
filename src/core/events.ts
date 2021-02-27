@@ -21,6 +21,7 @@ import {
 } from "discord.js";
 import { once } from "events";
 import { DEFAULT_TEST_TIMEOUT } from "../consts";
+import { TimeoutError } from "../errors";
 import { RoleData } from "../types";
 
 export interface EventResume {
@@ -716,29 +717,38 @@ export class Events {
    * Waits for changes in permission of a specific role.
    * @param roleData `id` or `name` to identify the role.
    * @returns Specified role that had his permissions updated.
+   * @internal
    */
   public waitRolePermissionUpdate(roleData: RoleData, timeout = DEFAULT_TEST_TIMEOUT) {
     return new Promise<Role>((resolve, reject) => {
       setTimeout(() => {
-        reject();
+        reject(new TimeoutError());
       }, timeout);
 
       this.onRoleUpdate((oldRole, newRole) => {
-        if (newRole.id !== roleData.id && newRole.name !== roleData.name) {
-          return;
-        }
-
-        if (!oldRole.permissions.equals(newRole.permissions)) {
+        if (
+          this.roleMatchRoleData(roleData, newRole) &&
+          !this.rolesPermissionsMatch(oldRole, newRole)
+        ) {
           resolve(newRole);
         }
       });
     });
   }
 
+  private roleMatchRoleData(roleData: RoleData, role: Role) {
+    return role.id === roleData.id || role.name === roleData.name;
+  }
+
+  private rolesPermissionsMatch(oldRole: Role, newRole: Role) {
+    return oldRole.permissions.equals(newRole.permissions);
+  }
+
   /**
    * Emitted whenever a user starts typing in a channel.
    * @param fn function to receive the channel (where) and the user (who)
    * is typing.
+   * @internal
    */
   public onTypingStart(
     fn: (channel: Channel | PartialDMChannel, user: User | PartialUser) => void,
@@ -749,6 +759,7 @@ export class Events {
   /**
    * Emitted once a user starts typing in a channel.
    * @returns `Channel` (where) and the `user` (who) is typing.
+   * @internal
    */
   public onceTypingStart() {
     return this._once<[Channel | PartialDMChannel, User | PartialUser]>("typingStart");
@@ -757,6 +768,7 @@ export class Events {
   /**
    * Emitted whenever a user's details (e.g. username) are changed.
    * @param fn function to receive the old and the new value of the user.
+   * @internal
    */
   public onUserUpdate(fn: (oldUser: User | PartialUser, newUser: User) => void) {
     this._client.on("userUpdate", fn);
@@ -765,6 +777,7 @@ export class Events {
   /**
    * Emitted once a user's details (e.g. username) are changed.
    * @returns `Old` and the `new` value of the user.
+   * @internal
    */
   public onceUserUpdate() {
     return this._once<[User | PartialUser, User]>("userUpdate");
@@ -773,6 +786,7 @@ export class Events {
   /**
    * Emitted whenever a user changes voice state - e.g. joins/leaves a channel, mutes/unmutes.
    * @param fn function to receive the old and the new voiceState value.
+   * @internal
    */
   public onVoiceStateUpdate(fn: (oldMember: VoiceState, newMember: VoiceState) => void) {
     this._client.on("voiceStateUpdate", fn);
@@ -781,6 +795,7 @@ export class Events {
   /**
    * Emitted once a user changes voice state - e.g. joins/leaves a channel, mutes/unmutes.
    * @returns `Old` and the `new` voiceState value.
+   * @internal
    */
   public onceVoiceStateUpdate() {
     return this._once<[VoiceState, VoiceState]>("voiceStateUpdate");

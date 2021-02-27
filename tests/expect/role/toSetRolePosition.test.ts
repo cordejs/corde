@@ -37,8 +37,7 @@ describe("testing ToSetRolePosition operation", () => {
       commandName,
       hasPassed: true,
       isNot: true,
-
-      customReturnMessage: `expected position: -2, actual position: -1`,
+      message: `expected position: -2, actual position: -1`,
     };
 
     expect(report).toEqual(matchReport);
@@ -53,7 +52,6 @@ describe("testing ToSetRolePosition operation", () => {
       commandName,
       hasPassed: false,
       isNot: true,
-
       output: "Role not found",
     };
     expect(report).toEqual(matchReport);
@@ -81,8 +79,7 @@ describe("testing ToSetRolePosition operation", () => {
       commandName,
       hasPassed: false,
       isNot: false,
-
-      customReturnMessage: `the maximum position possible is -1. Attempted value: 2`,
+      message: `the maximum position possible is -1. Attempted value: 2`,
     };
     expect(report).toEqual(matchReport);
   });
