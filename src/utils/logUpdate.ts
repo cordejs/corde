@@ -23,9 +23,17 @@ class LogUpdate {
     return newLength - 1;
   }
 
+  appendLine(value: string) {
+    return this.append("\n" + value);
+  }
+
   update(index: number, newValue: string) {
     this._logValue[index] = newValue;
     this.print();
+  }
+
+  updateLine(index: number, newValue: string) {
+    this.update(index, "\n" + newValue);
   }
 
   persist() {

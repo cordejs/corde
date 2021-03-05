@@ -4,6 +4,7 @@ import { AssertionProps, Group, Test, testFunctionType, VoidPromiseFunction } fr
 /**
  * Contain all information of data collected from files in runtime test
  * collection.
+ * @internal
  */
 class TestCollector {
   /**
@@ -14,14 +15,15 @@ class TestCollector {
   public isCollecting: boolean;
 
   /**
-   * Defines if the thread running has a **group** function.
+   * Defines if the running function is being executed inside a **group**.
+   * clausure
    */
-  public hasGroup: boolean;
+  public isInsideGroupClausure: boolean;
 
   /**
-   * Defines if the thread running has a **test** function.
+   * Defines if the running function is being executed inside a **testClausure**.
    */
-  public hasTest: boolean;
+  public isInsideTestClausure: boolean;
 
   /**
    * List of assertions found in running file.
@@ -77,7 +79,7 @@ class TestCollector {
 
   public addTestFunction(testFunction: testFunctionType) {
     if (testFunction) {
-      if (this.hasGroup || this.hasTest) {
+      if (this.isInsideGroupClausure || this.isInsideTestClausure) {
         this.testsFunctions.push(testFunction);
       } else {
         this.isolatedFunctions.push(testFunction);
@@ -85,7 +87,7 @@ class TestCollector {
     }
   }
 
-  public hasTestFunctions() {
+  public isInsideTestClausureFunctions() {
     return this.testsFunctions && this.testsFunctions.length > 0;
   }
 

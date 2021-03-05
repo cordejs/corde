@@ -33,6 +33,15 @@ export interface AssertionProps {
 }
 
 /**
+ * Contain all tests cases | groups of a test file.
+ */
+export interface TestFile {
+  path: string;
+  groups: Group[];
+  isEmpty: boolean;
+}
+
+/**
  * Represents **test** structure
  */
 export interface Test {
@@ -152,4 +161,5 @@ export interface TestReport {
   readonly isNot?: boolean;
   readonly hasPassed: boolean;
   readonly message?: string;
+  readonly diffExpectAndOutput?: boolean;
 }

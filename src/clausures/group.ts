@@ -17,7 +17,7 @@ import { testCollector } from "../common";
  */
 export function group(name: string, action: () => void | Promise<void>) {
   testCollector.addToGroupClousure(async () => {
-    testCollector.hasGroup = true;
+    testCollector.isInsideGroupClausure = true;
 
     if (action) {
       await action();
@@ -33,7 +33,7 @@ export function group(name: string, action: () => void | Promise<void>) {
       }
 
       // Case expect() be added inside the group clausure
-      if (testCollector.hasTestFunctions()) {
+      if (testCollector.isInsideTestClausureFunctions()) {
         const testsCloned = testCollector.cloneTestFunctions();
         testCollector.groups.push({ name, tests: [{ testsFunctions: testsCloned }] });
         testCollector.clearTestFunctions();
@@ -41,6 +41,6 @@ export function group(name: string, action: () => void | Promise<void>) {
     }
 
     testCollector.tests = [];
-    testCollector.hasGroup = false;
+    testCollector.isInsideGroupClausure = false;
   });
 }

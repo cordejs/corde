@@ -10,3 +10,8 @@ export * from "./pick";
 export * from "./tryImport";
 export * from "./formatObject";
 export * from "./diff";
+export * from "./isPromise";
+export * from "./dateDiff";
+export * from "./logUpdate";
+export * from "./stringIsNullOrEmpty";
+export * from "./timer";

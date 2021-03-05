@@ -1,5 +1,6 @@
-import { executeTestCases } from "../../src/core/runner";
-import { Group, TestReport } from "../../src/types";
+import { testRunner } from "../../src/core/runner";
+import { Group, TestFile, TestReport } from "../../src/types";
+import { getFullConsoleLog } from "../testHelper";
 
 const report: TestReport = {
   commandName: "comando",
@@ -21,7 +22,7 @@ describe("testing executeTestCases", () => {
       },
     ];
 
-    await executeTestCases(groups);
+    await testRunner.executeTestCases(groups);
 
     expect(groups[0].tests[0].testsReports[0]).toEqual(report);
     expect(groups[0].tests[0].testsReports).toHaveLength(1);
@@ -47,7 +48,7 @@ describe("testing executeTestCases", () => {
       },
     ];
 
-    await executeTestCases(groups);
+    await testRunner.executeTestCases(groups);
 
     expect(groups[0].tests[0].testsReports[0]).toEqual(report);
     expect(groups[0].tests[0].testsReports).toHaveLength(1);
@@ -76,7 +77,7 @@ describe("testing executeTestCases", () => {
       },
     ];
 
-    await executeTestCases(groups);
+    await testRunner.executeTestCases(groups);
 
     expect(groups[0].tests[0].testsReports[0]).toEqual(report);
     expect(groups[0].tests[0].testsReports).toHaveLength(1);
@@ -110,7 +111,7 @@ describe("testing executeTestCases", () => {
       },
     ];
 
-    await executeTestCases(groups);
+    await testRunner.executeTestCases(groups);
 
     expect(groups[0].tests[0].testsReports[0]).toEqual(report);
     expect(groups[0].tests[0].testsReports).toHaveLength(1);
@@ -124,7 +125,7 @@ describe("testing executeTestCases", () => {
 
   it("should return empty array when has no groups", async () => {
     const groups: Group[] = null;
-    await executeTestCases(groups);
+    await testRunner.executeTestCases(groups);
     expect(groups).toBeFalsy();
   });
 
@@ -134,7 +135,42 @@ describe("testing executeTestCases", () => {
         tests: null,
       },
     ];
-    await executeTestCases(groups);
+    await testRunner.executeTestCases(groups);
     expect(groups[0].tests).toBeFalsy();
+  });
+
+  it("should print a passed test on console", async () => {
+    const test: TestFile[] = [
+      {
+        path: "/tests/file.test.ts",
+        isEmpty: false,
+        groups: [
+          {
+            name: "group",
+            tests: [
+              {
+                name: "test case",
+                testsFunctions: [
+                  () =>
+                    Promise.resolve<TestReport>({
+                      hasPassed: true,
+                      commandName: "con",
+                      expectation: "1",
+                      output: "2",
+                      message: "",
+                      isNot: false,
+                    }),
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ];
+
+    const spy = jest.spyOn(console, "log");
+    await testRunner.runTestsAndPrint(test);
+
+    expect(getFullConsoleLog(spy.mock.calls)).toContain("test case");
   });
 });

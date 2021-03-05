@@ -15,7 +15,7 @@ import { testCollector } from "../common";
  */
 export function test(name: string, action: () => void | Promise<void>) {
   testCollector.addToTestClousure(async () => {
-    testCollector.hasTest = true;
+    testCollector.isInsideTestClausure = true;
 
     if (action) {
       await action();
@@ -27,6 +27,6 @@ export function test(name: string, action: () => void | Promise<void>) {
     }
 
     testCollector.testsFunctions = [];
-    testCollector.hasTest = false;
+    testCollector.isInsideTestClausure = false;
   });
 }

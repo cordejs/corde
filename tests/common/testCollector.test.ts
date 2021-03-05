@@ -3,7 +3,7 @@ import { TestReport } from "../../src/types";
 
 describe("testing testCollector", () => {
   it("should clear testsFunctions", () => {
-    testCollector.hasGroup = true;
+    testCollector.isInsideGroupClausure = true;
     testCollector.addTestFunction((corde) => {
       const report: TestReport = {
         commandName: "",

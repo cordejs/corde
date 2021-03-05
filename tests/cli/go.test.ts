@@ -4,7 +4,7 @@ import { go } from "../../src/cli/go";
 import { FileError } from "../../src/errors";
 import { runtime } from "../../src/common";
 import { BehaviorSubject } from "rxjs";
-import * as executeTests from "../../src/core/runner";
+import { testRunner } from "../../src/core/runner";
 import { Group } from "../../src/types";
 import { mockProcessExit } from "jest-mock-process";
 
@@ -39,7 +39,7 @@ describe("testing go command", () => {
     const readerSpy = jest.spyOn(reader, "loadConfig");
     const testObservable = new BehaviorSubject<boolean>(true);
     runtime.loginBot = jest.fn().mockImplementation(() => {});
-    jest.spyOn(executeTests, "executeTestCases").mockImplementation((groups: Group[]) => {
+    jest.spyOn(testRunner, "executeTestCases").mockImplementation((groups: Group[]) => {
       return Promise.resolve();
     });
     runtime.onBotStart = () => testObservable.asObservable();

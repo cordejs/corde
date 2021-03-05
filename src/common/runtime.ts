@@ -17,6 +17,10 @@ class Runtime {
     return this._bot;
   }
 
+  public get events() {
+    return this._bot.events;
+  }
+
   public get configs() {
     return this._configs;
   }
