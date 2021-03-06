@@ -43,6 +43,14 @@ describe("testing dateDiff function", () => {
     expect(diff[1]).toEqual(10321);
   });
 
+  test("should output empty string when no difference", () => {
+    const date1 = new Date(2020, 12, 1, 10, 10, 20, 321);
+    const date2 = new Date(2020, 12, 1, 10, 10, 20, 321);
+    const diff = dateDiff(date1, date2);
+    expect(diff[0]).toEqual("");
+    expect(diff[1]).toEqual(0);
+  });
+
   test("should output null due to no date1", () => {
     const date2 = new Date(2020, 12, 1, 10, 10, 10);
     expect(dateDiff(null, date2)).toBeFalsy();

@@ -28,6 +28,10 @@ export function dateDiff(date1: Date, date2: Date): [string, number] {
 
   let difference = date1.getTime() - date2.getTime();
 
+  if (difference === 0) {
+    return ["", 0];
+  }
+
   if (difference < MILISECONDS_PER_SECOND) {
     return [`${difference}ms`, difference];
   }
