@@ -3,6 +3,7 @@
     "outDir": "lib",
     "rootDir": ".",
     "resolveJsonModule": true,
+    "importHelpers": true,
     "allowJs": true,
     "checkJs": true,
     "pretty": true,
