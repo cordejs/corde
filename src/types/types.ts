@@ -155,11 +155,21 @@ export interface MessageData {
 }
 
 export interface TestReport {
-  readonly commandName?: string;
-  readonly expectation?: any;
-  readonly output?: any;
-  readonly isNot?: boolean;
-  readonly hasPassed: boolean;
+  readonly pass: boolean;
   readonly message?: string;
-  readonly diffExpectAndOutput?: boolean;
+}
+
+export interface SemiRunnerReport {
+  totalTests: number;
+  totalEmptyTests: number;
+  totalEmptyTestFiles: number;
+  totalTestFiles: number;
+  totalTestsPassed: number;
+  totalTestsFailed: number;
+  totalTestFilesPassed: number;
+  totalTestFilesFailed: number;
+}
+
+export interface RunnerReport extends SemiRunnerReport {
+  testTimer: string;
 }

@@ -1,4 +1,3 @@
-import { rejects } from "assert";
 import {
   Channel,
   Client,
@@ -54,7 +53,7 @@ export class Events {
     if (response.length === 1) {
       return response[0];
     }
-    return response as T;
+    return (response as unknown) as T;
   }
 
   /**

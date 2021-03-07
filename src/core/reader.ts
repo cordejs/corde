@@ -3,7 +3,7 @@ import path from "path";
 import { runtime } from "../common";
 import { testCollector } from "../common/testCollector";
 import { FileError } from "../errors";
-import { ConfigOptions } from "../types";
+import { ConfigOptions, TestFile } from "../types";
 import { tryImport } from "../utils";
 
 class Reader {
@@ -40,7 +40,8 @@ class Reader {
     }
   }
 
-  public async getTestsFromFiles(files: string[]) {
+  public async getTestsFromFiles(files: string[]): Promise<TestFile[]> {
+    const testFiles: TestFile[] = [];
     if (!files) {
       throw new FileError("No file was informed.");
     }
@@ -56,13 +57,22 @@ class Reader {
 
       await testCollector.executeGroupClojure();
       await testCollector.executeTestClojure();
+
+      addTestsGroupmentToGroupIfExist();
+      addIsolatedTestFunctionsToGroupIfExists();
+      addTestFunctionsToGroupIfExists();
+
+      testFiles.push({
+        path: file.replace(process.cwd() + "\\", ""),
+        groups: testCollector.groups.slice(),
+        isEmpty: !!testCollector.groups.length,
+      });
+
+      testCollector.groups = [];
     }
 
     testCollector.isCollecting = false;
-    addTestsGroupmentToGroupIfExist();
-    addIsolatedTestFunctionsToGroupIfExists();
-    addTestFunctionsToGroupIfExists();
-    return testCollector.groups;
+    return testFiles;
   }
 }
 
@@ -86,7 +96,7 @@ function loadConfigFromConfigFilePath(): ConfigOptions {
 
 function addTestsGroupmentToGroupIfExist() {
   if (testCollector.tests && testCollector.tests.length > 0) {
-    const testsCloned = testCollector.tests.map((test) => test);
+    const testsCloned = testCollector.tests.slice();
     testCollector.groups.push({ tests: testsCloned });
     testCollector.tests = [];
   }
@@ -101,7 +111,7 @@ function addIsolatedTestFunctionsToGroupIfExists() {
 }
 
 function addTestFunctionsToGroupIfExists() {
-  if (testCollector.hasTestFunctions()) {
+  if (testCollector.isInsideTestClausureFunctions()) {
     const testsCloned = testCollector.cloneTestFunctions();
     testCollector.groups.push({ tests: [{ testsFunctions: testsCloned }] });
     testCollector.clearTestFunctions();

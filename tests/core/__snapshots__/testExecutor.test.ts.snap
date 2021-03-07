@@ -1,0 +1,149 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should print empty test file 1`] = `" EMPTY   /tests/file1.test.ts"`;
+
+exports[`should print empty test file 2`] = `
+"
+ PASS   /tests/file1.test.ts   2ms
+    ● test (empty)   1ms
+   ✔️  subtest   1ms EMPTY   /tests/file2.test.ts"
+`;
+
+exports[`should print for a empty test file name 1`] = `
+"
+ PASS   /tests/file1.test.ts   1ms
+   ✔️  <empty test name>   "
+`;
+
+exports[`should print report for 1 test file, 1 test clausure and 1 failed function and 1 passed function 1`] = `
+"
+ FAIL   /tests/file1.test.ts   2ms
+   ❌ group -> test case1   1ms
+
+   expected: hi
+   received: hi!
+"
+`;
+
+exports[`should print report for 1 test file, 1 test clausure and 1 failed function and 1 passed function 2`] = `
+"
+ FAIL   /tests/file1.test.ts   2ms
+   ❌ group -> test case1   
+
+   expected: hi
+   received: hi!
+"
+`;
+
+exports[`should print report for 1 test file, 1 test clausure and 1 test function 1`] = `
+"
+ PASS   /tests/file1.test.ts   9ms
+   ✔️  group -> test case1   2ms"
+`;
+
+exports[`should print report for 1 test file, 1 test clausure and 1 test function that fail 1`] = `
+"
+ FAIL   /tests/file1.test.ts   2ms
+   ❌ group -> test case1   
+
+   expected: hi
+   received: hi!
+"
+`;
+
+exports[`should print report for 1 test file, 1 test clausure and 2 test function 1`] = `
+"
+ PASS   /tests/file1.test.ts   4ms
+   ✔️  group -> test case1   1ms"
+`;
+
+exports[`should print report for 1 test file, 2 test clausure and 1 failed function and 1 passed function 1`] = `
+"
+ FAIL   /tests/file1.test.ts   4ms
+   ❌ group -> test case1   1ms
+
+   expected: hi
+   received: hi!
+
+   ❌ group -> test case2   
+
+   expected: hi
+   received: hi!
+"
+`;
+
+exports[`should print report for 1 test file, 2 test clausure and 1 failed function and 1 passed function 2`] = `
+"
+ FAIL   /tests/file1.test.ts   4ms
+   ✔️  group name -> test case1   1ms
+   ❌ group name -> test case2   1ms
+
+   expected: hi
+   received: hi!
+"
+`;
+
+exports[`should print report for 2 test file, 1 test clausure and 1 test function 1`] = `
+"
+ PASS   /tests/file1.test.ts   2ms
+   ✔️  group -> test case1   
+ PASS   /tests/file2.test.ts   2ms
+   ✔️  group -> test case1   1ms"
+`;
+
+exports[`should print report for 2 test file, 1 test clausure and 2 test function 1`] = `
+"
+ PASS   /tests/file1.test.ts   2ms
+   ✔️  group -> test case1   1ms
+ PASS   /tests/file2.test.ts   4ms
+   ✔️  group -> test case1   "
+`;
+
+exports[`should print report for 2 test file, 2 test clausure and 1 failed function and 1 passed function 1`] = `
+"
+ FAIL   /tests/file1.test.ts   4ms
+   ❌ group -> test case1   1ms
+
+   expected: hi
+   received: hi!
+
+   ❌ group -> test case2   
+
+   expected: hi
+   received: hi!
+
+ FAIL   /tests/file2.test.ts   4ms
+   ❌ group -> test case1   
+
+   expected: hi
+   received: hi!
+
+   ❌ group -> test case2   1ms
+
+   expected: hi
+   received: hi!
+"
+`;
+
+exports[`should print report for 2 test file, 2 test clausure and 2 test function 1`] = `
+"
+ PASS   /tests/file1.test.ts   4ms
+   ✔️  group -> test case1   
+   ✔️  group -> test case2   
+ PASS   /tests/file2.test.ts   3ms
+   ✔️  group -> test case1   1ms
+   ✔️  group -> test case2   "
+`;
+
+exports[`should print subtest for a subgroup 1`] = `
+"
+ PASS   /tests/file1.test.ts   2ms
+    ● test (empty)   
+   ✔️  subtest   "
+`;
+
+exports[`should print tests for a subgroup 1`] = `
+"
+ PASS   /tests/file1.test.ts   1ms
+   ✔️  test   1ms"
+`;

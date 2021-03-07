@@ -2,20 +2,20 @@ import fs from "fs";
 import ora, { Color, Ora } from "ora";
 import path from "path";
 import { runtime, testCollector } from "../common";
-import { reader, getTestsFromGroup, reporter, executeTests } from "../core";
+import { reader, summary, TestExecutor } from "../core";
 import { FileError } from "../errors";
-import { Group, Test } from "../types/types";
+import { LogUpdate } from "../utils";
 import { validate } from "./validate";
-
-process.on("uncaughtException", () => {
-  stopLoading();
-});
 
 declare module "ora" {
   interface Ora {
     _spinner: object;
   }
 }
+
+process.on("uncaughtException", () => {
+  stopLoading();
+});
 
 let spinner: Ora;
 
@@ -36,41 +36,20 @@ function loadConfigs() {
 
 async function runTests(files: string[]) {
   startLoading("login to corde bot");
-  await runtime.loginBot(runtime.cordeTestToken);
+  runtime.loginBot(runtime.cordeTestToken);
+  await runtime.events.onceReady();
+  spinner.stop();
 
-  runtime.onBotStart().subscribe(async (isReady) => {
-    if (isReady) {
-      try {
-        const groups = await reader.getTestsFromFiles(files);
-
-        spinner.text = "starting bots";
-        const tests = getTestsFromGroup(groups);
-        if (!hasTestsToBeExecuted(tests)) {
-          spinner.succeed();
-          reporter.printNoTestFound();
-          process.exit(0);
-        }
-
-        spinner.text = "running tests";
-        await runTestsAndPrint(groups, tests);
-      } catch (error) {
-        spinner.stop();
-        console.error(error);
-        finishProcess(1);
-      }
-    }
-  });
-}
-
-async function runTestsAndPrint(groups: Group[], tests: Test[]) {
-  await executeTests(tests);
-  spinner.succeed();
-  const hasAllTestsPassed = reporter.outPutResult(groups);
-
-  if (hasAllTestsPassed) {
-    await finishProcess(0);
-  } else {
-    await finishProcess(1);
+  try {
+    const testFiles = await reader.getTestsFromFiles(files);
+    const testRunner = new TestExecutor(new LogUpdate());
+    const executionReport = await testRunner.runTestsAndPrint(testFiles);
+    summary.print(executionReport);
+    finishProcess(0);
+  } catch (error) {
+    spinner.stop();
+    console.error(error);
+    finishProcess(1);
   }
 }
 
@@ -141,21 +120,4 @@ function readDir(directories: string[]) {
   }
 
   return files;
-}
-
-function hasTestsToBeExecuted(tests: Test[]) {
-  if (!tests) {
-    return false;
-  }
-
-  for (const test of tests) {
-    if (test && test.testsFunctions) {
-      for (const fn of test.testsFunctions) {
-        if (fn) {
-          return true;
-        }
-      }
-    }
-  }
-  return false;
 }

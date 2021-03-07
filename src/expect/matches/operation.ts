@@ -63,11 +63,7 @@ export abstract class ExpectOperation<P1 = any, P2 = any, P3 = any> {
 
   protected generateReport(message?: string): TestReport {
     return {
-      commandName: this.command,
-      expectation: this.expectation,
-      output: this.output,
-      hasPassed: this.hasPassed,
-      isNot: this.isNot,
+      pass: this.hasPassed,
       message: message ?? this.message,
     };
   }
