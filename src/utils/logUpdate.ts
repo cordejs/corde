@@ -1,15 +1,16 @@
 import { default as _logUpdate } from "log-update";
 
-class LogUpdate {
+export class LogUpdate {
   private _logValue: string[];
+  private _stder: string;
+
+  get stder() {
+    return this._stder;
+  }
 
   constructor() {
     this._logValue = [];
-  }
-
-  init(initialValue: string) {
-    this._logValue.push(initialValue);
-    this.print();
+    this._stder = "";
   }
 
   /**
@@ -28,6 +29,9 @@ class LogUpdate {
   }
 
   update(index: number, newValue: string) {
+    if (index < 0 || index > this._logValue.length - 1) {
+      return;
+    }
     this._logValue[index] = newValue;
     this.print();
   }
@@ -38,6 +42,7 @@ class LogUpdate {
 
   persist() {
     _logUpdate.done();
+    this._stder += this.getlogValueString();
     this._logValue = [];
   }
 
@@ -49,5 +54,3 @@ class LogUpdate {
     _logUpdate(this.getlogValueString());
   }
 }
-
-export const logUpdate = new LogUpdate();
