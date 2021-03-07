@@ -2,6 +2,7 @@ import chalk from "chalk";
 
 export const DEFAULT_TEST_TIMEOUT = 10000;
 export const MESSAGE_TAB_SPACE = "   ";
+export const EXPECT_RECEIVED_TAB_SPACE = "    ";
 
 export const TEXT_PASS = chalk.green;
 export const TEXT_FAIL = chalk.red;

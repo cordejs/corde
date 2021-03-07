@@ -1,75 +1,13 @@
-import chalk from "chalk";
 import { TestExecutor } from "../../src/core/testExecutor";
-import {
-  Group,
-  RunnerReport,
-  SemiRunnerReport,
-  Test,
-  TestFile,
-  testFunctionType,
-  TestReport,
-} from "../../src/types";
+import { SemiRunnerReport, TestFile } from "../../src/types";
 import { buildReportMessage, LogUpdate } from "../../src/utils";
-import { removeANSIColorStyle } from "../testHelper";
-
-interface TestFileGeneratorInfo {
-  amountOfTests: number;
-  amountOfTestFunctions?: number;
-  testFunctionsReport?: TestReport[];
-  amountOfTestFiles: number;
-}
-
-const testFileNames = [
-  "/tests/file1.test.ts",
-  "/tests/file2.test.ts",
-  "/tests/file3.test.ts",
-  "/tests/file4.test.ts",
-];
-
-const testNames = ["test case1", "test case2", "test case3", "test case4"];
-
-function generateTestFile(generatorData: TestFileGeneratorInfo) {
-  const testFiles: TestFile[] = [];
-  const testFunctions: testFunctionType[] = [];
-  const tests: Test[] = [];
-
-  for (const report of generatorData.testFunctionsReport || []) {
-    testFunctions.push(() => Promise.resolve(report));
-  }
-
-  for (let i = 0; i < generatorData.amountOfTestFunctions; i++) {
-    testFunctions.push(() =>
-      Promise.resolve<TestReport>({
-        pass: true,
-      }),
-    );
-  }
-
-  // Updates the value if pass testFunctions.
-  generatorData.amountOfTestFunctions = testFunctions.length;
-
-  for (let i = 0; i < generatorData.amountOfTests; i++) {
-    tests.push({
-      name: testNames[i],
-      testsFunctions: testFunctions,
-    });
-  }
-
-  for (let i = 0; i < generatorData.amountOfTestFiles; i++) {
-    testFiles.push({
-      path: testFileNames[i],
-      isEmpty: false,
-      groups: [
-        {
-          name: "group",
-          tests: tests,
-        },
-      ],
-    });
-  }
-
-  return testFiles;
-}
+import {
+  generateTestFile,
+  removeANSIColorStyle,
+  TestFileGeneratorInfo,
+  testFileNames,
+  testNames,
+} from "../testHelper";
 
 let logUpdate: LogUpdate;
 let testRunner: TestExecutor;

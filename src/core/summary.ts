@@ -7,7 +7,6 @@ interface SummaryLine {
   fail: number;
   success: number;
   totalEmpty: number;
-  emptyLabel: string;
 }
 
 class Summary {
@@ -24,7 +23,6 @@ class Summary {
 
   private buildTestFilesSummary(runnerReport: RunnerReport) {
     return this.buildSummaryLine({
-      emptyLabel: "No tests in files, ",
       fail: runnerReport.totalTestFilesFailed,
       label: "Test Files: ",
       success: runnerReport.totalTestFilesPassed,
@@ -35,7 +33,6 @@ class Summary {
 
   private buildTestsSummary(runnerReport: RunnerReport) {
     return this.buildSummaryLine({
-      emptyLabel: "No tests found, ",
       fail: runnerReport.totalTestsFailed,
       label: "Tests:      ",
       success: runnerReport.totalTestsPassed,
@@ -45,7 +42,7 @@ class Summary {
   }
 
   private buildSummaryLine(data: SummaryLine) {
-    const { label, fail, success, total, emptyLabel, totalEmpty } = data;
+    const { label, fail, success, total, totalEmpty } = data;
 
     const partialLine: string[] = [];
     if (success > 0) {

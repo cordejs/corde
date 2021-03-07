@@ -3,6 +3,7 @@ import fs from "fs";
 import MockDiscord from "./mocks/mockDiscord";
 import { Client } from "discord.js";
 import { CordeBot } from "../src/core";
+import { Test, TestFile, testFunctionType, TestReport } from "../src/types";
 
 export const normalTsPath = path.resolve(process.cwd(), "corde.ts");
 export const tempTsPath = path.resolve(process.cwd(), "__corde.ts");
@@ -114,4 +115,63 @@ export function removeANSIColorStyle(value: string) {
     /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g,
     "",
   );
+}
+
+export interface TestFileGeneratorInfo {
+  amountOfTests: number;
+  amountOfTestFunctions?: number;
+  testFunctionsReport?: TestReport[];
+  amountOfTestFiles: number;
+}
+
+export const testFileNames = [
+  "/tests/file1.test.ts",
+  "/tests/file2.test.ts",
+  "/tests/file3.test.ts",
+  "/tests/file4.test.ts",
+];
+
+export const testNames = ["test case1", "test case2", "test case3", "test case4"];
+
+export function generateTestFile(generatorData: TestFileGeneratorInfo) {
+  const testFiles: TestFile[] = [];
+  const testFunctions: testFunctionType[] = [];
+  const tests: Test[] = [];
+
+  for (const report of generatorData.testFunctionsReport || []) {
+    testFunctions.push(() => Promise.resolve(report));
+  }
+
+  for (let i = 0; i < generatorData.amountOfTestFunctions; i++) {
+    testFunctions.push(() =>
+      Promise.resolve<TestReport>({
+        pass: true,
+      }),
+    );
+  }
+
+  // Updates the value if pass testFunctions.
+  generatorData.amountOfTestFunctions = testFunctions.length;
+
+  for (let i = 0; i < generatorData.amountOfTests; i++) {
+    tests.push({
+      name: testNames[i],
+      testsFunctions: testFunctions,
+    });
+  }
+
+  for (let i = 0; i < generatorData.amountOfTestFiles; i++) {
+    testFiles.push({
+      path: testFileNames[i],
+      isEmpty: false,
+      groups: [
+        {
+          name: "group",
+          tests: tests,
+        },
+      ],
+    });
+  }
+
+  return testFiles;
 }
