@@ -15,3 +15,4 @@ export * from "./dateDiff";
 export * from "./logUpdate";
 export * from "./stringIsNullOrEmpty";
 export * from "./timer";
+export * from "./buildReportMessage";
