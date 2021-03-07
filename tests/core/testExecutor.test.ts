@@ -513,7 +513,7 @@ it("should print subtest for a subgroup", async () => {
     totalTestFiles: 1,
     totalTestFilesFailed: 0,
     totalTestFilesPassed: 1,
-    totalTests: 1,
+    totalTests: 2,
     totalTestsFailed: 0,
     totalTestsPassed: 1,
     totalEmptyTestFiles: 0,
@@ -534,7 +534,7 @@ it("should print empty test file", async () => {
   const report = await testRunner.runTestsAndPrint(tests);
 
   expect(report).toMatchObject<SemiRunnerReport>({
-    totalTestFiles: 0,
+    totalTestFiles: 1,
     totalTestFilesFailed: 0,
     totalTestFilesPassed: 0,
     totalTests: 0,
@@ -585,10 +585,10 @@ it("should print empty test file", async () => {
   const report = await testRunner.runTestsAndPrint(tests);
 
   expect(report).toMatchObject<SemiRunnerReport>({
-    totalTestFiles: 1,
+    totalTestFiles: 2,
     totalTestFilesFailed: 0,
     totalTestFilesPassed: 1,
-    totalTests: 1,
+    totalTests: 2,
     totalTestsFailed: 0,
     totalTestsPassed: 1,
     totalEmptyTestFiles: 1,

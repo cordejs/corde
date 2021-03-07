@@ -49,6 +49,7 @@ export class TestExecutor {
         this._logUpdate.append(`${TAG_PENDING("EMPTY")}  ${testFile.path}`);
         this._logUpdate.persist();
         semiReport.totalEmptyTestFiles++;
+        semiReport.totalTestFiles++;
       } else {
         if (await this.executeTestFile(testFile, semiReport)) {
           semiReport.totalTestFilesPassed++;
@@ -123,6 +124,7 @@ export class TestExecutor {
 
     if (reports.length === 0) {
       semiReport.totalEmptyTests++;
+      semiReport.totalTests++;
     }
 
     const testDiff = testTimer.stop();

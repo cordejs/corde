@@ -13,6 +13,10 @@ export const tempJsPath = path.resolve(process.cwd(), "__corde.js");
 export const normalJsonPath = path.resolve(process.cwd(), "corde.json");
 export const tempJsonPath = path.resolve(process.cwd(), "__corde.json");
 
+export function getConsoleSpyStder(spy: jest.SpyInstance<void, any>) {
+  return getFullConsoleLog(spy.mock.calls);
+}
+
 export function getFullConsoleLog(log: [any?, ...any[]][]) {
   let stringValue = "";
   for (const value1 of log) {

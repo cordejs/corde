@@ -1,4 +1,4 @@
-import { TEXT_FAIL, TEXT_PASS, TEXT_PENDING } from "../consts";
+import { TEXT_EMPTY, TEXT_FAIL, TEXT_PASS, TEXT_PENDING } from "../consts";
 import { RunnerReport } from "../types";
 
 interface SummaryLine {
@@ -6,58 +6,84 @@ interface SummaryLine {
   total: number;
   fail: number;
   success: number;
+  totalEmpty: number;
   emptyLabel: string;
 }
 
 class Summary {
   print(runnerReport: RunnerReport) {
-    this.printTestFiles(runnerReport);
-    this.printTests(runnerReport);
-    console.log("Time:        " + runnerReport.testTimer);
+    let message = "\n";
+    message += this.buildTestFilesSummary(runnerReport) + "\n";
+    message += this.buildTestsSummary(runnerReport) + "\n";
+    if (runnerReport.testTimer) {
+      message += "Time:       " + runnerReport.testTimer;
+    }
+    console.log(message);
+    return message;
   }
 
-  private printTestFiles(runnerReport: RunnerReport) {
-    this.printSummaryLine({
+  private buildTestFilesSummary(runnerReport: RunnerReport) {
+    return this.buildSummaryLine({
       emptyLabel: "No tests in files, ",
       fail: runnerReport.totalTestFilesFailed,
       label: "Test Files: ",
       success: runnerReport.totalTestFilesPassed,
+      totalEmpty: runnerReport.totalEmptyTestFiles,
       total: runnerReport.totalTestFiles,
     });
   }
 
-  private printTests(runnerReport: RunnerReport) {
-    this.printSummaryLine({
+  private buildTestsSummary(runnerReport: RunnerReport) {
+    return this.buildSummaryLine({
       emptyLabel: "No tests found, ",
       fail: runnerReport.totalTestsFailed,
       label: "Tests:      ",
       success: runnerReport.totalTestsPassed,
+      totalEmpty: runnerReport.totalEmptyTests,
       total: runnerReport.totalTests,
     });
   }
 
-  private printSummaryLine(data: SummaryLine) {
-    const { label, fail, success, total, emptyLabel } = data;
+  private buildSummaryLine(data: SummaryLine) {
+    const { label, fail, success, total, emptyLabel, totalEmpty } = data;
 
-    if (fail === 0 && success > 0) {
-      console.log(`${success}${TEXT_PASS(`${success} passed`)}, ${total} total`);
+    const partialLine: string[] = [];
+    if (success > 0) {
+      partialLine.push(TEXT_PASS(`${success} passed`));
     }
 
-    if (fail > 0 && success === 0) {
-      console.log(`${success}${TEXT_FAIL(`${fail} failed`)}, ${total} total`);
+    if (fail > 0) {
+      partialLine.push(TEXT_FAIL(`${fail} failed`));
     }
 
-    if (fail > 0 && success > 0) {
-      console.log(
-        `${label}${TEXT_PASS(`${success} passed`)} and ${TEXT_FAIL(
-          `${fail} failed`,
-        )}, ${total} total`,
-      );
+    if (totalEmpty > 0) {
+      partialLine.push(TEXT_EMPTY(`${totalEmpty} empty`));
     }
 
-    if (fail === 0 && success === 0) {
-      console.log(`${label}${TEXT_PENDING(emptyLabel)}${total} total`);
+    return `${label}${this.buildSummaryLinePhrase(partialLine)}. ${total} total`;
+  }
+
+  /**
+   * Builds the summary line phrase
+   *
+   * @example
+   *
+   * ["1 passed", "2 fail"] => '1 passed and 2 fail'
+   * ["1 passed", "2 fail", "1 empty"] => '1 passed, 2 fail and 1 empty'
+   */
+  private buildSummaryLinePhrase(parts: string[]) {
+    let builtLine = "";
+
+    for (let i = 0; i < parts.length; i++) {
+      if (parts.length > 2 && i < 2) {
+        builtLine += parts[i] + ", ";
+      } else {
+        builtLine += parts[i] + " and ";
+      }
     }
+
+    // removes the last 'and '
+    return builtLine.substring(0, builtLine.length - 5);
   }
 }
 

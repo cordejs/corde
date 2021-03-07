@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should print a summary for 1 test file, 1 test case, and 1 test function that has pass 1`] = `
+"
+Test Files: 1 passed and 1 empty. 1 total
+Tests:      1 passed and 1 empty. 1 total
+Time:       2s"
+`;
+
+exports[`should print a summary for 1 test file, 1 test case, and 1 test function that has pass, and 1 that don't 1`] = `
+"
+Test Files: 1 passed. 1 total
+Tests:      1 passed and 1 failed. 2 total
+Time:       2s"
+`;
+
+exports[`should print a summary for 10 test file, 10 test case, and 10 test functions 1`] = `
+"
+Test Files: 10 passed. 10 total
+Tests:      10 passed. 10 total
+Time:       2s"
+`;
+
+exports[`should print a summary tests with fail, success and empty 1`] = `
+"
+Test Files: 1 passed, 1 failed, 1 empty. 3 total
+Tests:      1 passed, 1 failed, 1 empty. 3 total
+Time:       10.658s"
+`;
+
+exports[`should print a summary tests with only empty 1`] = `
+"
+Test Files: 1 empty. 1 total
+Tests:      1 empty. 1 total
+Time:       10.658s"
+`;
+
+exports[`should print a summary tests with only fail 1`] = `
+"
+Test Files: 3 failed. 3 total
+Tests:      3 failed. 3 total
+Time:       10.658s"
+`;
+
+exports[`should print a summary tests with timer '' 1`] = `
+"
+Test Files: 10 passed. 10 total
+Tests:      10 passed. 10 total
+"
+`;
