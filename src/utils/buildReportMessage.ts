@@ -1,18 +1,29 @@
 import { EXPECT_RECEIVED_TAB_SPACE } from "../consts";
 
-export function buildReportMessage(expect: string, received: string, isNot?: boolean) {
+export function buildReportMessage(expect: string, received?: string, isNot?: boolean) {
   let message = "\n";
 
   if (expect) {
     if (isNot) {
-      message += EXPECT_RECEIVED_TAB_SPACE + "not " + expect + "\n";
+      message += "not " + expect;
     } else {
-      message += EXPECT_RECEIVED_TAB_SPACE + expect + "\n";
+      message += expect;
     }
   }
 
   if (received) {
-    message += EXPECT_RECEIVED_TAB_SPACE + received + "\n";
+    message += received;
   }
-  return message;
+  return addSpace(message);
+}
+
+function addSpace(value: string) {
+  let newValue = "";
+
+  const split = value.split("\n");
+
+  for (const lineValue of split) {
+    newValue += EXPECT_RECEIVED_TAB_SPACE + lineValue + "\n";
+  }
+  return newValue;
 }

@@ -2,7 +2,7 @@ import { MessageEmbed } from "discord.js";
 import { MessageData, TestReport } from "../../../types";
 import { wait } from "../../../utils";
 import { ExpectOperation } from "../operation";
-import MessageUtils from "./messageUtils";
+import MessageUtils from "../../messageUtils";
 
 export class ToEditMessage extends ExpectOperation<MessageData, string | MessageEmbed> {
   public async action(

@@ -7,7 +7,7 @@ import { MinifiedEmbedMessage, TestReport } from "../../../types";
  */
 import { isPrimitiveValue } from "../../../utils/isPrimitiveValue";
 import { ExpectOperation } from "../operation";
-import MessageUtils from "./messageUtils";
+import MessageUtils from "../../messageUtils";
 
 export class ToReturn extends ExpectOperation<string | number | boolean | MessageEmbed> {
   public async action(expect: string | number | boolean | MessageEmbed): Promise<TestReport> {

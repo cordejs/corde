@@ -1,8 +1,8 @@
 import assert from "assert";
 import { Message, MessageEmbed } from "discord.js";
-import { MessageData, messageType, MinifiedEmbedMessage, Primitive } from "../../../types";
-import { pick } from "../../../utils/pick";
-import { isPrimitiveValue } from "../../../utils/isPrimitiveValue";
+import { MessageData, messageType, MinifiedEmbedMessage, Primitive } from "../types";
+import { pick } from "../utils/pick";
+import { isPrimitiveValue } from "../utils/isPrimitiveValue";
 
 class MessageUtilsManager {
   public messagesMatches(returnedMessage: Message, expectation: Primitive | MessageEmbed) {
