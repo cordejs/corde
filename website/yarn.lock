@@ -2480,14 +2480,15 @@
     "@docusaurus/plugin-content-pages" "2.0.0-alpha.70"
     "@docusaurus/types" "2.0.0-alpha.70"
 
-"@docusaurus/theme-live-codeblock@^2.0.0-alpha.70":
-  version "2.0.0-alpha.70"
-  resolved "https://registry.yarnpkg.com/@docusaurus/theme-live-codeblock/-/theme-live-codeblock-2.0.0-alpha.70.tgz#a27b5f61f7ba37a6f2a00929c7e0e0f95f9f3635"
-  integrity sha512-9fFC6MeazqmfzbnKgUFDiKmF1Zs5rG4CXCsxDcNbu/XZMd2xMrI5UlQfo+yfNAKX2aWvjaqThLfxRkJzI2guIA==
+"@docusaurus/theme-live-codeblock@^2.0.0-alpha.71":
+  version "2.0.0-alpha.71"
+  resolved "https://registry.yarnpkg.com/@docusaurus/theme-live-codeblock/-/theme-live-codeblock-2.0.0-alpha.71.tgz#65e8d1a297aa0a9d9335f090a551a4cd15569d2e"
+  integrity sha512-t6/03zU9G5dyNELlbZTu4BK/OEDvhtjlTobASL3G8+lgOoJLFn1dCNA6OywUMVurTom0JdSIP63b6dL2+DnWCQ==
   dependencies:
-    "@docusaurus/core" "2.0.0-alpha.70"
+    "@docusaurus/core" "2.0.0-alpha.71"
     "@philpl/buble" "^0.19.7"
     clsx "^1.1.1"
+    joi "^17.4.0"
     parse-numeric-range "^1.2.0"
     prism-react-renderer "^1.1.1"
     react-live "^2.2.3"
@@ -6172,6 +6173,16 @@ from2@^2.1.0:
     readable-stream "^2.0.0"
 
 fs-extra@^9.0.1, fs-extra@^9.1.0:
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-9.1.0.tgz#5954460c764a8da2094ba3554bf839e6b9a7c86d"
+  integrity sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ==
+  dependencies:
+    at-least-node "^1.0.0"
+    graceful-fs "^4.2.0"
+    jsonfile "^6.0.1"
+    universalify "^2.0.0"
+
+fs-extra@^9.1.0:
   version "9.1.0"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-9.1.0.tgz#5954460c764a8da2094ba3554bf839e6b9a7c86d"
   integrity sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ==
