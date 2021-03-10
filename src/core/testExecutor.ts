@@ -13,7 +13,7 @@ import {
   TEXT_PASS,
 } from "../consts";
 import { Group, RunnerReport, SemiRunnerReport, Test, TestFile, TestReport } from "../types";
-import { executeWithTimeout, stringIsNullOrEmpty, Timer } from "../utils";
+import { executeWithTimeout, formatObject, stringIsNullOrEmpty, Timer } from "../utils";
 import { LogUpdate } from "../utils";
 
 enum Status {
@@ -240,12 +240,21 @@ export class TestExecutor {
       } catch (error) {
         report = {
           pass: false,
+          message: this.getErrorMessage(error),
         };
       }
       await testCollector.afterEachFunctions.executeAsync();
       reports.push(report);
     }
     return reports;
+  }
+
+  private getErrorMessage(error: any) {
+    if (error instanceof Error) {
+      return error.message;
+    }
+
+    return formatObject(error);
   }
 
   private getAssertionPropsFromGroup(group: Group) {
