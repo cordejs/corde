@@ -14,8 +14,7 @@ export class ToEditMessage extends ExpectOperation<MessageData, string | Message
     await wait(600);
     const msg = await this.cordeBot.findMessage(messageData);
     if (!msg) {
-      this.message = MessageUtils.createNotFoundMessageForMessageData(messageData);
-      return this.generateReport();
+      return this.createReport(MessageUtils.createNotFoundMessageForMessageData(messageData));
     }
 
     if (MessageUtils.messagesMatches(msg, newValue)) {
@@ -23,6 +22,6 @@ export class ToEditMessage extends ExpectOperation<MessageData, string | Message
       this.invertHasPassedIfIsNot();
     }
 
-    return this.generateReport();
+    return this.createReport();
   }
 }

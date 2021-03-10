@@ -9,7 +9,7 @@ export class ToUnpinMessage extends ExpectOperation<MessageData> {
     const msg = await this.cordeBot.findMessage(messageData);
 
     if (!msg) {
-      return this.generateReport();
+      return this.createReport();
     }
 
     if (msg && !msg.pinned) {
@@ -17,6 +17,6 @@ export class ToUnpinMessage extends ExpectOperation<MessageData> {
     }
 
     this.invertHasPassedIfIsNot();
-    return this.generateReport();
+    return this.createReport();
   }
 }

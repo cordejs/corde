@@ -11,24 +11,13 @@ import MessageUtils from "../../messageUtils";
 
 export class ToReturn extends ExpectOperation<string | number | boolean | MessageEmbed> {
   public async action(expect: string | number | boolean | MessageEmbed): Promise<TestReport> {
-    try {
-      this.expectation = expect;
-      await this.cordeBot.sendTextMessage(this.command);
-      const returnedMessage = await this.cordeBot.awaitMessagesFromTestingBot();
+    this.expectation = expect;
+    await this.cordeBot.sendTextMessage(this.command);
+    const returnedMessage = await this.cordeBot.awaitMessagesFromTestingBot();
 
-      this.hasPassed = MessageUtils.messagesMatches(returnedMessage, expect);
-      this.output = this.getMessageValue(returnedMessage, expect);
-      this.invertHasPassedIfIsNot();
-    } catch (error) {
-      this.hasPassed = false;
-      if (error instanceof Error) {
-        this.output = error.message;
-      } else {
-        this.output = error;
-      }
-    }
-
-    return this.generateReport();
+    this.hasPassed = MessageUtils.messagesMatches(returnedMessage, expect);
+    this.invertHasPassedIfIsNot();
+    return this.createReport(this.getMessageValue(returnedMessage, expect));
   }
 
   private getMessageValue(

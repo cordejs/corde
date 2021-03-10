@@ -1,5 +1,6 @@
 import { CordeBot } from "../../core";
 import { TestReport } from "../../types/types";
+import { buildReportMessage } from "../../utils";
 
 /**
  * Entity helper for expectation assertions used for Corde tests
@@ -12,10 +13,8 @@ import { TestReport } from "../../types/types";
  *
  */
 export abstract class ExpectOperation<P1 = any, P2 = any, P3 = any> {
-  protected output: unknown;
   protected expectation: any;
   protected hasPassed: boolean;
-  protected message: string;
 
   protected readonly isNot: boolean;
   protected readonly command: string;
@@ -46,25 +45,21 @@ export abstract class ExpectOperation<P1 = any, P2 = any, P3 = any> {
    */
   public abstract action(p1: P1, p2: P2, p3: P3): Promise<TestReport>;
 
-  protected catchExecutionError<T extends Error | unknown>(error: T) {
-    this.hasPassed = false;
-    if (error instanceof Error) {
-      this.output = error.message;
-    } else {
-      this.output = error;
-    }
-  }
-
   protected invertHasPassedIfIsNot() {
     if (this.isNot) {
       this.hasPassed = !this.hasPassed;
     }
   }
 
-  protected generateReport(message?: string): TestReport {
+  protected createReport(expect?: string, received?: string): TestReport {
+    let message = "";
+    if (expect) {
+      message = buildReportMessage(expect, received, this.isNot);
+    }
+
     return {
       pass: this.hasPassed,
-      message: message ?? this.message,
+      message: message,
     };
   }
 }

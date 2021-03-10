@@ -4,6 +4,8 @@ import { initCordeClientWithChannel } from "../../testHelper";
 import { MockEvents } from "../../mocks/mockEvents";
 import { TestReport } from "../../../src/types";
 import { ToDeleteRole } from "../../../src/expect/matches";
+import { roleUtils } from "../../../src/expect/roleUtils";
+import { buildReportMessage } from "../../../src/utils";
 
 let mockDiscord = new MockDiscord();
 let mockEvents: MockEvents;
@@ -22,10 +24,9 @@ describe("testing toDeleteRole function", () => {
     const report = await toDeleteRole.action({ id: "123" });
 
     const model: TestReport = {
-      commandName: "test",
-      hasPassed: true,
-      isNot: isNot,
+      pass: true,
     };
+
     expect(report).toMatchObject(model);
   });
 
@@ -38,9 +39,8 @@ describe("testing toDeleteRole function", () => {
     const report = await toDeleteRole.action({ id: "123" });
 
     const model: TestReport = {
-      commandName: "test",
-      hasPassed: false,
-      isNot: isNot,
+      pass: true,
+      message: "",
     };
     expect(report).toMatchObject(model);
   });
@@ -51,13 +51,16 @@ describe("testing toDeleteRole function", () => {
     corde.fetchRole = jest.fn().mockReturnValue(mockDiscord.role);
 
     const isNot = false;
+    const roleData = { id: "123" };
     const toDeleteRole = new ToDeleteRole(corde, "test", isNot);
-    const report = await toDeleteRole.action({ id: "123" });
+    const report = await toDeleteRole.action(roleData);
+
+    const baseMessage = roleUtils.createExpectedMessageForMessageData(roleData);
+    const message = buildReportMessage(`expected: ${baseMessage}`, `received: ${roleData}`);
 
     const model: TestReport = {
-      commandName: "test",
-      hasPassed: false,
-      isNot: isNot,
+      pass: false,
+      message,
     };
     expect(report).toMatchObject(model);
   });
@@ -65,17 +68,23 @@ describe("testing toDeleteRole function", () => {
   it("should return a passed report for a found role with property role.deleted = true role (isNot false)", async () => {
     const corde = initializeCorde();
     mockEvents.mockOnceRoleDelete();
-    mockDiscord.role.deleted = true;
-    corde.fetchRole = jest.fn().mockReturnValue(mockDiscord.role);
+    const role = mockDiscord.role;
+    role.deleted = true;
+    corde.fetchRole = jest.fn().mockReturnValue(role);
 
     const isNot = false;
+    const roleData = { id: "123" };
     const toDeleteRole = new ToDeleteRole(corde, "test", isNot);
-    const report = await toDeleteRole.action({ id: "123" });
+    const report = await toDeleteRole.action(roleData);
+
+    const message = buildReportMessage(
+      "expected: a role not deleted",
+      `received: the role with id: ${role.id} and name ${role.name} is already deleted`,
+    );
 
     const model: TestReport = {
-      commandName: "test",
-      hasPassed: true,
-      isNot: isNot,
+      pass: false,
+      message,
     };
     expect(report).toMatchObject(model);
   });
@@ -83,17 +92,22 @@ describe("testing toDeleteRole function", () => {
   it("should return a failed report for a found role with property role.deleted = true role (isNot true)", async () => {
     const corde = initializeCorde();
     mockEvents.mockOnceRoleDelete();
-    mockDiscord.role.deleted = true;
-    corde.fetchRole = jest.fn().mockReturnValue(mockDiscord.role);
+    const role = mockDiscord.role;
+    role.deleted = true;
+    corde.fetchRole = jest.fn().mockReturnValue(role);
 
     const isNot = true;
     const toDeleteRole = new ToDeleteRole(corde, "test", isNot);
     const report = await toDeleteRole.action({ id: "123" });
 
+    const message = buildReportMessage(
+      "expected: a role not deleted",
+      `received: the role with id: ${role.id} and name ${role.name} is already deleted`,
+    );
+
     const model: TestReport = {
-      commandName: "test",
-      hasPassed: false,
-      isNot: isNot,
+      pass: false,
+      message,
     };
     expect(report).toMatchObject(model);
   });
@@ -108,9 +122,7 @@ describe("testing toDeleteRole function", () => {
     const report = await toDeleteRole.action({ id: "123" });
 
     const model: TestReport = {
-      commandName: "test",
-      hasPassed: true,
-      isNot: isNot,
+      pass: true,
     };
     expect(report).toMatchObject(model);
   });
@@ -123,14 +135,15 @@ describe("testing toDeleteRole function", () => {
     corde.findRole = jest.fn().mockReturnValue(null);
 
     const isNot = true;
+    const roleData = { id: "123" };
     const toDeleteRole = new ToDeleteRole(corde, "test", isNot);
-    const report = await toDeleteRole.action({ id: "123" });
+    const report = await toDeleteRole.action(roleData);
+
+    const baseMessage = roleUtils.createExpectedMessageForMessageData(roleData);
+    const message = buildReportMessage(`expected: ${baseMessage}`, `received: ${roleData}`);
 
     const model: TestReport = {
-      commandName: "test",
-      output: "No role found",
-      hasPassed: false,
-      isNot: isNot,
+      pass: false,
     };
     expect(report).toMatchObject(model);
   });
