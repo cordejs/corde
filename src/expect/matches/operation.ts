@@ -54,7 +54,7 @@ export abstract class ExpectOperation<P1 = any, P2 = any, P3 = any> {
   protected createReport(expect?: string, received?: string): TestReport {
     let message = "";
     if (expect) {
-      message = buildReportMessage(expect, received, this.isNot);
+      message = buildReportMessage(expect, received);
     }
 
     return {
