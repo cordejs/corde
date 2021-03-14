@@ -19,9 +19,11 @@ import {
   VoiceState,
 } from "discord.js";
 import { once } from "events";
+import { runtime } from "../common";
 import { DEFAULT_TEST_TIMEOUT } from "../consts";
 import { TimeoutError } from "../errors";
 import { RoleData } from "../types";
+import { executeWithTimeout } from "../utils";
 
 export interface EventResume {
   count: number;
@@ -197,11 +199,12 @@ export class Events {
 
   /**
    * Emitted once a guild role is deleted.
+   * Waits for a determined timeout.
    * @returns Deleted role.
    * @internal
    */
-  public onceRoleDelete(): Promise<Role> {
-    return this._once<Role>("roleDelete");
+  public onceRoleDelete(timeout?: number): Promise<Role> {
+    return executeWithTimeout(() => this._once<Role>("roleDelete"), timeout ?? runtime.timeOut);
   }
 
   /**

@@ -31,10 +31,10 @@ export class ToDeleteRole extends ExpectOperation<RoleData> {
   }
 
   private async getRoleOrInvalidMessage(roleData: RoleData) {
-    const roleDataInvalidMessage = roleUtils.getErrorForUndefinedRoleData(roleData);
+    const error = roleUtils.getErrorForUndefinedRoleData(roleData);
 
-    if (roleDataInvalidMessage) {
-      return { pass: false, message: roleDataInvalidMessage };
+    if (error) {
+      return { pass: false, message: error };
     }
 
     let role = await this.cordeBot.findRole(roleData);
@@ -42,7 +42,7 @@ export class ToDeleteRole extends ExpectOperation<RoleData> {
     const invalidRoleErrorMessage = roleUtils.validateRole(role, roleData);
 
     if (invalidRoleErrorMessage) {
-      return { pass: false, message: roleDataInvalidMessage };
+      return { pass: false, message: invalidRoleErrorMessage };
     }
 
     if (role.deleted) {
