@@ -353,7 +353,7 @@ export default class MockDiscord {
   createMockGuild() {
     return new Guild(this._client, {
       unavailable: false,
-      id: SnowflakeUtil.generate(),
+      id: "729334530350652501",
       name: "mocked js guild",
       icon: "mocked guild icon url",
       splash: "mocked guild splash url",
@@ -424,7 +424,7 @@ export default class MockDiscord {
 
   createUserMock(isBot: boolean) {
     return new User(this._client, {
-      id: SnowflakeUtil.generate(),
+      id: "529112540350652502",
       username: "UserCorde",
       discriminator: "user#0101",
       avatar: "user avatar url",
@@ -471,7 +471,7 @@ export default class MockDiscord {
     const msg = new Message(
       this._client,
       {
-        id: SnowflakeUtil.generate(),
+        id: "125332540654650541",
         type: "DEFAULT",
         content: customMessage,
         author: this._user,
@@ -502,7 +502,7 @@ export default class MockDiscord {
         emoji: {
           animated: false,
           name: customEmoji,
-          id: SnowflakeUtil.generate(),
+          id: "312322220410652501",
           deleted: false,
         },
         me: false,
@@ -536,8 +536,8 @@ export default class MockDiscord {
 
   createMockMessageEmbedCollection() {
     const collection = new Collection<string, MessageEmbed>();
-    collection.set(SnowflakeUtil.generate(), this._messageEmbed);
-    collection.set(SnowflakeUtil.generate(), this.createMockMessageEmbed("#0088ff", "test"));
+    collection.set("123352640350652502", this._messageEmbed);
+    collection.set("329762565356654501", this.createMockMessageEmbed("#0088ff", "test"));
     return collection;
   }
 
@@ -563,7 +563,7 @@ export default class MockDiscord {
     const role = new Role(
       this._client,
       {
-        id: SnowflakeUtil.generate(),
+        id: "819382540350652502",
         name: customName,
         color: 3447003,
         hoist: true,
