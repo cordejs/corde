@@ -14,7 +14,7 @@ export class Config implements ConfigOptions {
   public botTestToken?: string;
   public channelId: string;
   public guildId: string;
-  public timeOut?: number;
+  public timeOut: number;
   public botPrefix: string;
   public testFiles: string[];
 
@@ -32,45 +32,45 @@ export class Config implements ConfigOptions {
    * config.timeOut = 1000;
    *
    * const newConfig: ConfigOptions = { ...timeOut: 3000 };
-   * config.setNoFiledConfigsOptions(newConfig);
+   * config.setConfigs(newConfig);
    * console.log(config.timeOut) // print 1000;
    *
    * @param config new set of configs.
    */
-  public setNoFiledConfigsOptions(config: ConfigOptions) {
-    if (!this.cordeTestToken) {
+  public setConfigs(config: ConfigOptions, forceUpdate?: boolean) {
+    if (!this.cordeTestToken || forceUpdate) {
       this.cordeTestToken = config.cordeTestToken;
     }
 
-    if (!this.botPrefix) {
+    if (!this.botPrefix || forceUpdate) {
       this.botPrefix = config.botPrefix;
     }
 
-    if (!this.botTestId) {
+    if (!this.botTestId || forceUpdate) {
       this.botTestId = config.botTestId;
     }
 
-    if (!this.botTestToken) {
+    if (!this.botTestToken || forceUpdate) {
       this.botTestToken = config.botTestToken;
     }
 
-    if (!this.channelId) {
+    if (!this.channelId || forceUpdate) {
       this.channelId = config.channelId;
     }
 
-    if (!this.guildId) {
+    if (!this.guildId || forceUpdate) {
       this.guildId = config.guildId;
     }
 
-    if (!this.timeOut) {
+    if (!this.timeOut || forceUpdate) {
       this.timeOut = config.timeOut;
     }
 
-    if (!this.botPrefix) {
+    if (!this.botPrefix || forceUpdate) {
       this.botPrefix = config.botPrefix;
     }
 
-    if (!this.testFiles || this.testFiles.length === 0) {
+    if (!this.testFiles || this.testFiles.length === 0 || forceUpdate) {
       this.testFiles = config.testFiles;
     }
   }

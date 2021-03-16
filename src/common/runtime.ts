@@ -72,12 +72,12 @@ class Runtime {
     return Runtime._instance;
   }
 
-  public setConfigs(_configs: ConfigOptions) {
+  public setConfigs(_configs: ConfigOptions, forceUpdate?: boolean) {
     if (!_configs) {
       throw new ConfigError("Invalid _configs");
     }
 
-    this._configs.setNoFiledConfigsOptions(_configs);
+    this._configs.setConfigs(_configs, forceUpdate);
     this.loadBot();
   }
 
