@@ -9,7 +9,7 @@
  * @internal
  */
 export async function executeWithTimeout<TResult extends any>(
-  fn: () => Promise<TResult> | TResult,
+  fn: () => TResult | Promise<TResult>,
   timeout: number,
 ) {
   if (!fn) {
