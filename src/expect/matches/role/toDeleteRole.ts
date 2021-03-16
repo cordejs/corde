@@ -14,7 +14,17 @@ export class ToDeleteRole extends ExpectOperation<RoleData> {
     const role = roleOrFailObject as Role;
 
     await this.cordeBot.sendTextMessage(this.command);
-    await this.cordeBot.events.onceRoleDelete();
+    try {
+      await this.cordeBot.events.onceRoleDelete(roleData, this.timeOut);
+    } catch (error) {
+      if (this.isNot) {
+        return { pass: true };
+      }
+
+      return this.createReport(
+        `timeout: role ${role.id} wasn't deleted in the expected time (${this.timeOut})`,
+      );
+    }
     const deletedRole = await this.cordeBot.fetchRole(role.id);
 
     if (!deletedRole || deletedRole.deleted) {

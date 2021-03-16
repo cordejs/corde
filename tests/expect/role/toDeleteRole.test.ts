@@ -6,6 +6,7 @@ import { TestReport } from "../../../src/types";
 import { ToDeleteRole } from "../../../src/expect/matches";
 import { roleUtils } from "../../../src/expect/roleUtils";
 import { buildReportMessage } from "../../../src/utils";
+import { runtime } from "../../../src/common";
 
 let mockDiscord = new MockDiscord();
 let mockEvents: MockEvents;
@@ -71,6 +72,24 @@ describe("testing toDeleteRole function", () => {
       expect(report).toMatchObject(model);
       expect(report).toMatchSnapshot();
     });
+
+    it("should get timeout when trying to delete the role, but should pass", async () => {
+      const corde = initializeCorde();
+      corde.fetchRole = jest.fn().mockReturnValue(mockDiscord.role);
+
+      const isNot = true;
+      const roleData = { id: mockDiscord.role.id };
+      runtime.setConfigs({ timeOut: 100 }, true);
+
+      const toDeleteRole = new ToDeleteRole(corde, "test", isNot);
+      const report = await toDeleteRole.action(roleData);
+
+      const model: TestReport = {
+        pass: true,
+      };
+      expect(report).toMatchObject(model);
+      expect(report).toMatchSnapshot();
+    });
   });
 
   describe("isNot false", () => {
@@ -86,6 +105,29 @@ describe("testing toDeleteRole function", () => {
         pass: true,
       };
 
+      expect(report).toMatchObject(model);
+      expect(report).toMatchSnapshot();
+    });
+
+    it("should get timeout when trying to delete the role", async () => {
+      const corde = initializeCorde();
+      corde.fetchRole = jest.fn().mockReturnValue(mockDiscord.role);
+
+      const isNot = false;
+      const roleData = { id: mockDiscord.role.id };
+      runtime.setConfigs({ timeOut: 100 }, true);
+
+      const toDeleteRole = new ToDeleteRole(corde, "test", isNot);
+      const report = await toDeleteRole.action(roleData);
+
+      const message = buildReportMessage(
+        `timeout: role ${mockDiscord.role.id} wasn't deleted in the expected time (${runtime.timeOut})`,
+      );
+
+      const model: TestReport = {
+        pass: false,
+        message,
+      };
       expect(report).toMatchObject(model);
       expect(report).toMatchSnapshot();
     });
