@@ -1,3 +1,4 @@
+import { runtime } from "../../common";
 import { CordeBot } from "../../core";
 import { TestReport } from "../../types/types";
 import { buildReportMessage } from "../../utils";
@@ -19,7 +20,7 @@ export abstract class ExpectOperation<P1 = any, P2 = any, P3 = any> {
   protected readonly isNot: boolean;
   protected readonly command: string;
   protected readonly cordeBot: CordeBot;
-
+  protected readonly timeOut: number;
   /**
    * Initialize the match class with its default values.
    *
@@ -32,6 +33,7 @@ export abstract class ExpectOperation<P1 = any, P2 = any, P3 = any> {
     this.command = command;
     this.cordeBot = cordeBot;
     this.hasPassed = false;
+    this.timeOut = runtime.timeOut;
   }
 
   /**

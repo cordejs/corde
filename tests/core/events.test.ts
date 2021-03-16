@@ -196,7 +196,7 @@ describe("testing events event", () => {
     });
 
     it("should throw due to timeout", () => {
-      expect(events.onceRoleDelete(10)).rejects.toBeTruthy();
+      expect(events.onceRoleDelete(null, 10)).rejects.toBeTruthy();
     });
   });
 
@@ -820,7 +820,7 @@ describe("testing events event", () => {
     });
   });
 
-  describe("testing waitRolePermissionUpdate", () => {
+  describe("testing onceRolePermissionUpdate", () => {
     const eventName = "roleUpdate";
     const updatedRole = mockDiscord.createMockRole("test", 0);
     updatedRole.id = mockDiscord.role.id;
@@ -831,7 +831,7 @@ describe("testing events event", () => {
         client.emit(eventName, mockDiscord.role, updatedRole);
       }, DEFAULT_DELAY);
 
-      const newRole = await events.waitRolePermissionUpdate({ id: updatedRole.id });
+      const newRole = await events.onceRolePermissionUpdate({ id: updatedRole.id });
       expect(newRole).toEqual(updatedRole);
     });
 
@@ -840,7 +840,7 @@ describe("testing events event", () => {
         client.emit(eventName, mockDiscord.role, updatedRole);
       }, DEFAULT_DELAY);
 
-      const newRole = await events.waitRolePermissionUpdate({ name: updatedRole.name });
+      const newRole = await events.onceRolePermissionUpdate({ name: updatedRole.name });
       expect(newRole).toEqual(updatedRole);
     });
 
@@ -849,7 +849,7 @@ describe("testing events event", () => {
         client.emit(eventName, mockDiscord.role, updatedRole);
       }, DEFAULT_DELAY);
 
-      const newRole = await events.waitRolePermissionUpdate({
+      const newRole = await events.onceRolePermissionUpdate({
         id: updatedRole.id,
         name: updatedRole.name,
       });
@@ -861,7 +861,7 @@ describe("testing events event", () => {
         client.emit(eventName, mockDiscord.role, updatedRole);
       }, DEFAULT_DELAY);
 
-      expect(() => events.waitRolePermissionUpdate({ name: "potatoe" }, 100)).rejects.toBeTruthy();
+      expect(() => events.onceRolePermissionUpdate({ name: "potatoe" }, 100)).rejects.toBeTruthy();
     });
   });
 
@@ -947,6 +947,36 @@ describe("testing events event", () => {
       const [_oldRole, _newRole] = await events.onceVoiceStateUpdate();
       expect(_oldRole).toEqual(mockDiscord.voiceState);
       expect(_newRole).toEqual(updatedVoiceState);
+    });
+  });
+
+  describe("testing onceRoleRenamed", () => {
+    const eventName = "roleUpdate";
+    const updatedRole = Object.assign({}, mockDiscord.role);
+    updatedRole.name = "online";
+    it("should get renamed role using roleData", async () => {
+      // This should be skiped because do not match with roleData
+      executeWithDelay(() => {
+        const toSkipRole = Object.assign({}, mockDiscord.role);
+        toSkipRole.id = mockDiscord.generateId();
+        client.emit(eventName, toSkipRole, toSkipRole);
+      }, DEFAULT_DELAY);
+
+      executeWithDelay(() => {
+        client.emit(eventName, mockDiscord.role, updatedRole);
+      }, DEFAULT_DELAY + 100);
+
+      const updated = await events.onceRoleRenamed({ id: mockDiscord.role.id });
+      expect(updated).toEqual(updatedRole);
+    });
+
+    it("should get renamed role not using roleData", async () => {
+      executeWithDelay(() => {
+        client.emit(eventName, mockDiscord.role, updatedRole);
+      }, DEFAULT_DELAY);
+
+      const updated = await events.onceRoleRenamed();
+      expect(updated).toEqual(updatedRole);
     });
   });
 });

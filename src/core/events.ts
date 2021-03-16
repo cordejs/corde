@@ -23,7 +23,7 @@ import { runtime } from "../common";
 import { DEFAULT_TEST_TIMEOUT } from "../consts";
 import { TimeoutError } from "../errors";
 import { RoleData } from "../types";
-import { executeWithTimeout } from "../utils";
+import { executePromiseWithTimeout, executeWithTimeout } from "../utils";
 
 export interface EventResume {
   count: number;
@@ -42,20 +42,6 @@ export class Events {
 
   constructor(client: Client) {
     this._client = client;
-  }
-
-  /**
-   * Execute an event `once` returning it's response.
-   * @param event event's name.
-   * @internal
-   */
-  private async _once<T extends any>(event: keyof ClientEvents): Promise<T> {
-    const response = await once(this._client, event);
-
-    if (response.length === 1) {
-      return response[0];
-    }
-    return (response as unknown) as T;
   }
 
   /**
@@ -199,12 +185,29 @@ export class Events {
 
   /**
    * Emitted once a guild role is deleted.
-   * Waits for a determined timeout.
+   * If `roleData` is informed, returns the deleted role that
+   * match with `roleData` value, if not, returns the first role deleted.
+   *
+   * Waits for a determined timeout, rejecting this async function if reachs
+   * the timeout value.
+   *
+   * @param roleData Identifiers of the role.
+   * @param timeout Time that this functions should wait for a response.
    * @returns Deleted role.
    * @internal
    */
-  public onceRoleDelete(timeout?: number): Promise<Role> {
-    return executeWithTimeout(() => this._once<Role>("roleDelete"), timeout ?? runtime.timeOut);
+  public onceRoleDelete(roleData?: RoleData, timeout?: number): Promise<Role> {
+    return executePromiseWithTimeout((resolve) => {
+      this.onRoleDelete((deletedRole) => {
+        if (!roleData) {
+          resolve(deletedRole);
+        }
+
+        if (this.roleMatchRoleData(roleData, deletedRole)) {
+          resolve(deletedRole);
+        }
+      });
+    }, timeout ?? runtime.timeOut);
   }
 
   /**
@@ -716,12 +719,34 @@ export class Events {
   }
 
   /**
+   * @internal
+   */
+  public onceRoleRenamed(roleData?: RoleData, timeout?: number) {
+    return this._onRoleUpdateWithTimeout(
+      (oldRole, newRole) => oldRole.name !== newRole.name,
+      timeout,
+      roleData,
+    );
+  }
+
+  /**
+   * @internal
+   */
+  public onceRoleUpdateRoleColor(roleData?: RoleData, timeout?: number) {
+    return this._onRoleUpdateWithTimeout(
+      (oldRole, newRole) => oldRole.color !== newRole.color,
+      timeout,
+      roleData,
+    );
+  }
+
+  /**
    * Waits for changes in permission of a specific role.
    * @param roleData `id` or `name` to identify the role.
    * @returns Specified role that had his permissions updated.
    * @internal
    */
-  public waitRolePermissionUpdate(roleData: RoleData, timeout = DEFAULT_TEST_TIMEOUT) {
+  public onceRolePermissionUpdate(roleData: RoleData, timeout = DEFAULT_TEST_TIMEOUT) {
     return new Promise<Role>((resolve, reject) => {
       setTimeout(() => {
         reject(new TimeoutError());
@@ -739,7 +764,7 @@ export class Events {
   }
 
   private roleMatchRoleData(roleData: RoleData, role: Role) {
-    return role.id === roleData.id || role.name === roleData.name;
+    return role.id === roleData?.id || role.name === roleData?.name;
   }
 
   private rolesPermissionsMatch(oldRole: Role, newRole: Role) {
@@ -801,5 +826,37 @@ export class Events {
    */
   public onceVoiceStateUpdate() {
     return this._once<[VoiceState, VoiceState]>("voiceStateUpdate");
+  }
+
+  /**
+   * Execute an event `once` returning it's response.
+   * @param event event's name.
+   * @internal
+   */
+  private async _once<T extends any>(event: keyof ClientEvents): Promise<T> {
+    const response = await once(this._client, event);
+
+    if (response.length === 1) {
+      return response[0];
+    }
+    return (response as unknown) as T;
+  }
+
+  private _onRoleUpdateWithTimeout(
+    comparable: (oldRole: Role, newRole: Role) => boolean,
+    timeout?: number,
+    roleData?: RoleData,
+  ) {
+    return executePromiseWithTimeout<Role>((resolve) => {
+      this.onRoleUpdate((oldRole, newRole) => {
+        if (!roleData && comparable(oldRole, newRole)) {
+          resolve(newRole);
+        }
+
+        if (this.roleMatchRoleData(roleData, newRole) && comparable(oldRole, newRole)) {
+          resolve(newRole);
+        }
+      });
+    }, timeout ?? runtime.timeOut);
   }
 }

@@ -81,11 +81,11 @@ export interface ConfigOptions {
   /**
    * Fake bot used to test the really one
    */
-  cordeTestToken: string;
+  cordeTestToken?: string;
   /**
    * User's bot that will be tested
    */
-  botTestId: string;
+  botTestId?: string;
   /**
    * User's bot token that will run.
    */
@@ -93,11 +93,11 @@ export interface ConfigOptions {
   /**
    * Channel where tests will run
    */
-  channelId: string;
+  channelId?: string;
   /**
    * Guild where tests will run
    */
-  guildId: string;
+  guildId?: string;
   /**
    * Defines max amount of time that a command can run
    */
@@ -105,11 +105,11 @@ export interface ConfigOptions {
   /**
    * Defines how identify bot calls
    */
-  botPrefix: string;
+  botPrefix?: string;
   /**
    * Path for case tests. Use this from the base directory of the application
    */
-  testFiles: string[];
+  testFiles?: string[];
 }
 
 export interface Author {
