@@ -22,7 +22,7 @@ import {
 import { ExpectOperation } from "./matches/operation";
 import { MessageMatches } from "./matches/messageMatches.interface";
 import { RoleMatches } from "./matches/roleMatches";
-import { resolveName, typeOf } from "../utils";
+import { resolveName, stringIsNullOrEmpty, typeOf } from "../utils";
 import { PropertyError } from "../errors";
 
 /**
@@ -197,14 +197,10 @@ class ExpectMatches implements Matches {
     cordeBot: CordeBot,
     ...params: Parameters<T["action"]>
   ): Promise<TestReport> {
-    let commandName;
-    try {
-      commandName = await resolveName(this._commandName);
-    } catch (error) {
-      if (error instanceof Error) {
-        return { pass: false, message: error.message };
-      }
-      return { pass: false, message: error };
+    const commandName = await resolveName(this._commandName);
+
+    if (typeof commandName === "string" && stringIsNullOrEmpty(commandName)) {
+      return { pass: false, message: "command can not be null or an empty string" };
     }
     const op = new type(cordeBot, commandName, this._isNot);
     return (op.action as GenericFunction)(...params);

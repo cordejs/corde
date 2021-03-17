@@ -1,5 +1,4 @@
 import { typeOf } from ".";
-import { CommandNameType } from "../types";
 
 /**
  * Resolves an name executing or converting it's value.
