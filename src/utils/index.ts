@@ -19,3 +19,4 @@ export * from "./buildReportMessage";
 export * from "./executePromiseWithTimeout";
 export * from "./typeOf";
 export * from "./resolveName";
+export * from "./rgba";

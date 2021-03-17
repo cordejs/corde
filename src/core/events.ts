@@ -732,7 +732,7 @@ export class Events {
   /**
    * @internal
    */
-  public onceRoleUpdateRoleColor(roleData?: RoleData, timeout?: number) {
+  public onceRoleUpdateColor(roleData?: RoleData, timeout?: number) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.color !== newRole.color,
       timeout,

@@ -21,4 +21,13 @@ export class MockEvents {
   mockOnceRoleRenamed(role?: Role) {
     this._corde.events.onceRoleRenamed = jest.fn().mockReturnValue(role ?? this._mockDiscord.role);
   }
+
+  /**
+   * @internal
+   */
+  mockOnceRoleUpdateColor(role?: Role) {
+    this._corde.events.onceRoleUpdateColor = jest
+      .fn()
+      .mockReturnValue(role ?? this._mockDiscord.role);
+  }
 }
