@@ -25,7 +25,7 @@ class RoleUtils {
   }
 
   public getErrorForUndefinedRoleData(roleData: RoleData) {
-    if (roleData == undefined) {
+    if (!roleData) {
       return buildReportMessage(
         "expected: data to identifier the role (id or name)\n",
         `received: null`,

@@ -17,3 +17,4 @@ export * from "./stringIsNullOrEmpty";
 export * from "./timer";
 export * from "./buildReportMessage";
 export * from "./executePromiseWithTimeout";
+export * from "./typeOf";
