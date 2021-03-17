@@ -5,6 +5,10 @@ describe("testing typeOf", () => {
     expect(typeOf(1)).toEqual("number");
   });
 
+  it("should get a symbol", () => {
+    expect(typeOf(Symbol("1"))).toEqual("symbol");
+  });
+
   it("should get string", () => {
     expect(typeOf("")).toEqual("string");
   });
@@ -31,5 +35,9 @@ describe("testing typeOf", () => {
 
   it("should get function", () => {
     expect(typeOf(function () {})).toEqual("function");
+  });
+
+  it("should return array", () => {
+    expect(typeOf([])).toEqual("array");
   });
 });

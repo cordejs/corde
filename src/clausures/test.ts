@@ -1,4 +1,5 @@
 import { testCollector } from "../common";
+import { resolveName } from "../utils";
 
 /**
  * Represents a group of commands.
@@ -13,15 +14,19 @@ import { testCollector } from "../common";
  * @param action Commands related to this test
  * @since 1.0
  */
-export function test(name: string, action: () => void | Promise<void>) {
+export function test<T extends any>(
+  name: T,
+  action: () => void | Promise<void> | PromiseLike<void>,
+) {
   testCollector.addToTestClousure(async () => {
     testCollector.isInsideTestClausure = true;
 
     if (action) {
       await action();
 
+      const testName = await resolveName(name);
       testCollector.tests.push({
-        name,
+        name: testName,
         testsFunctions: testCollector.cloneTestFunctions(),
       });
     }

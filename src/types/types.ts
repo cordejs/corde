@@ -45,7 +45,7 @@ export interface TestFile {
  * Represents **test** structure
  */
 export interface Test {
-  name?: string;
+  name?: string | number | boolean;
   subTests?: Test[];
   testsFunctions: testFunctionType[];
   testsReports?: TestReport[];
@@ -55,7 +55,7 @@ export interface Test {
  * Represents **group** structure
  */
 export interface Group {
-  name?: string;
+  name?: string | number | boolean;
   subGroups?: Group[];
   tests: Test[];
 }

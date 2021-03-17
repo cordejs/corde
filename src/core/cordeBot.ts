@@ -130,7 +130,7 @@ export class CordeBot {
    * @return Promise rejection if a testing bot does not send any message in the timeout value setted,
    * or a resolve for the promise with the message returned by the testing bot.
    */
-  public async sendTextMessage(message: string): Promise<Message> {
+  public async sendTextMessage(message: string | number | boolean): Promise<Message> {
     return new Promise<Message>(async (resolve, reject) => {
       try {
         this.validateMessageAndChannel(message);
@@ -346,7 +346,7 @@ export class CordeBot {
     return `Error trying to login with token ${token}. \n` + error;
   }
 
-  private validateMessageAndChannel(message: string) {
+  private validateMessageAndChannel(message: string | number | boolean) {
     if (!message) {
       throw new CordeClientError("No tests were declared");
     }

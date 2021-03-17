@@ -22,6 +22,8 @@ import {
 import { ExpectOperation } from "./matches/operation";
 import { MessageMatches } from "./matches/messageMatches.interface";
 import { RoleMatches } from "./matches/roleMatches";
+import { resolveName, typeOf } from "../utils";
+import { PropertyError } from "../errors";
 
 /**
  * Defines all functions that can be used
@@ -44,10 +46,10 @@ export interface MatchWithNot extends Matches {
 }
 
 class ExpectMatches implements Matches {
-  protected _commandName: string;
+  protected _commandName: unknown;
   protected _isNot: boolean;
 
-  constructor(commandName: string, isNot: boolean) {
+  constructor(commandName: unknown, isNot: boolean) {
     this._commandName = commandName;
     this._isNot = isNot;
   }
@@ -186,12 +188,25 @@ class ExpectMatches implements Matches {
     return data;
   }
 
-  protected operationFactory<T extends ExpectOperation>(
-    type: new (cordeBot: CordeBot, command: string, isNot: boolean) => T,
+  protected async operationFactory<T extends ExpectOperation>(
+    type: new (
+      cordeBot: CordeBot,
+      command: string | number | bigint | boolean,
+      isNot: boolean,
+    ) => T,
     cordeBot: CordeBot,
     ...params: Parameters<T["action"]>
   ): Promise<TestReport> {
-    const op = new type(cordeBot, this._commandName, this._isNot);
+    let commandName;
+    try {
+      commandName = await resolveName(this._commandName);
+    } catch (error) {
+      if (error instanceof Error) {
+        return { pass: false, message: error.message };
+      }
+      return { pass: false, message: error };
+    }
+    const op = new type(cordeBot, commandName, this._isNot);
     return (op.action as GenericFunction)(...params);
   }
 }
@@ -199,7 +214,7 @@ class ExpectMatches implements Matches {
 export class ExpectMatchesWithNot extends ExpectMatches implements MatchWithNot {
   public not: ExpectMatches;
 
-  constructor(commandName: string) {
+  constructor(commandName: unknown) {
     super(commandName, false);
     this.not = new ExpectMatches(commandName, true);
   }

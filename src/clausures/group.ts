@@ -1,4 +1,5 @@
 import { testCollector } from "../common";
+import { resolveName } from "../utils";
 
 /**
  * Represents a group of tests.
@@ -6,7 +7,7 @@ import { testCollector } from "../common";
  * @example
  *
  * group('main commands', () => {
- *   test('Hello command must return... hello!!', () => {
+ *   group('Hello command must return... hello!!', () => {
  *      expect('hello').toReturn('hello!!');
  *   });
  * });
@@ -15,19 +16,22 @@ import { testCollector } from "../common";
  * @param action Tests related to this group
  * @since 1.0
  */
-export function group(name: string, action: () => void | Promise<void>) {
+export function group<T extends any>(
+  name: T,
+  action: () => void | Promise<void> | PromiseLike<void>,
+) {
   testCollector.addToGroupClousure(async () => {
     testCollector.isInsideGroupClausure = true;
 
     if (action) {
       await action();
       await testCollector.executeTestClojure();
-
+      const resolvedName = await resolveName(name);
       // In case of expect() be added in test clausure
       // that is contained in action()
       if (testCollector.tests && testCollector.tests.length > 0) {
         testCollector.groups.push({
-          name,
+          name: resolvedName,
           tests: testCollector.tests.map((test) => test),
         });
       }
@@ -35,7 +39,7 @@ export function group(name: string, action: () => void | Promise<void>) {
       // Case expect() be added inside the group clausure
       if (testCollector.isInsideTestClausureFunctions()) {
         const testsCloned = testCollector.cloneTestFunctions();
-        testCollector.groups.push({ name, tests: [{ testsFunctions: testsCloned }] });
+        testCollector.groups.push({ name: resolvedName, tests: [{ testsFunctions: testsCloned }] });
         testCollector.clearTestFunctions();
       }
     }

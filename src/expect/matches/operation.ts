@@ -18,7 +18,7 @@ export abstract class ExpectOperation<P1 = any, P2 = any, P3 = any> {
   protected hasPassed: boolean;
 
   protected readonly isNot: boolean;
-  protected readonly command: string;
+  protected readonly command: string | number | boolean;
   protected readonly cordeBot: CordeBot;
   protected readonly timeOut: number;
   /**
@@ -28,7 +28,7 @@ export abstract class ExpectOperation<P1 = any, P2 = any, P3 = any> {
    * @param command The command to execute.
    * @param isNot Definition if this is a deny test.
    */
-  public constructor(cordeBot: CordeBot, command: string, isNot: boolean) {
+  public constructor(cordeBot: CordeBot, command: string | number | boolean, isNot: boolean) {
     this.isNot = isNot;
     this.command = command;
     this.cordeBot = cordeBot;

@@ -11,8 +11,23 @@ import { ExpectMatchesWithNot, MatchWithNot } from "./matcher";
  * @returns The **Compare** object, where will handle
  * the type of response is expected.
  *
+ * @throws if `commandName` be object or any other type different than
+ * the defined.
+ *
+ * @example
+ *
+ * expect("ping")
+ * expect(1)
+ * expect(true)
+ * expect(() => "ping")
+ * expect(() => 1)
+ * expect(() => false)
+ * expect(() => Promise.resolve("ping"))
+ * expect(() => Promise.resolve(1))
+ * expect(() => Promise.resolve(false))
+ *
  * @since 1.0
  */
-export function expect(commandName: string): MatchWithNot {
+export function expect<T extends any>(commandName: T): MatchWithNot {
   return new ExpectMatchesWithNot(commandName);
 }
