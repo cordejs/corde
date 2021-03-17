@@ -25,8 +25,9 @@
   "scripts": {
     "clearbuild": "gulp clear",
     "build": "gulp",
+    "build:publish": "bash ./scripts/publish.sh",
     "prettier-lib": "prettier --write ./lib",
-    "watch": "tsc -w",
+    "watch": "bash ./scripts/watch.sh",
     "release": "release-it",
     "corde": "node ./bin/corde",
     "killProcess": "cd ./etc && bash ./build_and_kill.sh",

@@ -111,7 +111,11 @@ export class TestExecutor {
     return fileHasPassed;
   }
 
-  private async executeTest(test: Test, semiReport: SemiRunnerReport, groupName?: string) {
+  private async executeTest(
+    test: Test,
+    semiReport: SemiRunnerReport,
+    groupName?: string | number | boolean,
+  ) {
     const testTimer = new Timer();
     let fileHasPassed = true;
     testTimer.start();
@@ -200,14 +204,14 @@ export class TestExecutor {
     }
   }
 
-  private createTestText(testName: string) {
+  private createTestText(testName: string | number | boolean) {
     if (stringIsNullOrEmpty(testName)) {
       return this.createTestTextByStatus("()", Status.RUNNING);
     }
     return this.createTestTextByStatus(testName, Status.RUNNING);
   }
 
-  private createTestTextByStatus(testName: string, status: Status) {
+  private createTestTextByStatus(testName: string | number | boolean, status: Status) {
     let icon = TEST_RUNNING_ICON;
 
     if (status === Status.PASSED) {
@@ -220,7 +224,7 @@ export class TestExecutor {
     return `${MESSAGE_TAB_SPACE}${icon} ${colorizedName}`;
   }
 
-  private colorizeNameIfNotPass(value: string, status: Status) {
+  private colorizeNameIfNotPass(value: string | number | boolean, status: Status) {
     if (status === Status.FAIL) {
       return chalk.red(value);
     }
