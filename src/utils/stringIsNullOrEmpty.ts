@@ -4,5 +4,5 @@
  * @internal
  */
 export function stringIsNullOrEmpty(value: any) {
-  return value == "undefined" || (typeof value === "string" && value.trim() === "");
+  return value == undefined || (typeof value === "string" && value.trim() === "");
 }
