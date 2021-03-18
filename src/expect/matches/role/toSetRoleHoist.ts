@@ -1,9 +1,9 @@
-import { ExpectOperation } from "../operation";
+import { ExpectTest } from "../operation";
 import { Role } from "discord.js";
 import { RoleIdentifier, TestReport } from "../../../types";
 import { roleUtils } from "../../roleUtils";
 
-export class ToSetRoleHoist extends ExpectOperation<boolean, RoleIdentifier> {
+export class ToSetRoleHoist extends ExpectTest {
   public async action(hoist: boolean, roleIdentifier: RoleIdentifier): Promise<TestReport> {
     const error = roleUtils.getErrorForUndefinedRoleData(roleIdentifier);
 

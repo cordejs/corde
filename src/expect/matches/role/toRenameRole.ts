@@ -2,9 +2,9 @@ import { Role } from "discord.js";
 import { RoleIdentifier, TestReport } from "../../../types";
 import { typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
-import { ExpectOperation } from "../operation";
+import { ExpectTest } from "../operation";
 
-export class ToRenameRole extends ExpectOperation<string, RoleIdentifier> {
+export class ToRenameRole extends ExpectTest {
   public async action(newName: string, roleIdentifier: RoleIdentifier): Promise<TestReport> {
     const error = roleUtils.getErrorForUndefinedRoleData(roleIdentifier);
 

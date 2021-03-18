@@ -4,9 +4,9 @@ import { ColorResolvable } from "../../../discordTypes";
 import { RoleIdentifier, TestReport } from "../../../types";
 import { Colors, resolveColor, rgba, typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
-import { ExpectOperation } from "../operation";
+import { ExpectTest } from "../operation";
 
-export class ToSetRoleColor extends ExpectOperation<ColorResolvable | Colors, RoleIdentifier> {
+export class ToSetRoleColor extends ExpectTest {
   public async action(color: ColorResolvable, roleIdentifier: RoleIdentifier): Promise<TestReport> {
     const error = roleUtils.getErrorForUndefinedRoleData(roleIdentifier);
 

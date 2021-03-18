@@ -195,6 +195,9 @@ export enum Permission {
   VIEW_GUILD_INSIGHTS = 0x00080000,
 }
 
+const permissionsArray = Object.keys(Permission);
+export { permissionsArray };
+
 /**
  * Convert a list of permissions into an integer value.
  * @param permissions Permissions to be converted

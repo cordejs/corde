@@ -60,9 +60,12 @@ export interface Group {
   tests: Test[];
 }
 
-export interface RoleIdentifier {
+export interface Identifier {
+  id?: string;
+}
+
+export interface RoleIdentifier extends Identifier {
   name?: string;
-  id?: Snowflake;
 }
 
 export interface BaseRole {

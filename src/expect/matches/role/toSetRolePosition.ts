@@ -1,8 +1,8 @@
 import { RoleIdentifier, TestReport } from "../../../types";
 import { wait } from "../../../utils";
-import { ExpectOperation } from "../operation";
+import { ExpectTest } from "../operation";
 
-export class ToSetRolePosition extends ExpectOperation<number, RoleIdentifier> {
+export class ToSetRolePosition extends ExpectTest {
   public async action(newPosition: number, roleIdentifier: RoleIdentifier): Promise<TestReport> {
     let role = await this.cordeBot.findRole(roleIdentifier);
     const lastRole = this.cordeBot

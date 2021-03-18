@@ -13,7 +13,7 @@ import { buildReportMessage } from "../../utils";
  * by the inherited class.
  *
  */
-export abstract class ExpectOperation<P1 = any, P2 = any, P3 = any> {
+export abstract class ExpectTest {
   protected expectation: any;
   protected hasPassed: boolean;
 
@@ -39,13 +39,9 @@ export abstract class ExpectOperation<P1 = any, P2 = any, P3 = any> {
   /**
    * Execute the test, checking if a command did what was proposed to do.
    *
-   * @param p1 First parameter of the test.
-   * @param p2 Second parameter of the test.
-   * @param p3 Thirty parameter of the test.
-   *
    * @returns A report of the executed command.
    */
-  public abstract action(p1: P1, p2: P2, p3: P3): Promise<TestReport>;
+  public abstract action(...args: any): Promise<TestReport>;
 
   protected invertHasPassedIfIsNot() {
     if (this.isNot) {

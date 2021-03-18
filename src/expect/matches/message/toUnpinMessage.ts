@@ -1,8 +1,8 @@
 import { MessageData, TestReport } from "../../../types";
 import { wait } from "../../../utils";
-import { ExpectOperation } from "../operation";
+import { ExpectTest } from "../operation";
 
-export class ToUnpinMessage extends ExpectOperation<MessageData> {
+export class ToUnpinMessage extends ExpectTest {
   public async action(messageData: MessageData): Promise<TestReport> {
     await this.cordeBot.sendTextMessage(this.command);
     await wait(600);

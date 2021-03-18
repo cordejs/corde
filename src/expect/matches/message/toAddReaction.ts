@@ -1,8 +1,8 @@
 import { Message } from "discord.js";
 import { TestReport } from "../../../types";
-import { ExpectOperation } from "../operation";
+import { ExpectTest } from "../operation";
 
-export class ToAddReaction extends ExpectOperation<string[]> {
+export class ToAddReaction extends ExpectTest {
   public async action(reactions: string[]): Promise<TestReport> {
     this.expectation = reactions.join();
 

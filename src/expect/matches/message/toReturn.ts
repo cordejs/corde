@@ -6,10 +6,10 @@ import { MinifiedEmbedMessage, TestReport } from "../../../types";
  * "../../../utils" results in error in jest tests.
  */
 import { isPrimitiveValue } from "../../../utils/isPrimitiveValue";
-import { ExpectOperation } from "../operation";
+import { ExpectTest } from "../operation";
 import MessageUtils from "../../messageUtils";
 
-export class ToReturn extends ExpectOperation<string | number | boolean | MessageEmbed> {
+export class ToReturn extends ExpectTest {
   public async action(expect: string | number | boolean | MessageEmbed): Promise<TestReport> {
     this.expectation = expect;
     await this.cordeBot.sendTextMessage(this.command);

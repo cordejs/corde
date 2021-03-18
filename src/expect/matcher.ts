@@ -19,7 +19,7 @@ import {
   ToUnpinMessage,
   ToSetRolePermission,
 } from "./matches";
-import { ExpectOperation } from "./matches/operation";
+import { ExpectTest } from "./matches/operation";
 import { MessageMatches } from "./matches/messageMatches.interface";
 import { RoleMatches } from "./matches/roleMatches";
 import { resolveName, stringIsNullOrEmpty, typeOf } from "../utils";
@@ -194,7 +194,7 @@ class ExpectMatches implements Matches {
     return data;
   }
 
-  protected async operationFactory<T extends ExpectOperation>(
+  protected async operationFactory<T extends ExpectTest>(
     type: new (
       cordeBot: CordeBot,
       command: string | number | bigint | boolean,

@@ -1,10 +1,10 @@
 import { MessageEmbed } from "discord.js";
 import { MessageData, TestReport } from "../../../types";
 import { wait } from "../../../utils";
-import { ExpectOperation } from "../operation";
+import { ExpectTest } from "../operation";
 import MessageUtils from "../../messageUtils";
 
-export class ToEditMessage extends ExpectOperation<MessageData, string | MessageEmbed> {
+export class ToEditMessage extends ExpectTest {
   public async action(
     messageData: MessageData,
     newValue: string | MessageEmbed,

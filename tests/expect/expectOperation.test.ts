@@ -1,7 +1,7 @@
-import { ExpectOperation } from "../../src/expect/matches/operation";
+import { ExpectTest } from "../../src/expect/matches/operation";
 import { TestReport } from "../../src/types";
 
-class TestClass extends ExpectOperation {
+class TestClass extends ExpectTest {
   public action(p1: any, p2: any, p3: any): Promise<TestReport> {
     super.expectation = 1;
     super.output = 1;
@@ -9,7 +9,7 @@ class TestClass extends ExpectOperation {
   }
 }
 
-describe("testing ExpectOperation class", () => {
+describe("testing ExpectTest class", () => {
   it("should create a valid report based in generic data and isNot true", async () => {
     const conName = "test";
     const testClass = new TestClass(undefined, conName, true);
@@ -39,7 +39,7 @@ describe("testing ExpectOperation class", () => {
   });
 
   it("should adapt correct values to report after call catchExecutionError", async () => {
-    class TestClass1 extends ExpectOperation {
+    class TestClass1 extends ExpectTest {
       public action(p1: any, p2: any, p3: any): Promise<TestReport> {
         super.expectation = 1;
         super.output = 1;
@@ -62,7 +62,7 @@ describe("testing ExpectOperation class", () => {
   });
 
   it("should adapt correct values to report after call catchExecutionError", async () => {
-    class TestClass1 extends ExpectOperation {
+    class TestClass1 extends ExpectTest {
       public action(p1: any, p2: any, p3: any): Promise<TestReport> {
         super.expectation = 1;
         super.output = 1;
