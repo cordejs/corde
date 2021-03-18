@@ -1,6 +1,6 @@
 import { RoleIdentifier, TestReport } from "../../../types";
 import { wait } from "../../../utils";
-import { ExpectTest } from "../operation";
+import { ExpectTest } from "../expectTest";
 
 export class ToSetRolePosition extends ExpectTest {
   public async action(newPosition: number, roleIdentifier: RoleIdentifier): Promise<TestReport> {

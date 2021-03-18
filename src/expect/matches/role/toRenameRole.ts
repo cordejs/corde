@@ -2,7 +2,7 @@ import { Role } from "discord.js";
 import { RoleIdentifier, TestReport } from "../../../types";
 import { typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
-import { ExpectTest } from "../operation";
+import { ExpectTest } from "../expectTest";
 
 export class ToRenameRole extends ExpectTest {
   public async action(newName: string, roleIdentifier: RoleIdentifier): Promise<TestReport> {

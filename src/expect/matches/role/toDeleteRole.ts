@@ -1,7 +1,7 @@
 import { Role } from "discord.js";
 import { RoleIdentifier, TestReport } from "../../../types/types";
 import { roleUtils } from "../../roleUtils";
-import { ExpectTest } from "../operation";
+import { ExpectTest } from "../expectTest";
 
 export class ToDeleteRole extends ExpectTest {
   public async action(roleIdentifier: RoleIdentifier): Promise<TestReport> {

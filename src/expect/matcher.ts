@@ -19,7 +19,7 @@ import {
   ToUnpinMessage,
   ToSetRolePermission,
 } from "./matches";
-import { ExpectTest } from "./matches/operation";
+import { ExpectTest } from "./matches/expectTest";
 import { MessageMatches } from "./matches/messageMatches.interface";
 import { RoleMatches } from "./matches/roleMatches";
 import { resolveName, stringIsNullOrEmpty, typeOf } from "../utils";
@@ -180,7 +180,7 @@ class ExpectMatches implements Matches {
   ) {
     const data = this.getRoleData(roleIdentifier);
     testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(ToSetRolePermission, cordeBot, permissions, data);
+      return this.operationFactory(ToSetRolePermission, cordeBot, data, permissions);
     });
   }
 
@@ -209,7 +209,7 @@ class ExpectMatches implements Matches {
       return { pass: false, message: "command can not be null or an empty string" };
     }
     const op = new type(cordeBot, commandName, this._isNot);
-    return (op.action as GenericFunction)(...params);
+    return op.action(params);
   }
 }
 

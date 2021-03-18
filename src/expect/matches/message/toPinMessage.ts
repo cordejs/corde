@@ -1,6 +1,6 @@
 import { MessageData, TestReport } from "../../../types";
 import { wait } from "../../../utils";
-import { ExpectTest } from "../operation";
+import { ExpectTest } from "../expectTest";
 
 export class ToPinMessage extends ExpectTest {
   public async action(messageData: MessageData): Promise<TestReport> {

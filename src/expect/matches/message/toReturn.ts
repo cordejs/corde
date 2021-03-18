@@ -6,7 +6,7 @@ import { MinifiedEmbedMessage, TestReport } from "../../../types";
  * "../../../utils" results in error in jest tests.
  */
 import { isPrimitiveValue } from "../../../utils/isPrimitiveValue";
-import { ExpectTest } from "../operation";
+import { ExpectTest } from "../expectTest";
 import MessageUtils from "../../messageUtils";
 
 export class ToReturn extends ExpectTest {

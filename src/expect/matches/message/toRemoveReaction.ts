@@ -1,6 +1,6 @@
 import { MessageReaction } from "discord.js";
 import { MessageData, TestReport } from "../../../types";
-import { ExpectTest } from "../operation";
+import { ExpectTest } from "../expectTest";
 
 export class ToRemoveReaction extends ExpectTest {
   public async action(removedReactions: string[], messageData?: MessageData): Promise<TestReport> {

@@ -1,7 +1,7 @@
 import { MessageEmbed } from "discord.js";
 import { MessageData, TestReport } from "../../../types";
 import { wait } from "../../../utils";
-import { ExpectTest } from "../operation";
+import { ExpectTest } from "../expectTest";
 import MessageUtils from "../../messageUtils";
 
 export class ToEditMessage extends ExpectTest {

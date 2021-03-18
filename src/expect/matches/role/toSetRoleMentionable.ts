@@ -1,7 +1,7 @@
 import { Role } from "discord.js";
 import { RoleIdentifier, TestReport } from "../../../types";
 import { roleUtils } from "../../roleUtils";
-import { ExpectTest } from "../operation";
+import { ExpectTest } from "../expectTest";
 
 export class ToSetRoleMentionable extends ExpectTest {
   public async action(mentionable: boolean, roleIdentifier: RoleIdentifier): Promise<TestReport> {

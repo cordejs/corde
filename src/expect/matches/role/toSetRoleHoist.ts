@@ -1,4 +1,4 @@
-import { ExpectTest } from "../operation";
+import { ExpectTest } from "../expectTest";
 import { Role } from "discord.js";
 import { RoleIdentifier, TestReport } from "../../../types";
 import { roleUtils } from "../../roleUtils";

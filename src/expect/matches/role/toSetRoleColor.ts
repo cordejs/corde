@@ -4,7 +4,7 @@ import { ColorResolvable } from "../../../discordTypes";
 import { RoleIdentifier, TestReport } from "../../../types";
 import { Colors, resolveColor, rgba, typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
-import { ExpectTest } from "../operation";
+import { ExpectTest } from "../expectTest";
 
 export class ToSetRoleColor extends ExpectTest {
   public async action(color: ColorResolvable, roleIdentifier: RoleIdentifier): Promise<TestReport> {
