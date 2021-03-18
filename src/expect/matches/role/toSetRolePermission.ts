@@ -1,3 +1,4 @@
+import { Role } from "discord.js";
 import { RoleIdentifier, TestReport } from "../../../types";
 import {
   calcPermissionsValue,
@@ -26,18 +27,14 @@ export class ToSetRolePermission extends ExpectTest {
       typeOf(permissions) !== "null" &&
       typeOf(permissions) !== "undefined"
     ) {
-      return this.createReport(`expect: permissions to be null, undefined or an array`);
-    }
-
-    if (permissions && isPermissionsValid(permissions)) {
-      return this.createReport(diff(permissionsArray, permissions));
-    }
-
-    if (typeof mentionable !== "boolean") {
       return this.createReport(
-        `expect: mentionable parameter to be of boolean type\n`,
-        `received: ${typeof mentionable}`,
+        `expected: permissions to be null, undefined or an array\n`,
+        `received: ${typeof permissions}`,
       );
+    }
+
+    if (permissions && !isPermissionsValid(permissions)) {
+      return this.createReport(diff(permissionsArray, permissions));
     }
 
     const oldRole = await this.cordeBot.findRole(roleIdentifier);
@@ -47,29 +44,60 @@ export class ToSetRolePermission extends ExpectTest {
       return { pass: false, message: invalidRoleErrorMessage };
     }
 
-    if (!this.cordeBot.hasRole(roleIdentifier)) {
-      return this.setDataForNotFoundRoleAndGenerateReport();
+    await this.cordeBot.sendTextMessage(this.command);
+    let role: Role;
+    try {
+      role = await this.cordeBot.events.onceRolePermissionUpdate(roleIdentifier, this.timeOut);
+    } catch (error) {
+      if (this.isNot) {
+        return { pass: true };
+      }
+
+      return this.createReport(
+        `expected: role permissions change to: ${getPermissionsString(permissions)}\n`,
+        `received: permissions were not changed`,
+      );
     }
 
-    this.cordeBot.sendTextMessage(this.command);
-    const role = await this.cordeBot.events.onceRolePermissionUpdate(roleIdentifier);
-
-    if (!role) {
-      return this.setDataForNotFoundRoleAndGenerateReport();
-    }
-
-    const valuePermissions = permissions.map((p) => Permission[p]);
-    const expectedPermissionsValue = calcPermissionsValue(...valuePermissions);
-    if (role.permissions.bitfield === expectedPermissionsValue) {
+    if (role.permissions.equals(permissions)) {
       this.hasPassed = true;
     }
+
     this.invertHasPassedIfIsNot();
-    return this.createReport();
+
+    if (this.hasPassed) {
+      return { pass: true };
+    }
+
+    return this.createReport(
+      `expected: role permissions ${this.isNot ? "not " : ""}change to: ${getPermissionsString(
+        permissions,
+      )}\n`,
+      `received: ${getPermissionsString(role.permissions.toArray())}`,
+    );
+  }
+}
+
+function getPermissionsString(permissions: RolePermission[]) {
+  if (!permissions) {
+    return null;
   }
 
-  private setDataForNotFoundRoleAndGenerateReport() {
-    return this.createReport("Role not found");
+  if (permissions.includes("ADMINISTRATOR")) {
+    if (permissions.length === 1) {
+      return "ADMINISTRATOR";
+    }
+
+    if (permissions.length > 2) {
+      return `ADMINISTRATOR (and ${
+        permissions.filter((p) => p !== "ADMINISTRATOR").length
+      } others)`;
+    }
+
+    return `ADMINISTRATOR and ${permissions.filter((p) => p !== "ADMINISTRATOR")}`;
   }
+
+  return permissions.join(", ");
 }
 
 function isPermissionsValid(permissions: RolePermission[]) {

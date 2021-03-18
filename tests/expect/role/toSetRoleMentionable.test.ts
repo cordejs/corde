@@ -48,7 +48,7 @@ describe("testing toSetRoleMentionable operation", () => {
     const report = await toSetRoleMentionable.action({}, { id: "123" });
 
     const message = buildReportMessage(
-      `expect: mentionable parameter to be of boolean type\n`,
+      `expected: mentionable parameter to be of boolean type\n`,
       `received: object`,
     );
 

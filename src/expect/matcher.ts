@@ -20,7 +20,7 @@ import {
   ToSetRolePermission,
 } from "./matches";
 import { ExpectTest } from "./matches/expectTest";
-import { MessageMatches } from "./matches/messageMatches.interface";
+import { MessageMatches } from "./matches/messageMatches";
 import { RoleMatches } from "./matches/roleMatches";
 import { resolveName, stringIsNullOrEmpty, typeOf } from "../utils";
 import { PropertyError } from "../errors";

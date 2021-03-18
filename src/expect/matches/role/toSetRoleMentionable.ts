@@ -20,7 +20,7 @@ export class ToSetRoleMentionable extends ExpectTest {
 
     if (typeof mentionable !== "boolean") {
       return this.createReport(
-        `expect: mentionable parameter to be of boolean type\n`,
+        `expected: mentionable parameter to be of boolean type\n`,
         `received: ${typeof mentionable}`,
       );
     }

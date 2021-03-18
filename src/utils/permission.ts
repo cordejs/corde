@@ -204,5 +204,5 @@ export { permissionsArray };
  */
 export function calcPermissionsValue(...permissions: Permission[]) {
   // tslint:disable-next-line: no-bitwise
-  return permissions.reduce((p1, p2) => p1 | p2);
+  return permissions.reduce((p1, p2) => p1 | p2) as number;
 }

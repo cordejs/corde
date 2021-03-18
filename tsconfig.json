@@ -10,7 +10,7 @@
     "skipLibCheck": true,
     "declaration": true,
     "module": "CommonJS",
-    "target": "es6",
+    "target": "ES2020",
     "moduleResolution": "node",
     "newLine": "LF",
     "noImplicitAny": true,

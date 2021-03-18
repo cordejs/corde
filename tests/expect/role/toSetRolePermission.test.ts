@@ -1,207 +1,276 @@
 import { Client } from "discord.js";
 import { ToSetRolePermission } from "../../../src/expect/matches";
-import { TestReport } from "../../../src/types";
-import { Permission } from "../../../src/utils/permission";
 import MockDiscord from "../../mocks/mockDiscord";
 import { initCordeClientWithChannel } from "../../testHelper";
+import { TestReport } from "../../../src/types";
+import { buildReportMessage, calcPermissionsValue, Permission } from "../../../src/utils";
+import { MockEvents } from "../../mocks/mockEvents";
+import { runtime } from "../../../src/common";
 
 let mockDiscord = new MockDiscord();
-const commandName = "test";
 
-describe("testing ToSetRolePosition operation", () => {
+function initClient() {
+  const corde = initCordeClientWithChannel(mockDiscord, new Client());
+  corde.findRole = jest.fn().mockReturnValue(mockDiscord.role);
+  corde.fetchRole = jest.fn().mockReturnValue(mockDiscord.role);
+  corde.sendTextMessage = jest.fn().mockImplementation(() => {});
+  return corde;
+}
+
+describe("testing toSetRolePermission operation", () => {
   afterEach(() => {
     mockDiscord = new MockDiscord();
   });
 
-  describe("testing with isNot false", () => {
-    it("should return error due to not found role (before send command message)", async () => {
-      const corde = createCordeBotWithMockedFunctions(
-        mockDiscord.createMockRole("", Permission.ADMINISTRATOR),
-        false,
-      );
+  it("should fail due to undefined roleIdentifier", async () => {
+    const corde = initClient();
+    const toSetRolePermission = new ToSetRolePermission(corde, "test", false);
+    const report = await toSetRolePermission.action(undefined, ["ADD_REACTIONS"]);
 
-      corde.events.onceRolePermissionUpdate = jest.fn().mockReturnValue(mockDiscord.role);
-      const toSetRolePermission = new ToSetRolePermission(corde, commandName, false);
-      const report = await toSetRolePermission.action(["ADMINISTRATOR"], { id: "123" });
+    const message = buildReportMessage(
+      "expected: data to identifier the role (id or name)\n",
+      `received: null`,
+    );
 
-      const expectReport: TestReport = {
-        commandName,
-        hasPassed: false,
-        isNot: false,
+    const expectReport: TestReport = {
+      pass: false,
+      message,
+    };
 
-        output: "Role not found",
-      };
-
-      expect(report).toMatchObject(expectReport);
-    });
-
-    it("should get a valid report due to correct defined permission ", async () => {
-      const corde = createCordeBotWithMockedFunctions(
-        mockDiscord.createMockRole("", Permission.ADMINISTRATOR),
-      );
-
-      const role = mockDiscord.createMockRole("", Permission.ADMINISTRATOR);
-      corde.events.onceRolePermissionUpdate = jest.fn().mockReturnValue(role);
-
-      const report = await new ToSetRolePermission(corde, commandName, false).action(
-        ["ADMINISTRATOR"],
-        { id: "123" },
-      );
-
-      const expectReport: TestReport = {
-        commandName,
-        hasPassed: true,
-        isNot: false,
-      };
-
-      expect(report).toMatchObject(expectReport);
-    });
-
-    it("should return error due to not found role (after send command message)", async () => {
-      const corde = initCordeClientWithChannel(mockDiscord, new Client());
-      corde.getRoles = jest.fn().mockReturnValue(mockDiscord.roleManager.cache);
-      corde.hasRole = jest.fn().mockReturnValue(true);
-      corde.findRole = jest.fn().mockReturnValue(null);
-      corde.sendTextMessage = jest.fn().mockImplementation(() => {});
-
-      corde.events.onceRolePermissionUpdate = jest.fn().mockImplementation();
-
-      const report = await new ToSetRolePermission(corde, commandName, false).action(
-        ["ADMINISTRATOR"],
-        { id: "123" },
-      );
-
-      const expectReport: TestReport = {
-        commandName,
-        hasPassed: false,
-        isNot: false,
-        output: "Role not found",
-      };
-
-      expect(report).toMatchObject(expectReport);
-    });
-
-    it("should return error a exception thrown in function", async () => {
-      const corde = initCordeClientWithChannel(mockDiscord, new Client());
-      corde.getRoles = jest.fn().mockReturnValue(mockDiscord.roleManager.cache);
-      corde.hasRole = jest.fn().mockImplementation(() => {
-        throw new Error("");
-      });
-      corde.findRole = jest.fn().mockReturnValue(null);
-      corde.sendTextMessage = jest.fn().mockImplementation(() => {});
-
-      const report = await new ToSetRolePermission(corde, commandName, false).action(
-        ["ADMINISTRATOR"],
-        { id: "123" },
-      );
-
-      const expectReport: TestReport = {
-        commandName,
-        hasPassed: false,
-        isNot: false,
-        output: "",
-      };
-
-      expect(report).toMatchObject(expectReport);
-    });
+    expect(report).toEqual(expectReport);
+    expect(report).toMatchSnapshot();
   });
 
-  describe("testing with isNot true", () => {
-    it("should return error due to not found role (before send command message)", async () => {
-      const corde = createCordeBotWithMockedFunctions(
-        mockDiscord.createMockRole("", Permission.ADMINISTRATOR),
-        false,
-      );
-      const report = await new ToSetRolePermission(corde, commandName, true).action(
-        ["ATTACH_FILES"],
-        { id: "123" },
-      );
+  it("should return false due to invalid mentionable parameter (object)", async () => {
+    const corde = initClient();
+    const toSetRolePermission = new ToSetRolePermission(corde, "test", false);
+    // @ts-ignore
+    const report = await toSetRolePermission.action({ id: "123" }, {});
 
-      const expectReport: TestReport = {
-        commandName,
-        hasPassed: false,
-        isNot: true,
+    const message = buildReportMessage(
+      `expected: permissions to be null, undefined or an array\n`,
+      `received: object`,
+    );
 
-        output: "Role not found",
-      };
-      expect(report).toMatchObject(expectReport);
-    });
+    const expectReport: TestReport = {
+      pass: false,
+      message,
+    };
 
-    it("should get a valid report due to correct defined permission ", async () => {
-      const corde = createCordeBotWithMockedFunctions(
-        mockDiscord.createMockRole("", Permission.ADMINISTRATOR),
-      );
-      corde.events.onceRolePermissionUpdate = jest.fn().mockReturnValue(mockDiscord.role);
+    expect(report).toEqual(expectReport);
+    expect(report).toMatchSnapshot();
+  });
 
-      const report = await new ToSetRolePermission(corde, commandName, true).action(
-        ["ATTACH_FILES"],
-        { id: "123" },
-      );
+  it("should return false due to invalid mentionable parameter (undefined)", async () => {
+    const corde = initClient();
+    const toSetRolePermission = new ToSetRolePermission(corde, "test", false);
+    // @ts-ignore
+    const report = await toSetRolePermission.action({ id: "123" }, {});
 
-      const expectReport: TestReport = {
-        commandName,
-        hasPassed: true,
-        isNot: true,
-      };
+    const message = buildReportMessage(
+      `expected: permissions to be null, undefined or an array\n`,
+      `received: object`,
+    );
 
-      expect(report).toMatchObject(expectReport);
-    });
+    const expectReport: TestReport = {
+      pass: false,
+      message,
+    };
 
-    it("should return error due to not found role (after send command message)", async () => {
-      const corde = initCordeClientWithChannel(mockDiscord, new Client());
-      corde.getRoles = jest.fn().mockReturnValue(mockDiscord.roleManager.cache);
-      corde.hasRole = jest.fn().mockReturnValue(true);
-      corde.findRole = jest.fn().mockReturnValue(null);
-      corde.sendTextMessage = jest.fn().mockImplementation(() => {});
+    expect(report).toEqual(expectReport);
+    expect(report).toMatchSnapshot();
+  });
 
-      corde.events.onceRolePermissionUpdate = jest.fn().mockImplementation();
+  it("should return false due to not found role", async () => {
+    const corde = initClient();
+    corde.findRole = jest.fn().mockReturnValue(null);
+    const toSetRolePermission = new ToSetRolePermission(corde, "test", false);
+    const report = await toSetRolePermission.action({ id: "123" }, ["ATTACH_FILES"]);
 
-      const report = await new ToSetRolePermission(corde, commandName, true).action(
-        ["ADMINISTRATOR"],
-        { id: "123" },
-      );
+    const message = buildReportMessage(`expected: role with id 123\n`, `received: null`);
 
-      const expectReport: TestReport = {
-        commandName,
-        hasPassed: false,
-        isNot: true,
-        output: "Role not found",
-      };
+    const expectReport: TestReport = {
+      pass: false,
+      message,
+    };
 
-      expect(report).toMatchObject(expectReport);
-    });
+    expect(report).toEqual(expectReport);
+    expect(report).toMatchSnapshot();
+  });
 
-    it("should return error a exception thrown in function", async () => {
-      const corde = initCordeClientWithChannel(mockDiscord, new Client());
-      corde.getRoles = jest.fn().mockReturnValue(mockDiscord.roleManager.cache);
-      corde.hasRole = jest.fn().mockImplementation(() => {
-        throw new Error("");
-      });
-      corde.findRole = jest.fn().mockReturnValue(null);
-      corde.sendTextMessage = jest.fn().mockImplementation(() => {});
+  it("should fail due to no role mentionable was not updated", async () => {
+    const corde = initClient();
 
-      const report = await new ToSetRolePermission(corde, commandName, true).action(
-        ["ADMINISTRATOR"],
-        { id: "123" },
-      );
+    runtime.setConfigs({ timeOut: 100 }, true);
 
-      const expectReport: TestReport = {
-        commandName,
-        hasPassed: false,
-        isNot: true,
-        output: "",
-      };
+    const toSetRolePermission = new ToSetRolePermission(corde, "test", false);
+    const report = await toSetRolePermission.action({ id: "123" }, ["ATTACH_FILES"]);
 
-      expect(report).toMatchObject(expectReport);
-    });
+    const message = buildReportMessage(
+      `expected: role permissions change to: ATTACH_FILES\n`,
+      `received: permissions were not changed`,
+    );
+
+    const expectReport: TestReport = {
+      pass: false,
+      message,
+    };
+
+    expect(report).toEqual(expectReport);
+    expect(report).toMatchSnapshot();
+  });
+
+  it("should return true due to isNot true and no role change", async () => {
+    const corde = initClient();
+
+    runtime.setConfigs({ timeOut: 100 }, true);
+
+    const toSetRolePermission = new ToSetRolePermission(corde, "test", true);
+    const report = await toSetRolePermission.action({ id: "123" }, ["ATTACH_FILES"]);
+
+    const expectReport: TestReport = {
+      pass: true,
+    };
+
+    expect(report).toEqual(expectReport);
+    expect(report).toMatchSnapshot();
+  });
+
+  it("should return true due to role changed the mentionable (isNot false)", async () => {
+    const corde = initClient();
+
+    runtime.setConfigs({ timeOut: 100 }, true);
+    const mockEvent = new MockEvents(corde, mockDiscord);
+    const mockRole = mockDiscord.createMockRole(
+      "test role",
+      calcPermissionsValue(...mockDiscord.role.permissions.toArray().map((p) => Permission[p])),
+    );
+    mockEvent.mockOnceRolePermissionsUpdate(mockRole);
+    const toSetRolePermission = new ToSetRolePermission(corde, "test", false);
+    const report = await toSetRolePermission.action({ id: "123" }, mockRole.permissions.toArray());
+
+    const expectReport: TestReport = {
+      pass: true,
+    };
+
+    expect(report).toEqual(expectReport);
+    expect(report).toMatchSnapshot();
+  });
+
+  it("should return a not passed test due to mentionable should not change (isNot true)", async () => {
+    const corde = initClient();
+    const mockRole = mockDiscord.createMockRole(
+      "test role",
+      calcPermissionsValue(Permission.ADMINISTRATOR),
+    );
+    runtime.setConfigs({ timeOut: 100 }, true);
+    const mockEvent = new MockEvents(corde, mockDiscord);
+
+    mockEvent.mockOnceRolePermissionsUpdate(mockRole);
+    const toSetRolePermission = new ToSetRolePermission(corde, "test", true);
+    const report = await toSetRolePermission.action({ id: "123" }, ["ADMINISTRATOR"]);
+
+    const message = buildReportMessage(
+      `expected: role permissions not change to: ADMINISTRATOR\n`,
+      `received: ADMINISTRATOR (and ${
+        mockRole.permissions.toArray().filter((p) => p !== "ADMINISTRATOR").length
+      } others)`,
+    );
+
+    const expectReport: TestReport = {
+      pass: false,
+      message,
+    };
+
+    expect(report).toEqual(expectReport);
+    expect(report).toMatchSnapshot();
+  });
+
+  it("should return a not passed test due to mentionable should not change (isNot true)", async () => {
+    const corde = initClient();
+    const mockRole = mockDiscord.createMockRole(
+      "test role",
+      calcPermissionsValue(Permission.ADMINISTRATOR, Permission.BAN_MEMBERS),
+    );
+    runtime.setConfigs({ timeOut: 100 }, true);
+    const mockEvent = new MockEvents(corde, mockDiscord);
+
+    mockEvent.mockOnceRolePermissionsUpdate(mockRole);
+    const toSetRolePermission = new ToSetRolePermission(corde, "test", true);
+    const report = await toSetRolePermission.action({ id: "123" }, [
+      "ADMINISTRATOR",
+      "BAN_MEMBERS",
+    ]);
+
+    const message = buildReportMessage(
+      `expected: role permissions not change to: ADMINISTRATOR and BAN_MEMBERS\n`,
+      `received: ADMINISTRATOR (and ${
+        mockRole.permissions.toArray().filter((p) => p !== "ADMINISTRATOR").length
+      } others)`,
+    );
+
+    const expectReport: TestReport = {
+      pass: false,
+      message,
+    };
+
+    expect(report).toEqual(expectReport);
+    expect(report).toMatchSnapshot();
+  });
+
+  it("should return a not passed test due to mentionable should not change (isNot true)", async () => {
+    const corde = initClient();
+    const mockRole = mockDiscord.createMockRole(
+      "test role",
+      calcPermissionsValue(Permission.ADMINISTRATOR, Permission.BAN_MEMBERS, Permission.CONNECT),
+    );
+    runtime.setConfigs({ timeOut: 100 }, true);
+    const mockEvent = new MockEvents(corde, mockDiscord);
+
+    mockEvent.mockOnceRolePermissionsUpdate(mockRole);
+    const toSetRolePermission = new ToSetRolePermission(corde, "test", true);
+    const report = await toSetRolePermission.action({ id: "123" }, [
+      "ADMINISTRATOR",
+      "BAN_MEMBERS",
+      "CONNECT",
+    ]);
+
+    const message = buildReportMessage(
+      `expected: role permissions not change to: ADMINISTRATOR (and 2 others)\n`,
+      `received: ADMINISTRATOR (and ${
+        mockRole.permissions.toArray().filter((p) => p !== "ADMINISTRATOR").length
+      } others)`,
+    );
+
+    const expectReport: TestReport = {
+      pass: false,
+      message,
+    };
+
+    expect(report).toEqual(expectReport);
+    expect(report).toMatchSnapshot();
+  });
+
+  it("should return a not passed test due expected name did not match to received", async () => {
+    const corde = initClient();
+
+    runtime.setConfigs({ timeOut: 100 }, true);
+    const mockEvent = new MockEvents(corde, mockDiscord);
+    mockEvent.mockOnceRolePermissionsUpdate(mockDiscord.role);
+    const toSetRolePermission = new ToSetRolePermission(corde, "test", false);
+    const report = await toSetRolePermission.action({ id: "123" }, ["ATTACH_FILES"]);
+
+    const message = buildReportMessage(
+      `expected: role permissions change to: ATTACH_FILES\n`,
+      `received: ADMINISTRATOR (and 30 others)`,
+    );
+
+    const expectReport: TestReport = {
+      pass: false,
+      message,
+    };
+
+    expect(report).toEqual(expectReport);
+    expect(report).toMatchSnapshot();
   });
 });
-
-function createCordeBotWithMockedFunctions(findRoleMock: any = mockDiscord.role, hasRole = true) {
-  const corde = initCordeClientWithChannel(mockDiscord, new Client());
-  corde.getRoles = jest.fn().mockReturnValue(mockDiscord.roleManager.cache);
-  corde.hasRole = jest.fn().mockReturnValue(hasRole);
-  corde.findRole = jest.fn().mockReturnValue(findRoleMock);
-  corde.sendTextMessage = jest.fn().mockImplementation(() => {});
-  return corde;
-}

@@ -1,0 +1,103 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing toSetRolePermission operation should fail due to no role mentionable was not updated 1`] = `
+Object {
+  "message": "    
+    expected: role permissions change to: ATTACH_FILES
+    received: permissions were not changed
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toSetRolePermission operation should fail due to undefined roleIdentifier 1`] = `
+Object {
+  "message": "    
+    expected: data to identifier the role (id or name)
+    received: null
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toSetRolePermission operation should return a not passed test due expected name did not match to received 1`] = `
+Object {
+  "message": "    
+    expected: role permissions change to: ATTACH_FILES
+    received: ADMINISTRATOR (and 30 others)
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toSetRolePermission operation should return a not passed test due to mentionable should not change (isNot true) 1`] = `
+Object {
+  "message": "    
+    expected: role permissions not change to: ADMINISTRATOR
+    received: ADMINISTRATOR (and 30 others)
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toSetRolePermission operation should return a not passed test due to mentionable should not change (isNot true) 2`] = `
+Object {
+  "message": "    
+    expected: role permissions not change to: ADMINISTRATOR and BAN_MEMBERS
+    received: ADMINISTRATOR (and 30 others)
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toSetRolePermission operation should return a not passed test due to mentionable should not change (isNot true) 3`] = `
+Object {
+  "message": "    
+    expected: role permissions not change to: ADMINISTRATOR (and 2 others)
+    received: ADMINISTRATOR (and 30 others)
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toSetRolePermission operation should return false due to invalid mentionable parameter (object) 1`] = `
+Object {
+  "message": "    
+    expected: permissions to be null, undefined or an array
+    received: object
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toSetRolePermission operation should return false due to invalid mentionable parameter (undefined) 1`] = `
+Object {
+  "message": "    
+    expected: permissions to be null, undefined or an array
+    received: object
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toSetRolePermission operation should return false due to not found role 1`] = `
+Object {
+  "message": "    
+    expected: role with id 123
+    received: null
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toSetRolePermission operation should return true due to isNot true and no role change 1`] = `
+Object {
+  "pass": true,
+}
+`;
+
+exports[`testing toSetRolePermission operation should return true due to role changed the mentionable (isNot false) 1`] = `
+Object {
+  "pass": true,
+}
+`;
