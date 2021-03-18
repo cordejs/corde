@@ -22,7 +22,7 @@ describe("testing toSetRoleMentionable operation", () => {
     mockDiscord = new MockDiscord();
   });
 
-  it("should fail due to undefined roleData", async () => {
+  it("should fail due to undefined roleIdentifier", async () => {
     const corde = initClient();
     const toSetRoleMentionable = new ToSetRoleMentionable(corde, "test", false);
     const report = await toSetRoleMentionable.action(true, undefined);

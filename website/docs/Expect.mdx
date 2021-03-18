@@ -174,7 +174,7 @@ test("should unPin a really important message", () => {
 });
 ```
 
-### toDeleteRole(string | RoleData)
+### toDeleteRole(string | RoleIdentifier)
 
 Use `toDeleteRole` to check if a bot command deleted a role in guild
 defined in [guildId](/docs/configurations#guildid).
@@ -188,7 +188,7 @@ test("should pin a really important message", () => {
 });
 ```
 
-### toRenameRole(string, RoleData)
+### toRenameRole(string, RoleIdentifier)
 
 Use `toRenameRole` to check if a bot command renamed a role.
 
@@ -202,7 +202,7 @@ test("should rename a role", () => {
 });
 ```
 
-### toSetRoleColor(ColorResolvable | Colors, string | RoleData)
+### toSetRoleColor(ColorResolvable | Colors, string | RoleIdentifier)
 
 Use `toSetRoleColor` to check if a bot command set a new color to a role.
 
@@ -224,7 +224,7 @@ test("should set a role color", () => {
 });
 ```
 
-### toSetRoleHoist(boolean, string | RoleData)
+### toSetRoleHoist(boolean, string | RoleIdentifier)
 
 Use `toSetRoleHoist` to check if a bot command set or not a role as hoist.
 
@@ -247,7 +247,7 @@ test("should set a role hoist", () => {
 });
 ```
 
-### toSetRoleMentionable(boolean, string | RoleData)
+### toSetRoleMentionable(boolean, string | RoleIdentifier)
 
 Use `toSetRoleMentionable` to check if a bot command set or not a role as mentionable.
 
@@ -267,7 +267,7 @@ test("should set a role mentionable", () => {
 });
 ```
 
-### toSetRolePermission(string | RoleData, RolePermission | RolePermission[])
+### toSetRolePermission(string | RoleIdentifier, RolePermission | RolePermission[])
 
 Use `toSetRolePermission` to check if a bot command set or remove a single,
 or a list of permissions to a role.

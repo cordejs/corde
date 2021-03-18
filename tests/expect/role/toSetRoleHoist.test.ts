@@ -22,7 +22,7 @@ describe("testing toSetRoleHoist operation", () => {
     mockDiscord = new MockDiscord();
   });
 
-  it("should fail due to undefined roleData", async () => {
+  it("should fail due to undefined roleIdentifier", async () => {
     const corde = initClient();
     const toSetHoist = new ToSetRoleHoist(corde, "test", false);
     const report = await toSetHoist.action(true, undefined);

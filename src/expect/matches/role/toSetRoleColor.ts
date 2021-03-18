@@ -1,14 +1,14 @@
 import chalk, { rgb } from "chalk";
 import { Role } from "discord.js";
 import { ColorResolvable } from "../../../discordTypes";
-import { RoleData, TestReport } from "../../../types";
+import { RoleIdentifier, TestReport } from "../../../types";
 import { Colors, resolveColor, rgba, typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
 import { ExpectOperation } from "../operation";
 
-export class ToSetRoleColor extends ExpectOperation<ColorResolvable | Colors, RoleData> {
-  public async action(color: ColorResolvable, roleData: RoleData): Promise<TestReport> {
-    const error = roleUtils.getErrorForUndefinedRoleData(roleData);
+export class ToSetRoleColor extends ExpectOperation<ColorResolvable | Colors, RoleIdentifier> {
+  public async action(color: ColorResolvable, roleIdentifier: RoleIdentifier): Promise<TestReport> {
+    const error = roleUtils.getErrorForUndefinedRoleData(roleIdentifier);
 
     if (error) {
       return { pass: false, message: error };
@@ -18,8 +18,8 @@ export class ToSetRoleColor extends ExpectOperation<ColorResolvable | Colors, Ro
       return this.createReport(`toSetRoleColor: invalid color informed - '${typeOf(color)}'`);
     }
 
-    const oldRole = await this.cordeBot.findRole(roleData);
-    const invalidRoleErrorMessage = roleUtils.validateRole(oldRole, roleData);
+    const oldRole = await this.cordeBot.findRole(roleIdentifier);
+    const invalidRoleErrorMessage = roleUtils.validateRole(oldRole, roleIdentifier);
 
     if (invalidRoleErrorMessage) {
       return { pass: false, message: invalidRoleErrorMessage };
@@ -31,7 +31,7 @@ export class ToSetRoleColor extends ExpectOperation<ColorResolvable | Colors, Ro
     let role: Role;
 
     try {
-      role = await this.cordeBot.events.onceRoleUpdateColor(roleData, this.timeOut);
+      role = await this.cordeBot.events.onceRoleUpdateColor(roleIdentifier, this.timeOut);
     } catch (error) {
       if (this.isNot) {
         return { pass: true };

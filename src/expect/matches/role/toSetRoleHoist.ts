@@ -1,11 +1,11 @@
 import { ExpectOperation } from "../operation";
 import { Role } from "discord.js";
-import { RoleData, TestReport } from "../../../types";
+import { RoleIdentifier, TestReport } from "../../../types";
 import { roleUtils } from "../../roleUtils";
 
-export class ToSetRoleHoist extends ExpectOperation<boolean, RoleData> {
-  public async action(hoist: boolean, roleData: RoleData): Promise<TestReport> {
-    const error = roleUtils.getErrorForUndefinedRoleData(roleData);
+export class ToSetRoleHoist extends ExpectOperation<boolean, RoleIdentifier> {
+  public async action(hoist: boolean, roleIdentifier: RoleIdentifier): Promise<TestReport> {
+    const error = roleUtils.getErrorForUndefinedRoleData(roleIdentifier);
 
     if (error) {
       return { pass: false, message: error };
@@ -25,8 +25,8 @@ export class ToSetRoleHoist extends ExpectOperation<boolean, RoleData> {
       );
     }
 
-    const oldRole = await this.cordeBot.findRole(roleData);
-    const invalidRoleErrorMessage = roleUtils.validateRole(oldRole, roleData);
+    const oldRole = await this.cordeBot.findRole(roleIdentifier);
+    const invalidRoleErrorMessage = roleUtils.validateRole(oldRole, roleIdentifier);
 
     if (invalidRoleErrorMessage) {
       return { pass: false, message: invalidRoleErrorMessage };
@@ -35,7 +35,7 @@ export class ToSetRoleHoist extends ExpectOperation<boolean, RoleData> {
     await this.cordeBot.sendTextMessage(this.command);
     let role: Role;
     try {
-      role = await this.cordeBot.events.onceRoleHoistUpdate(roleData, this.timeOut);
+      role = await this.cordeBot.events.onceRoleHoistUpdate(roleIdentifier, this.timeOut);
     } catch (error) {
       if (this.isNot) {
         return { pass: true };

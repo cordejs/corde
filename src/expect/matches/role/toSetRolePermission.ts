@@ -1,15 +1,18 @@
-import { RoleData, TestReport } from "../../../types";
+import { RoleIdentifier, TestReport } from "../../../types";
 import { calcPermissionsValue, Permission, RolePermission } from "../../../utils";
 import { ExpectOperation } from "../operation";
 
-export class ToSetRolePermission extends ExpectOperation<RolePermission[], RoleData> {
-  public async action(permissions: RolePermission[], roleData: RoleData): Promise<TestReport> {
-    if (!this.cordeBot.hasRole(roleData)) {
+export class ToSetRolePermission extends ExpectOperation<RolePermission[], RoleIdentifier> {
+  public async action(
+    permissions: RolePermission[],
+    roleIdentifier: RoleIdentifier,
+  ): Promise<TestReport> {
+    if (!this.cordeBot.hasRole(roleIdentifier)) {
       return this.setDataForNotFoundRoleAndGenerateReport();
     }
 
     this.cordeBot.sendTextMessage(this.command);
-    const role = await this.cordeBot.events.onceRolePermissionUpdate(roleData);
+    const role = await this.cordeBot.events.onceRolePermissionUpdate(roleIdentifier);
 
     if (!role) {
       return this.setDataForNotFoundRoleAndGenerateReport();

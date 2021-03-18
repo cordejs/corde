@@ -1,7 +1,7 @@
 import { ColorResolvable, MessageEmbed, Snowflake } from "discord.js";
 import { testCollector } from "../common/testCollector";
 import { CordeBot } from "../core";
-import { GenericFunction, MessageData, RoleData, TestReport } from "../types/types";
+import { GenericFunction, MessageData, RoleIdentifier, TestReport } from "../types/types";
 import { Colors } from "../utils/colors";
 import { RolePermission } from "../utils/permission";
 import {
@@ -114,10 +114,10 @@ class ExpectMatches implements Matches {
   }
 
   public toSetRoleColor(color: Colors, id: Snowflake): void;
-  public toSetRoleColor(color: Colors, name: RoleData): void;
+  public toSetRoleColor(color: Colors, name: RoleIdentifier): void;
   public toSetRoleColor(color: ColorResolvable, id: Snowflake): void;
-  public toSetRoleColor(color: ColorResolvable, name: RoleData): void;
-  public toSetRoleColor(color: ColorResolvable | Colors, role: Snowflake | RoleData) {
+  public toSetRoleColor(color: ColorResolvable, name: RoleIdentifier): void;
+  public toSetRoleColor(color: ColorResolvable | Colors, role: Snowflake | RoleIdentifier) {
     const data = this.getRoleData(role);
     testCollector.addTestFunction((cordeBot) => {
       return this.operationFactory(ToSetRoleColor, cordeBot, color, data);
@@ -125,8 +125,8 @@ class ExpectMatches implements Matches {
   }
 
   public toDeleteRole(id: string): void;
-  public toDeleteRole(name: RoleData): void;
-  public toDeleteRole(role: string | RoleData) {
+  public toDeleteRole(name: RoleIdentifier): void;
+  public toDeleteRole(role: string | RoleIdentifier) {
     const data = this.getRoleData(role);
     testCollector.addTestFunction((cordeBot) => {
       return this.operationFactory(ToDeleteRole, cordeBot, data);
@@ -134,56 +134,62 @@ class ExpectMatches implements Matches {
   }
 
   public toSetRoleMentionable(mentionable: boolean, id: string): void;
-  public toSetRoleMentionable(mentionable: boolean, roleData: RoleData): void;
-  public toSetRoleMentionable(mentionable: boolean, roleData: string | RoleData) {
-    const data = this.getRoleData(roleData);
+  public toSetRoleMentionable(mentionable: boolean, roleIdentifier: RoleIdentifier): void;
+  public toSetRoleMentionable(mentionable: boolean, roleIdentifier: string | RoleIdentifier) {
+    const data = this.getRoleData(roleIdentifier);
     testCollector.addTestFunction((cordeBot) => {
       return this.operationFactory(ToSetRoleMentionable, cordeBot, mentionable, data);
     });
   }
 
   public toSetRoleHoist(hoist: boolean, id: string): void;
-  public toSetRoleHoist(hoist: boolean, roleData: RoleData): void;
-  public toSetRoleHoist(hoist: boolean, roleData: string | RoleData) {
-    const data = this.getRoleData(roleData);
+  public toSetRoleHoist(hoist: boolean, roleIdentifier: RoleIdentifier): void;
+  public toSetRoleHoist(hoist: boolean, roleIdentifier: string | RoleIdentifier) {
+    const data = this.getRoleData(roleIdentifier);
     testCollector.addTestFunction((cordeBot) => {
       return this.operationFactory(ToSetRoleHoist, cordeBot, hoist, data);
     });
   }
 
   public toRenameRole(newName: string, id: string): void;
-  public toRenameRole(newName: string, roleData: RoleData): void;
-  public toRenameRole(newName: string, roleData: string | RoleData) {
-    const data = this.getRoleData(roleData);
+  public toRenameRole(newName: string, roleIdentifier: RoleIdentifier): void;
+  public toRenameRole(newName: string, roleIdentifier: string | RoleIdentifier) {
+    const data = this.getRoleData(roleIdentifier);
     testCollector.addTestFunction((cordeBot) => {
       return this.operationFactory(ToRenameRole, cordeBot, newName, data);
     });
   }
 
   public toSetRolePosition(newPosition: number, id: string): void;
-  public toSetRolePosition(newPosition: number, roleData: RoleData): void;
-  public toSetRolePosition(newPosition: number, roleData: string | RoleData) {
-    const data = this.getRoleData(roleData);
+  public toSetRolePosition(newPosition: number, roleIdentifier: RoleIdentifier): void;
+  public toSetRolePosition(newPosition: number, roleIdentifier: string | RoleIdentifier) {
+    const data = this.getRoleData(roleIdentifier);
     testCollector.addTestFunction((cordeBot) => {
       return this.operationFactory(ToSetRolePosition, cordeBot, newPosition, data);
     });
   }
 
   public toSetRolePermission(id: string, ...permissions: RolePermission[]): void;
-  public toSetRolePermission(roleData: RoleData, ...permissions: RolePermission[]): void;
-  public toSetRolePermission(roleData: string | RoleData, ...permissions: RolePermission[]) {
-    const data = this.getRoleData(roleData);
+  public toSetRolePermission(
+    roleIdentifier: RoleIdentifier,
+    ...permissions: RolePermission[]
+  ): void;
+  public toSetRolePermission(
+    roleIdentifier: string | RoleIdentifier,
+    ...permissions: RolePermission[]
+  ) {
+    const data = this.getRoleData(roleIdentifier);
     testCollector.addTestFunction((cordeBot) => {
       return this.operationFactory(ToSetRolePermission, cordeBot, permissions, data);
     });
   }
 
-  protected getRoleData(roleData: string | RoleData) {
-    let data: RoleData;
-    if (typeof roleData === "string") {
-      data = { id: roleData };
+  protected getRoleData(roleIdentifier: string | RoleIdentifier) {
+    let data: RoleIdentifier;
+    if (typeof roleIdentifier === "string") {
+      data = { id: roleIdentifier };
     } else {
-      data = roleData as RoleData;
+      data = roleIdentifier as RoleIdentifier;
     }
     return data;
   }

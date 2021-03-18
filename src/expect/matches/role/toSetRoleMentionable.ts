@@ -1,11 +1,11 @@
 import { Role } from "discord.js";
-import { RoleData, TestReport } from "../../../types";
+import { RoleIdentifier, TestReport } from "../../../types";
 import { roleUtils } from "../../roleUtils";
 import { ExpectOperation } from "../operation";
 
-export class ToSetRoleMentionable extends ExpectOperation<boolean, RoleData> {
-  public async action(mentionable: boolean, roleData: RoleData): Promise<TestReport> {
-    const error = roleUtils.getErrorForUndefinedRoleData(roleData);
+export class ToSetRoleMentionable extends ExpectOperation<boolean, RoleIdentifier> {
+  public async action(mentionable: boolean, roleIdentifier: RoleIdentifier): Promise<TestReport> {
+    const error = roleUtils.getErrorForUndefinedRoleData(roleIdentifier);
 
     if (error) {
       return { pass: false, message: error };
@@ -25,8 +25,8 @@ export class ToSetRoleMentionable extends ExpectOperation<boolean, RoleData> {
       );
     }
 
-    const oldRole = await this.cordeBot.findRole(roleData);
-    const invalidRoleErrorMessage = roleUtils.validateRole(oldRole, roleData);
+    const oldRole = await this.cordeBot.findRole(roleIdentifier);
+    const invalidRoleErrorMessage = roleUtils.validateRole(oldRole, roleIdentifier);
 
     if (invalidRoleErrorMessage) {
       return { pass: false, message: invalidRoleErrorMessage };
@@ -35,7 +35,7 @@ export class ToSetRoleMentionable extends ExpectOperation<boolean, RoleData> {
     await this.cordeBot.sendTextMessage(this.command);
     let role: Role;
     try {
-      role = await this.cordeBot.events.onceRoleMentionableUpdate(roleData, this.timeOut);
+      role = await this.cordeBot.events.onceRoleMentionableUpdate(roleIdentifier, this.timeOut);
     } catch (error) {
       if (this.isNot) {
         return { pass: true };

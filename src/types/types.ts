@@ -60,7 +60,7 @@ export interface Group {
   tests: Test[];
 }
 
-export interface RoleData {
+export interface RoleIdentifier {
   name?: string;
   id?: Snowflake;
 }

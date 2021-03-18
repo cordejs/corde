@@ -1,12 +1,12 @@
 import { Role } from "discord.js";
-import { RoleData, TestReport } from "../../../types";
+import { RoleIdentifier, TestReport } from "../../../types";
 import { typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
 import { ExpectOperation } from "../operation";
 
-export class ToRenameRole extends ExpectOperation<string, RoleData> {
-  public async action(newName: string, roleData: RoleData): Promise<TestReport> {
-    const error = roleUtils.getErrorForUndefinedRoleData(roleData);
+export class ToRenameRole extends ExpectOperation<string, RoleIdentifier> {
+  public async action(newName: string, roleIdentifier: RoleIdentifier): Promise<TestReport> {
+    const error = roleUtils.getErrorForUndefinedRoleData(roleIdentifier);
 
     if (error) {
       return { pass: false, message: error };
@@ -26,9 +26,9 @@ export class ToRenameRole extends ExpectOperation<string, RoleData> {
       );
     }
 
-    const oldRole = await this.cordeBot.findRole(roleData);
+    const oldRole = await this.cordeBot.findRole(roleIdentifier);
 
-    const invalidRoleErrorMessage = roleUtils.validateRole(oldRole, roleData);
+    const invalidRoleErrorMessage = roleUtils.validateRole(oldRole, roleIdentifier);
 
     if (invalidRoleErrorMessage) {
       return { pass: false, message: invalidRoleErrorMessage };
@@ -38,7 +38,7 @@ export class ToRenameRole extends ExpectOperation<string, RoleData> {
 
     let newRole: Role;
     try {
-      newRole = await this.cordeBot.events.onceRoleRenamed(roleData, this.timeOut);
+      newRole = await this.cordeBot.events.onceRoleRenamed(roleIdentifier, this.timeOut);
     } catch (error) {
       if (this.isNot) {
         return { pass: true };

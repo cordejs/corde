@@ -1,4 +1,4 @@
-import { RoleData } from "../types/types";
+import { RoleIdentifier } from "../types/types";
 import { Role as JSRole } from "discord.js";
 import { Role } from "../discord-structures";
 import { runtime } from "../common";
@@ -25,8 +25,8 @@ export function getRole(id: string): Role;
  * @throws CordeClientError if corde's bot is not connected.
  * @returns Role that matches the provided **id** or **name**
  */
-export function getRole(data: RoleData): Role;
-export function getRole(data: string | RoleData): Role {
+export function getRole(data: RoleIdentifier): Role;
+export function getRole(data: string | RoleIdentifier): Role {
   if (!runtime.isBotLoggedIn()) {
     throw new CordeClientError("Bot is not connected yet. No role can be searched");
   }

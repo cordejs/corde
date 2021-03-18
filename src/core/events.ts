@@ -22,7 +22,7 @@ import { once } from "events";
 import { runtime } from "../common";
 import { DEFAULT_TEST_TIMEOUT } from "../consts";
 import { TimeoutError } from "../errors";
-import { RoleData } from "../types";
+import { RoleIdentifier } from "../types";
 import { executePromiseWithTimeout, executeWithTimeout } from "../utils";
 
 export interface EventResume {
@@ -185,25 +185,25 @@ export class Events {
 
   /**
    * Emitted once a guild role is deleted.
-   * If `roleData` is informed, returns the deleted role that
-   * match with `roleData` value, if not, returns the first role deleted.
+   * If `roleIdentifier` is informed, returns the deleted role that
+   * match with `roleIdentifier` value, if not, returns the first role deleted.
    *
    * Waits for a determined timeout, rejecting this async function if reachs
    * the timeout value.
    *
-   * @param roleData Identifiers of the role.
+   * @param roleIdentifier Identifiers of the role.
    * @param timeout Time that this functions should wait for a response.
    * @returns Deleted role.
    * @internal
    */
-  public onceRoleDelete(roleData?: RoleData, timeout?: number): Promise<Role> {
+  public onceRoleDelete(roleIdentifier?: RoleIdentifier, timeout?: number): Promise<Role> {
     return executePromiseWithTimeout((resolve) => {
       this.onRoleDelete((deletedRole) => {
-        if (!roleData) {
+        if (!roleIdentifier) {
           resolve(deletedRole);
         }
 
-        if (this.roleMatchRoleData(roleData, deletedRole)) {
+        if (this.roleMatchRoleData(roleIdentifier, deletedRole)) {
           resolve(deletedRole);
         }
       });
@@ -721,54 +721,54 @@ export class Events {
   /**
    * @internal
    */
-  public onceRoleRenamed(roleData?: RoleData, timeout?: number) {
+  public onceRoleRenamed(roleIdentifier?: RoleIdentifier, timeout?: number) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.name !== newRole.name,
       timeout,
-      roleData,
+      roleIdentifier,
     );
   }
 
   /**
    * @internal
    */
-  public onceRoleUpdateColor(roleData?: RoleData, timeout?: number) {
+  public onceRoleUpdateColor(roleIdentifier?: RoleIdentifier, timeout?: number) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.color !== newRole.color,
       timeout,
-      roleData,
+      roleIdentifier,
     );
   }
 
   /**
    * @internal
    */
-  public onceRoleHoistUpdate(roleData?: RoleData, timeout?: number) {
+  public onceRoleHoistUpdate(roleIdentifier?: RoleIdentifier, timeout?: number) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.hoist !== newRole.hoist,
       timeout,
-      roleData,
+      roleIdentifier,
     );
   }
 
   /**
    * @internal
    */
-  public onceRoleMentionableUpdate(roleData?: RoleData, timeout?: number) {
+  public onceRoleMentionableUpdate(roleIdentifier?: RoleIdentifier, timeout?: number) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.mentionable !== newRole.mentionable,
       timeout,
-      roleData,
+      roleIdentifier,
     );
   }
 
   /**
    * Waits for changes in permission of a specific role.
-   * @param roleData `id` or `name` to identify the role.
+   * @param roleIdentifier `id` or `name` to identify the role.
    * @returns Specified role that had his permissions updated.
    * @internal
    */
-  public onceRolePermissionUpdate(roleData: RoleData, timeout = DEFAULT_TEST_TIMEOUT) {
+  public onceRolePermissionUpdate(roleIdentifier: RoleIdentifier, timeout = DEFAULT_TEST_TIMEOUT) {
     return new Promise<Role>((resolve, reject) => {
       setTimeout(() => {
         reject(new TimeoutError());
@@ -776,7 +776,7 @@ export class Events {
 
       this.onRoleUpdate((oldRole, newRole) => {
         if (
-          this.roleMatchRoleData(roleData, newRole) &&
+          this.roleMatchRoleData(roleIdentifier, newRole) &&
           !this.rolesPermissionsMatch(oldRole, newRole)
         ) {
           resolve(newRole);
@@ -785,8 +785,8 @@ export class Events {
     });
   }
 
-  private roleMatchRoleData(roleData: RoleData, role: Role) {
-    return role.id === roleData?.id || role.name === roleData?.name;
+  private roleMatchRoleData(roleIdentifier: RoleIdentifier, role: Role) {
+    return role.id === roleIdentifier?.id || role.name === roleIdentifier?.name;
   }
 
   private rolesPermissionsMatch(oldRole: Role, newRole: Role) {
@@ -867,15 +867,15 @@ export class Events {
   private _onRoleUpdateWithTimeout(
     comparable: (oldRole: Role, newRole: Role) => boolean,
     timeout?: number,
-    roleData?: RoleData,
+    roleIdentifier?: RoleIdentifier,
   ) {
     return executePromiseWithTimeout<Role>((resolve) => {
       this.onRoleUpdate((oldRole, newRole) => {
-        if (!roleData && comparable(oldRole, newRole)) {
+        if (!roleIdentifier && comparable(oldRole, newRole)) {
           resolve(newRole);
         }
 
-        if (this.roleMatchRoleData(roleData, newRole) && comparable(oldRole, newRole)) {
+        if (this.roleMatchRoleData(roleIdentifier, newRole) && comparable(oldRole, newRole)) {
           resolve(newRole);
         }
       });

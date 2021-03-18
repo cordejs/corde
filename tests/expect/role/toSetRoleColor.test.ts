@@ -22,7 +22,7 @@ describe("testing toSetRoleColor", () => {
   afterEach(() => {
     mockDiscord = new MockDiscord();
   });
-  it("should fail due to undefined roleData", async () => {
+  it("should fail due to undefined roleIdentifier", async () => {
     const corde = initClient();
     const toSetRoleColor = new ToSetRoleColor(corde, "test", false);
     const report = await toSetRoleColor.action(Colors.BLUE, undefined);

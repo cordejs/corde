@@ -22,7 +22,7 @@ describe("testing ToRenameRole operation", () => {
     mockDiscord = new MockDiscord();
   });
 
-  it("should fail due to undefined roleData", async () => {
+  it("should fail due to undefined roleIdentifier", async () => {
     const corde = initClient();
     const toRename = new ToRenameRole(corde, "test", false);
     const report = await toRename.action("egg", undefined);

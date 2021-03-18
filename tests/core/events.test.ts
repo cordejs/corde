@@ -954,8 +954,8 @@ describe("testing events event", () => {
     const eventName = "roleUpdate";
     const updatedRole = Object.assign({}, mockDiscord.role);
     updatedRole.name = "online";
-    it("should get renamed role using roleData", async () => {
-      // This should be skiped because do not match with roleData
+    it("should get renamed role using roleIdentifier", async () => {
+      // This should be skiped because do not match with roleIdentifier
       executeWithDelay(() => {
         const toSkipRole = Object.assign({}, mockDiscord.role);
         toSkipRole.id = mockDiscord.generateId();
@@ -970,7 +970,7 @@ describe("testing events event", () => {
       expect(updated).toEqual(updatedRole);
     });
 
-    it("should get renamed role not using roleData", async () => {
+    it("should get renamed role not using roleIdentifier", async () => {
       executeWithDelay(() => {
         client.emit(eventName, mockDiscord.role, updatedRole);
       }, DEFAULT_DELAY);

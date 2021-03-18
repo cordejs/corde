@@ -1,5 +1,5 @@
 import { ColorResolvable, Snowflake } from "discord.js";
-import { RoleData } from "../../types";
+import { RoleIdentifier } from "../../types";
 import { Colors, RolePermission } from "../../utils";
 
 export interface RoleMatches {
@@ -9,7 +9,7 @@ export interface RoleMatches {
    *
    * @param color The new color for the role.
    * @param name Identifier of the role. It can be its it or it's name.
-   * Can also use RoleData to filter it.
+   * Can also use RoleIdentifier to filter it.
    *
    * @example
    *
@@ -28,13 +28,13 @@ export interface RoleMatches {
    * @since 2.0
    */
   toSetRoleColor(color: ColorResolvable, id: Snowflake): void;
-  toSetRoleColor(color: ColorResolvable, roleData: RoleData): void;
+  toSetRoleColor(color: ColorResolvable, roleIdentifier: RoleIdentifier): void;
   toSetRoleColor(color: Colors, id: Snowflake): void;
-  toSetRoleColor(color: Colors, roleData: RoleData): void;
+  toSetRoleColor(color: Colors, roleIdentifier: RoleIdentifier): void;
 
   /**
    * Defines a role that should be removed.
-   * @param id Id of the role. Can also use RoleData to filter it.
+   * @param id Id of the role. Can also use RoleIdentifier to filter it.
    *
    * @example
    *
@@ -50,23 +50,23 @@ export interface RoleMatches {
    * @since 2.0
    */
   toDeleteRole(id: Snowflake): void;
-  toDeleteRole(roleData: RoleData): void;
+  toDeleteRole(roleIdentifier: RoleIdentifier): void;
 
   /**
    * Defines a role that should have his *mentionable* property state.
    *
    * @param mentionable If the role can or can not be mentionable.
-   * @param id Identifier of the role. Can also use RoleData to filter it.
+   * @param id Identifier of the role. Can also use RoleIdentifier to filter it.
    * @since 2.0
    */
   toSetRoleMentionable(mentionable: boolean, id: Snowflake): void;
-  toSetRoleMentionable(mentionable: boolean, roleData: RoleData): void;
+  toSetRoleMentionable(mentionable: boolean, roleIdentifier: RoleIdentifier): void;
 
   /**
    * Defines if a role should be hoist or not.
    *
    * @param hoist if this role is pinned in the user listing.
-   * @param id Identifier of the role. Can also use RoleData to filter it.
+   * @param id Identifier of the role. Can also use RoleIdentifier to filter it.
    *
    * @description Discord provides two methods of displaying roles; hoisted and standard.
    * The role hierarchy is visibly clear to server members; roles are sorted and displayed
@@ -80,23 +80,23 @@ export interface RoleMatches {
    * @since 2.0
    */
   toSetRoleHoist(hoist: boolean, id: string): void;
-  toSetRoleHoist(hoist: boolean, roleData: RoleData): void;
+  toSetRoleHoist(hoist: boolean, roleIdentifier: RoleIdentifier): void;
 
   /**
    * Defines a new name for a role.
    *
    * @param newName new name of the role
-   * @param id Identifier of the role. Can also use RoleData to filter it.
+   * @param id Identifier of the role. Can also use RoleIdentifier to filter it.
    * @since 2.0
    */
   toRenameRole(newName: string, id: string): void;
-  toRenameRole(newName: string, roleData: RoleData): void;
+  toRenameRole(newName: string, roleIdentifier: RoleIdentifier): void;
 
   /**
    * Defines a new position for the role.
    *
    * @param newPosition The new position of the role.
-   * @param id Identifier of the role. Can also use RoleData to filter it.
+   * @param id Identifier of the role. Can also use RoleIdentifier to filter it.
    *
    * @description Role's maximum value depends of the amount of roles the guid Have.
    * So, if there is only 3 roles (including the default *everyone*), the maximum
@@ -106,14 +106,14 @@ export interface RoleMatches {
    * @since 2.0
    */
   toSetRolePosition(newPosition: number, id: string): void;
-  toSetRolePosition(newPosition: number, roleData: RoleData): void;
+  toSetRolePosition(newPosition: number, roleIdentifier: RoleIdentifier): void;
 
   /**
    * Defines a list of
    * [Permissions](https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags)
    * that a role should have.
    *
-   * @param id Identifier of the role. Can also use RoleData to filter it.
+   * @param id Identifier of the role. Can also use RoleIdentifier to filter it.
    * @param permissions List of permissions allowed by Discord.
    *
    * @example
@@ -127,5 +127,5 @@ export interface RoleMatches {
    * @since 2.0
    */
   toSetRolePermission(id: string, ...permissions: RolePermission[]): void;
-  toSetRolePermission(roleData: RoleData, ...permissions: RolePermission[]): void;
+  toSetRolePermission(roleIdentifier: RoleIdentifier, ...permissions: RolePermission[]): void;
 }

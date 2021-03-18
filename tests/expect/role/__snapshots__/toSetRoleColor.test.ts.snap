@@ -19,7 +19,7 @@ Object {
 }
 `;
 
-exports[`testing toSetRoleColor should fail due to undefined roleData 1`] = `
+exports[`testing toSetRoleColor should fail due to undefined roleIdentifier 1`] = `
 Object {
   "message": "    
     expected: data to identifier the role (id or name)

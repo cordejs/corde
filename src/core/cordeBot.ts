@@ -12,7 +12,7 @@ import {
 } from "discord.js";
 import { BehaviorSubject } from "rxjs";
 import { CordeClientError, TimeoutError } from "../errors";
-import { MessageData, RoleData } from "../types/types";
+import { MessageData, RoleIdentifier } from "../types/types";
 import { Events } from "./events";
 
 const DEFAULT_TEST_TIMEOUT = 5000;
@@ -277,16 +277,16 @@ export class CordeBot {
     return await this.guild.roles.fetch();
   }
 
-  public async hasRole(roleData: RoleData) {
-    return !!(await this.findRole(roleData));
+  public async hasRole(roleIdentifier: RoleIdentifier) {
+    return !!(await this.findRole(roleIdentifier));
   }
 
-  public async findRole(roleData: RoleData) {
+  public async findRole(roleIdentifier: RoleIdentifier) {
     const data = await this.guild.roles.fetch();
-    if (roleData.id) {
-      return data.cache.find((r) => r.id === roleData.id);
-    } else if (roleData.name) {
-      return data.cache.find((r) => r.name === roleData.name);
+    if (roleIdentifier.id) {
+      return data.cache.find((r) => r.id === roleIdentifier.id);
+    } else if (roleIdentifier.name) {
+      return data.cache.find((r) => r.name === roleIdentifier.name);
     }
     return null;
   }

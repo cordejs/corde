@@ -1,11 +1,11 @@
 import { Role } from "discord.js";
-import { RoleData, TestReport } from "../../../types/types";
+import { RoleIdentifier, TestReport } from "../../../types/types";
 import { roleUtils } from "../../roleUtils";
 import { ExpectOperation } from "../operation";
 
-export class ToDeleteRole extends ExpectOperation<RoleData> {
-  public async action(roleData: RoleData): Promise<TestReport> {
-    const roleOrFailObject = await this.getRoleOrInvalidMessage(roleData);
+export class ToDeleteRole extends ExpectOperation<RoleIdentifier> {
+  public async action(roleIdentifier: RoleIdentifier): Promise<TestReport> {
+    const roleOrFailObject = await this.getRoleOrInvalidMessage(roleIdentifier);
 
     if ((roleOrFailObject as TestReport).message) {
       return roleOrFailObject as TestReport;
@@ -15,7 +15,7 @@ export class ToDeleteRole extends ExpectOperation<RoleData> {
 
     await this.cordeBot.sendTextMessage(this.command);
     try {
-      await this.cordeBot.events.onceRoleDelete(roleData, this.timeOut);
+      await this.cordeBot.events.onceRoleDelete(roleIdentifier, this.timeOut);
     } catch (error) {
       if (this.isNot) {
         return { pass: true };
@@ -40,16 +40,16 @@ export class ToDeleteRole extends ExpectOperation<RoleData> {
     return this.createReport(`expected: role ${role.id} to ${this.isNot ? "not " : ""}be deleted`);
   }
 
-  private async getRoleOrInvalidMessage(roleData: RoleData) {
-    const error = roleUtils.getErrorForUndefinedRoleData(roleData);
+  private async getRoleOrInvalidMessage(roleIdentifier: RoleIdentifier) {
+    const error = roleUtils.getErrorForUndefinedRoleData(roleIdentifier);
 
     if (error) {
       return { pass: false, message: error };
     }
 
-    let role = await this.cordeBot.findRole(roleData);
+    let role = await this.cordeBot.findRole(roleIdentifier);
 
-    const invalidRoleErrorMessage = roleUtils.validateRole(role, roleData);
+    const invalidRoleErrorMessage = roleUtils.validateRole(role, roleIdentifier);
 
     if (invalidRoleErrorMessage) {
       return { pass: false, message: invalidRoleErrorMessage };

@@ -1,10 +1,10 @@
-import { RoleData, TestReport } from "../../../types";
+import { RoleIdentifier, TestReport } from "../../../types";
 import { wait } from "../../../utils";
 import { ExpectOperation } from "../operation";
 
-export class ToSetRolePosition extends ExpectOperation<number, RoleData> {
-  public async action(newPosition: number, roleData: RoleData): Promise<TestReport> {
-    let role = await this.cordeBot.findRole(roleData);
+export class ToSetRolePosition extends ExpectOperation<number, RoleIdentifier> {
+  public async action(newPosition: number, roleIdentifier: RoleIdentifier): Promise<TestReport> {
+    let role = await this.cordeBot.findRole(roleIdentifier);
     const lastRole = this.cordeBot
       .getRoles()
       .sort((r1, r2) => r2.position - r1.position)
@@ -21,7 +21,7 @@ export class ToSetRolePosition extends ExpectOperation<number, RoleData> {
       await this.cordeBot.sendTextMessage(this.command);
       // TODO: Fix this required wait to avoid inconsistence
       await wait(400);
-      role = await this.cordeBot.findRole(roleData);
+      role = await this.cordeBot.findRole(roleIdentifier);
       if (role.position === newPosition) {
         this.hasPassed = true;
       } else {
