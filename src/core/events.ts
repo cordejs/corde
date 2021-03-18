@@ -752,6 +752,17 @@ export class Events {
   }
 
   /**
+   * @internal
+   */
+  public onceRoleMentionableUpdate(roleData?: RoleData, timeout?: number) {
+    return this._onRoleUpdateWithTimeout(
+      (oldRole, newRole) => oldRole.mentionable !== newRole.mentionable,
+      timeout,
+      roleData,
+    );
+  }
+
+  /**
    * Waits for changes in permission of a specific role.
    * @param roleData `id` or `name` to identify the role.
    * @returns Specified role that had his permissions updated.
