@@ -41,7 +41,7 @@ describe("testing toSetRolePermission operation", () => {
     expect(report).toMatchSnapshot();
   });
 
-  it("should return false due to invalid mentionable parameter (object)", async () => {
+  it("should return false due to invalid permission parameter (object)", async () => {
     const corde = initClient();
     const toSetRolePermission = new ToSetRolePermission(corde, "test", false);
     // @ts-ignore
@@ -61,7 +61,7 @@ describe("testing toSetRolePermission operation", () => {
     expect(report).toMatchSnapshot();
   });
 
-  it("should return false due to invalid mentionable parameter (undefined)", async () => {
+  it("should return false due to invalid permission parameter (undefined)", async () => {
     const corde = initClient();
     const toSetRolePermission = new ToSetRolePermission(corde, "test", false);
     // @ts-ignore
@@ -98,7 +98,7 @@ describe("testing toSetRolePermission operation", () => {
     expect(report).toMatchSnapshot();
   });
 
-  it("should fail due to no role mentionable was not updated", async () => {
+  it("should fail due to role permissions was not updated", async () => {
     const corde = initClient();
 
     runtime.setConfigs({ timeOut: 100 }, true);
@@ -136,7 +136,7 @@ describe("testing toSetRolePermission operation", () => {
     expect(report).toMatchSnapshot();
   });
 
-  it("should return true due to role changed the mentionable (isNot false)", async () => {
+  it("should return true due to role changed permissions (isNot false)", async () => {
     const corde = initClient();
 
     runtime.setConfigs({ timeOut: 100 }, true);
@@ -157,7 +157,7 @@ describe("testing toSetRolePermission operation", () => {
     expect(report).toMatchSnapshot();
   });
 
-  it("should return a not passed test due to mentionable should not change (isNot true)", async () => {
+  it("should return a not passed test due to permissions should not change (isNot true)", async () => {
     const corde = initClient();
     const mockRole = mockDiscord.createMockRole(
       "test role",
@@ -186,7 +186,7 @@ describe("testing toSetRolePermission operation", () => {
     expect(report).toMatchSnapshot();
   });
 
-  it("should return a not passed test due to mentionable should not change (isNot true)", async () => {
+  it("should return a not passed test due to permissions should not change (isNot true)", async () => {
     const corde = initClient();
     const mockRole = mockDiscord.createMockRole(
       "test role",
@@ -218,7 +218,7 @@ describe("testing toSetRolePermission operation", () => {
     expect(report).toMatchSnapshot();
   });
 
-  it("should return a not passed test due to mentionable should not change (isNot true)", async () => {
+  it("should return a not passed test due to permissions should not change (isNot true)", async () => {
     const corde = initClient();
     const mockRole = mockDiscord.createMockRole(
       "test role",
