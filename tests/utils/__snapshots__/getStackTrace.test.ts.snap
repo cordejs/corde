@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing getStackTrace should get trace of an function 1`] = `
+Object {
+  "message": "error",
+  "pass": false,
+  "trace": "    test (tests\\\\utils\\\\getStackTrace.test.ts:21:18)
+    Object.<anonymous> (tests\\\\utils\\\\getStackTrace.test.ts:29:9)",
+}
+`;

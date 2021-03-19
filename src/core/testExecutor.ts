@@ -202,6 +202,10 @@ export class TestExecutor {
     if (report.message) {
       this._logUpdate.appendLine(report.message);
     }
+
+    if (!report.pass && report.trace) {
+      this._logUpdate.appendLine(report.trace);
+    }
   }
 
   private createTestText(testName: string | number | boolean) {

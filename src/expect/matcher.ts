@@ -22,8 +22,8 @@ import {
 import { ExpectTest } from "./matches/expectTest";
 import { MessageMatches } from "./matches/messageMatches";
 import { RoleMatches } from "./matches/roleMatches";
-import { resolveName, stringIsNullOrEmpty, typeOf } from "../utils";
-import { PropertyError } from "../errors";
+import { resolveName, stringIsNullOrEmpty } from "../utils";
+import { getStackTrace } from "../utils/getStackTrace";
 
 /**
  * Defines all functions that can be used
@@ -55,8 +55,9 @@ class ExpectMatches implements Matches {
   }
 
   public toEditMessage(message: MessageData, newValue: string | MessageEmbed): void {
+    const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(ToEditMessage, cordeBot, message, newValue);
+      return this.operationFactory(trace, ToEditMessage, cordeBot, message, newValue);
     });
   }
 
@@ -69,9 +70,10 @@ class ExpectMatches implements Matches {
     } else {
       data = message;
     }
+    const trace = getStackTrace();
 
     testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(ToPinMessage, cordeBot, data);
+      return this.operationFactory(trace, ToPinMessage, cordeBot, data);
     });
   }
 
@@ -86,17 +88,22 @@ class ExpectMatches implements Matches {
     }
 
     testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(ToUnpinMessage, cordeBot, data);
+      const trace = getStackTrace();
+      return this.operationFactory(trace, ToUnpinMessage, cordeBot, data);
     });
   }
 
   public toReturn(expect: string | number | boolean | MessageEmbed): void {
-    testCollector.addTestFunction((cordeBot) => this.operationFactory(ToReturn, cordeBot, expect));
+    const trace = getStackTrace();
+    testCollector.addTestFunction((cordeBot) =>
+      this.operationFactory(trace, ToReturn, cordeBot, expect),
+    );
   }
 
   public toAddReaction(...reaction: string[]): void {
+    const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) =>
-      this.operationFactory(ToAddReaction, cordeBot, reaction),
+      this.operationFactory(trace, ToAddReaction, cordeBot, reaction),
     );
   }
 
@@ -105,11 +112,12 @@ class ExpectMatches implements Matches {
   public toRemoveReaction(reactions: string, message: MessageData): void;
   public toRemoveReaction(reactions: string[], message: MessageData): void;
   public toRemoveReaction(reactions: string | string[], message?: any) {
+    const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) => {
       if (Array.isArray(reactions)) {
-        return this.operationFactory(ToRemoveReaction, cordeBot, reactions, message);
+        return this.operationFactory(trace, ToRemoveReaction, cordeBot, reactions, message);
       }
-      return this.operationFactory(ToRemoveReaction, cordeBot, [reactions], message);
+      return this.operationFactory(trace, ToRemoveReaction, cordeBot, [reactions], message);
     });
   }
 
@@ -119,8 +127,9 @@ class ExpectMatches implements Matches {
   public toSetRoleColor(color: ColorResolvable, name: RoleIdentifier): void;
   public toSetRoleColor(color: ColorResolvable | Colors, role: Snowflake | RoleIdentifier) {
     const data = this.getRoleData(role);
+    const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(ToSetRoleColor, cordeBot, color, data);
+      return this.operationFactory(trace, ToSetRoleColor, cordeBot, color, data);
     });
   }
 
@@ -128,8 +137,9 @@ class ExpectMatches implements Matches {
   public toDeleteRole(name: RoleIdentifier): void;
   public toDeleteRole(role: string | RoleIdentifier) {
     const data = this.getRoleData(role);
+    const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(ToDeleteRole, cordeBot, data);
+      return this.operationFactory(trace, ToDeleteRole, cordeBot, data);
     });
   }
 
@@ -137,8 +147,9 @@ class ExpectMatches implements Matches {
   public toSetRoleMentionable(mentionable: boolean, roleIdentifier: RoleIdentifier): void;
   public toSetRoleMentionable(mentionable: boolean, roleIdentifier: string | RoleIdentifier) {
     const data = this.getRoleData(roleIdentifier);
+    const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(ToSetRoleMentionable, cordeBot, mentionable, data);
+      return this.operationFactory(trace, ToSetRoleMentionable, cordeBot, mentionable, data);
     });
   }
 
@@ -146,8 +157,9 @@ class ExpectMatches implements Matches {
   public toSetRoleHoist(hoist: boolean, roleIdentifier: RoleIdentifier): void;
   public toSetRoleHoist(hoist: boolean, roleIdentifier: string | RoleIdentifier) {
     const data = this.getRoleData(roleIdentifier);
+    const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(ToSetRoleHoist, cordeBot, hoist, data);
+      return this.operationFactory(trace, ToSetRoleHoist, cordeBot, hoist, data);
     });
   }
 
@@ -155,8 +167,9 @@ class ExpectMatches implements Matches {
   public toRenameRole(newName: string, roleIdentifier: RoleIdentifier): void;
   public toRenameRole(newName: string, roleIdentifier: string | RoleIdentifier) {
     const data = this.getRoleData(roleIdentifier);
+    const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(ToRenameRole, cordeBot, newName, data);
+      return this.operationFactory(trace, ToRenameRole, cordeBot, newName, data);
     });
   }
 
@@ -164,8 +177,9 @@ class ExpectMatches implements Matches {
   public toSetRolePosition(newPosition: number, roleIdentifier: RoleIdentifier): void;
   public toSetRolePosition(newPosition: number, roleIdentifier: string | RoleIdentifier) {
     const data = this.getRoleData(roleIdentifier);
+    const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(ToSetRolePosition, cordeBot, newPosition, data);
+      return this.operationFactory(trace, ToSetRolePosition, cordeBot, newPosition, data);
     });
   }
 
@@ -179,8 +193,9 @@ class ExpectMatches implements Matches {
     ...permissions: RolePermission[]
   ) {
     const data = this.getRoleData(roleIdentifier);
+    const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(ToSetRolePermission, cordeBot, data, permissions);
+      return this.operationFactory(trace, ToSetRolePermission, cordeBot, data, permissions);
     });
   }
 
@@ -194,7 +209,11 @@ class ExpectMatches implements Matches {
     return data;
   }
 
+  // Trace can not me added inside operationFactory because it do,
+  // it will get irrelevant data.
+
   protected async operationFactory<T extends ExpectTest>(
+    trace: string,
     type: new (
       cordeBot: CordeBot,
       command: string | number | bigint | boolean,
@@ -209,7 +228,14 @@ class ExpectMatches implements Matches {
       return { pass: false, message: "command can not be null or an empty string" };
     }
     const op = new type(cordeBot, commandName, this._isNot);
-    return op.action(params);
+    return op.action(params).then((report) => {
+      if (report.pass) {
+        return report;
+      }
+
+      report.trace = trace;
+      return report;
+    });
   }
 }
 

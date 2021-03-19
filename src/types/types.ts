@@ -162,6 +162,7 @@ export interface MessageData {
 export interface TestReport {
   readonly pass: boolean;
   readonly message?: string;
+  trace?: string;
 }
 
 export interface SemiRunnerReport {
