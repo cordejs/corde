@@ -9,6 +9,8 @@ export type testFunctionType = (cordeBot: CordeBot) => Promise<TestReport>;
 export type VoidPromiseFunction = () => void | Promise<void>;
 export type GenericFunction = (...args: any[]) => any;
 export type Primitive = number | bigint | string | boolean;
+export type ResolveFunction<TResult> = (value: TResult) => void;
+export type RejectFunction = (reason?: any) => void;
 
 /**
  * Get all function `T` parameters as they may be

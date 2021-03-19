@@ -1,5 +1,4 @@
-type ResolveFunction<TResult> = (value: TResult) => void;
-type RejectFunction = (reason?: any) => void;
+import { RejectFunction, ResolveFunction } from "../types";
 
 /**
  * Execute a function that returns a promise, passing a `resolve` and
