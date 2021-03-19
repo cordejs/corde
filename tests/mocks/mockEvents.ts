@@ -25,6 +25,15 @@ export class MockEvents {
   /**
    * @internal
    */
+  mockOnceRolePositionUpdate(role?: Role) {
+    this._corde.events.onceRolePositionUpdate = jest
+      .fn()
+      .mockReturnValue(role ?? this._mockDiscord.role);
+  }
+
+  /**
+   * @internal
+   */
   mockOnceHoistUpdate(role?: Role) {
     this._corde.events.onceRoleHoistUpdate = jest
       .fn()

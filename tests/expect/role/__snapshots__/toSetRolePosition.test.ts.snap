@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing ToSetRolePosition operation should fail due to undefined roleIdentifier 1`] = `
+Object {
+  "message": "    
+    expected: data to identifier the role (id or name)
+    received: null
+",
+  "pass": false,
+}
+`;
+
+exports[`testing ToSetRolePosition operation should find and must return passed report due to 'changed position' (isNot true) 1`] = `
+Object {
+  "pass": true,
+}
+`;
+
+exports[`testing ToSetRolePosition operation should not find a role and must return not passed (isNot false) 1`] = `
+Object {
+  "message": "    
+    expected: role with id 123
+    received: null
+",
+  "pass": false,
+}
+`;
+
+exports[`testing ToSetRolePosition operation should not find a role and must return not passed (isNot true) 1`] = `
+Object {
+  "message": "    
+    expected: role with id 123
+    received: null
+",
+  "pass": false,
+}
+`;
+
+exports[`testing ToSetRolePosition operation should not find a role and return a failed report 1`] = `
+Object {
+  "message": "    
+    expected: role with id 123
+    received: null
+",
+  "pass": false,
+}
+`;
+
+exports[`testing ToSetRolePosition operation should return a not passed test due to new position be higher than the permitted (isNot false) 1`] = `
+Object {
+  "message": "    
+    expected: position to be >= 0 and <= -1 (max value possible)
+    received: 2
+",
+  "pass": false,
+}
+`;

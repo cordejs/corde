@@ -1,37 +1,70 @@
 import { RoleIdentifier, TestReport } from "../../../types";
-import { wait } from "../../../utils";
+import { roleUtils } from "../../roleUtils";
 import { ExpectTest } from "../expectTest";
 
 export class ToSetRolePosition extends ExpectTest {
   public async action(newPosition: number, roleIdentifier: RoleIdentifier): Promise<TestReport> {
+    const error = roleUtils.getErrorForUndefinedRoleData(roleIdentifier);
+
+    if (error) {
+      return { pass: false, message: error };
+    }
+
+    if (typeof newPosition !== "number") {
+      return this.createReport(
+        `expected: position option to be a number\n`,
+        `received: ${typeof newPosition}`,
+      );
+    }
+
+    const oldRole = await this.cordeBot.findRole(roleIdentifier);
+    const invalidRoleErrorMessage = roleUtils.validateRole(oldRole, roleIdentifier);
+
+    if (invalidRoleErrorMessage) {
+      return { pass: false, message: invalidRoleErrorMessage };
+    }
+
     let role = await this.cordeBot.findRole(roleIdentifier);
     const lastRole = this.cordeBot
       .getRoles()
       .sort((r1, r2) => r2.position - r1.position)
       .first();
 
-    if (!role || !lastRole) {
-      this.hasPassed = false;
-      return this.createReport("Role not found");
-    } else if (newPosition > lastRole.position) {
+    if (newPosition > lastRole.position) {
       return this.createReport(
-        `the maximum position possible is ${lastRole.position}. Attempted value: ${newPosition}`,
+        `expected: position to be >= 0 and <= ${lastRole.position} (max value possible)\n`,
+        `received: ${newPosition}`,
       );
-    } else {
-      await this.cordeBot.sendTextMessage(this.command);
-      // TODO: Fix this required wait to avoid inconsistence
-      await wait(400);
-      role = await this.cordeBot.findRole(roleIdentifier);
-      if (role.position === newPosition) {
-        this.hasPassed = true;
-      } else {
-        return this.createReport(
-          `expected position: ${newPosition}, actual position: ${role.position}`,
-        );
+    }
+
+    await this.cordeBot.sendTextMessage(this.command);
+
+    try {
+      role = await this.cordeBot.events.onceRolePositionUpdate(roleIdentifier, this.timeOut);
+    } catch (error) {
+      if (this.isNot) {
+        return { pass: true };
       }
+
+      return this.createReport(
+        `expected: role position to change to ${newPosition}\n`,
+        `received: position didn't change`,
+      );
+    }
+
+    if (role.position === newPosition) {
+      this.hasPassed = true;
     }
 
     this.invertHasPassedIfIsNot();
-    return this.createReport();
+
+    if (this.hasPassed) {
+      return { pass: true };
+    }
+
+    return this.createReport(
+      `expected: role position to change to ${newPosition}`,
+      `received: ${role.position}`,
+    );
   }
 }
