@@ -2,6 +2,7 @@ import { ExpectTest } from "../expectTest";
 import { Role } from "discord.js";
 import { RoleIdentifier, TestReport } from "../../../types";
 import { roleUtils } from "../../roleUtils";
+import { typeOf } from "../../../utils";
 
 export class ToSetRoleHoist extends ExpectTest {
   public async action(hoist: boolean, roleIdentifier: RoleIdentifier): Promise<TestReport> {
@@ -14,14 +15,14 @@ export class ToSetRoleHoist extends ExpectTest {
     if (hoist == undefined) {
       return this.createReport(
         `expected: hoist option to be true or false\n`,
-        `received: ${typeof hoist}`,
+        `received: ${typeOf(hoist)}`,
       );
     }
 
     if (typeof hoist !== "boolean") {
       return this.createReport(
         `expect: hoist parameter to be of boolean type\n`,
-        `received: ${typeof hoist}`,
+        `received: ${typeOf(hoist)}`,
       );
     }
 

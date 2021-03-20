@@ -1,4 +1,5 @@
 import { RoleIdentifier, TestReport } from "../../../types";
+import { typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
 import { ExpectTest } from "../expectTest";
 
@@ -13,7 +14,7 @@ export class ToSetRolePosition extends ExpectTest {
     if (typeof newPosition !== "number") {
       return this.createReport(
         `expected: position option to be a number\n`,
-        `received: ${typeof newPosition}`,
+        `received: ${typeOf(newPosition)}`,
       );
     }
 

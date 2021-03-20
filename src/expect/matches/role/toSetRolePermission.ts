@@ -29,7 +29,7 @@ export class ToSetRolePermission extends ExpectTest {
     ) {
       return this.createReport(
         `expected: permissions to be null, undefined or an array\n`,
-        `received: ${typeof permissions}`,
+        `received: ${typeOf(permissions)}`,
       );
     }
 
