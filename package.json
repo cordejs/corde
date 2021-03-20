@@ -24,10 +24,11 @@
   ],
   "scripts": {
     "clearbuild": "gulp clear",
-    "build": "gulp",
+    "build": "bash tasks.sh build",
+    "build:prod": "gulp",
     "build:publish": "bash ./scripts/publish.sh",
     "prettier-lib": "prettier --write ./lib",
-    "watch": "bash ./scripts/watch.sh",
+    "watch": "bash tasks.sh watch",
     "release": "release-it",
     "corde": "node ./bin/corde",
     "killProcess": "cd ./etc && bash ./build_and_kill.sh",
