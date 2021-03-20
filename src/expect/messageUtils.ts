@@ -17,7 +17,7 @@ class MessageUtils {
     if (isPrimitiveValue(expectation)) {
       const formattedMsg = this.getMessageByType(returnedMessage, "text") as Message;
       msg = formattedMsg.content;
-      return msg === expectation;
+      return msg == expectation;
     }
 
     const jsonMessage = this.getMessageByType(returnedMessage, "embed") as MinifiedEmbedMessage;

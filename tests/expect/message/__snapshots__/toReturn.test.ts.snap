@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing toReturn should fail due to no message was sent by the bot 1`] = `
+Object {
+  "message": "    
+    expected: testing bot to send a message
+    received: no message was sent
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toReturn should get success test due to bot returned equal message 1`] = `
+Object {
+  "pass": true,
+}
+`;
+
+exports[`testing toReturn should get success test due to timeout but isNot = true 1`] = `
+Object {
+  "pass": true,
+}
+`;
+
+exports[`testing toReturn should return a failed test due to invalid parameter (null) 1`] = `
+Object {
+  "message": "    
+    expected: expect value to be a primitive value (string, boolean, number) or an MessageEmbedLike
+    received: null
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toReturn should return a failed test due to invalid parameter (undefined) 1`] = `
+Object {
+  "message": "    
+    expected: expect value to be a primitive value (string, boolean, number) or an MessageEmbedLike
+    received: undefined
+",
+  "pass": false,
+}
+`;

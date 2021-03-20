@@ -1,8 +1,8 @@
 import chalk from "chalk";
 import fs from "fs";
 import path from "path";
-import { default as prettyFormat } from "pretty-format";
 import { FileError } from "../errors";
+import { format, BuiltInParserName } from "prettier";
 import { ConfigOptions, configFileType } from "../types";
 
 const jsonFile: ConfigOptions = {
@@ -60,7 +60,7 @@ export function init(fileType: configFileType = "json") {
   try {
     const fileName = `corde.${fileType}`;
     const filePath = path.resolve(process.cwd(), fileName);
-    fileContent = prettyFormat(fileContent);
+    fileContent = formatFile(fileContent, fileType);
     fs.writeFileSync(filePath, fileContent);
     console.log(
       `- ${chalk.green("Successfully")} generated corde config in ${chalk.bold(filePath)}`,
@@ -70,4 +70,20 @@ export function init(fileType: configFileType = "json") {
       " - Fail in config file creation. Check if you have permission to create files in this directory.",
     );
   }
+}
+
+function formatFile(file: string, type: configFileType) {
+  let fileParser: BuiltInParserName = "babel";
+
+  // Attempt to format a json with babel parse results in error
+  if (type === "json") {
+    fileParser = "json";
+  }
+
+  return format(file, {
+    printWidth: 100,
+    singleQuote: true,
+    trailingComma: "all",
+    parser: fileParser,
+  });
 }

@@ -29,7 +29,7 @@ import diffDefault from "jest-diff";
  *
  * @internal
  */
-export function diff<T, U>(obj1: T, obj2: U): string | null {
+export function diff<T>(obj1: T, obj2: T): string | null {
   return diffDefault(obj1, obj2, {
     aAnnotation: "expect",
     bAnnotation: "received",
