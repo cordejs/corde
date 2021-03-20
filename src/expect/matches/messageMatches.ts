@@ -1,5 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import { MessageData } from "../../types";
+import { MessageData, MessageEmbedLike } from "../../types";
 
 /**
  * Defines all functions that can be used
@@ -14,7 +14,75 @@ export interface MessageMatches {
    * @param expect A message returned by a bot after invoke a command
    * @since 1.0
    */
-  toReturn(expect: string | number | boolean | MessageEmbed): void;
+  toReturn(expect: string): void;
+  /**
+   * Defines the message expected to be returned by a
+   * command.
+   *
+   * @param expect A message returned by a bot after invoke a command
+   * @since 1.0
+   */
+  toReturn(expect: number): void;
+  /**
+   * Defines the message expected to be returned by a
+   * command.
+   *
+   * @param expect A message returned by a bot after invoke a command
+   * @since 1.0
+   */
+  toReturn(expect: boolean): void;
+  /**
+   * Defines the message expected to be returned by a
+   * command.
+   *
+   * @param expect A message returned by a bot after invoke a command
+   * @since 1.0
+   */
+  toReturn(expect: bigint): void;
+  /**
+   * Defines the message expected to be returned by a
+   * command.
+   *
+   * @param expect A message returned by a bot after invoke a command
+   * @since 1.0
+   *
+   * @example
+   *
+   * ```javascript
+   * {
+   *  color: 3447003,
+   *  author: {
+   *    name: "Bot's",
+   *    icon_url: "https://i.pinimg.com/originals/3b/97/82/3b9782bdf48463aa0118dabbf4eda6c4.jpg"
+   *  },
+   *  title: "This is an embed",
+   *  url: "http://google.com",
+   *  description: "This is a test embed to showcase what they look like and what they can do.",
+   *  fields: [{
+   *      name: "Fields",
+   *      value: "They can have different fields with small headlines."
+   *    },
+   *    {
+   *      name: "Masked links",
+   *      value: "You can put [masked links](http://google.com) inside of rich embeds."
+   *    },
+   *    {
+   *      name: "Markdown",
+   *      value: "You can put all the *usual* **__Markdown__** inside of them."
+   *    }
+   *  ],
+   *  timestamp: new Date(),
+   *  footer: {
+   *    icon_url: client.user.avatarURL,
+   *    text: "© Example"
+   *  }
+   * }
+   * ```
+   *
+   * @param expect
+   */
+  toReturn(expect: MessageEmbedLike): void;
+
   /**
    * Defines reactions that must be add to command message.
    *

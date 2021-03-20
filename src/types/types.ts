@@ -1,6 +1,8 @@
-import { ColorResolvable, Message, MessageEmbed, Snowflake } from "discord.js";
+import { ColorResolvable, Message, MessageEmbed } from "discord.js";
 import { Colors, RolePermission } from "..";
 import { CordeBot } from "../core";
+import { EmbedFieldData, FileOptions, MessageAttachment } from "discord.js";
+import { Stream } from "stream";
 
 export type messageType = "text" | "embed";
 export type messageOutputType = Message | MinifiedEmbedMessage;
@@ -178,4 +180,115 @@ export interface SemiRunnerReport {
 
 export interface RunnerReport extends SemiRunnerReport {
   testTimer: string;
+}
+
+export interface MessageEmbedAuthor {
+  name?: string;
+  url?: string;
+  iconURL?: string;
+}
+
+export interface MessageEmbedFooter {
+  /**
+   * footer text
+   */
+  text?: string;
+  /**
+   * url of footer icon (only supports http(s) and attachments)
+   */
+  iconURL?: string;
+}
+
+export interface MessageEmbedImage {
+  /**
+   * source url of image (only supports http(s) and attachments)
+   */
+  url: string;
+  /**
+   * height of image
+   */
+  height?: number;
+  /**
+   * width of image
+   */
+  width?: number;
+}
+
+export interface MessageEmbedThumbnail {
+  /**
+   * Url of the thumbnail
+   */
+  url: string;
+  /**
+   * Height of the thumbnail
+   */
+  height?: number;
+  /**
+   * width of the thumbnail
+   */
+  width?: number;
+}
+
+export interface FileLike {
+  /**
+   * Buffer, URL or stream of the file.
+   *
+   * @see https://nodejs.org/api/stream.html
+   * @see https://nodejs.org/api/buffer.html
+   */
+  attachment: Buffer | string | Stream;
+  /**
+   * Name of the file
+   */
+  name: string;
+}
+
+/**
+ * Main and optional informations about a embed message.
+ */
+export interface MessageEmbedLike {
+  /**
+   * author name **or** information
+   */
+  author?: MessageEmbedAuthor | string;
+  /**
+   * color code of the embed
+   */
+  color?: ColorResolvable;
+  /**
+   * description of embed
+   */
+  description?: string;
+  /**
+   * fields information. Array of embed field objects
+   */
+  fields?: EmbedFieldData[];
+  /**
+   * files urls **or** informations of the embed.
+   */
+  files?: (FileLike | string)[];
+  /**
+   * Footer url **or** information
+   */
+  footer?: MessageEmbedFooter | string;
+  /**
+   * Image URL **or** information
+   */
+  image?: MessageEmbedImage | string;
+  /**
+   * Source url of thumbnail (only supports http(s) and attachments)
+   */
+  thumbnailUrl?: string;
+  /**
+   * Timestamp of embed content **or** a Date object
+   */
+  timestamp?: number | Date;
+  /**
+   * Title of embed
+   */
+  title?: string;
+  /**
+   * Url of embed
+   */
+  url?: string;
 }

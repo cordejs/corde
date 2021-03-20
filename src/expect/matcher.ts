@@ -1,7 +1,14 @@
 import { ColorResolvable, MessageEmbed, Snowflake } from "discord.js";
 import { testCollector } from "../common/testCollector";
 import { CordeBot } from "../core";
-import { GenericFunction, MessageData, RoleIdentifier, TestReport } from "../types/types";
+import {
+  GenericFunction,
+  MessageData,
+  MessageEmbedLike,
+  Primitive,
+  RoleIdentifier,
+  TestReport,
+} from "../types/types";
 import { Colors } from "../utils/colors";
 import { RolePermission } from "../utils/permission";
 import {
@@ -93,7 +100,12 @@ class ExpectMatches implements Matches {
     });
   }
 
-  public toReturn(expect: string | number | boolean | MessageEmbed): void {
+  public toReturn(expect: string): void;
+  public toReturn(expect: boolean): void;
+  public toReturn(expect: number): void;
+  public toReturn(expect: bigint): void;
+  public toReturn(expect: MessageEmbedLike): void;
+  public toReturn(expect: Primitive | MessageEmbedLike): void {
     const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) =>
       this.operationFactory(trace, ToReturn, cordeBot, expect),

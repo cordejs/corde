@@ -1,10 +1,17 @@
 import assert from "assert";
 import { Message, MessageEmbed } from "discord.js";
-import { MessageData, messageType, MinifiedEmbedMessage, Primitive } from "../types";
+import {
+  MessageData,
+  MessageEmbedLike,
+  messageType,
+  MinifiedEmbedMessage,
+  Primitive,
+} from "../types";
 import { pick } from "../utils/pick";
 import { isPrimitiveValue } from "../utils/isPrimitiveValue";
+import { typeOf } from "../utils";
 
-class MessageUtilsManager {
+class MessageUtils {
   public messagesMatches(returnedMessage: Message, expectation: Primitive | MessageEmbed) {
     let msg = "";
     if (isPrimitiveValue(expectation)) {
@@ -99,10 +106,75 @@ class MessageUtilsManager {
 
     return null;
   }
+
+  public embedMessageLikeToMessageEmbed(embedLike: MessageEmbedLike) {
+    const embed = new MessageEmbed();
+    if (typeOf(embedLike) !== "object") {
+      return embed;
+    }
+
+    if (embedLike.author) {
+      if (typeof embedLike.author === "string") {
+        embed.setAuthor(embedLike.author);
+      } else {
+        embed.setAuthor(embedLike.author.name, embedLike.author.iconURL, embedLike.author.url);
+      }
+    }
+
+    if (embedLike.color) {
+      embed.setColor(embedLike.color);
+    }
+
+    if (embedLike.description) {
+      embed.setDescription(embedLike.description);
+    }
+
+    if (embedLike.fields) {
+      embed.addFields(...embedLike.fields);
+    }
+
+    if (embedLike.files) {
+      embed.attachFiles(embedLike.files);
+    }
+
+    if (embedLike.footer) {
+      if (typeof embedLike.footer === "string") {
+        embed.setFooter(embedLike.footer);
+      } else {
+        embed.setFooter(embedLike.footer.text, embedLike.footer.iconURL);
+      }
+    }
+
+    if (embedLike.image) {
+      if (typeof embedLike.image === "string") {
+        embed.setImage(embedLike.image);
+      } else {
+        embed.setImage(embedLike.image.url);
+      }
+    }
+
+    if (embedLike.thumbnailUrl) {
+      embed.setThumbnail(embedLike.thumbnailUrl);
+    }
+
+    if (embedLike.timestamp) {
+      embed.setTimestamp(embedLike.timestamp);
+    }
+
+    if (embedLike.title) {
+      embed.setTitle(embedLike.title);
+    }
+
+    if (embedLike.url) {
+      embed.setURL(embedLike.url);
+    }
+
+    return embed;
+  }
 }
 
 /**
  * @internal
  */
-const MessageUtils = new MessageUtilsManager();
-export default MessageUtils;
+const messageUtils = new MessageUtils();
+export default messageUtils;
