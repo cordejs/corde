@@ -16,8 +16,8 @@ import diffDefault from "jest-diff";
  *
  * // result outputs:
  *
- * - Expected
- * + Received
+ * - expected
+ * + received
  *
  *   Array [
  * -   "delete",
@@ -31,7 +31,7 @@ import diffDefault from "jest-diff";
  */
 export function diff<T>(obj1: T, obj2: T): string | null {
   return diffDefault(obj1, obj2, {
-    aAnnotation: "expect",
+    aAnnotation: "expected",
     bAnnotation: "received",
     includeChangeCounts: true,
   });

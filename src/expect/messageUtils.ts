@@ -74,6 +74,7 @@ class MessageUtils {
       if (!embed) {
         return null;
       }
+
       const tempObject = embed.toJSON() as MinifiedEmbedMessage;
       if (tempObject.image) {
         tempObject.image = pick(tempObject.image, "url");

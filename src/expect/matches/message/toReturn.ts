@@ -37,10 +37,10 @@ export class ToReturn extends ExpectTest {
       );
     }
 
-    if (typeof expect === "object") {
-      _expect = messageUtils.embedMessageLikeToMessageEmbed(expect);
+    if (typeOf(expect) === "object") {
+      _expect = messageUtils.embedMessageLikeToMessageEmbed(expect as MessageEmbedLike);
     } else {
-      _expect = expect;
+      _expect = expect as Primitive;
     }
 
     this.hasPassed = messageUtils.messagesMatches(returnedMessage, _expect);
@@ -48,6 +48,13 @@ export class ToReturn extends ExpectTest {
 
     if (this.hasPassed) {
       return { pass: true };
+    }
+
+    if (this.isNot) {
+      return this.createReport(
+        `expected: message from bot be different from expectation\n`,
+        `received: both returned and expectation are equal`,
+      );
     }
 
     let embedExpect: MinifiedEmbedMessage;
@@ -84,13 +91,6 @@ export class ToReturn extends ExpectTest {
       );
     }
 
-    if (!embedExpect && !embedReturned) {
-      return this.createReport(`expected: '${expect}'\n`, `received: '${returnedMessage.content}'`);
-    }
-
-    return this.createReport(
-      `expected: ${formatObject(_expect)}\n`,
-      `received: ${embedReturned ? formatObject(embedReturned) : `'${returnedMessage.content}'`}`,
-    );
+    return this.createReport(`expected: '${expect}'\n`, `received: '${returnedMessage.content}'`);
   }
 }
