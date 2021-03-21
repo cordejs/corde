@@ -1,9 +1,9 @@
 {
   "name": "corde",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A simple library for Discord bot tests",
-  "main": "./index.js",
-  "types": "./index.d.ts",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "directories": {
     "lib": "bin"
   },
@@ -40,10 +40,7 @@
     "jestClear": "jest --clearCache",
     "init-test-bot": "bash tasks.sh init-test-bot",
     "build-bot": "bash tasks.sh build-test-bot",
-    "task": "bash tasks.sh",
-    "postinstall": "husky install",
-    "prepublishOnly": "pinst --disable",
-    "postpublish": "pinst --enable"
+    "task": "bash tasks.sh"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",
