@@ -147,16 +147,8 @@ export class CordeBot {
    * Observes for a message send by the testing bot after corde bot
    * send it's message.
    */
-  public async awaitMessagesFromTestingBot() {
-    const msg = await this.textChannel.awaitMessages(
-      (responseName) => this.responseAuthorIsTestingBot(responseName.author.id),
-      this.createWatchResponseConfigs(),
-    );
-
-    if (msg) {
-      return msg.first();
-    }
-    throw new CordeClientError("No message was send");
+  public async awaitMessagesFromTestingBot(timeout: number) {
+    return this.events.onceMessage(this._testBotId, timeout);
   }
 
   /**

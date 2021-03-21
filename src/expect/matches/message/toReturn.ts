@@ -1,5 +1,5 @@
 import { Message, MessageEmbed } from "discord.js";
-import { MinifiedEmbedMessage, TestReport } from "../../../types";
+import { MessageEmbedLike, MinifiedEmbedMessage, Primitive, TestReport } from "../../../types";
 
 /**
  * For some reason, importing "isPrimitiveValue" from
@@ -7,32 +7,90 @@ import { MinifiedEmbedMessage, TestReport } from "../../../types";
  */
 import { isPrimitiveValue } from "../../../utils/isPrimitiveValue";
 import { ExpectTest } from "../expectTest";
-import MessageUtils from "../../messageUtils";
+
+import messageUtils from "../../messageUtils";
+import { diff, formatObject, typeOf } from "../../../utils";
 
 export class ToReturn extends ExpectTest {
-  public async action(expect: string | number | boolean | MessageEmbed): Promise<TestReport> {
+  public async action(expect: Primitive | MessageEmbedLike): Promise<TestReport> {
+    let _expect: Primitive | MessageEmbed;
     this.expectation = expect;
+    if (!isPrimitiveValue(expect) && typeOf(expect) !== "object") {
+      return this.createReport(
+        `expected: expect value to be a primitive value (string, boolean, number) or an MessageEmbedLike\n`,
+        `received: ${typeOf(expect)}`,
+      );
+    }
+
     await this.cordeBot.sendTextMessage(this.command);
-    const returnedMessage = await this.cordeBot.awaitMessagesFromTestingBot();
+    let returnedMessage: Message;
+    try {
+      returnedMessage = await this.cordeBot.awaitMessagesFromTestingBot(this.timeOut);
+    } catch {
+      if (this.isNot) {
+        return { pass: true };
+      }
 
-    this.hasPassed = MessageUtils.messagesMatches(returnedMessage, expect);
-    this.invertHasPassedIfIsNot();
-    return this.createReport(this.getMessageValue(returnedMessage, expect));
-  }
+      return this.createReport(
+        `expected: testing bot to send a message\n`,
+        `received: no message was sent`,
+      );
+    }
 
-  private getMessageValue(
-    returnedMessage: Message,
-    expect: string | number | boolean | MessageEmbed,
-  ) {
-    if (isPrimitiveValue(expect)) {
-      const formattedMsg = MessageUtils.getMessageByType(returnedMessage, "text") as Message;
-      return formattedMsg.content;
+    if (typeof expect === "object") {
+      _expect = messageUtils.embedMessageLikeToMessageEmbed(expect);
     } else {
-      const jsonMessage = MessageUtils.getMessageByType(
+      _expect = expect;
+    }
+
+    this.hasPassed = messageUtils.messagesMatches(returnedMessage, _expect);
+    this.invertHasPassedIfIsNot();
+
+    if (this.hasPassed) {
+      return { pass: true };
+    }
+
+    let embedExpect: MinifiedEmbedMessage;
+    if (typeOf(_expect) === "object") {
+      embedExpect = messageUtils.getMessageByType(
+        _expect as MessageEmbed,
+        "embed",
+      ) as MinifiedEmbedMessage;
+    }
+
+    let embedReturned: MinifiedEmbedMessage;
+    if (returnedMessage.embeds[0]) {
+      embedReturned = messageUtils.getMessageByType(
         returnedMessage,
         "embed",
       ) as MinifiedEmbedMessage;
-      return JSON.stringify(jsonMessage);
     }
+
+    if (embedExpect && embedReturned) {
+      return this.createReport(diff(embedReturned, embedExpect));
+    }
+
+    if (embedExpect && !embedReturned) {
+      return this.createReport(
+        `expected: ${formatObject(embedExpect)}\n`,
+        `received: '${returnedMessage.content}'`,
+      );
+    }
+
+    if (!embedExpect && embedReturned) {
+      return this.createReport(
+        `expected: '${expect}'\n`,
+        `received: ${formatObject(embedReturned)}`,
+      );
+    }
+
+    if (!embedExpect && !embedReturned) {
+      return this.createReport(`expected: '${expect}'\n`, `received: '${returnedMessage.content}'`);
+    }
+
+    return this.createReport(
+      `expected: ${formatObject(_expect)}\n`,
+      `received: ${embedReturned ? formatObject(embedReturned) : `'${returnedMessage.content}'`}`,
+    );
   }
 }

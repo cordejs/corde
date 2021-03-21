@@ -23,6 +23,8 @@ import {
   Activity,
   VoiceState,
 } from "discord.js";
+import messageUtils from "../../src/expect/messageUtils";
+import { MessageEmbedLike } from "../../src/types";
 
 /**
  * @private
@@ -102,6 +104,7 @@ export default class MockDiscord {
   private _speaking!: Speaking;
   private _presence!: Presence;
   private _voiceState!: VoiceState;
+  private _messageEmbedLike: MessageEmbedLike;
 
   /**
    * Initialize all mocks
@@ -305,6 +308,10 @@ export default class MockDiscord {
     return this._voiceState;
   }
 
+  get messageEmbedLike() {
+    return this._messageEmbedLike;
+  }
+
   get<T extends Collection<K, V>, K, V>(collection: T, index: number) {
     return collection.array()[index];
   }
@@ -331,6 +338,7 @@ export default class MockDiscord {
     this._isolatedMessageReaction = this.createIsolatedMockMessageReaction();
     this._messageReactionCollection = this.createMockMessageReactionCollection();
 
+    this._messageEmbedLike = this.createEmbedMessageLike();
     this._messageEmbed = this.createMockMessageEmbed();
     this._messageEmbedCollection = this.createMockMessageEmbedCollection();
     this._role = this.createMockRole();
@@ -541,22 +549,33 @@ export default class MockDiscord {
     return collection;
   }
 
-  createMockMessageEmbed(customColor = "#0099ff", customTitle = "Some title") {
-    return new MessageEmbed()
-      .setColor(customColor)
-      .setTitle(customTitle)
-      .setURL("https://discord.js.org/")
-      .setAuthor("Some name", "https://i.imgur.com/wSTFkRM.png", "https://discord.js.org")
-      .setDescription("Some description here")
-      .setThumbnail("https://i.imgur.com/wSTFkRM.png")
-      .addFields(
+  createEmbedMessageLike(customColor = "#0099ff", customTitle = "Some title"): MessageEmbedLike {
+    return {
+      color: customColor,
+      title: customTitle,
+      url: "https://discord.js.org/",
+      author: {
+        name: "Some name",
+        url: "https://discord.js.org",
+        iconURL: "https://i.imgur.com/wSTFkRM.png",
+      },
+      description: "Some description here",
+      fields: [
         { name: "Regular field title", value: "Some value here" },
         { name: "\u200B", value: "\u200B" },
         { name: "Inline field title", value: "Some value here", inline: true },
         { name: "Inline field title", value: "Some value here", inline: true },
-      )
-      .addField("Inline field title", "Some value here", true)
-      .setImage("https://i.imgur.com/wSTFkRM.png");
+      ],
+      thumbnailUrl: "https://i.imgur.com/wSTFkRM.png",
+      files: ["https://i.imgur.com/wSTFkRM.png"],
+    };
+  }
+
+  createMockMessageEmbed(customColor = "#0099ff", customTitle = "Some title") {
+    const embed = messageUtils.embedMessageLikeToMessageEmbed(this._messageEmbedLike);
+    embed.setColor(customColor);
+    embed.setTitle(customTitle);
+    return embed;
   }
 
   createMockRole(customName = "WE DEM BOYZZ!!!!!! 1", permissionBitField = 66321471) {

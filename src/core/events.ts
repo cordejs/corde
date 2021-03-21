@@ -541,8 +541,20 @@ export class Events {
    * @returns Created message.
    * @internal
    */
-  public onceMessage() {
-    return this._once<Message>("message");
+  public onceMessage(authorId?: string, timeout?: number) {
+    return executePromiseWithTimeout<Message>((resolve) => {
+      this.onMessage((message) => {
+        if (!authorId) {
+          resolve(message);
+          return;
+        }
+
+        if (message.author.id === authorId) {
+          resolve(message);
+          return;
+        }
+      });
+    }, timeout ?? runtime.timeOut);
   }
 
   /**

@@ -3,6 +3,7 @@ import { MessageData, TestReport } from "../../../types";
 import { wait } from "../../../utils";
 import { ExpectTest } from "../expectTest";
 import MessageUtils from "../../messageUtils";
+import messageUtils from "../../messageUtils";
 
 export class ToEditMessage extends ExpectTest {
   public async action(
@@ -17,7 +18,7 @@ export class ToEditMessage extends ExpectTest {
       return this.createReport(MessageUtils.createNotFoundMessageForMessageData(messageData));
     }
 
-    if (MessageUtils.messagesMatches(msg, newValue)) {
+    if (messageUtils.messagesMatches(msg, newValue)) {
       this.hasPassed = true;
       this.invertHasPassedIfIsNot();
     }

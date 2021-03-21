@@ -68,9 +68,9 @@ class MessageUtils {
    *  }
    *  ```
    */
-  public getMessageByType(answer: Message, type: messageType) {
+  public getMessageByType(answer: Message | MessageEmbed, type: messageType) {
     if (type === "embed") {
-      const embed = answer.embeds[0];
+      const embed = answer instanceof Message ? answer.embeds[0] : answer;
       if (!embed) {
         return null;
       }
