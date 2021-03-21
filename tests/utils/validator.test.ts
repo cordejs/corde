@@ -20,4 +20,9 @@ describe("testing validator", () => {
     validator.add((num) => num < 1);
     expect(validator.isValid(1)).toBeFalsy();
   });
+
+  it("validation should pass with no validator added", () => {
+    const validator = new Validator<[number]>();
+    expect(validator.isValid(1)).toBeTruthy();
+  });
 });
