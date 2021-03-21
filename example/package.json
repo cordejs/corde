@@ -1,0 +1,14 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lucas Gomes",
+  "license": "ISC",
+  "devDependencies": {
+    "corde": "^2.0.1"
+  }
+}
