@@ -21,3 +21,4 @@ export * from "./typeOf";
 export * from "./resolveName";
 export * from "./rgba";
 export * from "./getStackTrace";
+export * from "./validator";
