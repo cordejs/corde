@@ -132,18 +132,23 @@ class ExpectMatches implements Matches {
     );
   }
 
-  public toRemoveReaction(...reactions: string[]): void;
-  public toRemoveReaction(reactions: string[]): void;
-  public toRemoveReaction(reactions: string, message: MessageData): void;
-  public toRemoveReaction(reactions: string[], message: MessageData): void;
-  public toRemoveReaction(reactions: string | string[], message?: any) {
+  toRemoveReaction(emojis: string[]): void;
+  toRemoveReaction(emojis: EmojiLike[]): void;
+  toRemoveReaction(emojis: (string | EmojiLike)[]): void;
+  toRemoveReaction(emojis: string[], messageData: string): void;
+  toRemoveReaction(emojis: string[], messageData: MessageData): void;
+  toRemoveReaction(emojis: EmojiLike[], messageData: string): void;
+  toRemoveReaction(emojis: EmojiLike[], messageData: MessageData): void;
+  toRemoveReaction(emojis: (string | EmojiLike)[], messageData: string): void;
+  toRemoveReaction(emojis: (string | EmojiLike)[], messageData: MessageData): void;
+  public toRemoveReaction(
+    emojis: string[] | EmojiLike[] | (string | EmojiLike)[],
+    messageData?: string | MessageData,
+  ): void {
     const trace = getStackTrace();
-    testCollector.addTestFunction((cordeBot) => {
-      if (Array.isArray(reactions)) {
-        return this.operationFactory(trace, ToRemoveReaction, cordeBot, reactions, message);
-      }
-      return this.operationFactory(trace, ToRemoveReaction, cordeBot, [reactions], message);
-    });
+    testCollector.addTestFunction((cordeBot) =>
+      this.operationFactory(trace, ToRemoveReaction, cordeBot, emojis, messageData),
+    );
   }
 
   public toSetRoleColor(color: Colors, id: Snowflake): void;

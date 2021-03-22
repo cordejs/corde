@@ -137,13 +137,39 @@ export interface MessageMatches {
    * @param reactions Witch reactions will be removed.
    * @param message Values that will be used to find the message. **do not use all filters**, just one.
    * message ID is the main object used to filter, so, if all filters are filled, only ID will be considered.
+   *
+   * @example
+   *
+   * // Checks if the first message sent by the testing bot has the emoji 😄 removed from reactions.
+   * expect("emoji").toRemoveReaction(['😄']);
+   * expect("emoji").toRemoveReaction([{ name: '😄' }]);
+   * expect("emoji").toRemoveReaction([{ name: '😄' }]);
+   * expect("emoji").toRemoveReaction(['🍊', { name: '😄' }]);
+   * expect("emoji").toRemoveReaction(['🍊', { name: '😄' }]);
+   *
+   * // Checks if a specific message have their reactions removed.
+   * expect("emoji").toRemoveReaction(['😄'], { id: '96008815106887111' });
+   * expect("emoji").toRemoveReaction([{ name: '😄' }], { id: '96008815106887111' });
+   *
+   * // This example will find for a message with content: 'message text'
+   * expect("emoji").toRemoveReaction([{ name: '😄' }], { name: 'message text' });
+   * expect("emoji").toRemoveReaction(['🍊', { name: '😄' }], { id: 'message text' });
+   * expect("emoji").toRemoveReaction(['🍊', { name: '😄' }], { id: 'message text' });
+   *
+   * // Its also possible to search the message directly by it's id:
+   * expect("emoji").toRemoveReaction(['😄'], '96008815106887111');
+   *
    * @since 2.0
    */
-  toRemoveReaction(reactions: string[]): void;
-  toRemoveReaction(...reactions: string[]): void;
-  toRemoveReaction(reactions: string, message: MessageData): void;
-  toRemoveReaction(reactions: string[], message: MessageData): void;
-
+  toRemoveReaction(emojis: string[]): void;
+  toRemoveReaction(emojis: EmojiLike[]): void;
+  toRemoveReaction(emojis: (string | EmojiLike)[]): void;
+  toRemoveReaction(emojis: EmojiLike[], messageData: string): void;
+  toRemoveReaction(emojis: EmojiLike[], messageData: MessageData): void;
+  toRemoveReaction(emojis: (string | EmojiLike)[], messageData: string): void;
+  toRemoveReaction(emojis: (string | EmojiLike)[], messageData: MessageData): void;
+  toRemoveReaction(emojis: string[], messageData: string): void;
+  toRemoveReaction(emojis: string[], messageData: MessageData): void;
   /**
    * Verify if a command pinned a message.
    *
