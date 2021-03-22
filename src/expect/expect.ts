@@ -3,16 +3,13 @@ import { ExpectMatchesWithNot, MatchWithNot } from "./matcher";
 /**
  * Receives wich command will be tested.
  *
- * @param commandName Command name.
- *
- * @description Do not inform the command prefix if
+ * Do not inform the command prefix if
  * it's already informed in **configs**
  *
- * @returns The **Compare** object, where will handle
- * the type of response is expected.
+ * @param commandName Command name.
  *
- * @throws if `commandName` be object or any other type different than
- * the defined.
+ * @returns An object with all possible tests to be done
+ * in the bot.
  *
  * @example
  *
