@@ -57,7 +57,7 @@ export function init(fileType: configFileType = "json") {
   }
 
   try {
-    const fileName = `corde.${fileType}`;
+    const fileName = `corde.config.${fileType}`;
     const filePath = path.resolve(process.cwd(), fileName);
     fileContent = formatFile(fileContent, fileType);
     fs.writeFileSync(filePath, fileContent);
