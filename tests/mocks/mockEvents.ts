@@ -1,5 +1,6 @@
-import { Role } from "discord.js";
+import { MessageReaction, PartialUser, Role, User } from "discord.js";
 import { CordeBot } from "../../src/core";
+import { TimeoutError } from "../../src/errors";
 import MockDiscord from "./mockDiscord";
 
 /**
@@ -65,5 +66,31 @@ export class MockEvents {
     this._corde.events.onceRoleUpdateColor = jest
       .fn()
       .mockReturnValue(role ?? this._mockDiscord.role);
+  }
+
+  /**
+   * @internal
+   */
+  mockOnceMessageReactionsAdd(reactionsWithAuthors?: [MessageReaction, User | PartialUser][]) {
+    this._corde.events.onceMessageReactionsAdd = jest
+      .fn()
+      .mockReturnValue(
+        reactionsWithAuthors ?? [[this._mockDiscord.messageReaction, this._mockDiscord.user]],
+      );
+  }
+
+  /**
+   * @internal
+   */
+  mockOnceMessageReactionsAddToReject(error?: Error) {
+    this._corde.events.onceMessageReactionsAdd = jest.fn().mockImplementation(() => {
+      if (error) {
+        throw error;
+      }
+
+      throw new TimeoutError("timeout", [
+        [this._mockDiscord.messageReaction, this._mockDiscord.user],
+      ]);
+    });
   }
 }

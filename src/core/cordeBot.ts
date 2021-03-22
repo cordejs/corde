@@ -11,8 +11,10 @@ import {
   TextChannel,
 } from "discord.js";
 import { BehaviorSubject } from "rxjs";
+import { runtime } from "../common";
 import { CordeClientError, TimeoutError } from "../errors";
 import { MessageData, RoleIdentifier } from "../types/types";
+import { executePromiseWithTimeout } from "../utils";
 import { Events } from "./events";
 
 const DEFAULT_TEST_TIMEOUT = 5000;
@@ -85,6 +87,10 @@ export class CordeBot {
 
   public get channel() {
     return this.textChannel;
+  }
+
+  public get testBotId() {
+    return this._testBotId;
   }
 
   /**
@@ -163,19 +169,22 @@ export class CordeBot {
     reactions?: string[],
   ): Promise<Collection<string, MessageReaction>>;
   public async waitForAddedReactions(message: Message, reactions?: string[] | number) {
-    return new Promise<Collection<string, MessageReaction>>(async (resolve, reject) => {
-      try {
-        const filter = this.createWaitForAdedReactionsFilter(reactions);
-        const maxReactionsToWait = this.defineMaxReactionsToWaitForAddedReactions(reactions);
-        const collectedReactions = await message.awaitReactions(
-          filter,
-          this.createWatchResponseConfigs(maxReactionsToWait),
-        );
-        resolve(collectedReactions);
-      } catch (error) {
-        reject(new TimeoutError());
-      }
-    });
+    return executePromiseWithTimeout<Collection<string, MessageReaction>>(
+      async (resolve, reject) => {
+        try {
+          const filter = this.createWaitForAdedReactionsFilter(reactions);
+          const maxReactionsToWait = this.defineMaxReactionsToWaitForAddedReactions(reactions);
+          const collectedReactions = await message.awaitReactions(
+            filter,
+            this.createWatchResponseConfigs(maxReactionsToWait),
+          );
+          resolve(collectedReactions);
+        } catch (error) {
+          reject(new TimeoutError());
+        }
+      },
+      runtime.timeOut,
+    );
   }
 
   private createWaitForAdedReactionsFilter(reactions: number | string[]): CollectorFilter {
@@ -204,12 +213,9 @@ export class CordeBot {
     let amount = 0;
     const reactions: MessageReaction[] = [];
     return new Promise<MessageReaction[]>((resolve, reject) => {
-      setTimeout(
-        () => {
-          reject(new TimeoutError());
-        },
-        this._waitTimeOut ? this._waitTimeOut : DEFAULT_TEST_TIMEOUT,
-      );
+      setTimeout(() => {
+        reject(new TimeoutError());
+      }, runtime.timeOut);
 
       this._reactionsObserved.subscribe((reaction) => {
         if (reaction) {

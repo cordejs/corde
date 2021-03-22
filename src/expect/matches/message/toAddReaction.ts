@@ -1,31 +1,102 @@
-import { Message } from "discord.js";
-import { TestReport } from "../../../types";
+import { GuildEmoji, Message, MessageReaction, PartialUser, ReactionEmoji, User } from "discord.js";
+import { TimeoutError } from "../../../errors";
+import { EmojiLike, MessageData, TestReport } from "../../../types";
+import { typeOf } from "../../../utils";
 import { ExpectTest } from "../expectTest";
 
-export class ToAddReaction extends ExpectTest {
-  public async action(reactions: string[]): Promise<TestReport> {
-    this.expectation = reactions.join();
+type EmojisType = string[] | EmojiLike[] | (string | EmojiLike)[];
 
-    const message = await this.cordeBot.sendTextMessage(this.command);
-    await this.cordeBot.waitForAddedReactions(message, reactions);
-    this.hasPassed = isOutputEqualToExpect(message, reactions);
+export class ToAddReaction extends ExpectTest {
+  public async action(emojis: EmojisType, messageData?: MessageData | string): Promise<TestReport> {
+    if (
+      messageData != null &&
+      typeOf(messageData) !== "object" &&
+      typeOf(messageData) !== "string"
+    ) {
+      return this.createReport(
+        `expect: message data to be null, undefined, string or an object with id or text properties\n`,
+        `received: ${typeOf(messageData)}`,
+      );
+    }
+
+    if (!emojis || !Array.isArray(emojis)) {
+      return this.createReport(
+        `expected: emojis parameter to be an array with string or objects\n`,
+        `received: ${typeOf(emojis)}`,
+      );
+    }
+
+    await this.cordeBot.sendTextMessage(this.command);
+    let reactionsWithAuthors: [MessageReaction, User | PartialUser][];
+    try {
+      const emojiLike = emojis.map((e: string | EmojiLike) => {
+        if (typeof e === "string") {
+          return { name: e };
+        }
+        return e;
+      });
+
+      const _messageData = typeof messageData === "string" ? { id: messageData } : messageData;
+
+      reactionsWithAuthors = await this.cordeBot.events.onceMessageReactionsAdd({
+        authorId: this.cordeBot.testBotId,
+        emojis: emojiLike,
+        messageData: _messageData,
+        timeout: this.timeOut,
+      });
+    } catch (error) {
+      if (this.isNot) {
+        return { pass: true };
+      }
+
+      if (error instanceof TimeoutError && (error.data as any[])?.length) {
+        const emojisReturned = reactionsFromResponse(error.data);
+        return this.createReport(
+          `expected: to add reactions ${stringifyReactionToPrint(emojis)}\n`,
+          `received: ${emojisReturned}`,
+        );
+      }
+
+      return this.createReport(
+        `expected: to add reactions ${stringifyReactionToPrint(emojis)}\n`,
+        `received: no reaction was added to message`,
+      );
+    }
+
+    // We can set it as passed due to all validations about if
+    // the reactions added matches with expected are defined in the event onceMessageReactionsAdd
+    this.hasPassed = true;
 
     this.invertHasPassedIfIsNot();
-    return this.createReport(message.reactions.cache.map((v) => v.emoji.name).join());
+
+    if (this.hasPassed) {
+      return { pass: true };
+    }
+
+    const emojisReturned = reactionsFromResponse(reactionsWithAuthors);
+
+    return this.createReport(
+      `expected: ${this.isNot ? "not " : ""}to add reactions ${stringifyReactionToPrint(emojis)}\n`,
+      `received: ${emojisReturned}`,
+    );
   }
 }
 
-function isOutputEqualToExpect(message: Message, expectation: string | string[]) {
-  if (typeof expectation === "string" && message.reactions.cache.has(expectation)) {
-    return true;
-  } else {
-    for (const i in expectation as string[]) {
-      if (message.reactions.cache.has(expectation[i])) {
-        return true;
-      } else {
-        return false;
+function reactionsFromResponse(reactionsWithAuthors: [MessageReaction, User | PartialUser][]) {
+  const emojis = reactionsWithAuthors.map((r) => r[0].emoji);
+  return emojis.map((e) => e.name).join(", ");
+}
+
+function stringifyReactionToPrint(emojis: EmojisType) {
+  return emojis
+    .map((e: string | EmojiLike) => {
+      if (typeof e !== "string") {
+        if (e.id) {
+          return e.id;
+        }
+        return e.name;
       }
-    }
-  }
-  return false;
+      return e;
+    })
+    .join(", ");
 }

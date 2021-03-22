@@ -1,7 +1,8 @@
-import { ColorResolvable, MessageEmbed, Snowflake } from "discord.js";
+import { ColorResolvable, Message, MessageEmbed, Snowflake } from "discord.js";
 import { testCollector } from "../common/testCollector";
 import { CordeBot } from "../core";
 import {
+  EmojiLike,
   GenericFunction,
   MessageData,
   MessageEmbedLike,
@@ -29,7 +30,7 @@ import {
 import { ExpectTest } from "./matches/expectTest";
 import { MessageMatches } from "./matches/messageMatches";
 import { RoleMatches } from "./matches/roleMatches";
-import { resolveName, stringIsNullOrEmpty } from "../utils";
+import { resolveName, stringIsNullOrEmpty, typeOf } from "../utils";
 import { getStackTrace } from "../utils/getStackTrace";
 
 /**
@@ -112,10 +113,22 @@ class ExpectMatches implements Matches {
     );
   }
 
-  public toAddReaction(...reaction: string[]): void {
+  toAddReaction(emojis: string[]): void;
+  toAddReaction(emojis: EmojiLike[]): void;
+  toAddReaction(emojis: (string | EmojiLike)[]): void;
+  toAddReaction(emojis: string[], messageData: string): void;
+  toAddReaction(emojis: string[], messageData: MessageData): void;
+  toAddReaction(emojis: EmojiLike[], messageData: string): void;
+  toAddReaction(emojis: EmojiLike[], messageData: MessageData): void;
+  toAddReaction(emojis: (string | EmojiLike)[], messageData: string): void;
+  toAddReaction(emojis: (string | EmojiLike)[], messageData: MessageData): void;
+  public toAddReaction(
+    emojis: string[] | EmojiLike[] | (string | EmojiLike)[],
+    messageData?: string | MessageData,
+  ): void {
     const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) =>
-      this.operationFactory(trace, ToAddReaction, cordeBot, reaction),
+      this.operationFactory(trace, ToAddReaction, cordeBot, emojis, messageData),
     );
   }
 

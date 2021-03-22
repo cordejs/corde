@@ -22,13 +22,21 @@ import { once } from "events";
 import { runtime } from "../common";
 import { DEFAULT_TEST_TIMEOUT } from "../consts";
 import { TimeoutError } from "../errors";
-import { RoleIdentifier } from "../types";
-import { executePromiseWithTimeout, executeWithTimeout } from "../utils";
+import { EmojiLike, MessageData, RoleIdentifier } from "../types";
+import { executePromiseWithTimeout } from "../utils";
+import { Validator } from "../utils";
 
 export interface EventResume {
   count: number;
   index: number;
   nonce: string;
+}
+
+export interface SearchMessageReactionsOptions {
+  emojis?: EmojiLike[];
+  messageData?: MessageData;
+  authorId?: string;
+  timeout?: number;
 }
 
 // https://gist.github.com/koad/316b265a91d933fd1b62dddfcc3ff584
@@ -614,6 +622,54 @@ export class Events {
    */
   public onceMessageReactionAdd() {
     return this._once<[MessageReaction, User | PartialUser]>("messageReactionAdd");
+  }
+
+  /**
+   * @param filter
+   * @returns A list of relation of reactions added and the author.
+   * @internal
+   */
+  public onceMessageReactionsAdd(filter: SearchMessageReactionsOptions) {
+    const { emojis, messageData, authorId, timeout } = filter;
+
+    const validator = new Validator<[MessageReaction, User | PartialUser]>();
+
+    if (emojis) {
+      validator.add((reaction) =>
+        emojis.some((e) => e.id === reaction.emoji.id || e.name === reaction.emoji.name),
+      );
+    }
+
+    if (messageData) {
+      validator.add(
+        ({ message }) => message.id === messageData.id || message.content === messageData.text,
+      );
+    }
+
+    if (authorId) {
+      validator.add((_, author) => author.id === authorId);
+    }
+
+    const response: [MessageReaction, User | PartialUser][] = [];
+    return executePromiseWithTimeout<[MessageReaction, User | PartialUser][]>(
+      (resolve) => {
+        this.onMessageReactionAdd((reaction, author) => {
+          if (validator.isValid(reaction, author)) {
+            response.push([reaction, author]);
+          }
+
+          if (!emojis && !authorId && !messageData) {
+            resolve(response);
+          }
+
+          if (response.length === emojis?.length) {
+            resolve(response);
+          }
+        });
+      },
+      timeout,
+      response,
+    );
   }
 
   /**

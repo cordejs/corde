@@ -1,5 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import { MessageData, MessageEmbedLike } from "../../types";
+import { EmojiLike, MessageData, MessageEmbedLike } from "../../types";
 
 /**
  * Defines all functions that can be used
@@ -27,7 +27,7 @@ export interface MessageMatches {
    * Defines the message expected to be returned by a
    * command.
    *
-   * @param expect A message returned by a bot after invoke a command
+   * @param expect A message type **boolean**  returned by a bot after invoke a command
    * @since 1.0
    */
   toReturn(expect: boolean): void;
@@ -35,7 +35,7 @@ export interface MessageMatches {
    * Defines the message expected to be returned by a
    * command.
    *
-   * @param expect A message returned by a bot after invoke a command
+   * @param expect A message of type **bigint** returned by a bot after invoke a command
    * @since 1.0
    */
   toReturn(expect: bigint): void;
@@ -84,15 +84,15 @@ export interface MessageMatches {
   toReturn(expect: MessageEmbedLike): void;
 
   /**
-   * Defines reactions that must be add to command message.
+   * Defines [reactions](https://discordjs.guide/popular-topics/reactions.html#reacting-to-messages)
+   * that must be add to command message.
    *
-   * @param reaction Single or list of reactions that must be added to an message
-   *
-   * @see For how to react message -> https://discordjs.guide/popular-topics/reactions.html#reacting-to-messages
+   * @param emojis Single or list of reactions that must be added to an message.
+   * It can be **emojis** or [custom emojis](https://support.discord.com/hc/en-us/articles/360036479811-Custom-Emojis).
    *
    * @example
    *
-   *  bot.on('message', async (message) => {
+   * bot.on('message', async (message) => {
    *    if (command === 'emoji') {
    *       msg.react('😄');
    *    } else if(command === 'emojis') {
@@ -100,14 +100,36 @@ export interface MessageMatches {
    *    }
    *  });
    *
-   *  Tests:
+   * // Checks if the first message sent by the testing bot receives emojis in reactions.
+   * expect("emoji").toAddReaction(['😄']);
+   * expect("emoji").toAddReaction([{ name: '😄' }]);
+   * expect("emoji").toAddReaction([{ name: '😄' }]);
+   * expect("emoji").toAddReaction(['🍊', { name: '😄' }]);
+   * expect("emoji").toAddReaction(['🍊', { name: '😄' }]);
    *
-   *  expect('emoji').toAddReaction('😄');
-   *  expect('emojis').toAddReaction('😄', '🍊');
+   * // Checks if a specific message receives emojis in reactions.
+   * expect("emoji").toAddReaction(['😄'], { id: '96008815106887111' });
+   * expect("emoji").toAddReaction([{ name: '😄' }], { id: '96008815106887111' });
+   *
+   * // This example will find for a message with content: 'message text'
+   * expect("emoji").toAddReaction([{ name: '😄' }], { name: 'message text' });
+   * expect("emoji").toAddReaction(['🍊', { name: '😄' }], { id: 'message text' });
+   * expect("emoji").toAddReaction(['🍊', { name: '😄' }], { id: 'message text' });
+   *
+   * // Its also possible to search the message directly by it's id:
+   * expect("emoji").toAddReaction(['😄'], '96008815106887111');
    *
    * @since 1.0
    */
-  toAddReaction(...reaction: string[]): void;
+  toAddReaction(emojis: string[]): void;
+  toAddReaction(emojis: EmojiLike[]): void;
+  toAddReaction(emojis: (string | EmojiLike)[]): void;
+  toAddReaction(emojis: EmojiLike[], messageData: string): void;
+  toAddReaction(emojis: EmojiLike[], messageData: MessageData): void;
+  toAddReaction(emojis: (string | EmojiLike)[], messageData: string): void;
+  toAddReaction(emojis: (string | EmojiLike)[], messageData: MessageData): void;
+  toAddReaction(emojis: string[], messageData: string): void;
+  toAddReaction(emojis: string[], messageData: MessageData): void;
 
   /**
    * Remove a list of reactions from a message.

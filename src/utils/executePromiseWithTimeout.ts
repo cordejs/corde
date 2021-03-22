@@ -45,11 +45,7 @@ export function executePromiseWithTimeout<TResult extends any>(
 
   return new Promise<TResult>(async (resolve, reject) => {
     const nodeTimeout = setTimeout(() => {
-      if (rejectedData) {
-        reject(new TimeoutError("timeout", rejectedData));
-      } else {
-        reject(new TimeoutError("timeout"));
-      }
+      reject(new TimeoutError("timeout", rejectedData));
     }, timeout);
 
     fn((value) => {

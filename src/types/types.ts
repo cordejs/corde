@@ -292,3 +292,8 @@ export interface MessageEmbedLike {
    */
   url?: string;
 }
+
+export interface EmojiLike {
+  id?: string;
+  name?: string;
+}
