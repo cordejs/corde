@@ -7,8 +7,10 @@ import { initErrorHandlers } from "../errorHandler";
 import pack from "../package";
 import { runtime } from "../common";
 import { reader } from "../core";
+import { initEnvVariables } from "../envVariables";
 
 initErrorHandlers();
+initEnvVariables();
 
 export const program = new Command();
 
