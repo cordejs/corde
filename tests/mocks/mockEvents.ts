@@ -82,8 +82,34 @@ export class MockEvents {
   /**
    * @internal
    */
+  mockOnceMessageReactionsRemove(reactionsWithAuthors?: [MessageReaction, User | PartialUser][]) {
+    this._corde.events.onceMessageReactionsRemove = jest
+      .fn()
+      .mockReturnValue(
+        reactionsWithAuthors ?? [[this._mockDiscord.messageReaction, this._mockDiscord.user]],
+      );
+  }
+
+  /**
+   * @internal
+   */
   mockOnceMessageReactionsAddToReject(error?: Error) {
     this._corde.events.onceMessageReactionsAdd = jest.fn().mockImplementation(() => {
+      if (error) {
+        throw error;
+      }
+
+      throw new TimeoutError("timeout", [
+        [this._mockDiscord.messageReaction, this._mockDiscord.user],
+      ]);
+    });
+  }
+
+  /**
+   * @internal
+   */
+  mockOnceMessageReactionsRemoveToReject(error?: Error) {
+    this._corde.events.onceMessageReactionsRemove = jest.fn().mockImplementation(() => {
       if (error) {
         throw error;
       }

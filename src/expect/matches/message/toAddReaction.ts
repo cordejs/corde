@@ -1,10 +1,8 @@
 import { GuildEmoji, Message, MessageReaction, PartialUser, ReactionEmoji, User } from "discord.js";
 import { TimeoutError } from "../../../errors";
-import { EmojiLike, MessageData, TestReport } from "../../../types";
+import { EmojiLike, EmojisType, MessageData, TestReport } from "../../../types";
 import { typeOf } from "../../../utils";
 import { ExpectTest } from "../expectTest";
-
-type EmojisType = string[] | EmojiLike[] | (string | EmojiLike)[];
 
 export class ToAddReaction extends ExpectTest {
   public async action(emojis: EmojisType, messageData?: MessageData | string): Promise<TestReport> {

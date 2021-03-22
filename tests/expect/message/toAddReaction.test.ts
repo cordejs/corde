@@ -6,7 +6,6 @@ import { TestReport } from "../../../src/types";
 import { buildReportMessage, typeOf } from "../../../src/utils";
 import { MockEvents } from "../../mocks/mockEvents";
 import { runtime } from "../../../src/common";
-import { TimeoutError } from "../../../src/errors";
 
 describe("testing toAddReaction function", () => {
   let mockDiscord = new MockDiscord();

@@ -630,6 +630,22 @@ export class Events {
    * @internal
    */
   public onceMessageReactionsAdd(filter: SearchMessageReactionsOptions) {
+    return this._onceMessageReactionUpdate(filter, "onMessageReactionAdd");
+  }
+
+  /**
+   * @param filter
+   * @returns A list of relation of reactions removed and the author.
+   * @internal
+   */
+  public onceMessageReactionsRemove(filter: SearchMessageReactionsOptions) {
+    return this._onceMessageReactionUpdate(filter, "onMessageReactionRemove");
+  }
+
+  private _onceMessageReactionUpdate(
+    filter: SearchMessageReactionsOptions,
+    event: "onMessageReactionAdd" | "onMessageReactionRemove",
+  ) {
     const { emojis, messageData, authorId, timeout } = filter;
 
     const validator = new Validator<[MessageReaction, User | PartialUser]>();
@@ -653,7 +669,7 @@ export class Events {
     const response: [MessageReaction, User | PartialUser][] = [];
     return executePromiseWithTimeout<[MessageReaction, User | PartialUser][]>(
       (resolve) => {
-        this.onMessageReactionAdd((reaction, author) => {
+        this[event]((reaction, author) => {
           if (validator.isValid(reaction, author)) {
             response.push([reaction, author]);
           }

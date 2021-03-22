@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing toRemoveReaction function should fail due to invalid emoji (null) 1`] = `
+Object {
+  "message": "    
+    expected: emojis parameter to be an array with string or objects
+    received: null
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toRemoveReaction function should fail due to invalid emoji (object) 1`] = `
+Object {
+  "message": "    
+    expected: emojis parameter to be an array with string or objects
+    received: object
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toRemoveReaction function should fail due to invalid emoji (undefined) 1`] = `
+Object {
+  "message": "    
+    expected: emojis parameter to be an array with string or objects
+    received: undefined
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toRemoveReaction function should fail due to invalid messageData (number) 1`] = `
+Object {
+  "message": "    
+    expect: message data to be null, undefined, string or an object with id or text properties
+    received: number
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toRemoveReaction function should return a failed test with isNot = false 1`] = `
+Object {
+  "message": "    
+    expected: to remove reactions 😀
+    received: no reaction was removed to message
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toRemoveReaction function should return a failed test with isNot = false and timeout 1`] = `
+Object {
+  "message": "    
+    expected: to remove reactions 😀
+    received: 😀
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toRemoveReaction function should return a failed test with isNot = true 1`] = `
+Object {
+  "message": "    
+    expected: not to remove reactions 😀
+    received: 😀
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toRemoveReaction function should return a passed test with isNot = false 1`] = `
+Object {
+  "pass": true,
+}
+`;
+
+exports[`testing toRemoveReaction function should return a passed test with isNot = false 2`] = `
+Object {
+  "pass": true,
+}
+`;
+
+exports[`testing toRemoveReaction function should return a passed test with isNot = true 1`] = `
+Object {
+  "pass": true,
+}
+`;
