@@ -22,3 +22,5 @@ export * from "./resolveName";
 export * from "./rgba";
 export * from "./getStackTrace";
 export * from "./validator";
+export * from "./deepEqual";
+export * from "./isNullOrUndefined";
