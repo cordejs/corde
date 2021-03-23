@@ -24,3 +24,4 @@ export * from "./getStackTrace";
 export * from "./validator";
 export * from "./deepEqual";
 export * from "./isNullOrUndefined";
+export * from "./utils";
