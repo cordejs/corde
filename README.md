@@ -14,6 +14,7 @@
         src="https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod"
       />
     </a>
+    <br>
     <a href="https://circleci.com/gh/lucasgmagalhaes/corde">
       <img
         alt="CircleCi"
