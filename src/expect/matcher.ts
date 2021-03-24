@@ -5,6 +5,7 @@ import {
   EmojiLike,
   GenericFunction,
   MessageData,
+  MessageEditedIdentifier,
   MessageEmbedLike,
   Primitive,
   RoleIdentifier,
@@ -62,10 +63,23 @@ class ExpectMatches implements Matches {
     this._isNot = isNot;
   }
 
-  public toEditMessage(message: MessageData, newValue: string | MessageEmbed): void {
+  toEditMessage(newValue: string, messageData?: MessageEditedIdentifier): void;
+  toEditMessage(newValue: string, messageData?: string): void;
+  toEditMessage(newValue: number, messageData?: MessageEditedIdentifier): void;
+  toEditMessage(newValue: number, messageData?: string): void;
+  toEditMessage(newValue: bigint, messageData?: MessageEditedIdentifier): void;
+  toEditMessage(newValue: bigint, messageData?: string): void;
+  toEditMessage(newValue: boolean, messageData?: string): void;
+  toEditMessage(newValue: boolean, messageData?: MessageEditedIdentifier): void;
+  toEditMessage(newValue: MessageEmbedLike, messageData?: MessageEditedIdentifier): void;
+  toEditMessage(newValue: MessageEmbedLike, messageData?: string): void;
+  public toEditMessage(
+    newValue: Primitive | MessageEmbedLike,
+    message: MessageEditedIdentifier | string,
+  ): void {
     const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(trace, ToEditMessage, cordeBot, message, newValue);
+      return this.operationFactory(trace, ToEditMessage, cordeBot, newValue, message);
     });
   }
 

@@ -105,6 +105,7 @@ export default class MockDiscord {
   private _presence!: Presence;
   private _voiceState!: VoiceState;
   private _messageEmbedLike: MessageEmbedLike;
+  private _messageWithEmbed: Message;
 
   /**
    * Initialize all mocks
@@ -312,6 +313,10 @@ export default class MockDiscord {
     return this._messageEmbedLike;
   }
 
+  get messageWithEmbed() {
+    return this._messageWithEmbed;
+  }
+
   get<T extends Collection<K, V>, K, V>(collection: T, index: number) {
     return collection.array()[index];
   }
@@ -340,6 +345,8 @@ export default class MockDiscord {
 
     this._messageEmbedLike = this.createEmbedMessageLike();
     this._messageEmbed = this.createMockMessageEmbed();
+    this._messageWithEmbed = this.createMockMessageWithEmbed();
+
     this._messageEmbedCollection = this.createMockMessageEmbedCollection();
     this._role = this.createMockRole();
 
@@ -500,6 +507,13 @@ export default class MockDiscord {
       this._textChannel,
     );
 
+    return msg;
+  }
+
+  createMockMessageWithEmbed() {
+    const msg = this.createMockMessage();
+    msg.embeds.push(this._messageEmbed);
+    msg.content = "";
     return msg;
   }
 

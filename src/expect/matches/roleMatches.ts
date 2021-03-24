@@ -27,9 +27,9 @@ export interface RoleMatches {
    *
    * @since 2.0
    */
-  toSetRoleColor(color: ColorResolvable, id: Snowflake): void;
+  toSetRoleColor(color: ColorResolvable, id: string): void;
   toSetRoleColor(color: ColorResolvable, roleIdentifier: RoleIdentifier): void;
-  toSetRoleColor(color: Colors, id: Snowflake): void;
+  toSetRoleColor(color: Colors, id: string): void;
   toSetRoleColor(color: Colors, roleIdentifier: RoleIdentifier): void;
 
   /**
@@ -49,7 +49,7 @@ export interface RoleMatches {
    *
    * @since 2.0
    */
-  toDeleteRole(id: Snowflake): void;
+  toDeleteRole(id: string): void;
   toDeleteRole(roleIdentifier: RoleIdentifier): void;
 
   /**

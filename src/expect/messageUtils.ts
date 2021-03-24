@@ -1,5 +1,5 @@
 import assert from "assert";
-import { Message, MessageEmbed } from "discord.js";
+import { Message, MessageEmbed, PartialMessage } from "discord.js";
 import {
   MessageData,
   MessageEmbedLike,
@@ -12,7 +12,10 @@ import { isPrimitiveValue } from "../utils/isPrimitiveValue";
 import { typeOf } from "../utils";
 
 class MessageUtils {
-  public messagesMatches(returnedMessage: Message, expectation: Primitive | MessageEmbed) {
+  public messagesMatches(
+    returnedMessage: Message | PartialMessage,
+    expectation: Primitive | MessageEmbed,
+  ) {
     let msg = "";
     if (isPrimitiveValue(expectation)) {
       const formattedMsg = this.getMessageByType(returnedMessage, "text") as Message;
@@ -68,7 +71,7 @@ class MessageUtils {
    *  }
    *  ```
    */
-  public getMessageByType(answer: Message | MessageEmbed, type: messageType) {
+  public getMessageByType(answer: Message | MessageEmbed | PartialMessage, type: messageType) {
     if (type === "embed") {
       const embed = answer instanceof Message ? answer.embeds[0] : answer;
       if (!embed) {

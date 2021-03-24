@@ -19,25 +19,22 @@ import { typeOf } from "./typeOf";
  *
  */
 export function deepEqual(obj1: any, obj2: any) {
-  const obj1Ajusted = this.getSnapshotSeForInstanciaMobx(obj1);
-  const obj2Ajusted = this.getSnapshotSeForInstanciaMobx(obj2);
-
-  if (isNullOrUndefined(obj1Ajusted) && isNullOrUndefined(obj2Ajusted)) {
+  if (isNullOrUndefined(obj1) && isNullOrUndefined(obj2)) {
     return true;
   }
 
   if (
-    (isNullOrUndefined(obj1Ajusted) && !isNullOrUndefined(obj2Ajusted)) ||
-    (isNullOrUndefined(obj2Ajusted) && !isNullOrUndefined(obj1Ajusted))
+    (isNullOrUndefined(obj1) && !isNullOrUndefined(obj2)) ||
+    (isNullOrUndefined(obj2) && !isNullOrUndefined(obj1))
   ) {
     return false;
   }
-  if (typeOf(obj1Ajusted) !== "object" && typeof obj2Ajusted !== "object") {
-    return obj1Ajusted === obj2Ajusted;
+  if (typeOf(obj1) !== "object" && typeof obj2 !== "object") {
+    return obj1 === obj2;
   }
 
-  const obj1Properties = Object.getOwnPropertyNames(obj1Ajusted);
-  const obj2Properties = Object.getOwnPropertyNames(obj2Ajusted);
+  const obj1Properties = Object.getOwnPropertyNames(obj1);
+  const obj2Properties = Object.getOwnPropertyNames(obj2);
 
   if (obj1Properties.length !== obj2Properties.length) {
     return false;
@@ -45,8 +42,8 @@ export function deepEqual(obj1: any, obj2: any) {
 
   for (const prop of obj1Properties) {
     if (typeof obj1[prop] === "object") {
-      const newSubObj1 = obj1Ajusted[prop];
-      const newSubObj2 = obj2Ajusted[prop];
+      const newSubObj1 = obj1[prop];
+      const newSubObj2 = obj2[prop];
 
       const areEqual = deepEqual(newSubObj1, newSubObj2);
 

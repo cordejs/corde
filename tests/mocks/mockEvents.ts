@@ -1,4 +1,4 @@
-import { MessageReaction, PartialUser, Role, User } from "discord.js";
+import { Message, MessageReaction, PartialUser, Role, User } from "discord.js";
 import { CordeBot } from "../../src/core";
 import { TimeoutError } from "../../src/errors";
 import MockDiscord from "./mockDiscord";
@@ -118,5 +118,14 @@ export class MockEvents {
         [this._mockDiscord.messageReaction, this._mockDiscord.user],
       ]);
     });
+  }
+
+  /**
+   * @internal
+   */
+  mockOnceMessageContentOrEmbedChange(message?: Message) {
+    return (this._corde.events.onceMessageContentOrEmbedChange = jest
+      .fn()
+      .mockReturnValue(message ?? this._mockDiscord.message));
   }
 }

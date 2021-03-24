@@ -1,5 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import { EmojiLike, MessageData, MessageEmbedLike } from "../../types";
+import { EmojiLike, MessageData, MessageEditedIdentifier, MessageEmbedLike } from "../../types";
 
 /**
  * Defines all functions that can be used
@@ -170,6 +170,7 @@ export interface MessageMatches {
   toRemoveReaction(emojis: (string | EmojiLike)[], messageData: MessageData): void;
   toRemoveReaction(emojis: string[], messageData: string): void;
   toRemoveReaction(emojis: string[], messageData: MessageData): void;
+
   /**
    * Verify if a command pinned a message.
    *
@@ -191,9 +192,18 @@ export interface MessageMatches {
   /**
    * Verify if a command edited a message.
    *
-   * @param message Message to be edited.
    * @param newValue New value for the message.
+   * @param messageData Identifier of the message to be edited.
    * @since 1.0
    */
-  toEditMessage(message: MessageData, newValue: string | MessageEmbed): void;
+  toEditMessage(newValue: string, messageData?: MessageEditedIdentifier): void;
+  toEditMessage(newValue: string, messageData?: string): void;
+  toEditMessage(newValue: number, messageData?: MessageEditedIdentifier): void;
+  toEditMessage(newValue: number, messageData?: string): void;
+  toEditMessage(newValue: bigint, messageData?: MessageEditedIdentifier): void;
+  toEditMessage(newValue: bigint, messageData?: string): void;
+  toEditMessage(newValue: boolean, messageData?: string): void;
+  toEditMessage(newValue: boolean, messageData?: MessageEditedIdentifier): void;
+  toEditMessage(newValue: MessageEmbedLike, messageData?: MessageEditedIdentifier): void;
+  toEditMessage(newValue: MessageEmbedLike, messageData?: string): void;
 }

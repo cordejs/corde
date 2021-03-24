@@ -159,7 +159,25 @@ export interface MessageData {
    * We recommend to use **id** for message search.
    */
   text?: string;
+  /**
+   * Identifier of the message
+   */
   id?: string;
+}
+
+/**
+ * Object contract used to identify messages in message
+ * edition tests.
+ */
+export interface MessageEditedIdentifier {
+  /**
+   * Identifier of the message
+   */
+  id?: string;
+  /**
+   * Old content of the message to identify it.
+   */
+  oldContent?: string;
 }
 
 export interface TestReport {

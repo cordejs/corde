@@ -23,7 +23,7 @@ import { runtime } from "../common";
 import { DEFAULT_TEST_TIMEOUT } from "../consts";
 import { TimeoutError } from "../errors";
 import { EmojiLike, MessageData, RoleIdentifier } from "../types";
-import { executePromiseWithTimeout } from "../utils";
+import { deepEqual, executePromiseWithTimeout } from "../utils";
 import { Validator } from "../utils";
 
 export interface EventResume {
@@ -746,6 +746,44 @@ export class Events {
    */
   public onceMessageUpdate() {
     return this._once<[Message | PartialMessage, Message | PartialMessage]>("messageUpdate");
+  }
+
+  /**
+   * Emitted once a message with `id` x or `content` y, or it's embed message has changed.
+   *
+   * @param messageData Identifier of the message
+   * @param timeout time to wait for change
+   * @returns A message who had his content changed
+   * @internal
+   */
+  public onceMessageContentOrEmbedChange(messageData?: MessageData, timeout?: number) {
+    const validator = new Validator<[Message | PartialMessage, Message | PartialMessage]>();
+    validator.add(
+      (oldMessage, newMessage) =>
+        oldMessage.content != newMessage.content ||
+        this.messagesHasDifferentsEmbeds(oldMessage, newMessage),
+    );
+
+    if (messageData) {
+      validator.add(
+        (oldMessage) => oldMessage.id === messageData.id || oldMessage.content === messageData.text,
+      );
+    }
+
+    return executePromiseWithTimeout<Message | PartialMessage>((resolve) => {
+      this.onMessageUpdate((oldMessage, newMessage) => {
+        if (validator.isValid(oldMessage, newMessage)) {
+          resolve(newMessage);
+        }
+      });
+    }, timeout ?? runtime.timeOut);
+  }
+
+  private messagesHasDifferentsEmbeds(
+    oldMessage: Message | PartialMessage,
+    newMessage: Message | PartialMessage,
+  ) {
+    return !deepEqual(oldMessage.embeds, newMessage.embeds);
   }
 
   /**
