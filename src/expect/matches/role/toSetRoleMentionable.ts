@@ -37,7 +37,7 @@ export class ToSetRoleMentionable extends ExpectTest {
     let role: Role;
     try {
       role = await this.cordeBot.events.onceRoleMentionableUpdate(roleIdentifier, this.timeOut);
-    } catch (error) {
+    } catch {
       if (this.isNot) {
         return { pass: true };
       }

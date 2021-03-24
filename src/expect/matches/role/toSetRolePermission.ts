@@ -48,7 +48,7 @@ export class ToSetRolePermission extends ExpectTest {
     let role: Role;
     try {
       role = await this.cordeBot.events.onceRolePermissionUpdate(roleIdentifier, this.timeOut);
-    } catch (error) {
+    } catch {
       if (this.isNot) {
         return { pass: true };
       }

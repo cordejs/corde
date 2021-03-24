@@ -32,7 +32,7 @@ export class ToSetRoleColor extends ExpectTest {
 
     try {
       role = await this.cordeBot.events.onceRoleUpdateColor(roleIdentifier, this.timeOut);
-    } catch (error) {
+    } catch {
       if (this.isNot) {
         return { pass: true };
       }

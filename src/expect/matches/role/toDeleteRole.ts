@@ -16,7 +16,7 @@ export class ToDeleteRole extends ExpectTest {
     await this.cordeBot.sendTextMessage(this.command);
     try {
       await this.cordeBot.events.onceRoleDelete(roleIdentifier, this.timeOut);
-    } catch (error) {
+    } catch {
       if (this.isNot) {
         return { pass: true };
       }
