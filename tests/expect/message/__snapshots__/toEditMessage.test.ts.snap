@@ -1,10 +1,40 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`testing toEditMessage should fail due to no message was sent by the bot 1`] = `
+exports[`testing toEditMessage should fail due to message was not edited by the bot (no messageIdentifier as object with content) 1`] = `
 Object {
   "message": "    
-    expected: testing bot to send a message
-    received: no message was sent
+    expected: testing bot to edit the message with content \\"message test\\"
+    received: message was not edited
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toEditMessage should fail due to message was not edited by the bot (no messageIdentifier as object with id) 1`] = `
+Object {
+  "message": "    
+    expected: testing bot to edit the message with id 123
+    received: message was not edited
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toEditMessage should fail due to message was not edited by the bot (no messageIdentifier as string) 1`] = `
+Object {
+  "message": "    
+    expected: testing bot to edit the message with id 123
+    received: message was not edited
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toEditMessage should fail due to message was not edited by the bot (no messageIdentifier) 1`] = `
+Object {
+  "message": "    
+    expected: testing bot to edit the last message sent
+    received: message was not edited
 ",
   "pass": false,
 }
@@ -177,7 +207,7 @@ Object {
 exports[`testing toEditMessage should return a failed test due to invalid parameter (null) 1`] = `
 Object {
   "message": "    
-    expected: expect value to be a primitive value (string, boolean, number) or an MessageEmbedLike
+    expected: expect value to be a primitive value (string, boolean, number) or an MessageEmbedLike object
     received: null
 ",
   "pass": false,
@@ -187,7 +217,7 @@ Object {
 exports[`testing toEditMessage should return a failed test due to invalid parameter (undefined) 1`] = `
 Object {
   "message": "    
-    expected: expect value to be a primitive value (string, boolean, number) or an MessageEmbedLike
+    expected: expect value to be a primitive value (string, boolean, number) or an MessageEmbedLike object
     received: undefined
 ",
   "pass": false,

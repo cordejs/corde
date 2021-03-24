@@ -19,7 +19,7 @@ describe("testing toEditMessage", () => {
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
 
     const message = buildReportMessage(
-      `expected: expect value to be a primitive value (string, boolean, number) or an MessageEmbedLike\n`,
+      `expected: expect value to be a primitive value (string, boolean, number) or an MessageEmbedLike object\n`,
       `received: null`,
     );
 
@@ -38,7 +38,7 @@ describe("testing toEditMessage", () => {
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
 
     const message = buildReportMessage(
-      `expected: expect value to be a primitive value (string, boolean, number) or an MessageEmbedLike\n`,
+      `expected: expect value to be a primitive value (string, boolean, number) or an MessageEmbedLike object\n`,
       `received: undefined`,
     );
 
@@ -53,13 +53,13 @@ describe("testing toEditMessage", () => {
     expect(report).toMatchSnapshot();
   });
 
-  it("should fail due to no message was sent by the bot", async () => {
+  it("should fail due to message was not edited by the bot (no messageIdentifier)", async () => {
     runtime.setConfigs({ timeOut: 100 }, true);
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
 
     const message = buildReportMessage(
-      `expected: testing bot to send a message\n`,
-      `received: no message was sent`,
+      `expected: testing bot to edit the last message sent\n`,
+      `received: message was not edited`,
     );
 
     const reportModel: TestReport = {
@@ -69,6 +69,66 @@ describe("testing toEditMessage", () => {
 
     const toEditMessage = new ToEditMessage(cordeClient, "ping", false);
     const report = await toEditMessage.action("pong");
+    expect(report).toEqual(reportModel);
+    expect(report).toMatchSnapshot();
+  });
+
+  it("should fail due to message was not edited by the bot (no messageIdentifier as string)", async () => {
+    runtime.setConfigs({ timeOut: 100 }, true);
+    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+
+    const message = buildReportMessage(
+      `expected: testing bot to edit the message with id 123\n`,
+      `received: message was not edited`,
+    );
+
+    const reportModel: TestReport = {
+      pass: false,
+      message,
+    };
+
+    const toEditMessage = new ToEditMessage(cordeClient, "ping", false);
+    const report = await toEditMessage.action("pong", "123");
+    expect(report).toEqual(reportModel);
+    expect(report).toMatchSnapshot();
+  });
+
+  it("should fail due to message was not edited by the bot (no messageIdentifier as object with id)", async () => {
+    runtime.setConfigs({ timeOut: 100 }, true);
+    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+
+    const message = buildReportMessage(
+      `expected: testing bot to edit the message with id 123\n`,
+      `received: message was not edited`,
+    );
+
+    const reportModel: TestReport = {
+      pass: false,
+      message,
+    };
+
+    const toEditMessage = new ToEditMessage(cordeClient, "ping", false);
+    const report = await toEditMessage.action("pong", { id: "123" });
+    expect(report).toEqual(reportModel);
+    expect(report).toMatchSnapshot();
+  });
+
+  it("should fail due to message was not edited by the bot (no messageIdentifier as object with content)", async () => {
+    runtime.setConfigs({ timeOut: 100 }, true);
+    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+
+    const message = buildReportMessage(
+      `expected: testing bot to edit the message with content "message test"\n`,
+      `received: message was not edited`,
+    );
+
+    const reportModel: TestReport = {
+      pass: false,
+      message,
+    };
+
+    const toEditMessage = new ToEditMessage(cordeClient, "ping", false);
+    const report = await toEditMessage.action("pong", { oldContent: "message test" });
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
   });

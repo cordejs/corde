@@ -19,22 +19,24 @@ export class ToEditMessage extends ExpectTest {
 
     if (!isPrimitiveValue(newValue) && typeOf(newValue) !== "object") {
       return this.createReport(
-        `expected: expect value to be a primitive value (string, boolean, number) or an MessageEmbedLike\n`,
+        `expected: expect value to be a primitive value (string, boolean, number) or an MessageEmbedLike object\n`,
         `received: ${typeOf(newValue)}`,
       );
     }
 
     await this.cordeBot.sendTextMessage(this.command);
+
+    let _messageData: MessageEditedIdentifier;
+
+    if (typeof messageIdentifier === "string") {
+      _messageData = { id: messageIdentifier };
+    } else {
+      _messageData = messageIdentifier;
+    }
+
     let returnedMessage: Message | PartialMessage;
+
     try {
-      let _messageData: MessageEditedIdentifier;
-
-      if (typeof messageIdentifier === "string") {
-        _messageData = { id: messageIdentifier };
-      } else {
-        _messageData = messageIdentifier;
-      }
-
       returnedMessage = await this.cordeBot.events.onceMessageContentOrEmbedChange(
         _messageData,
         this.timeOut,
@@ -44,10 +46,26 @@ export class ToEditMessage extends ExpectTest {
         return { pass: true };
       }
 
-      return this.createReport(
-        `expected: testing bot to send a message\n`,
-        `received: no message was sent`,
-      );
+      if (!_messageData) {
+        return this.createReport(
+          `expected: testing bot to edit the last message sent\n`,
+          `received: message was not edited`,
+        );
+      }
+
+      if (_messageData.id) {
+        return this.createReport(
+          `expected: testing bot to edit the message with id ${_messageData.id}\n`,
+          `received: message was not edited`,
+        );
+      }
+
+      if (_messageData.oldContent) {
+        return this.createReport(
+          `expected: testing bot to edit the message with content "${_messageData.oldContent}"\n`,
+          `received: message was not edited`,
+        );
+      }
     }
 
     if (typeOf(newValue) === "object") {
