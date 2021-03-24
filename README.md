@@ -1,3 +1,4 @@
+
 <div align="center">
   <br />
   <p>
@@ -7,6 +8,12 @@
    <!-- <a href="https://discord.gg/f3Gs7uU">
       <img src="https://img.shields.io/discord/768647567461449778?color=7289da&logo=discord&logoColor=white" alt="Discord server" />
     </a> -->
+    <a href="https://gitpod.io/#https://github.com/lucasgmagalhaes/corde">
+      <img
+        alt="CircleCi"
+        src="https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod"
+      />
+    </a>
     <a href="https://circleci.com/gh/lucasgmagalhaes/corde">
       <img
         alt="CircleCi"
