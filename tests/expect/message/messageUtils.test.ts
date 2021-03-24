@@ -10,12 +10,12 @@ import {
 
 describe("testing messageUtils", () => {
   describe("testing createNotFoundMessageForMessageData", () => {
-    it("should return a message for a messageData with only id", () => {
+    it("should return a message for a messageIdentifier with only id", () => {
       const message = messageUtils.createNotFoundMessageForMessageData({ id: "123" });
       expect(message).toEqual("Message with id 123 not found.");
     });
 
-    it("should return message for a messageData with only text (content)", () => {
+    it("should return message for a messageIdentifier with only text (content)", () => {
       const message = messageUtils.createNotFoundMessageForMessageData({ text: "hello" });
       expect(message).toEqual("Message with content 'hello' not found.");
     });
@@ -28,7 +28,7 @@ describe("testing messageUtils", () => {
       expect(message).toEqual("Message with id 123 or content 'hello' not found.");
     });
 
-    it("should return null due to no messageData", () => {
+    it("should return null due to no messageIdentifier", () => {
       const message = messageUtils.createNotFoundMessageForMessageData(null);
       expect(message).toBeFalsy();
     });

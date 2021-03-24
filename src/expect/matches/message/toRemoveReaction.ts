@@ -1,21 +1,24 @@
 import { GuildEmoji, Message, MessageReaction, PartialUser, ReactionEmoji, User } from "discord.js";
 import { TimeoutError } from "../../../errors";
-import { EmojiLike, EmojisType, MessageData, TestReport } from "../../../types";
+import { EmojiLike, EmojisType, MessageIdentifier, TestReport } from "../../../types";
 import { typeOf } from "../../../utils";
 import { ExpectTest } from "../expectTest";
 
 // TODO: refact it due to it's equal to ToAddReaction
 
 export class ToRemoveReaction extends ExpectTest {
-  public async action(emojis: EmojisType, messageData?: MessageData | string): Promise<TestReport> {
+  public async action(
+    emojis: EmojisType,
+    messageIdentifier?: MessageIdentifier | string,
+  ): Promise<TestReport> {
     if (
-      messageData != null &&
-      typeOf(messageData) !== "object" &&
-      typeOf(messageData) !== "string"
+      messageIdentifier != null &&
+      typeOf(messageIdentifier) !== "object" &&
+      typeOf(messageIdentifier) !== "string"
     ) {
       return this.createReport(
         `expect: message data to be null, undefined, string or an object with id or text properties\n`,
-        `received: ${typeOf(messageData)}`,
+        `received: ${typeOf(messageIdentifier)}`,
       );
     }
 
@@ -36,12 +39,13 @@ export class ToRemoveReaction extends ExpectTest {
         return e;
       });
 
-      const _messageData = typeof messageData === "string" ? { id: messageData } : messageData;
+      const _messageData =
+        typeof messageIdentifier === "string" ? { id: messageIdentifier } : messageIdentifier;
 
       reactionsWithAuthors = await this.cordeBot.events.onceMessageReactionsRemove({
         authorId: this.cordeBot.testBotId,
         emojis: emojiLike,
-        messageData: _messageData,
+        messageIdentifier: _messageData,
         timeout: this.timeOut,
       });
     } catch (error) {

@@ -30,7 +30,7 @@ Object {
 }
 `;
 
-exports[`testing toAddReaction function should fail due to invalid messageData (number) 1`] = `
+exports[`testing toAddReaction function should fail due to invalid messageIdentifier (number) 1`] = `
 Object {
   "message": "    
     expect: message data to be null, undefined, string or an object with id or text properties

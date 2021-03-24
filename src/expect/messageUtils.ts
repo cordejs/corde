@@ -1,7 +1,7 @@
 import assert from "assert";
 import { Message, MessageEmbed, PartialMessage } from "discord.js";
 import {
-  MessageData,
+  MessageIdentifier,
   MessageEmbedLike,
   messageType,
   MinifiedEmbedMessage,
@@ -91,21 +91,21 @@ class MessageUtils {
     }
   }
 
-  public createNotFoundMessageForMessageData(msgData: MessageData): string | null {
-    if (!msgData) {
+  public createNotFoundMessageForMessageData(msgIdentifier: MessageIdentifier): string | null {
+    if (!msgIdentifier) {
       return null;
     }
 
-    if (msgData.id && msgData.text) {
-      return `Message with id ${msgData.id} or content '${msgData.text}' not found.`;
+    if (msgIdentifier.id && msgIdentifier.content) {
+      return `Message with id ${msgIdentifier.id} or content '${msgIdentifier.content}' not found.`;
     }
 
-    if (msgData.id) {
-      return `Message with id ${msgData.id} not found.`;
+    if (msgIdentifier.id) {
+      return `Message with id ${msgIdentifier.id} not found.`;
     }
 
-    if (msgData.text) {
-      return `Message with content '${msgData.text}' not found.`;
+    if (msgIdentifier.content) {
+      return `Message with content '${msgIdentifier.content}' not found.`;
     }
 
     return null;

@@ -154,7 +154,7 @@ export interface MinifiedEmbedMessage {
   url: string;
 }
 
-export interface MessageData {
+export interface MessageIdentifier {
   /**
    * Text of a message, use it to find a message if you don't know
    * it's **id**.

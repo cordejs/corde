@@ -13,7 +13,7 @@ describe("testing toAddReaction function", () => {
     mockDiscord = new MockDiscord();
   });
 
-  it("should fail due to invalid messageData (number)", async () => {
+  it("should fail due to invalid messageIdentifier (number)", async () => {
     const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
     const toAddReaction = new ToAddReaction(cordeClient, "add", false);
     // @ts-ignore

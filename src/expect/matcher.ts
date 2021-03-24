@@ -4,7 +4,7 @@ import { CordeBot } from "../core";
 import {
   EmojiLike,
   GenericFunction,
-  MessageData,
+  MessageIdentifier,
   MessageEditedIdentifier,
   MessageEmbedLike,
   Primitive,
@@ -63,16 +63,16 @@ class ExpectMatches implements Matches {
     this._isNot = isNot;
   }
 
-  toEditMessage(newValue: string, messageData?: MessageEditedIdentifier): void;
-  toEditMessage(newValue: string, messageData?: string): void;
-  toEditMessage(newValue: number, messageData?: MessageEditedIdentifier): void;
-  toEditMessage(newValue: number, messageData?: string): void;
-  toEditMessage(newValue: bigint, messageData?: MessageEditedIdentifier): void;
-  toEditMessage(newValue: bigint, messageData?: string): void;
-  toEditMessage(newValue: boolean, messageData?: string): void;
-  toEditMessage(newValue: boolean, messageData?: MessageEditedIdentifier): void;
-  toEditMessage(newValue: MessageEmbedLike, messageData?: MessageEditedIdentifier): void;
-  toEditMessage(newValue: MessageEmbedLike, messageData?: string): void;
+  toEditMessage(newValue: string, messageIdentifier?: MessageEditedIdentifier): void;
+  toEditMessage(newValue: string, messageIdentifier?: string): void;
+  toEditMessage(newValue: number, messageIdentifier?: MessageEditedIdentifier): void;
+  toEditMessage(newValue: number, messageIdentifier?: string): void;
+  toEditMessage(newValue: bigint, messageIdentifier?: MessageEditedIdentifier): void;
+  toEditMessage(newValue: bigint, messageIdentifier?: string): void;
+  toEditMessage(newValue: boolean, messageIdentifier?: string): void;
+  toEditMessage(newValue: boolean, messageIdentifier?: MessageEditedIdentifier): void;
+  toEditMessage(newValue: MessageEmbedLike, messageIdentifier?: MessageEditedIdentifier): void;
+  toEditMessage(newValue: MessageEmbedLike, messageIdentifier?: string): void;
   public toEditMessage(
     newValue: Primitive | MessageEmbedLike,
     message: MessageEditedIdentifier | string,
@@ -84,9 +84,9 @@ class ExpectMatches implements Matches {
   }
 
   public toPin(messageId: string): void;
-  public toPin(message: MessageData): void;
-  public toPin(message: string | MessageData): void {
-    let data: MessageData;
+  public toPin(message: MessageIdentifier): void;
+  public toPin(message: string | MessageIdentifier): void {
+    let data: MessageIdentifier;
     if (typeof message === "string") {
       data = { id: message };
     } else {
@@ -100,9 +100,9 @@ class ExpectMatches implements Matches {
   }
 
   public toUnPin(messageId: string): void;
-  public toUnPin(message: MessageData): void;
-  public toUnPin(message: string | MessageData): void {
-    let data: MessageData;
+  public toUnPin(message: MessageIdentifier): void;
+  public toUnPin(message: string | MessageIdentifier): void {
+    let data: MessageIdentifier;
     if (typeof message === "string") {
       data = { id: message };
     } else {
@@ -130,38 +130,38 @@ class ExpectMatches implements Matches {
   toAddReaction(emojis: string[]): void;
   toAddReaction(emojis: EmojiLike[]): void;
   toAddReaction(emojis: (string | EmojiLike)[]): void;
-  toAddReaction(emojis: string[], messageData: string): void;
-  toAddReaction(emojis: string[], messageData: MessageData): void;
-  toAddReaction(emojis: EmojiLike[], messageData: string): void;
-  toAddReaction(emojis: EmojiLike[], messageData: MessageData): void;
-  toAddReaction(emojis: (string | EmojiLike)[], messageData: string): void;
-  toAddReaction(emojis: (string | EmojiLike)[], messageData: MessageData): void;
+  toAddReaction(emojis: string[], messageIdentifier: string): void;
+  toAddReaction(emojis: string[], messageIdentifier: MessageIdentifier): void;
+  toAddReaction(emojis: EmojiLike[], messageIdentifier: string): void;
+  toAddReaction(emojis: EmojiLike[], messageIdentifier: MessageIdentifier): void;
+  toAddReaction(emojis: (string | EmojiLike)[], messageIdentifier: string): void;
+  toAddReaction(emojis: (string | EmojiLike)[], messageIdentifier: MessageIdentifier): void;
   public toAddReaction(
     emojis: string[] | EmojiLike[] | (string | EmojiLike)[],
-    messageData?: string | MessageData,
+    messageIdentifier?: string | MessageIdentifier,
   ): void {
     const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) =>
-      this.operationFactory(trace, ToAddReaction, cordeBot, emojis, messageData),
+      this.operationFactory(trace, ToAddReaction, cordeBot, emojis, messageIdentifier),
     );
   }
 
   toRemoveReaction(emojis: string[]): void;
   toRemoveReaction(emojis: EmojiLike[]): void;
   toRemoveReaction(emojis: (string | EmojiLike)[]): void;
-  toRemoveReaction(emojis: string[], messageData: string): void;
-  toRemoveReaction(emojis: string[], messageData: MessageData): void;
-  toRemoveReaction(emojis: EmojiLike[], messageData: string): void;
-  toRemoveReaction(emojis: EmojiLike[], messageData: MessageData): void;
-  toRemoveReaction(emojis: (string | EmojiLike)[], messageData: string): void;
-  toRemoveReaction(emojis: (string | EmojiLike)[], messageData: MessageData): void;
+  toRemoveReaction(emojis: string[], messageIdentifier: string): void;
+  toRemoveReaction(emojis: string[], messageIdentifier: MessageIdentifier): void;
+  toRemoveReaction(emojis: EmojiLike[], messageIdentifier: string): void;
+  toRemoveReaction(emojis: EmojiLike[], messageIdentifier: MessageIdentifier): void;
+  toRemoveReaction(emojis: (string | EmojiLike)[], messageIdentifier: string): void;
+  toRemoveReaction(emojis: (string | EmojiLike)[], messageIdentifier: MessageIdentifier): void;
   public toRemoveReaction(
     emojis: string[] | EmojiLike[] | (string | EmojiLike)[],
-    messageData?: string | MessageData,
+    messageIdentifier?: string | MessageIdentifier,
   ): void {
     const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) =>
-      this.operationFactory(trace, ToRemoveReaction, cordeBot, emojis, messageData),
+      this.operationFactory(trace, ToRemoveReaction, cordeBot, emojis, messageIdentifier),
     );
   }
 

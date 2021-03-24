@@ -1,5 +1,10 @@
 import { MessageEmbed } from "discord.js";
-import { EmojiLike, MessageData, MessageEditedIdentifier, MessageEmbedLike } from "../../types";
+import {
+  EmojiLike,
+  MessageIdentifier,
+  MessageEditedIdentifier,
+  MessageEmbedLike,
+} from "../../types";
 
 /**
  * Defines all functions that can be used
@@ -124,12 +129,12 @@ export interface MessageMatches {
   toAddReaction(emojis: string[]): void;
   toAddReaction(emojis: EmojiLike[]): void;
   toAddReaction(emojis: (string | EmojiLike)[]): void;
-  toAddReaction(emojis: EmojiLike[], messageData: string): void;
-  toAddReaction(emojis: EmojiLike[], messageData: MessageData): void;
-  toAddReaction(emojis: (string | EmojiLike)[], messageData: string): void;
-  toAddReaction(emojis: (string | EmojiLike)[], messageData: MessageData): void;
-  toAddReaction(emojis: string[], messageData: string): void;
-  toAddReaction(emojis: string[], messageData: MessageData): void;
+  toAddReaction(emojis: EmojiLike[], messageIdentifier: string): void;
+  toAddReaction(emojis: EmojiLike[], messageIdentifier: MessageIdentifier): void;
+  toAddReaction(emojis: (string | EmojiLike)[], messageIdentifier: string): void;
+  toAddReaction(emojis: (string | EmojiLike)[], messageIdentifier: MessageIdentifier): void;
+  toAddReaction(emojis: string[], messageIdentifier: string): void;
+  toAddReaction(emojis: string[], messageIdentifier: MessageIdentifier): void;
 
   /**
    * Remove a list of reactions from a message.
@@ -164,12 +169,12 @@ export interface MessageMatches {
   toRemoveReaction(emojis: string[]): void;
   toRemoveReaction(emojis: EmojiLike[]): void;
   toRemoveReaction(emojis: (string | EmojiLike)[]): void;
-  toRemoveReaction(emojis: EmojiLike[], messageData: string): void;
-  toRemoveReaction(emojis: EmojiLike[], messageData: MessageData): void;
-  toRemoveReaction(emojis: (string | EmojiLike)[], messageData: string): void;
-  toRemoveReaction(emojis: (string | EmojiLike)[], messageData: MessageData): void;
-  toRemoveReaction(emojis: string[], messageData: string): void;
-  toRemoveReaction(emojis: string[], messageData: MessageData): void;
+  toRemoveReaction(emojis: EmojiLike[], messageIdentifier: string): void;
+  toRemoveReaction(emojis: EmojiLike[], messageIdentifier: MessageIdentifier): void;
+  toRemoveReaction(emojis: (string | EmojiLike)[], messageIdentifier: string): void;
+  toRemoveReaction(emojis: (string | EmojiLike)[], messageIdentifier: MessageIdentifier): void;
+  toRemoveReaction(emojis: string[], messageIdentifier: string): void;
+  toRemoveReaction(emojis: string[], messageIdentifier: MessageIdentifier): void;
 
   /**
    * Verify if a command pinned a message.
@@ -178,7 +183,7 @@ export interface MessageMatches {
    * @since 2.0
    */
   toPin(messageId: string): void;
-  toPin(message: MessageData): void;
+  toPin(message: MessageIdentifier): void;
 
   /**
    * Verify if a command unpinned a message.
@@ -187,23 +192,23 @@ export interface MessageMatches {
    * @since 2.0
    */
   toUnPin(messageId: string): void;
-  toUnPin(message: MessageData): void;
+  toUnPin(message: MessageIdentifier): void;
 
   /**
    * Verify if a command edited a message.
    *
    * @param newValue New value for the message.
-   * @param messageData Identifier of the message to be edited.
+   * @param messageIdentifier Identifier of the message to be edited.
    * @since 1.0
    */
-  toEditMessage(newValue: string, messageData?: MessageEditedIdentifier): void;
-  toEditMessage(newValue: string, messageData?: string): void;
-  toEditMessage(newValue: number, messageData?: MessageEditedIdentifier): void;
-  toEditMessage(newValue: number, messageData?: string): void;
-  toEditMessage(newValue: bigint, messageData?: MessageEditedIdentifier): void;
-  toEditMessage(newValue: bigint, messageData?: string): void;
-  toEditMessage(newValue: boolean, messageData?: string): void;
-  toEditMessage(newValue: boolean, messageData?: MessageEditedIdentifier): void;
-  toEditMessage(newValue: MessageEmbedLike, messageData?: MessageEditedIdentifier): void;
-  toEditMessage(newValue: MessageEmbedLike, messageData?: string): void;
+  toEditMessage(newValue: string, messageIdentifier?: MessageEditedIdentifier): void;
+  toEditMessage(newValue: string, messageIdentifier?: string): void;
+  toEditMessage(newValue: number, messageIdentifier?: MessageEditedIdentifier): void;
+  toEditMessage(newValue: number, messageIdentifier?: string): void;
+  toEditMessage(newValue: bigint, messageIdentifier?: MessageEditedIdentifier): void;
+  toEditMessage(newValue: bigint, messageIdentifier?: string): void;
+  toEditMessage(newValue: boolean, messageIdentifier?: string): void;
+  toEditMessage(newValue: boolean, messageIdentifier?: MessageEditedIdentifier): void;
+  toEditMessage(newValue: MessageEmbedLike, messageIdentifier?: MessageEditedIdentifier): void;
+  toEditMessage(newValue: MessageEmbedLike, messageIdentifier?: string): void;
 }

@@ -230,20 +230,20 @@ describe("Testing matches class", () => {
 
     it("should add a toRemoveReaction function with message data", () => {
       const expectReaction = "😀";
-      const messageData = { id: "12312312" };
-      new ExpectMatchesWithNot(con).toRemoveReaction(expectReaction, messageData);
+      const messageIdentifier = { id: "12312312" };
+      new ExpectMatchesWithNot(con).toRemoveReaction(expectReaction, messageIdentifier);
       runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToRemoveReaction).toBeCalledWith(runtime.bot, con, false);
-      expect(toRemoveReactionMock).toBeCalledWith([expectReaction], messageData);
+      expect(toRemoveReactionMock).toBeCalledWith([expectReaction], messageIdentifier);
     });
 
     it("should add a toRemoveReaction function with array of emojis", () => {
       const expectReaction = ["😀"];
-      const messageData = { id: "12312312" };
-      new ExpectMatchesWithNot(con).toRemoveReaction(expectReaction, messageData);
+      const messageIdentifier = { id: "12312312" };
+      new ExpectMatchesWithNot(con).toRemoveReaction(expectReaction, messageIdentifier);
       runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToRemoveReaction).toBeCalledWith(runtime.bot, con, false);
-      expect(toRemoveReactionMock).toBeCalledWith(expectReaction, messageData);
+      expect(toRemoveReactionMock).toBeCalledWith(expectReaction, messageIdentifier);
     });
 
     it("should add a toRemoveReaction function with correct values (isNot true)", () => {

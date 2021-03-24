@@ -22,7 +22,7 @@ import { once } from "events";
 import { runtime } from "../common";
 import { DEFAULT_TEST_TIMEOUT } from "../consts";
 import { TimeoutError } from "../errors";
-import { EmojiLike, MessageData, RoleIdentifier } from "../types";
+import { EmojiLike, MessageIdentifier, RoleIdentifier } from "../types";
 import { deepEqual, executePromiseWithTimeout } from "../utils";
 import { Validator } from "../utils";
 
@@ -34,7 +34,7 @@ export interface EventResume {
 
 export interface SearchMessageReactionsOptions {
   emojis?: EmojiLike[];
-  messageData?: MessageData;
+  messageIdentifier?: MessageIdentifier;
   authorId?: string;
   timeout?: number;
 }
@@ -646,7 +646,7 @@ export class Events {
     filter: SearchMessageReactionsOptions,
     event: "onMessageReactionAdd" | "onMessageReactionRemove",
   ) {
-    const { emojis, messageData, authorId, timeout } = filter;
+    const { emojis, messageIdentifier, authorId, timeout } = filter;
 
     const validator = new Validator<[MessageReaction, User | PartialUser]>();
 
@@ -656,9 +656,10 @@ export class Events {
       );
     }
 
-    if (messageData) {
+    if (messageIdentifier) {
       validator.add(
-        ({ message }) => message.id === messageData.id || message.content === messageData.content,
+        ({ message }) =>
+          message.id === messageIdentifier.id || message.content === messageIdentifier.content,
       );
     }
 
@@ -674,7 +675,7 @@ export class Events {
             response.push([reaction, author]);
           }
 
-          if (!emojis && !authorId && !messageData) {
+          if (!emojis && !authorId && !messageIdentifier) {
             resolve(response);
           }
 
@@ -751,12 +752,12 @@ export class Events {
   /**
    * Emitted once a message with `id` x or `content` y, or it's embed message has changed.
    *
-   * @param messageData Identifier of the message
+   * @param messageIdentifier Identifier of the message
    * @param timeout time to wait for change
    * @returns A message who had his content changed
    * @internal
    */
-  public onceMessageContentOrEmbedChange(messageData?: MessageData, timeout?: number) {
+  public onceMessageContentOrEmbedChange(messageIdentifier?: MessageIdentifier, timeout?: number) {
     const validator = new Validator<[Message | PartialMessage, Message | PartialMessage]>();
     validator.add(
       (oldMessage, newMessage) =>
@@ -764,10 +765,11 @@ export class Events {
         this.messagesHasDifferentsEmbeds(oldMessage, newMessage),
     );
 
-    if (messageData) {
+    if (messageIdentifier) {
       validator.add(
         (oldMessage) =>
-          oldMessage.id === messageData.id || oldMessage.content === messageData.content,
+          oldMessage.id === messageIdentifier.id ||
+          oldMessage.content === messageIdentifier.content,
       );
     }
 

@@ -13,7 +13,7 @@ import messageUtils from "../../messageUtils";
 export class ToEditMessage extends ExpectTest {
   public async action(
     newValue: Primitive | MessageEmbedLike,
-    messageData?: MessageEditedIdentifier | string,
+    messageIdentifier?: MessageEditedIdentifier | string,
   ): Promise<TestReport> {
     let _expect: Primitive | MessageEmbed;
 
@@ -29,10 +29,10 @@ export class ToEditMessage extends ExpectTest {
     try {
       let _messageData: MessageEditedIdentifier;
 
-      if (typeof messageData === "string") {
-        _messageData = { id: messageData };
+      if (typeof messageIdentifier === "string") {
+        _messageData = { id: messageIdentifier };
       } else {
-        _messageData = messageData;
+        _messageData = messageIdentifier;
       }
 
       returnedMessage = await this.cordeBot.events.onceMessageContentOrEmbedChange(

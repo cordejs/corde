@@ -13,7 +13,7 @@ import {
 import { BehaviorSubject } from "rxjs";
 import { runtime } from "../common";
 import { CordeClientError, TimeoutError } from "../errors";
-import { MessageData, RoleIdentifier } from "../types/types";
+import { MessageIdentifier, RoleIdentifier } from "../types/types";
 import { executePromiseWithTimeout } from "../utils";
 import { Events } from "./events";
 
@@ -240,15 +240,17 @@ export class CordeBot {
   }
 
   public async findMessage(filter: (message: Message) => boolean): Promise<Message>;
-  public async findMessage(data: MessageData): Promise<Message>;
-  public async findMessage(data: MessageData | ((message: Message) => boolean)): Promise<Message> {
-    const messageData: MessageData = data as MessageData;
+  public async findMessage(data: MessageIdentifier): Promise<Message>;
+  public async findMessage(
+    data: MessageIdentifier | ((message: Message) => boolean),
+  ): Promise<Message> {
+    const messageIdentifier: MessageIdentifier = data as MessageIdentifier;
 
-    if (messageData && messageData.content) {
-      return this._findMessage((m) => m.content === messageData.content);
+    if (messageIdentifier && messageIdentifier.content) {
+      return this._findMessage((m) => m.content === messageIdentifier.content);
     }
-    if (messageData && messageData.id) {
-      return this._findMessage((m) => m.id === messageData.id);
+    if (messageIdentifier && messageIdentifier.id) {
+      return this._findMessage((m) => m.id === messageIdentifier.id);
     }
     if (data) {
       return this._findMessage(data as (message: Message) => boolean);
@@ -256,13 +258,13 @@ export class CordeBot {
     return null;
   }
 
-  public async findPinnedMessage(messageData: MessageData) {
+  public async findPinnedMessage(messageIdentifier: MessageIdentifier) {
     const msgs = await this.textChannel.messages.fetchPinned();
-    if (messageData && messageData.content) {
-      return msgs.find((m) => m.content === messageData.content);
+    if (messageIdentifier && messageIdentifier.content) {
+      return msgs.find((m) => m.content === messageIdentifier.content);
     }
-    if (messageData && messageData.id) {
-      return msgs.find((m) => m.id === messageData.id);
+    if (messageIdentifier && messageIdentifier.id) {
+      return msgs.find((m) => m.id === messageIdentifier.id);
     }
     return null;
   }
