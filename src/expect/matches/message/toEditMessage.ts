@@ -53,19 +53,12 @@ export class ToEditMessage extends ExpectTest {
         );
       }
 
-      if (_messageData.id) {
-        return this.createReport(
-          `expected: testing bot to edit the message with id ${_messageData.id}\n`,
-          `received: message was not edited`,
-        );
-      }
-
-      if (_messageData.oldContent) {
-        return this.createReport(
-          `expected: testing bot to edit the message with content "${_messageData.oldContent}"\n`,
-          `received: message was not edited`,
-        );
-      }
+      return this.createReport(
+        `expected: testing bot to edit the ${messageUtils.humanizeMessageIdentifierObject(
+          _messageData,
+        )}\n`,
+        `received: message was not edited`,
+      );
     }
 
     if (typeOf(newValue) === "object") {

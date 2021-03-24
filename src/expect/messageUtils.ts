@@ -91,6 +91,22 @@ class MessageUtils {
     }
   }
 
+  public humanizeMessageIdentifierObject(msgIdentifier: MessageIdentifier) {
+    if (!msgIdentifier) {
+      return "";
+    }
+
+    if (msgIdentifier?.id) {
+      return `message with id ${msgIdentifier.id}`;
+    }
+
+    if (msgIdentifier.content) {
+      return `message with content "${msgIdentifier.content}"`;
+    }
+
+    return "";
+  }
+
   public createNotFoundMessageForMessageData(msgIdentifier: MessageIdentifier): string | null {
     if (!msgIdentifier) {
       return null;
