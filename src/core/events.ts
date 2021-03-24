@@ -57,7 +57,7 @@ export class Events {
    * @param fn Operation to be executed after client becomes ready.
    * @internal
    */
-  public onReady(fn: () => void): void {
+  onReady(fn: () => void): void {
     this._client.on("ready", fn);
   }
 
@@ -65,7 +65,7 @@ export class Events {
    * Emitted once the client becomes ready to start working.
    * @internal
    */
-  public async onceReady(): Promise<void> {
+  async onceReady(): Promise<void> {
     await this._once<void>("ready");
     return;
   }
@@ -74,7 +74,7 @@ export class Events {
    * Emitted when a **bot** removes a emoji from a message.
    * @internal
    */
-  public onMessageReactionRemoveEmoji(fn: (reaction: MessageReaction) => void): void {
+  onMessageReactionRemoveEmoji(fn: (reaction: MessageReaction) => void): void {
     this._client.on("messageReactionRemoveEmoji", fn);
   }
 
@@ -83,7 +83,7 @@ export class Events {
    * @returns Reaction removed.
    * @internal
    */
-  public onceMessageReactionRemoveEmoji(): Promise<MessageReaction> {
+  onceMessageReactionRemoveEmoji(): Promise<MessageReaction> {
     return this._once<MessageReaction>("messageReactionRemoveEmoji");
   }
 
@@ -92,7 +92,7 @@ export class Events {
    * @param fn function to receive the event.
    * @internal
    */
-  public onChannelCreate(fn: (channel: Channel) => void): void {
+  onChannelCreate(fn: (channel: Channel) => void): void {
     this._client.on("channelCreate", fn);
   }
 
@@ -101,7 +101,7 @@ export class Events {
    * @returns Created channel.
    * @internal
    */
-  public onceChannelCreate(): Promise<Channel> {
+  onceChannelCreate(): Promise<Channel> {
     return this._once<Channel>("channelCreate");
   }
 
@@ -110,7 +110,7 @@ export class Events {
    * @param fn function to receive the deleted channel.
    * @internal
    */
-  public onChannelDelete(fn: (deletedChannel: Channel) => void): void {
+  onChannelDelete(fn: (deletedChannel: Channel) => void): void {
     this._client.on("channelDelete", fn);
   }
 
@@ -119,7 +119,7 @@ export class Events {
    * @returns Deleted channel.
    * @internal
    */
-  public onceChannelDelete(): Promise<Channel> {
+  onceChannelDelete(): Promise<Channel> {
     return this._once<Channel>("channelDelete");
   }
 
@@ -131,7 +131,7 @@ export class Events {
    * @param fn function to receive the channel and the time that it was updated.
    * @internal
    */
-  public onChannelPinsUpdate(fn: (channel: Channel, updateTime: Date) => void): void {
+  onChannelPinsUpdate(fn: (channel: Channel, updateTime: Date) => void): void {
     this._client.on("channelPinsUpdate", fn);
   }
 
@@ -143,7 +143,7 @@ export class Events {
    * @returns `Channel` and `date` of it's change.
    * @internal
    */
-  public async onceChannelPinsUpdate(): Promise<[Channel, Date]> {
+  async onceChannelPinsUpdate(): Promise<[Channel, Date]> {
     return this._once<[Channel, Date]>("channelPinsUpdate");
   }
 
@@ -152,7 +152,7 @@ export class Events {
    * @param fn function to receive the channel change
    * @internal
    */
-  public onChannelUpdate(fn: (oldChannel: Channel, newChannel: Channel) => void) {
+  onChannelUpdate(fn: (oldChannel: Channel, newChannel: Channel) => void) {
     this._client.on("channelUpdate", fn);
   }
 
@@ -161,7 +161,7 @@ export class Events {
    * @returns `Old channel` and `new value` of the channel.
    * @internal
    */
-  public async onceChannelUpdate(): Promise<[Channel, Channel]> {
+  async onceChannelUpdate(): Promise<[Channel, Channel]> {
     return this._once<[Channel, Channel]>("channelUpdate");
   }
 
@@ -170,7 +170,7 @@ export class Events {
    * @param fn Function to handle debug info.
    * @internal
    */
-  public onDebug(fn: (arg: string) => void) {
+  onDebug(fn: (arg: string) => void) {
     this._client.on("debug", fn);
   }
 
@@ -178,7 +178,7 @@ export class Events {
    * Emitted once for general debugging information.
    * @internal
    */
-  public async onceDebug(): Promise<string> {
+  async onceDebug(): Promise<string> {
     return await this._once<string>("debug");
   }
 
@@ -187,7 +187,7 @@ export class Events {
    * @param fn function to receive the deleted role.
    * @internal
    */
-  public onRoleDelete(fn: (role: Role) => void): void {
+  onRoleDelete(fn: (role: Role) => void): void {
     this._client.on("roleDelete", fn);
   }
 
@@ -204,7 +204,7 @@ export class Events {
    * @returns Deleted role.
    * @internal
    */
-  public onceRoleDelete(roleIdentifier?: RoleIdentifier, timeout?: number): Promise<Role> {
+  onceRoleDelete(roleIdentifier?: RoleIdentifier, timeout?: number): Promise<Role> {
     return executePromiseWithTimeout((resolve) => {
       this.onRoleDelete((deletedRole) => {
         if (!roleIdentifier) {
@@ -223,7 +223,7 @@ export class Events {
    * @param fn function to receive the event.
    * @internal
    */
-  public onDisconnect(fn: (closeEvent: CloseEvent, code: number) => void): void {
+  onDisconnect(fn: (closeEvent: CloseEvent, code: number) => void): void {
     this._client.on("disconnect", fn);
   }
 
@@ -232,7 +232,7 @@ export class Events {
    * @returns Close event.
    * @internal
    */
-  public onceDisconnect(): Promise<[CloseEvent, number]> {
+  onceDisconnect(): Promise<[CloseEvent, number]> {
     return this._once<[CloseEvent, number]>("disconnect");
   }
 
@@ -241,7 +241,7 @@ export class Events {
    * @param fn function to receive the created emoji.
    * @internal
    */
-  public onEmojiCreate(fn: (createdEmoji: GuildEmoji) => void): void {
+  onEmojiCreate(fn: (createdEmoji: GuildEmoji) => void): void {
     this._client.on("emojiCreate", fn);
   }
 
@@ -250,7 +250,7 @@ export class Events {
    * @returns Created emoji.
    * @internal
    */
-  public onceEmojiCreate(): Promise<GuildEmoji> {
+  onceEmojiCreate(): Promise<GuildEmoji> {
     return this._once<GuildEmoji>("emojiCreate");
   }
 
@@ -259,7 +259,7 @@ export class Events {
    * @param fn function to receive the deleted emoji.
    * @internal
    */
-  public onEmojiDelete(fn: (emojiDeleted: GuildEmoji) => void): void {
+  onEmojiDelete(fn: (emojiDeleted: GuildEmoji) => void): void {
     this._client.on("emojiDelete", fn);
   }
 
@@ -268,7 +268,7 @@ export class Events {
    * @returns The emoji that was deleted.
    * @internal
    */
-  public onceEmojiDelete(): Promise<GuildEmoji> {
+  onceEmojiDelete(): Promise<GuildEmoji> {
     return this._once<GuildEmoji>("emojiDelete");
   }
 
@@ -277,7 +277,7 @@ export class Events {
    * @param fn function to receice the old and the new value of the emoji.
    * @internal
    */
-  public onEmojiUpdate(fn: (oldEmoji: GuildEmoji, newEmoji: GuildEmoji) => void): void {
+  onEmojiUpdate(fn: (oldEmoji: GuildEmoji, newEmoji: GuildEmoji) => void): void {
     this._client.on("emojiUpdate", fn);
   }
 
@@ -286,7 +286,7 @@ export class Events {
    * @returns `Old` and `new` role value.
    * @internal
    */
-  public onceEmojiUpdate(): Promise<[GuildEmoji, GuildEmoji]> {
+  onceEmojiUpdate(): Promise<[GuildEmoji, GuildEmoji]> {
     return this._once<[GuildEmoji, GuildEmoji]>("emojiUpdate");
   }
 
@@ -295,7 +295,7 @@ export class Events {
    * @param fn function to receive the error.
    * @internal
    */
-  public onError(fn: (error: Error) => void): void {
+  onError(fn: (error: Error) => void): void {
     this._client.on("error", fn);
   }
 
@@ -304,7 +304,7 @@ export class Events {
    * @return Found error.
    * @internal
    */
-  public onceError(): Promise<Error> {
+  onceError(): Promise<Error> {
     return this._once<Error>("error");
   }
 
@@ -314,7 +314,7 @@ export class Events {
    * and the user itself.
    * @internal
    */
-  public onGuildBan(fn: (guild: Guild, user: User) => void) {
+  onGuildBan(fn: (guild: Guild, user: User) => void) {
     this._client.on("guildBanAdd", fn);
   }
 
@@ -323,7 +323,7 @@ export class Events {
    * @returns `guild` where the user was banned from, and the `user` itself
    * @internal
    */
-  public onceGuildBan() {
+  onceGuildBan() {
     return this._once<[Guild, User]>("guildBanAdd");
   }
 
@@ -333,7 +333,7 @@ export class Events {
    * from ban, and the user.
    * @internal
    */
-  public onGuildBanRemove(fn: (guild: Guild, user: User) => void) {
+  onGuildBanRemove(fn: (guild: Guild, user: User) => void) {
     this._client.on("guildBanRemove", fn);
   }
 
@@ -343,7 +343,7 @@ export class Events {
    * from ban, and the `user`.
    * @internal
    */
-  public onceGuildBanRemove() {
+  onceGuildBanRemove() {
     return this._once<[Guild, User]>("guildBanRemove");
   }
 
@@ -352,7 +352,7 @@ export class Events {
    * @param fn function to receive the created guild.
    * @internal
    */
-  public onGuildCreate(fn: (createdGuild: Guild) => void) {
+  onGuildCreate(fn: (createdGuild: Guild) => void) {
     this._client.on("guildCreate", fn);
   }
 
@@ -361,7 +361,7 @@ export class Events {
    * @returns Created guild.
    * @internal
    */
-  public onceGuildCreate() {
+  onceGuildCreate() {
     return this._once<Guild>("guildCreate");
   }
 
@@ -370,7 +370,7 @@ export class Events {
    * @param fn function to receive the deleted guild.
    * @internal
    */
-  public onGuildDelete(fn: (deletedGuild: Guild) => void) {
+  onGuildDelete(fn: (deletedGuild: Guild) => void) {
     this._client.on("guildDelete", fn);
   }
 
@@ -379,7 +379,7 @@ export class Events {
    * @returns Deleted guild.
    * @internal
    */
-  public onceGuildDelete() {
+  onceGuildDelete() {
     return this._once<Guild>("guildDelete");
   }
 
@@ -388,7 +388,7 @@ export class Events {
    * @param fn function to receive the member who was added to guild.
    * @internal
    */
-  public onGuildMemberAdd(fn: (member: GuildMember) => void) {
+  onGuildMemberAdd(fn: (member: GuildMember) => void) {
     this._client.on("guildMemberAdd", fn);
   }
 
@@ -397,7 +397,7 @@ export class Events {
    * @returns Member who was added to guild.
    * @internal
    */
-  public onceGuildMemberAdd() {
+  onceGuildMemberAdd() {
     return this._once<GuildMember>("guildMemberAdd");
   }
 
@@ -406,7 +406,7 @@ export class Events {
    * @param fn function to receive the guild who is available.
    * @internal
    */
-  public onGuildMemberAvailable(fn: (member: GuildMember | PartialGuildMember) => void) {
+  onGuildMemberAvailable(fn: (member: GuildMember | PartialGuildMember) => void) {
     this._client.on("guildMemberAvailable", fn);
   }
 
@@ -415,7 +415,7 @@ export class Events {
    * @returns Guild who is available.
    * @internal
    */
-  public onceGuildMemberAvailable() {
+  onceGuildMemberAvailable() {
     return this._once<GuildMember | PartialGuildMember>("guildMemberAvailable");
   }
 
@@ -424,7 +424,7 @@ export class Events {
    * @param fn function to receive the member of guild who kicked.
    * @internal
    */
-  public onGuildMemberRemove(fn: (member: GuildMember | PartialGuildMember) => void) {
+  onGuildMemberRemove(fn: (member: GuildMember | PartialGuildMember) => void) {
     this._client.on("guildMemberRemove", fn);
   }
 
@@ -433,7 +433,7 @@ export class Events {
    * @returns Member of guild who kicked.
    * @internal
    */
-  public onceGuildMemberRemove() {
+  onceGuildMemberRemove() {
     return this._once<GuildMember | PartialGuildMember>("guildMemberRemove");
   }
 
@@ -442,7 +442,7 @@ export class Events {
    * @param fn function to receive the collection of members that the guild received.
    * @internal
    */
-  public onGuildMemberChunk(
+  onGuildMemberChunk(
     fn: (members: Collection<string, GuildMember>, guild: Guild, eventResume: EventResume) => void,
   ) {
     this._client.on("guildMembersChunk", fn);
@@ -453,7 +453,7 @@ export class Events {
    * @returns The collection of members that the guild received.
    * @internal
    */
-  public onceGuildMemberChunk() {
+  onceGuildMemberChunk() {
     return this._once<[Collection<string, GuildMember>, Guild, EventResume]>("guildMembersChunk");
   }
 
@@ -462,7 +462,7 @@ export class Events {
    * @param fn function to receive the guild's member who is speaking.
    * @internal
    */
-  public onGuildMemberSpeaking(
+  onGuildMemberSpeaking(
     fn: (member: GuildMember | PartialGuildMember, speaking: Readonly<Speaking>) => void,
   ): void {
     this._client.on("guildMemberSpeaking", fn);
@@ -473,7 +473,7 @@ export class Events {
    * @returns The guild's member who is speaking.
    * @internal
    */
-  public onceGuildMemberSpeaking() {
+  onceGuildMemberSpeaking() {
     return this._once<[GuildMember | PartialGuildMember, Readonly<Speaking>]>(
       "guildMemberSpeaking",
     );
@@ -484,7 +484,7 @@ export class Events {
    * @param fn function to receive the old and the new value of the guild member.
    * @internal
    */
-  public onGuildMemberUpdate(
+  onGuildMemberUpdate(
     fn: (oldMember: GuildMember | PartialGuildMember, newMember: GuildMember) => void,
   ) {
     this._client.on("guildMemberUpdate", fn);
@@ -495,7 +495,7 @@ export class Events {
    * @returns Old and the new value of the guild member.
    * @internal
    */
-  public onceGuildMemberUpdate() {
+  onceGuildMemberUpdate() {
     return this._once<[GuildMember | PartialGuildMember, GuildMember]>("guildMemberUpdate");
   }
 
@@ -504,7 +504,7 @@ export class Events {
    * @param fn function to receive the unvailable guild.
    * @internal
    */
-  public onGuildUnavailable(fn: (guild: Guild) => void) {
+  onGuildUnavailable(fn: (guild: Guild) => void) {
     this._client.on("guildUnavailable", fn);
   }
 
@@ -513,7 +513,7 @@ export class Events {
    * @returns Unvailable guild.
    * @internal
    */
-  public onceGuildUnavailable() {
+  onceGuildUnavailable() {
     return this._once<Guild>("guildUnavailable");
   }
 
@@ -522,7 +522,7 @@ export class Events {
    * @param fn function to receive the old and new value of the updated guild.
    * @internal
    */
-  public onGuildUpdate(fn: (oldGuild: Guild, newGuild: Guild) => void) {
+  onGuildUpdate(fn: (oldGuild: Guild, newGuild: Guild) => void) {
     this._client.on("guildUpdate", fn);
   }
 
@@ -531,7 +531,7 @@ export class Events {
    * @returns The old and new value of the updated guild.
    * @internal
    */
-  public onceGuildUpdate() {
+  onceGuildUpdate() {
     return this._once<[Guild, Guild]>("guildUpdate");
   }
 
@@ -540,7 +540,7 @@ export class Events {
    * @param fn function to receive the created message.
    * @internal
    */
-  public onMessage(fn: (message: Message) => void) {
+  onMessage(fn: (message: Message) => void) {
     this._client.on("message", fn);
   }
 
@@ -549,7 +549,7 @@ export class Events {
    * @returns Created message.
    * @internal
    */
-  public onceMessage(authorId?: string, timeout?: number) {
+  onceMessage(authorId?: string, timeout?: number) {
     return executePromiseWithTimeout<Message>((resolve) => {
       this.onMessage((message) => {
         if (!authorId) {
@@ -570,7 +570,7 @@ export class Events {
    * @param fn function to receive the deleted message.
    * @internal
    */
-  public onMessageDelete(fn: (deletedMessage: Message | PartialMessage) => void) {
+  onMessageDelete(fn: (deletedMessage: Message | PartialMessage) => void) {
     this._client.on("messageDelete", fn);
   }
 
@@ -579,7 +579,7 @@ export class Events {
    * @returns Deleted message.
    * @internal
    */
-  public onceMessageDelete() {
+  onceMessageDelete() {
     return this._once<Message | PartialMessage>("messageDelete");
   }
 
@@ -589,9 +589,7 @@ export class Events {
    * was deleted.
    * @internal
    */
-  public onMessageDeleteBulk(
-    fn: (deletedMessages: Collection<string, Message | PartialMessage>) => void,
-  ) {
+  onMessageDeleteBulk(fn: (deletedMessages: Collection<string, Message | PartialMessage>) => void) {
     this._client.on("messageDeleteBulk", fn);
   }
 
@@ -600,7 +598,7 @@ export class Events {
    * @returns Collection of messages that was deleted.
    * @internal
    */
-  public onceMessageDeleteBulk() {
+  onceMessageDeleteBulk() {
     return this._once<Collection<string, Message | PartialMessage>>("messageDeleteBulk");
   }
 
@@ -609,9 +607,7 @@ export class Events {
    * @param fn function to receive the added reaction and it's author.
    * @internal
    */
-  public onMessageReactionAdd(
-    fn: (addedReaction: MessageReaction, author: User | PartialUser) => void,
-  ) {
+  onMessageReactionAdd(fn: (addedReaction: MessageReaction, author: User | PartialUser) => void) {
     this._client.on("messageReactionAdd", fn);
   }
 
@@ -620,7 +616,7 @@ export class Events {
    * @returns Added reaction and it's author.
    * @internal
    */
-  public onceMessageReactionAdd() {
+  onceMessageReactionAdd() {
     return this._once<[MessageReaction, User | PartialUser]>("messageReactionAdd");
   }
 
@@ -629,7 +625,7 @@ export class Events {
    * @returns A list of relation of reactions added and the author.
    * @internal
    */
-  public onceMessageReactionsAdd(filter: SearchMessageReactionsOptions) {
+  onceMessageReactionsAdd(filter: SearchMessageReactionsOptions) {
     return this._onceMessageReactionUpdate(filter, "onMessageReactionAdd");
   }
 
@@ -638,7 +634,7 @@ export class Events {
    * @returns A list of relation of reactions removed and the author.
    * @internal
    */
-  public onceMessageReactionsRemove(filter: SearchMessageReactionsOptions) {
+  onceMessageReactionsRemove(filter: SearchMessageReactionsOptions) {
     return this._onceMessageReactionUpdate(filter, "onMessageReactionRemove");
   }
 
@@ -695,7 +691,7 @@ export class Events {
    * of the remotion.
    * @internal
    */
-  public onMessageReactionRemove(
+  onMessageReactionRemove(
     fn: (removedReaction: MessageReaction, author: User | PartialUser) => void,
   ) {
     this._client.on("messageReactionRemove", fn);
@@ -706,7 +702,7 @@ export class Events {
    * @returns Removed reaction and the author of the remotion.
    * @internal
    */
-  public onceMessageReactionRemove() {
+  onceMessageReactionRemove() {
     return this._once<[MessageReaction, User | PartialUser]>("messageReactionRemove");
   }
 
@@ -716,7 +712,7 @@ export class Events {
    * removed.
    * @internal
    */
-  public onMessageReactionRemoveAll(fn: (message: Message | PartialMessage) => void) {
+  onMessageReactionRemoveAll(fn: (message: Message | PartialMessage) => void) {
     this._client.on("messageReactionRemoveAll", fn);
   }
 
@@ -725,7 +721,7 @@ export class Events {
    * @param fn Message who had it's reactions removed.
    * @internal
    */
-  public onceMessageReactionRemoveAll() {
+  onceMessageReactionRemoveAll() {
     return this._once<Message | PartialMessage>("messageReactionRemoveAll");
   }
 
@@ -734,7 +730,7 @@ export class Events {
    * @param fn function to receive the old and new value of a message.
    * @internal
    */
-  public onMessageUpdate(
+  onMessageUpdate(
     fn: (oldMessage: Message | PartialMessage, newMessage: Message | PartialMessage) => void,
   ) {
     this._client.on("messageUpdate", fn);
@@ -745,7 +741,7 @@ export class Events {
    * @returns `Old` and `new` value of a message.
    * @internal
    */
-  public onceMessageUpdate() {
+  onceMessageUpdate() {
     return this._once<[Message | PartialMessage, Message | PartialMessage]>("messageUpdate");
   }
 
@@ -757,7 +753,7 @@ export class Events {
    * @returns A message who had his content changed
    * @internal
    */
-  public onceMessageContentOrEmbedChange(messageIdentifier?: MessageIdentifier, timeout?: number) {
+  onceMessageContentOrEmbedChange(messageIdentifier?: MessageIdentifier, timeout?: number) {
     const validator = new Validator<[Message | PartialMessage, Message | PartialMessage]>();
     validator.add(
       (oldMessage, newMessage) =>
@@ -794,7 +790,7 @@ export class Events {
    * @param fn function to receive the old and new presence values.
    * @internal
    */
-  public onPresenceUpdate(fn: (oldMember: Presence, newMember: Presence) => void) {
+  onPresenceUpdate(fn: (oldMember: Presence, newMember: Presence) => void) {
     this._client.on("presenceUpdate", fn);
   }
 
@@ -803,7 +799,7 @@ export class Events {
    * @returns Old and new presence values.
    * @internal
    */
-  public oncePresenceUpdate() {
+  oncePresenceUpdate() {
     return this._once<[Presence, Presence]>("presenceUpdate");
   }
 
@@ -812,7 +808,7 @@ export class Events {
    * @param fn function to receive the created role.
    * @internal
    */
-  public onRoleCreate(fn: (createdRole: Role) => void) {
+  onRoleCreate(fn: (createdRole: Role) => void) {
     this._client.on("roleCreate", fn);
   }
 
@@ -821,7 +817,7 @@ export class Events {
    * @returns Created role.
    * @internal
    */
-  public onceRoleCreate() {
+  onceRoleCreate() {
     return this._once<Role>("roleCreate");
   }
 
@@ -830,7 +826,7 @@ export class Events {
    * @param fn function to receive the old and the new role value.
    * @internal
    */
-  public onRoleUpdate(fn: (oldRole: Role, newRole: Role) => void) {
+  onRoleUpdate(fn: (oldRole: Role, newRole: Role) => void) {
     this._client.on("roleUpdate", fn);
   }
 
@@ -839,14 +835,14 @@ export class Events {
    * @returns `old` and the `new` role value.
    * @internal
    */
-  public onceRoleUpdate() {
+  onceRoleUpdate() {
     return this._once<[Role, Role]>("roleUpdate");
   }
 
   /**
    * @internal
    */
-  public onceRoleRenamed(roleIdentifier?: RoleIdentifier, timeout?: number) {
+  onceRoleRenamed(roleIdentifier?: RoleIdentifier, timeout?: number) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.name !== newRole.name,
       timeout,
@@ -857,7 +853,7 @@ export class Events {
   /**
    * @internal
    */
-  public onceRolePositionUpdate(roleIdentifier?: RoleIdentifier, timeout?: number) {
+  onceRolePositionUpdate(roleIdentifier?: RoleIdentifier, timeout?: number) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.position !== newRole.position,
       timeout,
@@ -868,7 +864,7 @@ export class Events {
   /**
    * @internal
    */
-  public onceRoleUpdateColor(roleIdentifier?: RoleIdentifier, timeout?: number) {
+  onceRoleUpdateColor(roleIdentifier?: RoleIdentifier, timeout?: number) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.color !== newRole.color,
       timeout,
@@ -879,7 +875,7 @@ export class Events {
   /**
    * @internal
    */
-  public onceRoleHoistUpdate(roleIdentifier?: RoleIdentifier, timeout?: number) {
+  onceRoleHoistUpdate(roleIdentifier?: RoleIdentifier, timeout?: number) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.hoist !== newRole.hoist,
       timeout,
@@ -890,7 +886,7 @@ export class Events {
   /**
    * @internal
    */
-  public onceRoleMentionableUpdate(roleIdentifier?: RoleIdentifier, timeout?: number) {
+  onceRoleMentionableUpdate(roleIdentifier?: RoleIdentifier, timeout?: number) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.mentionable !== newRole.mentionable,
       timeout,
@@ -904,7 +900,7 @@ export class Events {
    * @returns Specified role that had his permissions updated.
    * @internal
    */
-  public onceRolePermissionUpdate(roleIdentifier: RoleIdentifier, timeout = DEFAULT_TEST_TIMEOUT) {
+  onceRolePermissionUpdate(roleIdentifier: RoleIdentifier, timeout = DEFAULT_TEST_TIMEOUT) {
     return new Promise<Role>((resolve, reject) => {
       setTimeout(() => {
         reject(new TimeoutError());
@@ -935,9 +931,7 @@ export class Events {
    * is typing.
    * @internal
    */
-  public onTypingStart(
-    fn: (channel: Channel | PartialDMChannel, user: User | PartialUser) => void,
-  ) {
+  onTypingStart(fn: (channel: Channel | PartialDMChannel, user: User | PartialUser) => void) {
     this._client.on("typingStart", fn);
   }
 
@@ -946,7 +940,7 @@ export class Events {
    * @returns `Channel` (where) and the `user` (who) is typing.
    * @internal
    */
-  public onceTypingStart() {
+  onceTypingStart() {
     return this._once<[Channel | PartialDMChannel, User | PartialUser]>("typingStart");
   }
 
@@ -955,7 +949,7 @@ export class Events {
    * @param fn function to receive the old and the new value of the user.
    * @internal
    */
-  public onUserUpdate(fn: (oldUser: User | PartialUser, newUser: User) => void) {
+  onUserUpdate(fn: (oldUser: User | PartialUser, newUser: User) => void) {
     this._client.on("userUpdate", fn);
   }
 
@@ -964,7 +958,7 @@ export class Events {
    * @returns `Old` and the `new` value of the user.
    * @internal
    */
-  public onceUserUpdate() {
+  onceUserUpdate() {
     return this._once<[User | PartialUser, User]>("userUpdate");
   }
 
@@ -973,7 +967,7 @@ export class Events {
    * @param fn function to receive the old and the new voiceState value.
    * @internal
    */
-  public onVoiceStateUpdate(fn: (oldMember: VoiceState, newMember: VoiceState) => void) {
+  onVoiceStateUpdate(fn: (oldMember: VoiceState, newMember: VoiceState) => void) {
     this._client.on("voiceStateUpdate", fn);
   }
 
@@ -982,7 +976,7 @@ export class Events {
    * @returns `Old` and the `new` voiceState value.
    * @internal
    */
-  public onceVoiceStateUpdate() {
+  onceVoiceStateUpdate() {
     return this._once<[VoiceState, VoiceState]>("voiceStateUpdate");
   }
 
