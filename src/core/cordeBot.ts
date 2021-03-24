@@ -244,8 +244,8 @@ export class CordeBot {
   public async findMessage(data: MessageData | ((message: Message) => boolean)): Promise<Message> {
     const messageData: MessageData = data as MessageData;
 
-    if (messageData && messageData.text) {
-      return this._findMessage((m) => m.content === messageData.text);
+    if (messageData && messageData.content) {
+      return this._findMessage((m) => m.content === messageData.content);
     }
     if (messageData && messageData.id) {
       return this._findMessage((m) => m.id === messageData.id);
@@ -258,8 +258,8 @@ export class CordeBot {
 
   public async findPinnedMessage(messageData: MessageData) {
     const msgs = await this.textChannel.messages.fetchPinned();
-    if (messageData && messageData.text) {
-      return msgs.find((m) => m.content === messageData.text);
+    if (messageData && messageData.content) {
+      return msgs.find((m) => m.content === messageData.content);
     }
     if (messageData && messageData.id) {
       return msgs.find((m) => m.id === messageData.id);

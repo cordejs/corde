@@ -658,7 +658,7 @@ export class Events {
 
     if (messageData) {
       validator.add(
-        ({ message }) => message.id === messageData.id || message.content === messageData.text,
+        ({ message }) => message.id === messageData.id || message.content === messageData.content,
       );
     }
 
@@ -766,7 +766,8 @@ export class Events {
 
     if (messageData) {
       validator.add(
-        (oldMessage) => oldMessage.id === messageData.id || oldMessage.content === messageData.text,
+        (oldMessage) =>
+          oldMessage.id === messageData.id || oldMessage.content === messageData.content,
       );
     }
 

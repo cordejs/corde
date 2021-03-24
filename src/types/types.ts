@@ -156,9 +156,15 @@ export interface MinifiedEmbedMessage {
 
 export interface MessageData {
   /**
-   * We recommend to use **id** for message search.
+   * Text of a message, use it to find a message if you don't know
+   * it's **id**.
+   *
+   * If there is more than one message with the same content,
+   * Corde will handle the latest message sent.
+   *
+   * ps: To avoid possible inconsistences, recommend to use **id** for message search.
    */
-  text?: string;
+  content?: string;
   /**
    * Identifier of the message
    */
