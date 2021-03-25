@@ -1,5 +1,5 @@
 import { Command } from "commander";
-import { go } from "./go";
+import { _default } from "./default";
 import { init } from "./init";
 import { validate } from "./validate";
 import { configFileType } from "../types/types";
@@ -39,7 +39,7 @@ program
     if (options.files) {
       runtime.testFiles = options.files.split(" ");
     }
-    await go();
+    await _default();
   });
 
 program

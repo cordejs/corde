@@ -4,7 +4,7 @@ import path from "path";
 import { runtime, testCollector } from "../common";
 import { reader, summary, TestExecutor } from "../core";
 import { FileError } from "../errors";
-import { LogUpdate } from "../utils";
+import { LogUpdate } from "../utils/logUpdate";
 import { validate } from "./validate";
 
 declare module "ora" {
@@ -19,7 +19,7 @@ process.on("uncaughtException", () => {
 
 let spinner: Ora;
 
-export async function go() {
+export async function _default() {
   loadConfigs();
   const files = readDir(runtime.testFiles);
   if (!files || files.length === 0) {
