@@ -1,22 +1,57 @@
+import { Message, PartialMessage } from "discord.js";
 import { MessageIdentifier, TestReport } from "../../../types";
-import { wait } from "../../../utils";
+import { typeOf } from "../../../utils";
+import messageUtils from "../../messageUtils";
 import { ExpectTest } from "../expectTest";
 
 export class ToPinMessage extends ExpectTest {
-  public async action(messageIdentifier: MessageIdentifier): Promise<TestReport> {
-    await this.cordeBot.sendTextMessage(this.command);
-    await wait(600);
-    const msg = await this.cordeBot.findPinnedMessage(messageIdentifier);
-    if (!msg) {
-      this.hasPassed = false;
-      return this.createReport();
+  public async action(messageIdentifier: MessageIdentifier | string): Promise<TestReport> {
+    if (
+      !messageIdentifier ||
+      (typeOf(messageIdentifier) !== "string" && typeOf(messageIdentifier) !== "object")
+    ) {
+      return this.createReport(
+        `expected: message identifier to be a string or a MessageIdentifier object\n`,
+        `received: ${typeOf(messageIdentifier)}`,
+      );
     }
 
-    if (msg.pinned) {
-      this.hasPassed = true;
+    let _msgIdentifier: MessageIdentifier;
+
+    if (typeof messageIdentifier === "string") {
+      _msgIdentifier = { id: messageIdentifier };
+    } else {
+      _msgIdentifier = messageIdentifier;
     }
+
+    await this.cordeBot.sendTextMessage(this.command);
+    let msgString = messageUtils.humanizeMessageIdentifierObject(_msgIdentifier);
+    let message: Message | PartialMessage;
+    try {
+      message = await this.cordeBot.events.onceMessagePinned(_msgIdentifier);
+    } catch {
+      if (this.isNot) {
+        return { pass: true };
+      }
+
+      return this.createReport(
+        `expected: pin ${msgString}\n`,
+        `received: informed message was not pinned`,
+      );
+    }
+
+    // Test has passed due to event validation
+    this.hasPassed = true;
 
     this.invertHasPassedIfIsNot();
-    return this.createReport();
+
+    if (this.hasPassed) {
+      return { pass: true };
+    }
+
+    return this.createReport(
+      `expected: to ${this.isNot ? "not " : ""}pin ${msgString}\n`,
+      `received: message pin = false`,
+    );
   }
 }

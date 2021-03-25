@@ -97,11 +97,11 @@ class MessageUtils {
     }
 
     if (msgIdentifier?.id) {
-      return `message with id ${msgIdentifier.id}`;
+      return `message of id ${msgIdentifier.id}`;
     }
 
     if (msgIdentifier.content) {
-      return `message with content "${msgIdentifier.content}"`;
+      return `message of content "${msgIdentifier.content}"`;
     }
 
     return "";

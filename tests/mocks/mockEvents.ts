@@ -124,8 +124,17 @@ export class MockEvents {
    * @internal
    */
   mockOnceMessageContentOrEmbedChange(message?: Message) {
-    return (this._corde.events.onceMessageContentOrEmbedChange = jest
+    this._corde.events.onceMessageContentOrEmbedChange = jest
       .fn()
-      .mockReturnValue(message ?? this._mockDiscord.message));
+      .mockReturnValue(message ?? this._mockDiscord.message);
+  }
+
+  /**
+   * @internal
+   */
+  mockOnceMessagePinned(message?: Message) {
+    this._corde.events.onceMessagePinned = jest
+      .fn()
+      .mockReturnValue(message ?? this._mockDiscord.pinnedMessage);
   }
 }

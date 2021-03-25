@@ -6,7 +6,7 @@ import {
   Primitive,
   TestReport,
 } from "../../../types";
-import { diff, formatObject, isPrimitiveValue, typeOf, wait } from "../../../utils";
+import { diff, formatObject, isPrimitiveValue, typeOf } from "../../../utils";
 import { ExpectTest } from "../expectTest";
 import messageUtils from "../../messageUtils";
 

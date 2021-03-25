@@ -746,6 +746,35 @@ export class Events {
   }
 
   /**
+   * Emitted once a message is pinned
+   *
+   * @param messageIdentifier Identifier of the message
+   * @param timeout timeout to wait
+   * @returns The pinned message
+   * @internal
+   */
+  onceMessagePinned(messageIdentifier?: MessageIdentifier, timeout?: number) {
+    const validator = new Validator<[Message | PartialMessage, Message | PartialMessage]>();
+    validator.add((oldMessage, newMessage) => !oldMessage.pinned && newMessage.pinned);
+
+    if (messageIdentifier) {
+      validator.add(
+        (oldMessage) =>
+          oldMessage.id === messageIdentifier.id ||
+          oldMessage.content === messageIdentifier.content,
+      );
+    }
+
+    return executePromiseWithTimeout<Message | PartialMessage>((resolve) => {
+      this.onMessageUpdate((oldMessage, newMessage) => {
+        if (validator.isValid(oldMessage, newMessage)) {
+          resolve(newMessage);
+        }
+      });
+    }, timeout ?? runtime.timeOut);
+  }
+
+  /**
    * Emitted once a message with `id` x or `content` y, or it's embed message has changed.
    *
    * @param messageIdentifier Identifier of the message

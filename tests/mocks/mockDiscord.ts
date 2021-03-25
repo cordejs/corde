@@ -106,6 +106,8 @@ export default class MockDiscord {
   private _voiceState!: VoiceState;
   private _messageEmbedLike: MessageEmbedLike;
   private _messageWithEmbed: Message;
+  private _pinnedMessage: Message;
+  private _unPinnedMessage: Message;
 
   /**
    * Initialize all mocks
@@ -317,6 +319,14 @@ export default class MockDiscord {
     return this._messageWithEmbed;
   }
 
+  get pinnedMessage() {
+    return this._pinnedMessage;
+  }
+
+  get unPinnedMessage() {
+    return this._unPinnedMessage;
+  }
+
   get<T extends Collection<K, V>, K, V>(collection: T, index: number) {
     return collection.array()[index];
   }
@@ -338,6 +348,9 @@ export default class MockDiscord {
     this._guildMember = this.createMockGuildMember();
     this._message = this.createMockMessage();
     this._messageCollection = this.createMockMessageCollection();
+
+    this._unPinnedMessage = this.createMockUnPinnedMessage();
+    this._pinnedMessage = this.createMockPinnedMessage();
 
     this._messageReaction = this.createMockMessageReaction();
     this._isolatedMessageReaction = this.createIsolatedMockMessageReaction();
@@ -507,6 +520,18 @@ export default class MockDiscord {
       this._textChannel,
     );
 
+    return msg;
+  }
+
+  createMockPinnedMessage() {
+    const msg = this.createMockMessage();
+    msg.pinned = true;
+    return msg;
+  }
+
+  createMockUnPinnedMessage() {
+    const msg = this.createMockMessage();
+    msg.pinned = false;
     return msg;
   }
 
