@@ -1,72 +1,82 @@
-import { ColorResolvable, Snowflake } from "discord.js";
+import { ColorResolvable } from "discord.js";
 import { RoleIdentifier } from "../../types";
 import { Colors, RolePermission } from "../../utils";
 
+/**
+ * Tests for a **Role** structure.
+ */
 export interface RoleMatches {
   /**
-   * Defines the new color that a role should have after
-   * a command call.
+   * Check if a command changed a role color.
    *
    * @param color The new color for the role.
-   * @param name Identifier of the role. It can be its it or it's name.
-   * Can also use RoleIdentifier to filter it.
-   *
-   * @example
-   *
-   * // Being the command:
-   * let msg: Message;
-   * msg.guild.roles.cache.find((r) => r.name === "player-one").setColor("GREEN");
-   *
-   * //The test operation shuld be
-   *
-   * expect("commandThatChangeColorOf player-one").toSetRoleColor("GREEN", {name: "player-one"})
-   *
-   * // You can also use the Colors helper.
-   *
-   * expect("commandThatChangeColorOf player-one").toSetRoleColor(Colors.GREEN, {name: "player-one"})
-   *
+   * @param roleId Id of the role.
    * @since 2.0
    */
-  toSetRoleColor(color: ColorResolvable, id: string): void;
+  toSetRoleColor(color: ColorResolvable, roleId: string): void;
+  /**
+   * Check if a command changed a role color.
+   *
+   * @param color The new color for the role.
+   * @param roleIdentifier Object with the **id** or the **name** of the role.
+   * @since 2.0
+   */
   toSetRoleColor(color: ColorResolvable, roleIdentifier: RoleIdentifier): void;
-  toSetRoleColor(color: Colors, id: string): void;
+  /**
+   * Check if a command changed a role color.
+   *
+   * @param color Color enum in hexadecimal format.
+   * @param roleId Object with the **id** or the **name** of the role.
+   * @since 2.0
+   */
+  toSetRoleColor(color: Colors, roleId: string): void;
+  /**
+   * Check if a command changed a role color.
+   *
+   * @param color Color enum in hexadecimal format.
+   * @param roleId Object with the **id** or the **name** of the role.
+   * @since 2.0
+   */
   toSetRoleColor(color: Colors, roleIdentifier: RoleIdentifier): void;
 
   /**
-   * Defines a role that should be removed.
-   * @param id Id of the role. Can also use RoleIdentifier to filter it.
+   * Check if a command deletes a role.
    *
-   * @example
-   *
-   * // Being the command:
-   * let msg: Message;
-   * const data = msg.guild.roles.cache.find((r) => r.name === roleName);
-   * await data.delete();
-   *
-   * //The test operation should be
-   *
-   * expect("commandThatChangeColorOf player-one").toDeleteRole({name: "player-one"})
-   *
+   * @param roleId Id of the role.
    * @since 2.0
    */
-  toDeleteRole(id: string): void;
+  toDeleteRole(roleId: string): void;
+
+  /**
+   * Check if a command deletes a role.
+   *
+   * @param roleIdentifier Object with **id** or **name** of the role.
+   * @since 2.0
+   */
   toDeleteRole(roleIdentifier: RoleIdentifier): void;
 
   /**
-   * Defines a role that should have his *mentionable* property state.
+   * Check if a command define a role as mentionable.
    *
    * @param mentionable If the role can or can not be mentionable.
-   * @param id Identifier of the role. Can also use RoleIdentifier to filter it.
+   * @param roleId Id of the role.
    * @since 2.0
    */
-  toSetRoleMentionable(mentionable: boolean, id: Snowflake): void;
+  toSetRoleMentionable(mentionable: boolean, roleId: string): void;
+  /**
+   * Check if a command define a role as mentionable.
+   *
+   * @param mentionable If the role can or can not be mentionable.
+   * @param roleIdentifier Object with **id** or **name** of the role.
+   * @since 2.0
+   */
   toSetRoleMentionable(mentionable: boolean, roleIdentifier: RoleIdentifier): void;
 
   /**
-   * Defines if a role should be hoist or not.
+   * Check if a commend define a role as hoist.
    *
    * @param hoist if this role is pinned in the user listing.
-   * @param id Identifier of the role. Can also use RoleIdentifier to filter it.
+   * @param roleId Id of the role.
    *
    * @description Discord provides two methods of displaying roles; hoisted and standard.
    * The role hierarchy is visibly clear to server members; roles are sorted and displayed
@@ -79,24 +89,48 @@ export interface RoleMatches {
    * @see https://discord.com/developers/docs/topics/permissions
    * @since 2.0
    */
-  toSetRoleHoist(hoist: boolean, id: string): void;
+  toSetRoleHoist(hoist: boolean, roleId: string): void;
+  /**
+   * Check if a commend define a role as hoist.
+   *
+   * @param hoist if this role is pinned in the user listing.
+   * @param roleIdentifier Object with **id** or **name** of the role.
+   *
+   * @description Discord provides two methods of displaying roles; hoisted and standard.
+   * The role hierarchy is visibly clear to server members; roles are sorted and displayed
+   * based on which role is higher in the role management menu.
+   *
+   * However, in a standard configuration, users are sorted alphabetically, meaning someone
+   * with the highest role will be sorted wherever their name exists in the alphabet.
+   *
+   * Source from [discord support](https://support.discord.com/hc/en-us/community/posts/360060076751-Un-hoisted-Role-Hierarchy).
+   * @see https://discord.com/developers/docs/topics/permissions
+   * @since 2.0
+   */
   toSetRoleHoist(hoist: boolean, roleIdentifier: RoleIdentifier): void;
 
   /**
-   * Defines a new name for a role.
+   * Check if a command rename a role.
    *
    * @param newName new name of the role
-   * @param id Identifier of the role. Can also use RoleIdentifier to filter it.
+   * @param roleId Id of the role.
    * @since 2.0
    */
-  toRenameRole(newName: string, id: string): void;
+  toRenameRole(newName: string, roleId: string): void;
+  /**
+   * Check if a command rename a role.
+   *
+   * @param newName new name of the role
+   * @param roleIdentifier Object with **id** or **name** of the role.
+   * @since 2.0
+   */
   toRenameRole(newName: string, roleIdentifier: RoleIdentifier): void;
 
   /**
-   * Defines a new position for the role.
+   * Check if a command change a role's position.
    *
    * @param newPosition The new position of the role.
-   * @param id Identifier of the role. Can also use RoleIdentifier to filter it.
+   * @param roleId Id of the role.
    *
    * @description Role's maximum value depends of the amount of roles the guid Have.
    * So, if there is only 3 roles (including the default *everyone*), the maximum
@@ -105,27 +139,44 @@ export interface RoleMatches {
    * @see https://discord.com/developers/docs/topics/permissions
    * @since 2.0
    */
-  toSetRolePosition(newPosition: number, id: string): void;
+  toSetRolePosition(newPosition: number, roleId: string): void;
+  /**
+   * Check if a command change a role's position.
+   *
+   * @param newPosition The new position of the role.
+   * @param roleIdentifier Object with **id** or **name** of the role.
+   *
+   * @description Role's maximum value depends of the amount of roles the guid Have.
+   * So, if there is only 3 roles (including the default *everyone*), the maximum
+   * position that a role can have is 2 (The count begins with 0, So: 0, 1, 2).
+   *
+   * @see https://discord.com/developers/docs/topics/permissions
+   * @since 2.0
+   */
   toSetRolePosition(newPosition: number, roleIdentifier: RoleIdentifier): void;
 
   /**
-   * Defines a list of
-   * [Permissions](https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags)
-   * that a role should have.
+   * Check if a command change the
+   * [permissions](https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags)
+   * of a role.
    *
-   * @param id Identifier of the role. Can also use RoleIdentifier to filter it.
+   * @param roleId Id of the role.
    * @param permissions List of permissions allowed by Discord.
-   *
-   * @example
-   *
-   * corde.test("change role color", () => {
-   *    const role = getRole();
-   *    expect("changeRole " + role.id).toSetRolePermission(role.id, "ADMINISTRATOR", "BAN_MEMBERS");
-   * });
    *
    * @see https://discord.com/developers/docs/topics/permissions#permissions
    * @since 2.0
    */
-  toSetRolePermission(id: string, ...permissions: RolePermission[]): void;
+  toSetRolePermission(roleId: string, ...permissions: RolePermission[]): void;
+  /**
+   * Check if a command change the
+   * [permissions](https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags)
+   * of a role.
+   *
+   * @param roleIdentifier Object with **id** or **name** of the role.
+   * @param permissions List of permissions allowed by Discord.
+   *
+   * @see https://discord.com/developers/docs/topics/permissions#permissions
+   * @since 2.0
+   */
   toSetRolePermission(roleIdentifier: RoleIdentifier, ...permissions: RolePermission[]): void;
 }
