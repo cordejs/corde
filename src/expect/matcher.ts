@@ -63,17 +63,7 @@ class ExpectMatches implements Matches {
     this._isNot = isNot;
   }
 
-  toEditMessage(newValue: string, messageIdentifier?: MessageEditedIdentifier): void;
-  toEditMessage(newValue: string, messageIdentifier?: string): void;
-  toEditMessage(newValue: number, messageIdentifier?: MessageEditedIdentifier): void;
-  toEditMessage(newValue: number, messageIdentifier?: string): void;
-  toEditMessage(newValue: bigint, messageIdentifier?: MessageEditedIdentifier): void;
-  toEditMessage(newValue: bigint, messageIdentifier?: string): void;
-  toEditMessage(newValue: boolean, messageIdentifier?: string): void;
-  toEditMessage(newValue: boolean, messageIdentifier?: MessageEditedIdentifier): void;
-  toEditMessage(newValue: MessageEmbedLike, messageIdentifier?: MessageEditedIdentifier): void;
-  toEditMessage(newValue: MessageEmbedLike, messageIdentifier?: string): void;
-  public toEditMessage(
+  toEditMessage(
     newValue: Primitive | MessageEmbedLike,
     message: MessageEditedIdentifier | string,
   ): void {
@@ -83,25 +73,15 @@ class ExpectMatches implements Matches {
     });
   }
 
-  public toPin(messageId: string): void;
-  public toPin(message: MessageIdentifier): void;
-  public toPin(message: string | MessageIdentifier): void {
-    let data: MessageIdentifier;
-    if (typeof message === "string") {
-      data = { id: message };
-    } else {
-      data = message;
-    }
+  toPin(message: string | MessageIdentifier): void {
     const trace = getStackTrace();
 
     testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(trace, ToPinMessage, cordeBot, data);
+      return this.operationFactory(trace, ToPinMessage, cordeBot, message);
     });
   }
 
-  public toUnPin(messageId: string): void;
-  public toUnPin(message: MessageIdentifier): void;
-  public toUnPin(message: string | MessageIdentifier): void {
+  toUnPin(message: string | MessageIdentifier): void {
     let data: MessageIdentifier;
     if (typeof message === "string") {
       data = { id: message };
@@ -115,28 +95,14 @@ class ExpectMatches implements Matches {
     });
   }
 
-  public toReturn(expect: string): void;
-  public toReturn(expect: boolean): void;
-  public toReturn(expect: number): void;
-  public toReturn(expect: bigint): void;
-  public toReturn(expect: MessageEmbedLike): void;
-  public toReturn(expect: Primitive | MessageEmbedLike): void {
+  toReturn(expect: Primitive | MessageEmbedLike): void {
     const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) =>
       this.operationFactory(trace, ToReturn, cordeBot, expect),
     );
   }
 
-  toAddReaction(emojis: string[]): void;
-  toAddReaction(emojis: EmojiLike[]): void;
-  toAddReaction(emojis: (string | EmojiLike)[]): void;
-  toAddReaction(emojis: string[], messageIdentifier: string): void;
-  toAddReaction(emojis: string[], messageIdentifier: MessageIdentifier): void;
-  toAddReaction(emojis: EmojiLike[], messageIdentifier: string): void;
-  toAddReaction(emojis: EmojiLike[], messageIdentifier: MessageIdentifier): void;
-  toAddReaction(emojis: (string | EmojiLike)[], messageIdentifier: string): void;
-  toAddReaction(emojis: (string | EmojiLike)[], messageIdentifier: MessageIdentifier): void;
-  public toAddReaction(
+  toAddReaction(
     emojis: string[] | EmojiLike[] | (string | EmojiLike)[],
     messageIdentifier?: string | MessageIdentifier,
   ): void {
@@ -146,16 +112,7 @@ class ExpectMatches implements Matches {
     );
   }
 
-  toRemoveReaction(emojis: string[]): void;
-  toRemoveReaction(emojis: EmojiLike[]): void;
-  toRemoveReaction(emojis: (string | EmojiLike)[]): void;
-  toRemoveReaction(emojis: string[], messageIdentifier: string): void;
-  toRemoveReaction(emojis: string[], messageIdentifier: MessageIdentifier): void;
-  toRemoveReaction(emojis: EmojiLike[], messageIdentifier: string): void;
-  toRemoveReaction(emojis: EmojiLike[], messageIdentifier: MessageIdentifier): void;
-  toRemoveReaction(emojis: (string | EmojiLike)[], messageIdentifier: string): void;
-  toRemoveReaction(emojis: (string | EmojiLike)[], messageIdentifier: MessageIdentifier): void;
-  public toRemoveReaction(
+  toRemoveReaction(
     emojis: string[] | EmojiLike[] | (string | EmojiLike)[],
     messageIdentifier?: string | MessageIdentifier,
   ): void {
@@ -165,11 +122,7 @@ class ExpectMatches implements Matches {
     );
   }
 
-  public toSetRoleColor(color: Colors, id: Snowflake): void;
-  public toSetRoleColor(color: Colors, name: RoleIdentifier): void;
-  public toSetRoleColor(color: ColorResolvable, id: Snowflake): void;
-  public toSetRoleColor(color: ColorResolvable, name: RoleIdentifier): void;
-  public toSetRoleColor(color: ColorResolvable | Colors, role: Snowflake | RoleIdentifier) {
+  toSetRoleColor(color: ColorResolvable | Colors, role: Snowflake | RoleIdentifier) {
     const data = this.getRoleData(role);
     const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) => {
@@ -177,9 +130,7 @@ class ExpectMatches implements Matches {
     });
   }
 
-  public toDeleteRole(id: string): void;
-  public toDeleteRole(name: RoleIdentifier): void;
-  public toDeleteRole(role: string | RoleIdentifier) {
+  toDeleteRole(role: string | RoleIdentifier) {
     const data = this.getRoleData(role);
     const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) => {
@@ -187,9 +138,7 @@ class ExpectMatches implements Matches {
     });
   }
 
-  public toSetRoleMentionable(mentionable: boolean, id: string): void;
-  public toSetRoleMentionable(mentionable: boolean, roleIdentifier: RoleIdentifier): void;
-  public toSetRoleMentionable(mentionable: boolean, roleIdentifier: string | RoleIdentifier) {
+  toSetRoleMentionable(mentionable: boolean, roleIdentifier: string | RoleIdentifier) {
     const data = this.getRoleData(roleIdentifier);
     const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) => {
@@ -197,9 +146,7 @@ class ExpectMatches implements Matches {
     });
   }
 
-  public toSetRoleHoist(hoist: boolean, id: string): void;
-  public toSetRoleHoist(hoist: boolean, roleIdentifier: RoleIdentifier): void;
-  public toSetRoleHoist(hoist: boolean, roleIdentifier: string | RoleIdentifier) {
+  toSetRoleHoist(hoist: boolean, roleIdentifier: string | RoleIdentifier) {
     const data = this.getRoleData(roleIdentifier);
     const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) => {
@@ -207,9 +154,7 @@ class ExpectMatches implements Matches {
     });
   }
 
-  public toRenameRole(newName: string, id: string): void;
-  public toRenameRole(newName: string, roleIdentifier: RoleIdentifier): void;
-  public toRenameRole(newName: string, roleIdentifier: string | RoleIdentifier) {
+  toRenameRole(newName: string, roleIdentifier: string | RoleIdentifier) {
     const data = this.getRoleData(roleIdentifier);
     const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) => {
@@ -217,9 +162,7 @@ class ExpectMatches implements Matches {
     });
   }
 
-  public toSetRolePosition(newPosition: number, id: string): void;
-  public toSetRolePosition(newPosition: number, roleIdentifier: RoleIdentifier): void;
-  public toSetRolePosition(newPosition: number, roleIdentifier: string | RoleIdentifier) {
+  toSetRolePosition(newPosition: number, roleIdentifier: string | RoleIdentifier) {
     const data = this.getRoleData(roleIdentifier);
     const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) => {
@@ -227,15 +170,7 @@ class ExpectMatches implements Matches {
     });
   }
 
-  public toSetRolePermission(id: string, ...permissions: RolePermission[]): void;
-  public toSetRolePermission(
-    roleIdentifier: RoleIdentifier,
-    ...permissions: RolePermission[]
-  ): void;
-  public toSetRolePermission(
-    roleIdentifier: string | RoleIdentifier,
-    ...permissions: RolePermission[]
-  ) {
+  toSetRolePermission(roleIdentifier: string | RoleIdentifier, ...permissions: RolePermission[]) {
     const data = this.getRoleData(roleIdentifier);
     const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) => {
@@ -284,7 +219,7 @@ class ExpectMatches implements Matches {
 }
 
 export class ExpectMatchesWithNot extends ExpectMatches implements MatchWithNot {
-  public not: ExpectMatches;
+  not: ExpectMatches;
 
   constructor(commandName: unknown) {
     super(commandName, false);
