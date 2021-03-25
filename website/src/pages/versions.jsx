@@ -28,7 +28,9 @@ export default function Versions() {
                       <Link to={version.path}>Documentation</Link>
                     </td>
                     <td>
-                      <a href={`${repoUrl}/releases/tag/v${version.name}`}>Release Notes</a>
+                      <a href={`${repoUrl}/releases/tag/v${getVersionFullName(version.label)}`}>
+                        Release Notes
+                      </a>
                     </td>
                   </tr>
                 ))}
@@ -39,4 +41,12 @@ export default function Versions() {
       </main>
     </Layout>
   );
+}
+
+/**
+ * @param {string} version
+ */
+function getVersionFullName(version) {
+  const versionChar = version[0];
+  return `${versionChar}.0.0`;
 }

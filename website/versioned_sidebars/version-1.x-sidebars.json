@@ -1,5 +1,5 @@
 {
-  "version-1.0.0/sidebar": [
+  "version-1.x/sidebar": [
     {
       "collapsed": false,
       "type": "category",
@@ -7,15 +7,15 @@
       "items": [
         {
           "type": "doc",
-          "id": "version-1.0.0/getting-started"
+          "id": "version-1.x/getting-started"
         },
         {
           "type": "doc",
-          "id": "version-1.0.0/cli"
+          "id": "version-1.x/cli"
         },
         {
           "type": "doc",
-          "id": "version-1.0.0/configurations"
+          "id": "version-1.x/configurations"
         }
       ]
     },
@@ -26,11 +26,11 @@
       "items": [
         {
           "type": "doc",
-          "id": "version-1.0.0/command"
+          "id": "version-1.x/command"
         },
         {
           "type": "doc",
-          "id": "version-1.0.0/hooks"
+          "id": "version-1.x/hooks"
         }
       ]
     }
