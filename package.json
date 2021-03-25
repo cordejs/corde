@@ -1,6 +1,6 @@
 {
   "name": "corde",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "A simple library for Discord bot tests",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -127,7 +127,7 @@
   "bugs": {
     "url": "https://github.com/lucasgmagalhaes/corde/issues"
   },
-  "homepage": "https://github.com/lucasgmagalhaes/corde#readme",
+  "homepage": "https://corde.netlify.app",
   "files": [
     "lib/**",
     "bin/",
