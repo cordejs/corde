@@ -754,8 +754,39 @@ export class Events {
    * @internal
    */
   onceMessagePinned(messageIdentifier?: MessageIdentifier, timeout?: number) {
+    return this._onceMessageSetPinneble(
+      (oldMessage, newMessage) => !oldMessage.pinned && newMessage.pinned,
+      messageIdentifier,
+      timeout,
+    );
+  }
+
+  /**
+   * Emitted once a message is unPinned
+   *
+   * @param messageIdentifier Identifier of the message
+   * @param timeout timeout to wait
+   * @returns The pinned message
+   * @internal
+   */
+  onceMessageUnPinned(messageIdentifier?: MessageIdentifier, timeout?: number) {
+    return this._onceMessageSetPinneble(
+      (oldMessage, newMessage) => oldMessage.pinned && !newMessage.pinned,
+      messageIdentifier,
+      timeout,
+    );
+  }
+
+  private _onceMessageSetPinneble(
+    validation: (
+      oldMessage: Message | PartialMessage,
+      newMessage: Message | PartialMessage,
+    ) => boolean,
+    messageIdentifier?: MessageIdentifier,
+    timeout?: number,
+  ) {
     const validator = new Validator<[Message | PartialMessage, Message | PartialMessage]>();
-    validator.add((oldMessage, newMessage) => !oldMessage.pinned && newMessage.pinned);
+    validator.add(validation);
 
     if (messageIdentifier) {
       validator.add(

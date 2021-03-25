@@ -25,7 +25,7 @@ import {
   ToEditMessage,
   ToPinMessage,
   ToRemoveReaction,
-  ToUnpinMessage,
+  ToUnPinMessage,
   ToSetRolePermission,
 } from "./matches";
 import { ExpectTest } from "./matches/expectTest";
@@ -73,25 +73,18 @@ class ExpectMatches implements Matches {
     });
   }
 
-  toPin(message: string | MessageIdentifier): void {
+  toPin(messageIdentifier: string | MessageIdentifier): void {
     const trace = getStackTrace();
 
     testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(trace, ToPinMessage, cordeBot, message);
+      return this.operationFactory(trace, ToPinMessage, cordeBot, messageIdentifier);
     });
   }
 
-  toUnPin(message: string | MessageIdentifier): void {
-    let data: MessageIdentifier;
-    if (typeof message === "string") {
-      data = { id: message };
-    } else {
-      data = message;
-    }
-
+  toUnPin(messageIdentifier: string | MessageIdentifier): void {
     testCollector.addTestFunction((cordeBot) => {
       const trace = getStackTrace();
-      return this.operationFactory(trace, ToUnpinMessage, cordeBot, data);
+      return this.operationFactory(trace, ToUnPinMessage, cordeBot, messageIdentifier);
     });
   }
 

@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing unpin message test should return a failed test due to isNot false and timeout (messageIdentifier) 1`] = `
+Object {
+  "message": "    
+    expected: unpin message of id 1233
+    received: informed message was not unpinned
+",
+  "pass": false,
+}
+`;
+
+exports[`testing unpin message test should return a failed test due to isNot false and timeout 1`] = `
+Object {
+  "message": "    
+    expected: unpin message of id 1233
+    received: informed message was not unpinned
+",
+  "pass": false,
+}
+`;
+
+exports[`testing unpin message test should return a failed test due to message unpinned but isNot true 1`] = `
+Object {
+  "message": "    
+    expected: to not unpin message of id 1233
+    received: message pin = true
+",
+  "pass": false,
+}
+`;
+
+exports[`testing unpin message test should return a passed test due to isNot true and timeout 1`] = `
+Object {
+  "pass": true,
+}
+`;
+
+exports[`testing unpin message test should return a passed test due to message unpinned 1`] = `
+Object {
+  "pass": true,
+}
+`;
+
+exports[`testing unpin message test should return error message due to no mesageIdentifier (null) 1`] = `
+Object {
+  "message": "    
+    expected: message identifier to be a string or a MessageIdentifier object
+    received: null
+",
+  "pass": false,
+}
+`;
+
+exports[`testing unpin message test should return error message due to no mesageIdentifier (undefined) 1`] = `
+Object {
+  "message": "    
+    expected: message identifier to be a string or a MessageIdentifier object
+    received: undefined
+",
+  "pass": false,
+}
+`;
