@@ -107,7 +107,7 @@
   "bugs": {
     "url": "https://github.com/lucasgmagalhaes/corde/issues"
   },
-  "homepage": "https://github.com/lucasgmagalhaes/corde#readme",
+  "homepage": "https://corde.netlify.app",
   "files": [
     "lib/**",
     "bin/",
