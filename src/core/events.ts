@@ -915,7 +915,7 @@ export class Events {
    */
   onceRolePositionUpdate(roleIdentifier?: RoleIdentifier, timeout?: number) {
     return this._onRoleUpdateWithTimeout(
-      (oldRole, newRole) => oldRole.position !== newRole.position,
+      (oldRole, newRole) => oldRole.rawPosition !== newRole.rawPosition,
       timeout,
       roleIdentifier,
     );

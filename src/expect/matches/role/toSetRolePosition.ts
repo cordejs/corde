@@ -40,7 +40,7 @@ export class ToSetRolePosition extends ExpectTest {
 
     if (newPosition > lastRole.position) {
       return this.createReport(
-        `expected: position to be >= 0 and <= ${lastRole.position} (max value possible)\n`,
+        `expected: position to be >= 0 and <= ${lastRole.rawPosition} (max value possible)\n`,
         `received: ${newPosition}`,
       );
     }
@@ -72,7 +72,7 @@ export class ToSetRolePosition extends ExpectTest {
 
     return this.createReport(
       `expected: role position to change to ${newPosition}\n`,
-      `received: ${role.position}`,
+      `received: ${role.rawPosition}`,
     );
   }
 }

@@ -1,5 +1,5 @@
 import { runtime } from "../common/runtime";
-import { Role } from "../discord-structures";
+import { CordeRole } from "../discord-structures";
 import { CordeClientError } from "../errors";
 import { BaseRole } from "../types/types";
 
@@ -19,7 +19,7 @@ export async function createRole(roleIdentifier: BaseRole) {
 
   try {
     const createdRole = await runtime.bot.roleManager.create({ data: roleIdentifier });
-    return new Role(createdRole);
+    return new CordeRole(createdRole);
   } catch (error) {
     throw Error("Could not create the role. " + error);
   }

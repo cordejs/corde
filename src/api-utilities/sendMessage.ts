@@ -8,7 +8,7 @@ import { CordeClientError } from "../errors";
  *
  * **This function does not work without a test case**
  *
- * @param message Message send
+ * @param message Message to send
  *
  * @example
  *
@@ -32,8 +32,7 @@ import { CordeClientError } from "../errors";
  */
 export function sendMessage(message: string | number | MessageEmbed): Promise<Message> {
   if (!message) {
-    console.log("can not send a empty message");
-    return null;
+    throw new Error("Can not send a empty message");
   }
 
   if (!runtime.isBotLoggedIn) {

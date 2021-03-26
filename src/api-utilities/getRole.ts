@@ -1,6 +1,6 @@
 import { RoleIdentifier } from "../types/types";
-import { Role as JSRole } from "discord.js";
-import { Role } from "../discord-structures";
+import { Role } from "discord.js";
+import { CordeRole } from "../discord-structures";
 import { runtime } from "../common";
 import { CordeClientError } from "../errors";
 
@@ -12,7 +12,7 @@ import { CordeClientError } from "../errors";
  * @throws CordeClientError if corde's bot is not connected.
  * @returns Role that matches the provided **id** or **name**
  */
-export function getRole(id: string): Role;
+export function getRole(id: string): CordeRole;
 /**
  * Reach for a `role` in the informed guild in settings,
  * basing on it's **id** or **name**.
@@ -25,27 +25,29 @@ export function getRole(id: string): Role;
  * @throws CordeClientError if corde's bot is not connected.
  * @returns Role that matches the provided **id** or **name**
  */
-export function getRole(data: RoleIdentifier): Role;
-export function getRole(data: string | RoleIdentifier): Role {
+export function getRole(data: RoleIdentifier): CordeRole;
+export function getRole(data: string | RoleIdentifier): CordeRole {
   if (!runtime.isBotLoggedIn()) {
     throw new CordeClientError("Bot is not connected yet. No role can be searched");
   }
 
-  try {
-    if (typeof data === "string") {
-      return convertToCordeRole(runtime.bot.getRoles().find((r) => r.id === data));
-    }
-    return convertToCordeRole(
-      runtime.bot.getRoles().find((r) => r.id === data.id || r.name === data.name),
-    );
-  } catch (error) {
-    throw new Error(`Could not find role ${data}`);
+  const _role = _getRole(data);
+  if (_role) {
+    return convertToCordeRole(_role);
   }
+  return null;
 }
 
-function convertToCordeRole(role: JSRole) {
+function _getRole(data: string | RoleIdentifier) {
+  if (typeof data === "string") {
+    return runtime.bot.getRoles().find((r) => r.id === data);
+  }
+  return runtime.bot.getRoles().find((r) => r.id === data.id || r.name === data.name);
+}
+
+function convertToCordeRole(role: Role) {
   if (role) {
-    return new Role(role);
+    return new CordeRole(role);
   }
   return null;
 }
