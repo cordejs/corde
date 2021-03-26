@@ -2,7 +2,7 @@ import { TestReport } from "../../src/types";
 import { getStackTrace } from "../../src/utils";
 
 type TypeExecutor = () => Promise<TestReport>;
-let executorList: TypeExecutor[] = [];
+const executorList: TypeExecutor[] = [];
 
 class ExpectExample {
   toReturn() {
