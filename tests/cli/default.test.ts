@@ -1,14 +1,16 @@
 import { reader } from "../../src/core/reader";
 import * as validateFn from "../../src/cli/validate";
-import { go } from "../../src/cli/go";
+import { _default } from "../../src/cli/default";
 import { FileError } from "../../src/errors";
 import { runtime } from "../../src/common";
-import { BehaviorSubject } from "rxjs";
-import { testRunner } from "../../src/core/runner";
-import { Group } from "../../src/types";
+import { TestExecutor } from "../../src/core/testExecutor";
+import { summary } from "../../src/core";
 import { mockProcessExit } from "jest-mock-process";
 
-describe("testing go command", () => {
+jest.mock("../../src/core/testExecutor.ts");
+TestExecutor.prototype.runTestsAndPrint = jest.fn().mockImplementation(() => Promise.resolve());
+
+describe("testing default command", () => {
   it("should throw exception due to no files", async () => {
     const readerSpy = jest.spyOn(reader, "loadConfig");
     readerSpy.mockReturnValue({
@@ -26,25 +28,20 @@ describe("testing go command", () => {
     validateSpy.mockImplementation(() => null);
 
     try {
-      await go();
+      await _default();
     } catch (error) {
       expect(error instanceof FileError).toBeTruthy();
     }
   });
 
   it("Should read a file folder", async () => {
-    // @ts-ignore
-    const processSpy = mockProcessExit();
-
+    mockProcessExit();
     const readerSpy = jest.spyOn(reader, "loadConfig");
-    const testObservable = new BehaviorSubject<boolean>(true);
-    runtime.loginBot = jest.fn().mockImplementation(() => {});
-    jest.spyOn(testRunner, "executeTestCases").mockImplementation((groups: Group[]) => {
-      return Promise.resolve();
-    });
-    runtime.onBotStart = () => testObservable.asObservable();
-
+    runtime.loginBot = jest.fn().mockReturnValue(Promise.resolve());
+    runtime.events.onceReady = jest.fn().mockReturnValue(Promise.resolve());
+    summary.print = jest.fn().mockReturnValue("");
     const validateSpy = jest.spyOn(validateFn, "validate");
+
     validateSpy.mockImplementation(() => null);
 
     readerSpy.mockReturnValue({
@@ -58,10 +55,6 @@ describe("testing go command", () => {
       timeOut: 1000,
     });
 
-    try {
-      await go();
-    } catch (error) {
-      fail();
-    }
+    expect(async () => await _default()).rejects.toBeFalsy();
   });
 });

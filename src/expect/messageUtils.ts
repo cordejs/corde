@@ -6,6 +6,7 @@ import {
   messageType,
   MinifiedEmbedMessage,
   Primitive,
+  MessageEditedIdentifier,
 } from "../types";
 import { pick } from "../utils/pick";
 import { isPrimitiveValue } from "../utils/isPrimitiveValue";
@@ -91,7 +92,9 @@ class MessageUtils {
     }
   }
 
-  public humanizeMessageIdentifierObject(msgIdentifier: MessageIdentifier) {
+  public humanizeMessageIdentifierObject(
+    msgIdentifier: MessageIdentifier | MessageEditedIdentifier,
+  ) {
     if (!msgIdentifier) {
       return "";
     }
@@ -100,8 +103,12 @@ class MessageUtils {
       return `message of id ${msgIdentifier.id}`;
     }
 
-    if (msgIdentifier.content) {
-      return `message of content "${msgIdentifier.content}"`;
+    if ((msgIdentifier as MessageIdentifier).content) {
+      return `message of content "${(msgIdentifier as MessageIdentifier).content}"`;
+    }
+
+    if ((msgIdentifier as MessageEditedIdentifier).oldContent) {
+      return `message of content "${(msgIdentifier as MessageEditedIdentifier).oldContent}"`;
     }
 
     return "";

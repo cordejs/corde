@@ -78,7 +78,7 @@ describe("testing toEditMessage", () => {
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
 
     const message = buildReportMessage(
-      `expected: testing bot to edit the message with id 123\n`,
+      `expected: testing bot to edit the message of id 123\n`,
       `received: message was not edited`,
     );
 
@@ -98,7 +98,7 @@ describe("testing toEditMessage", () => {
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
 
     const message = buildReportMessage(
-      `expected: testing bot to edit the message with id 123\n`,
+      `expected: testing bot to edit the message of id 123\n`,
       `received: message was not edited`,
     );
 
@@ -118,7 +118,7 @@ describe("testing toEditMessage", () => {
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
 
     const message = buildReportMessage(
-      `expected: testing bot to edit the message with content "message test"\n`,
+      `expected: testing bot to edit the message of content "message test"\n`,
       `received: message was not edited`,
     );
 

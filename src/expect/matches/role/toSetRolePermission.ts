@@ -11,12 +11,16 @@ import {
 import { roleUtils } from "../../roleUtils";
 import { ExpectTest } from "../expectTest";
 
+/**
+ * @internal
+ */
 export class ToSetRolePermission extends ExpectTest {
   public async action(
-    roleIdentifier: RoleIdentifier,
+    roleIdentifier: string | RoleIdentifier,
     permissions: RolePermission[],
   ): Promise<TestReport> {
-    const error = roleUtils.getErrorForUndefinedRoleData(roleIdentifier);
+    const identifier = roleUtils.getRoleData(roleIdentifier);
+    const error = roleUtils.getErrorForUndefinedRoleData(identifier);
 
     if (error) {
       return { pass: false, message: error };
@@ -37,8 +41,8 @@ export class ToSetRolePermission extends ExpectTest {
       return this.createReport(diff(permissionsArray, permissions));
     }
 
-    const oldRole = await this.cordeBot.findRole(roleIdentifier);
-    const invalidRoleErrorMessage = roleUtils.validateRole(oldRole, roleIdentifier);
+    const oldRole = await this.cordeBot.findRole(identifier);
+    const invalidRoleErrorMessage = roleUtils.validateRole(oldRole, identifier);
 
     if (invalidRoleErrorMessage) {
       return { pass: false, message: invalidRoleErrorMessage };
@@ -47,7 +51,7 @@ export class ToSetRolePermission extends ExpectTest {
     await this.cordeBot.sendTextMessage(this.command);
     let role: Role;
     try {
-      role = await this.cordeBot.events.onceRolePermissionUpdate(roleIdentifier, this.timeOut);
+      role = await this.cordeBot.events.onceRolePermissionUpdate(identifier, this.timeOut);
     } catch {
       if (this.isNot) {
         return { pass: true };

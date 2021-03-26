@@ -484,6 +484,8 @@ export default class MockDiscord {
     collection.set(this._message.id, this._message);
 
     const msg = this.createMockMessage("Hi");
+    msg.id = "1232142";
+
     collection.set(msg.id, msg);
 
     return collection;
@@ -686,6 +688,7 @@ export default class MockDiscord {
     }
 
     const newRole = this.createMockRole("batata 2");
+    newRole.id = "123321";
     manager.add(newRole, true);
 
     const cachedNewRole = manager.cache.find((r) => r.id === newRole.id);

@@ -1,20 +1,6 @@
-import {
-  AwaitMessagesOptions,
-  Channel,
-  Client,
-  Collection,
-  CollectorFilter,
-  Guild,
-  Message,
-  MessageEmbed,
-  MessageReaction,
-  TextChannel,
-} from "discord.js";
-import { BehaviorSubject } from "rxjs";
-import { runtime } from "../common";
-import { CordeClientError, TimeoutError } from "../errors";
+import { Channel, Client, Collection, Guild, Message, MessageEmbed, TextChannel } from "discord.js";
+import { CordeClientError } from "../errors";
 import { MessageIdentifier, RoleIdentifier } from "../types/types";
-import { executePromiseWithTimeout } from "../utils";
 import { Events } from "./events";
 
 const DEFAULT_TEST_TIMEOUT = 5000;
@@ -24,20 +10,8 @@ const DEFAULT_TEST_TIMEOUT = 5000;
  * functions for corde test.
  */
 export class CordeBot {
-  /**
-   * Observes if corde bot is **ready**.
-   * This is invoked after onReady in Discord.Client.
-   * Used to initialize some data for CordeBot.
-   * **Do not use onReady declared in Events if the intention is to ensure that
-   * cordebot is ready for usage**
-   */
-  public get onStart() {
-    return this._onStart.asObservable();
-  }
+  readonly events: Events;
 
-  public readonly events: Events;
-
-  private readonly _onStart: BehaviorSubject<boolean>;
   private readonly _prefix: string;
   private readonly _guildId: string;
   private readonly _channelId: string;
@@ -46,7 +20,6 @@ export class CordeBot {
   private readonly _client: Client;
 
   private textChannel: TextChannel;
-  private _reactionsObserved: BehaviorSubject<MessageReaction>;
 
   /**
    * Starts new instance of Discord client with its events.
@@ -72,24 +45,22 @@ export class CordeBot {
     this._guildId = guildId;
     this._waitTimeOut = waitTimeOut;
     this._testBotId = testBotId;
-    this._onStart = new BehaviorSubject<boolean>(false);
-    this._reactionsObserved = new BehaviorSubject<MessageReaction>(null);
     this.loadClientEvents();
   }
 
-  public get guild() {
+  get guild() {
     return this.textChannel.guild;
   }
 
-  public get roleManager() {
+  get roleManager() {
     return this.guild.roles;
   }
 
-  public get channel() {
+  get channel() {
     return this.textChannel;
   }
 
-  public get testBotId() {
+  get testBotId() {
     return this._testBotId;
   }
 
@@ -102,7 +73,7 @@ export class CordeBot {
    * rejection with a formatted message if there was found a error in
    * connection attempt.
    */
-  public async login(token: string) {
+  async login(token: string) {
     try {
       return await this._client.login(token);
     } catch (error) {
@@ -113,7 +84,7 @@ export class CordeBot {
   /**
    * Destroy client connection.
    */
-  public logout() {
+  logout() {
     this._client.destroy();
   }
 
@@ -121,7 +92,7 @@ export class CordeBot {
    * Sends a pure message without prefix it.
    * @param message Data to be send to channel
    */
-  public async sendMessage(message: string | number | MessageEmbed) {
+  async sendMessage(message: string | number | MessageEmbed) {
     return await this.textChannel.send(message);
   }
 
@@ -136,7 +107,7 @@ export class CordeBot {
    * @return Promise rejection if a testing bot does not send any message in the timeout value setted,
    * or a resolve for the promise with the message returned by the testing bot.
    */
-  public async sendTextMessage(message: string | number | boolean): Promise<Message> {
+  async sendTextMessage(message: string | number | boolean): Promise<Message> {
     return new Promise<Message>(async (resolve, reject) => {
       try {
         this.validateMessageAndChannel(message);
@@ -153,97 +124,20 @@ export class CordeBot {
    * Observes for a message send by the testing bot after corde bot
    * send it's message.
    */
-  public async awaitMessagesFromTestingBot(timeout: number) {
+  async awaitMessagesFromTestingBot(timeout: number) {
     return this.events.onceMessage(this._testBotId, timeout);
-  }
-
-  /**
-   * Observes for reactions in a message
-   */
-  public async waitForAddedReactions(
-    message: Message,
-    totalReactions?: number,
-  ): Promise<Collection<string, MessageReaction>>;
-  public async waitForAddedReactions(
-    message: Message,
-    reactions?: string[],
-  ): Promise<Collection<string, MessageReaction>>;
-  public async waitForAddedReactions(message: Message, reactions?: string[] | number) {
-    return executePromiseWithTimeout<Collection<string, MessageReaction>>(
-      async (resolve, reject) => {
-        try {
-          const filter = this.createWaitForAdedReactionsFilter(reactions);
-          const maxReactionsToWait = this.defineMaxReactionsToWaitForAddedReactions(reactions);
-          const collectedReactions = await message.awaitReactions(
-            filter,
-            this.createWatchResponseConfigs(maxReactionsToWait),
-          );
-          resolve(collectedReactions);
-        } catch (error) {
-          reject(new TimeoutError());
-        }
-      },
-      runtime.timeOut,
-    );
-  }
-
-  private createWaitForAdedReactionsFilter(reactions: number | string[]): CollectorFilter {
-    if (reactions && Array.isArray(reactions)) {
-      return (reaction, user) => {
-        return reactions.includes(reaction.emoji.name) && this.responseAuthorIsTestingBot(user.id);
-      };
-    }
-
-    return (_reaction, user) => {
-      return this.responseAuthorIsTestingBot(user.id);
-    };
-  }
-
-  private defineMaxReactionsToWaitForAddedReactions(reactions: number | string[]) {
-    if (reactions && Array.isArray(reactions)) {
-      return reactions.length;
-    }
-    if (typeof reactions === "number" && reactions > 0) {
-      return reactions;
-    }
-    return 1;
-  }
-
-  public waitForRemovedReactions(message: Message, take: number) {
-    let amount = 0;
-    const reactions: MessageReaction[] = [];
-    return new Promise<MessageReaction[]>((resolve, reject) => {
-      setTimeout(() => {
-        reject(new TimeoutError());
-      }, runtime.timeOut);
-
-      this._reactionsObserved.subscribe((reaction) => {
-        if (reaction) {
-          if (reaction.message.id === message.id) {
-            amount++;
-            reactions.push(reaction);
-          }
-          if (amount >= take) {
-            this._reactionsObserved.unsubscribe();
-            resolve(reactions);
-          }
-        }
-      });
-    });
   }
 
   /**
    * Checks if corde bot is connected
    */
-  public isLoggedIn() {
-    return !!this._client && !!this._client.readyAt && this._onStart.value;
+  isLoggedIn() {
+    return !!this._client && !!this._client.readyAt;
   }
 
-  public async findMessage(filter: (message: Message) => boolean): Promise<Message>;
-  public async findMessage(data: MessageIdentifier): Promise<Message>;
-  public async findMessage(
-    data: MessageIdentifier | ((message: Message) => boolean),
-  ): Promise<Message> {
+  async findMessage(filter: (message: Message) => boolean): Promise<Message>;
+  async findMessage(data: MessageIdentifier): Promise<Message>;
+  async findMessage(data: MessageIdentifier | ((message: Message) => boolean)): Promise<Message> {
     const messageIdentifier: MessageIdentifier = data as MessageIdentifier;
 
     if (messageIdentifier && messageIdentifier.content) {
@@ -258,30 +152,19 @@ export class CordeBot {
     return null;
   }
 
-  public async findPinnedMessage(messageIdentifier: MessageIdentifier) {
-    const msgs = await this.textChannel.messages.fetchPinned();
-    if (messageIdentifier && messageIdentifier.content) {
-      return msgs.find((m) => m.content === messageIdentifier.content);
-    }
-    if (messageIdentifier && messageIdentifier.id) {
-      return msgs.find((m) => m.id === messageIdentifier.id);
-    }
-    return null;
-  }
-
-  public async fetchRole(id: string) {
+  async fetchRole(id: string) {
     return await this.guild.roles.fetch(id, false, true);
   }
 
-  public async fetchRoles() {
+  async fetchRoles() {
     return await this.guild.roles.fetch();
   }
 
-  public async hasRole(roleIdentifier: RoleIdentifier) {
+  async hasRole(roleIdentifier: RoleIdentifier) {
     return !!(await this.findRole(roleIdentifier));
   }
 
-  public async findRole(roleIdentifier: RoleIdentifier) {
+  async findRole(roleIdentifier: RoleIdentifier) {
     const data = await this.guild.roles.fetch();
     if (roleIdentifier.id) {
       return data.cache.find((r) => r.id === roleIdentifier.id);
@@ -291,7 +174,7 @@ export class CordeBot {
     return null;
   }
 
-  public getRoles() {
+  getRoles() {
     return this.guild.roles.cache;
   }
 
@@ -319,26 +202,9 @@ export class CordeBot {
     this.textChannel = this.convertToTextChannel(channel);
   }
 
-  private responseAuthorIsTestingBot(idAuthor: string) {
-    return idAuthor === this._testBotId;
-  }
-
-  private createWatchResponseConfigs(max: number = 1): AwaitMessagesOptions {
-    return {
-      max,
-      time: this._waitTimeOut ? this._waitTimeOut : DEFAULT_TEST_TIMEOUT,
-      errors: ["time"],
-    };
-  }
-
   private loadClientEvents() {
     this.events.onReady(() => {
       this.loadChannel();
-      this._onStart.next(true);
-    });
-
-    this.events.onMessageReactionRemoveEmoji((reaction) => {
-      this._reactionsObserved.next(reaction);
     });
   }
 
@@ -356,7 +222,7 @@ export class CordeBot {
     }
   }
 
-  public findGuild(guildId: string) {
+  findGuild(guildId: string) {
     if (!this._client.guilds) {
       throw new CordeClientError(
         `corde bot isn't added in a guild. Please add it to the guild: ${guildId}`,
@@ -383,7 +249,7 @@ export class CordeBot {
     }
   }
 
-  public findChannel(guild: Guild, channelId: string) {
+  findChannel(guild: Guild, channelId: string) {
     if (!guild.channels) {
       throw new CordeClientError(`Guild '${guild.name}' do not have any channel.`);
     } else if (!guild.channels.cache.has(channelId)) {

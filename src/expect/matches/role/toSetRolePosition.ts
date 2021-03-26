@@ -3,9 +3,16 @@ import { typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
 import { ExpectTest } from "../expectTest";
 
+/**
+ * @internal
+ */
 export class ToSetRolePosition extends ExpectTest {
-  public async action(newPosition: number, roleIdentifier: RoleIdentifier): Promise<TestReport> {
-    const error = roleUtils.getErrorForUndefinedRoleData(roleIdentifier);
+  public async action(
+    newPosition: number,
+    roleIdentifier: string | RoleIdentifier,
+  ): Promise<TestReport> {
+    const identifier = roleUtils.getRoleData(roleIdentifier);
+    const error = roleUtils.getErrorForUndefinedRoleData(identifier);
 
     if (error) {
       return { pass: false, message: error };
@@ -18,14 +25,14 @@ export class ToSetRolePosition extends ExpectTest {
       );
     }
 
-    const oldRole = await this.cordeBot.findRole(roleIdentifier);
-    const invalidRoleErrorMessage = roleUtils.validateRole(oldRole, roleIdentifier);
+    const oldRole = await this.cordeBot.findRole(identifier);
+    const invalidRoleErrorMessage = roleUtils.validateRole(oldRole, identifier);
 
     if (invalidRoleErrorMessage) {
       return { pass: false, message: invalidRoleErrorMessage };
     }
 
-    let role = await this.cordeBot.findRole(roleIdentifier);
+    let role = await this.cordeBot.findRole(identifier);
     const lastRole = this.cordeBot
       .getRoles()
       .sort((r1, r2) => r2.position - r1.position)
@@ -41,7 +48,7 @@ export class ToSetRolePosition extends ExpectTest {
     await this.cordeBot.sendTextMessage(this.command);
 
     try {
-      role = await this.cordeBot.events.onceRolePositionUpdate(roleIdentifier, this.timeOut);
+      role = await this.cordeBot.events.onceRolePositionUpdate(identifier, this.timeOut);
     } catch {
       if (this.isNot) {
         return { pass: true };

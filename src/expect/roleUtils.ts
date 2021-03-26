@@ -4,7 +4,7 @@ import { RoleIdentifier } from "../types";
 import { buildReportMessage, formatObject } from "../utils";
 
 class RoleUtils {
-  public createExpectedMessageForRoleData(roleIdentifier: RoleIdentifier) {
+  createExpectedMessageForRoleData(roleIdentifier: RoleIdentifier) {
     if (!roleIdentifier) {
       return null;
     }
@@ -24,7 +24,7 @@ class RoleUtils {
     return null;
   }
 
-  public getErrorForUndefinedRoleData(roleIdentifier: RoleIdentifier) {
+  getErrorForUndefinedRoleData(roleIdentifier: RoleIdentifier) {
     if (!roleIdentifier) {
       return buildReportMessage(
         "expected: data to identifier the role (id or name)\n",
@@ -35,7 +35,7 @@ class RoleUtils {
     return null;
   }
 
-  public validateRole(role: Role, roleIdentifier: RoleIdentifier): string | null {
+  validateRole(role: Role, roleIdentifier: RoleIdentifier): string | null {
     if (!role) {
       const message = roleUtils.createExpectedMessageForRoleData(roleIdentifier);
 
@@ -50,6 +50,16 @@ class RoleUtils {
     }
 
     return null;
+  }
+
+  getRoleData(roleIdentifier: string | RoleIdentifier) {
+    let data: RoleIdentifier;
+    if (typeof roleIdentifier === "string") {
+      data = { id: roleIdentifier };
+    } else {
+      data = roleIdentifier as RoleIdentifier;
+    }
+    return data;
   }
 }
 

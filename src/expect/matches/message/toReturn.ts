@@ -11,6 +11,9 @@ import { ExpectTest } from "../expectTest";
 import messageUtils from "../../messageUtils";
 import { diff, formatObject, typeOf } from "../../../utils";
 
+/**
+ * @internal
+ */
 export class ToReturn extends ExpectTest {
   public async action(expect: Primitive | MessageEmbedLike): Promise<TestReport> {
     let _expect: Primitive | MessageEmbed;

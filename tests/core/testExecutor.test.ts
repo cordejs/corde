@@ -9,8 +9,12 @@ import {
   testNames,
 } from "../testHelper";
 
+import { mockTimer } from "../mocks/mockTimer";
+
 let logUpdate: LogUpdate;
 let testRunner: TestExecutor;
+
+mockTimer();
 
 beforeEach(() => {
   logUpdate = new LogUpdate();
@@ -152,7 +156,7 @@ it("should print report for 1 test file, 1 test clausure and 1 test function tha
     testFunctionsReport: [
       {
         pass: false,
-        message: buildReportMessage("expected: hi", "received: hi!"),
+        message: buildReportMessage("expected: hi\n", "received: hi!"),
       },
     ],
     amountOfTests: 1,
@@ -182,7 +186,7 @@ it("should print report for 1 test file, 1 test clausure and 1 failed function a
     testFunctionsReport: [
       {
         pass: false,
-        message: buildReportMessage("expected: hi", "received: hi!"),
+        message: buildReportMessage("expected: hi\n", "received: hi!"),
       },
       { pass: true },
     ],
@@ -212,7 +216,7 @@ it("should print report for 1 test file, 1 test clausure and 1 failed function a
     testFunctionsReport: [
       {
         pass: false,
-        message: buildReportMessage("expected: hi", "received: hi!"),
+        message: buildReportMessage("expected: hi\n", "received: hi!"),
       },
       { pass: true },
     ],
@@ -242,7 +246,7 @@ it("should print report for 1 test file, 2 test clausure and 1 failed function a
     testFunctionsReport: [
       {
         pass: false,
-        message: buildReportMessage("expected: hi", "received: hi!"),
+        message: buildReportMessage("expected: hi\n", "received: hi!"),
       },
       { pass: true },
     ],
@@ -272,7 +276,7 @@ it("should print report for 2 test file, 2 test clausure and 1 failed function a
     testFunctionsReport: [
       {
         pass: false,
-        message: buildReportMessage("expected: hi", "received: hi!"),
+        message: buildReportMessage("expected: hi\n", "received: hi!"),
       },
       { pass: true },
     ],
@@ -315,7 +319,7 @@ it("should print report for 1 test file, 2 test clausure and 1 failed function a
                 () =>
                   Promise.resolve({
                     pass: false,
-                    message: buildReportMessage("expected: hi", "received: hi!"),
+                    message: buildReportMessage("expected: hi\n", "received: hi!"),
                   }),
               ],
             },

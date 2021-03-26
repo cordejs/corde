@@ -4,6 +4,7 @@ import MockDiscord from "../mocks/mockDiscord";
 import { initCordeClient, initCordeClientWithChannel } from "../testHelper";
 import { TimeoutError } from "../../src/errors";
 import { ToReturn } from "../../src/expect/matches";
+import { MockEvents } from "../mocks/mockEvents";
 
 const DEFAULT_PREFIX = "!";
 const mockDiscord = new MockDiscord();
@@ -249,13 +250,11 @@ describe("Testing CordeBot object", () => {
     it("should call TextChannel.awaitMessages", async (done) => {
       const client = new Client();
       const corde = initCordeClientWithChannel(mockDiscord, client);
-      mockDiscord.textChannel.awaitMessages = jest
-        .fn()
-        .mockReturnValue(mockDiscord.messageCollection);
-      client.emit("ready");
+      const mockEvent = new MockEvents(corde, mockDiscord);
+      mockEvent.mockOnceMessage();
 
-      const spy = jest.spyOn(mockDiscord.textChannel, "awaitMessages");
-      await corde.awaitMessagesFromTestingBot();
+      const spy = jest.spyOn(corde.events, "onceMessage");
+      await corde.awaitMessagesFromTestingBot(10);
       expect(spy).toBeCalledTimes(1);
       done();
     });
@@ -274,132 +273,9 @@ describe("Testing CordeBot object", () => {
         });
       client.emit("ready");
       try {
-        expect(await corde.awaitMessagesFromTestingBot());
+        expect(await corde.awaitMessagesFromTestingBot(10));
       } catch (error) {
         expect(error).toBeTruthy();
-      }
-    });
-  });
-
-  describe("testing waitForAddedReactions", () => {
-    it("should call Message.awaitReactions", async (done) => {
-      const client = new Client();
-      const corde = initCordeClientWithChannel(mockDiscord, client);
-      mockDiscord.message.awaitReactions = jest
-        .fn()
-        .mockReturnValue(mockDiscord.messageReactionCollection);
-
-      const spy = jest.spyOn(mockDiscord.message, "awaitReactions");
-      await corde.waitForAddedReactions(mockDiscord.message, 1);
-
-      expect(spy).toBeCalledTimes(1);
-      done();
-    });
-
-    it("should return a message reaction based on amount", async (done) => {
-      const client = new Client();
-      const corde = initCordeClientWithChannel(mockDiscord, client);
-      mockDiscord.message.awaitReactions = jest
-        .fn()
-        .mockImplementation((filter: CollectorFilter) => {
-          if (filter(mockDiscord.messageReaction, mockDiscord.userBot)) {
-            return mockDiscord.messageReactionCollection;
-          } else {
-            return null;
-          }
-        });
-
-      jest.spyOn(mockDiscord.message, "awaitReactions");
-      const reactions = await corde.waitForAddedReactions(mockDiscord.message, 1);
-      expect(reactions.first()).toBe(mockDiscord.messageReaction);
-      expect(reactions.size).toBe(1);
-      done();
-    });
-
-    it("should return a message reaction without inform a amount", async (done) => {
-      const client = new Client();
-      const corde = initCordeClientWithChannel(mockDiscord, client);
-      mockDiscord.message.awaitReactions = jest
-        .fn()
-        .mockImplementation((filter: CollectorFilter) => {
-          if (filter(mockDiscord.messageReaction, mockDiscord.userBot)) {
-            return mockDiscord.messageReactionCollection;
-          } else {
-            return null;
-          }
-        });
-
-      jest.spyOn(mockDiscord.message, "awaitReactions");
-      const reactions = await corde.waitForAddedReactions(mockDiscord.message);
-      expect(reactions.first()).toBe(mockDiscord.messageReaction);
-      expect(reactions.size).toBe(1);
-      done();
-    });
-
-    it("should return a message reaction based on the reaction", async (done) => {
-      const client = new Client();
-      const corde = initCordeClientWithChannel(mockDiscord, client);
-      mockDiscord.message.awaitReactions = jest
-        .fn()
-        .mockImplementation((filter: CollectorFilter) => {
-          if (filter(mockDiscord.messageReaction, mockDiscord.userBot)) {
-            return mockDiscord.messageReactionCollection;
-          } else {
-            return null;
-          }
-        });
-
-      jest.spyOn(mockDiscord.message, "awaitReactions");
-      const reactions = await corde.waitForAddedReactions(mockDiscord.message, [
-        mockDiscord.messageReactionEmojiName,
-      ]);
-      expect(reactions.first()).toBe(mockDiscord.messageReaction);
-      expect(reactions.size).toBe(1);
-      done();
-    });
-
-    it("should return a rejection due to timeout", async (done) => {
-      const client = new Client();
-      const corde = initCordeClientWithChannel(mockDiscord, client);
-
-      jest.spyOn(mockDiscord.message, "awaitReactions");
-      try {
-        await corde.waitForAddedReactions(mockDiscord.message, 1);
-      } catch (error) {
-        expect(error).toBeTruthy();
-        done();
-      }
-    });
-  });
-
-  describe("testing waitForRemovedReactions", () => {
-    it("should get 1 removed reaction from a message", async (done) => {
-      const client = new Client();
-      const corde = initCordeClientWithChannel(mockDiscord, client);
-
-      setTimeout(() => {
-        client.emit("messageReactionRemoveEmoji", mockDiscord.messageReaction);
-      }, 250);
-      const reactions = await corde.waitForRemovedReactions(mockDiscord.message, 1);
-
-      expect(reactions[0]).toBe(mockDiscord.messageReaction);
-      expect(reactions.length).toBe(1);
-      done();
-    });
-
-    it("should not get 1 removed reaction from a message", async (done) => {
-      const client = new Client();
-      const corde = initCordeClientWithChannel(mockDiscord, client);
-
-      setTimeout(() => {
-        client.emit("messageReactionRemoveEmoji", mockDiscord.isolatedMessageReaction);
-      }, 250);
-
-      try {
-        await corde.waitForRemovedReactions(mockDiscord.message, 1);
-      } catch (error) {
-        expect(error).toBeInstanceOf(TimeoutError);
-        done();
       }
     });
   });
@@ -492,7 +368,7 @@ describe("Testing CordeBot object", () => {
         .fn()
         .mockReturnValue(mockDiscord.messageCollection);
 
-      const message = await corde.findMessage({ text: mockDiscord.message.content });
+      const message = await corde.findMessage({ content: mockDiscord.message.content });
       expect(message.id).toBe(mockDiscord.message.id);
       done();
     });
@@ -506,7 +382,7 @@ describe("Testing CordeBot object", () => {
         .fn()
         .mockReturnValue(mockDiscord.messageCollection);
 
-      const message = await corde.findMessage({ text: mockDiscord.message.content });
+      const message = await corde.findMessage({ content: mockDiscord.message.content });
       expect(message.id).toBe(mockDiscord.message.id);
       done();
     });

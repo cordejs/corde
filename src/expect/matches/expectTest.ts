@@ -41,7 +41,7 @@ export abstract class ExpectTest {
    *
    * @returns A report of the executed command.
    */
-  public abstract action(...args: any): Promise<TestReport>;
+  public abstract action(...args: any[]): Promise<TestReport>;
 
   protected invertHasPassedIfIsNot() {
     if (this.isNot) {

@@ -6,11 +6,7 @@ describe("testing testCollector", () => {
     testCollector.isInsideGroupClausure = true;
     testCollector.addTestFunction((corde) => {
       const report: TestReport = {
-        commandName: "",
-        expectation: "",
-        hasPassed: true,
-        isNot: true,
-        output: "",
+        pass: true,
       };
       return Promise.resolve(report);
     });

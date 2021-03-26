@@ -6,6 +6,9 @@ import { ExpectTest } from "../expectTest";
 
 // TODO: refact it due to it's equal to ToAddReaction
 
+/**
+ * @internal
+ */
 export class ToRemoveReaction extends ExpectTest {
   public async action(
     emojis: EmojisType,

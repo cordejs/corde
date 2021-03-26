@@ -3,9 +3,13 @@ import { RoleIdentifier, TestReport } from "../../../types/types";
 import { roleUtils } from "../../roleUtils";
 import { ExpectTest } from "../expectTest";
 
+/**
+ * @internal
+ */
 export class ToDeleteRole extends ExpectTest {
-  public async action(roleIdentifier: RoleIdentifier): Promise<TestReport> {
-    const roleOrFailObject = await this.getRoleOrInvalidMessage(roleIdentifier);
+  public async action(roleIdentifier: string | RoleIdentifier): Promise<TestReport> {
+    const identifier = roleUtils.getRoleData(roleIdentifier);
+    const roleOrFailObject = await this.getRoleOrInvalidMessage(identifier);
 
     if ((roleOrFailObject as TestReport).message) {
       return roleOrFailObject as TestReport;
@@ -15,7 +19,7 @@ export class ToDeleteRole extends ExpectTest {
 
     await this.cordeBot.sendTextMessage(this.command);
     try {
-      await this.cordeBot.events.onceRoleDelete(roleIdentifier, this.timeOut);
+      await this.cordeBot.events.onceRoleDelete(identifier, this.timeOut);
     } catch {
       if (this.isNot) {
         return { pass: true };

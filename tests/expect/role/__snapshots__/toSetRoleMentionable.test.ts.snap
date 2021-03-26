@@ -43,7 +43,7 @@ Object {
 exports[`testing toSetRoleMentionable operation should return false due to invalid mentionable parameter (object) 1`] = `
 Object {
   "message": "    
-    expect: mentionable parameter to be of boolean type
+    expected: mentionable parameter to be of boolean type
     received: object
 ",
   "pass": false,

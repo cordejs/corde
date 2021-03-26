@@ -16,13 +16,13 @@ describe("testing messageUtils", () => {
     });
 
     it("should return message for a messageIdentifier with only text (content)", () => {
-      const message = messageUtils.createNotFoundMessageForMessageData({ text: "hello" });
+      const message = messageUtils.createNotFoundMessageForMessageData({ content: "hello" });
       expect(message).toEqual("Message with content 'hello' not found.");
     });
 
     it("should return a message for a message data with text and id", () => {
       const message = messageUtils.createNotFoundMessageForMessageData({
-        text: "hello",
+        content: "hello",
         id: "123",
       });
       expect(message).toEqual("Message with id 123 or content 'hello' not found.");

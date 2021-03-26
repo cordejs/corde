@@ -4,6 +4,9 @@ import { typeOf } from "../../../utils";
 import messageUtils from "../../messageUtils";
 import { ExpectTest } from "../expectTest";
 
+/**
+ * @internal
+ */
 export class ToPinMessage extends ExpectTest {
   public async action(messageIdentifier: MessageIdentifier | string): Promise<TestReport> {
     if (

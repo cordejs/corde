@@ -1,10 +1,13 @@
 import { summary } from "../../src/core";
 import { TestExecutor } from "../../src/core/testExecutor";
 import { buildReportMessage, LogUpdate } from "../../src/utils";
+import { mockTimer } from "../mocks/mockTimer";
 import { generateTestFile, removeANSIColorStyle, TestFileGeneratorInfo } from "../testHelper";
 
 let logUpdate: LogUpdate;
 let testRunner: TestExecutor;
+
+mockTimer();
 
 beforeEach(() => {
   logUpdate = new LogUpdate();

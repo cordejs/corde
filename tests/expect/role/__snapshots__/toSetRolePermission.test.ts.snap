@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`testing toSetRolePermission operation should fail due to no role mentionable was not updated 1`] = `
+exports[`testing toSetRolePermission operation should fail due to role permissions was not updated 1`] = `
 Object {
   "message": "    
     expected: role permissions change to: ATTACH_FILES
@@ -30,7 +30,7 @@ Object {
 }
 `;
 
-exports[`testing toSetRolePermission operation should return a not passed test due to mentionable should not change (isNot true) 1`] = `
+exports[`testing toSetRolePermission operation should return a not passed test due to permissions should not change (isNot true) 1`] = `
 Object {
   "message": "    
     expected: role permissions not change to: ADMINISTRATOR
@@ -40,7 +40,7 @@ Object {
 }
 `;
 
-exports[`testing toSetRolePermission operation should return a not passed test due to mentionable should not change (isNot true) 2`] = `
+exports[`testing toSetRolePermission operation should return a not passed test due to permissions should not change (isNot true) 2`] = `
 Object {
   "message": "    
     expected: role permissions not change to: ADMINISTRATOR and BAN_MEMBERS
@@ -50,7 +50,7 @@ Object {
 }
 `;
 
-exports[`testing toSetRolePermission operation should return a not passed test due to mentionable should not change (isNot true) 3`] = `
+exports[`testing toSetRolePermission operation should return a not passed test due to permissions should not change (isNot true) 3`] = `
 Object {
   "message": "    
     expected: role permissions not change to: ADMINISTRATOR (and 2 others)
@@ -60,7 +60,7 @@ Object {
 }
 `;
 
-exports[`testing toSetRolePermission operation should return false due to invalid mentionable parameter (object) 1`] = `
+exports[`testing toSetRolePermission operation should return false due to invalid permission parameter (object) 1`] = `
 Object {
   "message": "    
     expected: permissions to be null, undefined or an array
@@ -70,7 +70,7 @@ Object {
 }
 `;
 
-exports[`testing toSetRolePermission operation should return false due to invalid mentionable parameter (undefined) 1`] = `
+exports[`testing toSetRolePermission operation should return false due to invalid permission parameter (undefined) 1`] = `
 Object {
   "message": "    
     expected: permissions to be null, undefined or an array
@@ -96,7 +96,7 @@ Object {
 }
 `;
 
-exports[`testing toSetRolePermission operation should return true due to role changed the mentionable (isNot false) 1`] = `
+exports[`testing toSetRolePermission operation should return true due to role changed permissions (isNot false) 1`] = `
 Object {
   "pass": true,
 }

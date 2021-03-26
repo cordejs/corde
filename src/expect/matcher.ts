@@ -1,4 +1,4 @@
-import { ColorResolvable, Message, MessageEmbed, Snowflake } from "discord.js";
+import { ColorResolvable } from "discord.js";
 import { testCollector } from "../common/testCollector";
 import { CordeBot } from "../core";
 import {
@@ -77,7 +77,7 @@ class ExpectMatches implements Matches {
     const trace = getStackTrace();
 
     testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(trace, ToPinMessage, cordeBot, messageIdentifier);
+      return this.operationFactory(null, ToPinMessage, cordeBot, messageIdentifier);
     });
   }
 
@@ -115,70 +115,65 @@ class ExpectMatches implements Matches {
     );
   }
 
-  toSetRoleColor(color: ColorResolvable | Colors, role: Snowflake | RoleIdentifier) {
-    const data = this.getRoleData(role);
+  toSetRoleColor(color: ColorResolvable | Colors, roleIdentifier: string | RoleIdentifier) {
     const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(trace, ToSetRoleColor, cordeBot, color, data);
+      return this.operationFactory(trace, ToSetRoleColor, cordeBot, color, roleIdentifier);
     });
   }
 
-  toDeleteRole(role: string | RoleIdentifier) {
-    const data = this.getRoleData(role);
+  toDeleteRole(roleIdentifier: string | RoleIdentifier) {
     const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(trace, ToDeleteRole, cordeBot, data);
+      return this.operationFactory(trace, ToDeleteRole, cordeBot, roleIdentifier);
     });
   }
 
   toSetRoleMentionable(mentionable: boolean, roleIdentifier: string | RoleIdentifier) {
-    const data = this.getRoleData(roleIdentifier);
     const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(trace, ToSetRoleMentionable, cordeBot, mentionable, data);
+      return this.operationFactory(
+        trace,
+        ToSetRoleMentionable,
+        cordeBot,
+        mentionable,
+        roleIdentifier,
+      );
     });
   }
 
   toSetRoleHoist(hoist: boolean, roleIdentifier: string | RoleIdentifier) {
-    const data = this.getRoleData(roleIdentifier);
     const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(trace, ToSetRoleHoist, cordeBot, hoist, data);
+      return this.operationFactory(trace, ToSetRoleHoist, cordeBot, hoist, roleIdentifier);
     });
   }
 
   toRenameRole(newName: string, roleIdentifier: string | RoleIdentifier) {
-    const data = this.getRoleData(roleIdentifier);
     const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(trace, ToRenameRole, cordeBot, newName, data);
+      return this.operationFactory(trace, ToRenameRole, cordeBot, newName, roleIdentifier);
     });
   }
 
   toSetRolePosition(newPosition: number, roleIdentifier: string | RoleIdentifier) {
-    const data = this.getRoleData(roleIdentifier);
     const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(trace, ToSetRolePosition, cordeBot, newPosition, data);
+      return this.operationFactory(trace, ToSetRolePosition, cordeBot, newPosition, roleIdentifier);
     });
   }
 
   toSetRolePermission(roleIdentifier: string | RoleIdentifier, ...permissions: RolePermission[]) {
-    const data = this.getRoleData(roleIdentifier);
     const trace = getStackTrace();
     testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(trace, ToSetRolePermission, cordeBot, data, permissions);
+      return this.operationFactory(
+        trace,
+        ToSetRolePermission,
+        cordeBot,
+        roleIdentifier,
+        permissions,
+      );
     });
-  }
-
-  protected getRoleData(roleIdentifier: string | RoleIdentifier) {
-    let data: RoleIdentifier;
-    if (typeof roleIdentifier === "string") {
-      data = { id: roleIdentifier };
-    } else {
-      data = roleIdentifier as RoleIdentifier;
-    }
-    return data;
   }
 
   // Trace can not me added inside operationFactory because it do,
@@ -199,15 +194,26 @@ class ExpectMatches implements Matches {
     if (typeof commandName === "string" && stringIsNullOrEmpty(commandName)) {
       return { pass: false, message: "command can not be null or an empty string" };
     }
+
     const op = new type(cordeBot, commandName, this._isNot);
-    return op.action(params).then((report) => {
+
+    try {
+      const report = await op.action(...params);
+
+      if (!report) {
+        return null;
+      }
+
       if (report.pass) {
         return report;
       }
 
       report.trace = trace;
       return report;
-    });
+    } catch (error) {
+      console.log(error);
+      return { pass: false, message: "command can not be null or an empty string" };
+    }
   }
 }
 

@@ -4,6 +4,9 @@ import { EmojiLike, EmojisType, MessageIdentifier, TestReport } from "../../../t
 import { typeOf } from "../../../utils";
 import { ExpectTest } from "../expectTest";
 
+/**
+ * @internal
+ */
 export class ToAddReaction extends ExpectTest {
   public async action(
     emojis: EmojisType,

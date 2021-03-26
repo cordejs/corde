@@ -3,7 +3,7 @@
 exports[`testing toEditMessage should fail due to message was not edited by the bot (no messageIdentifier as object with content) 1`] = `
 Object {
   "message": "    
-    expected: testing bot to edit the message with content \\"message test\\"
+    expected: testing bot to edit the message of content \\"message test\\"
     received: message was not edited
 ",
   "pass": false,
@@ -13,7 +13,7 @@ Object {
 exports[`testing toEditMessage should fail due to message was not edited by the bot (no messageIdentifier as object with id) 1`] = `
 Object {
   "message": "    
-    expected: testing bot to edit the message with id 123
+    expected: testing bot to edit the message of id 123
     received: message was not edited
 ",
   "pass": false,
@@ -23,7 +23,7 @@ Object {
 exports[`testing toEditMessage should fail due to message was not edited by the bot (no messageIdentifier as string) 1`] = `
 Object {
   "message": "    
-    expected: testing bot to edit the message with id 123
+    expected: testing bot to edit the message of id 123
     received: message was not edited
 ",
   "pass": false,

@@ -10,6 +10,9 @@ import { diff, formatObject, isPrimitiveValue, typeOf } from "../../../utils";
 import { ExpectTest } from "../expectTest";
 import messageUtils from "../../messageUtils";
 
+/**
+ * @internal
+ */
 export class ToEditMessage extends ExpectTest {
   public async action(
     newValue: Primitive | MessageEmbedLike,
