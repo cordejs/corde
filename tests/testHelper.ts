@@ -98,7 +98,6 @@ export function initCordeClient(mockDiscord: MockDiscord, clientInstance: Client
     DEFAULT_PREFIX,
     mockDiscord.guild.id,
     mockDiscord.channel.id,
-    timeout,
     mockDiscord.userBotId,
     clientInstance,
   );

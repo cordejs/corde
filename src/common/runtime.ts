@@ -9,16 +9,20 @@ class Runtime {
   files: string[];
 
   private readonly _configs: Config;
-  private readonly _bot: CordeBot;
+  private _bot: CordeBot;
 
   private static _instance: Runtime;
 
   get bot() {
+    if (!this._bot) {
+      this._bot = this.initBot();
+    }
+
     return this._bot;
   }
 
   get events() {
-    return this._bot.events;
+    return this.bot.events;
   }
 
   get configs() {
@@ -63,14 +67,6 @@ class Runtime {
 
   private constructor() {
     this._configs = new Config();
-    this._bot = new CordeBot(
-      this._configs.botPrefix,
-      this._configs.guildId,
-      this._configs.channelId,
-      this._configs.timeOut,
-      this._configs.botTestId,
-      new Client(),
-    );
   }
 
   static getInstance() {
@@ -92,24 +88,34 @@ class Runtime {
    * Shortcut for *bot.isLoggedIn*
    */
   isBotLoggedIn() {
-    return this._bot && this._bot.isLoggedIn();
+    return this.bot && this.bot.isLoggedIn();
   }
 
   /**
    * Shortcut for *bot.logout*
    */
   logoffBot() {
-    if (this._bot) {
-      this._bot.logout();
+    if (this.bot) {
+      this.bot.logout();
     }
   }
 
   async loginBot(token: string) {
-    return await this._bot.login(token);
+    return await this.bot.login(token);
   }
 
   injectBot(fn: testFunctionType) {
-    return fn(this._bot);
+    return fn(this.bot);
+  }
+
+  initBot() {
+    return new CordeBot(
+      this._configs.botPrefix,
+      this._configs.guildId,
+      this._configs.channelId,
+      this._configs.botTestId,
+      new Client(),
+    );
   }
 }
 

@@ -1,9 +1,8 @@
 import { Channel, Client, Collection, Guild, Message, MessageEmbed, TextChannel } from "discord.js";
+import { DEFAULT_TEST_TIMEOUT } from "../consts";
 import { CordeClientError } from "../errors";
 import { MessageIdentifier, RoleIdentifier } from "../types/types";
 import { Events } from "./events";
-
-const DEFAULT_TEST_TIMEOUT = 5000;
 
 /**
  * Encapsulation of Discord Client with all specific
@@ -11,16 +10,14 @@ const DEFAULT_TEST_TIMEOUT = 5000;
  */
 export class CordeBot {
   readonly events: Events;
-
   private readonly _prefix: string;
   private readonly _guildId: string;
   private readonly _channelId: string;
-  private readonly _waitTimeOut: number;
   private readonly _testBotId: string;
   private readonly _client: Client;
 
   private textChannel: TextChannel;
-
+  private _isReady: boolean;
   /**
    * Starts new instance of Discord client with its events.
    *
@@ -34,7 +31,6 @@ export class CordeBot {
     prefix: string,
     guildId: string,
     channelId: string,
-    waitTimeOut: number = DEFAULT_TEST_TIMEOUT,
     testBotId: string,
     client: Client,
   ) {
@@ -43,9 +39,9 @@ export class CordeBot {
     this._channelId = channelId;
     this._prefix = prefix;
     this._guildId = guildId;
-    this._waitTimeOut = waitTimeOut;
     this._testBotId = testBotId;
     this.loadClientEvents();
+    this._isReady = false;
   }
 
   get guild() {
@@ -132,7 +128,7 @@ export class CordeBot {
    * Checks if corde bot is connected
    */
   isLoggedIn() {
-    return !!this._client && !!this._client.readyAt;
+    return !!this._client && !!this._client.readyAt && this._isReady;
   }
 
   async findMessage(filter: (message: Message) => boolean): Promise<Message>;
@@ -204,6 +200,7 @@ export class CordeBot {
 
   private loadClientEvents() {
     this.events.onReady(() => {
+      this._isReady = true;
       this.loadChannel();
     });
   }

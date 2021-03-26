@@ -16,7 +16,6 @@ import {
   ToReturn,
   ToSetRoleColor,
 } from "../../src/expect/matches";
-import { TestReport } from "../../src/types";
 import { ExpectMatchesWithNot } from "../../src/expect/matcher";
 
 jest.mock("../../src/expect/matches/message/toReturn.ts");

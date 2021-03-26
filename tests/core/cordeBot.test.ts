@@ -2,7 +2,6 @@ import { testCollector } from "../../src/common/testCollector";
 import { Client, CollectorFilter } from "discord.js";
 import MockDiscord from "../mocks/mockDiscord";
 import { initCordeClient, initCordeClientWithChannel } from "../testHelper";
-import { TimeoutError } from "../../src/errors";
 import { ToReturn } from "../../src/expect/matches";
 import { MockEvents } from "../mocks/mockEvents";
 
@@ -200,12 +199,6 @@ describe("Testing CordeBot object", () => {
       const spy = jest.spyOn(_client, "destroy");
       _cordeClient.logout();
       expect(spy).toBeCalled();
-    });
-  });
-
-  describe("testing onStart", () => {
-    it("should get onStart observable", () => {
-      expect(_cordeClient.onStart).toBeTruthy();
     });
   });
 

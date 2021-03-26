@@ -211,7 +211,6 @@ class ExpectMatches implements Matches {
       report.trace = trace;
       return report;
     } catch (error) {
-      console.log(error);
       return { pass: false, message: "command can not be null or an empty string" };
     }
   }

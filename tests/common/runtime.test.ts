@@ -40,11 +40,6 @@ describe("Testing runtime", () => {
     expect(spy).toBeCalledTimes(1);
   });
 
-  it("should return bot.onStart", () => {
-    runtime.setConfigs(config);
-    expect(runtime.onBotStart()).toEqual(runtime.bot.onStart);
-  });
-
   it("should call bot.login", async (done) => {
     runtime.setConfigs(config);
     const spy = jest.spyOn(runtime.bot, "login");

@@ -5,6 +5,7 @@ import { ToAddReaction } from "../../../src/expect/matches";
 import { TestReport } from "../../../src/types";
 import { buildReportMessage, typeOf } from "../../../src/utils";
 import { MockEvents } from "../../mocks/mockEvents";
+import * as a from "../../../src/core";
 import { runtime } from "../../../src/common";
 
 describe("testing toAddReaction function", () => {
