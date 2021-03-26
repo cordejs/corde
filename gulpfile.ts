@@ -25,7 +25,10 @@ task("default", async () => {
     .pipe(strip())
     .pipe(
       babel({
-        presets: ["@babel/env"],
+        plugins: [
+          "@babel/plugin-syntax-nullish-coalescing-operator",
+          "@babel/plugin-syntax-optional-chaining",
+        ],
       }),
     )
     .pipe(dest(outDir));
