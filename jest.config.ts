@@ -4,7 +4,7 @@ process.env.ENV = "TEST";
 module.exports = {
   rootDir: ".",
   verbose: false,
-  preset: "ts-jest",
+  preset: "ts-jest/presets/js-with-babel",
   testEnvironment: "node",
   collectCoverageFrom: ["./src/**/*.ts"],
   testMatch: ["**/tests/**/*.test.ts"],
@@ -13,6 +13,11 @@ module.exports = {
   projects: ["<rootDir>/tests"],
   restoreMocks: true,
   forceExit: true,
+  globals: {
+    "ts-jest": {
+      babelConfig: true,
+    },
+  },
   transform: {
     "^.+\\.js?$": "babel-jest",
   },
