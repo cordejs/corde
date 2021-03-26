@@ -70,7 +70,7 @@ exports[`testing ToSetRolePosition operation should return a failed report posit
 Object {
   "message": "    
     expected: role position to change to -2
-    received: -1
+    received: 1
 ",
   "pass": false,
 }
@@ -79,7 +79,7 @@ Object {
 exports[`testing ToSetRolePosition operation should return a not passed test due to new position be higher than the permitted (isNot false) 1`] = `
 Object {
   "message": "    
-    expected: position to be >= 0 and <= -1 (max value possible)
+    expected: position to be >= 0 and <= 1 (max value possible)
     received: 2
 ",
   "pass": false,

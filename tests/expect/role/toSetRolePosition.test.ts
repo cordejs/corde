@@ -129,7 +129,7 @@ describe("testing ToSetRolePosition operation", () => {
     const report = await toSetPosition.action(2, { id: "123" });
 
     const message = buildReportMessage(
-      `expected: position to be >= 0 and <= -1 (max value possible)\n`,
+      `expected: position to be >= 0 and <= 1 (max value possible)\n`,
       `received: 2`,
     );
 
@@ -207,7 +207,7 @@ describe("testing ToSetRolePosition operation", () => {
 
     const message = buildReportMessage(
       `expected: role position to change to ${-2}\n`,
-      `received: -1`,
+      `received: 1`,
     );
 
     const matchReport: TestReport = {
