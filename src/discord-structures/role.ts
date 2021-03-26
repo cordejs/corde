@@ -1,12 +1,13 @@
-import { ColorResolvable, Role as DiscordRole } from "discord.js";
+import { ColorResolvable, Role } from "discord.js";
 import { BaseRole } from "../types/types";
 import { Colors, resolveColor, RolePermission } from "../utils";
 
 /**
+ * Encapsulation of [Discord.js Role](https://discord.js.org/#/docs/main/stable/class/Role).
  * @see https://discord.com/developers/docs/topics/permissions#role-object
  */
-export class Role {
-  constructor(private readonly _role: DiscordRole) {}
+export class CordeRole {
+  constructor(private _role: Role) {}
 
   /**
    * Integer representation of hexadecimal color code.
@@ -15,18 +16,30 @@ export class Role {
     return this._role.color;
   }
 
+  /**
+   * Creation time of the role.
+   */
   get createdAt() {
     return this._role.createdAt;
   }
 
+  /**
+   * Inform if this role was deleted.
+   */
   get isDeleted() {
     return this._role.deleted;
   }
 
+  /**
+   * Inform if this role can be edited.
+   */
   get isEditable() {
     return this._role.editable;
   }
 
+  /**
+   * This role's color in hexadecimal.
+   */
   get hexColor() {
     return this._role.hexColor;
   }
@@ -38,6 +51,9 @@ export class Role {
     return this._role.hoist;
   }
 
+  /**
+   * Id of this role.
+   */
   get id() {
     return this._role.id;
   }
@@ -56,15 +72,27 @@ export class Role {
     return this._role.mentionable;
   }
 
+  /**
+   * Name of this role.
+   */
   get name() {
     return this._role.name;
   }
 
+  /**
+   * Position of this role.
+   *
+   * @see https://discord.com/developers/docs/topics/permissions#permission-hierarchy
+   */
   get position() {
-    return this._role.position;
-  }
-
-  get rawPosition() {
+    /**
+     * see https://discord.js.org/#/docs/main/stable/class/Role?scrollTo=position
+     * Position in Discord.js is relative to the roleManager.
+     *
+     * We want the position relative to Discord itself, wich is the RAWPOSITION.
+     *
+     * To avoid the confusion, we will not expose position and rawPosition distinctly.
+     */
     return this._role.rawPosition;
   }
 
@@ -86,7 +114,8 @@ export class Role {
    * @param position new position for this role.
    */
   async updatePosition(position: number) {
-    await this._role.setPosition(position);
+    this._role = await this._role.setPosition(position);
+    return this;
   }
 
   /**
@@ -96,7 +125,8 @@ export class Role {
    * @param newName new value for this role's name
    */
   async updateName(newName: string) {
-    await this._role.setName(newName);
+    this._role = await this._role.setName(newName);
+    return this;
   }
 
   /**
@@ -106,7 +136,8 @@ export class Role {
    * @param mentionable New value for mentionable
    */
   async updateMentionable(mentionable: boolean) {
-    await this._role.setMentionable(mentionable);
+    this._role = await this._role.setMentionable(mentionable);
+    return this;
   }
 
   /**
@@ -117,7 +148,8 @@ export class Role {
    * @param hoist New value for hoist
    */
   async updateHoist(hoist: boolean) {
-    await this._role.setHoist(hoist);
+    this._role = await this._role.setHoist(hoist);
+    return this;
   }
 
   /**
@@ -128,7 +160,8 @@ export class Role {
    */
   async updateColor(newColor: ColorResolvable | Colors) {
     const color = resolveColor(newColor);
-    await this._role.setColor(color);
+    this._role = await this._role.setColor(color);
+    return this;
   }
 
   /**
@@ -139,7 +172,8 @@ export class Role {
    * empty array.
    */
   async updatePermissions(...permissions: RolePermission[]) {
-    await this._role.setPermissions(permissions);
+    this._role = await this._role.setPermissions(permissions);
+    return this;
   }
 
   /**
@@ -152,10 +186,10 @@ export class Role {
    */
   async update(data: BaseRole) {
     if (!data) {
-      return;
+      return this;
     }
 
-    await this._role.edit({
+    this._role = await this._role.edit({
       color: data.color ? resolveColor(data.color) : null,
       hoist: data.isHoist,
       mentionable: data.isMentionable,
@@ -163,5 +197,6 @@ export class Role {
       permissions: data.permissions,
       position: data.position,
     });
+    return this;
   }
 }
