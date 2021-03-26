@@ -125,7 +125,7 @@ function format(json: object | string, config: Config) {
   config = config || configDefault;
   const indent = indentConfig[config.type];
 
-  var indentType = new Array((config.size || indent.size) + 1).join(indent.char);
+  const indentType = new Array((config.size || indent.size) + 1).join(indent.char);
 
   let stringObjt = typeof json === "string" ? json : JSON.stringify(json);
 
@@ -140,8 +140,8 @@ function format(json: object | string, config: Config) {
 
 function formatStringObject(json: string, indentType: string) {
   p = [];
-  var out = "",
-    indent = 0;
+  let out = "";
+  let indent = 0;
 
   // Extract backslashes and strings
   json = json
@@ -175,7 +175,7 @@ function formatStringObject(json: string, indentType: string) {
   // Strip whitespace from numeric arrays and put backslashes
   // and strings back in
   out = out
-    .replace(/\[[\d,\s]+?\]/g, function (m) {
+    .replace(/\[[\d,\s]+?\]/g, (m) => {
       return m.replace(/\s/g, "");
     })
     .replace(/\\(\d+)\\/g, pop) // strings

@@ -26,7 +26,7 @@ export class ToRenameRole extends ExpectTest {
       );
     }
 
-    if (typeof newName === "string" && newName.trim() == "") {
+    if (typeof newName === "string" && newName.trim() === "") {
       return this.createReport(
         `expected: parameter newName must be a valid string\n`,
         `received: '${newName}'`,

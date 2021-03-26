@@ -57,10 +57,10 @@ export class ToRemoveReaction extends ExpectTest {
       }
 
       if (error instanceof TimeoutError && (error.data as any[])?.length) {
-        const emojisReturned = reactionsFromResponse(error.data);
+        const _emojisReturned = reactionsFromResponse(error.data);
         return this.createReport(
           `expected: to remove reactions ${stringifyReactionToPrint(emojis)}\n`,
-          `received: ${emojisReturned}`,
+          `received: ${_emojisReturned}`,
         );
       }
 

@@ -3,6 +3,7 @@
   "rules": {
     "array-type": false,
     "arrow-parens": false,
+    "no-bitwise": false,
     "import-blacklist": [true, "rxjs/Rx"],
     "interface-name": false,
     "max-classes-per-file": false,
@@ -28,6 +29,7 @@
     "prefer-for-of": false,
     "trailing-comma": false,
     "no-unused-variable": false,
-    "unified-signatures": false
+    "unified-signatures": false,
+    "triple-equals": [false]
   }
 }

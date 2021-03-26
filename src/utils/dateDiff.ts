@@ -26,7 +26,7 @@ export function dateDiff(date1: Date, date2: Date): [string, number] {
     return null;
   }
 
-  let difference = date1.getTime() - date2.getTime();
+  const difference = date1.getTime() - date2.getTime();
 
   if (difference === 0) {
     return ["", 0];

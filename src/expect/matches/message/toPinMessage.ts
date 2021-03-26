@@ -28,7 +28,7 @@ export class ToPinMessage extends ExpectTest {
     }
 
     await this.cordeBot.sendTextMessage(this.command);
-    let msgString = messageUtils.humanizeMessageIdentifierObject(_msgIdentifier);
+    const msgString = messageUtils.humanizeMessageIdentifierObject(_msgIdentifier);
     let message: Message | PartialMessage;
     try {
       message = await this.cordeBot.events.onceMessagePinned(_msgIdentifier);

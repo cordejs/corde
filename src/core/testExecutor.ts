@@ -135,7 +135,7 @@ export class TestExecutor {
 
     const testNameLabel = this.testReportLabelFunction(reports);
 
-    let formatedGroupName = !stringIsNullOrEmpty(groupName) ? groupName + " -> " : "";
+    const formatedGroupName = !stringIsNullOrEmpty(groupName) ? groupName + " -> " : "";
 
     if (stringIsNullOrEmpty(test.name)) {
       this._logUpdate.updateLine(

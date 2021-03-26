@@ -2,7 +2,7 @@ import chalk, { rgb } from "chalk";
 import { Role } from "discord.js";
 import { ColorResolvable } from "../../../discordTypes";
 import { RoleIdentifier, TestReport } from "../../../types";
-import { Colors, resolveColor, rgba, typeOf } from "../../../utils";
+import { resolveColor, rgba, typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
 import { ExpectTest } from "../expectTest";
 
@@ -45,12 +45,12 @@ export class ToSetRoleColor extends ExpectTest {
       }
 
       const resolvedExpectedColor = resolveColor(oldRole.color);
-      const fromLabel = createChalkLabelFromColor(resolvedExpectedColor);
-      const toLabel = createChalkLabelFromColor(numberColor);
+      const fromLabelColor = createChalkLabelFromColor(resolvedExpectedColor);
+      const toLabelColor = createChalkLabelFromColor(numberColor);
       return this.createReport(
-        `expected: change role color from ${fromLabel(resolvedExpectedColor)} to ${toLabel(
-          numberColor,
-        )}\n`,
+        `expected: change role color from ${fromLabelColor(
+          resolvedExpectedColor,
+        )} to ${toLabelColor(numberColor)}\n`,
         `received: the color was not changed`,
       );
     }

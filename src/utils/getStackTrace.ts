@@ -26,14 +26,14 @@ import { DEFAULT_STACK_TRACE_LIMIT, EXPECT_RECEIVED_TAB_SPACE } from "../consts"
  * @internal
  */
 export function getStackTrace(stackLimit?: number, removeFirstStack = true): string {
-  let obj: any = {};
+  const obj: any = {};
 
   Error.prepareStackTrace = (_, calls) => {
     const stacksWithoutFirstCall = calls.slice(removeFirstStack ? 1 : 0);
 
     // There is no need of 100% stack trace,
     // so we remove irrelevant paths.
-    let trace =
+    const trace =
       EXPECT_RECEIVED_TAB_SPACE +
       stacksWithoutFirstCall
         .filter((s) => isStrackRelevant(s))

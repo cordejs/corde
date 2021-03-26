@@ -18,9 +18,10 @@ export function rgba(value: number): [number, number, number, number] {
   }
 
   value >>>= 0;
-  const b = value & 0xff,
-    g = (value & 0xff00) >>> 8,
-    r = (value & 0xff0000) >>> 16,
-    a = ((value & 0xff000000) >>> 24) / 255;
+  const b = value & 0xff;
+  const g = (value & 0xff00) >>> 8;
+  const r = (value & 0xff0000) >>> 16;
+  const a = ((value & 0xff000000) >>> 24) / 255;
+
   return [r, g, b, a];
 }

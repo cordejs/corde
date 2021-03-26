@@ -5,14 +5,6 @@ import { CordeBot } from "../core";
 import { ConfigError } from "../errors";
 
 class Runtime {
-  configFilePath: string;
-  files: string[];
-
-  private readonly _configs: Config;
-  private _bot: CordeBot;
-
-  private static _instance: Runtime;
-
   get bot() {
     if (!this._bot) {
       this._bot = this.initBot();
@@ -68,6 +60,13 @@ class Runtime {
   private constructor() {
     this._configs = new Config();
   }
+
+  private static _instance: Runtime;
+  configFilePath: string;
+  files: string[];
+
+  private readonly _configs: Config;
+  private _bot: CordeBot;
 
   static getInstance() {
     if (!Runtime._instance) {

@@ -57,7 +57,7 @@ export abstract class ExpectTest {
 
     return {
       pass: this.hasPassed,
-      message: message,
+      message,
     };
   }
 }
