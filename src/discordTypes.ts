@@ -1,5 +1,5 @@
+import { BitField } from "discord.js";
 import { Colors, ColorsHex } from "./utils";
-import { BitField } from "./utils/bitfield";
 
 export type Base64Resolvable = Buffer | string;
 export type VerificationLevel = "NONE" | "LOW" | "MEDIUM" | "HIGH" | "VERY_HIGH";

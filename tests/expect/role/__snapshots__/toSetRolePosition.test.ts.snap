@@ -1,5 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`testing ToSetRolePosition operation should fail due to newPosition is not a number 1`] = `
+Object {
+  "message": "    
+    expected: position option to be a number
+    received: string
+",
+  "pass": false,
+}
+`;
+
 exports[`testing ToSetRolePosition operation should fail due to undefined roleIdentifier 1`] = `
 Object {
   "message": "    
@@ -46,6 +56,26 @@ Object {
 }
 `;
 
+exports[`testing ToSetRolePosition operation should return a failed report due to timeout and isNot false 1`] = `
+Object {
+  "message": "    
+    expected: role position to change to -2
+    received: position didn't change
+",
+  "pass": false,
+}
+`;
+
+exports[`testing ToSetRolePosition operation should return a failed report position setted was different than expected 1`] = `
+Object {
+  "message": "    
+    expected: role position to change to -2
+    received: -1
+",
+  "pass": false,
+}
+`;
+
 exports[`testing ToSetRolePosition operation should return a not passed test due to new position be higher than the permitted (isNot false) 1`] = `
 Object {
   "message": "    
@@ -53,5 +83,11 @@ Object {
     received: 2
 ",
   "pass": false,
+}
+`;
+
+exports[`testing ToSetRolePosition operation should return a passed report due to timeout and isNot true 1`] = `
+Object {
+  "pass": true,
 }
 `;

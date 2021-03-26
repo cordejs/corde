@@ -63,7 +63,7 @@ export class ToSetRolePermission extends ExpectTest {
       );
     }
 
-    if (role.permissions.equals(permissions)) {
+    if (role.permissions.equals(permissions ?? [])) {
       this.hasPassed = true;
     }
 

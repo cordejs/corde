@@ -1,9 +1,15 @@
 import { Client } from "discord.js";
 import { ToSetRolePermission } from "../../../src/expect/matches";
 import MockDiscord from "../../mocks/mockDiscord";
-import { initCordeClientWithChannel } from "../../testHelper";
+import { initCordeClientWithChannel, removeANSIColorStyle } from "../../testHelper";
 import { TestReport } from "../../../src/types";
-import { buildReportMessage, calcPermissionsValue, Permission } from "../../../src/utils";
+import {
+  buildReportMessage,
+  calcPermissionsValue,
+  diff,
+  Permission,
+  permissionsArray,
+} from "../../../src/utils";
 import { MockEvents } from "../../mocks/mockEvents";
 import { runtime } from "../../../src/common";
 
@@ -52,6 +58,24 @@ describe("testing toSetRolePermission operation", () => {
       `received: object`,
     );
 
+    const expectReport: TestReport = {
+      pass: false,
+      message,
+    };
+
+    expect(report).toEqual(expectReport);
+    expect(report).toMatchSnapshot();
+  });
+
+  it("should fail due to invalid permission value", async () => {
+    const corde = initClient();
+    const toSetRolePermission = new ToSetRolePermission(corde, "test", false);
+    // @ts-ignore
+    const report = await toSetRolePermission.action({ id: "123" }, ["BANANA"]);
+
+    const message = buildReportMessage(diff(permissionsArray, ["BANANA"]));
+
+    console.log(message);
     const expectReport: TestReport = {
       pass: false,
       message,
@@ -117,7 +141,11 @@ describe("testing toSetRolePermission operation", () => {
     };
 
     expect(report).toEqual(expectReport);
-    expect(report).toMatchSnapshot();
+    const snapReport = {
+      pass: report.pass,
+      message: removeANSIColorStyle(report.message),
+    };
+    expect(snapReport).toMatchSnapshot();
   });
 
   it("should return true due to isNot true and no role change", async () => {
@@ -262,6 +290,29 @@ describe("testing toSetRolePermission operation", () => {
 
     const message = buildReportMessage(
       `expected: role permissions change to: ATTACH_FILES\n`,
+      `received: ADMINISTRATOR (and 30 others)`,
+    );
+
+    const expectReport: TestReport = {
+      pass: false,
+      message,
+    };
+
+    expect(report).toEqual(expectReport);
+    expect(report).toMatchSnapshot();
+  });
+
+  it("should return a not passed test due expected name did not match to received", async () => {
+    const corde = initClient();
+
+    runtime.setConfigs({ timeOut: 100 }, true);
+    const mockEvent = new MockEvents(corde, mockDiscord);
+    mockEvent.mockOnceRolePermissionsUpdate(mockDiscord.role);
+    const toSetRolePermission = new ToSetRolePermission(corde, "test", false);
+    const report = await toSetRolePermission.action({ id: "123" }, null);
+
+    const message = buildReportMessage(
+      `expected: role permissions change to: null\n`,
       `received: ADMINISTRATOR (and 30 others)`,
     );
 

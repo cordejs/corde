@@ -2,7 +2,7 @@ import { Client } from "discord.js";
 import { runtime } from "../../../src/common";
 import { ToSetRolePosition } from "../../../src/expect/matches";
 import { TestReport } from "../../../src/types";
-import { buildReportMessage } from "../../../src/utils";
+import { buildReportMessage, typeOf } from "../../../src/utils";
 import MockDiscord from "../../mocks/mockDiscord";
 import { MockEvents } from "../../mocks/mockEvents";
 import { initCordeClientWithChannel } from "../../testHelper";
@@ -35,6 +35,26 @@ describe("testing ToSetRolePosition operation", () => {
     const message = buildReportMessage(
       "expected: data to identifier the role (id or name)\n",
       `received: null`,
+    );
+
+    const expectReport: TestReport = {
+      pass: false,
+      message,
+    };
+
+    expect(report).toEqual(expectReport);
+    expect(report).toMatchSnapshot();
+  });
+
+  it("should fail due to newPosition is not a number", async () => {
+    const corde = initClient();
+    const toSetRolePosition = new ToSetRolePosition(corde, "test", false);
+    // @ts-ignore
+    const report = await toSetRolePosition.action("batata", { id: "1231231" });
+
+    const message = buildReportMessage(
+      `expected: position option to be a number\n`,
+      `received: ${typeOf("batata")}`,
     );
 
     const expectReport: TestReport = {
@@ -129,6 +149,66 @@ describe("testing ToSetRolePosition operation", () => {
     const report = await toSetPosition.action(1, { id: "123" });
 
     const message = buildReportMessage(`expected: role with id 123\n`, `received: null`);
+
+    const matchReport: TestReport = {
+      pass: false,
+      message,
+    };
+    expect(report).toEqual(matchReport);
+    expect(report).toMatchSnapshot();
+  });
+
+  it("should return a passed report due to timeout and isNot true", async () => {
+    const corde = createCordeBotWithMockedFunctions();
+
+    runtime.setConfigs({ timeOut: 10 }, true);
+    corde.findRole = jest.fn().mockReturnValue(mockDiscord.role);
+    const toSetPosition = new ToSetRolePosition(corde, "test", true);
+    const report = await toSetPosition.action(-2, { id: "123" });
+
+    const matchReport: TestReport = {
+      pass: true,
+    };
+    expect(report).toEqual(matchReport);
+    expect(report).toMatchSnapshot();
+  });
+
+  it("should return a failed report due to timeout and isNot false", async () => {
+    const corde = createCordeBotWithMockedFunctions();
+
+    runtime.setConfigs({ timeOut: 10 }, true);
+    corde.findRole = jest.fn().mockReturnValue(mockDiscord.role);
+    const toSetPosition = new ToSetRolePosition(corde, "test", false);
+    const report = await toSetPosition.action(-2, { id: "123" });
+
+    const message = buildReportMessage(
+      `expected: role position to change to ${-2}\n`,
+      `received: position didn't change`,
+    );
+
+    const matchReport: TestReport = {
+      pass: false,
+      message,
+    };
+    expect(report).toEqual(matchReport);
+    expect(report).toMatchSnapshot();
+  });
+
+  it("should return a failed report position setted was different than expected", async () => {
+    const corde = createCordeBotWithMockedFunctions();
+
+    runtime.setConfigs({ timeOut: 10 }, true);
+    corde.findRole = jest.fn().mockReturnValue(mockDiscord.role);
+
+    const mockEvent = new MockEvents(corde, mockDiscord);
+    mockEvent.mockOnceRolePositionUpdate();
+    const toSetPosition = new ToSetRolePosition(corde, "test", false);
+    const report = await toSetPosition.action(-2, { id: "123" });
+
+    const message = buildReportMessage(
+      `expected: role position to change to ${-2}\n`,
+      `received: -1`,
+    );
 
     const matchReport: TestReport = {
       pass: false,

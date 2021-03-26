@@ -71,7 +71,7 @@ export class ToSetRolePosition extends ExpectTest {
     }
 
     return this.createReport(
-      `expected: role position to change to ${newPosition}`,
+      `expected: role position to change to ${newPosition}\n`,
       `received: ${role.position}`,
     );
   }

@@ -3,7 +3,6 @@ export * from "./colors";
 export * from "./permission";
 export * from "./executeWithTimeout";
 export * from "./isFunction";
-export * from "./bitfield";
 export * from "./isPrimitiveValue";
 export * from "./wait";
 export * from "./pick";
