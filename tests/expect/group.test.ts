@@ -39,18 +39,7 @@ describe("Testing group function", () => {
     });
 
     await testCollector.executeGroupClojure();
-
-    const groupsObj: Group[] = [];
-    groupsObj.push({
-      name: "groupName",
-      tests: [
-        {
-          testsFunctions: [],
-          name: "testName",
-        },
-      ],
-    });
-    expect(testCollector.groups).toEqual(groupsObj);
+    expect(testCollector.groups).toEqual([]);
   });
 
   it("Should add group with test inside and testFunction (single group)", async () => {

@@ -29,12 +29,7 @@ describe("Testing test function", () => {
 
     await testCollector.executeTestClojure();
 
-    if (testCollector.tests.length === 0) {
-      fail();
-    } else {
-      const _tests = testCollector.tests[0];
-      expect(_tests).toEqual(testObj);
-    }
+    expect(testCollector.tests.length).toEqual(0);
   });
 
   it("should not add a group", async () => {
@@ -44,7 +39,7 @@ describe("Testing test function", () => {
     if (!testCollector.tests) {
       fail();
     } else {
-      expect(testCollector.tests.length).toEqual(1);
+      expect(testCollector.tests.length).toEqual(0);
     }
   });
 

@@ -25,10 +25,12 @@ export function test<T extends any>(
       await action();
 
       const testName = await resolveName(name);
-      testCollector.tests.push({
-        name: testName,
-        testsFunctions: testCollector.cloneTestFunctions(),
-      });
+      if (testCollector.testsFunctions && testCollector.testsFunctions.length) {
+        testCollector.tests.push({
+          name: testName,
+          testsFunctions: testCollector.cloneTestFunctions(),
+        });
+      }
     }
 
     testCollector.testsFunctions = [];

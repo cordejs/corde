@@ -21,7 +21,7 @@ class Reader {
     const jsFilePath = path.resolve(process.cwd(), "corde.config.js");
 
     if (runtime.configFilePath) {
-      return loadConfigFromConfigFilePath();
+      return this.loadConfigFromConfigFilePath();
     }
 
     if (fs.existsSync(jsonFilePath)) {
@@ -48,13 +48,14 @@ class Reader {
     }
 
     testCollector.isCollecting = true;
+
     for (const file of files) {
       try {
         require(file);
       } catch (error) {
         console.log(buildReportMessage(error.message));
+        continue;
       }
-
       /**
        * This hooks is located here because after load the file,
        * We have to load the tests, and sometimes the user may,
@@ -72,14 +73,13 @@ class Reader {
       await testCollector.executeGroupClojure();
       await testCollector.executeTestClojure();
 
-      addTestsGroupmentToGroupIfExist();
-      addIsolatedTestFunctionsToGroupIfExists();
-      addTestFunctionsToGroupIfExists();
+      this.addTestsGroupmentToGroupIfExist();
+      this.addIsolatedTestFunctionsToGroupIfExists();
 
       testFiles.push({
         path: file.replace(process.cwd() + "\\", ""),
         groups: testCollector.groups.slice(),
-        isEmpty: !!testCollector.groups.length,
+        isEmpty: testCollector.groups.length === 0,
       });
 
       testCollector.groups = [];
@@ -88,47 +88,39 @@ class Reader {
     testCollector.isCollecting = false;
     return testFiles;
   }
-}
 
-function loadConfigFromConfigFilePath(): ConfigOptions {
-  let filePath = "";
-  if (fs.existsSync(runtime.configFilePath)) {
-    filePath = path.resolve(process.cwd(), runtime.configFilePath);
-  } else {
-    throw new FileError(`The path '${runtime.configFilePath}' do not appears to be a valid path`);
+  private loadConfigFromConfigFilePath(): ConfigOptions {
+    let filePath = "";
+    if (fs.existsSync(runtime.configFilePath)) {
+      filePath = path.resolve(process.cwd(), runtime.configFilePath);
+    } else {
+      throw new FileError(`The path '${runtime.configFilePath}' do not appears to be a valid path`);
+    }
+    const fileExt = path.extname(filePath);
+
+    if (fileExt === ".json") {
+      return JSON.parse(fs.readFileSync(filePath).toString());
+    } else if (fileExt === ".js" || fileExt === ".ts") {
+      return require(filePath);
+    } else {
+      throw new FileError(`Extension '${fileExt}' is not supported`);
+    }
   }
-  const fileExt = path.extname(filePath);
 
-  if (fileExt === ".json") {
-    return JSON.parse(fs.readFileSync(filePath).toString());
-  } else if (fileExt === ".js" || fileExt === ".ts") {
-    return require(filePath);
-  } else {
-    throw new FileError(`Extension '${fileExt}' is not supported`);
+  private addTestsGroupmentToGroupIfExist() {
+    if (testCollector.tests && testCollector.tests.length > 0) {
+      const testsCloned = testCollector.tests.slice();
+      testCollector.groups.push({ tests: testsCloned });
+      testCollector.tests = [];
+    }
   }
-}
 
-function addTestsGroupmentToGroupIfExist() {
-  if (testCollector.tests && testCollector.tests.length > 0) {
-    const testsCloned = testCollector.tests.slice();
-    testCollector.groups.push({ tests: testsCloned });
-    testCollector.tests = [];
-  }
-}
-
-function addIsolatedTestFunctionsToGroupIfExists() {
-  if (testCollector.hasIsolatedTestFunctions()) {
-    const testsCloned = testCollector.cloneIsolatedTestFunctions();
-    testCollector.groups.push({ tests: [{ testsFunctions: testsCloned }] });
-    testCollector.clearIsolatedTestFunctions();
-  }
-}
-
-function addTestFunctionsToGroupIfExists() {
-  if (testCollector.isInsideTestClausureFunctions()) {
-    const testsCloned = testCollector.cloneTestFunctions();
-    testCollector.groups.push({ tests: [{ testsFunctions: testsCloned }] });
-    testCollector.clearTestFunctions();
+  private addIsolatedTestFunctionsToGroupIfExists() {
+    if (testCollector.hasIsolatedTestFunctions()) {
+      const testsCloned = testCollector.cloneIsolatedTestFunctions();
+      testCollector.groups.push({ tests: [{ testsFunctions: testsCloned }] });
+      testCollector.clearIsolatedTestFunctions();
+    }
   }
 }
 
