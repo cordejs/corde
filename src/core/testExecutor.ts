@@ -1,5 +1,6 @@
 import chalk from "chalk";
 import { runtime, testCollector } from "../common";
+import { printHookErrors } from "../common";
 import {
   MESSAGE_TAB_SPACE,
   TAG_FAIL,
@@ -278,12 +279,7 @@ export class TestExecutor {
     if (keepRunning) {
       const _functionErrors = await queues.executeWithCatchCollectAsync();
       if (_functionErrors && _functionErrors.length) {
-        for (let i = 0; i < _functionErrors.length; i++) {
-          // Erros throwed by hooks are always of type Error.
-          const _error = _functionErrors[i] as Error;
-          this._logUpdate.append(buildReportMessage(_error.message));
-          this._logUpdate.append(buildReportMessage(_error.stack));
-        }
+        printHookErrors(_functionErrors);
         return false;
       }
       return true;

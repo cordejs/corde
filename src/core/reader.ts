@@ -1,10 +1,11 @@
+import chalk from "chalk";
 import fs from "fs";
 import path from "path";
-import { runtime } from "../common";
+import { printHookErrors, runtime } from "../common";
 import { testCollector } from "../common/testCollector";
 import { FileError } from "../errors";
 import { ConfigOptions, TestFile } from "../types";
-import { tryImport } from "../utils";
+import { buildReportMessage } from "../utils";
 
 class Reader {
   /**
@@ -42,17 +43,30 @@ class Reader {
 
   async getTestsFromFiles(files: string[]): Promise<TestFile[]> {
     const testFiles: TestFile[] = [];
-    if (!files) {
+    if (!files || !files.length) {
       throw new FileError("No file was informed.");
     }
 
     testCollector.isCollecting = true;
     for (const file of files) {
-      tryImport(file);
-      const exceptions = await testCollector.beforeStartFunctions.executeWithCatchCollectAsync();
+      try {
+        require(file);
+      } catch (error) {
+        console.log(buildReportMessage(error.message));
+      }
 
-      if (exceptions.length) {
-        console.log(exceptions);
+      /**
+       * This hooks is located here because after load the file,
+       * We have to load the tests, and sometimes the user may,
+       * expect to have something loaded in the hook above,
+       * for instance, in beforeStart hook he inits the boot login,
+       * and in a test, he get some data from the bot.
+       */
+
+      const _errors = await testCollector.beforeStartFunctions.executeWithCatchCollectAsync();
+
+      if (_errors && _errors.length) {
+        printHookErrors(_errors);
       }
 
       await testCollector.executeGroupClojure();
