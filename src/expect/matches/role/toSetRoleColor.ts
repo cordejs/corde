@@ -1,6 +1,5 @@
 import chalk, { rgb } from "chalk";
-import { Role } from "discord.js";
-import { ColorResolvable } from "../../../discordTypes";
+import { ColorResolvable, Role } from "discord.js";
 import { RoleIdentifier, TestReport } from "../../../types";
 import { resolveColor, rgba, typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";

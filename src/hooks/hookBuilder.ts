@@ -1,10 +1,12 @@
 import chalk from "chalk";
+import { runtime } from "../common";
 import { Queue } from "../data-structures";
 import { VoidPromiseFunction } from "../types";
-import { formatObject } from "../utils";
+import { executePromiseWithTimeout, formatObject } from "../utils";
 
 /**
  * Add a function to a informed hook
+ *
  * @internal
  */
 export function hookBuilder(
@@ -15,11 +17,18 @@ export function hookBuilder(
 ) {
   queueToAdd.enqueue(async () => {
     try {
-      await fn();
+      await executePromiseWithTimeout<void>(async (resolve, reject) => {
+        try {
+          await fn();
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
+      }, runtime.timeOut);
     } catch (error) {
       let newError: Error;
       const errorLabel = chalk.bgRed(`● ${errorTitle}`);
-      if (error instanceof Error) {
+      if (error instanceof Error && error.message) {
         newError = new Error(`${errorLabel}: ${error.message}`);
       } else {
         newError = new Error(`${errorLabel}: ${formatObject(error)}`);

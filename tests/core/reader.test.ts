@@ -2,9 +2,8 @@ import fs from "fs";
 import path from "path";
 import { runtime, testCollector } from "../../src/common";
 import { reader } from "../../src/core/reader";
-import { Group } from "../../src/types";
-import consts from "../mocks/constsNames";
 import { FileError } from "../../src/errors";
+import { beforeStart as _beforeStart } from "../../src/hooks";
 
 // TODO: This class must have more tests
 
@@ -63,6 +62,30 @@ describe("reader class", () => {
           "tests/mocks/txtconfig/corde.config.txt",
         );
         expect(() => reader.loadConfig()).toThrowError(FileError);
+      });
+    });
+
+    describe("testing getTestsFromFiles", () => {
+      it("should throw error due to no file", async () => {
+        try {
+          await reader.getTestsFromFiles(null);
+          fail();
+        } catch (error) {
+          console.log(error);
+          expect(error).toBeInstanceOf(FileError);
+        }
+      });
+
+      it("should get files with fail in execution of hook, but without stop execution", async () => {
+        _beforeStart(() => {
+          throw new Error();
+        });
+
+        const tests = await reader.getTestsFromFiles([
+          process.cwd(),
+          "tests/mocks/sampleSingleTest",
+        ]);
+        expect(tests).toBeTruthy();
       });
     });
 
