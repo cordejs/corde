@@ -1,5 +1,5 @@
 import { Queue } from "../data-structures";
-import { AssertionProps, Group, Test, testFunctionType, VoidPromiseFunction } from "../types/types";
+import { AssertionProps, Group, Test, TestFunctionType, VoidPromiseFunction } from "../types/types";
 
 /**
  * Contain all information of data collected from files in runtime test
@@ -54,8 +54,8 @@ class TestCollector {
   public beforeEachFunctions: Queue<VoidPromiseFunction>;
 
   public afterEachFunctions: Queue<VoidPromiseFunction>;
-  public testsFunctions: testFunctionType[];
-  public isolatedFunctions: testFunctionType[];
+  public testsFunctions: TestFunctionType[];
+  public isolatedFunctions: TestFunctionType[];
 
   private testClousureFunction: Queue<VoidPromiseFunction>;
   private groupClousureFunction: Queue<VoidPromiseFunction>;
@@ -77,7 +77,7 @@ class TestCollector {
     this.testsFunctions = [];
   }
 
-  public addTestFunction(testFunction: testFunctionType) {
+  public addTestFunction(testFunction: TestFunctionType) {
     if (testFunction) {
       if (this.isInsideGroupClausure || this.isInsideTestClausure) {
         this.testsFunctions.push(testFunction);

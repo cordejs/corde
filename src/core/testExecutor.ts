@@ -12,8 +12,19 @@ import {
   TEXT_FAIL,
   TEXT_PASS,
 } from "../consts";
-import { Group, RunnerReport, SemiRunnerReport, Test, TestFile, TestReport } from "../types";
+import { Queue } from "../data-structures";
 import {
+  Group,
+  RunnerReport,
+  SemiRunnerReport,
+  Test,
+  TestFile,
+  TestFunctionType,
+  TestReport,
+  VoidPromiseFunction,
+} from "../types";
+import {
+  buildReportMessage,
   executePromiseWithTimeout,
   executeWithTimeout,
   formatObject,
@@ -21,12 +32,6 @@ import {
   Timer,
 } from "../utils";
 import { LogUpdate } from "../utils";
-
-enum Status {
-  RUNNING,
-  PASSED,
-  FAIL,
-}
 
 export class TestExecutor {
   private _logUpdate: LogUpdate;
@@ -228,24 +233,62 @@ export class TestExecutor {
 
   async runTest(test: Test) {
     const reports: TestReport[] = [];
+
+    // before e after hooks will run just one time
+    // for test structure (if the hook fail)
+    let keepRunningBeforeEachFunctions = true;
+    let keepRunningAfterEachFunctions = true;
+
     for (const testfn of test.testsFunctions) {
-      await testCollector.beforeEachFunctions.executeAsync();
-      let report: TestReport;
-      report = await executePromiseWithTimeout(async (resolve) => {
-        try {
-          const _report = await runtime.injectBot(testfn);
-          resolve(_report);
-        } catch (error) {
-          resolve({
-            pass: false,
-            message: this.getErrorMessage(error),
-          });
-        }
-      }, runtime.configs.timeOut);
-      await testCollector.afterEachFunctions.executeAsync();
+      keepRunningBeforeEachFunctions = await this.executeHookFunctionIfPossible(
+        keepRunningBeforeEachFunctions,
+        testCollector.beforeEachFunctions,
+      );
+
+      const report = await this.tryExecuteTestFunction(testfn);
+
+      keepRunningAfterEachFunctions = await this.executeHookFunctionIfPossible(
+        keepRunningAfterEachFunctions,
+        testCollector.afterEachFunctions,
+      );
+
       reports.push(report);
     }
     return reports;
+  }
+
+  private async tryExecuteTestFunction(testFn: TestFunctionType) {
+    return await executePromiseWithTimeout<TestReport>(async (resolve) => {
+      try {
+        const _report = await runtime.injectBot(testFn);
+        resolve(_report);
+      } catch (error) {
+        resolve({
+          pass: false,
+          message: this.getErrorMessage(error),
+        });
+      }
+    }, runtime.configs.timeOut);
+  }
+
+  private async executeHookFunctionIfPossible(
+    keepRunning: boolean,
+    queues: Queue<VoidPromiseFunction>,
+  ) {
+    if (keepRunning) {
+      const _functionErrors = await queues.executeWithCatchCollectAsync();
+      if (_functionErrors && _functionErrors.length) {
+        for (let i = 0; i < _functionErrors.length; i++) {
+          // Erros throwed by hooks are always of type Error.
+          const _error = _functionErrors[i] as Error;
+          this._logUpdate.append(buildReportMessage(_error.message));
+          this._logUpdate.append(buildReportMessage(_error.stack));
+        }
+        return false;
+      }
+      return true;
+    }
+    return false;
   }
 
   private getErrorMessage(error: any) {

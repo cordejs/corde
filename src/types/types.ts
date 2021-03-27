@@ -7,7 +7,7 @@ import { Stream } from "stream";
 export type messageType = "text" | "embed";
 export type messageOutputType = Message | MinifiedEmbedMessage;
 export type messageExpectationType = string | MessageEmbed;
-export type testFunctionType = (cordeBot: CordeBot) => Promise<TestReport>;
+export type TestFunctionType = (cordeBot: CordeBot) => Promise<TestReport>;
 export type VoidPromiseFunction = () => void | Promise<void>;
 export type GenericFunction = (...args: any[]) => any;
 export type Primitive = number | bigint | string | boolean;
@@ -52,7 +52,7 @@ export interface TestFile {
 export interface Test {
   name?: string | number | boolean;
   subTests?: Test[];
-  testsFunctions: testFunctionType[];
+  testsFunctions: TestFunctionType[];
   testsReports?: TestReport[];
 }
 

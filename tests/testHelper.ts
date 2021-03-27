@@ -3,7 +3,7 @@ import fs from "fs";
 import MockDiscord from "./mocks/mockDiscord";
 import { Client } from "discord.js";
 import { CordeBot } from "../src/core";
-import { Test, TestFile, testFunctionType, TestReport } from "../src/types";
+import { Test, TestFile, TestFunctionType, TestReport } from "../src/types";
 
 export const normalTsPath = path.resolve(process.cwd(), "corde.ts");
 export const tempTsPath = path.resolve(process.cwd(), "__corde.ts");
@@ -134,7 +134,7 @@ export const testNames = ["test case1", "test case2", "test case3", "test case4"
 
 export function generateTestFile(generatorData: TestFileGeneratorInfo) {
   const testFiles: TestFile[] = [];
-  const testFunctions: testFunctionType[] = [];
+  const testFunctions: TestFunctionType[] = [];
   const tests: Test[] = [];
 
   for (const report of generatorData.testFunctionsReport || []) {

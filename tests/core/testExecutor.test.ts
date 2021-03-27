@@ -1,6 +1,5 @@
 import { TestExecutor } from "../../src/core/testExecutor";
-import { SemiRunnerReport, TestFile } from "../../src/types";
-import { buildReportMessage, diff, getStackTrace, LogUpdate } from "../../src/utils";
+import { buildReportMessage, diff, LogUpdate } from "../../src/utils";
 import {
   generateTestFile,
   removeANSIColorStyle,
@@ -10,6 +9,8 @@ import {
 } from "../testHelper";
 
 import { mockTimer } from "../mocks/mockTimer";
+import { afterEach as _afterEach, beforeEach as _beforeEach } from "../../src";
+import { SemiRunnerReport, TestFile } from "../../src/types";
 
 let logUpdate: LogUpdate;
 let testRunner: TestExecutor;
@@ -626,4 +627,59 @@ it("should print for a file that throws unknown error in test function", async (
 
   expect(reports[0].message).toEqual(`\"error message\"`);
   expect(reports[0].pass).toEqual(false);
+});
+
+it("should execute hooks with failure", async () => {
+  _afterEach(() => {
+    throw new Error("error in beforeEachFunctions");
+  });
+
+  _beforeEach(() => {
+    throw new Error("error in afterEachFunctions");
+  });
+
+  const report = await testRunner.runTest({
+    testsFunctions: [
+      (_: any) => {
+        return Promise.resolve({ pass: true });
+      },
+    ],
+  });
+
+  expect(report[0].pass).toEqual(true);
+});
+
+it("should execute hooks with failure (failure is not a Error instance)", async () => {
+  _afterEach(() => {
+    throw { message: "error in beforeEachFunctions" };
+  });
+
+  const report = await testRunner.runTest({
+    testsFunctions: [
+      (_: any) => {
+        return Promise.resolve({ pass: true });
+      },
+    ],
+  });
+
+  expect(report[0].pass).toEqual(true);
+});
+
+it("should hook, but execute just once", async () => {
+  _afterEach(() => {
+    throw { message: "error in beforeEachFunctions" };
+  });
+
+  const report = await testRunner.runTest({
+    testsFunctions: [
+      (_: any) => {
+        return Promise.resolve({ pass: true });
+      },
+      (_: any) => {
+        return Promise.resolve({ pass: true });
+      },
+    ],
+  });
+
+  expect(report[0].pass).toEqual(true);
 });

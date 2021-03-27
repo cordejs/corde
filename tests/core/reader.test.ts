@@ -6,7 +6,7 @@ import { Group } from "../../src/types";
 import consts from "../mocks/constsNames";
 import { FileError } from "../../src/errors";
 
-//TODO: This class must have more tests
+// TODO: This class must have more tests
 
 const conf = require("../mocks/jsconfig/corde.config.js");
 const cwd = process.cwd();

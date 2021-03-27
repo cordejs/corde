@@ -1,4 +1,4 @@
-import { ConfigOptions, testFunctionType } from "../types/types";
+import { ConfigOptions, TestFunctionType } from "../types/types";
 import { Config } from "./config";
 import { Client } from "discord.js";
 import { CordeBot } from "../core";
@@ -103,7 +103,7 @@ class Runtime {
     return await this.bot.login(token);
   }
 
-  injectBot(fn: testFunctionType) {
+  injectBot(fn: TestFunctionType) {
     return fn(this.bot);
   }
 

@@ -12,7 +12,7 @@ class Reader {
    * and validates it
    * @throws
    */
-  public loadConfig(): ConfigOptions {
+  loadConfig(): ConfigOptions {
     let _config: ConfigOptions;
 
     const jsonFilePath = path.resolve(process.cwd(), "corde.config.json");
@@ -40,7 +40,7 @@ class Reader {
     }
   }
 
-  public async getTestsFromFiles(files: string[]): Promise<TestFile[]> {
+  async getTestsFromFiles(files: string[]): Promise<TestFile[]> {
     const testFiles: TestFile[] = [];
     if (!files) {
       throw new FileError("No file was informed.");
