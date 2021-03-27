@@ -19,7 +19,6 @@ import {
 } from "discord.js";
 import { EventResume, Events } from "../../src/core/events";
 import MockDiscord from "../mocks/mockDiscord";
-import { executeWithDelay } from "../testHelper";
 
 const client = new Client();
 const mockDiscord = new MockDiscord();
@@ -42,10 +41,9 @@ describe("testing events event", () => {
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName);
-      }, DEFAULT_DELAY);
-      const _void = await events.onceReady();
+      const promise = events.onceReady();
+      client.emit(eventName);
+      const _void = await promise;
       expect(_void).toBeFalsy();
     });
   });
@@ -60,10 +58,9 @@ describe("testing events event", () => {
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.messageReaction);
-      }, DEFAULT_DELAY);
-      let _reaction = await events.onceMessageReactionRemoveEmoji();
+      const promise = events.onceMessageReactionRemoveEmoji();
+      client.emit(eventName, mockDiscord.messageReaction);
+      const _reaction = await promise;
       expect(_reaction).toEqual(mockDiscord.messageReaction);
     });
   });
@@ -78,10 +75,9 @@ describe("testing events event", () => {
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.channel);
-      }, DEFAULT_DELAY);
-      const _channel = await events.onceChannelCreate();
+      const promise = events.onceChannelCreate();
+      client.emit(eventName, mockDiscord.channel);
+      const _channel = await promise;
       expect(_channel).toEqual(mockDiscord.channel);
     });
   });
@@ -96,10 +92,9 @@ describe("testing events event", () => {
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.channel);
-      }, DEFAULT_DELAY);
-      const _channel = await events.onceChannelDelete();
+      const promise = events.onceChannelDelete();
+      client.emit(eventName, mockDiscord.channel);
+      const _channel = await promise;
       expect(_channel).toEqual(mockDiscord.channel);
     });
   });
@@ -121,10 +116,9 @@ describe("testing events event", () => {
 
     it("should get async once", async () => {
       const now = new Date();
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.channel, now);
-      }, DEFAULT_DELAY);
-      const [_channel, _date] = await events.onceChannelPinsUpdate();
+      const promise = events.onceChannelPinsUpdate();
+      client.emit(eventName, mockDiscord.channel, now);
+      const [_channel, _date] = await promise;
       expect(_channel).toEqual(mockDiscord.channel);
       expect(_date).toEqual(now);
     });
@@ -151,10 +145,9 @@ describe("testing events event", () => {
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, oldChannel, newChannel);
-      }, DEFAULT_DELAY);
-      const [_oldChannel, _newChannel] = await events.onceChannelUpdate();
+      const promise = events.onceChannelUpdate();
+      client.emit(eventName, oldChannel, newChannel);
+      const [_oldChannel, _newChannel] = await promise;
       expect(_oldChannel).toEqual(oldChannel);
       expect(_newChannel).toBe(newChannel);
     });
@@ -170,10 +163,9 @@ describe("testing events event", () => {
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, "test");
-      }, DEFAULT_DELAY);
-      const testValue = await events.onceDebug();
+      const promise = events.onceDebug();
+      client.emit(eventName, "test");
+      const testValue = await promise;
       expect(testValue).toEqual("test");
     });
   });
@@ -188,15 +180,32 @@ describe("testing events event", () => {
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.role);
-      }, DEFAULT_DELAY);
-      const deleted = await events.onceRoleDelete();
+      const promise = events.onceRoleDelete();
+      client.emit(eventName, mockDiscord.role);
+      const deleted = await promise;
       expect(deleted).toEqual(mockDiscord.role);
     });
 
-    it("should throw due to timeout", () => {
-      expect(events.onceRoleDelete(null, 10)).rejects.toBeTruthy();
+    it("should get async once with roleIdentifier", async () => {
+      const promise = events.onceRoleDelete({ id: mockDiscord.role.id });
+      client.emit(eventName, mockDiscord.role);
+      const deleted = await promise;
+      expect(deleted).toEqual(mockDiscord.role);
+    });
+
+    it("should fail when get async once with roleIdentifier", async () => {
+      expect(async () => {
+        const promise = events.onceRoleDelete({ id: "123" }, 10);
+        client.emit(eventName, mockDiscord.role);
+        await promise;
+      }).rejects.toBeTruthy();
+    });
+
+    it("should get role without specify", async () => {
+      const promise = events.onceRoleDelete({ id: mockDiscord.role.id });
+      client.emit(eventName, mockDiscord.role);
+      const deleted = await promise;
+      expect(deleted).toEqual(mockDiscord.role);
     });
   });
 
@@ -215,12 +224,9 @@ describe("testing events event", () => {
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, {}, 1);
-      }, DEFAULT_DELAY);
-
-      const [closeEvent, code] = await events.onceDisconnect();
-
+      const promise = events.onceDisconnect();
+      client.emit(eventName, {}, 1);
+      const [closeEvent, code] = await promise;
       expect(closeEvent).toEqual({});
       expect(code).toEqual(1);
     });
@@ -236,10 +242,9 @@ describe("testing events event", () => {
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.guildEmoji);
-      }, DEFAULT_DELAY);
-      const created = await events.onceEmojiCreate();
+      const promise = events.onceEmojiCreate();
+      client.emit(eventName, mockDiscord.guildEmoji);
+      const created = await promise;
       expect(created).toEqual(mockDiscord.guildEmoji);
     });
   });
@@ -254,10 +259,9 @@ describe("testing events event", () => {
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.guildEmoji);
-      }, DEFAULT_DELAY);
-      const deleted = await events.onceEmojiDelete();
+      const promise = events.onceEmojiDelete();
+      client.emit(eventName, mockDiscord.guildEmoji);
+      const deleted = await promise;
       expect(deleted).toEqual(mockDiscord.guildEmoji);
     });
   });
@@ -283,33 +287,30 @@ describe("testing events event", () => {
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, oldEmoji, newEmoji);
-      }, DEFAULT_DELAY);
-      const [_oldEmoji, _newEmoji] = await events.onceEmojiUpdate();
+      const promise = events.onceEmojiUpdate();
+      client.emit(eventName, oldEmoji, newEmoji);
+      const [_oldEmoji, _newEmoji] = await promise;
       expect(_oldEmoji).toEqual(oldEmoji);
       expect(_newEmoji).toBe(newEmoji);
     });
   });
 
-  // TODO: Fiz this tests
-  // describe("testing error event", () => {
-  //   const eventName = "error";
-  //   it("should get callback", () => {
-  //     let emitedError: Error;
-  //     events.onError((error) => (emitedError = error));
-  //     client.emit(eventName, new Error("Fail in connection"));
-  //     expect(emitedError).toBeInstanceOf(Error);
-  //   });
+  describe("testing error event", () => {
+    const eventName = "error";
+    it("should get callback", () => {
+      let emitedError: Error;
+      events.onError((error) => (emitedError = error));
+      client.emit(eventName, new Error("Fail in connection"));
+      expect(emitedError).toBeInstanceOf(Error);
+    });
 
-  //   it("should get async once", async () => {
-  //     executeWithDelay(() => {
-  //       client.emit(eventName, new Error("Fail in connection"));
-  //     }, DEFAULT_DELAY);
-  //     const error = await events.onceError();
-  //     expect(error).toBeInstanceOf(Error);
-  //   });
-  // });
+    it("should get async once", async () => {
+      const promise = events.onceError();
+      client.emit(eventName, new Error("Fail in connection"));
+      const error = await promise;
+      expect(error).toBeInstanceOf(Error);
+    });
+  });
 
   describe("testing guildBanAdd event", () => {
     const eventName = "guildBanAdd";
@@ -326,10 +327,9 @@ describe("testing events event", () => {
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.guild, mockDiscord.user);
-      }, DEFAULT_DELAY);
-      const [_guild, _user] = await events.onceGuildBan();
+      const promise = events.onceGuildBan();
+      client.emit(eventName, mockDiscord.guild, mockDiscord.user);
+      const [_guild, _user] = await promise;
       expect(_guild).toEqual(mockDiscord.guild);
       expect(_user).toBe(mockDiscord.user);
     });
@@ -350,10 +350,9 @@ describe("testing events event", () => {
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.guild, mockDiscord.user);
-      }, DEFAULT_DELAY);
-      const [_guild, _user] = await events.onceGuildBanRemove();
+      const promise = events.onceGuildBanRemove();
+      client.emit(eventName, mockDiscord.guild, mockDiscord.user);
+      const [_guild, _user] = await promise;
       expect(_guild).toEqual(mockDiscord.guild);
       expect(_user).toBe(mockDiscord.user);
     });
@@ -369,10 +368,9 @@ describe("testing events event", () => {
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.guild);
-      }, DEFAULT_DELAY);
-      const created = await events.onceGuildCreate();
+      const promise = events.onceGuildCreate();
+      client.emit(eventName, mockDiscord.guild);
+      const created = await promise;
       expect(created).toEqual(mockDiscord.guild);
     });
   });
@@ -387,10 +385,9 @@ describe("testing events event", () => {
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.guild);
-      }, DEFAULT_DELAY);
-      const deleted = await events.onceGuildDelete();
+      const promise = events.onceGuildDelete();
+      client.emit(eventName, mockDiscord.guild);
+      const deleted = await promise;
       expect(deleted).toEqual(mockDiscord.guild);
     });
   });
@@ -405,10 +402,9 @@ describe("testing events event", () => {
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.guildMember);
-      }, DEFAULT_DELAY);
-      const memberAdded = await events.onceGuildMemberAdd();
+      const promise = events.onceGuildMemberAdd();
+      client.emit(eventName, mockDiscord.guildMember);
+      const memberAdded = await promise;
       expect(memberAdded).toEqual(mockDiscord.guildMember);
     });
   });
@@ -423,10 +419,9 @@ describe("testing events event", () => {
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.guildMember);
-      }, DEFAULT_DELAY);
-      const memberAdded = await events.onceGuildMemberAvailable();
+      const promise = events.onceGuildMemberAvailable();
+      client.emit(eventName, mockDiscord.guildMember);
+      const memberAdded = await promise;
       expect(memberAdded).toEqual(mockDiscord.guildMember);
     });
   });
@@ -441,10 +436,9 @@ describe("testing events event", () => {
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.guildMember);
-      }, DEFAULT_DELAY);
-      const memberAdded = await events.onceGuildMemberRemove();
+      const promise = events.onceGuildMemberRemove();
+      client.emit(eventName, mockDiscord.guildMember);
+      const memberAdded = await promise;
       expect(memberAdded).toEqual(mockDiscord.guildMember);
     });
   });
@@ -476,11 +470,9 @@ describe("testing events event", () => {
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.guildMemberCollection, mockDiscord.guild, eventResume);
-      }, DEFAULT_DELAY);
-
-      const [_members, _guild, _resume] = await events.onceGuildMemberChunk();
+      const promise = events.onceGuildMemberChunk();
+      client.emit(eventName, mockDiscord.guildMemberCollection, mockDiscord.guild, eventResume);
+      const [_members, _guild, _resume] = await promise;
       expect(_members).toEqual(mockDiscord.guildMemberCollection);
       expect(_guild).toEqual(mockDiscord.guild);
       expect(_resume).toEqual(eventResume);
@@ -492,21 +484,22 @@ describe("testing events event", () => {
     it("should get callback", () => {
       let _guildMember: GuildMember | PartialGuildMember;
       let _speaking: Readonly<Speaking>;
+
       events.onGuildMemberSpeaking((guildMember, speaking) => {
         _guildMember = guildMember;
         _speaking = speaking;
       });
+
       client.emit(eventName, mockDiscord.guildMember, mockDiscord.speaking);
       expect(_guildMember).toEqual(mockDiscord.guildMember);
       expect(_speaking).toEqual(mockDiscord.speaking);
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.guildMember, mockDiscord.speaking);
-      }, DEFAULT_DELAY);
+      const promise = events.onceGuildMemberSpeaking();
 
-      const [_guildMember, _speaking] = await events.onceGuildMemberSpeaking();
+      client.emit(eventName, mockDiscord.guildMember, mockDiscord.speaking);
+      const [_guildMember, _speaking] = await promise;
 
       expect(_guildMember).toEqual(mockDiscord.guildMember);
       expect(_speaking).toEqual(mockDiscord.speaking);
@@ -518,13 +511,16 @@ describe("testing events event", () => {
     it("should get callback", () => {
       let _oldGuildMember: GuildMember | PartialGuildMember;
       let _newGuildMember: GuildMember;
+
       events.onGuildMemberUpdate((oldGuildMember, newGuildMember) => {
         _oldGuildMember = oldGuildMember;
         _newGuildMember = newGuildMember;
       });
+
       const updatedGuildMember = mockDiscord.guildMember;
       updatedGuildMember.nickname = "test";
       client.emit(eventName, mockDiscord.guildMember, updatedGuildMember);
+
       expect(_oldGuildMember).toEqual(mockDiscord.guildMember);
       expect(_newGuildMember).toEqual(updatedGuildMember);
     });
@@ -532,12 +528,11 @@ describe("testing events event", () => {
     it("should get async once", async () => {
       const updatedGuildMember = mockDiscord.guildMember;
       updatedGuildMember.nickname = "test";
+      const promise = events.onceGuildMemberUpdate();
 
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.guildMember, updatedGuildMember);
-      }, DEFAULT_DELAY);
+      client.emit(eventName, mockDiscord.guildMember, updatedGuildMember);
+      const [_oldGuildMember, _newGuildMember] = await promise;
 
-      const [_oldGuildMember, _newGuildMember] = await events.onceGuildMemberUpdate();
       expect(_oldGuildMember).toEqual(mockDiscord.guildMember);
       expect(_newGuildMember).toEqual(updatedGuildMember);
     });
@@ -553,10 +548,9 @@ describe("testing events event", () => {
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.guild);
-      }, DEFAULT_DELAY);
-      const guild = await events.onceGuildUnavailable();
+      const promise = events.onceGuildUnavailable();
+      client.emit(eventName, mockDiscord.guild);
+      const guild = await promise;
       expect(guild).toEqual(mockDiscord.guild);
     });
   });
@@ -581,11 +575,10 @@ describe("testing events event", () => {
       const updatedGuild = Object.assign({}, mockDiscord.guild);
       updatedGuild.name = "test";
 
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.guild, updatedGuild);
-      }, DEFAULT_DELAY);
+      const promise = events.onceGuildUpdate();
+      client.emit(eventName, mockDiscord.guild, updatedGuild);
+      const [_oldGuild, _newGuild] = await promise;
 
-      const [_oldGuild, _newGuild] = await events.onceGuildUpdate();
       expect(_oldGuild).toEqual(mockDiscord.guild);
       expect(_newGuild).toEqual(updatedGuild);
     });
@@ -601,11 +594,25 @@ describe("testing events event", () => {
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.message);
-      }, DEFAULT_DELAY);
-      const message = await events.onceMessage();
+      const promise = events.onceMessage();
+      client.emit(eventName, mockDiscord.message);
+      const message = await promise;
       expect(message).toEqual(mockDiscord.message);
+    });
+
+    it("should get async once with messageIdentifier", async () => {
+      const promise = events.onceMessage(mockDiscord.message.author.id);
+      client.emit(eventName, mockDiscord.message);
+      const message = await promise;
+      expect(message).toEqual(mockDiscord.message);
+    });
+
+    it("should fail when get async once with messageIdentifier", async () => {
+      expect(async () => {
+        const promise = events.onceMessage("123", 10);
+        client.emit(eventName, mockDiscord.message);
+        await promise;
+      }).rejects.toBeTruthy();
     });
   });
 
@@ -619,10 +626,9 @@ describe("testing events event", () => {
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.message);
-      }, DEFAULT_DELAY);
-      const message = await events.onceMessageDelete();
+      const promise = events.onceMessageDelete();
+      client.emit(eventName, mockDiscord.message);
+      const message = await promise;
       expect(message).toEqual(mockDiscord.message);
     });
   });
@@ -637,10 +643,9 @@ describe("testing events event", () => {
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.messageCollection);
-      }, DEFAULT_DELAY);
-      const messages = await events.onceMessageDeleteBulk();
+      const promise = events.onceMessageDeleteBulk();
+      client.emit(eventName, mockDiscord.messageCollection);
+      const messages = await promise;
       expect(messages).toEqual(mockDiscord.messageCollection);
     });
   });
@@ -660,10 +665,21 @@ describe("testing events event", () => {
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.messageReaction, mockDiscord.user);
-      }, DEFAULT_DELAY);
-      const [_reaction, _author] = await events.onceMessageReactionAdd();
+      const promise = events.onceMessageReactionAdd();
+      client.emit(eventName, mockDiscord.messageReaction, mockDiscord.user);
+      const [_reaction, _author] = await promise;
+      expect(_reaction).toEqual(mockDiscord.messageReaction);
+      expect(_author).toEqual(mockDiscord.user);
+    });
+  });
+
+  describe("testing onceMessageReactionsAdd", () => {
+    const eventName = "messageReactionAdd";
+    it("should get without inform filter", async () => {
+      const promise = events.onceMessageReactionsAdd();
+      client.emit(eventName, mockDiscord.messageReaction, mockDiscord.user);
+      const reactionsWithAuthors = await promise;
+      const [_reaction, _author] = reactionsWithAuthors[0];
       expect(_reaction).toEqual(mockDiscord.messageReaction);
       expect(_author).toEqual(mockDiscord.user);
     });
@@ -684,10 +700,9 @@ describe("testing events event", () => {
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.messageReaction, mockDiscord.user);
-      }, DEFAULT_DELAY);
-      const [_reaction, _author] = await events.onceMessageReactionRemove();
+      const promise = events.onceMessageReactionRemove();
+      client.emit(eventName, mockDiscord.messageReaction, mockDiscord.user);
+      const [_reaction, _author] = await promise;
       expect(_reaction).toEqual(mockDiscord.messageReaction);
       expect(_author).toEqual(mockDiscord.user);
     });
@@ -703,10 +718,9 @@ describe("testing events event", () => {
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.message);
-      }, DEFAULT_DELAY);
-      const message = await events.onceMessageReactionRemoveAll();
+      const promise = events.onceMessageReactionRemoveAll();
+      client.emit(eventName, mockDiscord.message);
+      const message = await promise;
       expect(message).toEqual(mockDiscord.message);
     });
   });
@@ -731,11 +745,9 @@ describe("testing events event", () => {
       const updatedMessage = Object.assign({}, mockDiscord.message);
       updatedMessage.content = "test";
 
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.message, updatedMessage);
-      }, DEFAULT_DELAY);
-
-      const [_oldMessage, _newMessage] = await events.onceMessageUpdate();
+      const promise = events.onceMessageUpdate();
+      client.emit(eventName, mockDiscord.message, updatedMessage);
+      const [_oldMessage, _newMessage] = await promise;
       expect(_oldMessage).toEqual(mockDiscord.message);
       expect(_newMessage).toEqual(updatedMessage);
     });
@@ -761,11 +773,9 @@ describe("testing events event", () => {
       const updatedPresence = Object.assign({}, mockDiscord.presence);
       updatedPresence.status = "online";
 
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.presence, updatedPresence);
-      }, DEFAULT_DELAY);
-
-      const [_oldPresence, _newPresence] = await events.oncePresenceUpdate();
+      const promise = events.oncePresenceUpdate();
+      client.emit(eventName, mockDiscord.presence, updatedPresence);
+      const [_oldPresence, _newPresence] = await promise;
       expect(_oldPresence).toEqual(mockDiscord.presence);
       expect(_newPresence).toEqual(updatedPresence);
     });
@@ -781,10 +791,9 @@ describe("testing events event", () => {
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.role);
-      }, DEFAULT_DELAY);
-      const role = await events.onceRoleCreate();
+      const promise = events.onceRoleCreate();
+      client.emit(eventName, mockDiscord.role);
+      const role = await promise;
       expect(role).toEqual(mockDiscord.role);
     });
   });
@@ -809,12 +818,9 @@ describe("testing events event", () => {
     it("should get async once", async () => {
       const updatedRole = Object.assign({}, mockDiscord.role);
       updatedRole.name = "online";
-
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.role, updatedRole);
-      }, DEFAULT_DELAY);
-
-      const [_oldRole, _newRole] = await events.onceRoleUpdate();
+      const promise = events.onceRoleUpdate();
+      client.emit(eventName, mockDiscord.role, updatedRole);
+      const [_oldRole, _newRole] = await promise;
       expect(_oldRole).toEqual(mockDiscord.role);
       expect(_newRole).toEqual(updatedRole);
     });
@@ -827,41 +833,35 @@ describe("testing events event", () => {
     updatedRole.name = mockDiscord.role.name;
 
     it("should wait for updates in a role based on it's id", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.role, updatedRole);
-      }, DEFAULT_DELAY);
-
-      const newRole = await events.onceRolePermissionUpdate({ id: updatedRole.id });
+      const promise = events.onceRolePermissionUpdate({ id: updatedRole.id });
+      client.emit(eventName, mockDiscord.role, updatedRole);
+      const newRole = await promise;
       expect(newRole).toEqual(updatedRole);
     });
 
     it("should wait for updates in a role based on it's name", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.role, updatedRole);
-      }, DEFAULT_DELAY);
-
-      const newRole = await events.onceRolePermissionUpdate({ name: updatedRole.name });
+      const promise = events.onceRolePermissionUpdate({ name: updatedRole.name });
+      client.emit(eventName, mockDiscord.role, updatedRole);
+      const newRole = await promise;
       expect(newRole).toEqual(updatedRole);
     });
 
     it("should wait for updates in a role based on it's id and name", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.role, updatedRole);
-      }, DEFAULT_DELAY);
-
-      const newRole = await events.onceRolePermissionUpdate({
+      const promise = events.onceRolePermissionUpdate({
         id: updatedRole.id,
         name: updatedRole.name,
       });
+      client.emit(eventName, mockDiscord.role, updatedRole);
+      const newRole = await promise;
       expect(newRole).toEqual(updatedRole);
     });
 
     it("should throw timeout for waiting", () => {
-      executeWithDelay(() => {
+      expect(async () => {
+        const promise = events.onceRolePermissionUpdate({ name: "potatoe" }, 100);
         client.emit(eventName, mockDiscord.role, updatedRole);
-      }, DEFAULT_DELAY);
-
-      expect(() => events.onceRolePermissionUpdate({ name: "potatoe" }, 100)).rejects.toBeTruthy();
+        await promise;
+      }).rejects.toBeTruthy();
     });
   });
 
@@ -880,11 +880,9 @@ describe("testing events event", () => {
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.channel, mockDiscord.user);
-      }, DEFAULT_DELAY);
-
-      const [_channel, _user] = await events.onceTypingStart();
+      const promise = events.onceTypingStart();
+      client.emit(eventName, mockDiscord.channel, mockDiscord.user);
+      const [_channel, _user] = await promise;
       expect(_channel).toEqual(mockDiscord.channel);
       expect(_user).toEqual(mockDiscord.user);
     });
@@ -909,11 +907,9 @@ describe("testing events event", () => {
     });
 
     it("should get async once", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.user, updatedUser);
-      }, DEFAULT_DELAY);
-
-      const [_oldUser, _newUser] = await events.onceUserUpdate();
+      const promise = events.onceUserUpdate();
+      client.emit(eventName, mockDiscord.user, updatedUser);
+      const [_oldUser, _newUser] = await promise;
       expect(_oldUser).toEqual(mockDiscord.user);
       expect(_newUser).toEqual(updatedUser);
     });
@@ -940,11 +936,9 @@ describe("testing events event", () => {
       const updatedRole = Object.assign({}, mockDiscord.role);
       updatedRole.name = "online";
 
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.voiceState, updatedVoiceState);
-      }, DEFAULT_DELAY);
-
-      const [_oldRole, _newRole] = await events.onceVoiceStateUpdate();
+      const promise = events.onceVoiceStateUpdate();
+      client.emit(eventName, mockDiscord.voiceState, updatedVoiceState);
+      const [_oldRole, _newRole] = await promise;
       expect(_oldRole).toEqual(mockDiscord.voiceState);
       expect(_newRole).toEqual(updatedVoiceState);
     });
@@ -955,27 +949,23 @@ describe("testing events event", () => {
     const updatedRole = Object.assign({}, mockDiscord.role);
     updatedRole.name = "online";
     it("should get renamed role using roleIdentifier", async () => {
+      const promise = events.onceRoleRenamed({ id: mockDiscord.role.id });
+
       // This should be skiped because do not match with roleIdentifier
-      executeWithDelay(() => {
-        const toSkipRole = Object.assign({}, mockDiscord.role);
-        toSkipRole.id = mockDiscord.generateId();
-        client.emit(eventName, toSkipRole, toSkipRole);
-      }, DEFAULT_DELAY);
+      const toSkipRole = Object.assign({}, mockDiscord.role);
+      toSkipRole.id = mockDiscord.generateId();
+      client.emit(eventName, toSkipRole, toSkipRole);
 
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.role, updatedRole);
-      }, DEFAULT_DELAY + 100);
+      client.emit(eventName, mockDiscord.role, updatedRole);
 
-      const updated = await events.onceRoleRenamed({ id: mockDiscord.role.id });
+      const updated = await promise;
       expect(updated).toEqual(updatedRole);
     });
 
     it("should get renamed role not using roleIdentifier", async () => {
-      executeWithDelay(() => {
-        client.emit(eventName, mockDiscord.role, updatedRole);
-      }, DEFAULT_DELAY);
-
-      const updated = await events.onceRoleRenamed();
+      const promise = events.onceRoleRenamed();
+      client.emit(eventName, mockDiscord.role, updatedRole);
+      const updated = await promise;
       expect(updated).toEqual(updatedRole);
     });
   });

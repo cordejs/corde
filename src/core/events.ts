@@ -625,7 +625,7 @@ export class Events {
    * @returns A list of relation of reactions added and the author.
    * @internal
    */
-  onceMessageReactionsAdd(filter: SearchMessageReactionsOptions) {
+  onceMessageReactionsAdd(filter?: SearchMessageReactionsOptions) {
     return this._onceMessageReactionUpdate(filter, "onMessageReactionAdd");
   }
 
@@ -634,7 +634,7 @@ export class Events {
    * @returns A list of relation of reactions removed and the author.
    * @internal
    */
-  onceMessageReactionsRemove(filter: SearchMessageReactionsOptions) {
+  onceMessageReactionsRemove(filter?: SearchMessageReactionsOptions) {
     return this._onceMessageReactionUpdate(filter, "onMessageReactionRemove");
   }
 
@@ -642,7 +642,7 @@ export class Events {
     filter: SearchMessageReactionsOptions,
     event: "onMessageReactionAdd" | "onMessageReactionRemove",
   ) {
-    const { emojis, messageIdentifier, authorId, timeout } = filter;
+    const { emojis, messageIdentifier, authorId, timeout } = filter ?? {};
 
     const validator = new Validator<[MessageReaction, User | PartialUser]>();
 
