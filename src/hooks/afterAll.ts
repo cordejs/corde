@@ -1,4 +1,6 @@
 import { testCollector } from "../common";
+import { getStackTrace } from "../utils";
+import { hookBuilder } from "./hookBuilder";
 
 /**
  * Declare a bunch of code that will be executed **after** tests begins
@@ -22,6 +24,7 @@ import { testCollector } from "../common";
  */
 export function afterAll(fn: () => void | Promise<void>) {
   if (fn) {
-    testCollector.afterAllFunctions.enqueue(fn);
+    const trace = getStackTrace();
+    hookBuilder(testCollector.afterAllFunctions, fn, trace, "AfterAllError");
   }
 }

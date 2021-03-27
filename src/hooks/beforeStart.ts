@@ -1,4 +1,6 @@
 import { testCollector } from "../common";
+import { getStackTrace } from "../utils";
+import { hookBuilder } from "./hookBuilder";
 
 /**
  * Declare a bunch of code that will be executed before tests begins.
@@ -22,6 +24,7 @@ import { testCollector } from "../common";
  */
 export function beforeStart(fn: () => void | Promise<void>) {
   if (fn) {
-    testCollector.beforeStartFunctions.enqueue(fn);
+    const trace = getStackTrace();
+    hookBuilder(testCollector.beforeStartFunctions, fn, trace, "BeforeStartError");
   }
 }

@@ -1,4 +1,6 @@
 import { testCollector } from "../common";
+import { getStackTrace } from "../utils";
+import { hookBuilder } from "./hookBuilder";
 
 /**
  * Declare a bunch of code that will be executed before each test begin
@@ -9,8 +11,9 @@ import { testCollector } from "../common";
  * @param fn code that will be executed **before** tests start
  * @since 2.0
  */
-export function beforeEach(fn: () => void) {
+export function beforeEach(fn: () => void | Promise<void>) {
   if (fn) {
-    testCollector.beforeEachFunctions.enqueue(fn);
+    const trace = getStackTrace();
+    hookBuilder(testCollector.beforeEachFunctions, fn, trace, "BeforeEachError");
   }
 }

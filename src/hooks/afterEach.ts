@@ -1,4 +1,6 @@
 import { testCollector } from "../common";
+import { getStackTrace } from "../utils";
+import { hookBuilder } from "./hookBuilder";
 
 /**
  * Declare a bunch of code that will be executed **after each** test.
@@ -10,8 +12,9 @@ import { testCollector } from "../common";
  * @param fn code that will be executed **after each** tests finish
  * @since 2.0
  */
-export function afterEach(fn: () => void) {
+export function afterEach(fn: () => void | Promise<void>) {
   if (fn) {
-    testCollector.afterEachFunctions.enqueue(fn);
+    const trace = getStackTrace();
+    hookBuilder(testCollector.afterEachFunctions, fn, trace, "AfterEachError");
   }
 }
