@@ -16,7 +16,6 @@ import {
   rgba as _rgba,
   stringIsNullOrEmpty as _stringIsNullOrEmpty,
   typeOf as _typeOf,
-  tryImport as _tryImport,
   wait as _wait,
   LogUpdate as _logUpdate,
   Guid as _Guid,
@@ -41,7 +40,6 @@ export namespace utils {
   export const rgba = _rgba;
   export const stringIsNullOrEmpty = _stringIsNullOrEmpty;
   export const typeOf = _typeOf;
-  export const tryImport = _tryImport;
   export const wait = _wait;
   export const LogUpdate = _logUpdate;
   export const calcPermissionsValue = _calcPermissionsValue;

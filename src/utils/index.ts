@@ -6,7 +6,6 @@ export * from "./isFunction";
 export * from "./isPrimitiveValue";
 export * from "./wait";
 export * from "./pick";
-export * from "./tryImport";
 export * from "./formatObject";
 export * from "./diff";
 export * from "./isPromise";
