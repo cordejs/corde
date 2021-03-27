@@ -13,7 +13,7 @@ import { isPrimitiveValue } from "../utils/isPrimitiveValue";
 import { typeOf } from "../utils";
 
 class MessageUtils {
-  public messagesMatches(
+  messagesMatches(
     returnedMessage: Message | PartialMessage,
     expectation: Primitive | MessageEmbed,
   ) {
@@ -72,7 +72,7 @@ class MessageUtils {
    *  }
    *  ```
    */
-  public getMessageByType(answer: Message | MessageEmbed | PartialMessage, type: messageType) {
+  getMessageByType(answer: Message | MessageEmbed | PartialMessage, type: messageType) {
     if (type === "embed") {
       const embed = answer instanceof Message ? answer.embeds[0] : answer;
       if (!embed) {
@@ -92,9 +92,7 @@ class MessageUtils {
     }
   }
 
-  public humanizeMessageIdentifierObject(
-    msgIdentifier: MessageIdentifier | MessageEditedIdentifier,
-  ) {
+  humanizeMessageIdentifierObject(msgIdentifier: MessageIdentifier | MessageEditedIdentifier) {
     if (!msgIdentifier) {
       return "";
     }
@@ -114,7 +112,7 @@ class MessageUtils {
     return "";
   }
 
-  public createNotFoundMessageForMessageData(msgIdentifier: MessageIdentifier): string | null {
+  createNotFoundMessageForMessageData(msgIdentifier: MessageIdentifier): string | null {
     if (!msgIdentifier) {
       return null;
     }
@@ -134,7 +132,7 @@ class MessageUtils {
     return null;
   }
 
-  public embedMessageLikeToMessageEmbed(embedLike: MessageEmbedLike) {
+  embedMessageLikeToMessageEmbed(embedLike: MessageEmbedLike) {
     const embed = new MessageEmbed();
     if (!embedLike || typeOf(embedLike) !== "object") {
       return embed;

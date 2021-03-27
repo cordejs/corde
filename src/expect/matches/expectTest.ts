@@ -28,7 +28,7 @@ export abstract class ExpectTest {
    * @param command The command to execute.
    * @param isNot Definition if this is a deny test.
    */
-  public constructor(cordeBot: CordeBot, command: string | number | boolean, isNot: boolean) {
+  constructor(cordeBot: CordeBot, command: string | number | boolean, isNot: boolean) {
     this.isNot = isNot;
     this.command = command;
     this.cordeBot = cordeBot;
@@ -41,7 +41,7 @@ export abstract class ExpectTest {
    *
    * @returns A report of the executed command.
    */
-  public abstract action(...args: any[]): Promise<TestReport>;
+  abstract action(...args: any[]): Promise<TestReport>;
 
   protected invertHasPassedIfIsNot() {
     if (this.isNot) {

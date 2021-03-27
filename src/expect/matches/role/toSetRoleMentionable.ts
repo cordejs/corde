@@ -8,10 +8,7 @@ import { ExpectTest } from "../expectTest";
  * @internal
  */
 export class ToSetRoleMentionable extends ExpectTest {
-  public async action(
-    mentionable: boolean,
-    roleIdentifier: string | RoleIdentifier,
-  ): Promise<TestReport> {
+  async action(mentionable: boolean, roleIdentifier: string | RoleIdentifier): Promise<TestReport> {
     const identifier = roleUtils.getRoleData(roleIdentifier);
     const error = roleUtils.getErrorForUndefinedRoleData(identifier);
 

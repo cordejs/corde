@@ -4,15 +4,15 @@ import * as uuid from "uuid";
  * @internal
  */
 class GuidManager {
-  public new() {
+  new() {
     return uuid.v4();
   }
 
-  public validate(guid: string) {
+  validate(guid: string) {
     return uuid.validate(guid);
   }
 
-  public parse(guid: string) {
+  parse(guid: string) {
     return uuid.parse(guid);
   }
 }

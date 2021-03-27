@@ -7,7 +7,7 @@ import { ExpectTest } from "../expectTest";
  * @internal
  */
 export class ToDeleteRole extends ExpectTest {
-  public async action(roleIdentifier: string | RoleIdentifier): Promise<TestReport> {
+  async action(roleIdentifier: string | RoleIdentifier): Promise<TestReport> {
     const identifier = roleUtils.getRoleData(roleIdentifier);
     const roleOrFailObject = await this.getRoleOrInvalidMessage(identifier);
 

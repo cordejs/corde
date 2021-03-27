@@ -2,7 +2,7 @@ import { ExpectTest } from "../../src/expect/matches/expectTest";
 import { TestReport } from "../../src/types";
 
 class TestClass extends ExpectTest {
-  public action(p1: any, p2: any, p3: any): Promise<TestReport> {
+  action(p1: any, p2: any, p3: any): Promise<TestReport> {
     return Promise.resolve(super.createReport());
   }
 }

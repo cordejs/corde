@@ -10,7 +10,7 @@ import { ExpectTest } from "../expectTest";
  * @internal
  */
 export class ToSetRoleColor extends ExpectTest {
-  public async action(
+  async action(
     color: ColorResolvable,
     roleIdentifier: string | RoleIdentifier,
   ): Promise<TestReport> {

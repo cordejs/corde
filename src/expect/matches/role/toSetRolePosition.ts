@@ -7,10 +7,7 @@ import { ExpectTest } from "../expectTest";
  * @internal
  */
 export class ToSetRolePosition extends ExpectTest {
-  public async action(
-    newPosition: number,
-    roleIdentifier: string | RoleIdentifier,
-  ): Promise<TestReport> {
+  async action(newPosition: number, roleIdentifier: string | RoleIdentifier): Promise<TestReport> {
     const identifier = roleUtils.getRoleData(roleIdentifier);
     const error = roleUtils.getErrorForUndefinedRoleData(identifier);
 

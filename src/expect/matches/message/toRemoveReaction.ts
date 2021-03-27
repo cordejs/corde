@@ -10,7 +10,7 @@ import { ExpectTest } from "../expectTest";
  * @internal
  */
 export class ToRemoveReaction extends ExpectTest {
-  public async action(
+  async action(
     emojis: EmojisType,
     messageIdentifier?: MessageIdentifier | string,
   ): Promise<TestReport> {

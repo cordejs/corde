@@ -8,7 +8,7 @@ import { ExpectTest } from "../expectTest";
  * @internal
  */
 export class ToAddReaction extends ExpectTest {
-  public async action(
+  async action(
     emojis: EmojisType,
     messageIdentifier?: MessageIdentifier | string,
   ): Promise<TestReport> {

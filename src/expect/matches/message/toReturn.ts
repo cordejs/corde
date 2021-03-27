@@ -15,7 +15,7 @@ import { diff, formatObject, typeOf } from "../../../utils";
  * @internal
  */
 export class ToReturn extends ExpectTest {
-  public async action(expect: Primitive | MessageEmbedLike): Promise<TestReport> {
+  async action(expect: Primitive | MessageEmbedLike): Promise<TestReport> {
     let _expect: Primitive | MessageEmbed;
     this.expectation = expect;
     if (!isPrimitiveValue(expect) && typeOf(expect) !== "object") {

@@ -16,14 +16,14 @@ class Package {
   /**
    * Package.json version
    */
-  public get version(): string {
+  get version(): string {
     return VERSION;
   }
 
   /**
    * Package.json description
    */
-  public get description(): string {
+  get description(): string {
     return DESCRIPTION;
   }
 }

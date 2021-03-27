@@ -8,10 +8,7 @@ import { ExpectTest } from "../expectTest";
  * @internal
  */
 export class ToRenameRole extends ExpectTest {
-  public async action(
-    newName: string,
-    roleIdentifier: RoleIdentifier | string,
-  ): Promise<TestReport> {
+  async action(newName: string, roleIdentifier: RoleIdentifier | string): Promise<TestReport> {
     const identifier = roleUtils.getRoleData(roleIdentifier);
     const error = roleUtils.getErrorForUndefinedRoleData(identifier);
 

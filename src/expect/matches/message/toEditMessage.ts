@@ -14,7 +14,7 @@ import messageUtils from "../../messageUtils";
  * @internal
  */
 export class ToEditMessage extends ExpectTest {
-  public async action(
+  async action(
     newValue: Primitive | MessageEmbedLike,
     messageIdentifier?: MessageEditedIdentifier | string,
   ): Promise<TestReport> {

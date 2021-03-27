@@ -8,7 +8,7 @@ import { ExpectTest } from "../expectTest";
  * @internal
  */
 export class ToPinMessage extends ExpectTest {
-  public async action(messageIdentifier: MessageIdentifier | string): Promise<TestReport> {
+  async action(messageIdentifier: MessageIdentifier | string): Promise<TestReport> {
     if (
       !messageIdentifier ||
       (typeOf(messageIdentifier) !== "string" && typeOf(messageIdentifier) !== "object")

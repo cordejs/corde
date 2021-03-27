@@ -15,7 +15,7 @@ import { ExpectTest } from "../expectTest";
  * @internal
  */
 export class ToSetRolePermission extends ExpectTest {
-  public async action(
+  async action(
     roleIdentifier: string | RoleIdentifier,
     permissions: RolePermission[],
   ): Promise<TestReport> {

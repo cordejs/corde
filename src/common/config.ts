@@ -9,14 +9,14 @@ import { ConfigOptions } from "../types";
  *
  */
 export class Config implements ConfigOptions {
-  public cordeTestToken: string;
-  public botTestId: string;
-  public botTestToken?: string;
-  public channelId: string;
-  public guildId: string;
-  public timeOut: number;
-  public botPrefix: string;
-  public testFiles: string[];
+  cordeTestToken: string;
+  botTestId: string;
+  botTestToken?: string;
+  channelId: string;
+  guildId: string;
+  timeOut: number;
+  botPrefix: string;
+  testFiles: string[];
 
   constructor() {
     this.timeOut = DEFAULT_TEST_TIMEOUT;
@@ -37,7 +37,7 @@ export class Config implements ConfigOptions {
    *
    * @param config new set of configs.
    */
-  public setConfigs(config: ConfigOptions, forceUpdate?: boolean) {
+  setConfigs(config: ConfigOptions, forceUpdate?: boolean) {
     if (!this.cordeTestToken || forceUpdate) {
       this.cordeTestToken = config.cordeTestToken;
     }

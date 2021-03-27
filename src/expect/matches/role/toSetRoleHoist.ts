@@ -8,10 +8,7 @@ import { typeOf } from "../../../utils";
  * @internal
  */
 export class ToSetRoleHoist extends ExpectTest {
-  public async action(
-    hoist: boolean,
-    roleIdentifier: string | RoleIdentifier,
-  ): Promise<TestReport> {
+  async action(hoist: boolean, roleIdentifier: string | RoleIdentifier): Promise<TestReport> {
     const identifier = roleUtils.getRoleData(roleIdentifier);
     const error = roleUtils.getErrorForUndefinedRoleData(identifier);
 
