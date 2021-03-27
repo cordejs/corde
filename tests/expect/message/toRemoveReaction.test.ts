@@ -175,7 +175,7 @@ describe("testing toRemoveReaction function", () => {
     expect(report).toMatchSnapshot();
   });
 
-  it("should return a failed test with isNot = true", async () => {
+  it("should return a failed test with isNot = true and emoji object with id and other with name", async () => {
     runtime.setConfigs({ timeOut: 10 });
     const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
     cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
@@ -186,14 +186,18 @@ describe("testing toRemoveReaction function", () => {
     const reportModel: TestReport = {
       pass: false,
       message: buildReportMessage(
-        `expected: not to remove reactions ${[mockDiscord.messageReaction.emoji.name].join(
-          ", ",
-        )}\n`,
+        `expected: not to remove reactions ${[
+          mockDiscord.messageReaction.emoji.id,
+          mockDiscord.messageReaction.emoji.name,
+        ].join(", ")}\n`,
         `received: ${[mockDiscord.messageReaction.emoji.name].join(", ")}`,
       ),
     };
 
-    const report = await toRemoveReaction.action([mockDiscord.messageReaction.emoji.name]);
+    const report = await toRemoveReaction.action([
+      { id: mockDiscord.messageReaction.emoji.id },
+      { name: mockDiscord.messageReaction.emoji.name },
+    ]);
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
   });

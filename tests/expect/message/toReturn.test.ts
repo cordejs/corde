@@ -235,6 +235,29 @@ describe("testing toReturn", () => {
     expect(report).toMatchSnapshot();
   });
 
+  it("should get fail test due to bot returned different messages (expect embed and returned primitive)", async () => {
+    runtime.setConfigs({ timeOut: 100 }, true);
+    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+
+    cordeClient.awaitMessagesFromTestingBot = jest.fn().mockReturnValue(mockDiscord.message);
+
+    const embedExpect = messageUtils.embedMessageLikeToMessageEmbed(mockDiscord.messageEmbedLike);
+
+    const reportModel: TestReport = {
+      pass: false,
+      message: buildReportMessage(
+        `expected: ${formatObject(embedExpect)}\n`,
+        `received: '${mockDiscord.message}'`,
+      ),
+    };
+
+    const toReturn = new ToReturn(cordeClient, "ping", false);
+    const report = await toReturn.action(mockDiscord.messageEmbedLike);
+
+    expect(report).toEqual(reportModel);
+    expect(report).toMatchSnapshot();
+  });
+
   it("should get fail test due to bot returned different messages both primitive values", async () => {
     runtime.setConfigs({ timeOut: 100 }, true);
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
@@ -242,7 +265,6 @@ describe("testing toReturn", () => {
     cordeClient.awaitMessagesFromTestingBot = jest.fn().mockReturnValue(mockDiscord.message);
 
     const expectValue = "expect value";
-    const embedReturned = messageUtils.getMessageByType(mockDiscord.message, "embed");
 
     const reportModel: TestReport = {
       pass: false,

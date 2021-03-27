@@ -99,6 +99,55 @@ Object {
 }
 `;
 
+exports[`testing toEditMessage should get fail test due to bot returned different messages (expect embed and returned primitive) 1`] = `
+Object {
+  "message": "    
+    expected: Object {
+      \\"author\\": Object {
+        \\"icon_url\\": \\"https://i.imgur.com/wSTFkRM.png\\",
+        \\"name\\": \\"Some name\\",
+        \\"url\\": \\"https://discord.js.org\\",
+      },
+      \\"color\\": 39423,
+      \\"description\\": \\"Some description here\\",
+      \\"fields\\": Array [
+        Object {
+          \\"inline\\": false,
+          \\"name\\": \\"Regular field title\\",
+          \\"value\\": \\"Some value here\\",
+        },
+        Object {
+          \\"inline\\": false,
+          \\"name\\": \\"​\\",
+          \\"value\\": \\"​\\",
+        },
+        Object {
+          \\"inline\\": true,
+          \\"name\\": \\"Inline field title\\",
+          \\"value\\": \\"Some value here\\",
+        },
+        Object {
+          \\"inline\\": true,
+          \\"name\\": \\"Inline field title\\",
+          \\"value\\": \\"Some value here\\",
+        },
+      ],
+      \\"footer\\": null,
+      \\"image\\": null,
+      \\"thumbnail\\": Object {
+        \\"url\\": \\"https://i.imgur.com/wSTFkRM.png\\",
+      },
+      \\"timestamp\\": null,
+      \\"title\\": \\"Some title\\",
+      \\"type\\": \\"rich\\",
+      \\"url\\": \\"https://discord.js.org/\\",
+    }
+    received: 'this is the message content'
+",
+  "pass": false,
+}
+`;
+
 exports[`testing toEditMessage should get fail test due to bot returned different messages (expect primitive and returned embed) 1`] = `
 Object {
   "message": "    

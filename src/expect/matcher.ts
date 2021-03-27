@@ -31,7 +31,7 @@ import {
 import { ExpectTest } from "./matches/expectTest";
 import { MessageMatches } from "./matches/messageMatches";
 import { RoleMatches } from "./matches/roleMatches";
-import { resolveName, stringIsNullOrEmpty, typeOf } from "../utils";
+import { buildReportMessage, resolveName, stringIsNullOrEmpty, typeOf } from "../utils";
 import { getStackTrace } from "../utils/getStackTrace";
 
 /**
@@ -191,28 +191,27 @@ class ExpectMatches implements Matches {
   ): Promise<TestReport> {
     const commandName = await resolveName(this._commandName);
 
-    if (typeof commandName === "string" && stringIsNullOrEmpty(commandName)) {
+    if (
+      commandName == undefined ||
+      (typeof commandName === "string" && stringIsNullOrEmpty(commandName))
+    ) {
       return { pass: false, message: "command can not be null or an empty string" };
     }
 
     const op = new type(cordeBot, commandName, this._isNot);
 
-    try {
-      const report = await op.action(...params);
+    const report = await op.action(...params);
 
-      if (!report) {
-        return null;
-      }
-
-      if (report.pass) {
-        return report;
-      }
-
-      report.trace = trace;
-      return report;
-    } catch (error) {
-      return { pass: false, message: "command can not be null or an empty string" };
+    if (!report) {
+      return null;
     }
+
+    if (report.pass) {
+      return report;
+    }
+
+    report.trace = buildReportMessage(trace);
+    return report;
   }
 }
 

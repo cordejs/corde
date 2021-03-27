@@ -13,7 +13,13 @@ import {
   TEXT_PASS,
 } from "../consts";
 import { Group, RunnerReport, SemiRunnerReport, Test, TestFile, TestReport } from "../types";
-import { executeWithTimeout, formatObject, stringIsNullOrEmpty, Timer } from "../utils";
+import {
+  executePromiseWithTimeout,
+  executeWithTimeout,
+  formatObject,
+  stringIsNullOrEmpty,
+  Timer,
+} from "../utils";
 import { LogUpdate } from "../utils";
 
 enum Status {
@@ -210,47 +216,32 @@ export class TestExecutor {
 
   private createTestText(testName: string | number | boolean) {
     if (stringIsNullOrEmpty(testName)) {
-      return this.createTestTextByStatus("()", Status.RUNNING);
+      return this.createTestTextByStatus("()");
     }
-    return this.createTestTextByStatus(testName, Status.RUNNING);
+    return this.createTestTextByStatus(testName);
   }
 
-  private createTestTextByStatus(testName: string | number | boolean, status: Status) {
+  private createTestTextByStatus(testName: string | number | boolean) {
     let icon = TEST_RUNNING_ICON;
-
-    if (status === Status.PASSED) {
-      icon = TEST_PASSED_ICON;
-    } else if (status === Status.FAIL) {
-      icon = TEST_FAIL_ICON;
-    }
-
-    const colorizedName = this.colorizeNameIfNotPass(testName, status);
-    return `${MESSAGE_TAB_SPACE}${icon} ${colorizedName}`;
+    return `${MESSAGE_TAB_SPACE}${icon} ${testName}`;
   }
 
-  private colorizeNameIfNotPass(value: string | number | boolean, status: Status) {
-    if (status === Status.FAIL) {
-      return chalk.red(value);
-    }
-    return value;
-  }
-
-  private async runTest(test: Test) {
+  async runTest(test: Test) {
     const reports: TestReport[] = [];
     for (const testfn of test.testsFunctions) {
       await testCollector.beforeEachFunctions.executeAsync();
       let report: TestReport;
-      try {
-        report = await executeWithTimeout(
-          async () => await runtime.injectBot(testfn),
-          runtime.configs.timeOut,
-        );
-      } catch (error) {
-        report = {
-          pass: false,
-          message: this.getErrorMessage(error),
-        };
-      }
+      report = await executePromiseWithTimeout(async (resolve) => {
+        try {
+          const _report = await runtime.injectBot(testfn);
+          resolve(_report);
+        } catch (error) {
+          resolve({
+            pass: false,
+            message: this.getErrorMessage(error),
+          });
+        }
+      }, runtime.configs.timeOut);
       await testCollector.afterEachFunctions.executeAsync();
       reports.push(report);
     }
@@ -285,10 +276,6 @@ export class TestExecutor {
 
   private getAssertionsPropsFromTest(test: Test) {
     const tests: Test[] = [test];
-
-    if (!test) {
-      return [];
-    }
 
     if (test.subTests) {
       test.subTests.forEach((subtest) => {

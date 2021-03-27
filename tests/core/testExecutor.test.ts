@@ -1,6 +1,6 @@
 import { TestExecutor } from "../../src/core/testExecutor";
 import { SemiRunnerReport, TestFile } from "../../src/types";
-import { buildReportMessage, diff, LogUpdate } from "../../src/utils";
+import { buildReportMessage, diff, getStackTrace, LogUpdate } from "../../src/utils";
 import {
   generateTestFile,
   removeANSIColorStyle,
@@ -566,4 +566,64 @@ it("should print report for 1 test file, 2 test clausure and 1 failed function a
     totalEmptyTests: 0,
   });
   expect(removeANSIColorStyle(logUpdate.stder)).toMatchSnapshot();
+});
+
+it("should print report for 1 test file, 2 test clausure and 1 failed function and 1 passed function with stackTrace", async () => {
+  const data: TestFileGeneratorInfo = {
+    amountOfTestFiles: 1,
+    testFunctionsReport: [
+      {
+        pass: false,
+        message: buildReportMessage(diff({ a: 1 }, { a: 2 })),
+        trace: buildReportMessage(
+          "at TestExecutor.printReportData (src/core/testExecutor.ts:202:13)\n" +
+            "at Object.<anonymous> (tests/utils/colors.test.ts:29:39)",
+        ),
+      },
+    ],
+    amountOfTests: 1,
+  };
+
+  const tests = generateTestFile(data);
+
+  const report = await testRunner.runTestsAndPrint(tests);
+
+  expect(report).toMatchObject<SemiRunnerReport>({
+    totalTestFiles: data.amountOfTestFiles,
+    totalTestFilesFailed: 1,
+    totalTestFilesPassed: 0,
+    totalTests: 1,
+    totalTestsFailed: 1,
+    totalTestsPassed: 0,
+    totalEmptyTestFiles: 0,
+    totalEmptyTests: 0,
+  });
+  expect(removeANSIColorStyle(logUpdate.stder)).toMatchSnapshot();
+});
+
+it("should print for a file that throws error in test function", async () => {
+  const reports = await testRunner.runTest({
+    testsFunctions: [
+      (_: any) => {
+        throw new Error("error message");
+      },
+    ],
+  });
+
+  expect(reports[0].message).toEqual("error message");
+  expect(reports[0].pass).toEqual(false);
+});
+
+it("should print for a file that throws unknown error in test function", async () => {
+  const reports = await testRunner.runTest({
+    testsFunctions: [
+      (_: any) => {
+        // tslint:disable-next-line: no-string-throw
+        throw "error message";
+      },
+    ],
+  });
+
+  expect(reports[0].message).toEqual(`\"error message\"`);
+  expect(reports[0].pass).toEqual(false);
 });

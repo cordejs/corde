@@ -17,6 +17,7 @@ import {
   ToSetRoleColor,
 } from "../../src/expect/matches";
 import { ExpectMatchesWithNot } from "../../src/expect/matcher";
+import { TestReport } from "../../src/types";
 
 jest.mock("../../src/expect/matches/message/toReturn.ts");
 jest.mock("../../src/expect/matches/message/toRemoveReaction.ts");
@@ -144,9 +145,36 @@ describe("Testing matches class", () => {
     expect(matches.not).not.toBe(undefined);
   });
 
+  describe("testing operationFactory", () => {
+    it("should return failed test due to null command name", async () => {
+      initExpectMatch("").toReturn("");
+      const report = await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(report).toEqual<TestReport>({
+        pass: false,
+        message: "command can not be null or an empty string",
+      });
+    });
+
+    it("should return passed test without trace", async () => {
+      initExpectMatch().toReturn("");
+      ToReturn.prototype.action = jest.fn().mockReturnValue(Promise.resolve({ pass: true }));
+      const report = await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(report.pass).toEqual(true);
+      expect(report.trace).toBeFalsy();
+    });
+
+    it("should return failed test with trace", async () => {
+      initExpectMatch().toReturn("");
+      ToReturn.prototype.action = jest.fn().mockReturnValue(Promise.resolve({ pass: false }));
+      const report = await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(report.pass).toEqual(false);
+      expect(report.trace).toBeTruthy();
+    });
+  });
+
   describe("testing toReturn function", () => {
     it("should add a function to hasIsolatedTestFunctions after call toReturn", async () => {
-      new ExpectMatchesWithNot("test").toReturn("empty");
+      initExpectMatch().toReturn("empty");
       expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
     });
 
@@ -170,6 +198,33 @@ describe("Testing matches class", () => {
       await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToReturn).toBeCalledWith(runtime.bot, con, true);
       expect(toReturnActionMock).toBeCalledWith(expectName);
+    });
+  });
+
+  describe("testing toEditMessage function", () => {
+    it("should add a function to hasIsolatedTestFunctions after call toReturn", async () => {
+      initExpectMatch().toEditMessage("empty", { id: "123" });
+      expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
+    });
+
+    it("should add a toEditMessage function", async () => {
+      initExpectMatch().toEditMessage("empty", { id: "123" });
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(toEditMessageActionMock).toBeCalled();
+    });
+
+    it("should add a toEditMessage function with correct values (isNot false)", async () => {
+      initExpectMatch().toEditMessage("empty", { id: "123" });
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToEditMessage).toBeCalledWith(runtime.bot, con, false);
+      expect(toEditMessageActionMock).toBeCalledWith("empty", { id: "123" });
+    });
+
+    it("should add a toEditMessage function with correct values (isNot true)", async () => {
+      initExpectMatch().not.toEditMessage("empty", { id: "123" });
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToEditMessage).toBeCalledWith(runtime.bot, con, true);
+      expect(toEditMessageActionMock).toBeCalledWith("empty", { id: "123" });
     });
   });
 
@@ -204,7 +259,7 @@ describe("Testing matches class", () => {
 
   describe("testing toRemoveReaction function", () => {
     it("should add a function to hasIsolatedTestFunctions after call toRemoveReaction", async () => {
-      new ExpectMatchesWithNot("test").toRemoveReaction(["😀"]);
+      initExpectMatch().toRemoveReaction(["😀"]);
       expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
     });
 
@@ -248,7 +303,7 @@ describe("Testing matches class", () => {
     };
 
     it("should add a function to hasIsolatedTestFunctions after call toSetRoleColor", async () => {
-      new ExpectMatchesWithNot("test").toSetRoleColor(color, "123");
+      initExpectMatch().toSetRoleColor(color, "123");
       expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
     });
 
@@ -286,7 +341,7 @@ describe("Testing matches class", () => {
     };
 
     it("should add a function to hasIsolatedTestFunctions after call toDeleteRole", async () => {
-      new ExpectMatchesWithNot("test").toDeleteRole("123");
+      initExpectMatch().toDeleteRole("123");
       expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
     });
 
@@ -339,7 +394,7 @@ describe("Testing matches class", () => {
     const mentionableTrue = true;
 
     it("should add a function to hasIsolatedTestFunctions after call toSetRoleMentionable", async () => {
-      new ExpectMatchesWithNot("test").toSetRoleMentionable(true, roleId.id);
+      initExpectMatch().toSetRoleMentionable(true, roleId.id);
       expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
     });
 
@@ -370,7 +425,7 @@ describe("Testing matches class", () => {
     };
     const mentionableTrue = true;
     it("should add a function to hasIsolatedTestFunctions after call toSetRoleHoist", async () => {
-      new ExpectMatchesWithNot("test").toSetRoleHoist(mentionableTrue, roleId);
+      initExpectMatch().toSetRoleHoist(mentionableTrue, roleId);
       expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
     });
 
@@ -614,6 +669,6 @@ describe("Testing matches class", () => {
   });
 });
 
-function initExpectMatch() {
-  return new ExpectMatchesWithNot(con);
+function initExpectMatch(value?: any) {
+  return new ExpectMatchesWithNot(value ?? con);
 }

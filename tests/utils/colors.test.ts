@@ -24,4 +24,8 @@ describe("testing colors", () => {
   it("should return invalid color due to invalid string number", () => {
     expect(resolveColor(123)).toBe(123);
   });
+
+  it("should get rgb color", () => {
+    expect(resolveColor([255, 0, 0])).toBe(16711680);
+  });
 });

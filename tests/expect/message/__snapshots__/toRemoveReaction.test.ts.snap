@@ -60,10 +60,10 @@ Object {
 }
 `;
 
-exports[`testing toRemoveReaction function should return a failed test with isNot = true 1`] = `
+exports[`testing toRemoveReaction function should return a failed test with isNot = true and emoji object with id and other with name 1`] = `
 Object {
   "message": "    
-    expected: not to remove reactions 😀
+    expected: not to remove reactions 312322220410652501, 😀
     received: 😀
 ",
   "pass": false,

@@ -335,4 +335,29 @@ describe("testing toEditMessage", () => {
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
   });
+
+  it("should get fail test due to bot returned different messages (expect embed and returned primitive)", async () => {
+    runtime.setConfigs({ timeOut: 100 }, true);
+    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+
+    cordeClient.awaitMessagesFromTestingBot = jest.fn().mockReturnValue(mockDiscord.message);
+    const embedExpect = messageUtils.embedMessageLikeToMessageEmbed(mockDiscord.messageEmbedLike);
+
+    const events = new MockEvents(cordeClient, mockDiscord);
+    events.mockOnceMessageContentOrEmbedChange();
+
+    const reportModel: TestReport = {
+      pass: false,
+      message: buildReportMessage(
+        `expected: ${formatObject(embedExpect)}\n`,
+        `received: '${mockDiscord.message}'`,
+      ),
+    };
+
+    const toEditMessage = new ToEditMessage(cordeClient, "ping", false);
+    const report = await toEditMessage.action(mockDiscord.messageEmbedLike);
+
+    expect(report).toEqual(reportModel);
+    expect(report).toMatchSnapshot();
+  });
 });

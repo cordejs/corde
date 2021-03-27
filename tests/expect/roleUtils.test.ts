@@ -47,6 +47,16 @@ describe("testing getErrorForUndefinedRoleData", () => {
   });
 });
 
+describe("testing getRoleData", () => {
+  it("should get given string id", () => {
+    expect(roleUtils.getRoleData("123")).toEqual({ id: "123" });
+  });
+
+  it("should get given object", () => {
+    expect(roleUtils.getRoleData({ id: "123" })).toEqual({ id: "123" });
+  });
+});
+
 describe("testing validateRole", () => {
   const mock = new MockDiscord();
 

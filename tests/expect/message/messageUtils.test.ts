@@ -1,4 +1,4 @@
-import { EmbedFieldData, MessageEmbedThumbnail } from "discord.js";
+import { EmbedFieldData, MessageEmbedImage, MessageEmbedThumbnail } from "discord.js";
 import { Stream } from "stream";
 import messageUtils from "../../../src/expect/messageUtils";
 import {
@@ -6,6 +6,7 @@ import {
   MessageEmbedAuthor,
   MessageEmbedFooter,
   MessageEmbedLike,
+  MinifiedEmbedMessage,
 } from "../../../src/types";
 
 describe("testing messageUtils", () => {
@@ -51,6 +52,25 @@ describe("testing messageUtils", () => {
 
       const embed = messageUtils.embedMessageLikeToMessageEmbed(messageLike);
       expect(embed).toMatchObject(messageLike);
+    });
+
+    it("should return empty message when pass null", () => {
+      const embed = messageUtils.embedMessageLikeToMessageEmbed(null);
+      expect(embed).toBeTruthy();
+    });
+
+    it("should convert image(string)", () => {
+      const embed = messageUtils.embedMessageLikeToMessageEmbed({ image: "./png.png" });
+      expect(embed.image).toMatchObject<MessageEmbedImage>({ url: "./png.png" });
+    });
+
+    it("should convert image(string)", () => {
+      const embed = messageUtils.embedMessageLikeToMessageEmbed({
+        image: {
+          url: "./png.png",
+        },
+      });
+      expect(embed.image).toMatchObject<MessageEmbedImage>({ url: "./png.png" });
     });
 
     it("should convert messageEmbedLike author string", () => {
@@ -146,6 +166,48 @@ describe("testing messageUtils", () => {
       };
       const embed = messageUtils.embedMessageLikeToMessageEmbed(messageLike);
       expect(embed.thumbnail).toMatchObject(thumbnail);
+    });
+  });
+
+  describe("testing getMessageByType", () => {
+    it("should get message with image", () => {
+      const messageEmbed = messageUtils.embedMessageLikeToMessageEmbed({
+        image: {
+          url: "www.google.com",
+        },
+      });
+
+      expect(
+        (messageUtils.getMessageByType(messageEmbed, "embed") as MinifiedEmbedMessage).image,
+      ).toBeTruthy();
+    });
+  });
+
+  describe("testing humanizeMessageIdentifierObject", () => {
+    it("should return '' for no identifier", () => {
+      expect(messageUtils.humanizeMessageIdentifierObject(null)).toEqual("");
+    });
+
+    it("should return message refering to the content", () => {
+      expect(messageUtils.humanizeMessageIdentifierObject({ content: "test" })).toEqual(
+        `message of content "test"`,
+      );
+    });
+
+    it("should return message refering to the oldContent", () => {
+      expect(messageUtils.humanizeMessageIdentifierObject({ oldContent: "test" })).toEqual(
+        `message of content "test"`,
+      );
+    });
+
+    it("should return '' for no object with no id or content", () => {
+      expect(messageUtils.humanizeMessageIdentifierObject({})).toEqual("");
+    });
+  });
+
+  describe("testing createNotFoundMessageForMessageData", () => {
+    it("should return '' for empty object", () => {
+      expect(messageUtils.createNotFoundMessageForMessageData({})).toEqual(null);
     });
   });
 });

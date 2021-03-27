@@ -12,23 +12,23 @@ export class Queue<T extends GenericFunction> {
   /**
    * Gets default parameters added.
    */
-  public get defaultParameters() {
+  get defaultParameters() {
     return this._defaultParameters;
   }
 
-  public get size() {
+  get size() {
     return this._funcs.size;
   }
 
-  public get hasFunctions() {
+  get hasFunctions() {
     return this._funcs.size > 0;
   }
 
-  public get hasDefaultParameters() {
+  get hasDefaultParameters() {
     return this._defaultParameters.length > 0;
   }
 
-  public get defaultParametersSize() {
+  get defaultParametersSize() {
     return this._defaultParameters.length;
   }
 
@@ -46,7 +46,7 @@ export class Queue<T extends GenericFunction> {
    *
    * @returns A **GUID** for the function
    */
-  public enqueue(fn: T) {
+  enqueue(fn: T) {
     if (!fn) {
       throw new Error("Can not add an null | undefined value");
     }
@@ -65,7 +65,7 @@ export class Queue<T extends GenericFunction> {
    * @param fn Function to be removed from queue.
    */
 
-  public dequeue(guid: string) {
+  dequeue(guid: string) {
     if (!guid) {
       return false;
     }
@@ -77,7 +77,7 @@ export class Queue<T extends GenericFunction> {
    * Execute functions with parameters.
    * @param params Parameters to be injected on function in queue.
    */
-  public async executeAsync<K extends ParametersAsOptional<T>, U extends ReturnType<T>>(
+  async executeAsync<K extends ParametersAsOptional<T>, U extends ReturnType<T>>(
     ...params: K
   ): Promise<U[]> {
     if (!this.hasFunctions) {
@@ -102,9 +102,7 @@ export class Queue<T extends GenericFunction> {
    * Execute functions with parameters.
    * @param params Parameters to be injected on function in queue.
    */
-  public executeSync<K extends ParametersAsOptional<T>, U extends ReturnType<T>>(
-    ...params: K
-  ): U[] {
+  executeSync<K extends ParametersAsOptional<T>, U extends ReturnType<T>>(...params: K): U[] {
     if (!this.hasFunctions) {
       return [];
     }
@@ -130,7 +128,7 @@ export class Queue<T extends GenericFunction> {
    * @param catchAction Function to handle errors.
    * @param params Parameters to the functions.
    */
-  public tryExecuteSync<K extends ParametersAsOptional<T>, U extends ReturnType<T>>(
+  tryExecuteSync<K extends ParametersAsOptional<T>, U extends ReturnType<T>>(
     catchAction?: (error: any) => void,
     ...params: K
   ): U[] {
@@ -164,7 +162,7 @@ export class Queue<T extends GenericFunction> {
    * @param catchAction Function to handle errors.
    * @param params Parameters to the functions.
    */
-  public async tryExecuteAsync<K extends ParametersAsOptional<T>, U extends ReturnType<T>>(
+  async tryExecuteAsync<K extends ParametersAsOptional<T>, U extends ReturnType<T>>(
     catchAction?: GenericFunction,
     ...params: K
   ) {
@@ -197,7 +195,7 @@ export class Queue<T extends GenericFunction> {
    * occur.
    * @param params Parameters to the functions.
    */
-  public executeWithCatchCollectSync<K extends ParametersAsOptional<T>>(...params: K) {
+  executeWithCatchCollectSync<K extends ParametersAsOptional<T>>(...params: K) {
     if (!this.hasFunctions) {
       return [];
     }
@@ -222,7 +220,7 @@ export class Queue<T extends GenericFunction> {
    * occur.
    * @param params Parameters to the functions.
    */
-  public async executeWithCatchCollectAsync<K extends ParametersAsOptional<T>>(...params: K) {
+  async executeWithCatchCollectAsync<K extends ParametersAsOptional<T>>(...params: K) {
     if (!this.hasFunctions) {
       return [];
     }
@@ -246,17 +244,17 @@ export class Queue<T extends GenericFunction> {
    * Add parameters to be injected on queued functions
    * @param parameter Parameter value
    */
-  public addDefaultParameters<K extends Parameters<T>>(...parameter: K) {
+  addDefaultParameters<K extends Parameters<T>>(...parameter: K) {
     if (parameter) {
       this._defaultParameters.push(...parameter);
     }
   }
 
-  public clearDefaultParameters() {
+  clearDefaultParameters() {
     this._defaultParameters = [];
   }
 
-  public removeFromDefaultParameter<K extends Parameters<T>>(...parameters: K) {
+  removeFromDefaultParameter<K extends Parameters<T>>(...parameters: K) {
     if (!this.hasDefaultParameters) {
       return;
     }
@@ -269,7 +267,7 @@ export class Queue<T extends GenericFunction> {
     }
   }
 
-  public clear() {
+  clear() {
     return this._funcs.clear();
   }
 
@@ -294,7 +292,7 @@ export class Queue<T extends GenericFunction> {
    * queue3.addDefaultParameters(1);
    * queue3.isDefaultArgumentsValid(1); // true - expect 1 arg, received 1
    */
-  public isDefaultArgumentsValid() {
+  isDefaultArgumentsValid() {
     if (!this.hasFunctions) {
       return true;
     }
@@ -307,7 +305,7 @@ export class Queue<T extends GenericFunction> {
     }
   }
 
-  private first() {
+  first() {
     if (!this.hasFunctions) {
       return null;
     }

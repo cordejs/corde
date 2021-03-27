@@ -195,4 +195,31 @@ describe("testing toAddReaction function", () => {
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
   });
+
+  it("should return a failed test with isNot = false and emoji object with id and other with name", async () => {
+    runtime.setConfigs({ timeOut: 10 });
+    const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
+    cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
+    const events = new MockEvents(cordeClient, mockDiscord);
+    events.mockOnceMessageReactionsRemove();
+    const toAddReaction = new ToAddReaction(cordeClient, "remove", false);
+
+    const reportModel: TestReport = {
+      pass: false,
+      message: buildReportMessage(
+        `expected: to add reactions ${[
+          mockDiscord.messageReaction.emoji.id,
+          mockDiscord.messageReaction.emoji.name,
+        ].join(", ")}\n`,
+        `received: no reaction was added to message`,
+      ),
+    };
+
+    const report = await toAddReaction.action([
+      { id: mockDiscord.messageReaction.emoji.id },
+      { name: mockDiscord.messageReaction.emoji.name },
+    ]);
+    expect(report).toEqual(reportModel);
+    expect(report).toMatchSnapshot();
+  });
 });

@@ -136,7 +136,7 @@ class MessageUtils {
 
   public embedMessageLikeToMessageEmbed(embedLike: MessageEmbedLike) {
     const embed = new MessageEmbed();
-    if (typeOf(embedLike) !== "object") {
+    if (!embedLike || typeOf(embedLike) !== "object") {
       return embed;
     }
 

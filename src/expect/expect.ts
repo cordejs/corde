@@ -11,20 +11,12 @@ import { ExpectMatchesWithNot, MatchWithNot } from "./matcher";
  * @returns An object with all possible tests to be done
  * in the bot.
  *
- * @example
- *
- * expect("ping")
- * expect(1)
- * expect(true)
- * expect(() => "ping")
- * expect(() => 1)
- * expect(() => false)
- * expect(() => Promise.resolve("ping"))
- * expect(() => Promise.resolve(1))
- * expect(() => Promise.resolve(false))
- *
  * @since 1.0
  */
-export function expect<T extends any>(commandName: T): MatchWithNot {
+export function expect(commandName: string): MatchWithNot;
+export function expect(commandName: number): MatchWithNot;
+export function expect(commandName: boolean): MatchWithNot;
+export function expect(commandName: () => any): MatchWithNot;
+export function expect(commandName: string | number | boolean | (() => any)): MatchWithNot {
   return new ExpectMatchesWithNot(commandName);
 }

@@ -98,6 +98,25 @@ exports[`should print report for 1 test file, 2 test clausure and 1 failed funct
 "
 `;
 
+exports[`should print report for 1 test file, 2 test clausure and 1 failed function and 1 passed function with stackTrace 1`] = `
+"
+ FAIL   /tests/file1.test.ts   10ms
+   x group -> test case1   10ms
+    
+    - expected  - 1
+    + received  + 1
+    
+      Object {
+    -   \\"a\\": 1,
+    +   \\"a\\": 2,
+      }
+
+    
+    at TestExecutor.printReportData (src/core/testExecutor.ts:202:13)
+    at Object.<anonymous> (tests/utils/colors.test.ts:29:39)
+"
+`;
+
 exports[`should print report for 2 test file, 1 test clausure and 1 test function 1`] = `
 "
  PASS   /tests/file1.test.ts   10ms
