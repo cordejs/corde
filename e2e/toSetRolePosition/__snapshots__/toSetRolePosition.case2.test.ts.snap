@@ -5,7 +5,7 @@ exports[`should fail when trying to set role as mentionable 1`] = `
  FAIL   e2e\\\\toSetRolePosition\\\\__cordeTest__\\\\bot_case2.test.ts   100ms
    x <empty test name>   100ms
     
-    expected: role position to change to 4
+    expected: role position to change to 5
     received: position didn't change
 
     at toSetRolePosition e2e\\\\toSetRolePosition\\\\__cordeTest__\\\\bot_case2.test.ts:8:54

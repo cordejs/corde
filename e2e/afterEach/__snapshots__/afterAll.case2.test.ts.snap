@@ -1,12 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should set role permissions 1`] = `
+exports[`should print on console in async function 1`] = `
 "
- PASS   e2e\\\\toSetRolePermission\\\\__cordeTest__\\\\bot_case1.test.ts   100ms
+ PASS   e2e\\\\afterAll\\\\__cordeTest__\\\\bot_case2.test.ts   100ms
    ✔  <empty test name>   100ms
 
 Test Files: 1 passed. 1 total
 Tests:      1 passed. 1 total
 Time:       100ms
+test afterAll
 "
 `;
