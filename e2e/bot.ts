@@ -19,7 +19,7 @@ export async function sendMessage(message: string) {
   const channel = bot.channels.cache.get(config.channelId);
 
   if (channel === undefined) {
-    throw new Error("Channelds not loaded");
+    throw new Error("Channels not loaded");
   }
 
   if (channel.isText()) {
