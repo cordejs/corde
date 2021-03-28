@@ -45,7 +45,8 @@ async function runTests(files: string[]) {
     const testFiles = await reader.getTestsFromFiles(files);
     if (testFiles.length === 0) {
       console.log(`${chalk.bgYellow(chalk.black(" INFO "))} No test were found.`);
-      finishProcess(0);
+      await finishProcess(0);
+      return;
     }
     const log = new LogUpdate();
     const testRunner = new TestExecutor(log);
@@ -58,14 +59,14 @@ async function runTests(files: string[]) {
     summary.print(executionReport);
 
     if (executionReport.totalTestsFailed > 0) {
-      finishProcess(1);
+      await finishProcess(1);
     } else {
-      finishProcess(0);
+      await finishProcess(0);
     }
   } catch (error) {
     spinner.stop();
     console.error(error);
-    finishProcess(1);
+    await finishProcess(1);
   }
 }
 
@@ -75,10 +76,10 @@ async function finishProcess(code: number, error?: any) {
       console.log(error);
     }
 
-    if (testCollector.afterAllFunctions && testCollector.afterAllFunctions.hasFunctions) {
+    if (testCollector.afterAllFunctions.hasFunctions) {
       const exceptions = await testCollector.afterAllFunctions.executeWithCatchCollectAsync();
       if (exceptions.length) {
-        console.log(exceptions);
+        console.log(...exceptions);
         code = 1;
       }
     }
