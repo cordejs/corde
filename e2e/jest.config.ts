@@ -1,4 +1,6 @@
 // Set TEST environment to avoid process to exit with code 1 inside aplicaton
+process.env.ENV = "E2E_TEST";
+
 module.exports = {
   verbose: false,
   preset: "ts-jest",

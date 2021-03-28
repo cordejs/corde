@@ -1,10 +1,9 @@
-import cli from "../cliRunner";
-import { assert, spec } from "../pipeline";
+import { runCLI } from "../cliRunner";
 import Utils from "../testUtils";
 
-spec("should print on console", async () => {
+it("should print on console", async () => {
   const command = Utils.buildCommandWithConfigPath("beforeEach", "bot_case1.test.ts");
   const results = await cli.exec(command);
-  assert(results.stdout).toContain("test beforeEach");
-  assert(results.statusCode).toEqual(0);
+  expect(results.stdout).toContain("test beforeEach");
+  expect(results.statusCode).toEqual(0);
 });

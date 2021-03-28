@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should print on console 1`] = `""`;
+
+exports[`testing afterAll function in bot_case1 (should be success) 1`] = `
+"
+Test Files: [32m1 passed[39m. 1 total
+Tests:      [32m1 passed[39m. 1 total
+Time:       8ms
+test afterAll
+"
+`;

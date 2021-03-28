@@ -6,5 +6,5 @@ corde.beforeEach(async () => {});
 corde.test("", async () => {
   const msg = await corde.sendMessage("TEST MESSAGE");
   console.log(msg.content);
-  testCollector.addTestFunction(() => Promise.resolve({ hasPassed: true }));
+  testCollector.addTestFunction(() => Promise.resolve({ pass: true }));
 });

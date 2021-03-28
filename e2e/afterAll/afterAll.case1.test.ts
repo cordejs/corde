@@ -1,10 +1,9 @@
-import cli from "../cliRunner";
+import { runCLI } from "../cliRunner";
 import Utils from "../testUtils";
-import { spec, assert } from "../pipeline";
 
-spec("should print on console", async () => {
+it("testing afterAll function in bot_case1 (should be success)", async () => {
   const command = Utils.buildCommandWithConfigPath("afterAll", "bot_case1.test.ts");
-  const results = await cli.exec(command);
-  assert(results.stdout).toContain("test afterAll");
-  assert(results.statusCode).toEqual(0);
+  const [mockProcess, stdout] = await runCLI(command);
+  expect(mockProcess).toBeCalledWith(0);
+  expect(stdout).toMatchSnapshot();
 });

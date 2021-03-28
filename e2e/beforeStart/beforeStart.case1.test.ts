@@ -1,11 +1,10 @@
-import { messages } from "../../src/messages";
-import cli from "../cliRunner";
-import { assert, spec } from "../pipeline";
+import { runCLI } from "../cliRunner";
+
 import Utils from "../testUtils";
 
-spec("should print on console", async () => {
+it("should print on console", async () => {
   const command = Utils.buildCommandWithConfigPath("beforeStart", "bot_case1.test.ts");
   const results = await cli.exec(command);
-  assert(results.stdout).toContain("test beforeStart");
-  assert(results.statusCode).toEqual(0);
+  expect(results.statusCode).toEqual(0);
+  expect(results.stdout).toMatchSnapshot();
 });

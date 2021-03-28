@@ -1,6 +1,10 @@
+/**
+ * File used in e2e tests with jest.
+ */
+
 import { bot } from "./bot";
 import * as config from "./corde.config";
 
-export = () => {
-  bot.login(config.botTestToken);
+export = async () => {
+  await bot.login(config.botTestToken);
 };

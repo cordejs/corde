@@ -1,15 +1,21 @@
+import { _main } from "../../lib/src/cli/cli";
+import { runCLI } from "../cliRunner";
 import pack from "../../package.json";
-import cli from "../cliRunner";
-import { assert, spec } from "../pipeline";
 
-spec("Should get correct version using -v", async () => {
-  const result = await cli.exec("-v");
-  assert(result.stdout).toContain(`v${pack.version}`);
-  assert(result.statusCode).toEqual(0);
+// For some reason, when testing the version,
+// The code throws error because it runs the validator.
+// As we are checking the version, there is no files to test,
+// so when validator is executed, it throws a error.
+// But if run "yarn corde -v" it runs perfectly. lol
+
+it("Should get correct version using --version", async () => {
+  const [mockProcess, stdout] = await runCLI("--version");
+  expect(mockProcess).toBeCalledWith(0);
+  expect(stdout).toContain(pack.version);
 });
 
-spec("Should get correct version using --version", async () => {
-  const result = await cli.exec("--version");
-  assert(result.stdout).toContain(`v${pack.version}`);
-  assert(result.statusCode).toEqual(0);
+it("Should get correct version using --version", async () => {
+  const [mockProcess, stdout] = await runCLI("-v");
+  expect(mockProcess).toBeCalledWith(0);
+  expect(stdout).toContain(pack.version);
 });

@@ -15,5 +15,5 @@ corde.afterAll(async () => {
 });
 
 corde.test("", () => {
-  testCollector.addTestFunction(() => Promise.resolve({ hasPassed: true }));
+  testCollector.addTestFunction(() => Promise.resolve({ pass: true }));
 });
