@@ -70,8 +70,17 @@ class Reader {
         printHookErrors(_errors);
       }
 
-      await testCollector.executeGroupClojure();
-      await testCollector.executeTestClojure();
+      const groupErros = await testCollector.executeGroupClojure();
+
+      if (groupErros && groupErros.length) {
+        printHookErrors(groupErros);
+      }
+
+      const testErrors = await testCollector.executeTestClojure();
+
+      if (testErrors && testErrors.length) {
+        printHookErrors(testErrors);
+      }
 
       this.addTestsGroupmentToGroupIfExist();
       this.addIsolatedTestFunctionsToGroupIfExists();

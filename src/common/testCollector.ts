@@ -122,7 +122,7 @@ class TestCollector {
   }
 
   async executeGroupClojure() {
-    await this.groupClousureFunction?.executeAsync();
+    return await this.groupClousureFunction?.executeWithCatchCollectAsync();
   }
 
   addToTestClousure(fn: () => void | Promise<void>) {
@@ -130,7 +130,7 @@ class TestCollector {
   }
 
   async executeTestClojure() {
-    await this.testClousureFunction?.executeAsync();
+    return await this.testClousureFunction?.executeWithCatchCollectAsync();
   }
 }
 
