@@ -8,7 +8,7 @@
 // (it's why this is the only file that is js file in this folder)
 
 import { Client, Message } from "discord.js";
-import * as config from "./corde.config";
+import * as config from "./corde.config.mjs";
 
 export const bot = new Client();
 

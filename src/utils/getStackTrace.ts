@@ -35,10 +35,11 @@ export function getStackTrace(stackLimit?: number, removeFirstStack = true): str
     // so we remove irrelevant paths.
     const trace =
       EXPECT_RECEIVED_TAB_SPACE +
+      "at " +
       stacksWithoutFirstCall
         .filter((s) => isStrackRelevant(s))
         .slice(0, stackLimit ?? DEFAULT_STACK_TRACE_LIMIT)
-        .join("\n" + EXPECT_RECEIVED_TAB_SPACE);
+        .join("\n" + EXPECT_RECEIVED_TAB_SPACE + "at ");
 
     // removes full path of the file for security.
     const formatedPath = process.cwd().replace(/\\/g, "\\\\");
