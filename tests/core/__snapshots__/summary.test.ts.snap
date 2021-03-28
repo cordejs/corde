@@ -48,3 +48,10 @@ Test Files: 10 passed. 10 total
 Tests:      10 passed. 10 total
 "
 `;
+
+exports[`should print summary with only one file that is empty 1`] = `
+"
+Test Files: 1 empty. 1 total
+Tests:      0 total
+Time:       3ms"
+`;

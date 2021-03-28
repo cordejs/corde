@@ -120,3 +120,19 @@ it("should print a summary tests with only empty", () => {
   const message = summary.print(summaryData);
   expect(removeANSIColorStyle(message)).toMatchSnapshot();
 });
+
+it("should print summary with only one file that is empty", () => {
+  const summaryData: RunnerReport = {
+    testTimer: "3ms",
+    totalTests: 0,
+    totalTestFiles: 1,
+    totalTestsPassed: 0,
+    totalTestsFailed: 0,
+    totalTestFilesPassed: 0,
+    totalTestFilesFailed: 0,
+    totalEmptyTestFiles: 1,
+    totalEmptyTests: 0,
+  };
+  const message = summary.print(summaryData);
+  expect(removeANSIColorStyle(message)).toMatchSnapshot();
+});
