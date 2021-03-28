@@ -75,7 +75,7 @@ async function finishProcess(code: number, error?: any) {
       console.log(error);
     }
 
-    if (testCollector.afterAllFunctions) {
+    if (testCollector.afterAllFunctions && testCollector.afterAllFunctions.hasFunctions) {
       const exceptions = await testCollector.afterAllFunctions.executeWithCatchCollectAsync();
       if (exceptions.length) {
         console.log(exceptions);

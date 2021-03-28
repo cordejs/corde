@@ -1,10 +1,10 @@
 import corde from "../../../lib";
 import { testCollector } from "../../../lib/src/common/testCollector";
-import { wait } from "../../../src/utils";
+import { wait } from "../../../lib/src/utils";
 
-corde.beforeEach(async () => {
+corde.afterAll(async () => {
   await wait(100);
-  console.log("test beforeEach");
+  console.log("test afterAll");
 });
 
 corde.test("", () => {

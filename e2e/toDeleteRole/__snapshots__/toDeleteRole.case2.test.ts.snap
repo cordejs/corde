@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should fail 1`] = `
+"
+ FAIL   e2e\\\\toDeleteRole\\\\__cordeTest__\\\\bot_case2.test.ts   100ms
+   x <empty test name>   100ms
+    
+    timeout: role 810988711701119057 wasn't deleted in the expected time (5000)
+
+    at toDeleteRole e2e\\\\toDeleteRole\\\\__cordeTest__\\\\bot_case2.test.ts:8:45
+    at lib\\\\src\\\\clausures\\\\test.js:31:13
+    at Queue.executeAsync (lib\\\\src\\\\data-structures\\\\queue.js:99:27)
+
+Test Files: 1 failed. 1 total
+Tests:      1 failed. 1 total
+Time:       100ms
+"
+`;

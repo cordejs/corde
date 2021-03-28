@@ -4,6 +4,6 @@ import { runCLI } from "../cliRunner";
 it("should set role as mentionable", async () => {
   const command = Utils.buildCommandWithConfigPath("toSetRolePosition", "bot_case1.test.ts");
   const [mockProcess, stdout] = await runCLI(command);
-  expect(mockProcess).toBeCalledWith(0);
   expect(stdout).toMatchSnapshot();
+  expect(mockProcess).toBeCalledWith(0);
 });

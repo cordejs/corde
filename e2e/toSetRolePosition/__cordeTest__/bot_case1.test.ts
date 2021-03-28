@@ -1,7 +1,4 @@
-// @ts-nocheck
-
 import corde from "../../../lib";
-import { bot } from "../../bot";
 
 let role = null;
 const roleName = "role-color";
@@ -15,6 +12,4 @@ corde.afterAll(async () => {
   if (role) {
     await role.updatePosition(role.position - 1);
   }
-
-  bot.destroy();
 });

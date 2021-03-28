@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should print on console 1`] = `
-"test beforeStart
+"test beforeEach
 
- PASS   e2e\\\\beforeStart\\\\__cordeTest__\\\\bot_case1.test.ts   100ms
+ PASS   e2e\\\\beforeEach\\\\__cordeTest__\\\\bot_case1.test.ts   100ms
    ✔  <empty test name>   100ms
 
 Test Files: 1 passed. 1 total

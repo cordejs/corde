@@ -1,3 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should set role as mentionable 1`] = `""`;
+exports[`should set role as mentionable 1`] = `
+"
+
+ INFO  No test were found.
+
+
+Test Files: 0 total
+Tests:      0 total
+Time:       100ms
+"
+`;
