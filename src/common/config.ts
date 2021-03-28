@@ -18,10 +18,6 @@ export class Config implements ConfigOptions {
   botPrefix: string;
   testFiles: string[];
 
-  constructor() {
-    this.timeOut = DEFAULT_TEST_TIMEOUT;
-  }
-
   /**
    * Set values to config options that are not **filed** yet
    * It means that all options that are already with a value will not lose
@@ -63,7 +59,11 @@ export class Config implements ConfigOptions {
     }
 
     if (!this.timeOut || forceUpdate) {
-      this.timeOut = config.timeOut;
+      if (config.timeOut) {
+        this.timeOut = config.timeOut;
+      } else {
+        this.timeOut = DEFAULT_TEST_TIMEOUT;
+      }
     }
 
     if (!this.botPrefix || forceUpdate) {
