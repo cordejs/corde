@@ -52,7 +52,7 @@ class Reader {
       try {
         require(file);
       } catch (error) {
-        console.log("\n" + chalk.red(error.stack));
+        console.log(error);
         continue;
       }
 
