@@ -1,3 +1,5 @@
+import { runtime } from "../common";
+
 const MILISECONDS_PER_SECOND = 1000;
 
 /**
@@ -22,6 +24,16 @@ const MILISECONDS_PER_SECOND = 1000;
  * @internal
  */
 export function dateDiff(date1: Date, date2: Date): [string, number] {
+  // I should mock this function in e2e environment, BUT
+  // I tried without success, so let's do this "gambiarra" (god forgive me).
+  // P.S: this was necessary because the time that each test needs to be executed is volatile,
+  // And in e2e environment, I make a snapshot of each test. So, this volatile data can not
+  // be present in the snapshot.
+
+  if (runtime.environment.isE2eTest) {
+    return ["100ms", 100];
+  }
+
   if (!date1 || !date2 || !(date1 instanceof Date) || !(date2 instanceof Date)) {
     return null;
   }

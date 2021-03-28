@@ -2,11 +2,11 @@
 
 exports[`tests should be sucessfull 1`] = `
 "
- PASS   e2e\\\\toReturn\\\\__cordeTest__\\\\bot_case1.test.ts   367ms
-   ✔  Hello command should return... hello!!   363ms
+ PASS   e2e\\\\toReturn\\\\__cordeTest__\\\\bot_case1.test.ts   100ms
+   ✔  Hello command should return... hello!!   100ms
 
 Test Files: 1 passed. 1 total
 Tests:      1 passed. 1 total
-Time:       370ms
+Time:       100ms
 "
 `;

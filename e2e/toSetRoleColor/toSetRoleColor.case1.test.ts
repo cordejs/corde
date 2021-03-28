@@ -3,7 +3,7 @@ import { runCLI } from "../cliRunner";
 
 it("should change role color", async () => {
   const command = Utils.buildCommandWithConfigPath("toSetRoleColor", "bot_case1.test.ts");
-  const results = await cli.exec(command);
-  expect(results.statusCode).toEqual(0);
-  expect(results.stdout).toMatchSnapshot();
+  const [mockProcess, stdout] = await runCLI(command);
+  expect(mockProcess).toBeCalledWith(0);
+  expect(stdout).toMatchSnapshot();
 });

@@ -2,8 +2,8 @@
 
 exports[`tests should not be sucessfull 1`] = `
 "
- FAIL   e2e\\\\toReturn\\\\__cordeTest__\\\\bot_case2.test.ts   521ms
-   x Hello command should return... hello!!   509ms
+ FAIL   e2e\\\\toReturn\\\\__cordeTest__\\\\bot_case2.test.ts   100ms
+   x Hello command should return... hello!!   100ms
     
     expected: '...'
     received: 'Hello!!'
@@ -14,6 +14,6 @@ exports[`tests should not be sucessfull 1`] = `
 
 Test Files: 1 failed. 1 total
 Tests:      1 failed. 1 total
-Time:       523ms
+Time:       100ms
 "
 `;
