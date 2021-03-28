@@ -246,30 +246,24 @@ export class TestExecutor {
         testCollector.beforeEachFunctions,
       );
 
-      const report = await this.tryExecuteTestFunction(testfn);
+      let _report: TestReport;
+      try {
+        _report = await runtime.injectBot(testfn);
+      } catch (error) {
+        _report = {
+          pass: false,
+          message: this.getErrorMessage(error),
+        };
+      }
 
       keepRunningAfterEachFunctions = await this.executeHookFunctionIfPossible(
         keepRunningAfterEachFunctions,
         testCollector.afterEachFunctions,
       );
 
-      reports.push(report);
+      reports.push(_report);
     }
     return reports;
-  }
-
-  private async tryExecuteTestFunction(testFn: TestFunctionType) {
-    return await executePromiseWithTimeout<TestReport>(async (resolve) => {
-      try {
-        const _report = await runtime.injectBot(testFn);
-        resolve(_report);
-      } catch (error) {
-        resolve({
-          pass: false,
-          message: this.getErrorMessage(error),
-        });
-      }
-    }, runtime.configs.timeOut);
   }
 
   private async executeHookFunctionIfPossible(

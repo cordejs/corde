@@ -1,7 +1,7 @@
 // Cannot be `import` as it's not under TS root dir
 
 function getPackage() {
-  if (process.env.NODE_ENV === "test") {
+  if (process.env.NODE_ENV === "TEST") {
     return require("../package.json");
   }
   return require("../../package.json");

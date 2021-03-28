@@ -75,9 +75,8 @@ class ExpectMatches implements Matches {
 
   toPin(messageIdentifier: string | MessageIdentifier): void {
     const trace = getStackTrace();
-
     testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(null, ToPinMessage, cordeBot, messageIdentifier);
+      return this.operationFactory(trace, ToPinMessage, cordeBot, messageIdentifier);
     });
   }
 
@@ -210,7 +209,7 @@ class ExpectMatches implements Matches {
       return report;
     }
 
-    report.trace = buildReportMessage(trace);
+    report.trace = trace;
     return report;
   }
 }

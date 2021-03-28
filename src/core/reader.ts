@@ -5,7 +5,6 @@ import { printHookErrors, runtime } from "../common";
 import { testCollector } from "../common/testCollector";
 import { FileError } from "../errors";
 import { ConfigOptions, TestFile } from "../types";
-import { buildReportMessage } from "../utils";
 
 class Reader {
   /**
@@ -53,9 +52,10 @@ class Reader {
       try {
         require(file);
       } catch (error) {
-        console.log(buildReportMessage(error.message));
+        console.log("\n" + chalk.red(error.stack));
         continue;
       }
+
       /**
        * This hooks is located here because after load the file,
        * We have to load the tests, and sometimes the user may,

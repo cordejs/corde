@@ -1,5 +1,5 @@
 import { Command } from "commander";
-import { _default } from "./default";
+import { exec } from "./exec";
 import { init } from "./init";
 import { validate } from "./validate";
 import { configFileType } from "../types/types";
@@ -39,7 +39,7 @@ program
     if (options.files) {
       runtime.testFiles = options.files.split(" ");
     }
-    await _default();
+    await exec();
   });
 
 program
@@ -61,9 +61,10 @@ program
     console.log("All configs are ok!");
   });
 
-// tslint:disable-next-line: deprecation
 if (process.env.ENV !== "TEST") {
-  program.parse(process.argv);
-} else {
-  program.exitOverride();
+  _main();
+}
+
+export async function _main(args?: string[]) {
+  await program.parseAsync(args ?? process.argv);
 }

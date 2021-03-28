@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import fs from "fs";
 import ora, { Color, Ora } from "ora";
 import path from "path";
@@ -19,7 +20,7 @@ process.on("uncaughtException", () => {
 
 let spinner: Ora;
 
-export async function _default() {
+export async function exec() {
   loadConfigs();
   const files = readDir(runtime.testFiles);
   if (!files || files.length === 0) {
@@ -42,10 +43,19 @@ async function runTests(files: string[]) {
 
   try {
     const testFiles = await reader.getTestsFromFiles(files);
+    if (testFiles.length === 0) {
+      console.log(`${chalk.bgYellow(chalk.black(" INFO "))} No test were found.`);
+      finishProcess(0);
+    }
     const testRunner = new TestExecutor(new LogUpdate());
     const executionReport = await testRunner.runTestsAndPrint(testFiles);
     summary.print(executionReport);
-    finishProcess(0);
+
+    if (executionReport.totalTestsFailed > 0) {
+      finishProcess(1);
+    } else {
+      finishProcess(0);
+    }
   } catch (error) {
     spinner.stop();
     console.error(error);

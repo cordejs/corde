@@ -57,7 +57,14 @@ class Summary {
       partialLine.push(TEXT_EMPTY(`${totalEmpty} empty`));
     }
 
-    return `${label}${this.buildSummaryLinePhrase(partialLine)}. ${total} total`;
+    if (partialLine.length) {
+      return `${label}${this.buildSummaryLinePhrase(partialLine)}. ${total} total`;
+    }
+
+    if (total === 0) {
+      return `${label}${TEXT_EMPTY(`${total} total`)}`;
+    }
+    return `${label}${total} total`;
   }
 
   /**

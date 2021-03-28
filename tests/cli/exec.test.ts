@@ -1,6 +1,6 @@
 import { reader } from "../../src/core/reader";
 import * as validateFn from "../../src/cli/validate";
-import { _default } from "../../src/cli/default";
+import { exec } from "../../src/cli/exec";
 import { FileError } from "../../src/errors";
 import { runtime } from "../../src/common";
 import { TestExecutor } from "../../src/core/testExecutor";
@@ -28,7 +28,7 @@ describe("testing default command", () => {
     validateSpy.mockImplementation(() => null);
 
     try {
-      await _default();
+      await exec();
     } catch (error) {
       expect(error instanceof FileError).toBeTruthy();
     }
@@ -55,6 +55,6 @@ describe("testing default command", () => {
       timeOut: 1000,
     });
 
-    expect(async () => await _default()).rejects.toBeFalsy();
+    expect(async () => await exec()).rejects.toBeFalsy();
   });
 });

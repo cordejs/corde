@@ -2,7 +2,7 @@
  * File used for manual tests
  */
 
-import { bot } from "./bot.mjs";
+import { bot } from "./bot.js";
 import * as config from "./corde.config.mjs";
 
 bot
