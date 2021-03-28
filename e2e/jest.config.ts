@@ -12,7 +12,6 @@ module.exports = {
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   modulePathIgnorePatterns: ["__cordeTest__"],
   restoreMocks: true,
-  forceExit: true,
   transform: {
     "^.+\\.js?$": "babel-jest",
   },
