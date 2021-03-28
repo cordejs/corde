@@ -33,7 +33,7 @@ export class ToRemoveReaction extends ExpectTest {
     }
 
     await this.cordeBot.sendTextMessage(this.command);
-    let reactionsWithAuthors: [MessageReaction, User | PartialUser][];
+    let reactionsWithAuthors: [MessageReaction, User | PartialUser | void][];
     try {
       const emojiLike = emojis.map((e: string | EmojiLike) => {
         if (typeof e === "string") {
@@ -46,7 +46,6 @@ export class ToRemoveReaction extends ExpectTest {
         typeof messageIdentifier === "string" ? { id: messageIdentifier } : messageIdentifier;
 
       reactionsWithAuthors = await this.cordeBot.events.onceMessageReactionsRemove({
-        authorId: this.cordeBot.testBotId,
         emojis: emojiLike,
         messageIdentifier: _messageData,
         timeout: this.timeOut,
@@ -91,7 +90,9 @@ export class ToRemoveReaction extends ExpectTest {
   }
 }
 
-function reactionsFromResponse(reactionsWithAuthors: [MessageReaction, User | PartialUser][]) {
+function reactionsFromResponse(
+  reactionsWithAuthors: [MessageReaction, User | PartialUser | void][],
+) {
   const emojis = reactionsWithAuthors.map((r) => r[0].emoji);
   return emojis.map((e) => e.name).join(", ");
 }

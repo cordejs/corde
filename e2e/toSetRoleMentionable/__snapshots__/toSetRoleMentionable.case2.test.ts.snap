@@ -8,7 +8,7 @@ exports[`should change role color 1`] = `
     expected: mentionable to be true
     received: role mentionable was not updated
 
-    at e2e\\\\toSetRoleMentionable\\\\__cordeTest__\\\\bot_case2.test.ts:8:51
+    at toSetRoleMentionable e2e\\\\toSetRoleMentionable\\\\__cordeTest__\\\\bot_case2.test.ts:8:51
     at lib\\\\src\\\\clausures\\\\test.js:31:13
     at Queue.executeAsync (lib\\\\src\\\\data-structures\\\\queue.js:99:27)
 

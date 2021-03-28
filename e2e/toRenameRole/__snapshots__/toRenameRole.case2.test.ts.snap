@@ -8,7 +8,7 @@ exports[`tests should be not be sucessfull 1`] = `
     expected: role 'old-role-name' to be renamed to batata
     received: name was not changed
 
-    at e2e\\\\toRenameRole\\\\__cordeTest__\\\\bot_case2.test.ts:8:49
+    at toRenameRole e2e\\\\toRenameRole\\\\__cordeTest__\\\\bot_case2.test.ts:8:49
     at lib\\\\src\\\\clausures\\\\test.js:31:13
     at Queue.executeAsync (lib\\\\src\\\\data-structures\\\\queue.js:99:27)
 

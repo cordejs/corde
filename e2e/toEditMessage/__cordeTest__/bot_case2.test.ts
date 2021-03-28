@@ -9,6 +9,6 @@ corde.group("test", async () => {
   const msg = await sendMessage("oldValue");
   corde.test("", async () => {
     const newValue = "newMessageEdited";
-    corde.expect(`editMessage ${msg.id} ${newValue}`).toEditMessage({ id: msg.id }, "wrongValue");
+    corde.expect(`editMessage ${msg.id} ${newValue}`).toEditMessage("wrongValue", { id: msg.id });
   });
 });

@@ -635,16 +635,16 @@ export class Events {
    * @internal
    */
   onceMessageReactionsRemove(filter?: SearchMessageReactionsOptions) {
-    return this._onceMessageReactionUpdate(filter, "onMessageReactionRemove");
+    return this._onceMessageReactionUpdate(filter, "onMessageReactionRemoveEmoji");
   }
 
   private _onceMessageReactionUpdate(
     filter: SearchMessageReactionsOptions,
-    event: "onMessageReactionAdd" | "onMessageReactionRemove",
+    event: "onMessageReactionAdd" | "onMessageReactionRemoveEmoji",
   ) {
     const { emojis, messageIdentifier, authorId, timeout } = filter ?? {};
 
-    const validator = new Validator<[MessageReaction, User | PartialUser]>();
+    const validator = new Validator<[MessageReaction, User | PartialUser | void]>();
 
     if (emojis) {
       validator.add((reaction) =>
@@ -660,13 +660,12 @@ export class Events {
     }
 
     if (authorId) {
-      validator.add((_, author) => author.id === authorId);
+      validator.add((_, author) => !author || author.id === authorId);
     }
-
-    const response: [MessageReaction, User | PartialUser][] = [];
-    return executePromiseWithTimeout<[MessageReaction, User | PartialUser][]>(
+    const response: [MessageReaction, User | PartialUser | void][] = [];
+    return executePromiseWithTimeout<[MessageReaction, User | PartialUser | void][]>(
       (resolve) => {
-        this[event]((reaction, author) => {
+        this[event]((reaction: MessageReaction, author: User | PartialUser | void) => {
           if (validator.isValid(reaction, author)) {
             response.push([reaction, author]);
           }
@@ -686,7 +685,7 @@ export class Events {
   }
 
   /**
-   * Emitted whenever a reaction is removed from a message.
+   * Emitted whenever a **user** remove a reaction from a message
    * @param fn function to receive the removed reaction and the author
    * of the remotion.
    * @internal

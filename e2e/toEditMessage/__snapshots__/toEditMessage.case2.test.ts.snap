@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should fail on message edition 1`] = `
+"
+ FAIL   e2e\\\\toEditMessage\\\\__cordeTest__\\\\bot_case2.test.ts   100ms
+   x test -> <empty test name>   100ms
+    
+    expected: 'wrongValue'
+    received: 'newMessageEdited'
+
+    at toEditMessage e2e\\\\toEditMessage\\\\__cordeTest__\\\\bot_case2.test.ts:13:67
+    at lib\\\\src\\\\clausures\\\\test.js:31:13
+    at Queue.executeAsync (lib\\\\src\\\\data-structures\\\\queue.js:99:27)
+
+Test Files: 1 failed. 1 total
+Tests:      1 failed. 1 total
+Time:       100ms
+"
+`;

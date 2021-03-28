@@ -15,7 +15,7 @@ export const bot = new Client();
 /**
  * @param {string} message
  */
-export async function sendMessage(message) {
+export async function sendMessage(message: string) {
   const channel = bot.channels.cache.get(config.channelId);
 
   if (channel === undefined) {
@@ -31,7 +31,7 @@ export async function sendMessage(message) {
 /**
  * @param {string} name
  */
-export function getRole(name) {
+export function getRole(name: string) {
   return bot.guilds.cache.get(config.guildId).roles.cache.find((r) => r.name === name);
 }
 
@@ -42,8 +42,14 @@ export function getRoleManager() {
 /**
  * Use this functions before use sendMessage (add it to **corde.beforeStart**)
  */
-export async function login() {
-  const readyPromise = new Promise((resolve) => {
+export async function login(isDebugMode?: boolean) {
+  if (isDebugMode) {
+    bot.on("raw", (...args: any[]) => {
+      console.log(args);
+    });
+  }
+
+  const readyPromise = new Promise<void>((resolve) => {
     bot.once("ready", () => {
       resolve();
     });
@@ -68,7 +74,7 @@ bot.on("message", async (message) => {
  * @param {string} command
  * @param {string[]} args
  */
-async function handleCommands(message, command, args) {
+async function handleCommands(message: Message, command: string, args: string[]) {
   // TODO: Refact this. '-'
   if (command === "hello" || command === "h") {
     await message.channel.send("Hello!!");
@@ -107,14 +113,14 @@ async function handleCommands(message, command, args) {
 /**
  * @param {Message} msg
  */
-async function emoji(msg) {
+async function emoji(msg: Message) {
   await msg.react("😄");
 }
 
 /**
  * @param {Message} msg
  */
-async function edit(msg) {
+async function edit(msg: Message) {
   if (msg) {
     await msg.edit("newValue");
   }
@@ -124,7 +130,7 @@ async function edit(msg) {
  * @param {Message} msg
  * @param {string} msgId
  */
-async function pin(msg, msgId) {
+async function pin(msg: Message, msgId: string) {
   const messageToPin = await fetchMessageById(msg, msgId);
   if (messageToPin) {
     await messageToPin.pin();
@@ -135,7 +141,7 @@ async function pin(msg, msgId) {
  * @param {Message} msg
  * @param {string} msgId
  */
-async function unPin(msg, msgId) {
+async function unPin(msg: Message, msgId: string) {
   const messageToPin = await fetchMessageById(msg, msgId);
   if (messageToPin) {
     await messageToPin.unpin();
@@ -147,7 +153,7 @@ async function unPin(msg, msgId) {
  * @param {string} msgId
  * @param {string} reaction
  */
-async function addReaction(msg, msgId, reaction) {
+async function addReaction(msg: Message, msgId: string, reaction: string) {
   const message = await fetchMessageById(msg, msgId);
   if (message) {
     await message.react(reaction);
@@ -159,7 +165,7 @@ async function addReaction(msg, msgId, reaction) {
  * @param {string} msgId
  * @param {string} msgNewValue
  */
-async function editMessage(msg, msgId, msgNewValue) {
+async function editMessage(msg: Message, msgId: string, msgNewValue: string) {
   const message = await fetchMessageById(msg, msgId);
   if (message) {
     await message.edit(msgNewValue);
@@ -171,7 +177,7 @@ async function editMessage(msg, msgId, msgNewValue) {
  * @param {string} msgId
  * @param {string} reaction
  */
-async function removeReaction(msg, msgId, reaction) {
+async function removeReaction(msg: Message, msgId: string, reaction: string) {
   const message = await fetchMessageById(msg, msgId);
 
   if (!message) {
@@ -191,7 +197,7 @@ async function removeReaction(msg, msgId, reaction) {
  * @param {string} roleId
  * @param {string} newName
  */
-async function renameRole(msg, roleId, newName) {
+async function renameRole(msg: Message, roleId: string, newName: string) {
   const role = getRoleById(msg, roleId);
   if (role) {
     await role.setName(newName);
@@ -203,7 +209,7 @@ async function renameRole(msg, roleId, newName) {
  * @param {string} roleId
  * @param {string} newColor
  */
-async function changeRoleColor(msg, roleId, newColor) {
+async function changeRoleColor(msg: Message, roleId: string, newColor: string) {
   const role = getRoleById(msg, roleId);
   if (role) {
     await role.setColor(newColor);
@@ -214,7 +220,7 @@ async function changeRoleColor(msg, roleId, newColor) {
  * @param {Message} msg
  * @param {string} roleId
  */
-async function setRoleHoist(msg, roleId) {
+async function setRoleHoist(msg: Message, roleId: string) {
   const role = getRoleById(msg, roleId);
   if (role) {
     await role.setHoist(true);
@@ -225,7 +231,7 @@ async function setRoleHoist(msg, roleId) {
  * @param {Message} msg
  * @param {string} roleId
  */
-async function setRoleMentionable(msg, roleId) {
+async function setRoleMentionable(msg: Message, roleId: string) {
   const role = getRoleById(msg, roleId);
   if (role) {
     await role.setMentionable(true);
@@ -236,7 +242,7 @@ async function setRoleMentionable(msg, roleId) {
  * @param {Message} msg
  * @param {string} roleId
  */
-async function increaseRolePosition(msg, roleId) {
+async function increaseRolePosition(msg: Message, roleId: string) {
   const role = getRoleById(msg, roleId);
   if (role) {
     await role.setPosition(role.position + 1);
@@ -248,7 +254,7 @@ async function increaseRolePosition(msg, roleId) {
  * @param {string} roleId
  * @param {any} permissions
  */
-async function setRolePermission(msg, roleId, permissions) {
+async function setRolePermission(msg: Message, roleId: string, permissions: any) {
   const role = getRoleById(msg, roleId);
   if (role) {
     await role.setPermissions(permissions);
@@ -259,7 +265,7 @@ async function setRolePermission(msg, roleId, permissions) {
  * @param {Message} msg
  * @param {string} roleId
  */
-async function deleteRole(msg, roleId) {
+async function deleteRole(msg: Message, roleId: string) {
   const role = getRoleById(msg, roleId);
 
   if (role && !role.deleted) {
@@ -273,7 +279,7 @@ async function deleteRole(msg, roleId) {
  * @param {Message} msg
  * @param {string} roleId
  */
-function getRoleById(msg, roleId) {
+function getRoleById(msg: Message, roleId: string) {
   if (msg) {
     return msg.guild.roles.cache.get(roleId);
   }
@@ -284,7 +290,7 @@ function getRoleById(msg, roleId) {
  * @param {Message} msg
  * @param {string} messageId
  */
-async function fetchMessageById(msg, messageId) {
+async function fetchMessageById(msg: Message, messageId: string) {
   try {
     return await msg.channel.messages.fetch(messageId);
   } catch (error) {

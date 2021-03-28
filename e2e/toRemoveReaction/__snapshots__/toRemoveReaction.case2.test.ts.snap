@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should not a message Reaction 1`] = `
+"
+ FAIL   e2e\\\\toRemoveReaction\\\\__cordeTest__\\\\bot_case2.test.ts   100ms
+   x <empty test name>   100ms
+    
+    expected: to remove reactions 😄
+    received: no reaction was removed to message
+
+    at toRemoveReaction e2e\\\\toRemoveReaction\\\\__cordeTest__\\\\bot_case2.test.ts:6:51
+    at lib\\\\src\\\\clausures\\\\test.js:31:13
+    at Queue.executeAsync (lib\\\\src\\\\data-structures\\\\queue.js:99:27)
+
+Test Files: 1 failed. 1 total
+Tests:      1 failed. 1 total
+Time:       100ms
+"
+`;

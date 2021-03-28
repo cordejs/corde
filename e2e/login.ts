@@ -2,11 +2,10 @@
  * File used for manual tests
  */
 
-import { bot } from "./bot.js";
-import * as config from "./corde.config.mjs";
+import { login } from "./bot";
+import * as config from "./corde.config";
 
-bot
-  .login(config.botTestToken)
+login(true)
   .then(() => {
     console.log("Bot connected");
   })

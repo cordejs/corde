@@ -4,7 +4,6 @@ import { CordeClientError } from "../errors";
 
 /**
  * Sends a message to the connected textChannel.
- * *This message will not be sent as a command.*
  *
  * **This function does not work without a test case**
  *
