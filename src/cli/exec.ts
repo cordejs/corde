@@ -37,6 +37,7 @@ function loadConfigs() {
 
 async function runTests(files: string[]) {
   startLoading("login to corde bot");
+  // No need to await this function
   runtime.loginBot(runtime.cordeTestToken);
   await runtime.events.onceReady();
   spinner.stop();
@@ -46,7 +47,6 @@ async function runTests(files: string[]) {
     if (testFiles.length === 0) {
       console.log(`${chalk.bgYellow(chalk.black(" INFO "))} No test were found.`);
       await finishProcess(0);
-      return;
     }
     const log = new LogUpdate();
     const testRunner = new TestExecutor(log);
@@ -70,7 +70,7 @@ async function runTests(files: string[]) {
   }
 }
 
-async function finishProcess(code: number, error?: any) {
+async function finishProcess(code: number, error?: any): Promise<never> {
   try {
     if (error) {
       console.log(error);

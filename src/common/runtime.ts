@@ -3,6 +3,7 @@ import { Config } from "./config";
 import { Client } from "discord.js";
 import { CordeBot } from "../core";
 import { ConfigError } from "../errors";
+import { DEFAULT_TEST_TIMEOUT } from "../consts";
 
 const Environment = {
   isUnityTest: process.env.ENV === "UNITY_TEST",
@@ -58,7 +59,7 @@ class Runtime {
   }
 
   get timeOut() {
-    return this._configs.timeOut;
+    return this._configs.timeOut ?? DEFAULT_TEST_TIMEOUT;
   }
 
   get botPrefix() {
@@ -110,8 +111,8 @@ class Runtime {
    * Shortcut for *bot.logout*
    */
   logoffBot() {
-    if (this.bot) {
-      this.bot.logout();
+    if (this._bot) {
+      this._bot.logout();
     }
   }
 
