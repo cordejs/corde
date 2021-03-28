@@ -222,7 +222,7 @@ export class TestExecutor {
 
   private createTestText(testName: string | number | boolean) {
     if (stringIsNullOrEmpty(testName)) {
-      return this.createTestTextByStatus("()");
+      return this.createTestTextByStatus("<empty test name>");
     }
     return this.createTestTextByStatus(testName);
   }

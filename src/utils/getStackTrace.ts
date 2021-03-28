@@ -25,7 +25,11 @@ import { DEFAULT_STACK_TRACE_LIMIT, EXPECT_RECEIVED_TAB_SPACE } from "../consts"
  *
  * @internal
  */
-export function getStackTrace(stackLimit?: number, removeFirstStack = true): string {
+export function getStackTrace(
+  stackLimit?: number,
+  removeFirstStack = true,
+  functionName?: string,
+): string {
   const obj: any = {};
 
   Error.prepareStackTrace = (_, calls) => {
@@ -33,9 +37,13 @@ export function getStackTrace(stackLimit?: number, removeFirstStack = true): str
 
     // There is no need of 100% stack trace,
     // so we remove irrelevant paths.
+
+    const formatFunctionName = functionName ? `${functionName} ` : "";
+
     const trace =
       EXPECT_RECEIVED_TAB_SPACE +
       "at " +
+      formatFunctionName +
       stacksWithoutFirstCall
         .filter((s) => isStrackRelevant(s))
         .slice(0, stackLimit ?? DEFAULT_STACK_TRACE_LIMIT)

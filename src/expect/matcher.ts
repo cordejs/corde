@@ -67,28 +67,28 @@ class ExpectMatches implements Matches {
     newValue: Primitive | MessageEmbedLike,
     message: MessageEditedIdentifier | string,
   ): void {
-    const trace = getStackTrace();
+    const trace = getStackTrace(null, true, "toEditMessage");
     testCollector.addTestFunction((cordeBot) => {
       return this.operationFactory(trace, ToEditMessage, cordeBot, newValue, message);
     });
   }
 
   toPin(messageIdentifier: string | MessageIdentifier): void {
-    const trace = getStackTrace();
+    const trace = getStackTrace(null, true, "toPin");
     testCollector.addTestFunction((cordeBot) => {
       return this.operationFactory(trace, ToPinMessage, cordeBot, messageIdentifier);
     });
   }
 
   toUnPin(messageIdentifier: string | MessageIdentifier): void {
+    const trace = getStackTrace(null, true, "toUnPin");
     testCollector.addTestFunction((cordeBot) => {
-      const trace = getStackTrace();
       return this.operationFactory(trace, ToUnPinMessage, cordeBot, messageIdentifier);
     });
   }
 
   toReturn(expect: Primitive | MessageEmbedLike): void {
-    const trace = getStackTrace();
+    const trace = getStackTrace(null, true, "toReturn");
     testCollector.addTestFunction((cordeBot) =>
       this.operationFactory(trace, ToReturn, cordeBot, expect),
     );
@@ -98,7 +98,7 @@ class ExpectMatches implements Matches {
     emojis: string[] | EmojiLike[] | (string | EmojiLike)[],
     messageIdentifier?: string | MessageIdentifier,
   ): void {
-    const trace = getStackTrace();
+    const trace = getStackTrace(null, true, "toAddReaction");
     testCollector.addTestFunction((cordeBot) =>
       this.operationFactory(trace, ToAddReaction, cordeBot, emojis, messageIdentifier),
     );
@@ -108,28 +108,28 @@ class ExpectMatches implements Matches {
     emojis: string[] | EmojiLike[] | (string | EmojiLike)[],
     messageIdentifier?: string | MessageIdentifier,
   ): void {
-    const trace = getStackTrace();
+    const trace = getStackTrace(null, true, "toRemoveReaction");
     testCollector.addTestFunction((cordeBot) =>
       this.operationFactory(trace, ToRemoveReaction, cordeBot, emojis, messageIdentifier),
     );
   }
 
   toSetRoleColor(color: ColorResolvable | Colors, roleIdentifier: string | RoleIdentifier) {
-    const trace = getStackTrace();
+    const trace = getStackTrace(null, true, "toSetRoleColor");
     testCollector.addTestFunction((cordeBot) => {
       return this.operationFactory(trace, ToSetRoleColor, cordeBot, color, roleIdentifier);
     });
   }
 
   toDeleteRole(roleIdentifier: string | RoleIdentifier) {
-    const trace = getStackTrace();
+    const trace = getStackTrace(null, true, "toDeleteRole");
     testCollector.addTestFunction((cordeBot) => {
       return this.operationFactory(trace, ToDeleteRole, cordeBot, roleIdentifier);
     });
   }
 
   toSetRoleMentionable(mentionable: boolean, roleIdentifier: string | RoleIdentifier) {
-    const trace = getStackTrace();
+    const trace = getStackTrace(null, true, "toSetRoleMentionable");
     testCollector.addTestFunction((cordeBot) => {
       return this.operationFactory(
         trace,
@@ -142,28 +142,28 @@ class ExpectMatches implements Matches {
   }
 
   toSetRoleHoist(hoist: boolean, roleIdentifier: string | RoleIdentifier) {
-    const trace = getStackTrace();
+    const trace = getStackTrace(null, true, "toSetRoleHoist");
     testCollector.addTestFunction((cordeBot) => {
       return this.operationFactory(trace, ToSetRoleHoist, cordeBot, hoist, roleIdentifier);
     });
   }
 
   toRenameRole(newName: string, roleIdentifier: string | RoleIdentifier) {
-    const trace = getStackTrace();
+    const trace = getStackTrace(null, true, "toRenameRole");
     testCollector.addTestFunction((cordeBot) => {
       return this.operationFactory(trace, ToRenameRole, cordeBot, newName, roleIdentifier);
     });
   }
 
   toSetRolePosition(newPosition: number, roleIdentifier: string | RoleIdentifier) {
-    const trace = getStackTrace();
+    const trace = getStackTrace(null, true, "toSetRolePosition");
     testCollector.addTestFunction((cordeBot) => {
       return this.operationFactory(trace, ToSetRolePosition, cordeBot, newPosition, roleIdentifier);
     });
   }
 
   toSetRolePermission(roleIdentifier: string | RoleIdentifier, ...permissions: RolePermission[]) {
-    const trace = getStackTrace();
+    const trace = getStackTrace(null, true, "toSetRolePermission");
     testCollector.addTestFunction((cordeBot) => {
       return this.operationFactory(
         trace,
