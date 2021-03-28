@@ -496,6 +496,30 @@ describe("Testing CordeBot object", () => {
       expect(role).toBeFalsy();
     });
   });
+
+  it("should get roleManager", () => {
+    const corde = initCordeBot();
+    expect(corde.roleManager).toEqual(mockDiscord.guild.roles);
+  });
+
+  it("should get channel", () => {
+    const corde = initCordeBot();
+    expect(corde.channel).toEqual(mockDiscord.textChannel);
+  });
+
+  it("should call textchannel.send", async () => {
+    const corde = initCordeBot();
+    const spy = jest.spyOn(mockDiscord.textChannel, "send").mockImplementation(() => null);
+    await corde.sendMessage("");
+    expect(spy).toBeCalled();
+  });
+
+  it("should call roles.fetch", async () => {
+    const corde = initCordeBot();
+    const spy = jest.spyOn(mockDiscord.guild.roles, "fetch").mockImplementation(() => null);
+    await corde.fetchRoles();
+    expect(spy).toBeCalled();
+  });
 });
 
 function initCordeBot() {

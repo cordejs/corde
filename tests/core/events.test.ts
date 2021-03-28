@@ -683,6 +683,44 @@ describe("testing events event", () => {
       expect(_reaction).toEqual(mockDiscord.messageReaction);
       expect(_author).toEqual(mockDiscord.user);
     });
+
+    it("should get without informing emoji and messageIdentifier", async () => {
+      const promise = events.onceMessageReactionsAdd({
+        emojis: [mockDiscord.messageReaction.emoji],
+        messageIdentifier: {
+          id: mockDiscord.messageReaction.message.id,
+        },
+        authorId: mockDiscord.user.id,
+      });
+      client.emit(eventName, mockDiscord.messageReaction, mockDiscord.user);
+      const reactionsWithAuthors = await promise;
+      const [_reaction, _author] = reactionsWithAuthors[0];
+      expect(_reaction).toEqual(mockDiscord.messageReaction);
+      expect(_author).toEqual(mockDiscord.user);
+    });
+  });
+
+  describe("testing onceMessagePinned", () => {
+    const eventName = "messageUpdate";
+    it("should return message pinned without filter", async () => {
+      const promise = events.onceMessagePinned();
+      const updatedMessage = Object.assign({}, mockDiscord.unPinnedMessage);
+      updatedMessage.pinned = true;
+      client.emit(eventName, mockDiscord.unPinnedMessage, updatedMessage);
+      const message = await promise;
+      expect(message).toEqual(updatedMessage);
+    });
+
+    it("should return message pinned filter", async () => {
+      const promise = events.onceMessagePinned({
+        id: mockDiscord.unPinnedMessage.id,
+      });
+      const updatedMessage = Object.assign({}, mockDiscord.unPinnedMessage);
+      updatedMessage.pinned = true;
+      client.emit(eventName, mockDiscord.unPinnedMessage, updatedMessage);
+      const message = await promise;
+      expect(message).toEqual(updatedMessage);
+    });
   });
 
   describe("testing messageReactionRemove event", () => {
