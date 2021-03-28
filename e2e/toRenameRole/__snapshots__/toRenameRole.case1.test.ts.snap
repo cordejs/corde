@@ -3,7 +3,7 @@
 exports[`tests should be sucessfull 1`] = `
 "
  PASS   e2e\\\\toRenameRole\\\\__cordeTest__\\\\bot_case1.test.ts   100ms
-   ✔  <empty test name>   100ms
+   ✔  should rename a role   100ms
 
 Test Files: 1 passed. 1 total
 Tests:      1 passed. 1 total

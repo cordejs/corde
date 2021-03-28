@@ -10,7 +10,7 @@ exports[`tests should not be sucessfull 1`] = `
 
     at toReturn e2e\\\\toReturn\\\\__cordeTest__\\\\bot_case2.test.ts:6:35
     at lib\\\\src\\\\clausures\\\\test.js:31:13
-    at Queue.executeAsync (lib\\\\src\\\\data-structures\\\\queue.js:99:27)
+    at Queue.executeWithCatchCollectAsync (lib\\\\src\\\\data-structures\\\\queue.js:254:15)
 
 Test Files: 1 failed. 1 total
 Tests:      1 failed. 1 total

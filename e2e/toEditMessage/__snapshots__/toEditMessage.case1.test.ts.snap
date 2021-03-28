@@ -1,15 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should edit a message 1`] = `
-"inited
-[object Map]
-
+"
  PASS   e2e\\\\toEditMessage\\\\__cordeTest__\\\\bot_case1.test.ts   100ms
    ✔  should edit a message   100ms
 
 Test Files: 1 passed. 1 total
 Tests:      1 passed. 1 total
 Time:       100ms
-ended
 "
 `;

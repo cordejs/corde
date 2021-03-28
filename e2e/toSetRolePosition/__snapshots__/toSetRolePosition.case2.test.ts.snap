@@ -3,14 +3,14 @@
 exports[`should fail when trying to set role as mentionable 1`] = `
 "
  FAIL   e2e\\\\toSetRolePosition\\\\__cordeTest__\\\\bot_case2.test.ts   100ms
-   x <empty test name>   100ms
+   x should fail when increase role position   100ms
     
     expected: role position to change to 5
     received: position didn't change
 
     at toSetRolePosition e2e\\\\toSetRolePosition\\\\__cordeTest__\\\\bot_case2.test.ts:8:54
     at lib\\\\src\\\\clausures\\\\test.js:31:13
-    at Queue.executeAsync (lib\\\\src\\\\data-structures\\\\queue.js:99:27)
+    at Queue.executeWithCatchCollectAsync (lib\\\\src\\\\data-structures\\\\queue.js:254:15)
 
 Test Files: 1 failed. 1 total
 Tests:      1 failed. 1 total

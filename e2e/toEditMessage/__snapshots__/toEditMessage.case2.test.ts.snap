@@ -1,3 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should fail on message edition 1`] = `""`;
+exports[`should fail on message edition 1`] = `
+"
+ FAIL   e2e\\\\toEditMessage\\\\__cordeTest__\\\\bot_case2.test.ts   100ms
+   x should fail to edit a message   100ms
+    
+    expected: testing bot to edit the message of id 11241241241
+    received: message was not edited
+
+    at toEditMessage e2e\\\\toEditMessage\\\\__cordeTest__\\\\bot_case2.test.ts:9:10
+    at lib\\\\src\\\\clausures\\\\test.js:31:13
+    at Queue.executeWithCatchCollectAsync (lib\\\\src\\\\data-structures\\\\queue.js:254:15)
+
+Test Files: 1 failed. 1 total
+Tests:      1 failed. 1 total
+Time:       100ms
+"
+`;

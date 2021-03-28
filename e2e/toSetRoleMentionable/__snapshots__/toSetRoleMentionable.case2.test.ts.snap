@@ -3,14 +3,14 @@
 exports[`should change role color 1`] = `
 "
  FAIL   e2e\\\\toSetRoleMentionable\\\\__cordeTest__\\\\bot_case2.test.ts   100ms
-   x <empty test name>   100ms
+   x should fail when attempting to set role mentionable   100ms
     
     expected: mentionable to be true
     received: role mentionable was not updated
 
     at toSetRoleMentionable e2e\\\\toSetRoleMentionable\\\\__cordeTest__\\\\bot_case2.test.ts:8:51
     at lib\\\\src\\\\clausures\\\\test.js:31:13
-    at Queue.executeAsync (lib\\\\src\\\\data-structures\\\\queue.js:99:27)
+    at Queue.executeWithCatchCollectAsync (lib\\\\src\\\\data-structures\\\\queue.js:254:15)
 
 Test Files: 1 failed. 1 total
 Tests:      1 failed. 1 total

@@ -3,14 +3,14 @@
 exports[`tests should be not be sucessfull 1`] = `
 "
  FAIL   e2e\\\\toRenameRole\\\\__cordeTest__\\\\bot_case2.test.ts   100ms
-   x <empty test name>   100ms
+   x should fail when renaming a role   100ms
     
     expected: role 'old-role-name' to be renamed to batata
     received: name was not changed
 
     at toRenameRole e2e\\\\toRenameRole\\\\__cordeTest__\\\\bot_case2.test.ts:8:49
     at lib\\\\src\\\\clausures\\\\test.js:31:13
-    at Queue.executeAsync (lib\\\\src\\\\data-structures\\\\queue.js:99:27)
+    at Queue.executeWithCatchCollectAsync (lib\\\\src\\\\data-structures\\\\queue.js:254:15)
 
 Test Files: 1 failed. 1 total
 Tests:      1 failed. 1 total
