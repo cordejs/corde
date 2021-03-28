@@ -1,11 +1,7 @@
 import corde from "../../../lib";
-import { login, sendMessage } from "../../bot";
+import { sendMessage } from "../../bot";
 
-corde.beforeStart(async () => {
-  await login();
-});
-
-corde.group("test", async () => {
+corde.group("should fail to edit a message", async () => {
   const msg = await sendMessage("oldValue");
   corde.test("", async () => {
     const newValue = "newMessageEdited";

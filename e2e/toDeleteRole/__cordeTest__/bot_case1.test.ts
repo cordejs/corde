@@ -14,7 +14,7 @@ corde.beforeStart(async () => {
   }
 });
 
-corde.test("", async () => {
+corde.test("should delete a role", async () => {
   role = role || corde.getRole({ name: roleName });
 
   if (!role) {

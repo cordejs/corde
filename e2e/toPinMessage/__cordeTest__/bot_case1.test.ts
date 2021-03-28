@@ -1,6 +1,6 @@
 import corde from "../../../lib";
 
-corde.group("test", async () => {
+corde.group("should pin a message", async () => {
   // Creates a message to pin
   const msg = await corde.sendMessage("oldValue");
 

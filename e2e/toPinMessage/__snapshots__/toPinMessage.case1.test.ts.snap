@@ -1,3 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should pin message 1`] = `""`;
+exports[`should pin message 1`] = `
+"
+ PASS   e2e\\\\toPinMessage\\\\__cordeTest__\\\\bot_case1.test.ts   100ms
+   ✔  test -> <empty test name>   100ms
+
+Test Files: 1 passed. 1 total
+Tests:      1 passed. 1 total
+Time:       100ms
+"
+`;

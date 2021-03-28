@@ -6,7 +6,7 @@ let role = null;
 const newName = "testRole";
 const oldName = "old-role-name";
 
-corde.test("", async () => {
+corde.test("should rename a role", async () => {
   role = corde.getRole({ name: oldName });
   corde.expect(`renameRole ${role.id} ${newName}`).toRenameRole(newName, role.id);
 });
