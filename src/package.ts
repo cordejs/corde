@@ -1,7 +1,9 @@
 // Cannot be `import` as it's not under TS root dir
 
+import { runtime } from "./common";
+
 function getPackage() {
-  if (process.env.NODE_ENV === "TEST") {
+  if (runtime.environment.isUnityTest) {
     return require("../package.json");
   }
   return require("../../package.json");

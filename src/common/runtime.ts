@@ -4,6 +4,14 @@ import { Client } from "discord.js";
 import { CordeBot } from "../core";
 import { ConfigError } from "../errors";
 
+const Environment = {
+  isUnityTest: process.env.ENV === "UNITY_TEST",
+  isE2eTest: process.env.ENV === "E2E_TEST",
+};
+
+/**
+ * @internal
+ */
 class Runtime {
   get bot() {
     if (!this._bot) {
@@ -11,6 +19,14 @@ class Runtime {
     }
 
     return this._bot;
+  }
+
+  get isTestEnv() {
+    return this.environment.isE2eTest || this.environment.isUnityTest;
+  }
+
+  get environment() {
+    return Environment;
   }
 
   get events() {

@@ -26,7 +26,7 @@ async function printErrorAndExit(error: Error) {
     await testCollector.afterAllFunctions.executeAsync();
   }
 
-  if (process.env.ENV !== "TEST") {
+  if (!runtime.isTestEnv) {
     process.exit(1);
   }
 }

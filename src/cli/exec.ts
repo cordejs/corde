@@ -47,8 +47,14 @@ async function runTests(files: string[]) {
       console.log(`${chalk.bgYellow(chalk.black(" INFO "))} No test were found.`);
       finishProcess(0);
     }
-    const testRunner = new TestExecutor(new LogUpdate());
+    const log = new LogUpdate();
+    const testRunner = new TestExecutor(log);
     const executionReport = await testRunner.runTestsAndPrint(testFiles);
+
+    if (runtime.environment.isE2eTest) {
+      console.log(log.stdout);
+    }
+
     summary.print(executionReport);
 
     if (executionReport.totalTestsFailed > 0) {

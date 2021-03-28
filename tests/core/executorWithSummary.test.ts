@@ -31,5 +31,5 @@ it("should print report for 1 test file, 1 test clausure and 1 failed function a
 
   const report = await testRunner.runTestsAndPrint(tests);
   const summaryStder = summary.print(report);
-  expect(removeANSIColorStyle(logUpdate.stder + summaryStder)).toMatchSnapshot();
+  expect(removeANSIColorStyle(logUpdate.stdout + summaryStder)).toMatchSnapshot();
 });

@@ -61,7 +61,7 @@ program
     console.log("All configs are ok!");
   });
 
-if (process.env.ENV !== "TEST") {
+if (process.env.ENV !== "UNITY_TEST" && process.env.ENV !== "E2E_TEST") {
   _main();
 }
 

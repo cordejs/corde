@@ -1,8 +1,8 @@
 import { initErrorHandlers } from "../src/errorHandler";
 import { getFullConsoleLog } from "./testHelper";
-import { mockProcessExit } from "jest-mock-process";
 import { testCollector, runtime } from "../src/common";
 import { Queue } from "../src/data-structures";
+import { mockProcess } from "./mocks";
 
 initErrorHandlers();
 describe("Testing errorHandler", () => {
@@ -44,7 +44,7 @@ describe("Testing errorHandler", () => {
 
   it("should call process.exit with a generic error message due to no one was provided", () => {
     try {
-      const mockExit = mockProcessExit();
+      const mockExit = mockProcess.mockProcessExit();
       const spy = jest.spyOn(console, "log");
       process.emit("uncaughtException", new Error("Error Test"));
       expect(mockExit).toHaveBeenCalledWith(1);
@@ -63,7 +63,7 @@ describe("Testing errorHandler", () => {
 
   it("should exit the process with code 1 when is not test", () => {
     runtime.isBotLoggedIn = jest.fn().mockReturnValue(true);
-    const mockExit = mockProcessExit();
+    const mockExit = mockProcess.mockProcessExit();
     process.env.ENV = "PROD";
     process.emit("uncaughtException", new Error("Error Test"));
     expect(mockExit).toBeCalledWith(1);
@@ -72,7 +72,7 @@ describe("Testing errorHandler", () => {
 
   it("should call process.exit", () => {
     try {
-      const mockExit = mockProcessExit();
+      const mockExit = mockProcess.mockProcessExit();
       const error = new Error("Error Test");
       error.name = null;
       process.emit("uncaughtException", error);

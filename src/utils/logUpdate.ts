@@ -2,15 +2,15 @@ import { default as _logUpdate } from "log-update";
 
 export class LogUpdate {
   private _logValue: string[];
-  private _stder: string;
+  private _stdout: string;
 
-  get stder() {
-    return this._stder;
+  get stdout() {
+    return this._stdout;
   }
 
   constructor() {
     this._logValue = [];
-    this._stder = "";
+    this._stdout = "";
   }
 
   /**
@@ -42,7 +42,7 @@ export class LogUpdate {
 
   persist() {
     _logUpdate.done();
-    this._stder += this.getlogValueString();
+    this._stdout += this.getlogValueString();
     this._logValue = [];
   }
 

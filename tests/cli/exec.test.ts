@@ -5,7 +5,7 @@ import { FileError } from "../../src/errors";
 import { runtime } from "../../src/common";
 import { TestExecutor } from "../../src/core/testExecutor";
 import { summary } from "../../src/core";
-import { mockProcessExit } from "jest-mock-process";
+import { mockProcess } from "../mocks";
 
 jest.mock("../../src/core/testExecutor.ts");
 TestExecutor.prototype.runTestsAndPrint = jest.fn().mockImplementation(() => Promise.resolve());
@@ -35,7 +35,7 @@ describe("testing default command", () => {
   });
 
   it("Should read a file folder", async () => {
-    mockProcessExit();
+    mockProcess.mockProcessExit();
     const readerSpy = jest.spyOn(reader, "loadConfig");
     runtime.loginBot = jest.fn().mockReturnValue(Promise.resolve());
     runtime.events.onceReady = jest.fn().mockReturnValue(Promise.resolve());

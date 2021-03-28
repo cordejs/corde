@@ -44,7 +44,7 @@ it("should print report for 1 test file, 1 test clausure and 1 test function", a
     totalEmptyTestFiles: 0,
     totalEmptyTests: 0,
   });
-  expect(removeANSIColorStyle(logUpdate.stder)).toMatchSnapshot();
+  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
 it("should print report for 1 test file, 1 test clausure and 2 test function", async () => {
@@ -69,7 +69,7 @@ it("should print report for 1 test file, 1 test clausure and 2 test function", a
     totalEmptyTestFiles: 0,
     totalEmptyTests: 0,
   });
-  expect(removeANSIColorStyle(logUpdate.stder)).toMatchSnapshot();
+  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
 it("should print report for 2 test file, 1 test clausure and 1 test function", async () => {
@@ -98,7 +98,7 @@ it("should print report for 2 test file, 1 test clausure and 1 test function", a
     totalEmptyTestFiles: 0,
     totalEmptyTests: 0,
   });
-  expect(removeANSIColorStyle(logUpdate.stder)).toMatchSnapshot();
+  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
 it("should print report for 2 test file, 1 test clausure and 2 test function", async () => {
@@ -123,7 +123,7 @@ it("should print report for 2 test file, 1 test clausure and 2 test function", a
     totalEmptyTestFiles: 0,
     totalEmptyTests: 0,
   });
-  expect(removeANSIColorStyle(logUpdate.stder)).toMatchSnapshot();
+  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
 it("should print report for 2 test file, 2 test clausure and 2 test function", async () => {
@@ -148,7 +148,7 @@ it("should print report for 2 test file, 2 test clausure and 2 test function", a
     totalEmptyTestFiles: 0,
     totalEmptyTests: 0,
   });
-  expect(removeANSIColorStyle(logUpdate.stder)).toMatchSnapshot();
+  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
 it("should print report for 1 test file, 1 test clausure and 1 test function that fail", async () => {
@@ -178,7 +178,7 @@ it("should print report for 1 test file, 1 test clausure and 1 test function tha
     totalEmptyTestFiles: 0,
     totalEmptyTests: 0,
   });
-  expect(removeANSIColorStyle(logUpdate.stder)).toMatchSnapshot();
+  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
 it("should print report for 1 test file, 1 test clausure and 1 failed function and 1 passed function", async () => {
@@ -208,7 +208,7 @@ it("should print report for 1 test file, 1 test clausure and 1 failed function a
     totalEmptyTestFiles: 0,
     totalEmptyTests: 0,
   });
-  expect(removeANSIColorStyle(logUpdate.stder)).toMatchSnapshot();
+  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
 it("should print report for 1 test file, 1 test clausure and 1 failed function and 1 passed function", async () => {
@@ -238,7 +238,7 @@ it("should print report for 1 test file, 1 test clausure and 1 failed function a
     totalEmptyTestFiles: 0,
     totalEmptyTests: 0,
   });
-  expect(removeANSIColorStyle(logUpdate.stder)).toMatchSnapshot();
+  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
 it("should print report for 1 test file, 2 test clausure and 1 failed function and 1 passed function", async () => {
@@ -268,7 +268,7 @@ it("should print report for 1 test file, 2 test clausure and 1 failed function a
     totalEmptyTestFiles: 0,
     totalEmptyTests: 0,
   });
-  expect(removeANSIColorStyle(logUpdate.stder)).toMatchSnapshot();
+  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
 it("should print report for 2 test file, 2 test clausure and 1 failed function and 1 passed function", async () => {
@@ -298,7 +298,7 @@ it("should print report for 2 test file, 2 test clausure and 1 failed function a
     totalEmptyTestFiles: 0,
     totalEmptyTests: 0,
   });
-  expect(removeANSIColorStyle(logUpdate.stder)).toMatchSnapshot();
+  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
 it("should print report for 1 test file, 2 test clausure and 1 failed function and 1 passed function", async () => {
@@ -342,7 +342,7 @@ it("should print report for 1 test file, 2 test clausure and 1 failed function a
     totalEmptyTestFiles: 0,
     totalEmptyTests: 0,
   });
-  expect(removeANSIColorStyle(logUpdate.stder)).toMatchSnapshot();
+  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
 it("should print for a empty test file name", async () => {
@@ -376,7 +376,7 @@ it("should print for a empty test file name", async () => {
     totalEmptyTestFiles: 0,
     totalEmptyTests: 0,
   });
-  expect(removeANSIColorStyle(logUpdate.stder)).toMatchSnapshot();
+  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
 it("should print tests for a subgroup", async () => {
@@ -416,7 +416,7 @@ it("should print tests for a subgroup", async () => {
     totalEmptyTestFiles: 0,
     totalEmptyTests: 0,
   });
-  expect(removeANSIColorStyle(logUpdate.stder)).toMatchSnapshot();
+  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
 it("should print subtest for a subgroup", async () => {
@@ -462,7 +462,7 @@ it("should print subtest for a subgroup", async () => {
     totalEmptyTestFiles: 0,
     totalEmptyTests: 1,
   });
-  expect(removeANSIColorStyle(logUpdate.stder)).toMatchSnapshot();
+  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
 it("should print empty test file", async () => {
@@ -486,7 +486,7 @@ it("should print empty test file", async () => {
     totalEmptyTestFiles: 1,
     totalEmptyTests: 0,
   });
-  expect(removeANSIColorStyle(logUpdate.stder)).toMatchSnapshot();
+  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
 it("should print empty test file", async () => {
@@ -537,7 +537,7 @@ it("should print empty test file", async () => {
     totalEmptyTestFiles: 1,
     totalEmptyTests: 1,
   });
-  expect(removeANSIColorStyle(logUpdate.stder)).toMatchSnapshot();
+  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
 it("should print report for 1 test file, 2 test clausure and 1 failed function and 1 passed function", async () => {
@@ -566,7 +566,7 @@ it("should print report for 1 test file, 2 test clausure and 1 failed function a
     totalEmptyTestFiles: 0,
     totalEmptyTests: 0,
   });
-  expect(removeANSIColorStyle(logUpdate.stder)).toMatchSnapshot();
+  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
 it("should print report for 1 test file, 2 test clausure and 1 failed function and 1 passed function with stackTrace", async () => {
@@ -599,7 +599,7 @@ it("should print report for 1 test file, 2 test clausure and 1 failed function a
     totalEmptyTestFiles: 0,
     totalEmptyTests: 0,
   });
-  expect(removeANSIColorStyle(logUpdate.stder)).toMatchSnapshot();
+  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
 it("should print for a file that throws error in test function", async () => {

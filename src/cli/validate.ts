@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import fs from "fs";
 import path from "path";
-import { FileError, PropertyError } from "../errors";
+import { ConfigError, FileError, PropertyError } from "../errors";
 import { ConfigOptions } from "../types";
 
 /**
@@ -47,6 +47,10 @@ function validatePaths(pathsDir: string[], errors: string[]) {
   if (!pathsDir || pathsDir.length === 0) {
     errors.push("No test files informed");
     return;
+  }
+
+  if (pathsDir.some((path) => !path)) {
+    throw new ConfigError(chalk.red("one of more paths are null or undefined. Check your config"));
   }
 
   for (const pathDir of pathsDir) {
