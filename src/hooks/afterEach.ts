@@ -10,11 +10,20 @@ import { hookBuilder } from "./hookBuilder";
  * reads and the positions of each `afterEach` call.
  *
  * @param fn code that will be executed **after each** tests finish
+ * @param timeout Time that Corde should wait for the execution of this function.
+ * **it overrides the timeout defined in configs**.
+ *
  * @since 2.0
  */
-export function afterEach(fn: () => void | Promise<void>) {
+export function afterEach(fn: () => void | Promise<void>, timeout?: number) {
   if (fn) {
     const trace = getStackTrace();
-    hookBuilder(testCollector.afterEachFunctions, fn, trace, "AfterEachError");
+    hookBuilder({
+      queueToAdd: testCollector.afterEachFunctions,
+      fn,
+      trace,
+      errorTitle: "AfterEachError",
+      timeout,
+    });
   }
 }

@@ -9,11 +9,20 @@ import { hookBuilder } from "./hookBuilder";
  * reads and the positions of each `beforeEach` call.
  *
  * @param fn code that will be executed **before** tests start
+ * @param timeout Time that Corde should wait for the execution of this function.
+ * **it overrides the timeout defined in configs**.
+ *
  * @since 2.0
  */
-export function beforeEach(fn: () => void | Promise<void>) {
+export function beforeEach(fn: () => void | Promise<void>, timeout?: number) {
   if (fn) {
     const trace = getStackTrace();
-    hookBuilder(testCollector.beforeEachFunctions, fn, trace, "BeforeEachError");
+    hookBuilder({
+      queueToAdd: testCollector.beforeEachFunctions,
+      fn,
+      trace,
+      errorTitle: "BeforeEachError",
+      timeout,
+    });
   }
 }

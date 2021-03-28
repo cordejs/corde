@@ -19,12 +19,21 @@ import { hookBuilder } from "./hookBuilder";
  *   await bot.login(config.botTestToken);
  * });
  *
- * @param fn code that will be executed **before** tests start
+ * @param fn code that will be executed **before** tests start.
+ * @param timeout Time that Corde should wait for the execution of this function.
+ * **it overrides the timeout defined in configs**.
+ *
  * @since 1.0
  */
-export function beforeStart(fn: () => void | Promise<void>) {
+export function beforeStart(fn: () => void | Promise<void>, timeout?: number) {
   if (fn) {
     const trace = getStackTrace();
-    hookBuilder(testCollector.beforeStartFunctions, fn, trace, "BeforeStartError");
+    hookBuilder({
+      queueToAdd: testCollector.beforeStartFunctions,
+      fn,
+      trace,
+      errorTitle: "BeforeStartError",
+      timeout,
+    });
   }
 }

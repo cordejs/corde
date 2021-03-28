@@ -4,17 +4,21 @@ import { Queue } from "../data-structures";
 import { VoidPromiseFunction } from "../types";
 import { executePromiseWithTimeout, formatObject } from "../utils";
 
+interface HookParams {
+  queueToAdd: Queue<VoidPromiseFunction>;
+  fn: () => void | Promise<void>;
+  trace: string;
+  errorTitle: string;
+  timeout?: number;
+}
+
 /**
  * Add a function to a informed hook
  *
  * @internal
  */
-export function hookBuilder(
-  queueToAdd: Queue<VoidPromiseFunction>,
-  fn: () => void | Promise<void>,
-  trace: string,
-  errorTitle: string,
-) {
+export function hookBuilder(params: HookParams) {
+  const { queueToAdd, fn, trace, errorTitle, timeout } = params;
   queueToAdd.enqueue(async () => {
     try {
       await executePromiseWithTimeout<void>(async (resolve, reject) => {
@@ -24,7 +28,7 @@ export function hookBuilder(
         } catch (error) {
           reject(error);
         }
-      }, runtime.timeOut);
+      }, timeout ?? runtime.timeOut);
     } catch (error) {
       let newError: Error;
       const errorLabel = chalk.bgRed(`● ${errorTitle}`);
