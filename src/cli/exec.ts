@@ -130,7 +130,7 @@ function readDir(directories: string[]) {
           dirContentPaths.push(path.resolve(dir, singleDirContent));
         }
         files.push(...readDir(dirContentPaths));
-      } else if (stats.isFile() && dir.includes(".test.")) {
+      } else if (stats.isFile()) {
         files.push(resolvedPath);
       }
     }

@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should not a message Reaction 1`] = `
+"node test --config ./e2e/corde.config.ts --files ./e2e/toRemoveReaction/__cordeTest__/bot_case2.spec.ts
+
+ FAIL   e2e\\\\toRemoveReaction\\\\__cordeTest__\\\\bot_case2.spec.ts   100ms
+   x should fail when trying to remove a reaction from a role   100ms
+    
+    expected: to remove reactions 😄
+    received: no reaction was removed to message
+
+    at toRemoveReaction e2e\\\\toRemoveReaction\\\\__cordeTest__\\\\bot_case2.spec.ts:6:51
+    at _internalTest (lib\\\\src\\\\clausures\\\\test.js:29:13)
+    at lib\\\\src\\\\clausures\\\\test.js:52:65
+
+Test Files: 1 failed. 1 total
+Tests:      1 failed. 1 total
+Time:       100ms
+"
+`;

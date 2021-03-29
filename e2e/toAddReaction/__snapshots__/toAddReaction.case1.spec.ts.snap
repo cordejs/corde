@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`tests should be sucessfull 1`] = `
+"node test --config ./e2e/corde.config.ts --files ./e2e/toAddReaction/__cordeTest__/bot_case1.spec.ts
+
+ PASS   e2e\\\\toAddReaction\\\\__cordeTest__\\\\bot_case1.spec.ts   100ms
+   ✔  should add reaction to a message   100ms
+
+Test Files: 1 passed. 1 total
+Tests:      1 passed. 1 total
+Time:       100ms
+"
+`;
