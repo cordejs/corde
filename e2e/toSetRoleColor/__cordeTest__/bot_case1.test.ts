@@ -7,7 +7,7 @@ let role = null;
 const roleName = "role-color";
 let oldRoleColor = 0;
 
-corde.test("should set role color", async () => {
+corde.it("should set role color", async () => {
   role = corde.getRole({ name: roleName });
   oldRoleColor = role.color;
   corde.expect(`changeRoleColor ${role.id} ${Colors.NAVY}`).toSetRoleColor(Colors.NAVY, role.id);

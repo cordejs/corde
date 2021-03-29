@@ -5,7 +5,7 @@ import corde from "../../../lib";
 let role = null;
 const roleName = "random-role";
 
-corde.test("should set role hoist", async () => {
+corde.it("should set role hoist", async () => {
   role = corde.getRole({ name: roleName });
   corde.expect(`setRoleHoist ${role.id}`).toSetRoleHoist(true, role.id);
 });

@@ -5,6 +5,6 @@ corde.beforeEach(() => {
   console.log("test beforeEach");
 });
 
-corde.test("", () => {
+corde.it("", () => {
   testCollector.addTestFunction(() => Promise.resolve({ pass: true }));
 });
