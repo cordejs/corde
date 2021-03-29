@@ -1,0 +1,6 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should fail 1`] = `
+"FileError: No test file was found in the path './e2e/toSetRolePermission/__cordeTest__/bot_case2.spec.ts'
+"
+`;

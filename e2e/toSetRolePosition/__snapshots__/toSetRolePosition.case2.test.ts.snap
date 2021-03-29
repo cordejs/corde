@@ -2,15 +2,15 @@
 
 exports[`should fail when trying to set role as mentionable 1`] = `
 "
- FAIL   e2e\\\\toSetRolePosition\\\\__cordeTest__\\\\bot_case2.test.ts   100ms
+ FAIL   e2e\\\\toSetRolePosition\\\\__cordeTest__\\\\bot_case2.spec.ts   100ms
    x should fail when increase role position   100ms
     
     expected: role position to change to 5
     received: position didn't change
 
-    at toSetRolePosition e2e\\\\toSetRolePosition\\\\__cordeTest__\\\\bot_case2.test.ts:8:54
-    at lib\\\\src\\\\clausures\\\\test.js:30:15
-    at lib\\\\src\\\\utils\\\\executePromiseWithTimeout.js:53:5
+    at toSetRolePosition e2e\\\\toSetRolePosition\\\\__cordeTest__\\\\bot_case2.spec.ts:8:54
+    at _internalTest (lib\\\\src\\\\clausures\\\\test.js:29:13)
+    at lib\\\\src\\\\clausures\\\\test.js:52:65
 
 Test Files: 1 failed. 1 total
 Tests:      1 failed. 1 total
