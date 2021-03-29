@@ -1,5 +1,5 @@
 import { Queue } from "../data-structures";
-import { AssertionProps, Group, Test, TestFunctionType, VoidPromiseFunction } from "../types/types";
+import { AssertionProps, Group, Test, TestFunctionType, VoidLikeFunction } from "../types/types";
 
 /**
  * Contain all information of data collected from files in runtime test
@@ -49,16 +49,16 @@ class TestCollector {
    */
   groups: Group[];
 
-  beforeStartFunctions: Queue<VoidPromiseFunction>;
-  afterAllFunctions: Queue<VoidPromiseFunction>;
-  beforeEachFunctions: Queue<VoidPromiseFunction>;
+  beforeStartFunctions: Queue<VoidLikeFunction>;
+  afterAllFunctions: Queue<VoidLikeFunction>;
+  beforeEachFunctions: Queue<VoidLikeFunction>;
 
-  afterEachFunctions: Queue<VoidPromiseFunction>;
+  afterEachFunctions: Queue<VoidLikeFunction>;
   testsFunctions: TestFunctionType[];
   isolatedFunctions: TestFunctionType[];
 
-  private testClousureFunction: Queue<VoidPromiseFunction>;
-  private groupClousureFunction: Queue<VoidPromiseFunction>;
+  private testClousureFunction: Queue<VoidLikeFunction>;
+  private groupClousureFunction: Queue<VoidLikeFunction>;
 
   constructor() {
     this.groups = [];

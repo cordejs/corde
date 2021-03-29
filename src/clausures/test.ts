@@ -1,39 +1,42 @@
-import { testCollector } from "../common";
-import { resolveName } from "../utils";
+import { runtime, testCollector } from "../common";
+import { VoidLikeFunction } from "../types";
+import { executePromiseWithTimeout, resolveName } from "../utils";
 
 /**
- * Represents a group of commands.
+ * Define a single test. A test should contain one or more expectations that test a action of
+ * the discord bot.
+ * A spec whose expectations all succeed will be passing and a spec with any failures will fail.
  *
- * @example
+ * @param expectationDescription Textual description of what this test is checking
+ * @param assertion Function that contains the code of your test. If not provided the it will be ignored in report.
+ * @param timeout Custom timeout for an async group. Overrides the timeout setting defined in configs
  *
- * test('Hello command should return... hello!!', () => {
- *   expect('hello').toReturn('hello!!');
- * });
- *
- * @param name Name of the test
- * @param action Commands related to this test
  * @since 1.0
  */
 export function test<T extends any>(
-  name: T,
-  action: () => void | Promise<void> | PromiseLike<void>,
+  expectationDescription: T,
+  assertion: VoidLikeFunction,
+  timeout?: number | undefined,
 ) {
   testCollector.addToTestClousure(async () => {
-    testCollector.isInsideTestClausure = true;
+    await executePromiseWithTimeout<void>(async (resolve) => {
+      testCollector.isInsideTestClausure = true;
 
-    if (action) {
-      await action();
+      if (assertion) {
+        await assertion();
 
-      const testName = await resolveName(name);
-      if (testCollector.testsFunctions && testCollector.testsFunctions.length) {
-        testCollector.tests.push({
-          name: testName,
-          testsFunctions: testCollector.cloneTestFunctions(),
-        });
+        const testName = await resolveName(expectationDescription);
+        if (testCollector.testsFunctions && testCollector.testsFunctions.length) {
+          testCollector.tests.push({
+            name: testName,
+            testsFunctions: testCollector.cloneTestFunctions(),
+          });
+        }
       }
-    }
 
-    testCollector.testsFunctions = [];
-    testCollector.isInsideTestClausure = false;
+      testCollector.testsFunctions = [];
+      testCollector.isInsideTestClausure = false;
+      resolve();
+    }, timeout ?? runtime.timeOut);
   });
 }

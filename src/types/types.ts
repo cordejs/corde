@@ -1,14 +1,15 @@
 import { ColorResolvable, Message, MessageEmbed } from "discord.js";
 import { Colors, RolePermission } from "..";
 import { CordeBot } from "../core";
-import { EmbedFieldData, FileOptions, MessageAttachment } from "discord.js";
+import { EmbedFieldData } from "discord.js";
 import { Stream } from "stream";
+
+export type VoidLikeFunction = (() => void) | (() => PromiseLike<void>) | (() => Promise<void>);
 
 export type messageType = "text" | "embed";
 export type messageOutputType = Message | MinifiedEmbedMessage;
 export type messageExpectationType = string | MessageEmbed;
 export type TestFunctionType = (cordeBot: CordeBot) => Promise<TestReport>;
-export type VoidPromiseFunction = () => void | Promise<void>;
 export type GenericFunction = (...args: any[]) => any;
 export type Primitive = number | bigint | string | boolean;
 export type ResolveFunction<TResult> = (value: TResult) => void;

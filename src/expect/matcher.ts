@@ -31,7 +31,7 @@ import {
 import { ExpectTest } from "./matches/expectTest";
 import { MessageMatches } from "./matches/messageMatches";
 import { RoleMatches } from "./matches/roleMatches";
-import { buildReportMessage, resolveName, stringIsNullOrEmpty, typeOf } from "../utils";
+import { resolveName, stringIsNullOrEmpty } from "../utils";
 import { getStackTrace } from "../utils/getStackTrace";
 
 /**

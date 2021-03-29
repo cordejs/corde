@@ -22,7 +22,7 @@ import {
   TestFile,
   TestFunctionType,
   TestReport,
-  VoidPromiseFunction,
+  VoidLikeFunction,
 } from "../types";
 import {
   buildReportMessage,
@@ -268,7 +268,7 @@ export class TestExecutor {
 
   private async executeHookFunctionIfPossible(
     keepRunning: boolean,
-    queues: Queue<VoidPromiseFunction>,
+    queues: Queue<VoidLikeFunction>,
   ) {
     if (keepRunning) {
       const _functionErrors = await queues.executeWithCatchCollectAsync();

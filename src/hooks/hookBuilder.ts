@@ -1,11 +1,11 @@
 import chalk from "chalk";
 import { runtime } from "../common";
 import { Queue } from "../data-structures";
-import { VoidPromiseFunction } from "../types";
+import { VoidLikeFunction } from "../types";
 import { executePromiseWithTimeout, formatObject } from "../utils";
 
 interface HookParams {
-  queueToAdd: Queue<VoidPromiseFunction>;
+  queueToAdd: Queue<VoidLikeFunction>;
   fn: () => void | Promise<void>;
   trace: string;
   errorTitle: string;
