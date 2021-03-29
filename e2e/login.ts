@@ -3,7 +3,6 @@
  */
 
 import { login } from "./bot";
-import * as config from "./corde.config";
 
 login(true)
   .then(() => {

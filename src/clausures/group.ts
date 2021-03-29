@@ -1,4 +1,4 @@
-import { runtime, testCollector } from "../common";
+import { testCollector } from "../common";
 import { VoidLikeFunction } from "../types";
 import { executePromiseWithTimeout, resolveName } from "../utils";
 
@@ -10,46 +10,54 @@ import { executePromiseWithTimeout, resolveName } from "../utils";
  * primitive value of then.
  *
  * @param testDefinitions Function for Corde to invoke that will define inner suites a test
- * @param timeout Custom timeout for an async group. Overrides the timeout setting defined in configs
+ * @param timeout Custom timeout for an async group.
  *
  * @since 1.0
  */
-export function group<T extends any>(
+export const group = <T extends any>(
   definitionResolvable: T,
   testDefinitions: VoidLikeFunction,
   timeout?: number | undefined,
-) {
-  testCollector.addToGroupClousure(async () => {
-    await executePromiseWithTimeout<void>(async (resolve) => {
-      testCollector.isInsideGroupClausure = true;
+) => {
+  const _internalGroup = async () => {
+    testCollector.isInsideGroupClausure = true;
 
-      if (testDefinitions) {
-        await testDefinitions();
-        await testCollector.executeTestClojure();
-        const resolvedName = await resolveName(definitionResolvable);
-        // In case of expect() be added in test clausure
-        // that is contained in testDefinitions()
-        if (testCollector.tests && testCollector.tests.length > 0) {
-          testCollector.groups.push({
-            name: resolvedName,
-            tests: testCollector.tests.map((test) => test),
-          });
-        }
-
-        // Case expect() be added inside the group clausure
-        if (testCollector.isInsideTestClausureFunctions()) {
-          const testsCloned = testCollector.cloneTestFunctions();
-          testCollector.groups.push({
-            name: resolvedName,
-            tests: [{ testsFunctions: testsCloned }],
-          });
-          testCollector.clearTestFunctions();
-        }
+    if (testDefinitions) {
+      await testDefinitions();
+      await testCollector.executeTestClojure();
+      const resolvedName = await resolveName(definitionResolvable);
+      // In case of expect() be added in test clausure
+      // that is contained in testDefinitions()
+      if (testCollector.tests && testCollector.tests.length > 0) {
+        testCollector.groups.push({
+          name: resolvedName,
+          tests: testCollector.tests.map((test) => test),
+        });
       }
 
-      testCollector.tests = [];
-      testCollector.isInsideGroupClausure = false;
-      resolve();
-    }, timeout ?? runtime.timeOut);
-  });
-}
+      // Case expect() be added inside the group clausure
+      if (testCollector.isInsideTestClausureFunctions()) {
+        const testsCloned = testCollector.cloneTestFunctions();
+        testCollector.groups.push({
+          name: resolvedName,
+          tests: [{ testsFunctions: testsCloned }],
+        });
+        testCollector.clearTestFunctions();
+      }
+    }
+
+    testCollector.tests = [];
+    testCollector.isInsideGroupClausure = false;
+  };
+
+  if (timeout) {
+    testCollector.addToGroupClousure(async () => {
+      await executePromiseWithTimeout<void>(async (resolve) => {
+        await _internalGroup();
+        resolve();
+      }, timeout);
+    });
+  } else {
+    testCollector.addToGroupClousure(async () => await _internalGroup());
+  }
+};

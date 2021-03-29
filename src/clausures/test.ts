@@ -1,4 +1,4 @@
-import { runtime, testCollector } from "../common";
+import { testCollector } from "../common";
 import { VoidLikeFunction } from "../types";
 import { executePromiseWithTimeout, resolveName } from "../utils";
 
@@ -9,34 +9,42 @@ import { executePromiseWithTimeout, resolveName } from "../utils";
  *
  * @param expectationDescription Textual description of what this test is checking
  * @param assertion Function that contains the code of your test. If not provided the it will be ignored in report.
- * @param timeout Custom timeout for an async group. Overrides the timeout setting defined in configs
+ * @param timeout Custom timeout for an async test
  *
  * @since 1.0
  */
-export function test<T extends any>(
+export const test = <T extends any>(
   expectationDescription: T,
   assertion: VoidLikeFunction,
   timeout?: number | undefined,
-) {
-  testCollector.addToTestClousure(async () => {
-    await executePromiseWithTimeout<void>(async (resolve) => {
-      testCollector.isInsideTestClausure = true;
+) => {
+  const _internalTest = async () => {
+    testCollector.isInsideTestClausure = true;
 
-      if (assertion) {
-        await assertion();
+    if (assertion) {
+      await assertion();
 
-        const testName = await resolveName(expectationDescription);
-        if (testCollector.testsFunctions && testCollector.testsFunctions.length) {
-          testCollector.tests.push({
-            name: testName,
-            testsFunctions: testCollector.cloneTestFunctions(),
-          });
-        }
+      const testName = await resolveName(expectationDescription);
+      if (testCollector.testsFunctions && testCollector.testsFunctions.length) {
+        testCollector.tests.push({
+          name: testName,
+          testsFunctions: testCollector.cloneTestFunctions(),
+        });
       }
+    }
 
-      testCollector.testsFunctions = [];
-      testCollector.isInsideTestClausure = false;
-      resolve();
-    }, timeout ?? runtime.timeOut);
-  });
-}
+    testCollector.testsFunctions = [];
+    testCollector.isInsideTestClausure = false;
+  };
+
+  if (timeout) {
+    testCollector.addToGroupClousure(async () => {
+      await executePromiseWithTimeout<void>(async (resolve) => {
+        await _internalTest();
+        resolve();
+      }, timeout);
+    });
+  } else {
+    testCollector.addToGroupClousure(async () => await _internalTest());
+  }
+};
