@@ -3,7 +3,7 @@
 exports[`should remove a message Reaction 1`] = `
 "
  PASS   e2e\\\\toRemoveReaction\\\\__cordeTest__\\\\bot_case1.test.ts   100ms
-   ✔  <empty test name>   100ms
+   ✔  should remove a reaction from a message   100ms
 
 Test Files: 1 passed. 1 total
 Tests:      1 passed. 1 total

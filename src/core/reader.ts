@@ -45,8 +45,6 @@ class Reader {
       throw new FileError("No file was informed.");
     }
 
-    testCollector.isCollecting = true;
-
     for (const file of files) {
       try {
         require(file);
@@ -93,7 +91,6 @@ class Reader {
       testCollector.groups = [];
     }
 
-    testCollector.isCollecting = false;
     return testFiles;
   }
 

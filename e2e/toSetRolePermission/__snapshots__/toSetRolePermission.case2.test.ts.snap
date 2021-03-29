@@ -9,8 +9,8 @@ exports[`should fail 1`] = `
     received: permissions were not changed
 
     at toSetRolePermission e2e\\\\toSetRolePermission\\\\__cordeTest__\\\\bot_case2.test.ts:10:10
-    at lib\\\\src\\\\clausures\\\\test.js:31:13
-    at Queue.executeWithCatchCollectAsync (lib\\\\src\\\\data-structures\\\\queue.js:254:15)
+    at lib\\\\src\\\\clausures\\\\test.js:30:15
+    at lib\\\\src\\\\utils\\\\executePromiseWithTimeout.js:53:5
 
 Test Files: 1 failed. 1 total
 Tests:      1 failed. 1 total

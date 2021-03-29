@@ -8,8 +8,8 @@ exports[`should fail 1`] = `
     timeout: role 825879364813062185 wasn't deleted in the expected time (5000)
 
     at toDeleteRole e2e\\\\toDeleteRole\\\\__cordeTest__\\\\bot_case2.test.ts:8:45
-    at lib\\\\src\\\\clausures\\\\test.js:31:13
-    at Queue.executeWithCatchCollectAsync (lib\\\\src\\\\data-structures\\\\queue.js:254:15)
+    at lib\\\\src\\\\clausures\\\\test.js:30:15
+    at lib\\\\src\\\\utils\\\\executePromiseWithTimeout.js:53:5
 
 Test Files: 1 failed. 1 total
 Tests:      1 failed. 1 total

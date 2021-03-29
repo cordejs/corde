@@ -250,10 +250,18 @@ export class Queue<T extends GenericFunction> {
     }
   }
 
+  /**
+   * Removes all default parameters from the queue
+   */
   clearDefaultParameters() {
     this._defaultParameters = [];
   }
 
+  /**
+   * Removes a specific default parameter
+   * @param parameters Parameter to remove
+   *
+   */
   removeFromDefaultParameter<K extends Parameters<T>>(...parameters: K) {
     if (!this.hasDefaultParameters) {
       return;
@@ -267,6 +275,10 @@ export class Queue<T extends GenericFunction> {
     }
   }
 
+  /**
+   * Removes all elements from the queue
+   * @returns The own queue.
+   */
   clear() {
     return this._funcs.clear();
   }
@@ -305,6 +317,9 @@ export class Queue<T extends GenericFunction> {
     }
   }
 
+  /**
+   * Gets the first functions queued or null if there no functions queued.
+   */
   first() {
     if (!this.hasFunctions) {
       return null;
