@@ -21,7 +21,8 @@
     "noFallthroughCasesInSwitch": true,
     "allowUnusedLabels": false,
     "allowUnreachableCode": false,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "types": ["node"]
   },
   "include": ["src/**/*", "index.ts"],
   "exclude": ["node_modules", "lib", "tests", "e2e"]

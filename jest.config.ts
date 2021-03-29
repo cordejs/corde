@@ -15,6 +15,7 @@ module.exports = {
   forceExit: true,
   globals: {
     "ts-jest": {
+      tsconfig: "./tests/tsconfig.spec.json",
       babelConfig: true,
     },
   },
