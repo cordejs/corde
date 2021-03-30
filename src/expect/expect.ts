@@ -19,8 +19,12 @@ export function expect(): void;
  *
  * @since 1.0
  */
-export function expect<T>(commandNameResolvable: T): MatchWithNot;
-export function expect<T>(commandNameResolvable?: T): MatchWithNot | void {
+export function expect<T extends Function | number | string>(
+  commandNameResolvable: T,
+): MatchWithNot;
+export function expect<T extends Function | number | string>(
+  commandNameResolvable?: T,
+): MatchWithNot | void {
   if (commandNameResolvable == null) {
     return;
   }

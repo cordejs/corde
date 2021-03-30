@@ -1,12 +1,11 @@
 import { RoleIdentifier } from "../types/types";
 import { Role } from "discord.js";
-import { CordeRole } from "../structures/cordeRole";
 import { runtime } from "../common/runtime";
 import { CordeClientError } from "../errors";
+import { CordeRole } from "../structures/cordeRole";
 
 /**
- * Reach for a `role` in the informed guild in settings,
- * basing on it's **id** or **name**.
+ * Finds a role in config guild's cache, basing on it's **id**
  *
  * @param id Id of the role.
  * @throws CordeClientError if corde's bot is not connected.
@@ -14,10 +13,10 @@ import { CordeClientError } from "../errors";
  */
 export function getRole(id: string): CordeRole;
 /**
- * Reach for a `role` in the informed guild in settings,
- * basing on it's **id** or **name**.
+ * Finds a role in config guild's cache, basing on it's **id** or **name**.
  *
  * @param data Data of the role. It can be it's **name** or **id**.
+ *
  * if both informations be provided, and they are from two differents
  * roles, the result will correspond to the role that matchs with the parameter
  * **id**.

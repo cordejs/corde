@@ -1,4 +1,3 @@
-
 <div align="center">
   <br />
   <p>
@@ -55,7 +54,7 @@ The bellow documentation is a resume of what you can find in [Corde's site](http
 
 Starting create tests with Corde is realy simple. First install it locally with npm `npm i -D corde` or yarn `yarn add -D corde`. You can also install it globally: `npm i -g corde` or `yarn global add corde`.
 
-After installed, add the file `corde.json` in root of your application with the follow structure:
+After installed, add the file `corde.config.json` in root of your application with the follow structure:
 
 ```javascript
 {

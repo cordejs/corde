@@ -1,16 +1,17 @@
 ---
 id: hooks
 title: Hooks
-custom_edit_url: https://github.com/lucasgmagalhaes/corde/blob/master/website/docs/hooks.md
+custom_edit_url: https://github.com/lucasgmagalhaes/corde/blob/master/docs/Hooks.mdx
 ---
 
-Hooks are functions triggered in different ocassions in corde tests executions
+Hooks are functions triggered in different ocassions in corde tests executions.
+Each hook has a timeout parameter wich **overrides** the timeout provided in config.
 All hooks are available bellow:
 
-- [afterAll](/docs/hooks#afterAll)
-- [afterEach](/docs/hooks#afterEach)
-- [beforeEach](/docs/hooks#beforeEach)
-- [beforeStart](/docs/hooks#beforeStart)
+- [`afterAll(function, timeout)`](/docs/hooks#afterallfunction-timeout)
+- [`afterEach(function, timeout)`](/docs/hooks#aftereachfunction-timeout)
+- [`beforeEach(function, timeout)`](/docs/hooks#beforeeachfunction-timeout)
+- [`beforeStart(functionm timeout)`](/docs/hooks#beforestartfunction-timeout)
 
 :::note
 These functions are valid for all tests executions. If you add some of then inside a `group`
@@ -45,9 +46,13 @@ Will work like:
 
 :::
 
-### afterAll(function)
+### `afterAll(function, timeout?)`
 
 Use `afterAll` to execute something that you want to be executed after all tests run.
+
+Optionally, you can provide a `timeout` (in milliseconds) for specifying how long to wait before aborting.
+_Note: The default timeout is 5 seconds._
+
 A good example of something to be executed after all tests is the logout of your testing
 bot.
 
@@ -64,10 +69,15 @@ As corde self make it's bot login, it's make their logout also. So there is no n
 to worry about it.
 :::
 
-### afterEach(function)
+### `afterEach(function, timeout?)`
 
-Use `afterEach` to execute something after execution of a test case. As metioned above,
-this function is not included to clausures like `group` and `test`, if you call it, this function will be included for all tests (yet).
+Use `afterEach` to execute something after execution of a test case.
+
+Optionally, you can provide a `timeout` (in milliseconds) for specifying how long to wait before aborting.
+_Note: The default timeout is 5 seconds._
+
+As metioned above, this function is not included to clausures like `group` and `test`,
+if you call it, this function will be included for all tests (yet).
 
 A exemplification of usage of `afterEach`
 
@@ -92,9 +102,12 @@ test("test 2", () => {
 // Done
 ```
 
-### beforeEach(function)
+### `beforeEach(function, timeout?)`
 
 Use `beforeEach` to execute something before operation of each test case.
+
+Optionally, you can provide a `timeout` (in milliseconds) for specifying how long to wait before aborting.
+_Note: The default timeout is 5 seconds._
 
 ```typescript
 beforeEach(() => {
@@ -117,9 +130,12 @@ test("test 2", () => {
 // Done
 ```
 
-### beforeStart(function)
+### `beforeStart(function, timeout?)`
 
 Use `beforeStart` to execute some function before all tests begin.
+
+Optionally, you can provide a `timeout` (in milliseconds) for specifying how long to wait before aborting.
+_Note: The default timeout is 5 seconds._
 
 This can be, for instance, the login of your bot.
 
@@ -136,4 +152,8 @@ bot. Functions to be executed before it will be created future versions of corde
 
 The image bellow ilustrate the operation of each hook:
 
-![Corde hooks lifecycle](/img/corde_hooks_lifecycle.png)
+<div style={{textAlign: 'center'}}>
+
+![image](/img/corde_hooks_lifecycle.png)
+
+</div>

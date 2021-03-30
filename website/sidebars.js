@@ -45,6 +45,10 @@ module.exports = {
         },
         {
           type: "doc",
+          id: "clausures",
+        },
+        {
+          type: "doc",
           id: "utilities",
         },
         {

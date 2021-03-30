@@ -10,14 +10,12 @@ import { executePromiseWithTimeout, resolveName } from "../utils";
  * primitive value of then.
  *
  * @param testDefinitions Function for Corde to invoke that will define inner suites a test
- * @param timeout Custom timeout for an async group.
  *
  * @since 1.0
  */
 export const group = <T extends any>(
   definitionResolvable: T,
   testDefinitions: VoidLikeFunction,
-  timeout?: number | undefined,
 ) => {
   const _internalGroup = async () => {
     testCollector.isInsideGroupClausure = true;
@@ -50,14 +48,5 @@ export const group = <T extends any>(
     testCollector.isInsideGroupClausure = false;
   };
 
-  if (timeout) {
-    testCollector.addToGroupClousure(async () => {
-      await executePromiseWithTimeout<void>(async (resolve) => {
-        await _internalGroup();
-        resolve();
-      }, timeout);
-    });
-  } else {
-    testCollector.addToGroupClousure(async () => await _internalGroup());
-  }
+  testCollector.addToGroupClousure(async () => await _internalGroup());
 };

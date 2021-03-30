@@ -73,11 +73,9 @@ module.exports = {
       "@docusaurus/preset-classic",
       {
         docs: {
-          path: "docs",
+          path: "../docs",
           sidebarPath: require.resolve("./sidebars.js"),
-          // Please change this to your repo.
-          editUrl: "https://github.com/lucasgmagalhaes/corde/edit/master/website/docs",
-
+          editUrl: "https://github.com/lucasgmagalhaes/corde/edit/master/docs",
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
           lastVersion: "current",
