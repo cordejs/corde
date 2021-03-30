@@ -14,6 +14,7 @@ import {
 import {
   GuildFeaturesType,
   SystemChannelFlagsResolvable,
+  SystemChannelFlagsString,
   VerificationLevel,
   VerificationLevelType,
 } from "../types";
@@ -44,7 +45,7 @@ export class CordeGuild {
   /**
    * The ID of the application that created this guild (if applicable)
    */
-  get aplicationID() {
+  get applicationID() {
     return this._guild.applicationID;
   }
 
@@ -237,7 +238,7 @@ export class CordeGuild {
    *
    * @see https://discord.com/developers/docs/resources/guild#guild-object-default-message-notification-level
    */
-  get messageNotificationLevel() {
+  get defaultMessageNotifications() {
     return this._guild.defaultMessageNotifications;
   }
 
@@ -370,7 +371,9 @@ export class CordeGuild {
    *
    * guild.updateSystemChannelFlags("WELCOME_MESSAGE_DISABLED");
    */
-  async updateSystemChannelFlags(newSystemChannelFlags: SystemChannelFlagsResolvable) {
+  async updateSystemChannelFlags(
+    newSystemChannelFlags: SystemChannelFlagsResolvable,
+  ): Promise<this> {
     const guild = await this._guild.setSystemChannelFlags(newSystemChannelFlags);
     this._guild = guild;
     return this;
@@ -444,9 +447,11 @@ export class CordeGuild {
    *
    * @example
    *
-   * guild.updateRolePosition([{ role: roleID, position: updatedRoleIndex }])
+   * guild.updateRolePosition(
+   *  { role: roleID, position: updatedRoleIndex },
+   *  { role: role2ID, position: updatedRole2Index })
    */
-  async updateRolePosition(newRolePositions: RolePosition[]) {
+  async updateRolePosition(...newRolePositions: RolePosition[]) {
     this._guild = await this._guild.setRolePositions(newRolePositions);
     return this;
   }
@@ -565,9 +570,11 @@ export class CordeGuild {
    *
    * @example
    *
-   * guild.updateChannelPositions([{ channel: channelID, position: newChannelIndex }])
+   * guild.updateChannelPositions(
+   * { channel: channelID, position: newChannelIndex },
+   * { channel: channel2ID, position: newChannel2Index })
    */
-  async updateChannelPositions(newChannelPositions: ChannelPosition[]) {
+  async updateChannelPositions(...newChannelPositions: ChannelPosition[]) {
     this._guild = await this._guild.setChannelPositions(newChannelPositions);
     return this;
   }

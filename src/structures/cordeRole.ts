@@ -12,70 +12,70 @@ export class CordeRole {
   /**
    * Integer representation of hexadecimal color code.
    */
-  get color() {
+  get color(): number {
     return this._role.color;
   }
 
   /**
    * Creation time of the role.
    */
-  get createdAt() {
+  get createdAt(): Date {
     return this._role.createdAt;
   }
 
   /**
    * Inform if this role was deleted.
    */
-  get isDeleted() {
+  get isDeleted(): boolean {
     return this._role.deleted;
   }
 
   /**
    * Inform if this role can be edited.
    */
-  get isEditable() {
+  get isEditable(): boolean {
     return this._role.editable;
   }
 
   /**
    * This role's color in hexadecimal.
    */
-  get hexColor() {
+  get hexColor(): string {
     return this._role.hexColor;
   }
 
   /**
    * If this role is pinned in the user listing
    */
-  get isHoist() {
+  get isHoist(): boolean {
     return this._role.hoist;
   }
 
   /**
    * Id of this role.
    */
-  get id() {
+  get id(): string {
     return this._role.id;
   }
 
   /**
    * Whether this role is managed by an integration
    */
-  get isManaged() {
+  get isManaged(): boolean {
     return this._role.managed;
   }
 
   /**
    * Whether this role is mentionable
    */
-  get isMentionable() {
+  get isMentionable(): boolean {
     return this._role.mentionable;
   }
 
   /**
    * Name of this role.
    */
-  get name() {
+  get name(): string {
     return this._role.name;
   }
 
@@ -84,7 +84,7 @@ export class CordeRole {
    *
    * @see https://discord.com/developers/docs/topics/permissions#permission-hierarchy
    */
-  get position() {
+  get position(): number {
     /**
      * see https://discord.js.org/#/docs/main/stable/class/Role?scrollTo=position
      * Position in Discord.js is relative to the roleManager.

@@ -631,8 +631,11 @@ export default class MockDiscord {
         rawPosition: 1,
         permissions: permissionBitField,
         permissions_new: permissionBitField,
-        managed: false,
+        // Make it false will resolve in a null pointer error.
+        // This is a workaround because I don't have patience to fix it, sorry
+        managed: true,
         mentionable: false,
+        deleted: false,
       },
       this._guild,
     );

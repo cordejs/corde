@@ -1,5 +1,5 @@
 import { runtime } from "../common/runtime";
-import { CordeRole } from "../discord-structures/role";
+import { CordeRole } from "../structures/cordeRole";
 import { CordeClientError } from "../errors";
 import { BaseRole } from "../types/types";
 
