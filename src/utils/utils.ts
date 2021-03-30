@@ -18,6 +18,7 @@ import { wait as _wait } from "./wait";
 import { LogUpdate as _logUpdate } from "./logUpdate";
 import { calcPermissionsValue as _calcPermissionsValue } from "./permission";
 import { resolveName as _resolveName } from "./resolveName";
+import { shortPathForPlataform as _shortPathForPlataform } from "./shortPathForPlataform";
 
 export namespace utils {
   export const isPromise = _isPromise;
@@ -40,4 +41,5 @@ export namespace utils {
   export const wait = _wait;
   export const LogUpdate = _logUpdate;
   export const calcPermissionsValue = _calcPermissionsValue;
+  export const shortPathForPlataform = _shortPathForPlataform;
 }

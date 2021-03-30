@@ -5,6 +5,7 @@ import { printHookErrors } from "../common/printHookError";
 import { testCollector } from "../common/testCollector";
 import { FileError } from "../errors";
 import { ConfigOptions, TestFile } from "../types";
+import { shortPathForPlataform } from "../utils";
 
 class Reader {
   /**
@@ -83,13 +84,8 @@ class Reader {
       this.addTestsGroupmentToGroupIfExist();
       this.addIsolatedTestFunctionsToGroupIfExists();
 
-      const shortFilePath =
-        process.platform === "win32"
-          ? file.replace(process.cwd() + "\\", "")
-          : file.replace(process.cwd() + "/", "");
-
       testFiles.push({
-        path: shortFilePath,
+        path: shortPathForPlataform(file),
         groups: testCollector.groups.slice(),
         isEmpty: testCollector.groups.length === 0,
       });

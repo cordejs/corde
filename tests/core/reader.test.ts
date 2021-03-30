@@ -100,7 +100,7 @@ describe("reader class", () => {
 
       it("should return group with only command", async () => {
         const pathFile = "tests/mocks/onlyCommands";
-        const pathReturned = "tests\\mocks\\onlyCommands";
+        const pathReturned = process.platform === "win32" ? "tests\\mocks\\onlyCommands" : pathFile;
         const tests = await reader.getTestsFromFiles([path.resolve(process.cwd(), pathFile)]);
         const expectedTests: TestFile[] = [
           {
@@ -122,7 +122,8 @@ describe("reader class", () => {
 
       it("should return group with double groups", async () => {
         const pathFile = "tests/mocks/sampleDoubleGroup";
-        const pathReturned = "tests\\mocks\\sampleDoubleGroup";
+        const pathReturned =
+          process.platform === "win32" ? "tests\\mocks\\sampleDoubleGroup" : pathFile;
         const tests = await reader.getTestsFromFiles([path.resolve(process.cwd(), pathFile)]);
         const expectedTests: TestFile[] = [
           {
@@ -155,7 +156,8 @@ describe("reader class", () => {
 
       it("should return group with only group and expect", async () => {
         const pathFile = "tests/mocks/sampleOnlyWithGroup";
-        const pathReturned = "tests\\mocks\\sampleOnlyWithGroup";
+        const pathReturned =
+          process.platform === "win32" ? "tests\\mocks\\sampleOnlyWithGroup" : pathFile;
         const tests = await reader.getTestsFromFiles([path.resolve(process.cwd(), pathFile)]);
         const expectedTests: TestFile[] = [
           {
@@ -178,7 +180,8 @@ describe("reader class", () => {
 
       it("should return group with single test", async () => {
         const pathFile = "tests/mocks/sampleSingleTest";
-        const pathReturned = "tests\\mocks\\sampleSingleTest";
+        const pathReturned =
+          process.platform === "win32" ? "tests\\mocks\\sampleSingleTest" : pathFile;
         const tests = await reader.getTestsFromFiles([path.resolve(process.cwd(), pathFile)]);
         const expectedTests: TestFile[] = [
           {
@@ -202,7 +205,9 @@ describe("reader class", () => {
 
     it("should return group with single group and test", async () => {
       const pathFile = "tests/mocks/sampleWithSingleGroup";
-      const pathReturned = "tests\\mocks\\sampleWithSingleGroup";
+      const pathReturned =
+        process.platform === "win32" ? "tests\\mocks\\sampleWithSingleGroup" : pathFile;
+
       const tests = await reader.getTestsFromFiles([path.resolve(process.cwd(), pathFile)]);
       const expectedTests: TestFile[] = [
         {
@@ -226,7 +231,8 @@ describe("reader class", () => {
 
     it("should return empty test (only with group)", async () => {
       const pathFile = "tests/mocks/sampleEmptyGroup";
-      const pathReturned = "tests\\mocks\\sampleEmptyGroup";
+      const pathReturned =
+        process.platform === "win32" ? "tests\\mocks\\sampleEmptyGroup" : pathFile;
       const tests = await reader.getTestsFromFiles([path.resolve(process.cwd(), pathFile)]);
       const expectedTests: TestFile[] = [
         {
@@ -240,7 +246,8 @@ describe("reader class", () => {
 
     it("should return empty test (only with test)", async () => {
       const pathFile = "tests/mocks/sampleEmptyTest";
-      const pathReturned = "tests\\mocks\\sampleEmptyTest";
+      const pathReturned =
+        process.platform === "win32" ? "tests\\mocks\\sampleEmptyTest" : pathFile;
       const tests = await reader.getTestsFromFiles([path.resolve(process.cwd(), pathFile)]);
       const expectedTests: TestFile[] = [
         {
