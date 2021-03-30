@@ -83,8 +83,13 @@ class Reader {
       this.addTestsGroupmentToGroupIfExist();
       this.addIsolatedTestFunctionsToGroupIfExists();
 
+      const shortFilePath =
+        process.platform === "win32"
+          ? file.replace(process.cwd() + "\\", "")
+          : file.replace(process.cwd() + "/", "");
+
       testFiles.push({
-        path: file.replace(process.cwd() + "\\", ""),
+        path: shortFilePath,
         groups: testCollector.groups.slice(),
         isEmpty: testCollector.groups.length === 0,
       });
