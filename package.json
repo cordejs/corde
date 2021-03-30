@@ -27,6 +27,7 @@
     "build": "bash tasks.sh build",
     "build:prod": "gulp && yarn prettier-lib",
     "build:publish": "bash ./scripts/publish.sh",
+    "generateStructureDocs": "typedoc --plugin typedoc-plugin-markdown src/structures",
     "prettier-lib": "prettier --write ./lib",
     "dependencies": "depcruise --config ./etc/.dependency-cruiser.js src",
     "watch": "bash tasks.sh watch",
@@ -90,6 +91,8 @@
     "ts-node": "^9.1.1",
     "tslint": "^6.1.3",
     "tslint-config-prettier": "^1.18.0",
+    "typedoc": "^0.20.34",
+    "typedoc-plugin-markdown": "^3.6.0",
     "typescript": "^4.1.3",
     "yarn": "^1.22.10"
   },

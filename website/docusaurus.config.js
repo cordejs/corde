@@ -19,8 +19,14 @@ module.exports = {
       items: [
         {
           to: "docs/",
-          activeBasePath: "docs",
+          activeBaseRegex: "^(.*docs\\/(?!(structures\\/?)).*)",
           label: "Docs",
+          position: "left",
+        },
+        {
+          to: "docs/structures/",
+          activeBasePath: "docs/structures",
+          label: "Structures",
           position: "left",
         },
         {
