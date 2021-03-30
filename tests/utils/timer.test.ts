@@ -9,7 +9,7 @@ describe("testing timer class", () => {
     const timer = new Timer();
     timer.start();
     await wait(100);
-    let value = timer.stop();
+    const value = timer.stop();
     expect(value[1]).toBeGreaterThan(0);
     expect(value[0]).toContain("ms");
   });

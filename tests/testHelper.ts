@@ -170,7 +170,7 @@ export function generateTestFile(generatorData: TestFileGeneratorInfo) {
       groups: [
         {
           name: "group",
-          tests: tests,
+          tests,
         },
       ],
     });

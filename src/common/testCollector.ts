@@ -7,6 +7,22 @@ import { AssertionProps, Group, Test, TestFunctionType, VoidLikeFunction } from 
  * @internal
  */
 class TestCollector {
+  private constructor() {
+    this.groups = [];
+    this.beforeEachFunctions = new Queue();
+    this.afterAllFunctions = new Queue();
+    this.beforeStartFunctions = new Queue();
+    this.afterEachFunctions = new Queue();
+
+    this.testClousureFunction = new Queue();
+    this.groupClousureFunction = new Queue();
+
+    this.tests = [];
+    this.assertions = [];
+    this.isolatedFunctions = [];
+    this.testsFunctions = [];
+  }
+  private static _instance: TestCollector;
   isInsideGroupClausure: boolean;
   isInsideTestClausure: boolean;
 
@@ -24,29 +40,12 @@ class TestCollector {
 
   private testClousureFunction: Queue<VoidLikeFunction>;
   private groupClousureFunction: Queue<VoidLikeFunction>;
-  private static _instance: TestCollector;
 
   static getInstance() {
     if (!TestCollector._instance) {
       TestCollector._instance = new TestCollector();
     }
     return TestCollector._instance;
-  }
-
-  private constructor() {
-    this.groups = [];
-    this.beforeEachFunctions = new Queue();
-    this.afterAllFunctions = new Queue();
-    this.beforeStartFunctions = new Queue();
-    this.afterEachFunctions = new Queue();
-
-    this.testClousureFunction = new Queue();
-    this.groupClousureFunction = new Queue();
-
-    this.tests = [];
-    this.assertions = [];
-    this.isolatedFunctions = [];
-    this.testsFunctions = [];
   }
 
   addTestFunction(testFunction: TestFunctionType) {

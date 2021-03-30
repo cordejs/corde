@@ -128,7 +128,7 @@ describe("testing messageUtils", () => {
         },
       ];
       const messageLike: MessageEmbedLike = {
-        fields: fields,
+        fields,
       };
       const embed = messageUtils.embedMessageLikeToMessageEmbed(messageLike);
       expect(embed.fields).toMatchObject<EmbedFieldData[]>(fields);

@@ -221,7 +221,7 @@ export class TestExecutor {
   }
 
   private createTestTextByStatus(testName: string | number | boolean) {
-    let icon = TEST_RUNNING_ICON;
+    const icon = TEST_RUNNING_ICON;
     return `${MESSAGE_TAB_SPACE}${icon} ${testName}`;
   }
 
