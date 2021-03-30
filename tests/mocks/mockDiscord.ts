@@ -44,7 +44,7 @@ export interface ActivityData {
   state?: string;
   application_id: string;
   timestamp: Date;
-  party?: Object;
+  party?: object;
 }
 
 export interface PresenceData {

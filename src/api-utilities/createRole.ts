@@ -20,7 +20,7 @@ export async function createRole(data: RoleData) {
   }
 
   try {
-    const createdRole = await runtime.bot.roleManager.create({ data: data });
+    const createdRole = await runtime.bot.roleManager.create({ data });
     return new CordeRole(createdRole);
   } catch (error) {
     throw Error("Could not create the role. " + error);

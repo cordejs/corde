@@ -26,8 +26,7 @@ describe("testing isPrimitiveValue function", () => {
   });
 
   it("class instance should not be primitive", () => {
-    interface A {}
-    let a: string | number | A;
+    let a: string | number | {};
     a = "";
     expect(isPrimitiveValue(a)).toBeTruthy();
   });

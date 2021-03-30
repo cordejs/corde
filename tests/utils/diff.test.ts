@@ -1,7 +1,5 @@
-/**
- * Since diff is just a binder for a external lib,
- * we just have to ensure that this lib is being called.
- **/
+// Since diff is just a binder for a external lib,
+// we just have to ensure that this lib is being called.
 
 import * as jestDiff from "jest-diff";
 import { diff } from "../../src/utils";

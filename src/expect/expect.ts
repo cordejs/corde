@@ -1,3 +1,4 @@
+import { VoidLikeFunction } from "../types";
 import { ExpectMatchesWithNot, MatchWithNot } from "./matcher";
 
 /**
@@ -19,10 +20,10 @@ export function expect(): void;
  *
  * @since 1.0
  */
-export function expect<T extends Function | number | string>(
+export function expect<T extends VoidLikeFunction | number | string>(
   commandNameResolvable: T,
 ): MatchWithNot;
-export function expect<T extends Function | number | string>(
+export function expect<T extends VoidLikeFunction | number | string>(
   commandNameResolvable?: T,
 ): MatchWithNot | void {
   if (commandNameResolvable == null) {

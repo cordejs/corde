@@ -134,9 +134,9 @@ describe("testing events event", () => {
       let _oldChannel: Channel;
       let _newChannel: Channel;
 
-      events.onChannelUpdate((oldChannel, newChannel) => {
-        _oldChannel = oldChannel;
-        _newChannel = newChannel;
+      events.onChannelUpdate((oldReceived, newReceived) => {
+        _oldChannel = oldReceived;
+        _newChannel = newReceived;
       });
 
       client.emit(eventName, oldChannel, newChannel);
