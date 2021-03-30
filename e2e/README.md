@@ -23,7 +23,7 @@ Take the following structure as example:
     .
     ├── toReturn
     │ ├── __cordeTest__             # Contains scripts of Corde tests
-    │     ├── bot_case1.test.ts     # Naming convention for test file
+    │     ├── bot_case1.spec.ts     # Naming convention for test file
     └── toReturn.case1.test.ts      # Test case for Jest to run
 
 About the others files, they can be decribed as:

@@ -1,0 +1,10 @@
+import Utils from "../testUtils";
+
+import { runCLI } from "../cliRunner";
+
+it("should change role color", async () => {
+  const command = Utils.buildCommandWithConfigPath("toSetRoleMentionable", "bot_case2.spec.ts");
+  const [mockProcess, stdout] = await runCLI(command);
+  expect(mockProcess).toBeCalledWith(1);
+  expect(stdout).toMatchSnapshot();
+});

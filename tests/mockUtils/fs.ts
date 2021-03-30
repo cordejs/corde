@@ -13,24 +13,24 @@ export class FsMockUtils {
    *
    */
   constructor() {}
-  public get writeFileSyncArgs() {
+  get writeFileSyncArgs() {
     return (fs.writeFileSync as jest.Mock).mock.calls[0][0];
   }
 
-  public get getCreatedFileContent() {
+  get getCreatedFileContent() {
     return (fs.writeFileSync as jest.Mock).mock.calls[0][1];
   }
 
-  public convertCreatedFileContentToModule() {
+  convertCreatedFileContentToModule() {
     return requireFromString(this.getCreatedFileContent);
   }
 
-  public createMockForWriteFileSync(impl?: () => void) {
+  createMockForWriteFileSync(impl?: () => void) {
     const fsImpl = impl ? impl : () => {};
     (fs.writeFileSync as jest.Mock).mockImplementation(fsImpl);
   }
 
-  public mockReadFileSync(impl?: () => string | Buffer | BufferEncoding) {
+  mockReadFileSync(impl?: () => string | Buffer | BufferEncoding) {
     const fsImpl = impl
       ? impl
       : (): string | Buffer | BufferEncoding => {
@@ -39,7 +39,7 @@ export class FsMockUtils {
     (fs.readFileSync as jest.Mock).mockImplementation(fsImpl);
   }
 
-  public buildFilePath(fileName: string) {
+  buildFilePath(fileName: string) {
     return path.resolve(process.cwd(), fileName);
   }
 }

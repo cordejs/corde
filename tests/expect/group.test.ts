@@ -1,4 +1,4 @@
-import { testCollector } from "../../src/common";
+import { testCollector } from "../../src/common/testCollector";
 import { Group } from "../../src/types";
 import { group, test } from "../../src/clausures";
 import { expect as cordeExpect } from "../../src/expect";
@@ -39,18 +39,7 @@ describe("Testing group function", () => {
     });
 
     await testCollector.executeGroupClojure();
-
-    const groupsObj: Group[] = [];
-    groupsObj.push({
-      name: "groupName",
-      tests: [
-        {
-          testsFunctions: [],
-          name: "testName",
-        },
-      ],
-    });
-    expect(testCollector.groups).toEqual(groupsObj);
+    expect(testCollector.groups).toEqual([]);
   });
 
   it("Should add group with test inside and testFunction (single group)", async () => {

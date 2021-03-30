@@ -18,29 +18,29 @@ afterEach(() => {
 });
 
 describe("Testing creation of config file in init", () => {
-  it("should create corde.js file", () => {
+  it("should create corde.config.js file", () => {
     init("js");
-    expect(fs.writeFileSyncArgs).toContain(fs.buildFilePath("corde.js"));
+    expect(fs.writeFileSyncArgs).toContain(fs.buildFilePath("corde.config.js"));
   });
 
-  it("should create corde.ts file", () => {
+  it("should create corde.config.ts file", () => {
     init("ts");
-    expect(fs.writeFileSyncArgs).toContain(fs.buildFilePath("corde.ts"));
+    expect(fs.writeFileSyncArgs).toContain(fs.buildFilePath("corde.config.ts"));
   });
 
-  it("should create corde.json file with directly argument", () => {
+  it("should create corde.config.json file with directly argument", () => {
     init("json");
-    expect(fs.writeFileSyncArgs).toContain(fs.buildFilePath("corde.json"));
+    expect(fs.writeFileSyncArgs).toContain(fs.buildFilePath("corde.config.json"));
   });
 
-  it("should create corde.json file without directly argument", () => {
+  it("should create corde.config.json file without directly argument", () => {
     init();
-    expect(fs.writeFileSyncArgs).toContain(fs.buildFilePath("corde.json"));
+    expect(fs.writeFileSyncArgs).toContain(fs.buildFilePath("corde.config.json"));
   });
 
-  it("should create corde.json file with undefined argument", () => {
+  it("should create corde.config.json file with undefined argument", () => {
     init(undefined);
-    expect(fs.writeFileSyncArgs).toContain(fs.buildFilePath("corde.json"));
+    expect(fs.writeFileSyncArgs).toContain(fs.buildFilePath("corde.config.json"));
   });
 
   it("should print msg error if invalid file extension was informed", () => {

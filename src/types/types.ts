@@ -1,14 +1,29 @@
-import { ColorResolvable, Message, MessageEmbed, Snowflake } from "discord.js";
-import { Colors, RolePermission } from "..";
-import { CordeBot } from "../core";
+import {
+  Collection,
+  ColorResolvable,
+  Guild,
+  GuildChannel,
+  Message,
+  MessageEmbed,
+  Role,
+  RoleManager,
+  TextChannel,
+} from "discord.js";
+import { Colors, RolePermission } from "../utils";
+import { EmbedFieldData } from "discord.js";
+import { Stream } from "stream";
+import { Events } from "../core/events";
 
+export type VoidLikeFunction = (() => void) | (() => PromiseLike<void>) | (() => Promise<void>);
+export type TestFunctionType = (cordeBot: CordeBotLike) => Promise<TestReport>;
 export type messageType = "text" | "embed";
 export type messageOutputType = Message | MinifiedEmbedMessage;
 export type messageExpectationType = string | MessageEmbed;
-export type testFunctionType = (cordeBot: CordeBot) => Promise<TestReport>;
-export type VoidPromiseFunction = () => void | Promise<void>;
 export type GenericFunction = (...args: any[]) => any;
 export type Primitive = number | bigint | string | boolean;
+export type ResolveFunction<TResult> = (value: TResult) => void;
+export type RejectFunction = (reason?: any) => void;
+export type EmojisType = string[] | EmojiLike[] | (string | EmojiLike)[];
 
 /**
  * Get all function `T` parameters as they may be
@@ -33,12 +48,21 @@ export interface AssertionProps {
 }
 
 /**
+ * Contain all tests cases | groups of a test file.
+ */
+export interface TestFile {
+  path: string;
+  groups: Group[];
+  isEmpty: boolean;
+}
+
+/**
  * Represents **test** structure
  */
 export interface Test {
-  name?: string;
+  name?: string | number | boolean;
   subTests?: Test[];
-  testsFunctions: testFunctionType[];
+  testsFunctions: TestFunctionType[];
   testsReports?: TestReport[];
 }
 
@@ -46,14 +70,17 @@ export interface Test {
  * Represents **group** structure
  */
 export interface Group {
-  name?: string;
+  name?: string | number | boolean;
   subGroups?: Group[];
   tests: Test[];
 }
 
-export interface RoleData {
+export interface Identifier {
+  id?: string;
+}
+
+export interface RoleIdentifier extends Identifier {
   name?: string;
-  id?: Snowflake;
 }
 
 export interface BaseRole {
@@ -72,11 +99,11 @@ export interface ConfigOptions {
   /**
    * Fake bot used to test the really one
    */
-  cordeTestToken: string;
+  cordeTestToken?: string;
   /**
    * User's bot that will be tested
    */
-  botTestId: string;
+  botTestId?: string;
   /**
    * User's bot token that will run.
    */
@@ -84,11 +111,11 @@ export interface ConfigOptions {
   /**
    * Channel where tests will run
    */
-  channelId: string;
+  channelId?: string;
   /**
    * Guild where tests will run
    */
-  guildId: string;
+  guildId?: string;
   /**
    * Defines max amount of time that a command can run
    */
@@ -96,11 +123,11 @@ export interface ConfigOptions {
   /**
    * Defines how identify bot calls
    */
-  botPrefix: string;
+  botPrefix?: string;
   /**
    * Path for case tests. Use this from the base directory of the application
    */
-  testFiles: string[];
+  testFiles?: string[];
 }
 
 export interface Author {
@@ -137,20 +164,232 @@ export interface MinifiedEmbedMessage {
   url: string;
 }
 
-export interface MessageData {
+export interface MessageIdentifier {
   /**
-   * We recommend to use **id** for message search.
+   * Text of a message, use it to find a message if you don't know
+   * it's **id**.
+   *
+   * If there is more than one message with the same content,
+   * Corde will handle the latest message sent.
+   *
+   * ps: To avoid possible inconsistences, recommend to use **id** for message search.
    */
-  text?: string;
+  content?: string;
+  /**
+   * Identifier of the message
+   */
   id?: string;
 }
 
+/**
+ * Object contract used to identify messages in message
+ * edition tests.
+ */
+export interface MessageEditedIdentifier {
+  /**
+   * Identifier of the message
+   */
+  id?: string;
+  /**
+   * Old content of the message to identify it.
+   */
+  oldContent?: string;
+}
+
 export interface TestReport {
-  readonly commandName?: string;
-  readonly expectation?: any;
-  readonly output?: any;
-  readonly isNot?: boolean;
-  readonly hasPassed: boolean;
-  readonly showExpectAndOutputValue?: boolean;
-  readonly customReturnMessage?: string;
+  readonly pass: boolean;
+  readonly message?: string;
+  trace?: string;
+}
+
+export interface SemiRunnerReport {
+  totalTests: number;
+  totalEmptyTests: number;
+  totalEmptyTestFiles: number;
+  totalTestFiles: number;
+  totalTestsPassed: number;
+  totalTestsFailed: number;
+  totalTestFilesPassed: number;
+  totalTestFilesFailed: number;
+}
+
+export interface RunnerReport extends SemiRunnerReport {
+  testTimer: string;
+}
+
+export interface MessageEmbedAuthor {
+  name?: string;
+  url?: string;
+  iconURL?: string;
+}
+
+export interface MessageEmbedFooter {
+  /**
+   * footer text
+   */
+  text?: string;
+  /**
+   * url of footer icon (only supports http(s) and attachments)
+   */
+  iconURL?: string;
+}
+
+export interface MessageEmbedImage {
+  /**
+   * source url of image (only supports http(s) and attachments)
+   */
+  url: string;
+  /**
+   * height of image
+   */
+  height?: number;
+  /**
+   * width of image
+   */
+  width?: number;
+}
+
+export interface MessageEmbedThumbnail {
+  /**
+   * Url of the thumbnail
+   */
+  url: string;
+  /**
+   * Height of the thumbnail
+   */
+  height?: number;
+  /**
+   * width of the thumbnail
+   */
+  width?: number;
+}
+
+export interface FileLike {
+  /**
+   * Buffer, URL or stream of the file.
+   *
+   * @see https://nodejs.org/api/stream.html
+   * @see https://nodejs.org/api/buffer.html
+   */
+  attachment: Buffer | string | Stream;
+  /**
+   * Name of the file
+   */
+  name: string;
+}
+
+/**
+ * Main and optional informations about a embed message.
+ */
+export interface MessageEmbedLike {
+  /**
+   * author name **or** information
+   */
+  author?: MessageEmbedAuthor | string;
+  /**
+   * color code of the embed
+   */
+  color?: ColorResolvable;
+  /**
+   * description of embed
+   */
+  description?: string;
+  /**
+   * fields information. Array of embed field objects
+   */
+  fields?: EmbedFieldData[];
+  /**
+   * files urls **or** informations of the embed.
+   */
+  files?: (FileLike | string)[];
+  /**
+   * Footer url **or** information
+   */
+  footer?: MessageEmbedFooter | string;
+  /**
+   * Image URL **or** information
+   */
+  image?: MessageEmbedImage | string;
+  /**
+   * Source url of thumbnail (only supports http(s) and attachments)
+   */
+  thumbnailUrl?: string;
+  /**
+   * Timestamp of embed content **or** a Date object
+   */
+  timestamp?: number | Date;
+  /**
+   * Title of embed
+   */
+  title?: string;
+  /**
+   * Url of embed
+   */
+  url?: string;
+}
+
+export interface EmojiLike {
+  id?: string;
+  name?: string;
+}
+
+/**
+ * Encapsulation of Discord Client with all specific
+ * functions for corde test.
+ */
+export interface CordeBotLike {
+  readonly events: Events;
+  readonly guild: Guild;
+  readonly roleManager: RoleManager;
+  readonly channel: TextChannel;
+  readonly testBotId: string;
+  /**
+   * Authenticate Corde bot to the installed bot in Discord server.
+   *
+   * @param token Corde bot token
+   *
+   * @returns Promise resolve for success connection, or a promise
+   * rejection with a formatted message if there was found a error in
+   * connection attempt.
+   */
+  login(token: string): Promise<string>;
+  /**
+   * Destroy client connection.
+   */
+  logout(): void;
+  /**
+   * Sends a pure message without prefix it.
+   * @param message Data to be send to channel
+   */
+  sendMessage(message: string | number | MessageEmbed): Promise<Message>;
+  /**
+   * Send a message to a channel defined in configs.
+   *
+   * @see Runtime
+   *
+   * @param message Message without prefix that will be sent to defined server's channel
+   * @description The message is concatenated with the stored **prefix** and is sent to the channel.
+   *
+   * @return Promise rejection if a testing bot does not send any message in the timeout value setted,
+   * or a resolve for the promise with the message returned by the testing bot.
+   */
+  sendTextMessage(message: string | number | boolean): Promise<Message>;
+  /**
+   * Observes for a message send by the testing bot after corde bot
+   * send it's message.
+   */
+  awaitMessagesFromTestingBot(timeout: number): Promise<Message>;
+  /**
+   * Checks if corde bot is connected
+   */
+  isLoggedIn(): boolean;
+  findMessage(filter: (message: Message) => boolean): Promise<Message>;
+  findMessage(data: MessageIdentifier): Promise<Message>;
+  fetchRole(id: string): Promise<Role>;
+  fetchRoles(): Promise<RoleManager>;
+  hasRole(roleIdentifier: RoleIdentifier): Promise<boolean>;
+  findRole(roleIdentifier: RoleIdentifier): Promise<Role>;
+  getRoles(): Collection<string, Role>;
+  findGuild(guildId: string): Guild;
+  findChannel(guild: Guild, channelId: string): GuildChannel;
 }

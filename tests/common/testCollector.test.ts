@@ -1,17 +1,12 @@
-import { testCollector } from "../../src/common";
+import { testCollector } from "../../src/common/testCollector";
 import { TestReport } from "../../src/types";
 
 describe("testing testCollector", () => {
   it("should clear testsFunctions", () => {
-    testCollector.hasGroup = true;
+    testCollector.isInsideGroupClausure = true;
     testCollector.addTestFunction((corde) => {
       const report: TestReport = {
-        commandName: "",
-        expectation: "",
-        hasPassed: true,
-        isNot: true,
-        output: "",
-        showExpectAndOutputValue: false,
+        pass: true,
       };
       return Promise.resolve(report);
     });

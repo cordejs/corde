@@ -1,5 +1,5 @@
 module.exports = {
-  someSidebar: [
+  docs: [
     {
       collapsed: false,
       type: "category",
@@ -45,6 +45,10 @@ module.exports = {
         },
         {
           type: "doc",
+          id: "clausures",
+        },
+        {
+          type: "doc",
           id: "utilities",
         },
         {
@@ -54,6 +58,27 @@ module.exports = {
         {
           type: "doc",
           id: "permissions",
+        },
+      ],
+    },
+  ],
+  structures: [
+    {
+      collapsed: false,
+      type: "category",
+      label: "Structures",
+      items: [
+        {
+          type: "doc",
+          id: "structures/home",
+        },
+        {
+          type: "doc",
+          id: "structures/corde_role",
+        },
+        {
+          type: "doc",
+          id: "structures/corde_guild",
         },
       ],
     },

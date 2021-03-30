@@ -1,53 +1,99 @@
 import { Message, MessageEmbed } from "discord.js";
-import { MinifiedEmbedMessage, TestReport } from "../../../types";
+import { MessageEmbedLike, MinifiedEmbedMessage, Primitive, TestReport } from "../../../types";
 
 /**
  * For some reason, importing "isPrimitiveValue" from
  * "../../../utils" results in error in jest tests.
  */
 import { isPrimitiveValue } from "../../../utils/isPrimitiveValue";
-import { ExpectOperation } from "../operation";
-import MessageUtils from "./messageUtils";
+import { ExpectTest } from "../expectTest";
 
-export class ToReturn extends ExpectOperation<string | number | boolean | MessageEmbed> {
-  public async action(expect: string | number | boolean | MessageEmbed): Promise<TestReport> {
-    try {
-      this.expectation = expect;
-      this.showExpectAndOutputValue = true;
-      await this.cordeBot.sendTextMessage(this.command);
-      const returnedMessage = await this.cordeBot.awaitMessagesFromTestingBot();
-      if (!isPrimitiveValue(expect)) {
-        this.showExpectAndOutputValue = false;
-      }
+import messageUtils from "../../messageUtils";
+import { diff, formatObject, typeOf } from "../../../utils";
 
-      this.hasPassed = MessageUtils.messagesMatches(returnedMessage, expect);
-      this.output = this.getMessageValue(returnedMessage, expect);
-      this.invertHasPassedIfIsNot();
-    } catch (error) {
-      this.hasPassed = false;
-      if (error instanceof Error) {
-        this.output = error.message;
-      } else {
-        this.output = error;
-      }
+/**
+ * @internal
+ */
+export class ToReturn extends ExpectTest {
+  async action(expect: Primitive | MessageEmbedLike): Promise<TestReport> {
+    let _expect: Primitive | MessageEmbed;
+    this.expectation = expect;
+    if (!isPrimitiveValue(expect) && typeOf(expect) !== "object") {
+      return this.createReport(
+        `expected: expect value to be a primitive value (string, boolean, number) or an MessageEmbedLike\n`,
+        `received: ${typeOf(expect)}`,
+      );
     }
 
-    return this.generateReport();
-  }
+    await this.cordeBot.sendTextMessage(this.command);
+    let returnedMessage: Message;
+    try {
+      returnedMessage = await this.cordeBot.awaitMessagesFromTestingBot(this.timeOut);
+    } catch {
+      if (this.isNot) {
+        return { pass: true };
+      }
 
-  private getMessageValue(
-    returnedMessage: Message,
-    expect: string | number | boolean | MessageEmbed,
-  ) {
-    if (isPrimitiveValue(expect)) {
-      const formattedMsg = MessageUtils.getMessageByType(returnedMessage, "text") as Message;
-      return formattedMsg.content;
+      return this.createReport(
+        `expected: testing bot to send a message\n`,
+        `received: no message was sent`,
+      );
+    }
+
+    if (typeOf(expect) === "object") {
+      _expect = messageUtils.embedMessageLikeToMessageEmbed(expect as MessageEmbedLike);
     } else {
-      const jsonMessage = MessageUtils.getMessageByType(
+      _expect = expect as Primitive;
+    }
+
+    this.hasPassed = messageUtils.messagesMatches(returnedMessage, _expect);
+    this.invertHasPassedIfIsNot();
+
+    if (this.hasPassed) {
+      return { pass: true };
+    }
+
+    if (this.isNot) {
+      return this.createReport(
+        `expected: message from bot be different from expectation\n`,
+        `received: both returned and expectation are equal`,
+      );
+    }
+
+    let embedExpect: MinifiedEmbedMessage;
+    if (typeOf(_expect) === "object") {
+      embedExpect = messageUtils.getMessageByType(
+        _expect as MessageEmbed,
+        "embed",
+      ) as MinifiedEmbedMessage;
+    }
+
+    let embedReturned: MinifiedEmbedMessage;
+    if (returnedMessage.embeds[0]) {
+      embedReturned = messageUtils.getMessageByType(
         returnedMessage,
         "embed",
       ) as MinifiedEmbedMessage;
-      return JSON.stringify(jsonMessage);
     }
+
+    if (embedExpect && embedReturned) {
+      return this.createReport(diff(embedReturned, embedExpect));
+    }
+
+    if (embedExpect && !embedReturned) {
+      return this.createReport(
+        `expected: ${formatObject(embedExpect)}\n`,
+        `received: '${returnedMessage.content}'`,
+      );
+    }
+
+    if (!embedExpect && embedReturned) {
+      return this.createReport(
+        `expected: '${expect}'\n`,
+        `received: ${formatObject(embedReturned)}`,
+      );
+    }
+
+    return this.createReport(`expected: '${expect}'\n`, `received: '${returnedMessage.content}'`);
   }
 }

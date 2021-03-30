@@ -1,14 +1,14 @@
 import { Command } from "commander";
-import { go } from "./go";
+import { exec } from "./exec";
 import { init } from "./init";
 import { validate } from "./validate";
 import { configFileType } from "../types/types";
-import { initErrorHandlers } from "../errorHandler";
 import pack from "../package";
-import { runtime } from "../common";
-import { reader } from "../core";
+import { runtime } from "../common/runtime";
+import { reader } from "../core/reader";
+import { initEnvVariables } from "../envVariables";
 
-initErrorHandlers();
+initEnvVariables();
 
 export const program = new Command();
 
@@ -37,7 +37,7 @@ program
     if (options.files) {
       runtime.testFiles = options.files.split(" ");
     }
-    await go();
+    await exec();
   });
 
 program
@@ -59,9 +59,10 @@ program
     console.log("All configs are ok!");
   });
 
-// tslint:disable-next-line: deprecation
-if (process.env.ENV !== "TEST") {
-  program.parse(process.argv);
-} else {
-  program.exitOverride();
+if (process.env.ENV !== "UNITY_TEST" && process.env.ENV !== "E2E_TEST") {
+  _main();
+}
+
+export async function _main(args?: string[]) {
+  await program.parseAsync(args ?? process.argv);
 }

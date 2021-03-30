@@ -1,10 +1,10 @@
 // Set TEST environment to avoid process to exit with code 1 inside aplicaton
-process.env.ENV = "TEST";
+process.env.ENV = "UNITY_TEST";
 
 module.exports = {
   rootDir: ".",
   verbose: false,
-  preset: "ts-jest",
+  preset: "ts-jest/presets/js-with-babel",
   testEnvironment: "node",
   collectCoverageFrom: ["./src/**/*.ts"],
   testMatch: ["**/tests/**/*.test.ts"],
@@ -13,6 +13,11 @@ module.exports = {
   projects: ["<rootDir>/tests"],
   restoreMocks: true,
   forceExit: true,
+  globals: {
+    "ts-jest": {
+      babelConfig: "./babel.config.js",
+    },
+  },
   transform: {
     "^.+\\.js?$": "babel-jest",
   },

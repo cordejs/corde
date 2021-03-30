@@ -1,19 +1,12 @@
 import corde from "../../../lib";
 import { testCollector } from "../../../lib/src/common/testCollector";
-
-async function asyncFunction() {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(null);
-    }, 50);
-  });
-}
+import { wait } from "../../../lib/src/utils";
 
 corde.afterAll(async () => {
-  await asyncFunction();
+  await wait(100);
   console.log("test afterAll");
 });
 
-corde.test("", () => {
-  testCollector.addTestFunction(() => Promise.resolve({ hasPassed: true }));
+corde.it("", () => {
+  testCollector.addTestFunction(() => Promise.resolve({ pass: true }));
 });

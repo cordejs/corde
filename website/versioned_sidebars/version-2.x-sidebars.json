@@ -41,6 +41,10 @@
         },
         {
           "type": "doc",
+          "id": "version-2.x/clausures"
+        },
+        {
+          "type": "doc",
           "id": "version-2.x/hooks"
         },
         {

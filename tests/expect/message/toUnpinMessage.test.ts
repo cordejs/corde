@@ -1,97 +1,142 @@
-import { ToUnpinMessage } from "../../../src/expect/matches";
-import MockDiscord from "../../mocks/mockDiscord";
-import { createCordeBotWithMockedFunctions } from "../../testHelper";
+import { Client } from "discord.js";
+import { runtime } from "../../../src/common/runtime";
+import { ToUnPinMessage } from "../../../src/expect/matches";
+import messageUtils from "../../../src/expect/messageUtils";
 import { TestReport } from "../../../src/types";
+import { buildReportMessage, typeOf } from "../../../src/utils";
+import MockDiscord from "../../mocks/mockDiscord";
+import { MockEvents } from "../../mocks/mockEvents";
+import { createCordeBotWithMockedFunctions } from "../../testHelper";
 
 let mockDiscord = new MockDiscord();
-const commandName = "test";
 
-// Mocking wait function
-jest.mock("../../../src/utils");
-
-describe("testing pin message test", () => {
+describe("testing unpin message test", () => {
   afterEach(() => {
     mockDiscord = new MockDiscord();
   });
 
-  it("should return false due to not found message", async () => {
-    const corde = createCordeBotWithMockedFunctions(mockDiscord);
-    corde.findMessage = jest.fn().mockReturnValue(null);
-    const toPin = new ToUnpinMessage(corde, commandName, false);
-    const returned = await toPin.action({ id: mockDiscord.message.id });
-    const expected: TestReport = {
-      commandName,
-      hasPassed: false,
-      isNot: false,
+  it("should return error message due to no mesageIdentifier (null)", async () => {
+    const corde = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const toUnPinMessage = new ToUnPinMessage(corde, "", false);
+    const report = await toUnPinMessage.action(null);
+
+    const expectReport: TestReport = {
+      pass: false,
+      message: buildReportMessage(
+        `expected: message identifier to be a string or a MessageIdentifier object\n`,
+        `received: ${typeOf(null)}`,
+      ),
     };
-    expect(returned).toMatchObject(expected);
+
+    expect(report).toEqual(expectReport);
+    expect(report).toMatchSnapshot();
   });
 
-  it("should assume that the message was not pinned", async () => {
-    const corde = createCordeBotWithMockedFunctions(mockDiscord);
-    corde.findMessage = jest.fn().mockReturnValue(mockDiscord.message);
-    mockDiscord.message.pinned = false;
-    const toPin = new ToUnpinMessage(corde, commandName, false);
-    const returned = await toPin.action({ id: mockDiscord.message.id });
-    const expected: TestReport = {
-      commandName,
-      hasPassed: true,
-      isNot: false,
+  it("should return error message due to no mesageIdentifier (undefined)", async () => {
+    const corde = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const toUnPinMessage = new ToUnPinMessage(corde, "", false);
+    const report = await toUnPinMessage.action(undefined);
+
+    const expectReport: TestReport = {
+      pass: false,
+      message: buildReportMessage(
+        `expected: message identifier to be a string or a MessageIdentifier object\n`,
+        `received: ${typeOf(undefined)}`,
+      ),
     };
-    expect(returned).toMatchObject(expected);
+
+    expect(report).toEqual(expectReport);
+    expect(report).toMatchSnapshot();
   });
 
-  it("should assume that the message was not pinned (isNot true)", async () => {
-    const corde = createCordeBotWithMockedFunctions(mockDiscord);
-    corde.findMessage = jest.fn().mockReturnValue(mockDiscord.message);
-    mockDiscord.message.pinned = false;
-    const toPin = new ToUnpinMessage(corde, commandName, true);
-    const returned = await toPin.action({ id: mockDiscord.message.id });
-    const expected: TestReport = {
-      commandName,
-      hasPassed: false,
-      isNot: true,
+  it("should return a passed test due to isNot true and timeout", async () => {
+    runtime.setConfigs({ timeOut: 10 }, true);
+    const corde = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const toUnPinMessage = new ToUnPinMessage(corde, "", true);
+    const report = await toUnPinMessage.action("1233");
+
+    const expectReport: TestReport = {
+      pass: true,
     };
-    expect(returned).toMatchObject(expected);
+
+    expect(report).toEqual(expectReport);
+    expect(report).toMatchSnapshot();
   });
 
-  it("should assume that the message was not pinned (isNot true)", async () => {
-    const corde = createCordeBotWithMockedFunctions(mockDiscord);
-    corde.findMessage = jest.fn().mockReturnValue(mockDiscord.message);
-    mockDiscord.message.pinned = true;
-    const toPin = new ToUnpinMessage(corde, commandName, true);
-    const returned = await toPin.action({ id: mockDiscord.message.id });
-    const expected: TestReport = {
-      commandName,
-      hasPassed: true,
-      isNot: true,
+  it("should return a failed test due to isNot false and timeout", async () => {
+    runtime.setConfigs({ timeOut: 10 }, true);
+    const corde = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const toUnPinMessage = new ToUnPinMessage(corde, "", false);
+    const report = await toUnPinMessage.action("1233");
+
+    const msgString = messageUtils.humanizeMessageIdentifierObject({ id: "1233" });
+    const expectReport: TestReport = {
+      pass: false,
+      message: buildReportMessage(
+        `expected: unpin ${msgString}\n`,
+        `received: informed message was not unpinned`,
+      ),
     };
-    expect(returned).toMatchObject(expected);
+
+    expect(report).toEqual(expectReport);
+    expect(report).toMatchSnapshot();
   });
 
-  it("should assume that the message was not found (isNot true)", async () => {
-    const corde = createCordeBotWithMockedFunctions(mockDiscord);
-    corde.findMessage = jest.fn().mockReturnValue(null);
-    const toPin = new ToUnpinMessage(corde, commandName, true);
-    const returned = await toPin.action({ id: mockDiscord.message.id });
-    const expected: TestReport = {
-      commandName,
-      hasPassed: false,
-      isNot: true,
+  it("should return a failed test due to isNot false and timeout (messageIdentifier)", async () => {
+    runtime.setConfigs({ timeOut: 10 }, true);
+    const corde = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const toUnPinMessage = new ToUnPinMessage(corde, "", false);
+    const report = await toUnPinMessage.action({ id: "1233" });
+
+    const msgString = messageUtils.humanizeMessageIdentifierObject({ id: "1233" });
+    const expectReport: TestReport = {
+      pass: false,
+      message: buildReportMessage(
+        `expected: unpin ${msgString}\n`,
+        `received: informed message was not unpinned`,
+      ),
     };
-    expect(returned).toMatchObject(expected);
+
+    expect(report).toEqual(expectReport);
+    expect(report).toMatchSnapshot();
   });
 
-  it("should assume that the message was not found (isNot true)", async () => {
-    const corde = createCordeBotWithMockedFunctions(mockDiscord);
-    corde.findMessage = jest.fn().mockReturnValue(null);
-    const toPin = new ToUnpinMessage(corde, commandName, false);
-    const returned = await toPin.action({ id: mockDiscord.message.id });
-    const expected: TestReport = {
-      commandName,
-      hasPassed: false,
-      isNot: false,
+  it("should return a passed test due to message unpinned", async () => {
+    const corde = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const toUnPinMessage = new ToUnPinMessage(corde, "", false);
+
+    const mockEvent = new MockEvents(corde, mockDiscord);
+    mockEvent.mockOnceMessageUnPinned();
+
+    const report = await toUnPinMessage.action({ id: "1233" });
+
+    const expectReport: TestReport = {
+      pass: true,
     };
-    expect(returned).toMatchObject(expected);
+
+    expect(report).toEqual(expectReport);
+    expect(report).toMatchSnapshot();
+  });
+
+  it("should return a failed test due to message unpinned but isNot true", async () => {
+    const corde = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const toUnPinMessage = new ToUnPinMessage(corde, "", true);
+
+    const mockEvent = new MockEvents(corde, mockDiscord);
+    mockEvent.mockOnceMessageUnPinned();
+
+    const report = await toUnPinMessage.action({ id: "1233" });
+    const msgString = messageUtils.humanizeMessageIdentifierObject({ id: "1233" });
+
+    const expectReport: TestReport = {
+      pass: false,
+      message: buildReportMessage(
+        `expected: to not unpin ${msgString}\n`,
+        `received: message pin = true`,
+      ),
+    };
+
+    expect(report).toEqual(expectReport);
+    expect(report).toMatchSnapshot();
   });
 });

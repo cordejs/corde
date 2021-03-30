@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing toDeleteRole function isNot false should fail due to inexistent role 1`] = `
+Object {
+  "message": "    
+    expected: role with id 123
+    received: null
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toDeleteRole function isNot false should fail due to roleIdentifier null 1`] = `
+Object {
+  "message": "    
+    expected: data to identifier the role (id or name)
+    received: null
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toDeleteRole function isNot false should get timeout when trying to delete the role 1`] = `
+Object {
+  "message": "    
+    timeout: role 819382540350652502 wasn't deleted in the expected time (100)
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toDeleteRole function isNot false should return a failed report for a no deleted role 1`] = `
+Object {
+  "message": "    
+    expected: role 819382540350652502 to be deleted
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toDeleteRole function isNot false should return a passed report for a deleted role 1`] = `
+Object {
+  "pass": true,
+}
+`;
+
+exports[`testing toDeleteRole function isNot false should return a passed report for a found role with property role.deleted = true role 1`] = `
+Object {
+  "message": "    
+    expected: role 819382540350652502 not deleted
+    received: role was deleted before call the command '!deleteRole 123'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toDeleteRole function isnot true should get timeout when trying to delete the role, but should pass 1`] = `
+Object {
+  "pass": true,
+}
+`;
+
+exports[`testing toDeleteRole function isnot true should return a failed report for a deleted role(isNot true) 1`] = `
+Object {
+  "message": "    
+    expected: role 819382540350652502 to not be deleted
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toDeleteRole function isnot true should return a failed report for a found role with property role.deleted = true role 1`] = `
+Object {
+  "message": "    
+    expected: role 819382540350652502 not deleted
+    received: role was deleted before call the command '!removeRole 123'
+",
+  "pass": false,
+}
+`;

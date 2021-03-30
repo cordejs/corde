@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should remove a message Reaction 1`] = `
+"node test --config ./e2e/corde.config.ts --files ./e2e/toRemoveReaction/__cordeTest__/bot_case1.spec.ts
+
+ PASS   e2e\\\\toRemoveReaction\\\\__cordeTest__\\\\bot_case1.spec.ts   100ms
+   ✔  should remove a reaction from a message   100ms
+
+Test Files: 1 passed. 1 total
+Tests:      1 passed. 1 total
+Time:       100ms
+"
+`;

@@ -8,7 +8,7 @@ import {
   ToSetRoleMentionable,
   ToSetRolePermission,
   ToPinMessage,
-  ToUnpinMessage,
+  ToUnPinMessage,
   ToAddReaction,
   ToDeleteRole,
   ToEditMessage,
@@ -16,8 +16,8 @@ import {
   ToReturn,
   ToSetRoleColor,
 } from "../../src/expect/matches";
-import { TestReport } from "../../src/types";
 import { ExpectMatchesWithNot } from "../../src/expect/matcher";
+import { TestReport } from "../../src/types";
 
 jest.mock("../../src/expect/matches/message/toReturn.ts");
 jest.mock("../../src/expect/matches/message/toRemoveReaction.ts");
@@ -48,210 +48,251 @@ let toSetRolePermissionSpy: jest.SpyInstance<any, any>;
 let toPinMessageSpy: jest.SpyInstance<any, any>;
 let toUnpinMessageSpy: jest.SpyInstance<any, any>;
 
-const toEditMessageMock = jest.fn();
+const toEditMessageActionMock = jest.fn();
 const toSetRoleMentionableActionMock = jest.fn();
 const toSetHoistActionMock = jest.fn();
-const toReturnMock = jest.fn();
-const toAddReactionMock = jest.fn();
-const toRemoveReactionMock = jest.fn();
+const toReturnActionMock = jest.fn();
+const toAddReactionActionMock = jest.fn();
+const toRemoveReactionActionMock = jest.fn();
 const toRenameRoleActionMock = jest.fn();
-const toSetRoleColorMock = jest.fn();
+const toSetRoleColorActionMock = jest.fn();
 const toDeleteRoleMock = jest.fn();
 const toSetRolePositionActionMock = jest.fn();
-const toSetRolePermissionMock = jest.fn();
-const toPinMessageMock = jest.fn();
-const toUnpinMessageMock = jest.fn();
+const toSetRolePermissionActionMock = jest.fn();
+const toPinMessageActionMock = jest.fn();
+const toUnpinMessageActionMock = jest.fn();
 
 const con = "test";
 
 describe("Testing matches class", () => {
   beforeEach(() => {
     testCollector.clearIsolatedTestFunctions();
-    const testReportPromiseResponse = Promise.resolve({} as TestReport);
-    toReturnSpy = (ToReturn as jest.Mock).mockImplementation(() => {
-      return {
-        action: toReturnMock,
-      };
-    });
 
-    toAddReactionSpy = (ToAddReaction as jest.Mock).mockImplementation(() => {
-      return {
-        action: toAddReactionMock,
-      };
-    });
+    toReturnSpy = ToReturn as jest.Mock;
+    ToReturn.prototype.action = toReturnActionMock;
 
-    toRemoveReactionSpy = (ToRemoveReaction as jest.Mock).mockImplementation(() => {
-      return {
-        action: toRemoveReactionMock,
-      };
-    });
+    toAddReactionSpy = ToAddReaction as jest.Mock;
+    ToAddReaction.prototype.action = toAddReactionActionMock;
 
-    toSetRoleColorSpy = (ToSetRoleColor as jest.Mock).mockImplementation(() => {
-      return {
-        action: toSetRoleColorMock,
-      };
-    });
+    toRemoveReactionSpy = ToRemoveReaction as jest.Mock;
+    ToRemoveReaction.prototype.action = toRemoveReactionActionMock;
 
-    toEditMessageSpy = (ToEditMessage as jest.Mock).mockImplementation(() => {
-      return {
-        action: toEditMessageMock,
-      };
-    });
+    toSetRoleColorSpy = ToSetRoleColor as jest.Mock;
+    ToSetRoleColor.prototype.action = toSetRoleColorActionMock;
 
-    toDeleteRoleSpy = (ToDeleteRole as jest.Mock).mockImplementation(() => {
-      return {
-        action: toDeleteRoleMock,
-      };
-    });
+    toEditMessageSpy = ToEditMessage as jest.Mock;
+    ToEditMessage.prototype.action = toEditMessageActionMock;
 
-    toSetRoleMentionableSpy = (ToSetRoleMentionable as jest.Mock).mockImplementation(() => {
-      return {
-        action: toSetRoleMentionableActionMock,
-      };
-    });
+    toDeleteRoleSpy = ToDeleteRole as jest.Mock;
+    ToDeleteRole.prototype.action = toDeleteRoleMock;
 
-    toSetHoistSpy = (ToSetRoleHoist as jest.Mock).mockImplementation(() => {
-      return {
-        action: toSetHoistActionMock,
-      };
-    });
+    toSetRoleMentionableSpy = ToSetRoleMentionable as jest.Mock;
+    ToSetRoleMentionable.prototype.action = toSetRoleMentionableActionMock;
 
-    toRenameRoleSpy = (ToRenameRole as jest.Mock).mockImplementation(() => {
-      return {
-        action: toRenameRoleActionMock,
-      };
-    });
+    toSetHoistSpy = ToSetRoleHoist as jest.Mock;
+    ToSetRoleHoist.prototype.action = toSetHoistActionMock;
 
-    toSetRolePositionSpy = (ToSetRolePosition as jest.Mock).mockImplementation(() => {
-      return {
-        action: toSetRolePositionActionMock,
-      };
-    });
+    toRenameRoleSpy = ToRenameRole as jest.Mock;
+    ToRenameRole.prototype.action = toRenameRoleActionMock;
 
-    toSetRolePermissionSpy = (ToSetRolePermission as jest.Mock).mockImplementation(() => {
-      return {
-        action: toSetRolePermissionMock,
-      };
-    });
+    toSetRolePositionSpy = ToSetRolePosition as jest.Mock;
+    ToSetRolePosition.prototype.action = toSetRolePositionActionMock;
 
-    toPinMessageSpy = (ToPinMessage as jest.Mock).mockImplementation(() => {
-      return {
-        action: toPinMessageMock,
-      };
-    });
+    toSetRolePermissionSpy = ToSetRolePermission as jest.Mock;
+    ToSetRolePermission.prototype.action = toSetRolePermissionActionMock;
 
-    toUnpinMessageSpy = (ToUnpinMessage as jest.Mock).mockImplementation(() => {
-      return {
-        action: toUnpinMessageMock,
-      };
-    });
+    toPinMessageSpy = ToPinMessage as jest.Mock;
+    ToPinMessage.prototype.action = toPinMessageActionMock;
+
+    toUnpinMessageSpy = ToUnPinMessage as jest.Mock;
+    ToUnPinMessage.prototype.action = toUnpinMessageActionMock;
   });
 
   afterEach(() => {
     toSetRoleMentionableSpy.mockClear();
     toSetRolePermissionSpy.mockClear();
     toPinMessageSpy.mockClear();
+    toEditMessageSpy.mockClear();
+    toReturnSpy.mockClear();
+    toAddReactionSpy.mockClear();
+    toRemoveReactionSpy.mockClear();
+    toSetRoleColorSpy.mockClear();
+    toDeleteRoleSpy.mockClear();
+    toSetHoistSpy.mockClear();
+    toRenameRoleSpy.mockClear();
+    toSetRolePositionSpy.mockClear();
+    toUnpinMessageSpy.mockClear();
+
+    toEditMessageActionMock.mockClear();
+    toSetRoleMentionableActionMock.mockClear();
+    toSetHoistActionMock.mockClear();
+    toReturnActionMock.mockClear();
+    toAddReactionActionMock.mockClear();
+    toRemoveReactionActionMock.mockClear();
+    toRenameRoleActionMock.mockClear();
+    toSetRoleColorActionMock.mockClear();
+    toDeleteRoleMock.mockClear();
+    toSetRolePositionActionMock.mockClear();
+    toSetRolePermissionActionMock.mockClear();
+    toPinMessageActionMock.mockClear();
+    toSetRolePositionActionMock.mockClear();
+    toSetRolePositionActionMock.mockClear();
+    toSetRolePositionActionMock.mockClear();
   });
 
-  it("should not return a function", () => {
+  it("should not return a function", async () => {
     const matches = new ExpectMatchesWithNot("name");
     expect(matches.not).not.toBe(undefined);
   });
 
+  describe("testing operationFactory", () => {
+    it("should return failed test due to null command name", async () => {
+      initExpectMatch("").toReturn("");
+      const report = await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(report).toEqual<TestReport>({
+        pass: false,
+        message: "command can not be null or an empty string",
+      });
+    });
+
+    it("should return passed test without trace", async () => {
+      initExpectMatch().toReturn("");
+      ToReturn.prototype.action = jest.fn().mockReturnValue(Promise.resolve({ pass: true }));
+      const report = await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(report.pass).toEqual(true);
+      expect(report.trace).toBeFalsy();
+    });
+
+    it("should return failed test with trace", async () => {
+      initExpectMatch().toReturn("");
+      ToReturn.prototype.action = jest.fn().mockReturnValue(Promise.resolve({ pass: false }));
+      const report = await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(report.pass).toEqual(false);
+      expect(report.trace).toBeTruthy();
+    });
+  });
+
   describe("testing toReturn function", () => {
-    it("should add a function to hasIsolatedTestFunctions after call toReturn", () => {
-      new ExpectMatchesWithNot("test").toReturn("empty");
+    it("should add a function to hasIsolatedTestFunctions after call toReturn", async () => {
+      initExpectMatch().toReturn("empty");
       expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
     });
 
-    it("should add a toReturn function", () => {
-      new ExpectMatchesWithNot(con).toReturn("expect");
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
-      expect(toReturnSpy).toBeCalled();
+    it("should add a toReturn function", async () => {
+      initExpectMatch().toReturn("expect");
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(toReturnActionMock).toBeCalled();
     });
 
-    it("should add a toReturn function with correct values (isNot false)", () => {
+    it("should add a toReturn function with correct values (isNot false)", async () => {
       const expectName = "empty";
-      new ExpectMatchesWithNot(con).toReturn(expectName);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      initExpectMatch().toReturn(expectName);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToReturn).toBeCalledWith(runtime.bot, con, false);
-      expect(toReturnMock).toBeCalledWith(expectName);
+      expect(toReturnActionMock).toBeCalledWith(expectName);
     });
 
-    it("should add a toReturn function with correct values (isNot true)", () => {
+    it("should add a toReturn function with correct values (isNot true)", async () => {
       const expectName = "empty";
-      new ExpectMatchesWithNot(con).not.toReturn(expectName);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      initExpectMatch().not.toReturn(expectName);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToReturn).toBeCalledWith(runtime.bot, con, true);
-      expect(toReturnMock).toBeCalledWith(expectName);
+      expect(toReturnActionMock).toBeCalledWith(expectName);
+    });
+  });
+
+  describe("testing toEditMessage function", () => {
+    it("should add a function to hasIsolatedTestFunctions after call toReturn", async () => {
+      initExpectMatch().toEditMessage("empty", { id: "123" });
+      expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
+    });
+
+    it("should add a toEditMessage function", async () => {
+      initExpectMatch().toEditMessage("empty", { id: "123" });
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(toEditMessageActionMock).toBeCalled();
+    });
+
+    it("should add a toEditMessage function with correct values (isNot false)", async () => {
+      initExpectMatch().toEditMessage("empty", { id: "123" });
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToEditMessage).toBeCalledWith(runtime.bot, con, false);
+      expect(toEditMessageActionMock).toBeCalledWith("empty", { id: "123" });
+    });
+
+    it("should add a toEditMessage function with correct values (isNot true)", async () => {
+      initExpectMatch().not.toEditMessage("empty", { id: "123" });
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToEditMessage).toBeCalledWith(runtime.bot, con, true);
+      expect(toEditMessageActionMock).toBeCalledWith("empty", { id: "123" });
     });
   });
 
   describe("testing toAddReaction function", () => {
-    it("should add a function to hasIsolatedTestFunctions after call toAddReaction", () => {
-      new ExpectMatchesWithNot("test").toAddReaction("😀");
+    it("should add a function to hasIsolatedTestFunctions after call toAddReaction", async () => {
+      initExpectMatch().toAddReaction(["😀"]);
       expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
     });
 
-    it("should add a toAddReaction function", () => {
-      new ExpectMatchesWithNot("con").toAddReaction("😀");
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
-      expect(toAddReactionSpy).toBeCalled();
+    it("should add a toAddReaction function", async () => {
+      initExpectMatch().toAddReaction(["😀"]);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(toAddReactionActionMock).toBeCalled();
     });
 
-    it("should add a toAddReaction function with correct values (isNot false)", () => {
-      const expectReaction = "😀";
-      new ExpectMatchesWithNot(con).toAddReaction(expectReaction);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+    it("should add a toAddReaction function with correct values (isNot false)", async () => {
+      const expectReaction = ["😀"];
+      initExpectMatch().toAddReaction(expectReaction);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToAddReaction).toBeCalledWith(runtime.bot, con, false);
-      expect(toAddReactionMock).toBeCalledWith([expectReaction]);
+      expect(toAddReactionActionMock).toBeCalledWith(expectReaction, undefined);
     });
 
-    it("should add a toAddReaction function with correct values (isNot true)", () => {
-      const expectReaction = "😀";
-      new ExpectMatchesWithNot(con).not.toAddReaction(expectReaction);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+    it("should add a toAddReaction function with correct values (isNot true)", async () => {
+      const expectReaction = ["😀"];
+      initExpectMatch().not.toAddReaction(expectReaction);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToAddReaction).toBeCalledWith(runtime.bot, con, true);
-      expect(toAddReactionMock).toBeCalledWith([expectReaction]);
+      expect(toAddReactionActionMock).toBeCalledWith(expectReaction, undefined);
     });
   });
 
   describe("testing toRemoveReaction function", () => {
-    it("should add a function to hasIsolatedTestFunctions after call toRemoveReaction", () => {
-      new ExpectMatchesWithNot("test").toRemoveReaction("😀");
+    it("should add a function to hasIsolatedTestFunctions after call toRemoveReaction", async () => {
+      initExpectMatch().toRemoveReaction(["😀"]);
       expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
     });
 
-    it("should add a toRemoveReaction function", () => {
-      new ExpectMatchesWithNot("con").toRemoveReaction("😀");
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
-      expect(toRemoveReactionSpy).toBeCalled();
+    it("should add a toRemoveReaction function", async () => {
+      new ExpectMatchesWithNot("con").toRemoveReaction(["😀"]);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(toRemoveReactionActionMock).toBeCalled();
     });
 
-    it("should add a toRemoveReaction function with message data", () => {
-      const expectReaction = "😀";
-      const messageData = { id: "12312312" };
-      new ExpectMatchesWithNot(con).toRemoveReaction(expectReaction, messageData);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
-      expect(ToRemoveReaction).toBeCalledWith(runtime.bot, con, false);
-      expect(toRemoveReactionMock).toBeCalledWith([expectReaction], messageData);
-    });
-
-    it("should add a toRemoveReaction function with array of emojis", () => {
+    it("should add a toRemoveReaction function with message data", async () => {
       const expectReaction = ["😀"];
-      const messageData = { id: "12312312" };
-      new ExpectMatchesWithNot(con).toRemoveReaction(expectReaction, messageData);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      const messageIdentifier = { id: "12312312" };
+      initExpectMatch().toRemoveReaction(expectReaction, messageIdentifier);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToRemoveReaction).toBeCalledWith(runtime.bot, con, false);
-      expect(toRemoveReactionMock).toBeCalledWith(expectReaction, messageData);
+      expect(toRemoveReactionActionMock).toBeCalledWith(expectReaction, messageIdentifier);
     });
 
-    it("should add a toRemoveReaction function with correct values (isNot true)", () => {
-      const expectReaction = "😀";
-      new ExpectMatchesWithNot(con).not.toRemoveReaction(expectReaction);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+    it("should add a toRemoveReaction function with array of emojis", async () => {
+      const expectReaction = ["😀"];
+      const messageIdentifier = { id: "12312312" };
+      initExpectMatch().toRemoveReaction(expectReaction, messageIdentifier);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToRemoveReaction).toBeCalledWith(runtime.bot, con, false);
+      expect(toRemoveReactionActionMock).toBeCalledWith(expectReaction, messageIdentifier);
+    });
+
+    it("should add a toRemoveReaction function with correct values (isNot true)", async () => {
+      const expectReaction = ["😀"];
+      initExpectMatch().not.toRemoveReaction(expectReaction);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToRemoveReaction).toBeCalledWith(runtime.bot, con, true);
-      expect(toRemoveReactionMock).toBeCalledWith([expectReaction], undefined);
+      expect(toRemoveReactionActionMock).toBeCalledWith(expectReaction, undefined);
     });
   });
 
@@ -261,36 +302,36 @@ describe("Testing matches class", () => {
       id: "123",
     };
 
-    it("should add a function to hasIsolatedTestFunctions after call toSetRoleColor", () => {
-      new ExpectMatchesWithNot("test").toSetRoleColor(color, "123");
+    it("should add a function to hasIsolatedTestFunctions after call toSetRoleColor", async () => {
+      initExpectMatch().toSetRoleColor(color, "123");
       expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
     });
 
-    it("should add a toSetRoleColor function", () => {
+    it("should add a toSetRoleColor function", async () => {
       new ExpectMatchesWithNot("con").toSetRoleColor(color, "123");
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(toSetRoleColorSpy).toBeCalled();
     });
 
-    it("should add a toSetRoleColor function with correct values (isNot false)", () => {
-      new ExpectMatchesWithNot(con).toSetRoleColor(color, "123");
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+    it("should add a toSetRoleColor function with correct values (isNot false)", async () => {
+      initExpectMatch().toSetRoleColor(color, "123");
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToSetRoleColor).toBeCalledWith(runtime.bot, con, false);
-      expect(toSetRoleColorMock).toBeCalledWith(color, roleId);
+      expect(toSetRoleColorActionMock).toBeCalledWith(color, roleId.id);
     });
 
-    it("should add a toSetRoleColor function with message data", () => {
-      new ExpectMatchesWithNot(con).toSetRoleColor(Colors.DARK_AQUA, { id: "123" });
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+    it("should add a toSetRoleColor function with message data", async () => {
+      initExpectMatch().toSetRoleColor(Colors.DARK_AQUA, "123");
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToSetRoleColor).toBeCalledWith(runtime.bot, con, false);
-      expect(toSetRoleColorMock).toBeCalledWith(color, { id: "123" });
+      expect(toSetRoleColorActionMock).toBeCalledWith(color, "123");
     });
 
-    it("should add a toSetRoleColor function with correct values (isNot true)", () => {
-      new ExpectMatchesWithNot(con).not.toSetRoleColor(color, "123");
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+    it("should add a toSetRoleColor function with correct values (isNot true)", async () => {
+      initExpectMatch().not.toSetRoleColor(color, "123");
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToSetRoleColor).toBeCalledWith(runtime.bot, con, true);
-      expect(toSetRoleColorMock).toBeCalledWith(color, roleId);
+      expect(toSetRoleColorActionMock).toBeCalledWith(color, roleId.id);
     });
   });
 
@@ -299,50 +340,50 @@ describe("Testing matches class", () => {
       id: "123",
     };
 
-    it("should add a function to hasIsolatedTestFunctions after call toDeleteRole", () => {
-      new ExpectMatchesWithNot("test").toDeleteRole("123");
+    it("should add a function to hasIsolatedTestFunctions after call toDeleteRole", async () => {
+      initExpectMatch().toDeleteRole("123");
       expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
     });
 
-    it("should add a toDeleteRole function", () => {
+    it("should add a toDeleteRole function", async () => {
       new ExpectMatchesWithNot("con").toDeleteRole("123");
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(toDeleteRoleSpy).toBeCalled();
     });
 
-    it("should add a toDeleteRole function with correct values (isNot false)", () => {
-      new ExpectMatchesWithNot(con).toDeleteRole("123");
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+    it("should add a toDeleteRole function with correct values (isNot false)", async () => {
+      initExpectMatch().toDeleteRole("123");
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToDeleteRole).toBeCalledWith(runtime.bot, con, false);
+      expect(toDeleteRoleMock).toBeCalledWith(roleId.id);
+    });
+
+    it("should add a toDeleteRole function with id", async () => {
+      initExpectMatch().toDeleteRole("123");
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToDeleteRole).toBeCalledWith(runtime.bot, con, false);
+      expect(toDeleteRoleMock).toBeCalledWith(roleId.id);
+    });
+
+    it("should add a toDeleteRole function with id in data object", async () => {
+      initExpectMatch().toDeleteRole(roleId);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToDeleteRole).toBeCalledWith(runtime.bot, con, false);
       expect(toDeleteRoleMock).toBeCalledWith(roleId);
     });
 
-    it("should add a toDeleteRole function with id", () => {
-      new ExpectMatchesWithNot(con).toDeleteRole("123");
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
-      expect(ToDeleteRole).toBeCalledWith(runtime.bot, con, false);
-      expect(toDeleteRoleMock).toBeCalledWith(roleId);
-    });
-
-    it("should add a toDeleteRole function with id in data object", () => {
-      new ExpectMatchesWithNot(con).toDeleteRole(roleId);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
-      expect(ToDeleteRole).toBeCalledWith(runtime.bot, con, false);
-      expect(toDeleteRoleMock).toBeCalledWith(roleId);
-    });
-
-    it("should add a toDeleteRole function with name in data object", () => {
-      new ExpectMatchesWithNot(con).toDeleteRole({ name: "test" });
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+    it("should add a toDeleteRole function with name in data object", async () => {
+      initExpectMatch().toDeleteRole({ name: "test" });
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToDeleteRole).toBeCalledWith(runtime.bot, con, false);
       expect(toDeleteRoleMock).toBeCalledWith({ name: "test" });
     });
 
-    it("should add a toDeleteRole function with correct values (isNot true)", () => {
-      new ExpectMatchesWithNot(con).not.toDeleteRole("123");
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
-      expect(ToDeleteRole).toBeCalledWith(runtime.bot, con, false);
-      expect(toDeleteRoleMock).toBeCalledWith(roleId);
+    it("should add a toDeleteRole function with correct values (isNot true)", async () => {
+      initExpectMatch().not.toDeleteRole("123");
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToDeleteRole).toBeCalledWith(runtime.bot, con, true);
+      expect(toDeleteRoleMock).toBeCalledWith(roleId.id);
     });
   });
 
@@ -352,29 +393,29 @@ describe("Testing matches class", () => {
     };
     const mentionableTrue = true;
 
-    it("should add a function to hasIsolatedTestFunctions after call toSetRoleMentionable", () => {
-      new ExpectMatchesWithNot("test").toSetRoleMentionable(true, roleId);
+    it("should add a function to hasIsolatedTestFunctions after call toSetRoleMentionable", async () => {
+      initExpectMatch().toSetRoleMentionable(true, roleId.id);
       expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
     });
 
-    it("should add a toSetRoleMentionable function", () => {
-      new ExpectMatchesWithNot("con").toSetRoleMentionable(true, roleId);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+    it("should add a toSetRoleMentionable function", async () => {
+      new ExpectMatchesWithNot("con").toSetRoleMentionable(true, roleId.id);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(toSetRoleMentionableSpy).toBeCalled();
     });
 
-    it("should add a toSetRoleMentionable function with correct values (isNot false)", () => {
-      new ExpectMatchesWithNot(con).toSetRoleMentionable(mentionableTrue, roleId);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+    it("should add a toSetRoleMentionable function with correct values (isNot false)", async () => {
+      initExpectMatch().toSetRoleMentionable(mentionableTrue, roleId.id);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToSetRoleMentionable).toBeCalledWith(runtime.bot, con, false);
-      expect(toSetRoleMentionableActionMock).toBeCalledWith(mentionableTrue, roleId);
+      expect(toSetRoleMentionableActionMock).toBeCalledWith(mentionableTrue, roleId.id);
     });
 
-    it("should add a toSetRoleMentionable function with correct values (isNot true)", () => {
-      new ExpectMatchesWithNot(con).not.toSetRoleMentionable(mentionableTrue, roleId);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+    it("should add a toSetRoleMentionable function with correct values (isNot true)", async () => {
+      initExpectMatch().not.toSetRoleMentionable(mentionableTrue, roleId.id);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToSetRoleMentionable).toBeCalledWith(runtime.bot, con, true);
-      expect(toSetRoleMentionableActionMock).toBeCalledWith(mentionableTrue, roleId);
+      expect(toSetRoleMentionableActionMock).toBeCalledWith(mentionableTrue, roleId.id);
     });
   });
 
@@ -383,34 +424,34 @@ describe("Testing matches class", () => {
       id: "123",
     };
     const mentionableTrue = true;
-    it("should add a function to hasIsolatedTestFunctions after call toSetRoleHoist", () => {
-      new ExpectMatchesWithNot("test").toSetRoleHoist(mentionableTrue, roleId);
+    it("should add a function to hasIsolatedTestFunctions after call toSetRoleHoist", async () => {
+      initExpectMatch().toSetRoleHoist(mentionableTrue, roleId);
       expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
     });
 
-    it("should add a toSetRoleHoist function", () => {
+    it("should add a toSetRoleHoist function", async () => {
       new ExpectMatchesWithNot("con").toSetRoleHoist(mentionableTrue, roleId);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(toSetHoistSpy).toBeCalled();
     });
 
-    it("should add a toSetRoleHoist function with correct values using id", () => {
-      new ExpectMatchesWithNot(con).toSetRoleHoist(mentionableTrue, "123");
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+    it("should add a toSetRoleHoist function with correct values using id", async () => {
+      initExpectMatch().toSetRoleHoist(mentionableTrue, "123");
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToSetRoleHoist).toBeCalledWith(runtime.bot, con, false);
+      expect(toSetHoistActionMock).toBeCalledWith(true, roleId.id);
+    });
+
+    it("should add a toSetRoleHoist function with correct values (isNot false)", async () => {
+      initExpectMatch().toSetRoleHoist(mentionableTrue, roleId);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToSetRoleHoist).toBeCalledWith(runtime.bot, con, false);
       expect(toSetHoistActionMock).toBeCalledWith(true, roleId);
     });
 
-    it("should add a toSetRoleHoist function with correct values (isNot false)", () => {
-      new ExpectMatchesWithNot(con).toSetRoleHoist(mentionableTrue, roleId);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
-      expect(ToSetRoleHoist).toBeCalledWith(runtime.bot, con, false);
-      expect(toSetHoistActionMock).toBeCalledWith(true, roleId);
-    });
-
-    it("should add a toSetRoleHoist function with correct values (isNot true)", () => {
-      new ExpectMatchesWithNot(con).not.toSetRoleHoist(mentionableTrue, roleId);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+    it("should add a toSetRoleHoist function with correct values (isNot true)", async () => {
+      initExpectMatch().not.toSetRoleHoist(mentionableTrue, roleId);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToSetRoleHoist).toBeCalledWith(runtime.bot, con, true);
       expect(toSetHoistActionMock).toBeCalledWith(mentionableTrue, roleId);
     });
@@ -421,34 +462,34 @@ describe("Testing matches class", () => {
       id: "123",
     };
 
-    it("should add a function to hasIsolatedTestFunctions after call toRenameRole", () => {
+    it("should add a function to hasIsolatedTestFunctions after call toRenameRole", async () => {
       initExpectMatch().toRenameRole("newName", roleId);
       expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
     });
 
-    it("should add a toRenameRole function", () => {
+    it("should add a toRenameRole function", async () => {
       initExpectMatch().toRenameRole("newName", roleId);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
-      expect(toSetHoistSpy).toBeCalled();
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(toRenameRoleActionMock).toBeCalled();
     });
 
-    it("should add a toRenameRole function with correct values using id", () => {
+    it("should add a toRenameRole function with correct values using id", async () => {
       initExpectMatch().toRenameRole("newName", "123");
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToRenameRole).toBeCalledWith(runtime.bot, con, false);
-      expect(toRenameRoleActionMock).toBeCalledWith("newName", { id: "123" });
+      expect(toRenameRoleActionMock).toBeCalledWith("newName", "123");
     });
 
-    it("should add a toRenameRole function with correct values (isNot false)", () => {
+    it("should add a toRenameRole function with correct values (isNot false)", async () => {
       initExpectMatch().toRenameRole("newName", roleId);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToRenameRole).toBeCalledWith(runtime.bot, con, false);
       expect(toRenameRoleActionMock).toBeCalledWith("newName", roleId);
     });
 
-    it("should add a toRenameRole function with correct values (isNot true)", () => {
+    it("should add a toRenameRole function with correct values (isNot true)", async () => {
       initExpectMatch().not.toRenameRole("newName", roleId);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToRenameRole).toBeCalledWith(runtime.bot, con, true);
       expect(toRenameRoleActionMock).toBeCalledWith("newName", roleId);
     });
@@ -460,34 +501,34 @@ describe("Testing matches class", () => {
     };
 
     const newPosition = 1;
-    it("should add a function to hasIsolatedTestFunctions after call toSetRolePosition", () => {
+    it("should add a function to hasIsolatedTestFunctions after call toSetRolePosition", async () => {
       initExpectMatch().toSetRolePosition(newPosition, roleId);
       expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
     });
 
-    it("should add a toSetRolePosition function", () => {
+    it("should add a toSetRolePosition function", async () => {
       initExpectMatch().toSetRolePosition(newPosition, roleId);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(toSetRolePositionSpy).toBeCalled();
     });
 
-    it("should add a toSetRolePosition function with correct values using id", () => {
+    it("should add a toSetRolePosition function with correct values using id", async () => {
       initExpectMatch().toSetRolePosition(newPosition, roleId);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
-      expect(ToSetRolePosition).toBeCalledWith(runtime.bot, con, false);
-      expect(toSetRolePositionActionMock).toBeCalledWith(newPosition, { id: "123" });
-    });
-
-    it("should add a toSetRolePosition function with correct values (isNot false)", () => {
-      initExpectMatch().toSetRolePosition(newPosition, roleId);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToSetRolePosition).toBeCalledWith(runtime.bot, con, false);
       expect(toSetRolePositionActionMock).toBeCalledWith(newPosition, roleId);
     });
 
-    it("should add a toSetRolePosition function with correct values (isNot true)", () => {
+    it("should add a toSetRolePosition function with correct values (isNot false)", async () => {
+      initExpectMatch().toSetRolePosition(newPosition, roleId);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToSetRolePosition).toBeCalledWith(runtime.bot, con, false);
+      expect(toSetRolePositionActionMock).toBeCalledWith(newPosition, roleId);
+    });
+
+    it("should add a toSetRolePosition function with correct values (isNot true)", async () => {
       initExpectMatch().not.toSetRolePosition(newPosition, roleId);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToSetRolePosition).toBeCalledWith(runtime.bot, con, true);
       expect(toSetRolePositionActionMock).toBeCalledWith(newPosition, roleId);
     });
@@ -502,36 +543,36 @@ describe("Testing matches class", () => {
       initExpectMatch().toSetRolePermission(roleId, "ADMINISTRATOR");
     }
 
-    it("should add a function to hasIsolatedTestFunctions after call toSetRolePermission", () => {
+    it("should add a function to hasIsolatedTestFunctions after call toSetRolePermission", async () => {
       toSetRolePermission();
       expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
     });
 
-    it("should add a toSetRolePermission function", () => {
+    it("should add a toSetRolePermission function", async () => {
       toSetRolePermission();
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
-      expect(toSetRolePermissionSpy).toBeCalled();
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(toSetRolePermissionActionMock).toBeCalled();
     });
 
-    it("should add a toSetRolePermission function with correct values using id", () => {
+    it("should add a toSetRolePermission function with correct values using id", async () => {
       toSetRolePermission();
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToSetRolePermission).toBeCalledWith(runtime.bot, con, false);
-      expect(toSetRolePermissionMock).toBeCalledWith(["ADMINISTRATOR"], roleId);
+      expect(toSetRolePermissionActionMock).toBeCalledWith(roleId, ["ADMINISTRATOR"]);
     });
 
-    it("should add a toSetRolePermission function with correct values (isNot false)", () => {
+    it("should add a toSetRolePermission function with correct values (isNot false)", async () => {
       toSetRolePermission();
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToSetRolePermission).toBeCalledWith(runtime.bot, con, false);
-      expect(toSetRolePermissionMock).toBeCalledWith(["ADMINISTRATOR"], roleId);
+      expect(toSetRolePermissionActionMock).toBeCalledWith(roleId, ["ADMINISTRATOR"]);
     });
 
-    it("should add a toSetRolePermission function with correct values (isNot true)", () => {
+    it("should add a toSetRolePermission function with correct values (isNot true)", async () => {
       initExpectMatch().not.toSetRolePermission(roleId, "ADMINISTRATOR");
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToSetRolePermission).toBeCalledWith(runtime.bot, con, true);
-      expect(toSetRolePermissionMock).toBeCalledWith(["ADMINISTRATOR"], roleId);
+      expect(toSetRolePermissionActionMock).toBeCalledWith(roleId, ["ADMINISTRATOR"]);
     });
   });
 
@@ -540,44 +581,44 @@ describe("Testing matches class", () => {
       id: "123",
     };
 
-    it("should add a function to hasIsolatedTestFunctions after call toPin", () => {
+    it("should add a function to hasIsolatedTestFunctions after call toPin", async () => {
       initExpectMatch().toPin(messageId);
       expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
     });
 
-    it("should add a toPin function", () => {
+    it("should add a toPin function", async () => {
       initExpectMatch().toPin(messageId);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
-      expect(toPinMessageSpy).toBeCalled();
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(toPinMessageActionMock).toBeCalled();
     });
 
-    it("should add a toPin function with correct values using id", () => {
+    it("should add a toPin function with correct values using id", async () => {
       initExpectMatch().toPin(messageId);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToPinMessage).toBeCalledWith(runtime.bot, con, false);
-      expect(toPinMessageMock).toBeCalledWith(messageId);
+      expect(toPinMessageActionMock).toBeCalledWith(messageId);
     });
 
-    it("should add a toPin function with correct values using string id", () => {
+    it("should add a toPin function with correct values using string id", async () => {
       const id = "1323";
       initExpectMatch().toPin(id);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToPinMessage).toBeCalledWith(runtime.bot, con, false);
-      expect(toPinMessageMock).toBeCalledWith({ id: id });
+      expect(toPinMessageActionMock).toBeCalledWith(id);
     });
 
-    it("should add a toPin function with correct values (isNot false)", () => {
+    it("should add a toPin function with correct values (isNot false)", async () => {
       initExpectMatch().toPin(messageId);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToPinMessage).toBeCalledWith(runtime.bot, con, false);
-      expect(toPinMessageMock).toBeCalledWith(messageId);
+      expect(toPinMessageActionMock).toBeCalledWith(messageId);
     });
 
-    it("should add a toPin function with correct values (isNot true)", () => {
+    it("should add a toPin function with correct values (isNot true)", async () => {
       initExpectMatch().not.toPin(messageId);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(ToPinMessage).toBeCalledWith(runtime.bot, con, true);
-      expect(toPinMessageMock).toBeCalledWith(messageId);
+      expect(toPinMessageActionMock).toBeCalledWith(messageId);
     });
   });
 
@@ -586,48 +627,48 @@ describe("Testing matches class", () => {
       id: "123",
     };
 
-    it("should add a function to hasIsolatedTestFunctions after call toUnpin", () => {
+    it("should add a function to hasIsolatedTestFunctions after call toUnpin", async () => {
       initExpectMatch().toUnPin(messageId);
       expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
     });
 
-    it("should add a toUnpin function", () => {
+    it("should add a toUnpin function", async () => {
       initExpectMatch().toUnPin(messageId);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
-      expect(toUnpinMessageSpy).toBeCalled();
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(toUnpinMessageActionMock).toBeCalled();
     });
 
-    it("should add a toUnpin function with correct values using id", () => {
+    it("should add a toUnpin function with correct values using id", async () => {
       initExpectMatch().toUnPin(messageId);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
-      expect(ToUnpinMessage).toBeCalledWith(runtime.bot, con, false);
-      expect(toUnpinMessageMock).toBeCalledWith(messageId);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToUnPinMessage).toBeCalledWith(runtime.bot, con, false);
+      expect(toUnpinMessageActionMock).toBeCalledWith(messageId);
     });
 
-    it("should add a toUnpin function with correct values using string id", () => {
+    it("should add a toUnpin function with correct values using string id", async () => {
       const id = "123121";
       initExpectMatch().toUnPin(id);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
-      expect(ToUnpinMessage).toBeCalledWith(runtime.bot, con, false);
-      expect(toUnpinMessageMock).toBeCalledWith({ id: id });
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToUnPinMessage).toBeCalledWith(runtime.bot, con, false);
+      expect(toUnpinMessageActionMock).toBeCalledWith(id);
     });
 
-    it("should add a toUnpin function with correct values (isNot false)", () => {
+    it("should add a toUnpin function with correct values (isNot false)", async () => {
       initExpectMatch().toUnPin(messageId);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
-      expect(ToUnpinMessage).toBeCalledWith(runtime.bot, con, false);
-      expect(toUnpinMessageMock).toBeCalledWith(messageId);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToUnPinMessage).toBeCalledWith(runtime.bot, con, false);
+      expect(toUnpinMessageActionMock).toBeCalledWith(messageId);
     });
 
-    it("should add a toUnpin function with correct values (isNot true)", () => {
+    it("should add a toUnpin function with correct values (isNot true)", async () => {
       initExpectMatch().not.toUnPin(messageId);
-      runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
-      expect(ToUnpinMessage).toBeCalledWith(runtime.bot, con, true);
-      expect(toUnpinMessageMock).toBeCalledWith(messageId);
+      await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+      expect(ToUnPinMessage).toBeCalledWith(runtime.bot, con, true);
+      expect(toUnpinMessageActionMock).toBeCalledWith(messageId);
     });
   });
 });
 
-function initExpectMatch() {
-  return new ExpectMatchesWithNot(con);
+function initExpectMatch(value?: any) {
+  return new ExpectMatchesWithNot(value ?? con);
 }

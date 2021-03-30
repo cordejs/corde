@@ -12,7 +12,7 @@ import {
 } from "./api-utilities";
 
 import { expect as _expect } from "./expect";
-import { group as _group, test as _test } from "./clausures";
+import { group as _group, test as _test, describe as _describe, it as _it } from "./clausures";
 
 /**
  * Corde's utility namespace to call it's API functions.
@@ -29,4 +29,6 @@ export namespace corde {
   export const sendMessage = _sendMessage;
   export const getRole = _getRole;
   export const createRole = _createRole;
+  export const describe = _describe;
+  export const it = _it;
 }

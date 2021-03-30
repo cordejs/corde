@@ -6,9 +6,10 @@
  * @param fn Function to be executed.
  * @param timeout Time that this function will wait.
  * @returns Result of the executed function (`fn`)
+ * @internal
  */
 export async function executeWithTimeout<TResult extends any>(
-  fn: () => Promise<TResult> | TResult,
+  fn: () => TResult | Promise<TResult>,
   timeout: number,
 ) {
   if (!fn) {

@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should fail on message pin 1`] = `
+"node test --config ./e2e/corde.config.ts --files ./e2e/toUnPinMessage/__cordeTest__/bot_case2.spec.ts
+
+ FAIL   e2e\\\\toUnPinMessage\\\\__cordeTest__\\\\bot_case2.spec.ts   100ms
+   x should fail when unpin a message   100ms
+    
+    expected: unpin message of id 12312
+    received: informed message was not unpinned
+
+    at toUnPin e2e\\\\toUnPinMessage\\\\__cordeTest__\\\\bot_case2.spec.ts:9:49
+    at _internalTest (lib\\\\src\\\\clausures\\\\test.js:29:13)
+    at lib\\\\src\\\\clausures\\\\test.js:52:65
+
+Test Files: 1 failed. 1 total
+Tests:      1 failed. 1 total
+Time:       100ms
+"
+`;

@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing toSetRoleHoist operation should fail due to no role hoist was not updated 1`] = `
+Object {
+  "message": "    
+    expected: hoist to be false
+    received: role hoist was not updated
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toSetRoleHoist operation should fail due to undefined roleIdentifier 1`] = `
+Object {
+  "message": "    
+    expected: data to identifier the role (id or name)
+    received: null
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toSetRoleHoist operation should return a not passed test due expected name did not match to received 1`] = `
+Object {
+  "message": "    
+    expected: hoist to be false
+    received: true
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toSetRoleHoist operation should return a not passed test due to hoist should not change (isNot true) 1`] = `
+Object {
+  "message": "    
+    expected: hoist to not be true
+    received: true
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toSetRoleHoist operation should return false due to invalid hoist parameter (object) 1`] = `
+Object {
+  "message": "    
+    expect: hoist parameter to be of boolean type
+    received: object
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toSetRoleHoist operation should return false due to invalid hoist parameter (undefined) 1`] = `
+Object {
+  "message": "    
+    expected: hoist option to be true or false
+    received: undefined
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toSetRoleHoist operation should return false due to not found role 1`] = `
+Object {
+  "message": "    
+    expected: role with id 123
+    received: null
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toSetRoleHoist operation should return true due to isNot true and no role change 1`] = `
+Object {
+  "pass": true,
+}
+`;
+
+exports[`testing toSetRoleHoist operation should return true due to role changed the hoist (isNot false) 1`] = `
+Object {
+  "pass": true,
+}
+`;

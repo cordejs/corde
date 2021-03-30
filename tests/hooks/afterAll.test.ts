@@ -1,6 +1,7 @@
-import { testCollector } from "../../src/common";
-import { afterAll } from "../../src/hooks";
+import { testCollector } from "../../src/common/testCollector";
+import { afterAll as _afterAll } from "../../src/hooks";
 import { Queue } from "../../src/data-structures";
+import { wait } from "../../src/utils";
 
 describe("Testing afterAll function", () => {
   afterEach(() => {
@@ -9,7 +10,7 @@ describe("Testing afterAll function", () => {
 
   it("Should add a function", () => {
     let a = 1;
-    afterAll(() => {
+    _afterAll(() => {
       a = 2;
     });
 
@@ -17,8 +18,19 @@ describe("Testing afterAll function", () => {
     expect(a).toBe(2);
   });
 
+  it("should execute a async function", async () => {
+    let a = 0;
+    _afterAll(async () => {
+      await wait(100);
+      a = 1;
+    });
+
+    await testCollector.afterAllFunctions.executeWithCatchCollectAsync();
+    expect(a).toEqual(1);
+  });
+
   it("Should do nothing", () => {
-    afterAll(undefined);
+    _afterAll(undefined);
 
     const length = testCollector.afterAllFunctions.size;
     expect(length).toBe(0);

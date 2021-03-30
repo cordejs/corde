@@ -1,5 +1,5 @@
 import { testCollector } from "../../src/common/testCollector";
-import { beforeStart } from "../../src/hooks";
+import { beforeStart as _beforeStart } from "../../src/hooks";
 import { Queue } from "../../src/data-structures";
 import { wait } from "../../src/utils";
 
@@ -9,7 +9,7 @@ describe("Testing beforeStart function", () => {
   });
   it("Should add a function", () => {
     let a = 1;
-    beforeStart(() => {
+    _beforeStart(() => {
       a = 2;
     });
 
@@ -18,7 +18,7 @@ describe("Testing beforeStart function", () => {
   });
 
   it("Should do nothing", () => {
-    beforeStart(undefined);
+    _beforeStart(undefined);
 
     const length = testCollector.beforeStartFunctions.size;
     expect(length).toBe(0);
@@ -26,7 +26,7 @@ describe("Testing beforeStart function", () => {
 
   it("add a async function", async () => {
     let a = 1;
-    beforeStart(async () => {
+    _beforeStart(async () => {
       await wait(100);
       a = 2;
     });
