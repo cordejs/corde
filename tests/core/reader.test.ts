@@ -99,11 +99,12 @@ describe("reader class", () => {
       });
 
       it("should return group with only command", async () => {
-        const pathFile = "tests\\mocks\\onlyCommands";
+        const pathFile = "tests/mocks/onlyCommands";
+        const pathReturned = "tests\\mocks\\onlyCommands";
         const tests = await reader.getTestsFromFiles([path.resolve(process.cwd(), pathFile)]);
         const expectedTests: TestFile[] = [
           {
-            path: pathFile,
+            path: pathReturned,
             isEmpty: false,
             groups: [
               {
@@ -120,11 +121,12 @@ describe("reader class", () => {
       });
 
       it("should return group with double groups", async () => {
-        const pathFile = "tests\\mocks\\sampleDoubleGroup";
+        const pathFile = "tests/mocks/sampleDoubleGroup";
+        const pathReturned = "tests\\mocks\\sampleDoubleGroup";
         const tests = await reader.getTestsFromFiles([path.resolve(process.cwd(), pathFile)]);
         const expectedTests: TestFile[] = [
           {
-            path: pathFile,
+            path: pathReturned,
             isEmpty: false,
             groups: [
               {
@@ -152,11 +154,12 @@ describe("reader class", () => {
       });
 
       it("should return group with only group and expect", async () => {
-        const pathFile = "tests\\mocks\\sampleOnlyWithGroup";
+        const pathFile = "tests/mocks/sampleOnlyWithGroup";
+        const pathReturned = "tests\\mocks\\sampleOnlyWithGroup";
         const tests = await reader.getTestsFromFiles([path.resolve(process.cwd(), pathFile)]);
         const expectedTests: TestFile[] = [
           {
-            path: pathFile,
+            path: pathReturned,
             isEmpty: false,
             groups: [
               {
@@ -174,11 +177,12 @@ describe("reader class", () => {
       });
 
       it("should return group with single test", async () => {
-        const pathFile = "tests\\mocks\\sampleSingleTest";
+        const pathFile = "tests/mocks/sampleSingleTest";
+        const pathReturned = "tests\\mocks\\sampleSingleTest";
         const tests = await reader.getTestsFromFiles([path.resolve(process.cwd(), pathFile)]);
         const expectedTests: TestFile[] = [
           {
-            path: pathFile,
+            path: pathReturned,
             isEmpty: false,
             groups: [
               {
@@ -197,11 +201,12 @@ describe("reader class", () => {
     });
 
     it("should return group with single group and test", async () => {
-      const pathFile = "tests\\mocks\\sampleWithSingleGroup";
+      const pathFile = "tests/mocks/sampleWithSingleGroup";
+      const pathReturned = "tests\\mocks\\sampleWithSingleGroup";
       const tests = await reader.getTestsFromFiles([path.resolve(process.cwd(), pathFile)]);
       const expectedTests: TestFile[] = [
         {
-          path: pathFile,
+          path: pathReturned,
           isEmpty: false,
           groups: [
             {
@@ -220,11 +225,12 @@ describe("reader class", () => {
     });
 
     it("should return empty test (only with group)", async () => {
-      const pathFile = "tests\\mocks\\sampleEmptyGroup";
+      const pathFile = "tests/mocks/sampleEmptyGroup";
+      const pathReturned = "tests\\mocks\\sampleEmptyGroup";
       const tests = await reader.getTestsFromFiles([path.resolve(process.cwd(), pathFile)]);
       const expectedTests: TestFile[] = [
         {
-          path: pathFile,
+          path: pathReturned,
           isEmpty: true,
           groups: [],
         },
@@ -233,11 +239,12 @@ describe("reader class", () => {
     });
 
     it("should return empty test (only with test)", async () => {
-      const pathFile = "tests\\mocks\\sampleEmptyTest";
+      const pathFile = "tests/mocks/sampleEmptyTest";
+      const pathReturned = "tests\\mocks\\sampleEmptyTest";
       const tests = await reader.getTestsFromFiles([path.resolve(process.cwd(), pathFile)]);
       const expectedTests: TestFile[] = [
         {
-          path: pathFile,
+          path: pathReturned,
           isEmpty: true,
           groups: [],
         },
