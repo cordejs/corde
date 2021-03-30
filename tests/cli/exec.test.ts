@@ -7,7 +7,14 @@ import { TestExecutor } from "../../src/core/testExecutor";
 import { summary } from "../../src/core/summary";
 import { mockProcess } from "../mocks";
 
-jest.mock("ora");
+jest.mock("ora", () => {
+  const spinner = {
+    stop: jest.fn(),
+  };
+  const start = () => spinner;
+  const result = { start };
+  return () => result;
+});
 
 jest.mock("../../src/core/testExecutor.ts");
 TestExecutor.prototype.runTestsAndPrint = jest.fn().mockImplementation(() => Promise.resolve({}));
