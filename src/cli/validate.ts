@@ -49,7 +49,7 @@ function validatePaths(pathsDir: string[], errors: string[]) {
     return;
   }
 
-  if (pathsDir.some((path) => !path)) {
+  if (pathsDir.some((_path) => !_path)) {
     throw new ConfigError(chalk.red("one of more paths are null or undefined. Check your config"));
   }
 
