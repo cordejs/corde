@@ -1,5 +1,4 @@
 import { Role } from "discord.js";
-import { CordeBot } from "../core";
 import { RoleIdentifier } from "../types";
 import { buildReportMessage, formatObject } from "../utils";
 

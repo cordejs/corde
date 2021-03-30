@@ -1,4 +1,4 @@
-import { typeOf } from ".";
+import { typeOf } from "./typeOf";
 
 /**
  * Resolves an name executing or converting it's value.

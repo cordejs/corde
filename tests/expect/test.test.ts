@@ -1,6 +1,6 @@
 import { testCollector } from "../../src/common/testCollector";
 import { Test } from "../../src/types";
-import { test } from "../../src/clausures";
+import { test as _test } from "../../src/clausures";
 import { expect as cordeExpect } from "../../src/expect";
 
 describe("Testing test function", () => {
@@ -10,7 +10,7 @@ describe("Testing test function", () => {
 
   it("Should execute test function", async () => {
     let a = 1;
-    test("test group", () => {
+    _test("test group", () => {
       a = 2;
     });
 
@@ -25,7 +25,7 @@ describe("Testing test function", () => {
       name: testName,
     };
 
-    test(testName, () => {});
+    _test(testName, () => {});
 
     await testCollector.executeTestClojure();
 
@@ -33,7 +33,7 @@ describe("Testing test function", () => {
   });
 
   it("should not add a group", async () => {
-    test(undefined, () => {});
+    _test(undefined, () => {});
     await testCollector.executeTestClojure();
 
     if (!testCollector.tests) {
@@ -44,10 +44,10 @@ describe("Testing test function", () => {
   });
 
   it("add two tests with single cases inside then should return two tests with single cases inside then", async () => {
-    test("case 1", () => {
+    _test("case 1", () => {
       cordeExpect("").toPin({ id: "1" });
     });
-    test("case 2", () => {
+    _test("case 2", () => {
       cordeExpect("").toPin({ id: "1" });
     });
 
@@ -57,11 +57,11 @@ describe("Testing test function", () => {
   });
 
   it("should add cases", async () => {
-    test("case 1", () => {
+    _test("case 1", () => {
       cordeExpect("").toPin({ id: "1" });
       cordeExpect("").toPin({ id: "1" });
     });
-    test("case 2", () => {
+    _test("case 2", () => {
       cordeExpect("").toPin({ id: "1" });
       cordeExpect("").toPin({ id: "1" });
       cordeExpect("").toPin({ id: "1" });
@@ -74,17 +74,17 @@ describe("Testing test function", () => {
 
   // Fix later
   // it("should add sub tests", () => {
-  //   test("case 1", () => {
+  //   _test("case 1", () => {
   //     cordeExpect("").toPin({ id: "1" });
-  //     test("case 2", () => {
+  //     _test("case 2", () => {
   //       cordeExpect("").toPin({ id: "1" });
   //     });
   //   });
-  //   test("case 3", () => {
+  //   _test("case 3", () => {
   //     cordeExpect("").toPin({ id: "1" });
-  //     test("case 4", () => {
+  //     _test("case 4", () => {
   //       cordeExpect("").toPin({ id: "1" });
-  //       test("case 5", () => {
+  //       _test("case 5", () => {
   //         cordeExpect("").toPin({ id: "1" });
   //       });
   //     });

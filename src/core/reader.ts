@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
-import { printHookErrors, runtime } from "../common";
+import { runtime } from "../common/runtime";
+import { printHookErrors } from "../common/printHookError";
 import { testCollector } from "../common/testCollector";
 import { FileError } from "../errors";
 import { ConfigOptions, TestFile } from "../types";

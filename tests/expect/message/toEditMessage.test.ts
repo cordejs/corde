@@ -4,7 +4,7 @@ import { createCordeBotWithMockedFunctions } from "../../testHelper";
 import { TestReport } from "../../../src/types";
 import { ToEditMessage } from "../../../src/expect/matches";
 import { buildReportMessage, diff, formatObject } from "../../../src/utils";
-import { runtime } from "../../../src/common";
+import { runtime } from "../../../src/common/runtime";
 import messageUtils from "../../../src/expect/messageUtils";
 import { MockEvents } from "../../mocks/mockEvents";
 

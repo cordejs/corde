@@ -1,7 +1,7 @@
 import { RoleIdentifier } from "../types/types";
 import { Role } from "discord.js";
-import { CordeRole } from "../discord-structures";
-import { runtime } from "../common";
+import { CordeRole } from "../discord-structures/role";
+import { runtime } from "../common/runtime";
 import { CordeClientError } from "../errors";
 
 /**

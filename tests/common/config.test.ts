@@ -1,5 +1,5 @@
 import { ConfigOptions } from "../../src/types";
-import { Config } from "../../src/common";
+import { Config } from "../../src/common/config";
 import { DEFAULT_TEST_TIMEOUT } from "../../src/consts";
 
 describe("testing config", () => {

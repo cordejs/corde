@@ -1,4 +1,4 @@
-import { summary } from "../../src/core";
+import { summary } from "../../src/core/summary";
 import { RunnerReport } from "../../src/types";
 import { removeANSIColorStyle } from "../testHelper";
 

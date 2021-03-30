@@ -1,6 +1,6 @@
 // Cannot be `import` as it's not under TS root dir
 
-import { runtime } from "./common";
+import { runtime } from "./common/runtime";
 
 function getPackage() {
   if (runtime.environment.isUnityTest) {

@@ -4,8 +4,8 @@ import { init } from "./init";
 import { validate } from "./validate";
 import { configFileType } from "../types/types";
 import pack from "../package";
-import { runtime } from "../common";
-import { reader } from "../core";
+import { runtime } from "../common/runtime";
+import { reader } from "../core/reader";
 import { initEnvVariables } from "../envVariables";
 
 initEnvVariables();

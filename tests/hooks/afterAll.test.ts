@@ -1,4 +1,4 @@
-import { testCollector } from "../../src/common";
+import { testCollector } from "../../src/common/testCollector";
 import { afterAll as _afterAll } from "../../src/hooks";
 import { Queue } from "../../src/data-structures";
 import { wait } from "../../src/utils";

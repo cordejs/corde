@@ -2,13 +2,15 @@ import { reader } from "../../src/core/reader";
 import * as validateFn from "../../src/cli/validate";
 import { exec } from "../../src/cli/exec";
 import { FileError } from "../../src/errors";
-import { runtime } from "../../src/common";
+import { runtime } from "../../src/common/runtime";
 import { TestExecutor } from "../../src/core/testExecutor";
-import { summary } from "../../src/core";
+import { summary } from "../../src/core/summary";
 import { mockProcess } from "../mocks";
 
+jest.mock("ora");
+
 jest.mock("../../src/core/testExecutor.ts");
-TestExecutor.prototype.runTestsAndPrint = jest.fn().mockImplementation(() => Promise.resolve());
+TestExecutor.prototype.runTestsAndPrint = jest.fn().mockImplementation(() => Promise.resolve({}));
 
 describe("testing default command", () => {
   it("should throw exception due to no files", async () => {
@@ -35,7 +37,7 @@ describe("testing default command", () => {
   });
 
   it("Should read a file folder", async () => {
-    mockProcess.mockProcessExit();
+    const exitMock = mockProcess.mockProcessExit();
     const readerSpy = jest.spyOn(reader, "loadConfig");
     runtime.loginBot = jest.fn().mockReturnValue(Promise.resolve());
     runtime.events.onceReady = jest.fn().mockReturnValue(Promise.resolve());
@@ -55,6 +57,7 @@ describe("testing default command", () => {
       timeOut: 1000,
     });
 
-    expect(async () => await exec()).rejects.toBeFalsy();
+    await exec();
+    expect(exitMock).toBeCalledWith(0);
   });
 });

@@ -11,7 +11,7 @@ import {
   permissionsArray,
 } from "../../../src/utils";
 import { MockEvents } from "../../mocks/mockEvents";
-import { runtime } from "../../../src/common";
+import { runtime } from "../../../src/common/runtime";
 
 let mockDiscord = new MockDiscord();
 

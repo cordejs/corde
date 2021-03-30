@@ -19,7 +19,6 @@ import {
   VoiceState,
 } from "discord.js";
 import { once } from "events";
-import { runtime } from "../common";
 import { DEFAULT_TEST_TIMEOUT } from "../consts";
 import { TimeoutError } from "../errors";
 import { EmojiLike, MessageIdentifier, RoleIdentifier } from "../types";
@@ -215,7 +214,7 @@ export class Events {
           resolve(deletedRole);
         }
       });
-    }, timeout ?? runtime.timeOut);
+    }, timeout);
   }
 
   /**
@@ -562,7 +561,7 @@ export class Events {
           return;
         }
       });
-    }, timeout ?? runtime.timeOut);
+    }, timeout);
   }
 
   /**
@@ -801,7 +800,7 @@ export class Events {
           resolve(newMessage);
         }
       });
-    }, timeout ?? runtime.timeOut);
+    }, timeout);
   }
 
   /**
@@ -834,7 +833,7 @@ export class Events {
           resolve(newMessage);
         }
       });
-    }, timeout ?? runtime.timeOut);
+    }, timeout);
   }
 
   private messagesHasDifferentsEmbeds(
@@ -1068,6 +1067,6 @@ export class Events {
           resolve(newRole);
         }
       });
-    }, timeout ?? runtime.timeOut);
+    }, timeout);
   }
 }

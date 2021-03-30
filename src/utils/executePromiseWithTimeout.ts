@@ -1,5 +1,4 @@
 import { TimeoutError } from "../errors";
-import { RejectFunction, ResolveFunction } from "../types";
 
 /**
  * Execute a function that returns a promise, passing a `resolve` and
@@ -35,7 +34,7 @@ import { RejectFunction, ResolveFunction } from "../types";
  * @internal
  */
 export function executePromiseWithTimeout<TResult extends any>(
-  fn: (resolve: ResolveFunction<TResult>, reject: RejectFunction) => void,
+  fn: (resolve: (reason?: TResult) => void, reject: (reason?: any) => void) => void,
   timeout: number,
   rejectedData?: TResult,
 ) {

@@ -1,15 +1,24 @@
-import { ColorResolvable, Message, MessageEmbed } from "discord.js";
-import { Colors, RolePermission } from "..";
-import { CordeBot } from "../core";
+import {
+  Collection,
+  ColorResolvable,
+  Guild,
+  GuildChannel,
+  Message,
+  MessageEmbed,
+  Role,
+  RoleManager,
+  TextChannel,
+} from "discord.js";
+import { Colors, RolePermission } from "../utils";
 import { EmbedFieldData } from "discord.js";
 import { Stream } from "stream";
+import { Events } from "../core/events";
 
 export type VoidLikeFunction = (() => void) | (() => PromiseLike<void>) | (() => Promise<void>);
-
+export type TestFunctionType = (cordeBot: CordeBotLike) => Promise<TestReport>;
 export type messageType = "text" | "embed";
 export type messageOutputType = Message | MinifiedEmbedMessage;
 export type messageExpectationType = string | MessageEmbed;
-export type TestFunctionType = (cordeBot: CordeBot) => Promise<TestReport>;
 export type GenericFunction = (...args: any[]) => any;
 export type Primitive = number | bigint | string | boolean;
 export type ResolveFunction<TResult> = (value: TResult) => void;
@@ -322,4 +331,65 @@ export interface MessageEmbedLike {
 export interface EmojiLike {
   id?: string;
   name?: string;
+}
+
+/**
+ * Encapsulation of Discord Client with all specific
+ * functions for corde test.
+ */
+export interface CordeBotLike {
+  readonly events: Events;
+  readonly guild: Guild;
+  readonly roleManager: RoleManager;
+  readonly channel: TextChannel;
+  readonly testBotId: string;
+  /**
+   * Authenticate Corde bot to the installed bot in Discord server.
+   *
+   * @param token Corde bot token
+   *
+   * @returns Promise resolve for success connection, or a promise
+   * rejection with a formatted message if there was found a error in
+   * connection attempt.
+   */
+  login(token: string): Promise<string>;
+  /**
+   * Destroy client connection.
+   */
+  logout(): void;
+  /**
+   * Sends a pure message without prefix it.
+   * @param message Data to be send to channel
+   */
+  sendMessage(message: string | number | MessageEmbed): Promise<Message>;
+  /**
+   * Send a message to a channel defined in configs.
+   *
+   * @see Runtime
+   *
+   * @param message Message without prefix that will be sent to defined server's channel
+   * @description The message is concatenated with the stored **prefix** and is sent to the channel.
+   *
+   * @return Promise rejection if a testing bot does not send any message in the timeout value setted,
+   * or a resolve for the promise with the message returned by the testing bot.
+   */
+  sendTextMessage(message: string | number | boolean): Promise<Message>;
+  /**
+   * Observes for a message send by the testing bot after corde bot
+   * send it's message.
+   */
+  awaitMessagesFromTestingBot(timeout: number): Promise<Message>;
+  /**
+   * Checks if corde bot is connected
+   */
+  isLoggedIn(): boolean;
+  findMessage(filter: (message: Message) => boolean): Promise<Message>;
+  findMessage(data: MessageIdentifier): Promise<Message>;
+  fetchRole(id: string): Promise<Role>;
+  fetchRoles(): Promise<RoleManager>;
+  hasRole(roleIdentifier: RoleIdentifier): Promise<boolean>;
+  findRole(roleIdentifier: RoleIdentifier): Promise<Role>;
+  getRoles(): Collection<string, Role>;
+  findGuild(guildId: string): Guild;
+  findChannel(guild: Guild, channelId: string): GuildChannel;
 }

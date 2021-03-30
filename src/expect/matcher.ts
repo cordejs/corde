@@ -1,16 +1,15 @@
 import { ColorResolvable } from "discord.js";
 import { testCollector } from "../common/testCollector";
-import { CordeBot } from "../core";
 import {
   EmojiLike,
-  GenericFunction,
   MessageIdentifier,
   MessageEditedIdentifier,
   MessageEmbedLike,
   Primitive,
   RoleIdentifier,
   TestReport,
-} from "../types/types";
+  CordeBotLike,
+} from "../types";
 import { Colors } from "../utils/colors";
 import { RolePermission } from "../utils/permission";
 import {
@@ -181,11 +180,11 @@ class ExpectMatches implements Matches {
   protected async operationFactory<T extends ExpectTest>(
     trace: string,
     type: new (
-      cordeBot: CordeBot,
+      cordeBot: CordeBotLike,
       command: string | number | bigint | boolean,
       isNot: boolean,
     ) => T,
-    cordeBot: CordeBot,
+    cordeBot: CordeBotLike,
     ...params: Parameters<T["action"]>
   ): Promise<TestReport> {
     const commandName = await resolveName(this._commandName);

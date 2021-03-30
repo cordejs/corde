@@ -1,4 +1,4 @@
-import { testCollector } from "../common";
+import { testCollector } from "../common/testCollector";
 import { VoidLikeFunction } from "../types";
 import { executePromiseWithTimeout, resolveName } from "../utils";
 
@@ -45,6 +45,6 @@ export const test = <T extends any>(
       }, timeout);
     });
   } else {
-    testCollector.addToGroupClousure(async () => await _internalTest());
+    testCollector.addToTestClousure(async () => await _internalTest());
   }
 };

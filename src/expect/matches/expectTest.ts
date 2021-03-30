@@ -1,6 +1,5 @@
-import { runtime } from "../../common";
-import { CordeBot } from "../../core";
-import { TestReport } from "../../types/types";
+import { runtime } from "../../common/runtime";
+import { CordeBotLike, TestReport } from "../../types";
 import { buildReportMessage } from "../../utils";
 
 /**
@@ -19,7 +18,7 @@ export abstract class ExpectTest {
 
   protected readonly isNot: boolean;
   protected readonly command: string | number | boolean;
-  protected readonly cordeBot: CordeBot;
+  protected readonly cordeBot: CordeBotLike;
   protected readonly timeOut: number;
   /**
    * Initialize the match class with its default values.
@@ -28,7 +27,7 @@ export abstract class ExpectTest {
    * @param command The command to execute.
    * @param isNot Definition if this is a deny test.
    */
-  constructor(cordeBot: CordeBot, command: string | number | boolean, isNot: boolean) {
+  constructor(cordeBot: CordeBotLike, command: string | number | boolean, isNot: boolean) {
     this.isNot = isNot;
     this.command = command;
     this.cordeBot = cordeBot;

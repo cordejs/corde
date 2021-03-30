@@ -1,7 +1,7 @@
 import { ConfigOptions, TestFunctionType } from "../types/types";
 import { Config } from "./config";
 import { Client } from "discord.js";
-import { CordeBot } from "../core";
+import { CordeBot } from "../core/cordeBot";
 import { ConfigError } from "../errors";
 import { DEFAULT_TEST_TIMEOUT } from "../consts";
 

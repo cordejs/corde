@@ -1,5 +1,5 @@
 import { Message, MessageEmbed } from "discord.js";
-import { runtime } from "../common";
+import { runtime } from "../common/runtime";
 import { CordeClientError } from "../errors";
 
 /**

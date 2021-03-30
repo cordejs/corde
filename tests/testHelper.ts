@@ -2,8 +2,8 @@ import path from "path";
 import fs from "fs";
 import MockDiscord from "./mocks/mockDiscord";
 import { Client } from "discord.js";
-import { CordeBot } from "../src/core";
-import { Test, TestFile, TestFunctionType, TestReport } from "../src/types";
+import { CordeBot } from "../src/core/cordeBot";
+import { CordeBotLike, Test, TestFile, TestFunctionType, TestReport } from "../src/types";
 
 export const normalTsPath = path.resolve(process.cwd(), "corde.ts");
 export const tempTsPath = path.resolve(process.cwd(), "__corde.ts");
@@ -93,7 +93,11 @@ export function initCordeClientWithChannel(
 
 export const DEFAULT_PREFIX = "!";
 
-export function initCordeClient(mockDiscord: MockDiscord, clientInstance: Client, timeout = 500) {
+export function initCordeClient(
+  mockDiscord: MockDiscord,
+  clientInstance: Client,
+  timeout = 500,
+): CordeBotLike {
   return new CordeBot(
     DEFAULT_PREFIX,
     mockDiscord.guild.id,

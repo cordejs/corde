@@ -1,4 +1,4 @@
-import { testCollector } from "../../src/common";
+import { testCollector } from "../../src/common/testCollector";
 import { TestReport } from "../../src/types";
 
 describe("testing testCollector", () => {

@@ -1,5 +1,5 @@
 import { Client } from "discord.js";
-import { runtime } from "../../../src/common";
+import { runtime } from "../../../src/common/runtime";
 import { ToPinMessage } from "../../../src/expect/matches";
 import messageUtils from "../../../src/expect/messageUtils";
 import { TestReport } from "../../../src/types";

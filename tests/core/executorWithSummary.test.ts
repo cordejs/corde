@@ -1,4 +1,4 @@
-import { summary } from "../../src/core";
+import { summary } from "../../src/core/summary";
 import { TestExecutor } from "../../src/core/testExecutor";
 import { buildReportMessage, LogUpdate } from "../../src/utils";
 import { mockTimer } from "../mocks/mockTimer";

@@ -1,14 +1,23 @@
-import { Channel, Client, Collection, Guild, Message, MessageEmbed, TextChannel } from "discord.js";
-import { DEFAULT_TEST_TIMEOUT } from "../consts";
+import {
+  Channel,
+  Client,
+  Collection,
+  Guild,
+  Message,
+  MessageEmbed,
+  Role,
+  RoleManager,
+  TextChannel,
+} from "discord.js";
 import { CordeClientError } from "../errors";
-import { MessageIdentifier, RoleIdentifier } from "../types/types";
+import { CordeBotLike, MessageIdentifier, RoleIdentifier } from "../types";
 import { Events } from "./events";
 
 /**
  * Encapsulation of Discord Client with all specific
  * functions for corde test.
  */
-export class CordeBot {
+export class CordeBot implements CordeBotLike {
   readonly events: Events;
   private readonly _prefix: string;
   private readonly _guildId: string;
@@ -148,11 +157,11 @@ export class CordeBot {
     return null;
   }
 
-  async fetchRole(id: string) {
+  async fetchRole(id: string): Promise<Role> {
     return await this.guild.roles.fetch(id, false, true);
   }
 
-  async fetchRoles() {
+  async fetchRoles(): Promise<RoleManager> {
     return await this.guild.roles.fetch();
   }
 

@@ -1,26 +1,23 @@
-import {
-  isPromise as _isPromise,
-  buildReportMessage as _buildReportMessage,
-  dateDiff as _dateDiff,
-  deepEqual as _deepEqual,
-  diff as _diff,
-  executePromiseWithTimeout as _executePromiseWithTimeout,
-  executeWithTimeout as _executeWithTimeout,
-  formatObject as _formatObject,
-  getStackTrace as _getStackTrace,
-  isFunction as _isFunction,
-  isNullOrUndefined as _isNullOrUndefined,
-  isPrimitiveValue as _isPrimitiveValue,
-  pick as _pick,
-  resolveName as _resolveName,
-  rgba as _rgba,
-  stringIsNullOrEmpty as _stringIsNullOrEmpty,
-  typeOf as _typeOf,
-  wait as _wait,
-  LogUpdate as _logUpdate,
-  Guid as _Guid,
-  calcPermissionsValue as _calcPermissionsValue,
-} from "./";
+import { isPromise as _isPromise } from "./isPromise";
+import { buildReportMessage as _buildReportMessage } from "./buildReportMessage";
+import { dateDiff as _dateDiff } from "./dateDiff";
+import { deepEqual as _deepEqual } from "./deepEqual";
+import { diff as _diff } from "./diff";
+import { executePromiseWithTimeout as _executePromiseWithTimeout } from "./executePromiseWithTimeout";
+import { executeWithTimeout as _executeWithTimeout } from "./executeWithTimeout";
+import { formatObject as _formatObject } from "./formatObject";
+import { getStackTrace as _getStackTrace } from "./getStackTrace";
+import { isFunction as _isFunction } from "./isFunction";
+import { isNullOrUndefined as _isNullOrUndefined } from "./isNullOrUndefined";
+import { isPrimitiveValue as _isPrimitiveValue } from "./isPrimitiveValue";
+import { pick as _pick } from "./pick";
+import { rgba as _rgba } from "./rgba";
+import { stringIsNullOrEmpty as _stringIsNullOrEmpty } from "./stringIsNullOrEmpty";
+import { typeOf as _typeOf } from "./typeOf";
+import { wait as _wait } from "./wait";
+import { LogUpdate as _logUpdate } from "./logUpdate";
+import { calcPermissionsValue as _calcPermissionsValue } from "./permission";
+import { resolveName as _resolveName } from "./resolveName";
 
 export namespace utils {
   export const isPromise = _isPromise;
