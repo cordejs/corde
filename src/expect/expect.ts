@@ -8,7 +8,7 @@ import { ExpectMatchesWithNot, MatchWithNot } from "./matcher";
  */
 export function expect(): void;
 /**
- * Receives wich command will be tested.
+ * Receives which command will be tested.
  *
  * Do not inform the command prefix if
  * it's already informed in **configs**

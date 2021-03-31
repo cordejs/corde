@@ -89,7 +89,7 @@ export class CordeRole {
      * see https://discord.js.org/#/docs/main/stable/class/Role?scrollTo=position
      * Position in Discord.js is relative to the roleManager.
      *
-     * We want the position relative to Discord itself, wich is the RAWPOSITION.
+     * We want the position relative to Discord itself, which is the RAWPOSITION.
      *
      * To avoid the confusion, we will not expose position and rawPosition distinctly.
      */

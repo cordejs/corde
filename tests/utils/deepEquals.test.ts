@@ -100,7 +100,7 @@ describe("testing deepEqual", () => {
       expect(deepEqual([{ id: 1, sub: { id: 3 } }], [{ id: 1, sub: { id: 2 } }])).toBeFalsy();
     });
 
-    it("should return false for array of objects with subobjects wich are differents", () => {
+    it("should return false for array of objects with subobjects which are differents", () => {
       expect(
         deepEqual(
           [{ id: 1, sub: [{ id: 3 }, { id: 3 }] }],
