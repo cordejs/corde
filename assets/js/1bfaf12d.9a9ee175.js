@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[10],{82:function(e){e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"Releasing Corde v3","permalink":"/blog/2021/03/30/corde-v3"}]}')}}]);
