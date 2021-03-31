@@ -9,6 +9,6 @@
   "author": "Lucas Gomes",
   "license": "ISC",
   "devDependencies": {
-    "corde": "^2.0.2"
+    "corde": "^3.0.0"
   }
 }

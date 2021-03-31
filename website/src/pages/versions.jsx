@@ -48,5 +48,9 @@ export default function Versions() {
  */
 function getVersionFullName(version) {
   const versionChar = version[0];
+  // We released it wrong
+  if (versionChar === "3") {
+    return `${versionChar}.0.1`;
+  }
   return `${versionChar}.0.0`;
 }
