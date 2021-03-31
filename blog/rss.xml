@@ -4,8 +4,15 @@
         <title>Corde Blog</title>
         <link>https://lucasgmagalhaes.github.io/corde/blog</link>
         <description>Corde Blog</description>
-        <lastBuildDate>Sun, 25 Oct 2015 23:29:00 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 30 Mar 2021 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
+        <item>
+            <title><![CDATA[Releasing Corde v3]]></title>
+            <link>https://lucasgmagalhaes.github.io/corde/blog/2021/03/30/corde-v3</link>
+            <guid>Releasing Corde v3</guid>
+            <pubDate>Tue, 30 Mar 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[Informations about version 3]]></description>
+        </item>
     </channel>
 </rss>
