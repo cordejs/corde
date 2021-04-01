@@ -9,7 +9,7 @@ import {
   TextChannel,
 } from "discord.js";
 import { CordeClientError } from "../errors";
-import { CordeBotLike, MessageIdentifier, RoleIdentifier } from "../types";
+import { ChannelLocation, CordeBotLike, MessageIdentifier, RoleIdentifier } from "../types";
 import { Events } from "./events";
 
 /**
@@ -122,8 +122,8 @@ export class CordeBot implements CordeBotLike {
    * Observes for a message send by the testing bot after corde bot
    * send it's message.
    */
-  async awaitMessagesFromTestingBot(timeout: number) {
-    return this.events.onceMessage(this._testBotId, timeout);
+  async awaitMessagesFromTestingBot(timeout: number, location?: ChannelLocation) {
+    return this.events.onceMessage(this._testBotId, location, timeout);
   }
 
   /**

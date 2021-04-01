@@ -3,6 +3,7 @@ import {
   MessageIdentifier,
   MessageEditedIdentifier,
   MessageEmbedLike,
+  ChannelLocation,
 } from "../../types";
 
 /**
@@ -18,31 +19,7 @@ export interface MessageMatches {
    * @param expect A message returned by a bot after invoke a command
    * @since 1.0
    */
-  toReturn(expect: string): void;
-  /**
-   * Defines the message expected to be returned by a
-   * command.
-   *
-   * @param expect A message returned by a bot after invoke a command
-   * @since 1.0
-   */
-  toReturn(expect: number): void;
-  /**
-   * Defines the message expected to be returned by a
-   * command.
-   *
-   * @param expect A message type **boolean**  returned by a bot after invoke a command
-   * @since 1.0
-   */
-  toReturn(expect: boolean): void;
-  /**
-   * Defines the message expected to be returned by a
-   * command.
-   *
-   * @param expect A message of type **bigint** returned by a bot after invoke a command
-   * @since 1.0
-   */
-  toReturn(expect: bigint): void;
+  toReturn(expect: bigint | boolean | number | string): void;
   /**
    * Defines the message expected to be returned by a
    * command.
@@ -51,6 +28,34 @@ export interface MessageMatches {
    * @since 1.0
    */
   toReturn(expect: MessageEmbedLike): void;
+
+  /**
+   * Defines the message expected to be returned by a
+   * command in a specific channel and guild(optional).
+   *
+   * @param expect A message returned by a bot after invoke a command
+   * @param channelId Id of the channel where the message must be sent to.
+   * @param guildId Id of the guild that contains the channel where the message must be sent to.
+   * @since 3.0
+   */
+  toReturnInChannel(
+    expect: bigint | boolean | number | string | MessageEmbedLike,
+    channelId: string,
+    guildId?: string,
+  ): void;
+
+  /**
+   * Defines the message expected to be returned by a
+   * command in a specific channel and guild(optional).
+   *
+   * @param expect A message returned by a bot after invoke a command.
+   * @param channelLocation Object with to holds the id of the channel and of the guild (optional).
+   * @since 3.0
+   */
+  toReturnInChannel(
+    expect: bigint | boolean | number | string | MessageEmbedLike,
+    channelLocation: ChannelLocation,
+  ): void;
 
   /**
    * Defines [reactions](https://discordjs.guide/popular-topics/reactions.html#reacting-to-messages)

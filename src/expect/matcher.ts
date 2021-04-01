@@ -9,6 +9,7 @@ import {
   RoleIdentifier,
   TestReport,
   CordeBotLike,
+  ChannelLocation,
 } from "../types";
 import { Colors } from "../utils/colors";
 import { RolePermission } from "../utils/permission";
@@ -32,6 +33,7 @@ import { MessageMatches } from "./matches/messageMatches";
 import { RoleMatches } from "./matches/roleMatches";
 import { buildReportMessage, resolveName, stringIsNullOrEmpty } from "../utils";
 import { getStackTrace } from "../utils/getStackTrace";
+import { ToReturnInChannel } from "./matches/message/toReturnInChannel";
 
 /**
  * Defines all functions that can be used
@@ -60,6 +62,17 @@ class ExpectMatches implements Matches {
   constructor(commandName: unknown, isNot: boolean) {
     this._commandName = commandName;
     this._isNot = isNot;
+  }
+
+  toReturnInChannel(
+    expect: string | number | bigint | boolean | MessageEmbedLike,
+    channelId: string | ChannelLocation,
+    guildId?: string,
+  ) {
+    const trace = getStackTrace(undefined, true, "toReturnInChannel");
+    testCollector.addTestFunction((cordeBot) => {
+      return this.operationFactory(trace, ToReturnInChannel, cordeBot, expect, channelId, guildId);
+    });
   }
 
   toEditMessage(
