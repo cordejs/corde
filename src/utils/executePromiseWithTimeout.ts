@@ -35,7 +35,7 @@ import { TimeoutError } from "../errors";
  */
 export function executePromiseWithTimeout<TResult extends any>(
   fn: (resolve: (reason?: TResult) => void, reject: (reason?: any) => void) => void,
-  timeout: number,
+  timeout?: number,
   rejectedData?: TResult,
 ) {
   if (!fn) {
@@ -49,7 +49,7 @@ export function executePromiseWithTimeout<TResult extends any>(
 
     fn((value) => {
       clearTimeout(nodeTimeout);
-      resolve(value);
+      resolve(value as TResult);
     }, reject);
   });
 }

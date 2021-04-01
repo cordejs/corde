@@ -7,6 +7,7 @@ const MILISECONDS_PER_SECOND = 1000;
  *
  * // example of outputs
  *
+ * ["", 0]
  * [100ms, 100]
  * [1s, 1000]
  * [1.01s, 1010]
@@ -23,7 +24,7 @@ const MILISECONDS_PER_SECOND = 1000;
  */
 export function dateDiff(date1: Date, date2: Date): [string, number] {
   if (!date1 || !date2 || !(date1 instanceof Date) || !(date2 instanceof Date)) {
-    return null;
+    return ["", 0];
   }
 
   const difference = date1.getTime() - date2.getTime();

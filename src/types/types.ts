@@ -99,23 +99,23 @@ export interface ConfigOptions {
   /**
    * Fake bot used to test the really one
    */
-  cordeTestToken?: string;
+  cordeTestToken: string;
   /**
    * User's bot that will be tested
    */
-  botTestId?: string;
+  botTestId: string;
   /**
    * User's bot token that will run.
    */
-  botTestToken?: string;
+  botTestToken: string;
   /**
    * Channel where tests will run
    */
-  channelId?: string;
+  channelId: string;
   /**
    * Guild where tests will run
    */
-  guildId?: string;
+  guildId: string;
   /**
    * Defines max amount of time that a command can run
    */
@@ -123,11 +123,11 @@ export interface ConfigOptions {
   /**
    * Defines how identify bot calls
    */
-  botPrefix?: string;
+  botPrefix: string;
   /**
    * Path for case tests. Use this from the base directory of the application
    */
-  testFiles?: string[];
+  testFiles: string[];
 }
 
 export interface Author {
@@ -383,12 +383,15 @@ export interface CordeBotLike {
    * Checks if corde bot is connected
    */
   isLoggedIn(): boolean;
-  findMessage(filter: (message: Message) => boolean): Promise<Message>;
-  findMessage(data: MessageIdentifier): Promise<Message>;
-  fetchRole(id: string): Promise<Role>;
-  fetchRoles(): Promise<RoleManager>;
+  findMessage(filter: (message: Message) => boolean): Promise<Message | undefined>;
+  findMessage(data: MessageIdentifier): Promise<Message | undefined>;
+  findMessage(
+    data: MessageIdentifier | ((message: Message) => boolean),
+  ): Promise<Message | undefined>;
+  fetchRoles(): Promise<RoleManager | null>;
+  fetchRole(id: string): Promise<Role | null>;
   hasRole(roleIdentifier: RoleIdentifier): Promise<boolean>;
-  findRole(roleIdentifier: RoleIdentifier): Promise<Role>;
+  findRole(roleIdentifier: RoleIdentifier): Promise<Role | undefined>;
   getRoles(): Collection<string, Role>;
   findGuild(guildId: string): Guild;
   findChannel(guild: Guild, channelId: string): GuildChannel;

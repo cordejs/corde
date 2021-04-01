@@ -4,8 +4,8 @@ import { dateDiff } from "./dateDiff";
  * @internal
  */
 export class Timer {
-  private _startTime: Date;
-  private _endTime: Date;
+  private _startTime!: Date;
+  private _endTime!: Date;
 
   start() {
     this._startTime = new Date();

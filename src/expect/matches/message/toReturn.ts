@@ -60,7 +60,7 @@ export class ToReturn extends ExpectTest {
       );
     }
 
-    let embedExpect: MinifiedEmbedMessage;
+    let embedExpect: MinifiedEmbedMessage | undefined;
     if (typeOf(_expect) === "object") {
       embedExpect = messageUtils.getMessageByType(
         _expect as MessageEmbed,
@@ -68,7 +68,7 @@ export class ToReturn extends ExpectTest {
       ) as MinifiedEmbedMessage;
     }
 
-    let embedReturned: MinifiedEmbedMessage;
+    let embedReturned: MinifiedEmbedMessage | undefined;
     if (returnedMessage.embeds[0]) {
       embedReturned = messageUtils.getMessageByType(
         returnedMessage,

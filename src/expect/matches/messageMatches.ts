@@ -1,4 +1,3 @@
-import { MessageEmbed } from "discord.js";
 import {
   EmojiLike,
   MessageIdentifier,
@@ -55,9 +54,9 @@ export interface MessageMatches {
 
   /**
    * Defines [reactions](https://discordjs.guide/popular-topics/reactions.html#reacting-to-messages)
-   * that must be add to command message.
+   * that must be added to the command message.
    *
-   * @param emojis Single or list of reactions that must be added to an message.
+   * @param emojis Single or list of reactions that must be added to a message.
    * It can be **emojis** or [custom emojis](https://support.discord.com/hc/en-us/articles/360036479811-Custom-Emojis).
    *
    * @example
@@ -95,7 +94,7 @@ export interface MessageMatches {
 
   /**
    * Check if a command removes a list of reactions from the last message sent
-   * by someone who is not the the testing bot or corde's bot.
+   * by someone who is not the testing bot or corde's bot.
    *
    * @param emojis Reactions to check if were removed. And/or reactions like (reactions that are customized).
    * @example

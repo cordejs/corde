@@ -3,9 +3,10 @@ import fs from "fs";
 import path from "path";
 import { ConfigError, FileError, PropertyError } from "../errors";
 import { ConfigOptions } from "../types";
+import { stringIsNullOrEmpty } from "../utils";
 
 /**
- * Check if configs are valid. Throws a exception
+ * Check if configs are valid. Throws an exception
  * if there is no parameter or if any required property is
  * missing.
  *
@@ -43,7 +44,7 @@ export function validate(configs: ConfigOptions) {
   }
 }
 
-function validatePaths(pathsDir: string[], errors: string[]) {
+function validatePaths(pathsDir: string[] | undefined, errors: string[]) {
   if (!pathsDir || pathsDir.length === 0) {
     errors.push("No test files informed");
     return;
@@ -72,14 +73,14 @@ function validatePaths(pathsDir: string[], errors: string[]) {
   }
 }
 
-function addToErrorsIfPropertyIsMissing(value: string, errors: string[], message: string) {
-  if (!isStringValid(value)) {
+function addToErrorsIfPropertyIsMissing(
+  value: string | undefined,
+  errors: string[],
+  message: string,
+) {
+  if (stringIsNullOrEmpty(value)) {
     errors.push(message);
   }
-}
-
-function isStringValid(value: string) {
-  return value && value.trim() !== "";
 }
 
 function buildMissingPropertiesErrorAndThrow(errorString: string, erros: string[]) {

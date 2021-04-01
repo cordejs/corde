@@ -24,8 +24,8 @@ given a command passed to it. All tests current available in this version(2.0) a
 - [`toSetRolePosition(value)`](/docs/expect#tosetrolepositionnumber-string--roleidentifier)
 
 :::note
-All examples bellow are only to ilustrate the functions called after
-`expect`. These examples are not used exatly show they are described
+All examples below are only to illustrate the functions called after
+`expect`. These examples are not used exactly to show they are described
 in a real use case.
 :::
 
@@ -33,17 +33,17 @@ in a real use case.
 
 ### `expect(string | number | Function)`
 
-Expect is a function that receives a command as argument. The same argument that you would send to
+Expect is a function that receives a command as an argument. The same argument that you would send to
 Discord to invoke some action from your bot. As there is a [prefix](/docs/configurations#botprefix) witch can
-be passed in config file, there is no need to pass that prefix in `expect` function.
+be passed in the config file, there is no need to pass that prefix in the `expect` function.
 
 The expect function receives by default a string, but it can the value can be of any type. This type will be resolved
 for a string value that will be used as the command.
 
 I.E:
 
-Suposing that there is a bot with prefix **!** and that bot has a command called **createAGuild**, you can
-use `expect` like the example bellow:
+Supposing that there is a bot with prefix **!** and that bot has a command called **createAGuild**, you can
+use `expect` like the example below:
 
 ```typescript
 expect("createAGuild");
@@ -57,7 +57,7 @@ expect(() => "createGuild"); // Valid
 expect(() => Promise.resolve("createGuild")); // Valid
 ```
 
-This function returns a several other functions to define what Corde should check after that command be invoke.
+This function returns several other functions to define what Corde should check after that command be invoke.
 
 :::note
 If for some reason you what to pass the bot prefix in `expect`, do not use the config variable [prefix](/docs/configuration#botprefix).
@@ -65,7 +65,7 @@ If for some reason you what to pass the bot prefix in `expect`, do not use the c
 
 ### `not`
 
-Use `not` to deny some test after this keyword. It can be used to check if a operation
+Use `not` to deny some test after this keyword. It can be used to check if an operation
 made by a bot command is anything but **not** something.
 
 I.E:
@@ -88,7 +88,7 @@ type of `messageIdentifier`:
 string | MessageIdentifier;
 ```
 
-Use `toAddReaction` to check if the bot added an reaction or an list of reactions to **the last message sent by someone who is not a bot**.
+Use `toAddReaction` to check if the bot added a reaction or a list of reactions to **the last message sent by someone who is not a bot**.
 
 ```typescript
 const messageId = "15198241251";
@@ -108,8 +108,8 @@ expect("addReactions").toAddReaction([{ id: "121512312" }], { content: "banana" 
 ```
 
 :::note
-This example is only to ilustrate how this test can be used, not an real case usage of this.
-We also will allow add the id of an message, in this test in the future.
+This example is only to illustrate how this test can be used, not a real case usage of this.
+We also will allow adding the id of a message, in this test in the future.
 :::
 
 ### `toEditMessage(newContent, messageIdentifier)`
@@ -182,7 +182,7 @@ type of `messageIdentifier`:
 string | MessageIdentifier;
 ```
 
-Use `toRemoveReaction` to check if an reaction or a list of reactions were removed
+Use `toRemoveReaction` to check if a reaction or a list of reactions were removed
 after a command call.
 
 ```typescript
@@ -204,7 +204,7 @@ expect("removeReactions").toRemoveReaction([{ id: "121512312" }], { content: "ba
 
 ### `toReturn(string | boolean | number | MessageEmbedLike)`
 
-Use `toReturn` to check if the bot send a primitive message value or an EmbedMessage after call of an
+Use `toReturn` to check if the bot send a primitive message value or an EmbedMessage after the call of an
 command passed in `expect`.
 
 I.E:
@@ -266,7 +266,7 @@ expect(`renameRole ${role.id}`).toRenameRole("dm-hight-master", { name: role.nam
 
 ### `toSetRoleColor(ColorResolvable | Colors, string | RoleIdentifier)`
 
-Use `toSetRoleColor` to check if a bot command set a new color to a role.
+Use `toSetRoleColor` to check if a bot command sets a new color to a role.
 
 <div style={{textAlign: 'center'}}>
 
@@ -286,7 +286,7 @@ expect(`setColor ${role.id}`).toSetRoleColor("GREEN", { name: role.name });
 
 ### `toSetRoleHoist(boolean, string | RoleIdentifier)`
 
-Use `toSetRoleHoist` to check if a bot command set or not a role as hoist.
+Use `toSetRoleHoist` to check if a bot command sets or not a role as a hoist.
 
 <div style={{textAlign: 'center'}}>
 

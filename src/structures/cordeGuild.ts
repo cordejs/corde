@@ -31,7 +31,7 @@ export class CordeGuild {
   /**
    * The ID of the voice channel where AFK members are moved
    */
-  get afkChannelID(): string {
+  get afkChannelID(): string | null {
     return this._guild.afkChannelID;
   }
 

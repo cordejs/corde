@@ -8,6 +8,8 @@ import { AssertionProps, Group, Test, TestFunctionType, VoidLikeFunction } from 
  */
 class TestCollector {
   private constructor() {
+    this.isInsideGroupClausure = false;
+    this.isInsideTestClausure = false;
     this.groups = [];
     this.beforeEachFunctions = new Queue();
     this.afterAllFunctions = new Queue();

@@ -1,6 +1,6 @@
 import { EXPECT_RECEIVED_TAB_SPACE } from "../consts";
 
-export function buildReportMessage(expect: string, received?: string) {
+export function buildReportMessage(expect?: string, received?: string) {
   let message = "\n";
 
   if (expect) {

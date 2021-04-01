@@ -31,7 +31,7 @@ First, we need the `corde` config file. The fastest way to do that is by calling
 yarn corde --init
 ```
 
-This command will create the `corde.config.json` file in the root of your project. For more details about the `init` command
+This command will create the `corde.config.json` file at the root of your project. For more details about the `init` command
 check the CLI documentation here.
 
 This file will have the following structure:
@@ -48,10 +48,10 @@ This file will have the following structure:
 }
 ```
 
-With the config file created, we need to put the necesary data to getting started with tests.
+With the config file created, we need to put the necessary data to getting started with tests.
 Check configurations for details about each option.
 
-Okay, after have the options setted, Let's create or first test.
+Okay, after having the options set, Let's create the first test.
 
 Let's supose that we have a file called `bot.js` (our bot) and it's have the following structure:
 
@@ -71,7 +71,7 @@ exports.client = client;
 exports.loginBot = loginBot;
 ```
 
-Then let's create a `test` folder in the root of your aplication and then a file called for example: `bot.test.js`.
+Then let's create a `test` folder in the root of your application and then a file called for example: `bot.test.js`.
 By doing this, we have the following structure of files
 
 ```
@@ -83,10 +83,10 @@ By doing this, we have the following structure of files
 ├── corde.config.json
 ```
 
-This bot have just a simple task: Send a fixed message when the users send **hello**.
+This bot has just a simple task: Send a fixed message when the users send **hello**.
 
 So, we need to create a test to ensure that the bot will always send the fixed message (**Hello!!**) when
-the user call **!hello** (`!` is the prefix for bot. Always use a prefix for your bot).
+the user call **!hello** (`!` is the prefix for the bot. Always use a prefix for your bot).
 
 Let's implement the `bot.test.js`:
 
@@ -112,19 +112,19 @@ afterAll(() => {
 ```
 
 :::info
-Corde does not have global function. We pretend to create then in the future.
+Corde does not have a global function. We pretend to create them in the future.
 :::
 
 So, what we got here?
 
-The first thing that we do is call `beforeStart` function. This function is mainly used to
+The first thing that we do is call the `beforeStart` function. This function is mainly used to
 init our bot connection (remember the `loginBot()`?).
 
-Then we can declare the `group` function. Be clare that `group` and `test` functions are optional.
-You can use just the `expect` function. That is what make the magic happens. (uuuh)
+Then we can declare the `group` function. Be clear that `group` and `test` functions are optional.
+You can use just the `expect` function. That is what makes the magic happens. (uh)
 
-`expect` wait for the _command name_. Pay attemtion that we do not put the bot prefix. Corde already do it
-for us. If we put it, we will se Corde sending `!!hello` to Discord (we do not want this).
+`expect` wait for the _command name_. Pay attention that we do not put the bot prefix. Corde already does it
+for us. If we put it, we will see Corde sending `!!hello` to Discord (we do not want this).
 
 After that, we call `toReturn` with the parameter `Hello!!`. So, we are telling Corde that we expect that after sending `!hello`,
 our bot should send `Hello!!`. And that is it.
@@ -139,7 +139,7 @@ It will run all tests and print the result like follow:
 
 <div style={{textAlign: 'center'}}>
 
-![Result code](/img/console_print.png)
+![Result code](../website/static/img/console_print.png)
 
 </div>
 

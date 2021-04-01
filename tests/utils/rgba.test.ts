@@ -2,12 +2,12 @@ import { rgba } from "../../src/utils";
 
 describe("testing rgba function", () => {
   it("should return null due to invalid value", () => {
-    expect(rgba(null)).toEqual(null);
+    expect(rgba(null)).toEqual([0, 0, 0, 0]);
   });
 
   it("should return null due to invalid value (string)", () => {
     // @ts-ignore
-    expect(rgba("")).toEqual(null);
+    expect(rgba("")).toEqual([0, 0, 0, 0]);
   });
 
   it("should convert a number to an rgba value", () => {

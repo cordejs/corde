@@ -53,23 +53,23 @@ describe("testing dateDiff function", () => {
 
   test("should output null due to no date1", () => {
     const date2 = new Date(2020, 12, 1, 10, 10, 10);
-    expect(dateDiff(null, date2)).toBeFalsy();
+    expect(dateDiff(null, date2)).toEqual(["", 0]);
   });
 
   test("should output null due to no date2", () => {
     const date1 = new Date(2020, 12, 1, 10, 10, 10);
-    expect(dateDiff(date1, null)).toBeFalsy();
+    expect(dateDiff(date1, null)).toEqual(["", 0]);
   });
 
   test("should output null due to date1 is not a Date", () => {
     const date2 = new Date(2020, 12, 1, 10, 10, 10);
     // @ts-ignore
-    expect(dateDiff(123, date2)).toBeFalsy();
+    expect(dateDiff(123, date2)).toEqual(["", 0]);
   });
 
   test("should output null due to date2 is not a Date", () => {
     const date1 = new Date(2020, 12, 1, 10, 10, 10);
     // @ts-ignore
-    expect(dateDiff(date1, 321)).toBeFalsy();
+    expect(dateDiff(date1, 321)).toEqual(["", 0]);
   });
 });

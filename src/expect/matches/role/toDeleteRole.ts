@@ -53,10 +53,8 @@ export class ToDeleteRole extends ExpectTest {
 
     const role = await this.cordeBot.findRole(roleIdentifier);
 
-    const invalidRoleErrorMessage = roleUtils.validateRole(role, roleIdentifier);
-
-    if (invalidRoleErrorMessage) {
-      return { pass: false, message: invalidRoleErrorMessage };
+    if (!role) {
+      return { pass: false, message: roleUtils.validateRole(role, roleIdentifier) };
     }
 
     if (role.deleted) {

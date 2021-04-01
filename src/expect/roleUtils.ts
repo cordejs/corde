@@ -34,7 +34,7 @@ class RoleUtils {
     return null;
   }
 
-  validateRole(role: Role, roleIdentifier: RoleIdentifier): string | null {
+  validateRole(role: Role | undefined, roleIdentifier: RoleIdentifier): string | undefined {
     if (!role) {
       const message = roleUtils.createExpectedMessageForRoleData(roleIdentifier);
 
@@ -48,7 +48,7 @@ class RoleUtils {
       );
     }
 
-    return null;
+    return undefined;
   }
 
   getRoleData(roleIdentifier: string | RoleIdentifier) {

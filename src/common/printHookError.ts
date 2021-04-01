@@ -5,7 +5,7 @@ import { buildReportMessage, formatObject, LogUpdate } from "../utils";
  */
 export function printHookErrors(errors: Error[], log?: LogUpdate) {
   for (let i = 0; i < errors.length; i++) {
-    // Erros throwed by hooks are always of type Error.
+    // Errors thrown by hooks are always of type Error.
 
     if (errors[i].message) {
       print(buildReportMessage(errors[i].message), log);

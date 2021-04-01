@@ -2,21 +2,21 @@ import { DEFAULT_TEST_TIMEOUT } from "../consts";
 import { ConfigOptions } from "../types";
 
 /**
- * Default interface of json config
+ * Default interface of JSON config
  *
  * @description `botTestToken` is not required.
  * only inform if is desired to start test bot with corde
  *
  */
 export class Config implements ConfigOptions {
-  cordeTestToken: string;
-  botTestId: string;
-  botTestToken?: string;
-  channelId: string;
-  guildId: string;
-  timeOut: number;
-  botPrefix: string;
-  testFiles: string[];
+  cordeTestToken!: string;
+  botTestId!: string;
+  botTestToken!: string;
+  channelId!: string;
+  guildId!: string;
+  timeOut?: number;
+  botPrefix!: string;
+  testFiles!: string[];
 
   /**
    * Set values to config options that are not **filed** yet
@@ -33,28 +33,28 @@ export class Config implements ConfigOptions {
    *
    * @param config new set of configs.
    */
-  setConfigs(config: ConfigOptions, forceUpdate?: boolean) {
-    if (!this.cordeTestToken || forceUpdate) {
+  setConfigs(config: Partial<ConfigOptions>, forceUpdate?: boolean) {
+    if (config.cordeTestToken && (!this.cordeTestToken || forceUpdate)) {
       this.cordeTestToken = config.cordeTestToken;
     }
 
-    if (!this.botPrefix || forceUpdate) {
+    if (config.botPrefix && (!this.botPrefix || forceUpdate)) {
       this.botPrefix = config.botPrefix;
     }
 
-    if (!this.botTestId || forceUpdate) {
+    if (config.botTestId && (!this.botTestId || forceUpdate)) {
       this.botTestId = config.botTestId;
     }
 
-    if (!this.botTestToken || forceUpdate) {
+    if (config.botTestToken && (!this.botTestToken || forceUpdate)) {
       this.botTestToken = config.botTestToken;
     }
 
-    if (!this.channelId || forceUpdate) {
+    if (config.channelId && (!this.channelId || forceUpdate)) {
       this.channelId = config.channelId;
     }
 
-    if (!this.guildId || forceUpdate) {
+    if (config.guildId && (!this.guildId || forceUpdate)) {
       this.guildId = config.guildId;
     }
 
@@ -66,11 +66,11 @@ export class Config implements ConfigOptions {
       }
     }
 
-    if (!this.botPrefix || forceUpdate) {
+    if (config.botPrefix && (!this.botPrefix || forceUpdate)) {
       this.botPrefix = config.botPrefix;
     }
 
-    if (!this.testFiles || this.testFiles.length === 0 || forceUpdate) {
+    if (config.testFiles && (!this.testFiles || this.testFiles.length === 0 || forceUpdate)) {
       this.testFiles = config.testFiles;
     }
   }

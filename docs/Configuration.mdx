@@ -4,19 +4,19 @@ title: Configuring Corde
 custom_edit_url: https://github.com/lucasgmagalhaes/corde/blob/master/docs/Configuration.mdx
 ---
 
-Corde's configuration can be defined through a `corde.config.js|json|ts` file. This file must be in the root of your application,
+Corde's configuration can be defined through a `corde.config.js|json|ts` file. This file must be at the root of your application,
 or you can declare a custom path for it with the cli option [--config](CLI.mdx#--config).
 
 This is the full config file for Corde:
 
 ```javascript
 {
-	"cordeTestToken":  "YOUR_TESTING_BOT_TOKEN_HERE",
-	"botTestId":  "YOUR_TESTING_BOT_ID_HERE",
-	"botTestToken":  "YOUR_BOT_TOKEN_HERE",
-	"guildId":  "THE_GUID_OF_BOT_HERE",
-	"channelId":  "CHANNELS_ID_HERE",
-	"botPrefix":  "+",
+    "cordeTestToken":  "YOUR_TESTING_BOT_TOKEN_HERE",
+    "botTestId":  "YOUR_TESTING_BOT_ID_HERE",
+    "botTestToken":  "YOUR_BOT_TOKEN_HERE",
+    "guildId":  "THE_GUID_OF_BOT_HERE",
+    "channelId":  "CHANNELS_ID_HERE",
+    "botPrefix":  "+",
     "testFiles":  ["./test"],
     "timeOut": 1000
 }
@@ -105,4 +105,4 @@ Array with the path of test folders | files.
 **Example: `1000`**  
 **Default: `5000`**
 
-Timeout for each test. Value mesuared in miliseconds.
+Timeout for each test. The value in milliseconds.

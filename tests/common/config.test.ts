@@ -4,15 +4,12 @@ import { DEFAULT_TEST_TIMEOUT } from "../../src/consts";
 
 describe("testing config", () => {
   it("should set all values to configs", () => {
-    const configOptions: ConfigOptions = {
+    const configOptions: Partial<ConfigOptions> = {
       botPrefix: "!",
       botTestId: "123",
-      channelId: "",
-      cordeTestToken: "",
       guildId: "123",
       testFiles: ["123"],
-      timeOut: undefined,
-      botTestToken: undefined,
+      timeOut: DEFAULT_TEST_TIMEOUT,
     };
 
     const config = new Config();

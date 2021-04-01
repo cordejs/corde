@@ -25,10 +25,9 @@ export class ToSetRoleColor extends ExpectTest {
     }
 
     const oldRole = await this.cordeBot.findRole(identifier);
-    const invalidRoleErrorMessage = roleUtils.validateRole(oldRole, identifier);
 
-    if (invalidRoleErrorMessage) {
-      return { pass: false, message: invalidRoleErrorMessage };
+    if (!oldRole) {
+      return { pass: false, message: roleUtils.validateRole(oldRole, identifier) };
     }
 
     const numberColor = resolveColor(color);
