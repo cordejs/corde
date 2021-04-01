@@ -24,25 +24,18 @@ describe("testing executeWithTimeout function", () => {
   });
 
   it("should fail in execution of async function", async () => {
-    expect(
+    try {
       executeWithTimeout(
-        () =>
+        async () =>
           new Promise<string>((resolve) => {
             setTimeout(() => {
               resolve("ok");
             }, 1000);
           }),
         100,
-      ),
-    ).rejects.toBeTruthy();
-  });
-
-  it("should fail due to timeout", () => {
-    expect(
-      executeWithTimeout(
-        () => new Promise<string>(() => {}),
-        100,
-      ),
-    ).rejects.toBeTruthy();
+      );
+    } catch (error) {
+      expect(error).toBeTruthy();
+    }
   });
 });
