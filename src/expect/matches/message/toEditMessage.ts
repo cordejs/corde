@@ -22,7 +22,7 @@ export class ToEditMessage extends ExpectTest {
 
     if (!isPrimitiveValue(newValue) && typeOf(newValue) !== "object") {
       return this.createReport(
-        `expected: expect value to be a primitive value (string, boolean, number) or an MessageEmbedLike object\n`,
+        "expected: expect value to be a primitive value (string, boolean, number) or an MessageEmbedLike object\n",
         `received: ${typeOf(newValue)}`,
       );
     }
@@ -51,8 +51,8 @@ export class ToEditMessage extends ExpectTest {
 
       if (!_messageData) {
         return this.createReport(
-          `expected: testing bot to edit the last message sent\n`,
-          `received: message was not edited`,
+          "expected: testing bot to edit the last message sent\n",
+          "received: message was not edited",
         );
       }
 
@@ -60,7 +60,7 @@ export class ToEditMessage extends ExpectTest {
         `expected: testing bot to edit the ${messageUtils.humanizeMessageIdentifierObject(
           _messageData,
         )}\n`,
-        `received: message was not edited`,
+        "received: message was not edited",
       );
     }
 
@@ -79,8 +79,8 @@ export class ToEditMessage extends ExpectTest {
 
     if (this.isNot) {
       return this.createReport(
-        `expected: message from bot be different from expectation\n`,
-        `received: both returned and expectation are equal`,
+        "expected: message from bot be different from expectation\n",
+        "received: both returned and expectation are equal",
       );
     }
 

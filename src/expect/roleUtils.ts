@@ -27,7 +27,7 @@ class RoleUtils {
     if (!roleIdentifier) {
       return buildReportMessage(
         "expected: data to identifier the role (id or name)\n",
-        `received: null`,
+        "received: null",
       );
     }
 
@@ -39,11 +39,11 @@ class RoleUtils {
       const message = roleUtils.createExpectedMessageForRoleData(roleIdentifier);
 
       if (message) {
-        return buildReportMessage(`expected: ${message}\n`, `received: null`);
+        return buildReportMessage(`expected: ${message}\n`, "received: null");
       }
 
       return buildReportMessage(
-        `expected: a id or a name to identify the role\n`,
+        "expected: a id or a name to identify the role\n",
         `received: ${formatObject(roleIdentifier)}`,
       );
     }

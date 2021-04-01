@@ -18,14 +18,14 @@ export class ToRenameRole extends ExpectTest {
 
     if (typeof newName !== "string" && typeof newName !== "number") {
       return this.createReport(
-        `expected: parameter newName must be a string or a number\n`,
+        "expected: parameter newName must be a string or a number\n",
         `received: ${typeOf(newName)}`,
       );
     }
 
     if (typeof newName === "string" && newName.trim() === "") {
       return this.createReport(
-        `expected: parameter newName must be a valid string\n`,
+        "expected: parameter newName must be a valid string\n",
         `received: '${newName}'`,
       );
     }
@@ -48,7 +48,7 @@ export class ToRenameRole extends ExpectTest {
 
       return this.createReport(
         `expected: role '${oldRole.name}' to be renamed to ${newName}\n`,
-        `received: name was not changed`,
+        "received: name was not changed",
       );
     }
 

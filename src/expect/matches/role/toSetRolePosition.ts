@@ -17,7 +17,7 @@ export class ToSetRolePosition extends ExpectTest {
 
     if (typeof newPosition !== "number") {
       return this.createReport(
-        `expected: position option to be a number\n`,
+        "expected: position option to be a number\n",
         `received: ${typeOf(newPosition)}`,
       );
     }
@@ -36,7 +36,7 @@ export class ToSetRolePosition extends ExpectTest {
       .first();
 
     if (!lastRole) {
-      return this.createReport(`no roles were found`);
+      return this.createReport("no roles were found");
     }
 
     if (newPosition > lastRole.position) {
@@ -57,7 +57,7 @@ export class ToSetRolePosition extends ExpectTest {
 
       return this.createReport(
         `expected: role position to change to ${newPosition}\n`,
-        `received: position didn't change`,
+        "received: position didn't change",
       );
     }
 

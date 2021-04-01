@@ -1,4 +1,3 @@
-import { Message, PartialMessage } from "discord.js";
 import { MessageIdentifier, TestReport } from "../../../types";
 import { typeOf } from "../../../utils";
 import messageUtils from "../../messageUtils";
@@ -14,7 +13,7 @@ export class ToUnPinMessage extends ExpectTest {
       (typeOf(messageIdentifier) !== "string" && typeOf(messageIdentifier) !== "object")
     ) {
       return this.createReport(
-        `expected: message identifier to be a string or a MessageIdentifier object\n`,
+        "expected: message identifier to be a string or a MessageIdentifier object\n",
         `received: ${typeOf(messageIdentifier)}`,
       );
     }
@@ -29,9 +28,8 @@ export class ToUnPinMessage extends ExpectTest {
 
     await this.cordeBot.sendTextMessage(this.command);
     const msgString = messageUtils.humanizeMessageIdentifierObject(_msgIdentifier);
-    let message: Message | PartialMessage;
     try {
-      message = await this.cordeBot.events.onceMessageUnPinned(_msgIdentifier);
+      await this.cordeBot.events.onceMessageUnPinned(_msgIdentifier);
     } catch {
       if (this.isNot) {
         return { pass: true };
@@ -39,7 +37,7 @@ export class ToUnPinMessage extends ExpectTest {
 
       return this.createReport(
         `expected: unpin ${msgString}\n`,
-        `received: informed message was not unpinned`,
+        "received: informed message was not unpinned",
       );
     }
 
@@ -54,7 +52,7 @@ export class ToUnPinMessage extends ExpectTest {
 
     return this.createReport(
       `expected: to ${this.isNot ? "not " : ""}unpin ${msgString}\n`,
-      `received: message pin = true`,
+      "received: message pin = true",
     );
   }
 }

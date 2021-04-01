@@ -1,4 +1,4 @@
-import { GuildEmoji, Message, MessageReaction, PartialUser, ReactionEmoji, User } from "discord.js";
+import { MessageReaction, PartialUser, User } from "discord.js";
 import { TimeoutError } from "../../../errors";
 import { EmojiLike, EmojisType, MessageIdentifier, TestReport } from "../../../types";
 import { typeOf } from "../../../utils";
@@ -20,14 +20,14 @@ export class ToRemoveReaction extends ExpectTest {
       typeOf(messageIdentifier) !== "string"
     ) {
       return this.createReport(
-        `expect: message data to be null, undefined, string or an object with id or text properties\n`,
+        "expect: message data to be null, undefined, string or an object with id or text properties\n",
         `received: ${typeOf(messageIdentifier)}`,
       );
     }
 
     if (!emojis || !Array.isArray(emojis)) {
       return this.createReport(
-        `expected: emojis parameter to be an array with string or objects\n`,
+        "expected: emojis parameter to be an array with string or objects\n",
         `received: ${typeOf(emojis)}`,
       );
     }
@@ -65,7 +65,7 @@ export class ToRemoveReaction extends ExpectTest {
 
       return this.createReport(
         `expected: to remove reactions ${stringifyReactionToPrint(emojis)}\n`,
-        `received: no reaction was removed to message`,
+        "received: no reaction was removed to message",
       );
     }
 

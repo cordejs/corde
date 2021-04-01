@@ -18,14 +18,14 @@ export class ToSetRoleHoist extends ExpectTest {
 
     if (hoist == undefined) {
       return this.createReport(
-        `expected: hoist option to be true or false\n`,
+        "expected: hoist option to be true or false\n",
         `received: ${typeOf(hoist)}`,
       );
     }
 
     if (typeof hoist !== "boolean") {
       return this.createReport(
-        `expect: hoist parameter to be of boolean type\n`,
+        "expect: hoist parameter to be of boolean type\n",
         `received: ${typeOf(hoist)}`,
       );
     }
@@ -48,7 +48,7 @@ export class ToSetRoleHoist extends ExpectTest {
 
       return this.createReport(
         `expected: hoist to be ${hoist}\n`,
-        `received: role hoist was not updated`,
+        "received: role hoist was not updated",
       );
     }
     if (role.hoist === hoist) {

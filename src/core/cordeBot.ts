@@ -6,7 +6,6 @@ import {
   Message,
   MessageEmbed,
   Role,
-  RoleManager,
   TextChannel,
 } from "discord.js";
 import { CordeClientError } from "../errors";
@@ -113,16 +112,10 @@ export class CordeBot implements CordeBotLike {
    * or a resolve for the promise with the message returned by the testing bot.
    */
   async sendTextMessage(message: string | number | boolean): Promise<Message> {
-    return new Promise<Message>(async (resolve, reject) => {
-      try {
-        this.validateMessageAndChannel(message);
-        const formattedMessage = this._prefix + message;
-        const returnedMessage = await this.textChannel.send(formattedMessage);
-        resolve(returnedMessage);
-      } catch (error) {
-        reject(error);
-      }
-    });
+    this.validateMessageAndChannel(message);
+    const formattedMessage = this._prefix + message;
+    const returnedMessage = await this.textChannel.send(formattedMessage);
+    return returnedMessage;
   }
 
   /**
@@ -216,7 +209,11 @@ export class CordeBot implements CordeBotLike {
     });
   }
 
-  private buildLoginErrorMessage(token: string, error: object) {
+  // Don't use `object` as a type. The `object` type is currently hard to use
+  // ([see this issue](https://github.com/microsoft/TypeScript/issues/21732)).
+  // Consider using `Record<string, unknown>` instead, as it allows you to more easily inspect and use the keys
+
+  private buildLoginErrorMessage(token: string, error: Record<string, unknown>) {
     return `Error trying to login with token ${token}. \n` + error;
   }
 
@@ -238,7 +235,7 @@ export class CordeBot implements CordeBotLike {
     } else if (!this._client.guilds.cache.has(guildId)) {
       throw new CordeClientError(
         `Guild ${guildId} doesn't belong to corde bot. change the guild id ` +
-          ` in corde.config or add the bot to a valid guild`,
+          " in corde.config or add the bot to a valid guild",
       );
     } else {
       const guild = this._client.guilds.cache.find((_guild) => _guild.id === guildId);

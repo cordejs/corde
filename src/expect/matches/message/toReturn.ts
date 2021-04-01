@@ -20,7 +20,7 @@ export class ToReturn extends ExpectTest {
     this.expectation = expect;
     if (!isPrimitiveValue(expect) && typeOf(expect) !== "object") {
       return this.createReport(
-        `expected: expect value to be a primitive value (string, boolean, number) or an MessageEmbedLike\n`,
+        "expected: expect value to be a primitive value (string, boolean, number) or an MessageEmbedLike\n",
         `received: ${typeOf(expect)}`,
       );
     }
@@ -35,8 +35,8 @@ export class ToReturn extends ExpectTest {
       }
 
       return this.createReport(
-        `expected: testing bot to send a message\n`,
-        `received: no message was sent`,
+        "expected: testing bot to send a message\n",
+        "received: no message was sent",
       );
     }
 
@@ -55,8 +55,8 @@ export class ToReturn extends ExpectTest {
 
     if (this.isNot) {
       return this.createReport(
-        `expected: message from bot be different from expectation\n`,
-        `received: both returned and expectation are equal`,
+        "expected: message from bot be different from expectation\n",
+        "received: both returned and expectation are equal",
       );
     }
 
