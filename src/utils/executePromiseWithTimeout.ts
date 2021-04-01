@@ -42,7 +42,7 @@ export function executePromiseWithTimeout<TResult extends any>(
     throw new Error("can not execute an null function");
   }
 
-  return new Promise<TResult>(async (resolve, reject) => {
+  return new Promise<TResult>((resolve, reject) => {
     const nodeTimeout = setTimeout(() => {
       reject(new TimeoutError("timeout", rejectedData));
     }, timeout);

@@ -14,6 +14,140 @@ import { EmbedFieldData } from "discord.js";
 import { Stream } from "stream";
 import { Events } from "../core/events";
 
+export interface TestReport {
+  readonly pass: boolean;
+  readonly message?: string;
+  trace?: string;
+}
+
+export interface Author {
+  icon_url: string;
+  name: string;
+  url: string;
+}
+
+export interface Field {
+  name: string;
+  inline: boolean;
+  value: string;
+}
+
+export interface Image {
+  url: string;
+}
+
+export interface Thumbnail {
+  url: string;
+}
+
+export interface EmojiLike {
+  id?: string;
+  name?: string;
+}
+
+export interface MinifiedEmbedMessage {
+  author: Author;
+  color: number;
+  description: string;
+  fields: Field[];
+  footer?: any;
+  image: Image;
+  thumbnail: Thumbnail;
+  timestamp?: any;
+  title: string;
+  type: string;
+  url: string;
+}
+
+export interface MessageIdentifier {
+  /**
+   * Text of a message, use it to find a message if you don't know
+   * it's **id**.
+   *
+   * If there is more than one message with the same content,
+   * Corde will handle the latest message sent.
+   *
+   * ps: To avoid possible inconsistences, recommend to use **id** for message search.
+   */
+  content?: string;
+  /**
+   * Identifier of the message
+   */
+  id?: string;
+}
+
+export interface Identifier {
+  id?: string;
+}
+
+export interface RoleIdentifier extends Identifier {
+  name?: string;
+}
+
+/**
+ * Encapsulation of Discord Client with all specific
+ * functions for corde test.
+ */
+export interface CordeBotLike {
+  readonly events: Events;
+  readonly guild: Guild;
+  readonly roleManager: RoleManager;
+  readonly channel: TextChannel;
+  readonly testBotId: string;
+  /**
+   * Authenticate Corde bot to the installed bot in Discord server.
+   *
+   * @param token Corde bot token
+   *
+   * @returns Promise resolve for success connection, or a promise
+   * rejection with a formatted message if there was found a error in
+   * connection attempt.
+   */
+  login(token: string): Promise<string>;
+  /**
+   * Destroy client connection.
+   */
+  logout(): void;
+  /**
+   * Sends a pure message without prefix it.
+   * @param message Data to be send to channel
+   */
+  sendMessage(message: string | number | MessageEmbed): Promise<Message>;
+  /**
+   * Send a message to a channel defined in configs.
+   *
+   * @see Runtime
+   *
+   * @param message Message without prefix that will be sent to defined server's channel
+   * @description The message is concatenated with the stored **prefix** and is sent to the channel.
+   *
+   * @return Promise rejection if a testing bot does not send any message in the timeout value setted,
+   * or a resolve for the promise with the message returned by the testing bot.
+   */
+  sendTextMessage(message: string | number | boolean): Promise<Message>;
+  /**
+   * Observes for a message send by the testing bot after corde bot
+   * send it's message.
+   */
+  awaitMessagesFromTestingBot(timeout: number): Promise<Message>;
+  /**
+   * Checks if corde bot is connected
+   */
+  isLoggedIn(): boolean;
+  findMessage(filter: (message: Message) => boolean): Promise<Message | undefined>;
+  findMessage(data: MessageIdentifier): Promise<Message | undefined>;
+  findMessage(
+    data: MessageIdentifier | ((message: Message) => boolean),
+  ): Promise<Message | undefined>;
+  fetchRoles(): Promise<RoleManager | null>;
+  fetchRole(id: string): Promise<Role | null>;
+  hasRole(roleIdentifier: RoleIdentifier): Promise<boolean>;
+  findRole(roleIdentifier: RoleIdentifier): Promise<Role | undefined>;
+  getRoles(): Collection<string, Role>;
+  findGuild(guildId: string): Guild;
+  findChannel(guild: Guild, channelId: string): GuildChannel;
+}
+
 export type VoidLikeFunction = (() => void) | (() => PromiseLike<void>) | (() => Promise<void>);
 export type TestFunctionType = (cordeBot: CordeBotLike) => Promise<TestReport>;
 export type messageType = "text" | "embed";
@@ -48,15 +182,6 @@ export interface AssertionProps {
 }
 
 /**
- * Contain all tests cases | groups of a test file.
- */
-export interface TestFile {
-  path: string;
-  groups: Group[];
-  isEmpty: boolean;
-}
-
-/**
  * Represents **test** structure
  */
 export interface Test {
@@ -75,12 +200,13 @@ export interface Group {
   tests: Test[];
 }
 
-export interface Identifier {
-  id?: string;
-}
-
-export interface RoleIdentifier extends Identifier {
-  name?: string;
+/**
+ * Contain all tests cases | groups of a test file.
+ */
+export interface TestFile {
+  path: string;
+  groups: Group[];
+  isEmpty: boolean;
 }
 
 export interface BaseRole {
@@ -130,57 +256,6 @@ export interface ConfigOptions {
   testFiles: string[];
 }
 
-export interface Author {
-  icon_url: string;
-  name: string;
-  url: string;
-}
-
-export interface Field {
-  name: string;
-  inline: boolean;
-  value: string;
-}
-
-export interface Image {
-  url: string;
-}
-
-export interface Thumbnail {
-  url: string;
-}
-
-export interface MinifiedEmbedMessage {
-  author: Author;
-  color: number;
-  description: string;
-  fields: Field[];
-  footer?: any;
-  image: Image;
-  thumbnail: Thumbnail;
-  timestamp?: any;
-  title: string;
-  type: string;
-  url: string;
-}
-
-export interface MessageIdentifier {
-  /**
-   * Text of a message, use it to find a message if you don't know
-   * it's **id**.
-   *
-   * If there is more than one message with the same content,
-   * Corde will handle the latest message sent.
-   *
-   * ps: To avoid possible inconsistences, recommend to use **id** for message search.
-   */
-  content?: string;
-  /**
-   * Identifier of the message
-   */
-  id?: string;
-}
-
 /**
  * Object contract used to identify messages in message
  * edition tests.
@@ -194,12 +269,6 @@ export interface MessageEditedIdentifier {
    * Old content of the message to identify it.
    */
   oldContent?: string;
-}
-
-export interface TestReport {
-  readonly pass: boolean;
-  readonly message?: string;
-  trace?: string;
 }
 
 export interface SemiRunnerReport {
@@ -326,73 +395,4 @@ export interface MessageEmbedLike {
    * Url of embed
    */
   url?: string;
-}
-
-export interface EmojiLike {
-  id?: string;
-  name?: string;
-}
-
-/**
- * Encapsulation of Discord Client with all specific
- * functions for corde test.
- */
-export interface CordeBotLike {
-  readonly events: Events;
-  readonly guild: Guild;
-  readonly roleManager: RoleManager;
-  readonly channel: TextChannel;
-  readonly testBotId: string;
-  /**
-   * Authenticate Corde bot to the installed bot in Discord server.
-   *
-   * @param token Corde bot token
-   *
-   * @returns Promise resolve for success connection, or a promise
-   * rejection with a formatted message if there was found a error in
-   * connection attempt.
-   */
-  login(token: string): Promise<string>;
-  /**
-   * Destroy client connection.
-   */
-  logout(): void;
-  /**
-   * Sends a pure message without prefix it.
-   * @param message Data to be send to channel
-   */
-  sendMessage(message: string | number | MessageEmbed): Promise<Message>;
-  /**
-   * Send a message to a channel defined in configs.
-   *
-   * @see Runtime
-   *
-   * @param message Message without prefix that will be sent to defined server's channel
-   * @description The message is concatenated with the stored **prefix** and is sent to the channel.
-   *
-   * @return Promise rejection if a testing bot does not send any message in the timeout value setted,
-   * or a resolve for the promise with the message returned by the testing bot.
-   */
-  sendTextMessage(message: string | number | boolean): Promise<Message>;
-  /**
-   * Observes for a message send by the testing bot after corde bot
-   * send it's message.
-   */
-  awaitMessagesFromTestingBot(timeout: number): Promise<Message>;
-  /**
-   * Checks if corde bot is connected
-   */
-  isLoggedIn(): boolean;
-  findMessage(filter: (message: Message) => boolean): Promise<Message | undefined>;
-  findMessage(data: MessageIdentifier): Promise<Message | undefined>;
-  findMessage(
-    data: MessageIdentifier | ((message: Message) => boolean),
-  ): Promise<Message | undefined>;
-  fetchRoles(): Promise<RoleManager | null>;
-  fetchRole(id: string): Promise<Role | null>;
-  hasRole(roleIdentifier: RoleIdentifier): Promise<boolean>;
-  findRole(roleIdentifier: RoleIdentifier): Promise<Role | undefined>;
-  getRoles(): Collection<string, Role>;
-  findGuild(guildId: string): Guild;
-  findChannel(guild: Guild, channelId: string): GuildChannel;
 }

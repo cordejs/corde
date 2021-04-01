@@ -1,13 +1,6 @@
 import { Role } from "discord.js";
 import { RoleIdentifier, TestReport } from "../../../types";
-import {
-  calcPermissionsValue,
-  diff,
-  Permission,
-  permissionsArray,
-  RolePermission,
-  typeOf,
-} from "../../../utils";
+import { diff, permissionsArray, RolePermission, typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
 import { ExpectTest } from "../expectTest";
 
@@ -32,7 +25,7 @@ export class ToSetRolePermission extends ExpectTest {
       typeOf(permissions) !== "undefined"
     ) {
       return this.createReport(
-        `expected: permissions to be null, undefined or an array\n`,
+        "expected: permissions to be null, undefined or an array\n",
         `received: ${typeOf(permissions)}`,
       );
     }
@@ -59,7 +52,7 @@ export class ToSetRolePermission extends ExpectTest {
 
       return this.createReport(
         `expected: role permissions change to: ${getPermissionsString(permissions)}\n`,
-        `received: permissions were not changed`,
+        "received: permissions were not changed",
       );
     }
 

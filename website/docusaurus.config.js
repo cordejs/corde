@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 const versions = require("./versions.json");
 
 module.exports = {
@@ -20,7 +22,7 @@ module.exports = {
         {
           to: "docs/",
           activeBaseRegex: "^(.*docs\\/(?!(structures\\/?)).*)",
-          label: "Docs",
+          label: "Documentation",
           position: "left",
         },
         {

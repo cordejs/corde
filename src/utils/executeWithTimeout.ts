@@ -16,13 +16,11 @@ export async function executeWithTimeout<TResult extends any>(
     throw new Error("can not execute an null function");
   }
 
-  return new Promise<TResult>(async (resolve, reject) => {
-    const nodeTimeout = setTimeout(() => {
-      reject("timeout");
-    }, timeout);
+  const nodeTimeout = setTimeout(() => {
+    throw new Error("timeout");
+  }, timeout);
 
-    const response = await fn();
-    clearTimeout(nodeTimeout);
-    resolve(response);
-  });
+  const response = await fn();
+  clearTimeout(nodeTimeout);
+  return response;
 }

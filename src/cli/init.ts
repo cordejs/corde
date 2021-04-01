@@ -121,7 +121,7 @@ function tabs(count: number, indentType: string) {
   return new Array(count + 1).join(indentType);
 }
 
-function format(json: object | string, config: Config) {
+function format(json: Record<string, unknown> | string, config: Config) {
   config = config || configDefault;
   const indent = indentConfig[config.type];
 

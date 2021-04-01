@@ -1,4 +1,4 @@
-import chalk, { rgb } from "chalk";
+import chalk from "chalk";
 import { ColorResolvable, Role } from "discord.js";
 import { RoleIdentifier, TestReport } from "../../../types";
 import { resolveColor, rgba, typeOf } from "../../../utils";
@@ -49,7 +49,7 @@ export class ToSetRoleColor extends ExpectTest {
         `expected: change role color from ${fromLabelColor(
           resolvedExpectedColor,
         )} to ${toLabelColor(numberColor)}\n`,
-        `received: the color was not changed`,
+        "received: the color was not changed",
       );
     }
 

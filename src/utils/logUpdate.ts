@@ -1,4 +1,4 @@
-import { default as _logUpdate } from "log-update";
+import _logUpdate from "log-update";
 
 export class LogUpdate {
   private _logValue: string[];

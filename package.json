@@ -42,7 +42,7 @@
     "fix-lint": "eslint --fix ./src ./tests",
     "np": "np --no-cleanup --no-yarn",
     "format": "prettier --write \"src/**/*.ts\"",
-    "lint": "eslint src",
+    "lint": "eslint src/**/*.ts",
     "validate-ci": "circleci config validate",
     "jestClear": "jest --clearCache",
     "postinstall": "husky install",

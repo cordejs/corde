@@ -7,7 +7,10 @@ import { Colors, resolveColor, RolePermission } from "../utils";
  * @see https://discord.com/developers/docs/topics/permissions#role-object
  */
 export class CordeRole {
-  constructor(private _role: Role) {}
+  private _role: Role;
+  constructor(role: Role) {
+    this._role = role;
+  }
 
   /**
    * Integer representation of hexadecimal color code.

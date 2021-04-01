@@ -1,4 +1,3 @@
-import { Message, PartialMessage } from "discord.js";
 import { MessageIdentifier, TestReport } from "../../../types";
 import { typeOf } from "../../../utils";
 import messageUtils from "../../messageUtils";
@@ -14,7 +13,7 @@ export class ToPinMessage extends ExpectTest {
       (typeOf(messageIdentifier) !== "string" && typeOf(messageIdentifier) !== "object")
     ) {
       return this.createReport(
-        `expected: message identifier to be a string or a MessageIdentifier object\n`,
+        "expected: message identifier to be a string or a MessageIdentifier object\n",
         `received: ${typeOf(messageIdentifier)}`,
       );
     }
@@ -29,9 +28,8 @@ export class ToPinMessage extends ExpectTest {
 
     await this.cordeBot.sendTextMessage(this.command);
     const msgString = messageUtils.humanizeMessageIdentifierObject(_msgIdentifier);
-    let message: Message | PartialMessage;
     try {
-      message = await this.cordeBot.events.onceMessagePinned(_msgIdentifier);
+      await this.cordeBot.events.onceMessagePinned(_msgIdentifier);
     } catch {
       if (this.isNot) {
         return { pass: true };
@@ -39,7 +37,7 @@ export class ToPinMessage extends ExpectTest {
 
       return this.createReport(
         `expected: pin ${msgString}\n`,
-        `received: informed message was not pinned`,
+        "received: informed message was not pinned",
       );
     }
 
@@ -54,7 +52,7 @@ export class ToPinMessage extends ExpectTest {
 
     return this.createReport(
       `expected: to ${this.isNot ? "not " : ""}pin ${msgString}\n`,
-      `received: message pin = false`,
+      "received: message pin = false",
     );
   }
 }

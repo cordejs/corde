@@ -13,7 +13,7 @@ import { validate } from "./validate";
 
 declare module "ora" {
   interface Ora {
-    _spinner: object;
+    _spinner: Record<string, unknown>;
   }
 }
 

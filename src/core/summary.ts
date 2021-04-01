@@ -1,4 +1,4 @@
-import { TEXT_EMPTY, TEXT_FAIL, TEXT_PASS, TEXT_PENDING } from "../consts";
+import { TEXT_EMPTY, TEXT_FAIL, TEXT_PASS } from "../consts";
 import { RunnerReport } from "../types";
 
 interface SummaryLine {

@@ -1,5 +1,4 @@
 import {
-  BufferResolvable,
   Channel,
   ChannelPosition,
   ChannelResolvable,
@@ -14,7 +13,6 @@ import {
 import {
   GuildFeaturesType,
   SystemChannelFlagsResolvable,
-  SystemChannelFlagsString,
   VerificationLevel,
   VerificationLevelType,
 } from "../types";

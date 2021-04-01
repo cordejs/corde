@@ -18,14 +18,14 @@ export class ToSetRoleMentionable extends ExpectTest {
 
     if (mentionable == undefined) {
       return this.createReport(
-        `expected: mentionable option to be true or false\n`,
+        "expected: mentionable option to be true or false\n",
         `received: ${typeOf(mentionable)}`,
       );
     }
 
     if (typeof mentionable !== "boolean") {
       return this.createReport(
-        `expected: mentionable parameter to be of boolean type\n`,
+        "expected: mentionable parameter to be of boolean type\n",
         `received: ${typeOf(mentionable)}`,
       );
     }
@@ -48,7 +48,7 @@ export class ToSetRoleMentionable extends ExpectTest {
 
       return this.createReport(
         `expected: mentionable to be ${mentionable}\n`,
-        `received: role mentionable was not updated`,
+        "received: role mentionable was not updated",
       );
     }
     if (role.mentionable === mentionable) {
