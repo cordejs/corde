@@ -1,3 +1,10 @@
+# 3.0.2
+
+## 💡 Miscellaneous
+
+- Bump some dependencies
+- Fix word spells in code documentation
+
 # 3.0.1
 
 ## 💣 Breaking changes
