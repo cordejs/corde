@@ -16,7 +16,7 @@ import { hookBuilder } from "./hookBuilder";
  * @since 2.0
  */
 export function afterEach(fn: () => void | Promise<void>, timeout?: number) {
-  if (fn) {
+  if (typeof fn === "function") {
     const trace = getStackTrace();
     hookBuilder({
       queueToAdd: testCollector.afterEachFunctions,

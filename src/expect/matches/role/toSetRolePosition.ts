@@ -35,6 +35,10 @@ export class ToSetRolePosition extends ExpectTest {
       .sort((r1, r2) => r2.position - r1.position)
       .first();
 
+    if (!lastRole) {
+      return this.createReport(`no roles were found`);
+    }
+
     if (newPosition > lastRole.position) {
       return this.createReport(
         `expected: position to be >= 0 and <= ${lastRole.rawPosition} (max value possible)\n`,

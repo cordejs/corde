@@ -100,8 +100,8 @@ describe("testing cli", () => {
 
   it("should call validate command with 'v' alias", () => {
     program.exitOverride();
-    jest.spyOn(reader, "loadConfig").mockImplementation(null);
-    const spyValidate = jest.spyOn(validateFunc, "validate").mockImplementation(null);
+    jest.spyOn(reader, "loadConfig").mockImplementation(() => null);
+    const spyValidate = jest.spyOn(validateFunc, "validate").mockImplementation(() => {});
     program.parse(["node", "test", "v"]);
     expect(spyValidate).toBeCalled();
   });

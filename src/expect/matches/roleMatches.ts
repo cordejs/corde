@@ -56,7 +56,7 @@ export interface RoleMatches {
   toDeleteRole(roleIdentifier: RoleIdentifier): void;
 
   /**
-   * Check if a command define a role as mentionable.
+   * Check if a command defines a role as mentionable.
    *
    * @param mentionable If the role can or can not be mentionable.
    * @param roleId Id of the role.
@@ -73,7 +73,7 @@ export interface RoleMatches {
   toSetRoleMentionable(mentionable: boolean, roleIdentifier: RoleIdentifier): void;
 
   /**
-   * Check if a commend define a role as hoist.
+   * Check if a commend defines a role as a hoist.
    *
    * @param hoist if this role is pinned in the user listing.
    * @param roleId Id of the role.
@@ -110,7 +110,7 @@ export interface RoleMatches {
   toSetRoleHoist(hoist: boolean, roleIdentifier: RoleIdentifier): void;
 
   /**
-   * Check if a command rename a role.
+   * Check if a command renames a role.
    *
    * @param newName new name of the role
    * @param roleId Id of the role.
@@ -127,13 +127,13 @@ export interface RoleMatches {
   toRenameRole(newName: string, roleIdentifier: RoleIdentifier): void;
 
   /**
-   * Check if a command change a role's position.
+   * Check if a command changes a role's position.
    *
    * @param newPosition The new position of the role.
    * @param roleId Id of the role.
    *
-   * @description Role's maximum value depends of the amount of roles the guid Have.
-   * So, if there is only 3 roles (including the default *everyone*), the maximum
+   * @description Role's maximum value depends on the number of roles the guild Have.
+   * So, if there are only 3 roles (including the default *everyone*), the maximum
    * position that a role can have is 2 (The count begins with 0, So: 0, 1, 2).
    *
    * @see https://discord.com/developers/docs/topics/permissions
@@ -146,8 +146,8 @@ export interface RoleMatches {
    * @param newPosition The new position of the role.
    * @param roleIdentifier Object with **id** or **name** of the role.
    *
-   * @description Role's maximum value depends of the amount of roles the guid Have.
-   * So, if there is only 3 roles (including the default *everyone*), the maximum
+   * @description Role's maximum value depends on the number of roles the guild has.
+   * So, if there are only 3 roles (including the default *everyone*), the maximum
    * position that a role can have is 2 (The count begins with 0, So: 0, 1, 2).
    *
    * @see https://discord.com/developers/docs/topics/permissions

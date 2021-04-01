@@ -11,7 +11,7 @@ import { CordeRole } from "../structures/cordeRole";
  * @throws CordeClientError if corde's bot is not connected.
  * @returns Role that matches the provided **id** or **name**
  */
-export function getRole(id: string): CordeRole;
+export function getRole(id: string): CordeRole | undefined;
 /**
  * Finds a role in config guild's cache, basing on it's **id** or **name**.
  *
@@ -24,8 +24,8 @@ export function getRole(id: string): CordeRole;
  * @throws CordeClientError if corde's bot is not connected.
  * @returns Role that matches the provided **id** or **name**
  */
-export function getRole(data: RoleIdentifier): CordeRole;
-export function getRole(data: string | RoleIdentifier): CordeRole {
+export function getRole(data: RoleIdentifier): CordeRole | undefined;
+export function getRole(data: string | RoleIdentifier) {
   if (!runtime.isBotLoggedIn()) {
     throw new CordeClientError("Bot is not connected yet. No role can be searched");
   }
@@ -34,7 +34,7 @@ export function getRole(data: string | RoleIdentifier): CordeRole {
   if (_role) {
     return convertToCordeRole(_role);
   }
-  return null;
+  return undefined;
 }
 
 function _getRole(data: string | RoleIdentifier) {
@@ -48,5 +48,5 @@ function convertToCordeRole(role: Role) {
   if (role) {
     return new CordeRole(role);
   }
-  return null;
+  return undefined;
 }

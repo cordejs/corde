@@ -42,7 +42,7 @@
 
 ## 👀 About
 
-Corde is a small testing library for Discord.js. As there is a tool to create bots for Discord, it's cool to also have a tool to test then. Corde objective is to be simple, fast and readable to delevopers, such as many others unity test tool around the web.
+Corde is a small testing library for Discord.js. As there is a tool to create bots for Discord, it's cool to also have a tool to test then. Corde objective is to be simple, fast, and readable to developers, such as many others unity test tools around the web.
 
 ## Documentation
 
@@ -52,9 +52,9 @@ The bellow documentation is a resume of what you can find in [Corde's site](http
 
 **Node.js 12.0.0 or newer is required**
 
-Starting create tests with Corde is realy simple. First install it locally with npm `npm i -D corde` or yarn `yarn add -D corde`. You can also install it globally: `npm i -g corde` or `yarn global add corde`.
+Starting to create tests with Corde is simple. First, install it locally with npm `npm i -D corde` or yarn `yarn add -D corde`. You can also install it globally: `npm i -g corde` or `yarn global add corde`.
 
-After installed, add the file `corde.config.json` in root of your application with the follow structure:
+After installed, add the file `corde.config.json` in the root of your application with the following structure:
 
 ```javascript
 {
@@ -68,7 +68,7 @@ After installed, add the file `corde.config.json` in root of your application wi
 }
 ```
 
-Check the Config section for a more detailed explanation of each configuration propertie.
+Check the Config section for a more detailed explanation of each configuration property.
 
 Now that the config file is created, let's create some tests. You can keep the unity test natural file name structure, creating a `bot.test.js` with the follow structure:
 
@@ -91,12 +91,12 @@ afterAll(() => {
 });
 ```
 
-What is happenning ?
+What is happening?
 
-1. `beforeStart` is a fuction that is used to run something **before** the execution of tests. Put there the instruction that makes the bot login i.e. You can also start the bot and then run all tests, with that, there is no need of use `beforeStart` function.
-2. `group` Is a collections of tests that referes to some sort of tests.
-3. `test` Is the container of a test. it's describe what will be tested, and what is the expectation.
-4. `command` is the core of Corde, that is what really with validade if a command is or not executing what it should. The simpliest action that a bot can do is send a plain message, with that, `command` has a collections of options of expectations of response of the bot, in this case, is tested that a command _ping_ should return _pong_. 5)`afterAll` is a fuction that is used to run something **after** the execution of tests. Put there the instructions that make the logoff of the bot, i.e.
+1. `beforeStart` is a function that is used to run something **before** the execution of tests. Put there the instruction that makes the bot login i.e. You can also start the bot and then run all tests, with that, there is no need to use the `beforeStart` function.
+2. `group` Is a collection of tests that refers to some sort of tests.
+3. `test` Is the container of a test. it describes what will be tested, and what is the expectation.
+4. `command` is the core of Corde, that is what really with validate if a command is or not executing what it should. The simplest action that a bot can do is send a plain message, with that, `command` has a collection of options of expectations of the response of the bot, in this case, is tested that a command _ping_ should return _pong_. 5)`afterAll` is a function that is used to run something **after** the execution of tests. Put there the instructions that make the logoff of the bot, i.e.
 
 ## ⚙️ Configurations
 
@@ -108,5 +108,5 @@ What is happenning ?
 | botTestId      | Bot's id that is testing.                            |
 | guildId        | Guild that your and the test bot are.                |
 | channelId      | Channel that your and the test bot are.              |
-| botPrefix      | Bot invoke command prefix                            |
-| testFiles      | Path were all tests files are                        |
+| botPrefix      | Bot invoke-command prefix                            |
+| testFiles      | Path where all tests files are                       |

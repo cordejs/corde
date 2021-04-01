@@ -28,7 +28,7 @@ import { Validator } from "../utils";
 export interface EventResume {
   count: number;
   index: number;
-  nonce: string;
+  nonce: string | undefined;
 }
 
 export interface SearchMessageReactionsOptions {
@@ -195,7 +195,7 @@ export class Events {
    * If `roleIdentifier` is informed, returns the deleted role that
    * match with `roleIdentifier` value, if not, returns the first role deleted.
    *
-   * Waits for a determined timeout, rejecting this async function if reachs
+   * Waits for a determined timeout, rejecting this async function if reaches
    * the timeout value.
    *
    * @param roleIdentifier Identifiers of the role.
@@ -625,7 +625,7 @@ export class Events {
    * @internal
    */
   onceMessageReactionsAdd(filter?: SearchMessageReactionsOptions) {
-    return this._onceMessageReactionUpdate(filter, "onMessageReactionAdd");
+    return this._onceMessageReactionUpdate("onMessageReactionAdd", filter);
   }
 
   /**
@@ -634,12 +634,12 @@ export class Events {
    * @internal
    */
   onceMessageReactionsRemove(filter?: SearchMessageReactionsOptions) {
-    return this._onceMessageReactionUpdate(filter, "onMessageReactionRemoveEmoji");
+    return this._onceMessageReactionUpdate("onMessageReactionRemoveEmoji", filter);
   }
 
   private _onceMessageReactionUpdate(
-    filter: SearchMessageReactionsOptions,
     event: "onMessageReactionAdd" | "onMessageReactionRemoveEmoji",
+    filter?: SearchMessageReactionsOptions,
   ) {
     const { emojis, messageIdentifier, authorId, timeout } = filter ?? {};
 
@@ -753,7 +753,7 @@ export class Events {
    */
   onceMessagePinned(messageIdentifier?: MessageIdentifier, timeout?: number) {
     return this._onceMessageSetPinneble(
-      (oldMessage, newMessage) => !oldMessage.pinned && newMessage.pinned,
+      (oldMessage, newMessage) => !(oldMessage.pinned as boolean) && (newMessage.pinned as boolean),
       messageIdentifier,
       timeout,
     );
@@ -769,7 +769,7 @@ export class Events {
    */
   onceMessageUnPinned(messageIdentifier?: MessageIdentifier, timeout?: number) {
     return this._onceMessageSetPinneble(
-      (oldMessage, newMessage) => oldMessage.pinned && !newMessage.pinned,
+      (oldMessage, newMessage) => (oldMessage.pinned as boolean) && !(newMessage.pinned as boolean),
       messageIdentifier,
       timeout,
     );
@@ -804,7 +804,7 @@ export class Events {
   }
 
   /**
-   * Emitted once a message with `id` x or `content` y, or it's embed message has changed.
+   * Emitted once a message with `id` x or `content` y, or its embed message has changed.
    *
    * @param messageIdentifier Identifier of the message
    * @param timeout time to wait for change
@@ -848,7 +848,7 @@ export class Events {
    * @param fn function to receive the old and new presence values.
    * @internal
    */
-  onPresenceUpdate(fn: (oldMember: Presence, newMember: Presence) => void) {
+  onPresenceUpdate(fn: (oldMember: Presence | undefined, newMember: Presence) => void) {
     this._client.on("presenceUpdate", fn);
   }
 
@@ -975,7 +975,7 @@ export class Events {
     });
   }
 
-  private roleMatchRoleData(roleIdentifier: RoleIdentifier, role: Role) {
+  private roleMatchRoleData(roleIdentifier: RoleIdentifier | undefined, role: Role) {
     return role.id === roleIdentifier?.id || role.name === roleIdentifier?.name;
   }
 

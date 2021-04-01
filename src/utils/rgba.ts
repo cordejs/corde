@@ -13,10 +13,6 @@
  * @internal
  */
 export function rgba(value: number): [number, number, number, number] {
-  if (typeof value !== "number") {
-    return null;
-  }
-
   value >>>= 0;
   const b = value & 0xff;
   const g = (value & 0xff00) >>> 8;

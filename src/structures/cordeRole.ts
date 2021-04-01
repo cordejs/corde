@@ -190,7 +190,7 @@ export class CordeRole {
     }
 
     this._role = await this._role.edit({
-      color: data.color ? resolveColor(data.color) : null,
+      color: data.color ? resolveColor(data.color) : undefined,
       hoist: data.isHoist,
       mentionable: data.isMentionable,
       name: data.name,

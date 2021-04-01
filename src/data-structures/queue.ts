@@ -61,8 +61,8 @@ export class Queue<T extends GenericFunction> {
   }
 
   /**
-   * Removes a function from queue
-   * @param fn Function to be removed from queue.
+   * Removes a function from the queue
+   * @param fn Function to be removed from the queue.
    */
 
   dequeue(guid: string) {
@@ -285,10 +285,10 @@ export class Queue<T extends GenericFunction> {
 
   /**
    * Check if default arguments correctly fill all expected arguments
-   * for functions in queue.
+   * for functions in the queue.
    *
    * @returns `true` if arguments are ok or there is no function added
-   * and `false` if it's going to pass more or less arguments than necessary.
+   * and `false` if it's going to pass more or fewer arguments than necessary.
    *
    * @example
    *
@@ -329,7 +329,11 @@ export class Queue<T extends GenericFunction> {
     return keyValue[1];
   }
 
-  private checkFunctionArgumentsSize(fn: GenericFunction, argsToPass: any[]) {
+  private checkFunctionArgumentsSize(fn: GenericFunction | null, argsToPass: any[]) {
+    if (!fn) {
+      return;
+    }
+
     if (fn.length !== argsToPass.length) {
       throw new Error(
         `Could not pass more arguments ${argsToPass.length} than what the function ${fn.name} supports ${fn.length}`,

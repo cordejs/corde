@@ -1,12 +1,12 @@
 import { testCollector } from "../common/testCollector";
 import { VoidLikeFunction } from "../types";
-import { executePromiseWithTimeout, resolveName } from "../utils";
+import { resolveName } from "../utils";
 
 /**
  * Create a group of tests.
  *
- * @param descriptionDefinition Resolvable description of the group. It is offen a string,
- * but can be sync of async functions, numbers, booleans... Functions will be executed to get the
+ * @param descriptionDefinition Resolvable description of the group. It is often a string,
+ * but can be sync or async functions, numbers, booleans... Functions will be executed to get the
  * primitive value of then.
  *
  * @param testDefinitions Function for Corde to invoke that will define inner suites a test

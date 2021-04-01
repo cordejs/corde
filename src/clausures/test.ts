@@ -3,12 +3,12 @@ import { VoidLikeFunction } from "../types";
 import { executePromiseWithTimeout, resolveName } from "../utils";
 
 /**
- * Define a single test. A test should contain one or more expectations that test a action of
+ * Define a single test. A test should contain one or more expectations that test action of
  * the discord bot.
  * A spec whose expectations all succeed will be passing and a spec with any failures will fail.
  *
  * @param expectationDescription Textual description of what this test is checking
- * @param assertion Function that contains the code of your test. If not provided the it will be ignored in report.
+ * @param assertion Function that contains the code of your test. If not provided it will be ignored in the report.
  * @param timeout Custom timeout for an async test
  *
  * @since 1.0

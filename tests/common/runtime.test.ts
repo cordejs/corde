@@ -6,12 +6,12 @@ import { ConfigOptions } from "../../src/types";
 const config: ConfigOptions = {
   botPrefix: "!",
   botTestId: "123",
-  channelId: "",
-  cordeTestToken: "",
+  channelId: "1241241",
+  cordeTestToken: "321",
   guildId: "123",
   testFiles: ["123"],
   timeOut: DEFAULT_TEST_TIMEOUT,
-  botTestToken: undefined,
+  botTestToken: "12412412123124",
 };
 
 describe("Testing runtime", () => {

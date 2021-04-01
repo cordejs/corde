@@ -48,7 +48,7 @@ export abstract class ExpectTest {
     }
   }
 
-  protected createReport(expect?: string, received?: string): TestReport {
+  protected createReport(expect?: string | null, received?: string): TestReport {
     let message = "";
     if (expect) {
       message = buildReportMessage(expect, received);

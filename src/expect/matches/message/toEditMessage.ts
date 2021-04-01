@@ -29,7 +29,7 @@ export class ToEditMessage extends ExpectTest {
 
     await this.cordeBot.sendTextMessage(this.command);
 
-    let _messageData: MessageEditedIdentifier;
+    let _messageData: MessageEditedIdentifier | undefined;
 
     if (typeof messageIdentifier === "string") {
       _messageData = { id: messageIdentifier };
@@ -84,7 +84,7 @@ export class ToEditMessage extends ExpectTest {
       );
     }
 
-    let embedExpect: MinifiedEmbedMessage;
+    let embedExpect: MinifiedEmbedMessage | undefined;
     if (typeOf(_expect) === "object") {
       embedExpect = messageUtils.getMessageByType(
         _expect as MessageEmbed,
@@ -92,7 +92,7 @@ export class ToEditMessage extends ExpectTest {
       ) as MinifiedEmbedMessage;
     }
 
-    let embedReturned: MinifiedEmbedMessage;
+    let embedReturned: MinifiedEmbedMessage | undefined;
     if (returnedMessage.embeds[0]) {
       embedReturned = messageUtils.getMessageByType(
         returnedMessage,

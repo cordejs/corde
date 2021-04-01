@@ -3,7 +3,7 @@ import { getStackTrace } from "../utils";
 import { hookBuilder } from "./hookBuilder";
 
 /**
- * Declare a bunch of code that will be executed before tests begins.
+ * Declare a bunch of code that will be executed before tests begin.
  *
  * More than one declaration of this code results in a list
  * of functions to run.
@@ -12,7 +12,7 @@ import { hookBuilder } from "./hookBuilder";
  * reads and the positions of each `afterAll` call.
  *
  * @example
- * // The main function of this is for start a bot if you haven't started it yet
+ * // The main function of this is to start a bot if you haven't started it yet
  *
  * const bot = new Discord.Client();
  * beforeStart(async () => {
@@ -26,7 +26,7 @@ import { hookBuilder } from "./hookBuilder";
  * @since 1.0
  */
 export function beforeStart(fn: () => void | Promise<void>, timeout?: number) {
-  if (fn) {
+  if (typeof fn === "function") {
     const trace = getStackTrace();
     hookBuilder({
       queueToAdd: testCollector.beforeStartFunctions,

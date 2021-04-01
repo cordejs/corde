@@ -14,7 +14,7 @@ All hooks are available bellow:
 - [`beforeStart(functionm timeout)`](/docs/hooks#beforestartfunction-timeout)
 
 :::note
-These functions are valid for all tests executions. If you add some of then inside a `group`
+These functions are valid for all test executions. If you add some of them inside a `group`
 or a `test`, corde will not add then to that scope. This feature will be released in the next version of corde.
 
 This means that:
@@ -53,7 +53,7 @@ Use `afterAll` to execute something that you want to be executed after all tests
 Optionally, you can provide a `timeout` (in milliseconds) for specifying how long to wait before aborting.
 _Note: The default timeout is 5 seconds._
 
-A good example of something to be executed after all tests is the logout of your testing
+A good example of something to be executed after all tests are the log out of your testing
 bot.
 
 I.E:
@@ -65,21 +65,21 @@ afterAll(() => {
 ```
 
 :::note
-As corde self make it's bot login, it's make their logout also. So there is no need
+As corde self make its bot login, it makes their logout also. So there is no need
 to worry about it.
 :::
 
 ### `afterEach(function, timeout?)`
 
-Use `afterEach` to execute something after execution of a test case.
+Use `afterEach` to execute something after the execution of a test case.
 
 Optionally, you can provide a `timeout` (in milliseconds) for specifying how long to wait before aborting.
 _Note: The default timeout is 5 seconds._
 
-As metioned above, this function is not included to clausures like `group` and `test`,
+As mentioned above, this function is not included in clauses like `group` and `test`,
 if you call it, this function will be included for all tests (yet).
 
-A exemplification of usage of `afterEach`
+An exemplification of usage of `afterEach`
 
 ```typescript
 afterEach(() => {
@@ -104,7 +104,7 @@ test("test 2", () => {
 
 ### `beforeEach(function, timeout?)`
 
-Use `beforeEach` to execute something before operation of each test case.
+Use `beforeEach` to execute something before the operation of each test case.
 
 Optionally, you can provide a `timeout` (in milliseconds) for specifying how long to wait before aborting.
 _Note: The default timeout is 5 seconds._

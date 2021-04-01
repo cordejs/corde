@@ -213,14 +213,14 @@ export class TestExecutor {
     }
   }
 
-  private createTestText(testName: string | number | boolean) {
+  private createTestText(testName?: string | number | boolean) {
     if (stringIsNullOrEmpty(testName)) {
       return this.createTestTextByStatus("<empty test name>");
     }
     return this.createTestTextByStatus(testName);
   }
 
-  private createTestTextByStatus(testName: string | number | boolean) {
+  private createTestTextByStatus(testName?: string | number | boolean) {
     const icon = TEST_RUNNING_ICON;
     return `${MESSAGE_TAB_SPACE}${icon} ${testName}`;
   }

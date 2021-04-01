@@ -25,7 +25,7 @@ export class CordeBot implements CordeBotLike {
   private readonly _testBotId: string;
   private readonly _client: Client;
 
-  private textChannel: TextChannel;
+  private textChannel!: TextChannel;
   private _isReady: boolean;
   /**
    * Starts new instance of Discord client with its events.
@@ -140,9 +140,11 @@ export class CordeBot implements CordeBotLike {
     return !!this._client && !!this._client.readyAt && this._isReady;
   }
 
-  async findMessage(filter: (message: Message) => boolean): Promise<Message>;
-  async findMessage(data: MessageIdentifier): Promise<Message>;
-  async findMessage(data: MessageIdentifier | ((message: Message) => boolean)): Promise<Message> {
+  async findMessage(filter: (message: Message) => boolean): Promise<Message | undefined>;
+  async findMessage(data: MessageIdentifier): Promise<Message | undefined>;
+  async findMessage(
+    data: MessageIdentifier | ((message: Message) => boolean),
+  ): Promise<Message | undefined> {
     const messageIdentifier: MessageIdentifier = data as MessageIdentifier;
 
     if (messageIdentifier && messageIdentifier.content) {
@@ -154,14 +156,14 @@ export class CordeBot implements CordeBotLike {
     if (data) {
       return this._findMessage(data as (message: Message) => boolean);
     }
-    return null;
+    return undefined;
   }
 
-  async fetchRole(id: string): Promise<Role> {
+  async fetchRole(id: string): Promise<Role | null> {
     return await this.guild.roles.fetch(id, false, true);
   }
 
-  async fetchRoles(): Promise<RoleManager> {
+  async fetchRoles() {
     return await this.guild.roles.fetch();
   }
 
@@ -176,7 +178,7 @@ export class CordeBot implements CordeBotLike {
     } else if (roleIdentifier.name) {
       return data.cache.find((r) => r.name === roleIdentifier.name);
     }
-    return null;
+    return undefined;
   }
 
   getRoles() {
@@ -193,7 +195,7 @@ export class CordeBot implements CordeBotLike {
     if (collection) {
       return collection.find(fn);
     }
-    return null;
+    return undefined;
   }
 
   /**

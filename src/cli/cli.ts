@@ -26,16 +26,16 @@ program
     "Set the path for all tests. Use this if you wan to specify a single path." +
       " for Array, use only 'corde <path1> <path2>'",
   )
-  .action(async (args) => {
+  .action(async (args: any) => {
     const options = program.opts();
     if (options.config) {
       runtime.configFilePath = options.config;
     }
     if (args) {
-      runtime.testFiles = program.args;
+      runtime.setConfigs({ testFiles: program.args }, true);
     }
     if (options.files) {
-      runtime.testFiles = options.files.split(" ");
+      runtime.setConfigs({ testFiles: options.files.split(" ") }, true);
     }
     await exec();
   });

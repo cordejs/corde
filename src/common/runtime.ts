@@ -70,20 +70,16 @@ class Runtime {
     return this._configs.testFiles;
   }
 
-  set testFiles(path: string[]) {
-    this._configs.testFiles = path;
-  }
-
   private constructor() {
     this._configs = new Config();
   }
 
   private static _instance: Runtime;
-  configFilePath: string;
-  files: string[];
+  configFilePath!: string;
+  files!: string[];
 
   private readonly _configs: Config;
-  private _bot: CordeBotLike;
+  private _bot!: CordeBotLike;
 
   static getInstance() {
     if (!Runtime._instance) {
@@ -92,7 +88,7 @@ class Runtime {
     return Runtime._instance;
   }
 
-  setConfigs(_configs: ConfigOptions, forceUpdate?: boolean) {
+  setConfigs(_configs: Partial<ConfigOptions>, forceUpdate?: boolean) {
     if (!_configs) {
       throw new ConfigError("Invalid _configs");
     }

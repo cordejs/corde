@@ -2,6 +2,7 @@
   "compilerOptions": {
     "outDir": "lib",
     "rootDir": ".",
+    "strict": true,
     "resolveJsonModule": true,
     "importHelpers": true,
     "allowJs": true,
