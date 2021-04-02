@@ -2,7 +2,7 @@ import { Client } from "discord.js";
 import { ToRenameRole } from "../../../src/expect/matches";
 import MockDiscord from "../../mocks/mockDiscord";
 import { initCordeClientWithChannel } from "../../testHelper";
-import { TestReport } from "../../../src/types";
+import { CordeBotLike, TestReport } from "../../../src/types";
 import { buildReportMessage } from "../../../src/utils";
 import { MockEvents } from "../../mocks/mockEvents";
 import { runtime } from "../../../src/common/runtime";
@@ -17,6 +17,15 @@ function initClient() {
   return corde;
 }
 
+function initTestClass(cordeBot: CordeBotLike, isNot: boolean) {
+  return new ToRenameRole({
+    command: "toDelete",
+    cordeBot: cordeBot,
+    isNot: isNot,
+    timeout: 1000,
+  });
+}
+
 describe("testing ToRenameRole operation", () => {
   afterEach(() => {
     mockDiscord = new MockDiscord();
@@ -24,7 +33,7 @@ describe("testing ToRenameRole operation", () => {
 
   it("should fail due to undefined roleIdentifier", async () => {
     const corde = initClient();
-    const toRename = new ToRenameRole(corde, "test", false);
+    const toRename = initTestClass(corde, false);
     const report = await toRename.action("egg", undefined);
 
     const message = buildReportMessage(
@@ -43,7 +52,7 @@ describe("testing ToRenameRole operation", () => {
 
   it("should return false due to invalid newName value (null)", async () => {
     const corde = initClient();
-    const toRename = new ToRenameRole(corde, "test", false);
+    const toRename = initTestClass(corde, false);
     // @ts-ignore
     const report = await toRename.action({}, { id: "123" });
 
@@ -63,7 +72,7 @@ describe("testing ToRenameRole operation", () => {
 
   it("should return false due to newName be a empty string", async () => {
     const corde = initClient();
-    const toRename = new ToRenameRole(corde, "test", false);
+    const toRename = initTestClass(corde, false);
     const report = await toRename.action("", { id: "123" });
 
     const message = buildReportMessage(
@@ -83,7 +92,7 @@ describe("testing ToRenameRole operation", () => {
   it("should return false due to not found role", async () => {
     const corde = initClient();
     corde.findRole = jest.fn().mockReturnValue(null);
-    const toRename = new ToRenameRole(corde, "test", false);
+    const toRename = initTestClass(corde, false);
     const report = await toRename.action("newName", { id: "123" });
 
     const message = buildReportMessage(`expected: role with id 123\n`, `received: null`);
@@ -102,7 +111,7 @@ describe("testing ToRenameRole operation", () => {
 
     runtime.setConfigs({ timeOut: 100 }, true);
 
-    const toRename = new ToRenameRole(corde, "test", false);
+    const toRename = initTestClass(corde, false);
     const report = await toRename.action("newName", { id: "123" });
 
     const message = buildReportMessage(
@@ -124,7 +133,7 @@ describe("testing ToRenameRole operation", () => {
 
     runtime.setConfigs({ timeOut: 100 }, true);
 
-    const toRename = new ToRenameRole(corde, "test", true);
+    const toRename = initTestClass(corde, true);
     const report = await toRename.action("newName", { id: "123" });
 
     const expectReport: TestReport = {
@@ -141,7 +150,7 @@ describe("testing ToRenameRole operation", () => {
     runtime.setConfigs({ timeOut: 100 }, true);
     const mockEvent = new MockEvents(corde, mockDiscord);
     mockEvent.mockOnceRoleRenamed(mockDiscord.role);
-    const toRename = new ToRenameRole(corde, "test", false);
+    const toRename = initTestClass(corde, false);
     const report = await toRename.action(mockDiscord.role.name, { id: "123" });
 
     const expectReport: TestReport = {
@@ -158,7 +167,7 @@ describe("testing ToRenameRole operation", () => {
     runtime.setConfigs({ timeOut: 100 }, true);
     const mockEvent = new MockEvents(corde, mockDiscord);
     mockEvent.mockOnceRoleRenamed(mockDiscord.role);
-    const toRename = new ToRenameRole(corde, "test", true);
+    const toRename = initTestClass(corde, true);
     const report = await toRename.action(mockDiscord.role.name, { id: "123" });
 
     const message = buildReportMessage(
@@ -181,7 +190,7 @@ describe("testing ToRenameRole operation", () => {
     runtime.setConfigs({ timeOut: 100 }, true);
     const mockEvent = new MockEvents(corde, mockDiscord);
     mockEvent.mockOnceRoleRenamed(mockDiscord.role);
-    const toRename = new ToRenameRole(corde, "test", false);
+    const toRename = initTestClass(corde, false);
     const report = await toRename.action("test", { id: "123" });
 
     const message = buildReportMessage(

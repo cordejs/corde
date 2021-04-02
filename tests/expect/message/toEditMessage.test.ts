@@ -1,11 +1,10 @@
 import { Client } from "discord.js";
 import MockDiscord from "../../mocks/mockDiscord";
 import { createCordeBotWithMockedFunctions } from "../../testHelper";
-import { TestReport } from "../../../src/types";
+import { CordeBotLike, TestReport } from "../../../src/types";
 import { ToEditMessage } from "../../../src/expect/matches";
 import { buildReportMessage, diff, formatObject } from "../../../src/utils";
 import { runtime } from "../../../src/common/runtime";
-import messageUtils from "../../../src/expect/messageUtils";
 import { MockEvents } from "../../mocks/mockEvents";
 
 let mockDiscord = new MockDiscord();
@@ -14,6 +13,15 @@ describe("testing toEditMessage", () => {
   afterEach(() => {
     mockDiscord = new MockDiscord();
   });
+
+  function initTestClass(cordeBot: CordeBotLike, commandName?: string, isNot?: boolean) {
+    return new ToEditMessage({
+      command: commandName,
+      cordeBot: cordeBot,
+      isNot: isNot,
+      timeout: runtime.timeOut,
+    });
+  }
 
   it("should return a failed test due to invalid parameter (null)", async () => {
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
@@ -28,7 +36,7 @@ describe("testing toEditMessage", () => {
       message,
     };
 
-    const toEditMessage = new ToEditMessage(cordeClient, "ping", false);
+    const toEditMessage = initTestClass(cordeClient, "ping", false);
     const report = await toEditMessage.action(null);
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
@@ -47,7 +55,7 @@ describe("testing toEditMessage", () => {
       message,
     };
 
-    const toEditMessage = new ToEditMessage(cordeClient, "ping", false);
+    const toEditMessage = initTestClass(cordeClient, "ping", false);
     const report = await toEditMessage.action(undefined);
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
@@ -67,7 +75,7 @@ describe("testing toEditMessage", () => {
       message,
     };
 
-    const toEditMessage = new ToEditMessage(cordeClient, "ping", false);
+    const toEditMessage = initTestClass(cordeClient, "ping", false);
     const report = await toEditMessage.action("pong");
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
@@ -87,7 +95,7 @@ describe("testing toEditMessage", () => {
       message,
     };
 
-    const toEditMessage = new ToEditMessage(cordeClient, "ping", false);
+    const toEditMessage = initTestClass(cordeClient, "ping", false);
     const report = await toEditMessage.action("pong", "123");
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
@@ -107,7 +115,7 @@ describe("testing toEditMessage", () => {
       message,
     };
 
-    const toEditMessage = new ToEditMessage(cordeClient, "ping", false);
+    const toEditMessage = initTestClass(cordeClient, "ping", false);
     const report = await toEditMessage.action("pong", { id: "123" });
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
@@ -127,7 +135,7 @@ describe("testing toEditMessage", () => {
       message,
     };
 
-    const toEditMessage = new ToEditMessage(cordeClient, "ping", false);
+    const toEditMessage = initTestClass(cordeClient, "ping", false);
     const report = await toEditMessage.action("pong", { oldContent: "message test" });
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
@@ -141,7 +149,7 @@ describe("testing toEditMessage", () => {
       pass: true,
     };
 
-    const toEditMessage = new ToEditMessage(cordeClient, "ping", true);
+    const toEditMessage = initTestClass(cordeClient, "ping", true);
     const report = await toEditMessage.action("pong");
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
@@ -158,7 +166,7 @@ describe("testing toEditMessage", () => {
       pass: true,
     };
 
-    const toEditMessage = new ToEditMessage(cordeClient, "ping", false);
+    const toEditMessage = initTestClass(cordeClient, "ping", false);
     const report = await toEditMessage.action(mockDiscord.message.content);
 
     expect(report).toEqual(reportModel);
@@ -176,7 +184,7 @@ describe("testing toEditMessage", () => {
       pass: true,
     };
 
-    const toEditMessage = new ToEditMessage(cordeClient, "ping", false);
+    const toEditMessage = initTestClass(cordeClient, "ping", false);
     const report = await toEditMessage.action(mockDiscord.message.content);
 
     expect(report).toEqual(reportModel);
@@ -195,7 +203,7 @@ describe("testing toEditMessage", () => {
       pass: true,
     };
 
-    const toEditMessage = new ToEditMessage(cordeClient, "ping", false);
+    const toEditMessage = initTestClass(cordeClient, "ping", false);
     const report = await toEditMessage.action(2);
 
     expect(report).toEqual(reportModel);
@@ -213,7 +221,7 @@ describe("testing toEditMessage", () => {
       pass: true,
     };
 
-    const toEditMessage = new ToEditMessage(cordeClient, "ping", false);
+    const toEditMessage = initTestClass(cordeClient, "ping", false);
     const report = await toEditMessage.action(mockDiscord.messageEmbedLike);
 
     expect(report).toEqual(reportModel);
@@ -235,7 +243,7 @@ describe("testing toEditMessage", () => {
       ),
     };
 
-    const toEditMessage = new ToEditMessage(cordeClient, "ping", true);
+    const toEditMessage = initTestClass(cordeClient, "ping", true);
     const report = await toEditMessage.action(mockDiscord.messageEmbedLike);
 
     expect(report).toEqual(reportModel);
@@ -253,7 +261,7 @@ describe("testing toEditMessage", () => {
       pass: true,
     };
 
-    const toEditMessage = new ToEditMessage(cordeClient, "ping", true);
+    const toEditMessage = initTestClass(cordeClient, "ping", true);
     const report = await toEditMessage.action(mockDiscord.messageEmbedLike);
 
     expect(report).toEqual(reportModel);
@@ -267,21 +275,22 @@ describe("testing toEditMessage", () => {
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessageContentOrEmbedChange(mockDiscord.messageWithEmbed);
 
-    const embedReturned = messageUtils.getMessageByType(mockDiscord.messageWithEmbed, "embed");
+    const toEditMessage = initTestClass(cordeClient, "ping", false);
+
+    const embedReturned = toEditMessage.getMessageByType(mockDiscord.messageWithEmbed, "embed");
     const embedLike = {
       author: "Test",
       fields: mockDiscord.messageEmbedLike.fields,
     };
 
-    const embedExpect = messageUtils.embedMessageLikeToMessageEmbed(embedLike);
-    const embedExpectedMinified = messageUtils.getMessageByType(embedExpect, "embed");
+    const embedExpect = toEditMessage.embedMessageLikeToMessageEmbed(embedLike);
+    const embedExpectedMinified = toEditMessage.getMessageByType(embedExpect, "embed");
 
     const reportModel: TestReport = {
       pass: false,
       message: buildReportMessage(diff(embedReturned, embedExpectedMinified)),
     };
 
-    const toEditMessage = new ToEditMessage(cordeClient, "ping", false);
     const report = await toEditMessage.action(embedLike);
 
     expect(report).toEqual(reportModel);
@@ -294,9 +303,10 @@ describe("testing toEditMessage", () => {
 
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessageContentOrEmbedChange(mockDiscord.messageWithEmbed);
+    const toEditMessage = initTestClass(cordeClient, "ping", false);
 
     const expectValue = "expect value";
-    const embedReturned = messageUtils.getMessageByType(mockDiscord.messageWithEmbed, "embed");
+    const embedReturned = toEditMessage.getMessageByType(mockDiscord.messageWithEmbed, "embed");
 
     const reportModel: TestReport = {
       pass: false,
@@ -306,7 +316,6 @@ describe("testing toEditMessage", () => {
       ),
     };
 
-    const toEditMessage = new ToEditMessage(cordeClient, "ping", false);
     const report = await toEditMessage.action(expectValue);
 
     expect(report).toEqual(reportModel);
@@ -329,7 +338,7 @@ describe("testing toEditMessage", () => {
       ),
     };
 
-    const toEditMessage = new ToEditMessage(cordeClient, "ping", false);
+    const toEditMessage = initTestClass(cordeClient, "ping", false);
     const report = await toEditMessage.action(expectValue);
 
     expect(report).toEqual(reportModel);
@@ -340,8 +349,12 @@ describe("testing toEditMessage", () => {
     runtime.setConfigs({ timeOut: 100 }, true);
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
 
-    cordeClient.awaitMessagesFromTestingBot = jest.fn().mockReturnValue(mockDiscord.message);
-    const embedExpect = messageUtils.embedMessageLikeToMessageEmbed(mockDiscord.messageEmbedLike);
+    const mockEvent = new MockEvents(cordeClient, mockDiscord);
+    mockEvent.mockOnceMessageContentOrEmbedChange();
+
+    const toEditMessage = initTestClass(cordeClient, "ping", false);
+
+    const embedExpect = toEditMessage.embedMessageLikeToMessageEmbed(mockDiscord.messageEmbedLike);
 
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessageContentOrEmbedChange();
@@ -354,7 +367,6 @@ describe("testing toEditMessage", () => {
       ),
     };
 
-    const toEditMessage = new ToEditMessage(cordeClient, "ping", false);
     const report = await toEditMessage.action(mockDiscord.messageEmbedLike);
 
     expect(report).toEqual(reportModel);

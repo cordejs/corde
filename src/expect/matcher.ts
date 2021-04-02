@@ -28,12 +28,13 @@ import {
   ToUnPinMessage,
   ToSetRolePermission,
 } from "./matches";
-import { ExpectTest } from "./matches/expectTest";
+import { ExpectTest, ExpectTestParams } from "./matches/expectTest";
 import { MessageMatches } from "./matches/messageMatches";
 import { RoleMatches } from "./matches/roleMatches";
 import { buildReportMessage, resolveName, stringIsNullOrEmpty } from "../utils";
 import { getStackTrace } from "../utils/getStackTrace";
 import { ToReturnInChannel } from "./matches/message/toReturnInChannel";
+import { runtime } from "../common/runtime";
 
 /**
  * Defines all functions that can be used
@@ -153,6 +154,10 @@ class ExpectMatches implements Matches {
     });
   }
 
+  to(assertion: (expect: ExpectMatchesWithNot) => void[]) {
+    assertion(new ExpectMatchesWithNot(this._commandName));
+  }
+
   toSetRoleHoist(hoist: boolean, roleIdentifier: string | RoleIdentifier) {
     const trace = getStackTrace(undefined, true, "toSetRoleHoist");
     testCollector.addTestFunction((cordeBot) => {
@@ -192,7 +197,7 @@ class ExpectMatches implements Matches {
 
   protected async operationFactory<T extends ExpectTest>(
     trace: string,
-    type: new (cordeBot: CordeBotLike, command: string | number | boolean, isNot: boolean) => T,
+    type: new (params: ExpectTestParams) => T,
     cordeBot: CordeBotLike,
     ...params: Parameters<T["action"]>
   ): Promise<TestReport> {
@@ -205,7 +210,12 @@ class ExpectMatches implements Matches {
       return { pass: false, message: "command can not be null or an empty string" };
     }
 
-    const op = new type(cordeBot, commandName, this._isNot);
+    const op = new type({
+      cordeBot,
+      command: commandName,
+      isNot: this._isNot,
+      timeout: runtime.timeOut,
+    });
 
     const report = await op.action(...params);
 

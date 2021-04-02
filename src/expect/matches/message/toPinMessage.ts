@@ -1,12 +1,12 @@
 import { MessageIdentifier, TestReport } from "../../../types";
 import { typeOf } from "../../../utils";
-import messageUtils from "../../messageUtils";
 import { ExpectTest } from "../expectTest";
+import { MessageExpectTest } from "./messageExpectTest";
 
 /**
  * @internal
  */
-export class ToPinMessage extends ExpectTest {
+export class ToPinMessage extends MessageExpectTest {
   async action(messageIdentifier: MessageIdentifier | string): Promise<TestReport> {
     if (
       !messageIdentifier ||
@@ -27,7 +27,7 @@ export class ToPinMessage extends ExpectTest {
     }
 
     await this.cordeBot.sendTextMessage(this.command);
-    const msgString = messageUtils.humanizeMessageIdentifierObject(_msgIdentifier);
+    const msgString = this.humanizeMessageIdentifierObject(_msgIdentifier);
     try {
       await this.cordeBot.events.onceMessagePinned(_msgIdentifier);
     } catch {

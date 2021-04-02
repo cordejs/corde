@@ -1,7 +1,6 @@
 import { Message, MessageEmbed } from "discord.js";
 import { MessageEmbedLike, ChannelLocation, Primitive, TestReport } from "../../../types";
 
-import messageUtils from "../../messageUtils";
 import { typeOf } from "../../../utils";
 import { MessageExpectTest } from "./messageExpectTest";
 
@@ -59,12 +58,12 @@ export class ToReturnInChannel extends MessageExpectTest {
     let _expect: Primitive | MessageEmbed;
 
     if (typeOf(expect) === "object") {
-      _expect = messageUtils.embedMessageLikeToMessageEmbed(expect as MessageEmbedLike);
+      _expect = this.embedMessageLikeToMessageEmbed(expect as MessageEmbedLike);
     } else {
       _expect = expect as Primitive;
     }
 
-    this.hasPassed = messageUtils.messagesMatches(returnedMessage, _expect);
+    this.hasPassed = this.messagesMatches(returnedMessage, _expect);
     this.invertHasPassedIfIsNot();
 
     if (this.hasPassed) {

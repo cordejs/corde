@@ -1,6 +1,12 @@
-import { runtime } from "../../common/runtime";
 import { CordeBotLike, TestReport } from "../../types";
 import { buildReportMessage } from "../../utils";
+
+export interface ExpectTestParams {
+  cordeBot: CordeBotLike;
+  command: string | number | boolean;
+  isNot: boolean;
+  timeout: number;
+}
 
 /**
  * Entity helper for expectation assertions used for Corde tests
@@ -20,6 +26,7 @@ export abstract class ExpectTest {
   protected readonly command: string | number | boolean;
   protected readonly cordeBot: CordeBotLike;
   protected readonly timeOut: number;
+
   /**
    * Initialize the match class with its default values.
    *
@@ -27,12 +34,12 @@ export abstract class ExpectTest {
    * @param command The command to execute.
    * @param isNot Definition if this is a deny test.
    */
-  constructor(cordeBot: CordeBotLike, command: string | number | boolean, isNot: boolean) {
-    this.isNot = isNot;
-    this.command = command;
-    this.cordeBot = cordeBot;
+  constructor(defaultParams: ExpectTestParams) {
+    this.isNot = defaultParams.isNot;
+    this.command = defaultParams.command;
+    this.cordeBot = defaultParams.cordeBot;
     this.hasPassed = false;
-    this.timeOut = runtime.timeOut;
+    this.timeOut = defaultParams.timeout;
   }
 
   /**

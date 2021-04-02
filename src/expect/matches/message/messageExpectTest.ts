@@ -1,6 +1,13 @@
 import assert from "assert";
 import { Message, MessageEmbed, PartialMessage } from "discord.js";
-import { MessageEmbedLike, messageType, MinifiedEmbedMessage, Primitive } from "../../../types";
+import {
+  MessageEditedIdentifier,
+  MessageEmbedLike,
+  MessageIdentifier,
+  messageType,
+  MinifiedEmbedMessage,
+  Primitive,
+} from "../../../types";
 import { diff, formatObject, isPrimitiveValue, pick, typeOf } from "../../../utils";
 import { ExpectTest } from "../expectTest";
 
@@ -15,16 +22,11 @@ export abstract class MessageExpectTest extends ExpectTest {
     return null;
   }
 
-  createReportForExpectAndResponse(expect: Primitive | MessageEmbed, returnedMessage: Message) {
-    let _expect: Primitive | MessageEmbed;
-
-    if (typeOf(expect) === "object") {
-      _expect = this.embedMessageLikeToMessageEmbed(expect as MessageEmbedLike);
-    } else {
-      _expect = expect as Primitive;
-    }
-
-    this.hasPassed = this.messagesMatches(returnedMessage, _expect);
+  createReportForExpectAndResponse(
+    expect: Primitive | MessageEmbed,
+    returnedMessage: Message | PartialMessage,
+  ) {
+    this.hasPassed = this.messagesMatches(returnedMessage, expect);
     this.invertHasPassedIfIsNot();
 
     if (this.hasPassed) {
@@ -39,8 +41,8 @@ export abstract class MessageExpectTest extends ExpectTest {
     }
 
     let embedExpect: MinifiedEmbedMessage | undefined;
-    if (typeOf(_expect) === "object") {
-      embedExpect = this.getMessageByType(_expect as MessageEmbed, "embed") as MinifiedEmbedMessage;
+    if (typeOf(expect) === "object") {
+      embedExpect = this.getMessageByType(expect as MessageEmbed, "embed") as MinifiedEmbedMessage;
     }
 
     let embedReturned: MinifiedEmbedMessage | undefined;
@@ -146,6 +148,22 @@ export abstract class MessageExpectTest extends ExpectTest {
     } else {
       return answer;
     }
+  }
+
+  humanizeMessageIdentifierObject(msgIdentifier: MessageIdentifier | MessageEditedIdentifier) {
+    if (!msgIdentifier) {
+      return "";
+    }
+    if (msgIdentifier?.id) {
+      return `message of id ${msgIdentifier.id}`;
+    }
+    if ((msgIdentifier as MessageIdentifier).content) {
+      return `message of content "${(msgIdentifier as MessageIdentifier).content}"`;
+    }
+    if ((msgIdentifier as MessageEditedIdentifier).oldContent) {
+      return `message of content "${(msgIdentifier as MessageEditedIdentifier).oldContent}"`;
+    }
+    return "";
   }
 
   embedMessageLikeToMessageEmbed(embedLike: MessageEmbedLike) {

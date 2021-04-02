@@ -1,39 +1,26 @@
 import { EmbedFieldData, MessageEmbedImage, MessageEmbedThumbnail } from "discord.js";
 import { Stream } from "stream";
-import messageUtils from "../../../src/expect/messageUtils";
 import {
   FileLike,
   MessageEmbedAuthor,
   MessageEmbedFooter,
   MessageEmbedLike,
   MinifiedEmbedMessage,
+  TestReport,
 } from "../../../src/types";
 
-describe("testing messageUtils", () => {
+import { MessageExpectTest } from "../../../src/expect/matches/message/messageExpectTest";
+
+class ExpectMessage extends MessageExpectTest {
+  action(..._: any[]): Promise<TestReport> {
+    throw new Error("Method not implemented.");
+  }
+}
+
+const extension = new ExpectMessage({ command: "", cordeBot: null, isNot: false, timeout: 1000 });
+
+describe("testing extension", () => {
   describe("testing createNotFoundMessageForMessageData", () => {
-    it("should return a message for a messageIdentifier with only id", () => {
-      const message = messageUtils.createNotFoundMessageForMessageData({ id: "123" });
-      expect(message).toEqual("Message with id 123 not found.");
-    });
-
-    it("should return message for a messageIdentifier with only text (content)", () => {
-      const message = messageUtils.createNotFoundMessageForMessageData({ content: "hello" });
-      expect(message).toEqual("Message with content 'hello' not found.");
-    });
-
-    it("should return a message for a message data with text and id", () => {
-      const message = messageUtils.createNotFoundMessageForMessageData({
-        content: "hello",
-        id: "123",
-      });
-      expect(message).toEqual("Message with id 123 or content 'hello' not found.");
-    });
-
-    it("should return null due to no messageIdentifier", () => {
-      const message = messageUtils.createNotFoundMessageForMessageData(null);
-      expect(message).toBeFalsy();
-    });
-
     it("should convert messageEmbedLike simples data to messageEmbed", () => {
       const timeNow = Date.now();
       const messageLike: MessageEmbedLike = {
@@ -50,22 +37,22 @@ describe("testing messageUtils", () => {
         timestamp: timeNow,
       };
 
-      const embed = messageUtils.embedMessageLikeToMessageEmbed(messageLike);
+      const embed = extension.embedMessageLikeToMessageEmbed(messageLike);
       expect(embed).toMatchObject(messageLike);
     });
 
     it("should return empty message when pass null", () => {
-      const embed = messageUtils.embedMessageLikeToMessageEmbed(null);
+      const embed = extension.embedMessageLikeToMessageEmbed(null);
       expect(embed).toBeTruthy();
     });
 
     it("should convert image(string)", () => {
-      const embed = messageUtils.embedMessageLikeToMessageEmbed({ image: "./png.png" });
+      const embed = extension.embedMessageLikeToMessageEmbed({ image: "./png.png" });
       expect(embed.image).toMatchObject<MessageEmbedImage>({ url: "./png.png" });
     });
 
     it("should convert image(string)", () => {
-      const embed = messageUtils.embedMessageLikeToMessageEmbed({
+      const embed = extension.embedMessageLikeToMessageEmbed({
         image: {
           url: "./png.png",
         },
@@ -77,7 +64,7 @@ describe("testing messageUtils", () => {
       const messageLike: MessageEmbedLike = {
         author: "lucas",
       };
-      const embed = messageUtils.embedMessageLikeToMessageEmbed(messageLike);
+      const embed = extension.embedMessageLikeToMessageEmbed(messageLike);
       expect(embed.author).toMatchObject<MessageEmbedAuthor>({
         name: "lucas",
       });
@@ -89,7 +76,7 @@ describe("testing messageUtils", () => {
           name: "lucas",
         },
       };
-      const embed = messageUtils.embedMessageLikeToMessageEmbed(messageLike);
+      const embed = extension.embedMessageLikeToMessageEmbed(messageLike);
       expect(embed.author).toMatchObject(messageLike.author);
     });
 
@@ -97,7 +84,7 @@ describe("testing messageUtils", () => {
       const messageLike: MessageEmbedLike = {
         files: ["test 1"],
       };
-      const embed = messageUtils.embedMessageLikeToMessageEmbed(messageLike);
+      const embed = extension.embedMessageLikeToMessageEmbed(messageLike);
       expect(embed.files).toMatchObject<string[]>(["test 1"]);
     });
 
@@ -111,7 +98,7 @@ describe("testing messageUtils", () => {
           },
         ],
       };
-      const embed = messageUtils.embedMessageLikeToMessageEmbed(messageLike);
+      const embed = extension.embedMessageLikeToMessageEmbed(messageLike);
       expect(embed.files).toMatchObject<FileLike[]>([
         {
           name: "file 1",
@@ -130,7 +117,7 @@ describe("testing messageUtils", () => {
       const messageLike: MessageEmbedLike = {
         fields,
       };
-      const embed = messageUtils.embedMessageLikeToMessageEmbed(messageLike);
+      const embed = extension.embedMessageLikeToMessageEmbed(messageLike);
       expect(embed.fields).toMatchObject<EmbedFieldData[]>(fields);
     });
 
@@ -142,7 +129,7 @@ describe("testing messageUtils", () => {
       const messageLike: MessageEmbedLike = {
         footer,
       };
-      const embed = messageUtils.embedMessageLikeToMessageEmbed(messageLike);
+      const embed = extension.embedMessageLikeToMessageEmbed(messageLike);
       expect(embed.footer).toMatchObject(footer);
     });
 
@@ -153,7 +140,7 @@ describe("testing messageUtils", () => {
       const messageLike: MessageEmbedLike = {
         footer: "footer text",
       };
-      const embed = messageUtils.embedMessageLikeToMessageEmbed(messageLike);
+      const embed = extension.embedMessageLikeToMessageEmbed(messageLike);
       expect(embed.footer).toMatchObject(footer);
     });
 
@@ -164,50 +151,44 @@ describe("testing messageUtils", () => {
       const messageLike: MessageEmbedLike = {
         thumbnailUrl: "wwww.google",
       };
-      const embed = messageUtils.embedMessageLikeToMessageEmbed(messageLike);
+      const embed = extension.embedMessageLikeToMessageEmbed(messageLike);
       expect(embed.thumbnail).toMatchObject(thumbnail);
     });
   });
 
   describe("testing getMessageByType", () => {
     it("should get message with image", () => {
-      const messageEmbed = messageUtils.embedMessageLikeToMessageEmbed({
+      const messageEmbed = extension.embedMessageLikeToMessageEmbed({
         image: {
           url: "www.google.com",
         },
       });
 
       expect(
-        (messageUtils.getMessageByType(messageEmbed, "embed") as MinifiedEmbedMessage).image,
+        (extension.getMessageByType(messageEmbed, "embed") as MinifiedEmbedMessage).image,
       ).toBeTruthy();
     });
   });
 
   describe("testing humanizeMessageIdentifierObject", () => {
     it("should return '' for no identifier", () => {
-      expect(messageUtils.humanizeMessageIdentifierObject(null)).toEqual("");
+      expect(extension.humanizeMessageIdentifierObject(null)).toEqual("");
     });
 
     it("should return message refering to the content", () => {
-      expect(messageUtils.humanizeMessageIdentifierObject({ content: "test" })).toEqual(
+      expect(extension.humanizeMessageIdentifierObject({ content: "test" })).toEqual(
         `message of content "test"`,
       );
     });
 
     it("should return message refering to the oldContent", () => {
-      expect(messageUtils.humanizeMessageIdentifierObject({ oldContent: "test" })).toEqual(
+      expect(extension.humanizeMessageIdentifierObject({ oldContent: "test" })).toEqual(
         `message of content "test"`,
       );
     });
 
     it("should return '' for no object with no id or content", () => {
-      expect(messageUtils.humanizeMessageIdentifierObject({})).toEqual("");
-    });
-  });
-
-  describe("testing createNotFoundMessageForMessageData", () => {
-    it("should return '' for empty object", () => {
-      expect(messageUtils.createNotFoundMessageForMessageData({})).toEqual(null);
+      expect(extension.humanizeMessageIdentifierObject({})).toEqual("");
     });
   });
 });

@@ -2,7 +2,7 @@ import MockDiscord from "../../mocks/mockDiscord";
 import { initCordeClientWithChannel } from "../../testHelper";
 import { Client } from "discord.js";
 import { ToAddReaction } from "../../../src/expect/matches";
-import { TestReport } from "../../../src/types";
+import { CordeBotLike, TestReport } from "../../../src/types";
 import { buildReportMessage, typeOf } from "../../../src/utils";
 import { MockEvents } from "../../mocks/mockEvents";
 import { runtime } from "../../../src/common/runtime";
@@ -13,9 +13,18 @@ describe("testing toAddReaction function", () => {
     mockDiscord = new MockDiscord();
   });
 
+  function initTestClass(cordeBot: CordeBotLike, commandName?: string, isNot?: boolean) {
+    return new ToAddReaction({
+      command: commandName,
+      cordeBot: cordeBot,
+      isNot: isNot,
+      timeout: runtime.timeOut,
+    });
+  }
+
   it("should fail due to invalid messageIdentifier (number)", async () => {
     const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
-    const toAddReaction = new ToAddReaction(cordeClient, "add", false);
+    const toAddReaction = initTestClass(cordeClient, "add", false);
     // @ts-ignore
     const report = await toAddReaction.action(["1"], 1);
 
@@ -33,7 +42,7 @@ describe("testing toAddReaction function", () => {
 
   it("should fail due to invalid emoji (undefined)", async () => {
     const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
-    const toAddReaction = new ToAddReaction(cordeClient, "add", false);
+    const toAddReaction = initTestClass(cordeClient, "add", false);
     // @ts-ignore
     const report = await toAddReaction.action(undefined);
 
@@ -51,7 +60,7 @@ describe("testing toAddReaction function", () => {
 
   it("should fail due to invalid emoji (null)", async () => {
     const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
-    const toAddReaction = new ToAddReaction(cordeClient, "add", false);
+    const toAddReaction = initTestClass(cordeClient, "add", false);
     // @ts-ignore
     const report = await toAddReaction.action(null);
 
@@ -69,7 +78,7 @@ describe("testing toAddReaction function", () => {
 
   it("should fail due to invalid emoji (object)", async () => {
     const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
-    const toAddReaction = new ToAddReaction(cordeClient, "add", false);
+    const toAddReaction = initTestClass(cordeClient, "add", false);
     // @ts-ignore
     const report = await toAddReaction.action({});
 
@@ -91,7 +100,7 @@ describe("testing toAddReaction function", () => {
     events.mockOnceMessageReactionsAdd();
 
     cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
-    const toAddReaction = new ToAddReaction(cordeClient, "add", false);
+    const toAddReaction = initTestClass(cordeClient, "add", false);
 
     const reportModel: TestReport = {
       pass: true,
@@ -106,7 +115,7 @@ describe("testing toAddReaction function", () => {
     runtime.setConfigs({ timeOut: 10 }, true);
     const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
     cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
-    const toAddReaction = new ToAddReaction(cordeClient, "add", true);
+    const toAddReaction = initTestClass(cordeClient, "add", true);
 
     const reportModel: TestReport = {
       pass: true,
@@ -121,7 +130,7 @@ describe("testing toAddReaction function", () => {
     runtime.setConfigs({ timeOut: 10 }, true);
     const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
     cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
-    const toAddReaction = new ToAddReaction(cordeClient, "add", false);
+    const toAddReaction = initTestClass(cordeClient, "add", false);
 
     const reportModel: TestReport = {
       pass: false,
@@ -142,7 +151,7 @@ describe("testing toAddReaction function", () => {
     cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessageReactionsAddToReject();
-    const toAddReaction = new ToAddReaction(cordeClient, "add", false);
+    const toAddReaction = initTestClass(cordeClient, "add", false);
 
     const reportModel: TestReport = {
       pass: false,
@@ -163,7 +172,7 @@ describe("testing toAddReaction function", () => {
     cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessageReactionsAdd();
-    const toAddReaction = new ToAddReaction(cordeClient, "add", false);
+    const toAddReaction = initTestClass(cordeClient, "add", false);
 
     const reportModel: TestReport = {
       pass: true,
@@ -180,7 +189,7 @@ describe("testing toAddReaction function", () => {
     cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessageReactionsAdd();
-    const toAddReaction = new ToAddReaction(cordeClient, "add", true);
+    const toAddReaction = initTestClass(cordeClient, "add", true);
 
     const reportModel: TestReport = {
       pass: false,
@@ -201,7 +210,7 @@ describe("testing toAddReaction function", () => {
     cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessageReactionsRemove();
-    const toAddReaction = new ToAddReaction(cordeClient, "remove", false);
+    const toAddReaction = initTestClass(cordeClient, "add", false);
 
     const reportModel: TestReport = {
       pass: false,

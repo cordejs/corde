@@ -85,8 +85,7 @@ export interface RoleIdentifier extends Identifier {
 }
 
 /**
- * Encapsulation of Discord Client with all specific
- * functions for corde test.
+ * Contract with necessary functions of Discord.js Client
  */
 export interface CordeBotLike {
   readonly events: Events;

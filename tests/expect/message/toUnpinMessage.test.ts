@@ -1,8 +1,7 @@
 import { Client } from "discord.js";
 import { runtime } from "../../../src/common/runtime";
 import { ToUnPinMessage } from "../../../src/expect/matches";
-import messageUtils from "../../../src/expect/messageUtils";
-import { TestReport } from "../../../src/types";
+import { CordeBotLike, TestReport } from "../../../src/types";
 import { buildReportMessage, typeOf } from "../../../src/utils";
 import MockDiscord from "../../mocks/mockDiscord";
 import { MockEvents } from "../../mocks/mockEvents";
@@ -15,9 +14,18 @@ describe("testing unpin message test", () => {
     mockDiscord = new MockDiscord();
   });
 
+  function initTestClass(cordeBot: CordeBotLike, isNot: boolean) {
+    return new ToUnPinMessage({
+      command: "toPin",
+      cordeBot: cordeBot,
+      isNot: isNot,
+      timeout: 1000,
+    });
+  }
+
   it("should return error message due to no mesageIdentifier (null)", async () => {
     const corde = createCordeBotWithMockedFunctions(mockDiscord, new Client());
-    const toUnPinMessage = new ToUnPinMessage(corde, "", false);
+    const toUnPinMessage = initTestClass(corde, false);
     const report = await toUnPinMessage.action(null);
 
     const expectReport: TestReport = {
@@ -34,7 +42,7 @@ describe("testing unpin message test", () => {
 
   it("should return error message due to no mesageIdentifier (undefined)", async () => {
     const corde = createCordeBotWithMockedFunctions(mockDiscord, new Client());
-    const toUnPinMessage = new ToUnPinMessage(corde, "", false);
+    const toUnPinMessage = initTestClass(corde, false);
     const report = await toUnPinMessage.action(undefined);
 
     const expectReport: TestReport = {
@@ -52,7 +60,7 @@ describe("testing unpin message test", () => {
   it("should return a passed test due to isNot true and timeout", async () => {
     runtime.setConfigs({ timeOut: 10 }, true);
     const corde = createCordeBotWithMockedFunctions(mockDiscord, new Client());
-    const toUnPinMessage = new ToUnPinMessage(corde, "", true);
+    const toUnPinMessage = initTestClass(corde, true);
     const report = await toUnPinMessage.action("1233");
 
     const expectReport: TestReport = {
@@ -66,10 +74,10 @@ describe("testing unpin message test", () => {
   it("should return a failed test due to isNot false and timeout", async () => {
     runtime.setConfigs({ timeOut: 10 }, true);
     const corde = createCordeBotWithMockedFunctions(mockDiscord, new Client());
-    const toUnPinMessage = new ToUnPinMessage(corde, "", false);
+    const toUnPinMessage = initTestClass(corde, false);
     const report = await toUnPinMessage.action("1233");
 
-    const msgString = messageUtils.humanizeMessageIdentifierObject({ id: "1233" });
+    const msgString = toUnPinMessage.humanizeMessageIdentifierObject({ id: "1233" });
     const expectReport: TestReport = {
       pass: false,
       message: buildReportMessage(
@@ -85,10 +93,10 @@ describe("testing unpin message test", () => {
   it("should return a failed test due to isNot false and timeout (messageIdentifier)", async () => {
     runtime.setConfigs({ timeOut: 10 }, true);
     const corde = createCordeBotWithMockedFunctions(mockDiscord, new Client());
-    const toUnPinMessage = new ToUnPinMessage(corde, "", false);
+    const toUnPinMessage = initTestClass(corde, false);
     const report = await toUnPinMessage.action({ id: "1233" });
 
-    const msgString = messageUtils.humanizeMessageIdentifierObject({ id: "1233" });
+    const msgString = toUnPinMessage.humanizeMessageIdentifierObject({ id: "1233" });
     const expectReport: TestReport = {
       pass: false,
       message: buildReportMessage(
@@ -103,7 +111,7 @@ describe("testing unpin message test", () => {
 
   it("should return a passed test due to message unpinned", async () => {
     const corde = createCordeBotWithMockedFunctions(mockDiscord, new Client());
-    const toUnPinMessage = new ToUnPinMessage(corde, "", false);
+    const toUnPinMessage = initTestClass(corde, false);
 
     const mockEvent = new MockEvents(corde, mockDiscord);
     mockEvent.mockOnceMessageUnPinned();
@@ -120,13 +128,13 @@ describe("testing unpin message test", () => {
 
   it("should return a failed test due to message unpinned but isNot true", async () => {
     const corde = createCordeBotWithMockedFunctions(mockDiscord, new Client());
-    const toUnPinMessage = new ToUnPinMessage(corde, "", true);
+    const toUnPinMessage = initTestClass(corde, true);
 
     const mockEvent = new MockEvents(corde, mockDiscord);
     mockEvent.mockOnceMessageUnPinned();
 
     const report = await toUnPinMessage.action({ id: "1233" });
-    const msgString = messageUtils.humanizeMessageIdentifierObject({ id: "1233" });
+    const msgString = toUnPinMessage.humanizeMessageIdentifierObject({ id: "1233" });
 
     const expectReport: TestReport = {
       pass: false,
