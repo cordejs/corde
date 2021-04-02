@@ -16,7 +16,7 @@
 ## 🚀 Features
 
 - Full rework of UI of the CLI (#362)
-- Added timeout for `group` and `test` clausures (#505)
+- Added timeout for `group` and `test` closures (#505)
 - Created alias for `group` and `test` (`describe` and `it` respectively) (#493)
 - Added timeout for hooks(`afterAll`, `beforeStart`, `afterEach`, `beforeEach`) (#590)
 - Hooks executions are being done safely, so they do not breaks the application (#588)

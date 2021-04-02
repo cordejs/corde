@@ -1,4 +1,4 @@
-export { group, test, describe, it } from "./clausures";
+export { group, test, describe, it } from "./closures";
 export { expect } from "./expect";
 export { sendMessage, getRole, createRole } from "./api-utilities";
 export { afterAll, beforeStart, afterEach, beforeEach } from "./hooks";

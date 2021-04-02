@@ -22,7 +22,7 @@ beforeEach(() => {
   testRunner = new TestExecutor(logUpdate);
 });
 
-it("should print report for 1 test file, 1 test clausure and 1 test function", async () => {
+it("should print report for 1 test file, 1 test closure and 1 test function", async () => {
   const data: TestFileGeneratorInfo = {
     amountOfTestFiles: 1,
     amountOfTestFunctions: 1,
@@ -47,7 +47,7 @@ it("should print report for 1 test file, 1 test clausure and 1 test function", a
   expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
-it("should print report for 1 test file, 1 test clausure and 2 test function", async () => {
+it("should print report for 1 test file, 1 test closure and 2 test function", async () => {
   const data: TestFileGeneratorInfo = {
     amountOfTestFiles: 1,
     amountOfTestFunctions: 2,
@@ -72,7 +72,7 @@ it("should print report for 1 test file, 1 test clausure and 2 test function", a
   expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
-it("should print report for 2 test file, 1 test clausure and 1 test function", async () => {
+it("should print report for 2 test file, 1 test closure and 1 test function", async () => {
   const data: TestFileGeneratorInfo = {
     amountOfTestFiles: 2,
     amountOfTestFunctions: 1,
@@ -101,7 +101,7 @@ it("should print report for 2 test file, 1 test clausure and 1 test function", a
   expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
-it("should print report for 2 test file, 1 test clausure and 2 test function", async () => {
+it("should print report for 2 test file, 1 test closure and 2 test function", async () => {
   const data: TestFileGeneratorInfo = {
     amountOfTestFiles: 2,
     amountOfTestFunctions: 2,
@@ -126,7 +126,7 @@ it("should print report for 2 test file, 1 test clausure and 2 test function", a
   expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
-it("should print report for 2 test file, 2 test clausure and 2 test function", async () => {
+it("should print report for 2 test file, 2 test closure and 2 test function", async () => {
   const data: TestFileGeneratorInfo = {
     amountOfTestFiles: 2,
     amountOfTestFunctions: 2,
@@ -151,7 +151,7 @@ it("should print report for 2 test file, 2 test clausure and 2 test function", a
   expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
-it("should print report for 1 test file, 1 test clausure and 1 test function that fail", async () => {
+it("should print report for 1 test file, 1 test closure and 1 test function that fail", async () => {
   const data: TestFileGeneratorInfo = {
     amountOfTestFiles: 1,
     testFunctionsReport: [
@@ -181,7 +181,7 @@ it("should print report for 1 test file, 1 test clausure and 1 test function tha
   expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
-it("should print report for 1 test file, 1 test clausure and 1 failed function and 1 passed function", async () => {
+it("should print report for 1 test file, 1 test closure and 1 failed function and 1 passed function", async () => {
   const data: TestFileGeneratorInfo = {
     amountOfTestFiles: 1,
     testFunctionsReport: [
@@ -211,7 +211,7 @@ it("should print report for 1 test file, 1 test clausure and 1 failed function a
   expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
-it("should print report for 1 test file, 1 test clausure and 1 failed function and 1 passed function", async () => {
+it("should print report for 1 test file, 1 test closure and 1 failed function and 1 passed function", async () => {
   const data: TestFileGeneratorInfo = {
     amountOfTestFiles: 1,
     testFunctionsReport: [
@@ -241,7 +241,7 @@ it("should print report for 1 test file, 1 test clausure and 1 failed function a
   expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
-it("should print report for 1 test file, 2 test clausure and 1 failed function and 1 passed function", async () => {
+it("should print report for 1 test file, 2 test closure and 1 failed function and 1 passed function", async () => {
   const data: TestFileGeneratorInfo = {
     amountOfTestFiles: 1,
     testFunctionsReport: [
@@ -271,7 +271,7 @@ it("should print report for 1 test file, 2 test clausure and 1 failed function a
   expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
-it("should print report for 2 test file, 2 test clausure and 1 failed function and 1 passed function", async () => {
+it("should print report for 2 test file, 2 test closure and 1 failed function and 1 passed function", async () => {
   const data: TestFileGeneratorInfo = {
     amountOfTestFiles: 2,
     testFunctionsReport: [
@@ -301,7 +301,7 @@ it("should print report for 2 test file, 2 test clausure and 1 failed function a
   expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
-it("should print report for 1 test file, 2 test clausure and 1 failed function and 1 passed function", async () => {
+it("should print report for 1 test file, 2 test closure and 1 failed function and 1 passed function", async () => {
   const tests: TestFile[] = [
     {
       path: testFileNames[0],
@@ -540,7 +540,7 @@ it("should print empty test file", async () => {
   expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
-it("should print report for 1 test file, 2 test clausure and 1 failed function and 1 passed function", async () => {
+it("should print report for 1 test file, 2 test closure and 1 failed function and 1 passed function", async () => {
   const data: TestFileGeneratorInfo = {
     amountOfTestFiles: 1,
     testFunctionsReport: [
@@ -569,7 +569,7 @@ it("should print report for 1 test file, 2 test clausure and 1 failed function a
   expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
 });
 
-it("should print report for 1 test file, 2 test clausure and 1 failed function and 1 passed function with stackTrace", async () => {
+it("should print report for 1 test file, 2 test closure and 1 failed function and 1 passed function with stackTrace", async () => {
   const data: TestFileGeneratorInfo = {
     amountOfTestFiles: 1,
     testFunctionsReport: [

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should print report for 1 test file, 1 test clausure and 1 failed function and 1 passed function 1`] = `
+exports[`should print report for 1 test file, 1 test closure and 1 failed function and 1 passed function 1`] = `
 "
  FAIL   /tests/file1.test.ts   10ms
    x group -> test case1   10ms

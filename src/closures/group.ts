@@ -24,7 +24,7 @@ export const group = <T extends any>(
       await testDefinitions();
       await testCollector.executeTestClojure();
       const resolvedName = await resolveName(definitionResolvable);
-      // In case of expect() be added in test clausure
+      // In case of expect() be added in test closure
       // that is contained in testDefinitions()
       if (testCollector.tests && testCollector.tests.length > 0) {
         testCollector.groups.push({
@@ -33,7 +33,7 @@ export const group = <T extends any>(
         });
       }
 
-      // Case expect() be added inside the group clausure
+      // Case expect() be added inside the group closure
       if (testCollector.isInsideTestClausureFunctions()) {
         const testsCloned = testCollector.cloneTestFunctions();
         testCollector.groups.push({

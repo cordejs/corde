@@ -12,7 +12,7 @@ import {
 } from "./api-utilities";
 
 import { expect as _expect } from "./expect";
-import { group as _group, test as _test, describe as _describe, it as _it } from "./clausures";
+import { group as _group, test as _test, describe as _describe, it as _it } from "./closures";
 
 /**
  * Corde's utility namespace to call it's API functions.

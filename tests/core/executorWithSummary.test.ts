@@ -14,7 +14,7 @@ beforeEach(() => {
   testRunner = new TestExecutor(logUpdate);
 });
 
-it("should print report for 1 test file, 1 test clausure and 1 failed function and 1 passed function", async () => {
+it("should print report for 1 test file, 1 test closure and 1 failed function and 1 passed function", async () => {
   const data: TestFileGeneratorInfo = {
     amountOfTestFiles: 1,
     testFunctionsReport: [
