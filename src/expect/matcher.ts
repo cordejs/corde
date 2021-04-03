@@ -10,6 +10,7 @@ import {
   TestReport,
   CordeBotLike,
   ChannelLocation,
+  TestFunctionType,
 } from "../types";
 import { Colors } from "../utils/colors";
 import { RolePermission } from "../utils/permission";
@@ -29,40 +30,32 @@ import {
   ToSetRolePermission,
 } from "./matches";
 import { ExpectTest, ExpectTestParams } from "./matches/expectTest";
-import { MessageMatches } from "./matches/messageMatches";
-import { RoleMatches } from "./matches/roleMatches";
 import { buildReportMessage, resolveName, stringIsNullOrEmpty } from "../utils";
 import { getStackTrace } from "../utils/getStackTrace";
 import { ToReturnInChannel } from "./matches/message/toReturnInChannel";
 import { runtime } from "../common/runtime";
+import { Matches, AllMatches, MacherContructorArgs, MayReturnMatch } from "./types";
 
-/**
- * Defines all functions that can be used
- * to check a bot reaction of a command.
- */
-type Matches = MessageMatches & RoleMatches;
-
-/**
- * Defines the initial value of expectations from
- * **command** function. It includes all matches and
- * the *not* statement. Witch will deny the executed match
- */
-export interface MatchWithNot extends Matches {
-  /**
-   * Defines that a command should **not** do something.
-   * Use this if you can not precise what response a command will throw,
-   * But know what it **can not** throw.
-   */
-  not: Matches;
-}
-
-class ExpectMatches implements Matches {
+export class ExpectMatches<TResponseType extends MayReturnMatch> implements Matches<TResponseType> {
   protected _commandName: unknown;
   protected _isNot: boolean;
+  protected _isCascade: boolean;
 
-  constructor(commandName: unknown, isNot: boolean) {
+  constructor({ commandName, isNot, isCascade }: MacherContructorArgs) {
     this._commandName = commandName;
     this._isNot = isNot;
+    this._isCascade = isCascade ?? false;
+  }
+
+  todoInCascade(...tests: TestFunctionType[]): void {
+    console.log(tests);
+  }
+
+  toReturn(expect: Primitive | MessageEmbedLike): TResponseType {
+    const trace = getStackTrace(undefined, true, "toReturn");
+    return this.returnOrAddToCollector((cordeBot) =>
+      this.operationFactory(trace, ToReturn, cordeBot, expect),
+    );
   }
 
   toReturnInChannel(
@@ -98,13 +91,6 @@ class ExpectMatches implements Matches {
     testCollector.addTestFunction((cordeBot) => {
       return this.operationFactory(trace, ToUnPinMessage, cordeBot, messageIdentifier);
     });
-  }
-
-  toReturn(expect: Primitive | MessageEmbedLike): void {
-    const trace = getStackTrace(undefined, true, "toReturn");
-    testCollector.addTestFunction((cordeBot) =>
-      this.operationFactory(trace, ToReturn, cordeBot, expect),
-    );
   }
 
   toAddReaction(
@@ -152,10 +138,6 @@ class ExpectMatches implements Matches {
         roleIdentifier,
       );
     });
-  }
-
-  to(assertion: (expect: ExpectMatchesWithNot) => void[]) {
-    assertion(new ExpectMatchesWithNot(this._commandName));
   }
 
   toSetRoleHoist(hoist: boolean, roleIdentifier: string | RoleIdentifier) {
@@ -234,13 +216,32 @@ class ExpectMatches implements Matches {
     report.trace = trace;
     return report;
   }
+
+  protected initExpectCascadeWithIsNot() {
+    return new AllExpectMatches<void>({
+      commandName: this._commandName,
+      isNot: this._isNot,
+      isCascade: true,
+    });
+  }
+
+  protected returnOrAddToCollector(testFunction: TestFunctionType): any {
+    if (this._isCascade) {
+      return testFunction;
+    }
+
+    testCollector.addTestFunction(testFunction);
+    return;
+  }
 }
 
-export class ExpectMatchesWithNot extends ExpectMatches implements MatchWithNot {
-  not: ExpectMatches;
+export class AllExpectMatches<TReturn extends MayReturnMatch>
+  extends ExpectMatches<TReturn>
+  implements AllMatches<TReturn> {
+  not: Matches<TReturn>;
 
-  constructor(commandName: unknown) {
-    super(commandName, false);
-    this.not = new ExpectMatches(commandName, true);
+  constructor(commandName?: unknown, isCascade?: boolean) {
+    super({ commandName, isNot: false, isCascade });
+    this.not = new ExpectMatches({ commandName, isNot: true, isCascade });
   }
 }

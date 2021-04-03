@@ -1,33 +1,30 @@
-import { VoidLikeFunction } from "../types";
-import { ExpectMatchesWithNot, MatchWithNot } from "./matcher";
+import { AllExpectMatches, ExpectMatches } from "./matcher";
+import { Expect } from "./types";
 
-/**
- * Invalid declaration of a test matcher.
- *
- * @since 3.0
- */
-export function expect(): void;
-/**
- * Receives which command will be tested.
- *
- * Do not inform the command prefix if
- * it's already informed in **configs**
- *
- * @param commandNameResolvable Command name. (Empty strings will resolve failed test)
- *
- * @returns An object with all possible tests to be done
- * in the bot.
- *
- * @since 1.0
- */
-export function expect<T extends VoidLikeFunction | number | string>(
+const _expect: any = <T extends (() => number | string) | number | string>(
   commandNameResolvable: T,
-): MatchWithNot;
-export function expect<T extends VoidLikeFunction | number | string>(
-  commandNameResolvable?: T,
-): MatchWithNot | void {
-  if (commandNameResolvable == null) {
-    return;
+) => {
+  return new AllExpectMatches<void>(commandNameResolvable);
+};
+
+const matcherBase = new ExpectMatches({ isCascade: true, isNot: false, commandName: "" });
+const prototype = Object.getPrototypeOf(matcherBase);
+
+const notExpect = new ExpectMatches({ isCascade: true, isNot: true, commandName: "" });
+_expect.not = notExpect;
+
+Object.getOwnPropertyNames(prototype).map((propName) => {
+  if (propName !== "constructor" && typeof prototype[propName] === "function") {
+    _expect[propName] = (...args: any[]) => {
+      return (new ExpectMatches({
+        isCascade: true,
+        isNot: false,
+        commandName: "",
+      }) as any)[propName](...args);
+    };
   }
-  return new ExpectMatchesWithNot(commandNameResolvable);
-}
+});
+
+const expect = _expect as Expect;
+
+export { expect };

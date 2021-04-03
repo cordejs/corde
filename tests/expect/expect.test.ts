@@ -4,4 +4,9 @@ describe("Testing command function", () => {
     const matches = cordeExpect("test");
     expect(matches).not.toBe(undefined);
   });
+
+  it("should get test functions as properties", () => {
+    console.log(cordeExpect.not.toReturn(""));
+    expect(cordeExpect.not.toReturn("")).toBeTruthy();
+  });
 });
