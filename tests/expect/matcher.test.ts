@@ -16,7 +16,7 @@ import {
   ToReturn,
   ToSetRoleColor,
 } from "../../src/expect/matches";
-import { ExpectMatchesWithNot } from "../../src/expect/matcher";
+import { AllExpectMatches } from "../../src/expect/matcher";
 import { TestReport } from "../../src/types";
 import { ExpectTest, ExpectTestParams } from "../../src/expect/matches/expectTest";
 
@@ -164,7 +164,7 @@ describe("Testing matches class", () => {
   });
 
   it("should not return a function", async () => {
-    const matches = new ExpectMatchesWithNot("name");
+    const matches = initExpectMatch("name");
     expect(matches.not).not.toBe(undefined);
   });
 
@@ -291,7 +291,7 @@ describe("Testing matches class", () => {
     });
 
     it("should add a toRemoveReaction function", async () => {
-      new ExpectMatchesWithNot("con").toRemoveReaction(["😀"]);
+      initExpectMatch().toRemoveReaction(["😀"]);
       await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(toRemoveReactionActionMock).toBeCalled();
     });
@@ -347,7 +347,7 @@ describe("Testing matches class", () => {
     });
 
     it("should add a toSetRoleColor function", async () => {
-      new ExpectMatchesWithNot("con").toSetRoleColor(color, "123");
+      initExpectMatch().toSetRoleColor(color, "123");
       await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(toSetRoleColorSpy).toBeCalled();
     });
@@ -379,7 +379,7 @@ describe("Testing matches class", () => {
     });
 
     it("should add a toDeleteRole function", async () => {
-      new ExpectMatchesWithNot("con").toDeleteRole("123");
+      initExpectMatch().toDeleteRole("123");
       await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(toDeleteRoleSpy).toBeCalled();
     });
@@ -422,7 +422,7 @@ describe("Testing matches class", () => {
     });
 
     it("should add a toSetRoleMentionable function", async () => {
-      new ExpectMatchesWithNot("con").toSetRoleMentionable(true, roleId.id);
+      initExpectMatch().toSetRoleMentionable(true, roleId.id);
       await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(toSetRoleMentionableSpy).toBeCalled();
     });
@@ -461,7 +461,7 @@ describe("Testing matches class", () => {
     });
 
     it("should add a toSetRoleHoist function", async () => {
-      new ExpectMatchesWithNot("con").toSetRoleHoist(mentionableTrue, roleId);
+      initExpectMatch().toSetRoleHoist(mentionableTrue, roleId);
       await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(toSetHoistSpy).toBeCalled();
     });
@@ -714,5 +714,5 @@ describe("Testing matches class", () => {
 });
 
 function initExpectMatch(value?: any) {
-  return new ExpectMatchesWithNot(value ?? con);
+  return new AllExpectMatches(value ?? con);
 }
