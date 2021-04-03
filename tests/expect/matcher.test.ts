@@ -16,7 +16,7 @@ import {
   ToReturn,
   ToSetRoleColor,
 } from "../../src/expect/matches";
-import { AllExpectMatches } from "../../src/expect/matcher";
+import { AllExpectMatches, ExpectMatches } from "../../src/expect/matcher";
 import { TestReport } from "../../src/types";
 import { ExpectTest, ExpectTestParams } from "../../src/expect/matches/expectTest";
 
@@ -166,6 +166,14 @@ describe("Testing matches class", () => {
   it("should not return a function", async () => {
     const matches = initExpectMatch("name");
     expect(matches.not).not.toBe(undefined);
+  });
+
+  it("toString should return the name of ExpectMatches", () => {
+    expect(new ExpectMatches({} as any).toString()).toEqual("ExpectMatches");
+  });
+
+  it("toString should return the name of AllExpectMatches", () => {
+    expect(new AllExpectMatches({} as any).toString()).toEqual("AllExpectMatches");
   });
 
   describe("testing operationFactory", () => {

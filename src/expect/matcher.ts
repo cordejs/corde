@@ -174,6 +174,10 @@ export class ExpectMatches<TResponseType extends MayReturnMatch> implements Matc
     });
   }
 
+  toString() {
+    return "ExpectMatches";
+  }
+
   // Trace can not me added inside operationFactory because it do,
   // it will get irrelevant data.
 
@@ -243,5 +247,9 @@ export class AllExpectMatches<TReturn extends MayReturnMatch>
   constructor(commandName?: unknown, isCascade?: boolean) {
     super({ commandName, isNot: false, isCascade });
     this.not = new ExpectMatches({ commandName, isNot: true, isCascade });
+  }
+
+  toString() {
+    return "AllExpectMatches";
   }
 }

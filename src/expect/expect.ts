@@ -1,5 +1,5 @@
 import { AllExpectMatches, ExpectMatches } from "./matcher";
-import { Expect } from "./types";
+import { Expect, MacherContructorArgs } from "./types";
 
 const _expect: any = <T extends (() => number | string) | number | string>(
   commandNameResolvable: T,
@@ -7,20 +7,17 @@ const _expect: any = <T extends (() => number | string) | number | string>(
   return new AllExpectMatches<void>(commandNameResolvable);
 };
 
-const matcherBase = new ExpectMatches({ isCascade: true, isNot: false, commandName: "" });
+const defaultConstructor: MacherContructorArgs = { isCascade: true, isNot: false, commandName: "" };
+const matcherBase = new ExpectMatches(defaultConstructor);
 const prototype = Object.getPrototypeOf(matcherBase);
 
-const notExpect = new ExpectMatches({ isCascade: true, isNot: true, commandName: "" });
+const notExpect = new ExpectMatches({ ...defaultConstructor, isNot: true });
 _expect.not = notExpect;
 
 Object.getOwnPropertyNames(prototype).map((propName) => {
   if (propName !== "constructor" && typeof prototype[propName] === "function") {
     _expect[propName] = (...args: any[]) => {
-      return (new ExpectMatches({
-        isCascade: true,
-        isNot: false,
-        commandName: "",
-      }) as any)[propName](...args);
+      return (new ExpectMatches(defaultConstructor) as any)[propName](...args);
     };
   }
 });
