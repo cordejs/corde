@@ -66,7 +66,7 @@ export abstract class ExpectTest {
     if (!this.isCascade || forceSend) {
       return this.cordeBot.sendTextMessage(this.command);
     }
-    return;
+    return Promise.resolve();
   }
 
   protected createFailedTest(message?: string): TestReport {

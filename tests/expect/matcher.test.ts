@@ -41,21 +41,6 @@ jest.mock("../../src/expect/matches/role/toSetRolePermission.ts");
 
 jest.mock("../../src/expect/matches/todoInCascade.ts");
 
-let toEditMessageSpy: jest.SpyInstance;
-let toReturnSpy: jest.SpyInstance;
-let toAddReactionSpy: jest.SpyInstance;
-let toRemoveReactionSpy: jest.SpyInstance;
-let toSetRoleColorSpy: jest.SpyInstance;
-let toDeleteRoleSpy: jest.SpyInstance;
-let toSetRoleMentionableSpy: jest.SpyInstance<any, any>;
-let toSetHoistSpy: jest.SpyInstance<any, any>;
-let toRenameRoleSpy: jest.SpyInstance<any, any>;
-let toSetRolePositionSpy: jest.SpyInstance<any, any>;
-let toSetRolePermissionSpy: jest.SpyInstance<any, any>;
-let toPinMessageSpy: jest.SpyInstance<any, any>;
-let toUnpinMessageSpy: jest.SpyInstance<any, any>;
-let todoInCascadeSpy: jest.SpyInstance<any, any>;
-
 const toEditMessageActionMock = jest.fn();
 const toSetRoleMentionableActionMock = jest.fn();
 const toSetHoistActionMock = jest.fn();
@@ -64,7 +49,7 @@ const toAddReactionActionMock = jest.fn();
 const toRemoveReactionActionMock = jest.fn();
 const toRenameRoleActionMock = jest.fn();
 const toSetRoleColorActionMock = jest.fn();
-const toDeleteRoleMock = jest.fn();
+const toDeleteRoleActionMock = jest.fn();
 const toSetRolePositionActionMock = jest.fn();
 const toSetRolePermissionActionMock = jest.fn();
 const toPinMessageActionMock = jest.fn();
@@ -100,76 +85,41 @@ describe("Testing matches class", () => {
   beforeEach(() => {
     testCollector.clearIsolatedTestFunctions();
 
-    toReturnSpy = ToReturn as jest.Mock;
     ToReturn.prototype.action = toReturnActionMock;
-
-    toAddReactionSpy = ToAddReaction as jest.Mock;
     ToAddReaction.prototype.action = toAddReactionActionMock;
-
-    toRemoveReactionSpy = ToRemoveReaction as jest.Mock;
     ToRemoveReaction.prototype.action = toRemoveReactionActionMock;
-
-    toSetRoleColorSpy = ToSetRoleColor as jest.Mock;
     ToSetRoleColor.prototype.action = toSetRoleColorActionMock;
 
-    toEditMessageSpy = ToEditMessage as jest.Mock;
     ToEditMessage.prototype.action = toEditMessageActionMock;
-
-    toDeleteRoleSpy = ToDeleteRole as jest.Mock;
-    ToDeleteRole.prototype.action = toDeleteRoleMock;
-
-    toSetRoleMentionableSpy = ToSetRoleMentionable as jest.Mock;
+    ToDeleteRole.prototype.action = toDeleteRoleActionMock;
     ToSetRoleMentionable.prototype.action = toSetRoleMentionableActionMock;
-
-    toSetHoistSpy = ToSetRoleHoist as jest.Mock;
     ToSetRoleHoist.prototype.action = toSetHoistActionMock;
 
-    toRenameRoleSpy = ToRenameRole as jest.Mock;
     ToRenameRole.prototype.action = toRenameRoleActionMock;
-
-    toSetRolePositionSpy = ToSetRolePosition as jest.Mock;
     ToSetRolePosition.prototype.action = toSetRolePositionActionMock;
-
-    toSetRolePermissionSpy = ToSetRolePermission as jest.Mock;
     ToSetRolePermission.prototype.action = toSetRolePermissionActionMock;
-
-    toPinMessageSpy = ToPinMessage as jest.Mock;
     ToPinMessage.prototype.action = toPinMessageActionMock;
 
-    toUnpinMessageSpy = ToUnPinMessage as jest.Mock;
     ToUnPinMessage.prototype.action = toUnpinMessageActionMock;
-
-    todoInCascadeSpy = TodoInCascade as jest.Mock;
     TodoInCascade.prototype.action = todoInCascadeActionMock;
   });
 
   afterEach(() => {
-    toSetRoleMentionableSpy.mockClear();
-    toSetRolePermissionSpy.mockClear();
-    toPinMessageSpy.mockClear();
-    toEditMessageSpy.mockClear();
-    toReturnSpy.mockClear();
-    toAddReactionSpy.mockClear();
-    toRemoveReactionSpy.mockClear();
-    toSetRoleColorSpy.mockClear();
-    toDeleteRoleSpy.mockClear();
-    toSetHoistSpy.mockClear();
-    toRenameRoleSpy.mockClear();
-    toSetRolePositionSpy.mockClear();
-    toUnpinMessageSpy.mockClear();
-
     toEditMessageActionMock.mockClear();
     toSetRoleMentionableActionMock.mockClear();
     toSetHoistActionMock.mockClear();
     toReturnActionMock.mockClear();
+
     toAddReactionActionMock.mockClear();
     toRemoveReactionActionMock.mockClear();
     toRenameRoleActionMock.mockClear();
     toSetRoleColorActionMock.mockClear();
-    toDeleteRoleMock.mockClear();
+
+    toDeleteRoleActionMock.mockClear();
     toSetRolePositionActionMock.mockClear();
     toSetRolePermissionActionMock.mockClear();
     toPinMessageActionMock.mockClear();
+
     toSetRolePositionActionMock.mockClear();
     toSetRolePositionActionMock.mockClear();
     toSetRolePositionActionMock.mockClear();
@@ -370,7 +320,7 @@ describe("Testing matches class", () => {
     it("should add a toSetRoleColor function", async () => {
       initExpectMatch().toSetRoleColor(color, "123");
       await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
-      expect(toSetRoleColorSpy).toBeCalled();
+      expect(toSetRoleColorActionMock).toBeCalled();
     });
 
     it("should add a toSetRoleColor function with correct values (isNot false)", async () => {
@@ -402,32 +352,32 @@ describe("Testing matches class", () => {
     it("should add a toDeleteRole function", async () => {
       initExpectMatch().toDeleteRole("123");
       await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
-      expect(toDeleteRoleSpy).toBeCalled();
+      expect(toDeleteRoleActionMock).toBeCalled();
     });
 
     it("should add a toDeleteRole function with correct values (isNot false)", async () => {
       initExpectMatch().toDeleteRole("123");
-      await createDefaultTestFor(ToDeleteRole, toDeleteRoleMock, false, "123");
+      await createDefaultTestFor(ToDeleteRole, toDeleteRoleActionMock, false, "123");
     });
 
     it("should add a toDeleteRole function with id", async () => {
       initExpectMatch().toDeleteRole("123");
-      await createDefaultTestFor(ToDeleteRole, toDeleteRoleMock, false, "123");
+      await createDefaultTestFor(ToDeleteRole, toDeleteRoleActionMock, false, "123");
     });
 
     it("should add a toDeleteRole function with id in data object", async () => {
       initExpectMatch().toDeleteRole(roleId);
-      await createDefaultTestFor(ToDeleteRole, toDeleteRoleMock, false, roleId);
+      await createDefaultTestFor(ToDeleteRole, toDeleteRoleActionMock, false, roleId);
     });
 
     it("should add a toDeleteRole function with name in data object", async () => {
       initExpectMatch().toDeleteRole({ name: "test" });
-      await createDefaultTestFor(ToDeleteRole, toDeleteRoleMock, false, { name: "test" });
+      await createDefaultTestFor(ToDeleteRole, toDeleteRoleActionMock, false, { name: "test" });
     });
 
     it("should add a toDeleteRole function with correct values (isNot true)", async () => {
       initExpectMatch().not.toDeleteRole("123");
-      await createDefaultTestFor(ToDeleteRole, toDeleteRoleMock, true, roleId.id);
+      await createDefaultTestFor(ToDeleteRole, toDeleteRoleActionMock, true, roleId.id);
     });
   });
 
@@ -445,7 +395,7 @@ describe("Testing matches class", () => {
     it("should add a toSetRoleMentionable function", async () => {
       initExpectMatch().toSetRoleMentionable(true, roleId.id);
       await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
-      expect(toSetRoleMentionableSpy).toBeCalled();
+      expect(toSetRoleMentionableActionMock).toBeCalled();
     });
 
     it("should add a toSetRoleMentionable function with correct values (isNot false)", async () => {
@@ -484,7 +434,7 @@ describe("Testing matches class", () => {
     it("should add a toSetRoleHoist function", async () => {
       initExpectMatch().toSetRoleHoist(mentionableTrue, roleId);
       await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
-      expect(toSetHoistSpy).toBeCalled();
+      expect(toSetHoistActionMock).toBeCalled();
     });
 
     it("should add a toSetRoleHoist function with correct values using id", async () => {
@@ -573,7 +523,7 @@ describe("Testing matches class", () => {
     it("should add a toSetRolePosition function", async () => {
       initExpectMatch().toSetRolePosition(newPosition, roleId);
       await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
-      expect(toSetRolePositionSpy).toBeCalled();
+      expect(toSetRolePositionActionMock).toBeCalled();
     });
 
     it("should add a toSetRolePosition function with correct values using id", async () => {
@@ -733,41 +683,41 @@ describe("Testing matches class", () => {
     });
   });
 
-  describe("testing to todoInCascade", () => {
-    it("should add a function to hasIsolatedTestFunctions after call toUnpin", async () => {
-      initExpectMatch().todoInCascade();
-      expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
-    });
+  // describe("testing to todoInCascade", () => {
+  //   it("should add a function to hasIsolatedTestFunctions after call toUnpin", async () => {
+  //     initExpectMatch().todoInCascade();
+  //     expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
+  //   });
 
-    it("should add a todoInCascade function", async () => {
-      initExpectMatch().todoInCascade();
-      await createToBeCalledTestFor(toUnpinMessageActionMock);
-    });
+  //   it("should add a todoInCascade function", async () => {
+  //     initExpectMatch().todoInCascade();
+  //     await createToBeCalledTestFor(toUnpinMessageActionMock);
+  //   });
 
-    it("should add a todoInCascade function with correct values using id", async () => {
-      const call = _expect.toReturn("test");
-      initExpectMatch().todoInCascade(call);
-      await createDefaultTestFor(TodoInCascade, todoInCascadeActionMock, false, [call]);
-    });
+  //   it("should add a todoInCascade function with correct values using id", async () => {
+  //     const call = _expect.toReturn("test");
+  //     initExpectMatch().todoInCascade(call);
+  //     await createDefaultTestFor(TodoInCascade, todoInCascadeActionMock, false, [call]);
+  //   });
 
-    it("should add a todoInCascade function with correct values using string id", async () => {
-      const call = _expect.toReturn("test");
-      initExpectMatch().todoInCascade(call);
-      await createDefaultTestFor(TodoInCascade, todoInCascadeActionMock, false, [call]);
-    });
+  //   it("should add a todoInCascade function with correct values using string id", async () => {
+  //     const call = _expect.toReturn("test");
+  //     initExpectMatch().todoInCascade(call);
+  //     await createDefaultTestFor(TodoInCascade, todoInCascadeActionMock, false, [call]);
+  //   });
 
-    it("should add a todoInCascade function with correct values (isNot false)", async () => {
-      const call = _expect.toReturn("test");
-      initExpectMatch().todoInCascade(call);
-      await createDefaultTestFor(TodoInCascade, todoInCascadeActionMock, false, [call]);
-    });
+  //   it("should add a todoInCascade function with correct values (isNot false)", async () => {
+  //     const call = _expect.toReturn("test");
+  //     initExpectMatch().todoInCascade(call);
+  //     await createDefaultTestFor(TodoInCascade, todoInCascadeActionMock, false, [call]);
+  //   });
 
-    it("should add a todoInCascade function with correct values (isNot true)", async () => {
-      const call = _expect.toReturn("test");
-      initExpectMatch().todoInCascade(call);
-      await createDefaultTestFor(TodoInCascade, todoInCascadeActionMock, true, [call]);
-    });
-  });
+  //   it("should add a todoInCascade function with correct values (isNot true)", async () => {
+  //     const call = _expect.toReturn("test");
+  //     initExpectMatch().todoInCascade(call);
+  //     await createDefaultTestFor(TodoInCascade, todoInCascadeActionMock, true, [call]);
+  //   });
+  // });
 });
 
 function initExpectMatch(value?: any) {
