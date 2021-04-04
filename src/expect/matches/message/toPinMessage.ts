@@ -1,12 +1,16 @@
 import { MessageIdentifier, TestReport } from "../../../types";
 import { typeOf } from "../../../utils";
-import { ExpectTest } from "../expectTest";
+import { ExpectTestBaseParams } from "../../types";
 import { MessageExpectTest } from "./messageExpectTest";
 
 /**
  * @internal
  */
 export class ToPinMessage extends MessageExpectTest {
+  constructor(params: ExpectTestBaseParams) {
+    super({ ...params, testName: "toPinMessage" });
+  }
+
   async action(messageIdentifier: MessageIdentifier | string): Promise<TestReport> {
     if (
       !messageIdentifier ||
@@ -26,13 +30,13 @@ export class ToPinMessage extends MessageExpectTest {
       _msgIdentifier = messageIdentifier;
     }
 
-    await this.cordeBot.sendTextMessage(this.command);
+    await this.sendCommandMessage();
     const msgString = this.humanizeMessageIdentifierObject(_msgIdentifier);
     try {
       await this.cordeBot.events.onceMessagePinned(_msgIdentifier);
     } catch {
       if (this.isNot) {
-        return { pass: true };
+        return this.createPassTest();
       }
 
       return this.createReport(
@@ -47,7 +51,7 @@ export class ToPinMessage extends MessageExpectTest {
     this.invertHasPassedIfIsNot();
 
     if (this.hasPassed) {
-      return { pass: true };
+      return this.createPassTest();
     }
 
     return this.createReport(

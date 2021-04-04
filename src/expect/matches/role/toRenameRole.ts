@@ -2,18 +2,23 @@ import { Role } from "discord.js";
 import { RoleIdentifier, TestReport } from "../../../types";
 import { typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
+import { ExpectTestBaseParams } from "../../types";
 import { ExpectTest } from "../expectTest";
 
 /**
  * @internal
  */
 export class ToRenameRole extends ExpectTest {
+  constructor(params: ExpectTestBaseParams) {
+    super({ ...params, testName: "toRenameRole" });
+  }
+
   async action(newName: string, roleIdentifier: RoleIdentifier | string): Promise<TestReport> {
     const identifier = roleUtils.getRoleData(roleIdentifier);
     const error = roleUtils.getErrorForUndefinedRoleData(identifier);
 
     if (error) {
-      return { pass: false, message: error };
+      return this.createFailedTest(error);
     }
 
     if (typeof newName !== "string" && typeof newName !== "number") {
@@ -33,17 +38,17 @@ export class ToRenameRole extends ExpectTest {
     const oldRole = await this.cordeBot.findRole(identifier);
 
     if (!oldRole) {
-      return { pass: false, message: roleUtils.validateRole(oldRole, identifier) };
+      return this.createFailedTest(roleUtils.validateRole(oldRole, identifier));
     }
 
-    await this.cordeBot.sendTextMessage(this.command);
+    await this.sendCommandMessage();
 
     let newRole: Role;
     try {
       newRole = await this.cordeBot.events.onceRoleRenamed(identifier, this.timeOut);
     } catch {
       if (this.isNot) {
-        return { pass: true };
+        return this.createPassTest();
       }
 
       return this.createReport(
@@ -59,7 +64,7 @@ export class ToRenameRole extends ExpectTest {
     this.invertHasPassedIfIsNot();
 
     if (this.hasPassed) {
-      return { pass: true };
+      return this.createPassTest();
     }
 
     return this.createReport(

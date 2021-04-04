@@ -6,7 +6,7 @@ import { CordeBotLike, TestReport } from "../../../src/types";
 import { buildReportMessage, Colors, resolveColor } from "../../../src/utils";
 import MockDiscord from "../../mocks/mockDiscord";
 import { MockEvents } from "../../mocks/mockEvents";
-import { initCordeClientWithChannel, removeANSIColorStyle } from "../../testHelper";
+import { createReport, initCordeClientWithChannel, removeANSIColorStyle } from "../../testHelper";
 
 let mockDiscord = new MockDiscord();
 
@@ -41,10 +41,7 @@ describe("testing toSetRoleColor", () => {
       `received: null`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRoleColor, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -57,10 +54,7 @@ describe("testing toSetRoleColor", () => {
 
     const message = buildReportMessage(`toSetRoleColor: invalid color informed - 'null'`);
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRoleColor, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -74,10 +68,7 @@ describe("testing toSetRoleColor", () => {
 
     const message = buildReportMessage(`expected: role with id 123\n`, `received: null`);
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRoleColor, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -98,10 +89,7 @@ describe("testing toSetRoleColor", () => {
       `received: the color was not changed`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRoleColor, false, message);
 
     expect(report.pass).toEqual(expectReport.pass);
     expect(removeANSIColorStyle(report.message)).toEqual(expectReport.message);
@@ -119,9 +107,7 @@ describe("testing toSetRoleColor", () => {
     const toSetRoleColor = initTestClass(corde, true);
     const report = await toSetRoleColor.action(Colors.GREY, { id: "123" });
 
-    const expectReport: TestReport = {
-      pass: true,
-    };
+    const expectReport = createReport(toSetRoleColor, true);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -136,9 +122,7 @@ describe("testing toSetRoleColor", () => {
     const toSetRoleColor = initTestClass(corde, false);
     const report = await toSetRoleColor.action(mockDiscord.role.color, { id: "123" });
 
-    const expectReport: TestReport = {
-      pass: true,
-    };
+    const expectReport = createReport(toSetRoleColor, true);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -160,10 +144,7 @@ describe("testing toSetRoleColor", () => {
       `received: ${mockDiscord.role.color}`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRoleColor, false, message);
 
     expect(report.pass).toEqual(expectReport.pass);
     expect(removeANSIColorStyle(report.message)).toEqual(expectReport.message);
@@ -189,10 +170,7 @@ describe("testing toSetRoleColor", () => {
       `received: ${resolveColor(mockDiscord.role.color)}`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRoleColor, false, message);
 
     expect(report.pass).toEqual(expectReport.pass);
     expect(removeANSIColorStyle(report.message)).toEqual(expectReport.message);

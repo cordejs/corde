@@ -16,7 +16,8 @@ import { Events } from "../core/events";
 
 export interface TestReport {
   readonly pass: boolean;
-  readonly message?: string;
+  message?: string;
+  testName: string;
   trace?: string;
 }
 

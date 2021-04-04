@@ -2,12 +2,17 @@ import { Message, MessageEmbed } from "discord.js";
 import { MessageEmbedLike, ChannelLocation, Primitive, TestReport } from "../../../types";
 
 import { typeOf } from "../../../utils";
+import { ExpectTestBaseParams } from "../../types";
 import { MessageExpectTest } from "./messageExpectTest";
 
 /**
  * @internal
  */
 export class ToReturnInChannel extends MessageExpectTest {
+  constructor(params: ExpectTestBaseParams) {
+    super({ ...params, testName: "toReturnInChannel" });
+  }
+
   async action(
     expect: Primitive | MessageEmbedLike,
     channel: string | ChannelLocation,
@@ -40,13 +45,13 @@ export class ToReturnInChannel extends MessageExpectTest {
       _channelData = channel;
     }
 
-    await this.cordeBot.sendTextMessage(this.command);
+    await this.sendCommandMessage();
     let returnedMessage: Message;
     try {
       returnedMessage = await this.cordeBot.awaitMessagesFromTestingBot(this.timeOut, _channelData);
     } catch {
       if (this.isNot) {
-        return { pass: true };
+        return this.createPassTest();
       }
 
       return this.createReport(
@@ -67,7 +72,7 @@ export class ToReturnInChannel extends MessageExpectTest {
     this.invertHasPassedIfIsNot();
 
     if (this.hasPassed) {
-      return { pass: true };
+      return this.createPassTest();
     }
 
     if (this.isNot) {

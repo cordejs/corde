@@ -1,7 +1,7 @@
 import { Client } from "discord.js";
 import { ToSetRoleMentionable } from "../../../src/expect/matches";
 import MockDiscord from "../../mocks/mockDiscord";
-import { initCordeClientWithChannel } from "../../testHelper";
+import { createReport, initCordeClientWithChannel } from "../../testHelper";
 import { CordeBotLike, TestReport } from "../../../src/types";
 import { buildReportMessage } from "../../../src/utils";
 import { MockEvents } from "../../mocks/mockEvents";
@@ -41,10 +41,7 @@ describe("testing toSetRoleMentionable operation", () => {
       `received: null`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRoleMentionable, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -61,10 +58,7 @@ describe("testing toSetRoleMentionable operation", () => {
       `received: object`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRoleMentionable, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -81,10 +75,7 @@ describe("testing toSetRoleMentionable operation", () => {
       `received: undefined`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRoleMentionable, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -98,10 +89,7 @@ describe("testing toSetRoleMentionable operation", () => {
 
     const message = buildReportMessage(`expected: role with id 123\n`, `received: null`);
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRoleMentionable, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -120,10 +108,7 @@ describe("testing toSetRoleMentionable operation", () => {
       `received: role mentionable was not updated`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRoleMentionable, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -137,9 +122,7 @@ describe("testing toSetRoleMentionable operation", () => {
     const toSetRoleMentionable = initTestClass(corde, true);
     const report = await toSetRoleMentionable.action(false, { id: "123" });
 
-    const expectReport: TestReport = {
-      pass: true,
-    };
+    const expectReport = createReport(toSetRoleMentionable, true);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -154,9 +137,7 @@ describe("testing toSetRoleMentionable operation", () => {
     const toSetRoleMentionable = initTestClass(corde, false);
     const report = await toSetRoleMentionable.action(mockDiscord.role.mentionable, { id: "123" });
 
-    const expectReport: TestReport = {
-      pass: true,
-    };
+    const expectReport = createReport(toSetRoleMentionable, true);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -176,10 +157,7 @@ describe("testing toSetRoleMentionable operation", () => {
       `received: ${mockDiscord.role.mentionable}`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRoleMentionable, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -196,10 +174,7 @@ describe("testing toSetRoleMentionable operation", () => {
 
     const message = buildReportMessage(`expected: mentionable to be true\n`, `received: false`);
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRoleMentionable, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();

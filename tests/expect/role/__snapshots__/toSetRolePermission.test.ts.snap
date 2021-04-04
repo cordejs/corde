@@ -73,6 +73,7 @@ Object {
     [2m  ][22m
 ",
   "pass": false,
+  "testName": "toSetRolePermission",
 }
 `;
 
@@ -93,6 +94,7 @@ Object {
     received: null
 ",
   "pass": false,
+  "testName": "toSetRolePermission",
 }
 `;
 
@@ -103,6 +105,7 @@ Object {
     received: ADMINISTRATOR (and 30 others)
 ",
   "pass": false,
+  "testName": "toSetRolePermission",
 }
 `;
 
@@ -113,6 +116,7 @@ Object {
     received: ADMINISTRATOR (and 30 others)
 ",
   "pass": false,
+  "testName": "toSetRolePermission",
 }
 `;
 
@@ -123,6 +127,7 @@ Object {
     received: ADMINISTRATOR (and 30 others)
 ",
   "pass": false,
+  "testName": "toSetRolePermission",
 }
 `;
 
@@ -133,6 +138,7 @@ Object {
     received: ADMINISTRATOR (and 30 others)
 ",
   "pass": false,
+  "testName": "toSetRolePermission",
 }
 `;
 
@@ -143,6 +149,7 @@ Object {
     received: ADMINISTRATOR (and 30 others)
 ",
   "pass": false,
+  "testName": "toSetRolePermission",
 }
 `;
 
@@ -153,6 +160,7 @@ Object {
     received: object
 ",
   "pass": false,
+  "testName": "toSetRolePermission",
 }
 `;
 
@@ -163,6 +171,7 @@ Object {
     received: object
 ",
   "pass": false,
+  "testName": "toSetRolePermission",
 }
 `;
 
@@ -173,17 +182,20 @@ Object {
     received: null
 ",
   "pass": false,
+  "testName": "toSetRolePermission",
 }
 `;
 
 exports[`testing toSetRolePermission operation should return true due to isNot true and no role change 1`] = `
 Object {
   "pass": true,
+  "testName": "toSetRolePermission",
 }
 `;
 
 exports[`testing toSetRolePermission operation should return true due to role changed permissions (isNot false) 1`] = `
 Object {
   "pass": true,
+  "testName": "toSetRolePermission",
 }
 `;

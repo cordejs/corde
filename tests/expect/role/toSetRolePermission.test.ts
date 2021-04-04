@@ -1,7 +1,7 @@
 import { Client } from "discord.js";
 import { ToSetRolePermission } from "../../../src/expect/matches";
 import MockDiscord from "../../mocks/mockDiscord";
-import { initCordeClientWithChannel, removeANSIColorStyle } from "../../testHelper";
+import { createReport, initCordeClientWithChannel, removeANSIColorStyle } from "../../testHelper";
 import { CordeBotLike, TestReport } from "../../../src/types";
 import {
   buildReportMessage,
@@ -47,10 +47,7 @@ describe("testing toSetRolePermission operation", () => {
       `received: null`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRolePermission, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -67,10 +64,7 @@ describe("testing toSetRolePermission operation", () => {
       `received: object`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRolePermission, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -85,10 +79,7 @@ describe("testing toSetRolePermission operation", () => {
     const message = buildReportMessage(diff(permissionsArray, ["BANANA"]));
 
     console.log(message);
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRolePermission, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -105,10 +96,7 @@ describe("testing toSetRolePermission operation", () => {
       `received: object`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRolePermission, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -122,10 +110,7 @@ describe("testing toSetRolePermission operation", () => {
 
     const message = buildReportMessage(`expected: role with id 123\n`, `received: null`);
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRolePermission, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -144,10 +129,7 @@ describe("testing toSetRolePermission operation", () => {
       `received: permissions were not changed`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRolePermission, false, message);
 
     expect(report).toEqual(expectReport);
     const snapReport = {
@@ -165,9 +147,7 @@ describe("testing toSetRolePermission operation", () => {
     const toSetRolePermission = initTestClass(corde, true);
     const report = await toSetRolePermission.action({ id: "123" }, ["ATTACH_FILES"]);
 
-    const expectReport: TestReport = {
-      pass: true,
-    };
+    const expectReport = createReport(toSetRolePermission, true);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -186,9 +166,7 @@ describe("testing toSetRolePermission operation", () => {
     const toSetRolePermission = initTestClass(corde, false);
     const report = await toSetRolePermission.action({ id: "123" }, mockRole.permissions.toArray());
 
-    const expectReport: TestReport = {
-      pass: true,
-    };
+    const expectReport = createReport(toSetRolePermission, true);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -214,10 +192,7 @@ describe("testing toSetRolePermission operation", () => {
       } others)`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRolePermission, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -246,10 +221,7 @@ describe("testing toSetRolePermission operation", () => {
       } others)`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRolePermission, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -282,6 +254,7 @@ describe("testing toSetRolePermission operation", () => {
     const expectReport: TestReport = {
       pass: false,
       message,
+      testName: toSetRolePermission.toString(),
     };
 
     expect(report).toEqual(expectReport);
@@ -305,6 +278,7 @@ describe("testing toSetRolePermission operation", () => {
     const expectReport: TestReport = {
       pass: false,
       message,
+      testName: toSetRolePermission.toString(),
     };
 
     expect(report).toEqual(expectReport);
@@ -328,6 +302,7 @@ describe("testing toSetRolePermission operation", () => {
     const expectReport: TestReport = {
       pass: false,
       message,
+      testName: toSetRolePermission.toString(),
     };
 
     expect(report).toEqual(expectReport);

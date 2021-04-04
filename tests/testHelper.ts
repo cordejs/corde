@@ -148,6 +148,7 @@ export function generateTestFile(generatorData: TestFileGeneratorInfo) {
   for (let i = 0; i < generatorData.amountOfTestFunctions; i++) {
     testFunctions.push(() =>
       Promise.resolve<TestReport>({
+        testName: "",
         pass: true,
       }),
     );
@@ -177,4 +178,16 @@ export function generateTestFile(generatorData: TestFileGeneratorInfo) {
   }
 
   return testFiles;
+}
+
+export function createReport(entity: Object, pass: boolean, message?: string): TestReport {
+  const obj: TestReport = {
+    pass,
+    testName: entity.toString(),
+  };
+
+  if (message) {
+    obj.message = message;
+  }
+  return obj;
 }

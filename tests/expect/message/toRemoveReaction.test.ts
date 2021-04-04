@@ -31,6 +31,7 @@ describe("testing toRemoveReaction function", () => {
 
     const expectedReport: TestReport = {
       pass: false,
+      testName: toRemoveReaction.toString(),
       message: buildReportMessage(
         `expect: message data to be null, undefined, string or an object with id or text properties\n`,
         `received: ${typeOf(1)}`,
@@ -49,6 +50,7 @@ describe("testing toRemoveReaction function", () => {
 
     const expectedReport: TestReport = {
       pass: false,
+      testName: toRemoveReaction.toString(),
       message: buildReportMessage(
         `expected: emojis parameter to be an array with string or objects\n`,
         `received: ${typeOf(undefined)}`,
@@ -67,6 +69,7 @@ describe("testing toRemoveReaction function", () => {
 
     const expectedReport: TestReport = {
       pass: false,
+      testName: toRemoveReaction.toString(),
       message: buildReportMessage(
         `expected: emojis parameter to be an array with string or objects\n`,
         `received: ${typeOf(null)}`,
@@ -85,6 +88,7 @@ describe("testing toRemoveReaction function", () => {
 
     const expectedReport: TestReport = {
       pass: false,
+      testName: toRemoveReaction.toString(),
       message: buildReportMessage(
         `expected: emojis parameter to be an array with string or objects\n`,
         `received: ${typeOf({})}`,
@@ -105,6 +109,7 @@ describe("testing toRemoveReaction function", () => {
 
     const reportModel: TestReport = {
       pass: true,
+      testName: toRemoveReaction.toString(),
     };
 
     const report = await toRemoveReaction.action([mockDiscord.messageReaction.emoji.name]);
@@ -120,6 +125,7 @@ describe("testing toRemoveReaction function", () => {
 
     const reportModel: TestReport = {
       pass: true,
+      testName: toRemoveReaction.toString(),
     };
 
     const report = await toRemoveReaction.action([mockDiscord.messageReaction.emoji.name]);
@@ -135,6 +141,7 @@ describe("testing toRemoveReaction function", () => {
 
     const reportModel: TestReport = {
       pass: false,
+      testName: toRemoveReaction.toString(),
       message: buildReportMessage(
         `expected: to remove reactions ${[mockDiscord.messageReaction.emoji.name].join(", ")}\n`,
         `received: no reaction was removed to message`,
@@ -156,6 +163,7 @@ describe("testing toRemoveReaction function", () => {
 
     const reportModel: TestReport = {
       pass: false,
+      testName: toRemoveReaction.toString(),
       message: buildReportMessage(
         `expected: to remove reactions ${[mockDiscord.messageReaction.emoji.name].join(", ")}\n`,
         `received: ${[mockDiscord.messageReaction.emoji.name].join(", ")}`,
@@ -177,6 +185,7 @@ describe("testing toRemoveReaction function", () => {
 
     const reportModel: TestReport = {
       pass: true,
+      testName: toRemoveReaction.toString(),
     };
 
     const report = await toRemoveReaction.action([mockDiscord.messageReaction.emoji.name]);
@@ -194,6 +203,7 @@ describe("testing toRemoveReaction function", () => {
 
     const reportModel: TestReport = {
       pass: false,
+      testName: toRemoveReaction.toString(),
       message: buildReportMessage(
         `expected: not to remove reactions ${[
           mockDiscord.messageReaction.emoji.id,
@@ -207,6 +217,7 @@ describe("testing toRemoveReaction function", () => {
       { id: mockDiscord.messageReaction.emoji.id },
       { name: mockDiscord.messageReaction.emoji.name },
     ]);
+
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
   });

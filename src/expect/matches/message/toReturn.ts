@@ -1,12 +1,17 @@
 import { Message, MessageEmbed } from "discord.js";
 import { MessageEmbedLike, Primitive, TestReport } from "../../../types";
 import { typeOf } from "../../../utils";
+import { ExpectTestBaseParams } from "../../types";
 import { MessageExpectTest } from "./messageExpectTest";
 
 /**
  * @internal
  */
 export class ToReturn extends MessageExpectTest {
+  constructor(params: ExpectTestBaseParams) {
+    super({ ...params, testName: "toReturn" });
+  }
+
   async action(expect: Primitive | MessageEmbedLike): Promise<TestReport> {
     let _expect: Primitive | MessageEmbed;
     const errorReport = this.validateExpect(expect);
@@ -15,13 +20,13 @@ export class ToReturn extends MessageExpectTest {
       return errorReport;
     }
 
-    await this.cordeBot.sendTextMessage(this.command);
+    await this.sendCommandMessage();
     let returnedMessage: Message;
     try {
       returnedMessage = await this.cordeBot.awaitMessagesFromTestingBot(this.timeOut);
     } catch {
       if (this.isNot) {
-        return { pass: true };
+        return this.createPassTest();
       }
 
       return this.createReport(
@@ -40,7 +45,7 @@ export class ToReturn extends MessageExpectTest {
     this.invertHasPassedIfIsNot();
 
     if (this.hasPassed) {
-      return { pass: true };
+      return this.createPassTest();
     }
 
     if (this.isNot) {

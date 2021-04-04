@@ -29,12 +29,19 @@ import {
   ToUnPinMessage,
   ToSetRolePermission,
 } from "./matches";
-import { ExpectTest, ExpectTestParams } from "./matches/expectTest";
+import { ExpectTest } from "./matches/expectTest";
 import { buildReportMessage, resolveName, stringIsNullOrEmpty } from "../utils";
 import { getStackTrace } from "../utils/getStackTrace";
 import { ToReturnInChannel } from "./matches/message/toReturnInChannel";
 import { runtime } from "../common/runtime";
-import { Matches, AllMatches, MacherContructorArgs, MayReturnMatch } from "./types";
+import {
+  Matches,
+  AllMatches,
+  MacherContructorArgs,
+  MayReturnMatch,
+  ExpectTestBaseParams,
+} from "./types";
+import { TodoInCascade } from "./matches/todoInCascade";
 
 export class ExpectMatches<TResponseType extends MayReturnMatch> implements Matches<TResponseType> {
   protected _commandName: unknown;
@@ -48,7 +55,12 @@ export class ExpectMatches<TResponseType extends MayReturnMatch> implements Matc
   }
 
   todoInCascade(...tests: TestFunctionType[]): void {
-    console.log(tests);
+    const trace = getStackTrace(undefined, true, "todoInCascade");
+    testCollector.addTestFunction((cordeBot) => {
+      // Encapsulate the functions inside another so it do not be executed.
+      const testEnhanced = tests.map((test) => () => test(cordeBot));
+      return this.operationFactory(trace, TodoInCascade, cordeBot, testEnhanced);
+    });
   }
 
   toReturn(expect: Primitive | MessageEmbedLike): TResponseType {
@@ -183,18 +195,11 @@ export class ExpectMatches<TResponseType extends MayReturnMatch> implements Matc
 
   protected async operationFactory<T extends ExpectTest>(
     trace: string,
-    type: new (params: ExpectTestParams) => T,
+    type: new (params: ExpectTestBaseParams) => T,
     cordeBot: CordeBotLike,
     ...params: Parameters<T["action"]>
   ): Promise<TestReport> {
     const commandName = await resolveName(this._commandName);
-
-    if (
-      commandName == undefined ||
-      (typeof commandName === "string" && stringIsNullOrEmpty(commandName))
-    ) {
-      return { pass: false, message: "command can not be null or an empty string" };
-    }
 
     const op = new type({
       cordeBot,
@@ -203,12 +208,24 @@ export class ExpectMatches<TResponseType extends MayReturnMatch> implements Matc
       timeout: runtime.timeOut,
     });
 
+    if (
+      commandName == undefined ||
+      (typeof commandName === "string" && stringIsNullOrEmpty(commandName))
+    ) {
+      return {
+        pass: false,
+        message: buildReportMessage("command can not be null or an empty string"),
+        testName: op.toString(),
+      };
+    }
+
     const report = await op.action(...params);
 
     if (!report) {
       return {
         pass: false,
         message: buildReportMessage("no report was provided by the test"),
+        testName: op.toString(),
         trace,
       };
     }

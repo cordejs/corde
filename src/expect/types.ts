@@ -6,9 +6,20 @@ import {
   ChannelLocation,
   RoleIdentifier,
   TestFunctionType,
+  CordeBotLike,
 } from "../types";
 import { ColorResolvable } from "discord.js";
 import { Colors, RolePermission } from "../utils";
+
+export interface ExpectTestBaseParams {
+  cordeBot: CordeBotLike;
+  command: string | number | boolean;
+  isNot: boolean;
+  timeout: number;
+}
+export interface ExpectTestParams extends ExpectTestBaseParams {
+  testName: string;
+}
 
 export type MayReturnMatch = Matches<any> | void;
 
@@ -527,4 +538,5 @@ export interface Expect extends AllMatches<any> {
    * @since 1.0
    */
   <T extends (() => number | string) | number | string>(commandNameResolvable: T): AllMatches<void>;
+  any(): any;
 }

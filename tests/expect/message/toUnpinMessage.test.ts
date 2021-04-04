@@ -30,6 +30,7 @@ describe("testing unpin message test", () => {
 
     const expectReport: TestReport = {
       pass: false,
+      testName: toUnPinMessage.toString(),
       message: buildReportMessage(
         `expected: message identifier to be a string or a MessageIdentifier object\n`,
         `received: ${typeOf(null)}`,
@@ -47,6 +48,7 @@ describe("testing unpin message test", () => {
 
     const expectReport: TestReport = {
       pass: false,
+      testName: toUnPinMessage.toString(),
       message: buildReportMessage(
         `expected: message identifier to be a string or a MessageIdentifier object\n`,
         `received: ${typeOf(undefined)}`,
@@ -65,6 +67,7 @@ describe("testing unpin message test", () => {
 
     const expectReport: TestReport = {
       pass: true,
+      testName: toUnPinMessage.toString(),
     };
 
     expect(report).toEqual(expectReport);
@@ -80,6 +83,7 @@ describe("testing unpin message test", () => {
     const msgString = toUnPinMessage.humanizeMessageIdentifierObject({ id: "1233" });
     const expectReport: TestReport = {
       pass: false,
+      testName: toUnPinMessage.toString(),
       message: buildReportMessage(
         `expected: unpin ${msgString}\n`,
         `received: informed message was not unpinned`,
@@ -99,6 +103,7 @@ describe("testing unpin message test", () => {
     const msgString = toUnPinMessage.humanizeMessageIdentifierObject({ id: "1233" });
     const expectReport: TestReport = {
       pass: false,
+      testName: toUnPinMessage.toString(),
       message: buildReportMessage(
         `expected: unpin ${msgString}\n`,
         `received: informed message was not unpinned`,
@@ -120,6 +125,7 @@ describe("testing unpin message test", () => {
 
     const expectReport: TestReport = {
       pass: true,
+      testName: toUnPinMessage.toString(),
     };
 
     expect(report).toEqual(expectReport);
@@ -138,6 +144,7 @@ describe("testing unpin message test", () => {
 
     const expectReport: TestReport = {
       pass: false,
+      testName: toUnPinMessage.toString(),
       message: buildReportMessage(
         `expected: to not unpin ${msgString}\n`,
         `received: message pin = true`,

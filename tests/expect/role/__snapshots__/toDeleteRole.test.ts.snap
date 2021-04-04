@@ -7,6 +7,7 @@ Object {
     received: null
 ",
   "pass": false,
+  "testName": "toDeleteRole",
 }
 `;
 
@@ -17,6 +18,7 @@ Object {
     received: null
 ",
   "pass": false,
+  "testName": "toDeleteRole",
 }
 `;
 
@@ -26,6 +28,7 @@ Object {
     timeout: role 819382540350652502 wasn't deleted in the expected time (100)
 ",
   "pass": false,
+  "testName": "toDeleteRole",
 }
 `;
 
@@ -35,12 +38,14 @@ Object {
     expected: role 819382540350652502 to be deleted
 ",
   "pass": false,
+  "testName": "toDeleteRole",
 }
 `;
 
 exports[`testing toDeleteRole function isNot false should return a passed report for a deleted role 1`] = `
 Object {
   "pass": true,
+  "testName": "toDeleteRole",
 }
 `;
 
@@ -51,12 +56,14 @@ Object {
     received: role was deleted before call the command '!deleteRole 123'
 ",
   "pass": false,
+  "testName": "toDeleteRole",
 }
 `;
 
 exports[`testing toDeleteRole function isnot true should get timeout when trying to delete the role, but should pass 1`] = `
 Object {
   "pass": true,
+  "testName": "toDeleteRole",
 }
 `;
 
@@ -66,6 +73,7 @@ Object {
     expected: role 819382540350652502 to not be deleted
 ",
   "pass": false,
+  "testName": "toDeleteRole",
 }
 `;
 
@@ -76,5 +84,6 @@ Object {
     received: role was deleted before call the command '!removeRole 123'
 ",
   "pass": false,
+  "testName": "toDeleteRole",
 }
 `;

@@ -1,12 +1,17 @@
 import { Message, MessageEmbed, PartialMessage } from "discord.js";
 import { MessageEditedIdentifier, MessageEmbedLike, Primitive, TestReport } from "../../../types";
 import { isPrimitiveValue, typeOf } from "../../../utils";
+import { ExpectTestBaseParams } from "../../types";
 import { MessageExpectTest } from "./messageExpectTest";
 
 /**
  * @internal
  */
 export class ToEditMessage extends MessageExpectTest {
+  constructor(params: ExpectTestBaseParams) {
+    super({ ...params, testName: "toEditMessage" });
+  }
+
   async action(
     newValue: Primitive | MessageEmbedLike,
     messageIdentifier?: MessageEditedIdentifier | string,
@@ -20,7 +25,7 @@ export class ToEditMessage extends MessageExpectTest {
       );
     }
 
-    await this.cordeBot.sendTextMessage(this.command);
+    await this.sendCommandMessage();
 
     let _messageData: MessageEditedIdentifier | undefined;
 
@@ -39,7 +44,7 @@ export class ToEditMessage extends MessageExpectTest {
       );
     } catch {
       if (this.isNot) {
-        return { pass: true };
+        return this.createPassTest();
       }
 
       if (!_messageData) {
@@ -65,7 +70,7 @@ export class ToEditMessage extends MessageExpectTest {
     this.invertHasPassedIfIsNot();
 
     if (this.hasPassed) {
-      return { pass: true };
+      return this.createPassTest();
     }
 
     if (this.isNot) {

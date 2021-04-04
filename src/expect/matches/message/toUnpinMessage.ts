@@ -1,11 +1,16 @@
 import { MessageIdentifier, TestReport } from "../../../types";
 import { typeOf } from "../../../utils";
+import { ExpectTestBaseParams } from "../../types";
 import { MessageExpectTest } from "./messageExpectTest";
 
 /**
  * @internal
  */
 export class ToUnPinMessage extends MessageExpectTest {
+  constructor(params: ExpectTestBaseParams) {
+    super({ ...params, testName: "toUnPinMessage" });
+  }
+
   async action(messageIdentifier: MessageIdentifier | string): Promise<TestReport> {
     if (
       !messageIdentifier ||
@@ -25,13 +30,13 @@ export class ToUnPinMessage extends MessageExpectTest {
       _msgIdentifier = messageIdentifier;
     }
 
-    await this.cordeBot.sendTextMessage(this.command);
+    await this.sendCommandMessage();
     const msgString = this.humanizeMessageIdentifierObject(_msgIdentifier);
     try {
       await this.cordeBot.events.onceMessageUnPinned(_msgIdentifier);
     } catch {
       if (this.isNot) {
-        return { pass: true };
+        return this.createPassTest();
       }
 
       return this.createReport(
@@ -46,7 +51,7 @@ export class ToUnPinMessage extends MessageExpectTest {
     this.invertHasPassedIfIsNot();
 
     if (this.hasPassed) {
-      return { pass: true };
+      return this.createPassTest();
     }
 
     return this.createReport(

@@ -18,7 +18,9 @@ import {
 } from "../../src/expect/matches";
 import { AllExpectMatches, ExpectMatches } from "../../src/expect/matcher";
 import { TestReport } from "../../src/types";
-import { ExpectTest, ExpectTestParams } from "../../src/expect/matches/expectTest";
+import { ExpectTest } from "../../src/expect/matches/expectTest";
+import { ExpectTestBaseParams, ExpectTestParams } from "../../src/expect/types";
+import { buildReportMessage } from "../../src/utils";
 
 jest.mock("../../src/expect/matches/message/toReturn.ts");
 jest.mock("../../src/expect/matches/message/toRemoveReaction.ts");
@@ -77,7 +79,7 @@ async function createDefaultTestFor<T extends ExpectTest>(
   ...callForActionMock: Parameters<T["action"]>
 ) {
   await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
-  const params: ExpectTestParams = {
+  const params: ExpectTestBaseParams = {
     command: con,
     cordeBot: runtime.bot,
     isNot: isNot,
@@ -182,7 +184,8 @@ describe("Testing matches class", () => {
       const report = await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
       expect(report).toEqual<TestReport>({
         pass: false,
-        message: "command can not be null or an empty string",
+        testName: undefined,
+        message: buildReportMessage("command can not be null or an empty string"),
       });
     });
 

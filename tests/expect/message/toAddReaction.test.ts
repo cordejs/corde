@@ -1,5 +1,5 @@
 import MockDiscord from "../../mocks/mockDiscord";
-import { initCordeClientWithChannel } from "../../testHelper";
+import { createReport, initCordeClientWithChannel } from "../../testHelper";
 import { Client } from "discord.js";
 import { ToAddReaction } from "../../../src/expect/matches";
 import { CordeBotLike, TestReport } from "../../../src/types";
@@ -28,13 +28,12 @@ describe("testing toAddReaction function", () => {
     // @ts-ignore
     const report = await toAddReaction.action(["1"], 1);
 
-    const expectedReport: TestReport = {
-      pass: false,
-      message: buildReportMessage(
-        `expect: message data to be null, undefined, string or an object with id or text properties\n`,
-        `received: ${typeOf(1)}`,
-      ),
-    };
+    const message = buildReportMessage(
+      `expect: message data to be null, undefined, string or an object with id or text properties\n`,
+      `received: ${typeOf(1)}`,
+    );
+
+    const expectedReport = createReport(toAddReaction, false, message);
 
     expect(report).toEqual(expectedReport);
     expect(report).toMatchSnapshot();
@@ -46,13 +45,12 @@ describe("testing toAddReaction function", () => {
     // @ts-ignore
     const report = await toAddReaction.action(undefined);
 
-    const expectedReport: TestReport = {
-      pass: false,
-      message: buildReportMessage(
-        `expected: emojis parameter to be an array with string or objects\n`,
-        `received: ${typeOf(undefined)}`,
-      ),
-    };
+    const message = buildReportMessage(
+      `expected: emojis parameter to be an array with string or objects\n`,
+      `received: ${typeOf(undefined)}`,
+    );
+
+    const expectedReport = createReport(toAddReaction, false, message);
 
     expect(report).toEqual(expectedReport);
     expect(report).toMatchSnapshot();
@@ -64,13 +62,12 @@ describe("testing toAddReaction function", () => {
     // @ts-ignore
     const report = await toAddReaction.action(null);
 
-    const expectedReport: TestReport = {
-      pass: false,
-      message: buildReportMessage(
-        `expected: emojis parameter to be an array with string or objects\n`,
-        `received: ${typeOf(null)}`,
-      ),
-    };
+    const message = buildReportMessage(
+      `expected: emojis parameter to be an array with string or objects\n`,
+      `received: ${typeOf(null)}`,
+    );
+
+    const expectedReport = createReport(toAddReaction, false, message);
 
     expect(report).toEqual(expectedReport);
     expect(report).toMatchSnapshot();
@@ -82,13 +79,12 @@ describe("testing toAddReaction function", () => {
     // @ts-ignore
     const report = await toAddReaction.action({});
 
-    const expectedReport: TestReport = {
-      pass: false,
-      message: buildReportMessage(
-        `expected: emojis parameter to be an array with string or objects\n`,
-        `received: ${typeOf({})}`,
-      ),
-    };
+    const message = buildReportMessage(
+      `expected: emojis parameter to be an array with string or objects\n`,
+      `received: ${typeOf({})}`,
+    );
+
+    const expectedReport = createReport(toAddReaction, false, message);
 
     expect(report).toEqual(expectedReport);
     expect(report).toMatchSnapshot();
@@ -102,9 +98,7 @@ describe("testing toAddReaction function", () => {
     cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
     const toAddReaction = initTestClass(cordeClient, "add", false);
 
-    const reportModel: TestReport = {
-      pass: true,
-    };
+    const reportModel = createReport(toAddReaction, true);
 
     const report = await toAddReaction.action([mockDiscord.messageReaction.emoji.name]);
     expect(report).toEqual(reportModel);
@@ -117,9 +111,7 @@ describe("testing toAddReaction function", () => {
     cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
     const toAddReaction = initTestClass(cordeClient, "add", true);
 
-    const reportModel: TestReport = {
-      pass: true,
-    };
+    const reportModel = createReport(toAddReaction, true);
 
     const report = await toAddReaction.action([mockDiscord.messageReaction.emoji.name]);
     expect(report).toEqual(reportModel);
@@ -132,13 +124,12 @@ describe("testing toAddReaction function", () => {
     cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
     const toAddReaction = initTestClass(cordeClient, "add", false);
 
-    const reportModel: TestReport = {
-      pass: false,
-      message: buildReportMessage(
-        `expected: to add reactions ${[mockDiscord.messageReaction.emoji.name].join(", ")}\n`,
-        `received: no reaction was added to message`,
-      ),
-    };
+    const message = buildReportMessage(
+      `expected: to add reactions ${[mockDiscord.messageReaction.emoji.name].join(", ")}\n`,
+      `received: no reaction was added to message`,
+    );
+
+    const reportModel = createReport(toAddReaction, false, message);
 
     const report = await toAddReaction.action([mockDiscord.messageReaction.emoji.name]);
     expect(report).toEqual(reportModel);
@@ -153,13 +144,12 @@ describe("testing toAddReaction function", () => {
     events.mockOnceMessageReactionsAddToReject();
     const toAddReaction = initTestClass(cordeClient, "add", false);
 
-    const reportModel: TestReport = {
-      pass: false,
-      message: buildReportMessage(
-        `expected: to add reactions ${[mockDiscord.messageReaction.emoji.name].join(", ")}\n`,
-        `received: ${[mockDiscord.messageReaction.emoji.name].join(", ")}`,
-      ),
-    };
+    const message = buildReportMessage(
+      `expected: to add reactions ${[mockDiscord.messageReaction.emoji.name].join(", ")}\n`,
+      `received: ${[mockDiscord.messageReaction.emoji.name].join(", ")}`,
+    );
+
+    const reportModel = createReport(toAddReaction, false, message);
 
     const report = await toAddReaction.action([mockDiscord.messageReaction.emoji.name]);
     expect(report).toEqual(reportModel);
@@ -174,9 +164,7 @@ describe("testing toAddReaction function", () => {
     events.mockOnceMessageReactionsAdd();
     const toAddReaction = initTestClass(cordeClient, "add", false);
 
-    const reportModel: TestReport = {
-      pass: true,
-    };
+    const reportModel = createReport(toAddReaction, true);
 
     const report = await toAddReaction.action([mockDiscord.messageReaction.emoji.name]);
     expect(report).toEqual(reportModel);
@@ -191,13 +179,12 @@ describe("testing toAddReaction function", () => {
     events.mockOnceMessageReactionsAdd();
     const toAddReaction = initTestClass(cordeClient, "add", true);
 
-    const reportModel: TestReport = {
-      pass: false,
-      message: buildReportMessage(
-        `expected: not to add reactions ${[mockDiscord.messageReaction.emoji.name].join(", ")}\n`,
-        `received: ${[mockDiscord.messageReaction.emoji.name].join(", ")}`,
-      ),
-    };
+    const message = buildReportMessage(
+      `expected: not to add reactions ${[mockDiscord.messageReaction.emoji.name].join(", ")}\n`,
+      `received: ${[mockDiscord.messageReaction.emoji.name].join(", ")}`,
+    );
+
+    const reportModel = createReport(toAddReaction, false, message);
 
     const report = await toAddReaction.action([mockDiscord.messageReaction.emoji.name]);
     expect(report).toEqual(reportModel);
@@ -212,16 +199,15 @@ describe("testing toAddReaction function", () => {
     events.mockOnceMessageReactionsRemove();
     const toAddReaction = initTestClass(cordeClient, "add", false);
 
-    const reportModel: TestReport = {
-      pass: false,
-      message: buildReportMessage(
-        `expected: to add reactions ${[
-          mockDiscord.messageReaction.emoji.id,
-          mockDiscord.messageReaction.emoji.name,
-        ].join(", ")}\n`,
-        `received: no reaction was added to message`,
-      ),
-    };
+    const message = buildReportMessage(
+      `expected: to add reactions ${[
+        mockDiscord.messageReaction.emoji.id,
+        mockDiscord.messageReaction.emoji.name,
+      ].join(", ")}\n`,
+      `received: no reaction was added to message`,
+    );
+
+    const reportModel = createReport(toAddReaction, false, message);
 
     const report = await toAddReaction.action([
       { id: mockDiscord.messageReaction.emoji.id },

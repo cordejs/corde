@@ -3,12 +3,17 @@ import { ColorResolvable, Role } from "discord.js";
 import { RoleIdentifier, TestReport } from "../../../types";
 import { resolveColor, rgba, typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
+import { ExpectTestBaseParams } from "../../types";
 import { ExpectTest } from "../expectTest";
 
 /**
  * @internal
  */
 export class ToSetRoleColor extends ExpectTest {
+  constructor(params: ExpectTestBaseParams) {
+    super({ ...params, testName: "toSetRoleColor" });
+  }
+
   async action(
     color: ColorResolvable,
     roleIdentifier: string | RoleIdentifier,
@@ -17,7 +22,7 @@ export class ToSetRoleColor extends ExpectTest {
     const error = roleUtils.getErrorForUndefinedRoleData(identifier);
 
     if (error) {
-      return { pass: false, message: error };
+      return this.createFailedTest(error);
     }
 
     if (!color) {
@@ -27,19 +32,19 @@ export class ToSetRoleColor extends ExpectTest {
     const oldRole = await this.cordeBot.findRole(identifier);
 
     if (!oldRole) {
-      return { pass: false, message: roleUtils.validateRole(oldRole, identifier) };
+      return this.createFailedTest(roleUtils.validateRole(oldRole, identifier));
     }
 
     const numberColor = resolveColor(color);
 
-    await this.cordeBot.sendTextMessage(this.command);
+    await this.sendCommandMessage();
     let role: Role;
 
     try {
       role = await this.cordeBot.events.onceRoleUpdateColor(identifier, this.timeOut);
     } catch {
       if (this.isNot) {
-        return { pass: true };
+        return this.createPassTest();
       }
 
       const resolvedExpectedColor = resolveColor(oldRole.color);
@@ -60,7 +65,7 @@ export class ToSetRoleColor extends ExpectTest {
     this.invertHasPassedIfIsNot();
 
     if (this.hasPassed) {
-      return { pass: true };
+      return this.createPassTest();
     }
 
     const fromLabel = createChalkLabelFromColor(oldRole.color);

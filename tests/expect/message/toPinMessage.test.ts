@@ -30,6 +30,7 @@ describe("testing pin message test", () => {
 
     const expectReport: TestReport = {
       pass: false,
+      testName: toPinMessage.toString(),
       message: buildReportMessage(
         `expected: message identifier to be a string or a MessageIdentifier object\n`,
         `received: ${typeOf(null)}`,
@@ -47,6 +48,7 @@ describe("testing pin message test", () => {
 
     const expectReport: TestReport = {
       pass: false,
+      testName: toPinMessage.toString(),
       message: buildReportMessage(
         `expected: message identifier to be a string or a MessageIdentifier object\n`,
         `received: ${typeOf(undefined)}`,
@@ -65,6 +67,7 @@ describe("testing pin message test", () => {
 
     const expectReport: TestReport = {
       pass: true,
+      testName: toPinMessage.toString(),
     };
 
     expect(report).toEqual(expectReport);
@@ -80,6 +83,7 @@ describe("testing pin message test", () => {
     const msgString = toPinMessage.humanizeMessageIdentifierObject({ id: "1233" });
     const expectReport: TestReport = {
       pass: false,
+      testName: toPinMessage.toString(),
       message: buildReportMessage(
         `expected: pin ${msgString}\n`,
         `received: informed message was not pinned`,
@@ -99,6 +103,7 @@ describe("testing pin message test", () => {
     const msgString = toPinMessage.humanizeMessageIdentifierObject({ id: "1233" });
     const expectReport: TestReport = {
       pass: false,
+      testName: toPinMessage.toString(),
       message: buildReportMessage(
         `expected: pin ${msgString}\n`,
         `received: informed message was not pinned`,
@@ -120,6 +125,7 @@ describe("testing pin message test", () => {
 
     const expectReport: TestReport = {
       pass: true,
+      testName: toPinMessage.toString(),
     };
 
     expect(report).toEqual(expectReport);
@@ -138,6 +144,7 @@ describe("testing pin message test", () => {
 
     const expectReport: TestReport = {
       pass: false,
+      testName: toPinMessage.toString(),
       message: buildReportMessage(
         `expected: to not pin ${msgString}\n`,
         `received: message pin = false`,

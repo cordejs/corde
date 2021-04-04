@@ -17,7 +17,13 @@ class ExpectMessage extends MessageExpectTest {
   }
 }
 
-const extension = new ExpectMessage({ command: "", cordeBot: null, isNot: false, timeout: 1000 });
+const extension = new ExpectMessage({
+  command: "",
+  cordeBot: null,
+  isNot: false,
+  testName: "",
+  timeout: 1000,
+});
 
 describe("testing extension", () => {
   describe("testing createNotFoundMessageForMessageData", () => {

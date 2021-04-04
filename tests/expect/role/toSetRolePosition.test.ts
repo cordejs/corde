@@ -5,7 +5,7 @@ import { CordeBotLike, TestReport } from "../../../src/types";
 import { buildReportMessage, typeOf } from "../../../src/utils";
 import MockDiscord from "../../mocks/mockDiscord";
 import { MockEvents } from "../../mocks/mockEvents";
-import { initCordeClientWithChannel } from "../../testHelper";
+import { createReport, initCordeClientWithChannel } from "../../testHelper";
 
 let mockDiscord = new MockDiscord();
 
@@ -46,10 +46,7 @@ describe("testing ToSetRolePosition operation", () => {
       `received: null`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRolePosition, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -66,10 +63,7 @@ describe("testing ToSetRolePosition operation", () => {
       `received: ${typeOf("batata")}`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRolePosition, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -81,9 +75,9 @@ describe("testing ToSetRolePosition operation", () => {
     mockEvent.mockOnceRolePositionUpdate();
     const toSetPosition = initTestClass(corde, false);
     const report = await toSetPosition.action(-1, { id: "123" });
-    const matchReport: TestReport = {
-      pass: true,
-    };
+
+    const matchReport = createReport(toSetPosition, true);
+
     expect(report).toEqual(matchReport);
   });
 
@@ -91,11 +85,10 @@ describe("testing ToSetRolePosition operation", () => {
     const corde = createCordeBotWithMockedFunctions();
     const mockEvent = new MockEvents(corde, mockDiscord);
     mockEvent.mockOnceRolePositionUpdate();
+
     const toSetPosition = initTestClass(corde, true);
     const report = await toSetPosition.action(-2, { id: "123" });
-    const matchReport: TestReport = {
-      pass: true,
-    };
+    const matchReport = createReport(toSetPosition, true);
 
     expect(report).toEqual(matchReport);
     expect(report).toMatchSnapshot();
@@ -109,10 +102,7 @@ describe("testing ToSetRolePosition operation", () => {
 
     const message = buildReportMessage(`expected: role with id 123\n`, `received: null`);
 
-    const matchReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const matchReport = createReport(toSetPosition, false, message);
     expect(report).toEqual(matchReport);
     expect(report).toMatchSnapshot();
   });
@@ -124,10 +114,8 @@ describe("testing ToSetRolePosition operation", () => {
 
     const message = buildReportMessage(`expected: role with id 123\n`, `received: null`);
 
-    const matchReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const matchReport = createReport(toSetPosition, false, message);
+
     expect(report).toEqual(matchReport);
     expect(report).toMatchSnapshot();
   });
@@ -142,10 +130,8 @@ describe("testing ToSetRolePosition operation", () => {
       `received: 2`,
     );
 
-    const matchReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const matchReport = createReport(toSetPosition, false, message);
+
     expect(report).toEqual(matchReport);
     expect(report).toMatchSnapshot();
   });
@@ -159,10 +145,8 @@ describe("testing ToSetRolePosition operation", () => {
 
     const message = buildReportMessage(`expected: role with id 123\n`, `received: null`);
 
-    const matchReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const matchReport = createReport(toSetPosition, false, message);
+
     expect(report).toEqual(matchReport);
     expect(report).toMatchSnapshot();
   });
@@ -175,9 +159,7 @@ describe("testing ToSetRolePosition operation", () => {
     const toSetPosition = initTestClass(corde, true);
     const report = await toSetPosition.action(-2, { id: "123" });
 
-    const matchReport: TestReport = {
-      pass: true,
-    };
+    const matchReport = createReport(toSetPosition, true);
     expect(report).toEqual(matchReport);
     expect(report).toMatchSnapshot();
   });
@@ -195,10 +177,8 @@ describe("testing ToSetRolePosition operation", () => {
       `received: position didn't change`,
     );
 
-    const matchReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const matchReport = createReport(toSetPosition, false, message);
+
     expect(report).toEqual(matchReport);
     expect(report).toMatchSnapshot();
   });
@@ -219,10 +199,8 @@ describe("testing ToSetRolePosition operation", () => {
       `received: 1`,
     );
 
-    const matchReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const matchReport = createReport(toSetPosition, false, message);
+
     expect(report).toEqual(matchReport);
     expect(report).toMatchSnapshot();
   });

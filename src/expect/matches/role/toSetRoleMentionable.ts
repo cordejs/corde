@@ -2,18 +2,23 @@ import { Role } from "discord.js";
 import { RoleIdentifier, TestReport } from "../../../types";
 import { typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
+import { ExpectTestBaseParams } from "../../types";
 import { ExpectTest } from "../expectTest";
 
 /**
  * @internal
  */
 export class ToSetRoleMentionable extends ExpectTest {
+  constructor(params: ExpectTestBaseParams) {
+    super({ ...params, testName: "toSetRoleMentionable" });
+  }
+
   async action(mentionable: boolean, roleIdentifier: string | RoleIdentifier): Promise<TestReport> {
     const identifier = roleUtils.getRoleData(roleIdentifier);
     const error = roleUtils.getErrorForUndefinedRoleData(identifier);
 
     if (error) {
-      return { pass: false, message: error };
+      return this.createFailedTest(error);
     }
 
     if (mentionable == undefined) {
@@ -34,16 +39,16 @@ export class ToSetRoleMentionable extends ExpectTest {
     const invalidRoleErrorMessage = roleUtils.validateRole(oldRole, identifier);
 
     if (invalidRoleErrorMessage) {
-      return { pass: false, message: invalidRoleErrorMessage };
+      return this.createFailedTest(invalidRoleErrorMessage);
     }
 
-    await this.cordeBot.sendTextMessage(this.command);
+    await this.sendCommandMessage();
     let role: Role;
     try {
       role = await this.cordeBot.events.onceRoleMentionableUpdate(identifier, this.timeOut);
     } catch {
       if (this.isNot) {
-        return { pass: true };
+        return this.createPassTest();
       }
 
       return this.createReport(
@@ -58,7 +63,7 @@ export class ToSetRoleMentionable extends ExpectTest {
     this.invertHasPassedIfIsNot();
 
     if (this.hasPassed) {
-      return { pass: true };
+      return this.createPassTest();
     }
 
     return this.createReport(

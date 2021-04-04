@@ -7,6 +7,7 @@ Object {
     received: no message was sent
 ",
   "pass": false,
+  "testName": "toReturn",
 }
 `;
 
@@ -66,6 +67,7 @@ Object {
     [2m  }[22m
 ",
   "pass": false,
+  "testName": "toReturn",
 }
 `;
 
@@ -115,6 +117,7 @@ Object {
     received: 'this is the message content'
 ",
   "pass": false,
+  "testName": "toReturn",
 }
 `;
 
@@ -164,6 +167,7 @@ Object {
     }
 ",
   "pass": false,
+  "testName": "toReturn",
 }
 `;
 
@@ -174,6 +178,7 @@ Object {
     received: 'this is the message content'
 ",
   "pass": false,
+  "testName": "toReturn",
 }
 `;
 
@@ -184,42 +189,49 @@ Object {
     received: both returned and expectation are equal
 ",
   "pass": false,
+  "testName": "toReturn",
 }
 `;
 
 exports[`testing toReturn should get success test due to bot returned different messages (isNot true) 1`] = `
 Object {
   "pass": true,
+  "testName": "toReturn",
 }
 `;
 
 exports[`testing toReturn should get success test due to bot returned equal message 1`] = `
 Object {
   "pass": true,
+  "testName": "toReturn",
 }
 `;
 
 exports[`testing toReturn should get success test due to bot returned equal messages (string number) 1`] = `
 Object {
   "pass": true,
+  "testName": "toReturn",
 }
 `;
 
 exports[`testing toReturn should get success test due to bot returned equal messages (string type) 1`] = `
 Object {
   "pass": true,
+  "testName": "toReturn",
 }
 `;
 
 exports[`testing toReturn should get success test due to bot returned equal messages (type embed) 1`] = `
 Object {
   "pass": true,
+  "testName": "toReturn",
 }
 `;
 
 exports[`testing toReturn should get success test due to timeout but isNot = true 1`] = `
 Object {
   "pass": true,
+  "testName": "toReturn",
 }
 `;
 
@@ -230,6 +242,7 @@ Object {
     received: null
 ",
   "pass": false,
+  "testName": "toReturn",
 }
 `;
 
@@ -240,5 +253,6 @@ Object {
     received: undefined
 ",
   "pass": false,
+  "testName": "toReturn",
 }
 `;

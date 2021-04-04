@@ -7,6 +7,7 @@ Object {
     received: string
 ",
   "pass": false,
+  "testName": "toSetRolePosition",
 }
 `;
 
@@ -17,12 +18,14 @@ Object {
     received: null
 ",
   "pass": false,
+  "testName": "toSetRolePosition",
 }
 `;
 
 exports[`testing ToSetRolePosition operation should find and must return passed report due to 'changed position' (isNot true) 1`] = `
 Object {
   "pass": true,
+  "testName": "toSetRolePosition",
 }
 `;
 
@@ -33,6 +36,7 @@ Object {
     received: null
 ",
   "pass": false,
+  "testName": "toSetRolePosition",
 }
 `;
 
@@ -43,6 +47,7 @@ Object {
     received: null
 ",
   "pass": false,
+  "testName": "toSetRolePosition",
 }
 `;
 
@@ -53,6 +58,7 @@ Object {
     received: null
 ",
   "pass": false,
+  "testName": "toSetRolePosition",
 }
 `;
 
@@ -63,6 +69,7 @@ Object {
     received: position didn't change
 ",
   "pass": false,
+  "testName": "toSetRolePosition",
 }
 `;
 
@@ -73,6 +80,7 @@ Object {
     received: 1
 ",
   "pass": false,
+  "testName": "toSetRolePosition",
 }
 `;
 
@@ -83,11 +91,13 @@ Object {
     received: 2
 ",
   "pass": false,
+  "testName": "toSetRolePosition",
 }
 `;
 
 exports[`testing ToSetRolePosition operation should return a passed report due to timeout and isNot true 1`] = `
 Object {
   "pass": true,
+  "testName": "toSetRolePosition",
 }
 `;

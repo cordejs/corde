@@ -1,12 +1,6 @@
 import { CordeBotLike, TestReport } from "../../types";
 import { buildReportMessage } from "../../utils";
-
-export interface ExpectTestParams {
-  cordeBot: CordeBotLike;
-  command: string | number | boolean;
-  isNot: boolean;
-  timeout: number;
-}
+import { ExpectTestParams } from "../types";
 
 /**
  * Entity helper for expectation assertions used for Corde tests
@@ -26,7 +20,7 @@ export abstract class ExpectTest {
   protected readonly command: string | number | boolean;
   protected readonly cordeBot: CordeBotLike;
   protected readonly timeOut: number;
-
+  protected readonly testName: string;
   /**
    * Initialize the match class with its default values.
    *
@@ -40,6 +34,7 @@ export abstract class ExpectTest {
     this.cordeBot = defaultParams.cordeBot;
     this.hasPassed = false;
     this.timeOut = defaultParams.timeout;
+    this.testName = defaultParams.testName;
   }
 
   /**
@@ -55,15 +50,44 @@ export abstract class ExpectTest {
     }
   }
 
-  protected createReport(expect?: string | null, received?: string): TestReport {
+  /**
+   * Encapsulation of cordeBot.sendTextMessage
+   * Sends `command` as message
+   *
+   * @returns Message sent
+   */
+  protected sendCommandMessage() {
+    return this.cordeBot.sendTextMessage(this.command);
+  }
+
+  protected createFailedTest(message?: string): TestReport {
+    return {
+      pass: false,
+      message,
+      testName: this.testName,
+    };
+  }
+
+  protected createPassTest(): TestReport {
+    return {
+      pass: true,
+      testName: this.testName,
+    };
+  }
+  protected createReport(...messages: (string | null | undefined)[]): TestReport {
     let message = "";
-    if (expect) {
-      message = buildReportMessage(expect, received);
+    if (messages.length) {
+      message = buildReportMessage(...messages);
     }
 
     return {
+      testName: this.testName,
       pass: this.hasPassed,
       message,
     };
+  }
+
+  toString() {
+    return this.testName ?? "ExpectTest";
   }
 }

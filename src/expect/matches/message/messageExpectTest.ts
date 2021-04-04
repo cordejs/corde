@@ -30,7 +30,7 @@ export abstract class MessageExpectTest extends ExpectTest {
     this.invertHasPassedIfIsNot();
 
     if (this.hasPassed) {
-      return { pass: true };
+      return this.createPassTest();
     }
 
     if (this.isNot) {

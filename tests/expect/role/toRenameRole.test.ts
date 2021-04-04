@@ -1,7 +1,7 @@
 import { Client } from "discord.js";
 import { ToRenameRole } from "../../../src/expect/matches";
 import MockDiscord from "../../mocks/mockDiscord";
-import { initCordeClientWithChannel } from "../../testHelper";
+import { createReport, initCordeClientWithChannel } from "../../testHelper";
 import { CordeBotLike, TestReport } from "../../../src/types";
 import { buildReportMessage } from "../../../src/utils";
 import { MockEvents } from "../../mocks/mockEvents";
@@ -41,10 +41,7 @@ describe("testing ToRenameRole operation", () => {
       `received: null`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toRename, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -61,10 +58,7 @@ describe("testing ToRenameRole operation", () => {
       `received: object`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toRename, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -80,10 +74,7 @@ describe("testing ToRenameRole operation", () => {
       `received: ''`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toRename, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -97,10 +88,7 @@ describe("testing ToRenameRole operation", () => {
 
     const message = buildReportMessage(`expected: role with id 123\n`, `received: null`);
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toRename, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -119,10 +107,7 @@ describe("testing ToRenameRole operation", () => {
       `received: name was not changed`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toRename, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -136,9 +121,7 @@ describe("testing ToRenameRole operation", () => {
     const toRename = initTestClass(corde, true);
     const report = await toRename.action("newName", { id: "123" });
 
-    const expectReport: TestReport = {
-      pass: true,
-    };
+    const expectReport = createReport(toRename, true);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -153,9 +136,7 @@ describe("testing ToRenameRole operation", () => {
     const toRename = initTestClass(corde, false);
     const report = await toRename.action(mockDiscord.role.name, { id: "123" });
 
-    const expectReport: TestReport = {
-      pass: true,
-    };
+    const expectReport = createReport(toRename, true);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -175,10 +156,7 @@ describe("testing ToRenameRole operation", () => {
       `received: name was not changed (actual: '${mockDiscord.role.name}')`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toRename, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -198,10 +176,7 @@ describe("testing ToRenameRole operation", () => {
       `received: name was not changed (actual: '${mockDiscord.role.name}')`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toRename, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();

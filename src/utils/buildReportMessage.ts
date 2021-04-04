@@ -1,15 +1,16 @@
 import { EXPECT_RECEIVED_TAB_SPACE } from "../consts";
 
-export function buildReportMessage(expect?: string, received?: string) {
+/**
+ * @internal
+ */
+export function buildReportMessage(...messages: (string | undefined | null)[]) {
   let message = "\n";
-
-  if (expect) {
-    message += expect;
+  for (let i = 0; i < messages.length; i++) {
+    if (messages[i]) {
+      message += messages[i];
+    }
   }
 
-  if (received) {
-    message += received;
-  }
   return addSpace(message);
 }
 
