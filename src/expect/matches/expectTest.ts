@@ -21,6 +21,8 @@ export abstract class ExpectTest {
   protected readonly cordeBot: CordeBotLike;
   protected readonly timeOut: number;
   protected readonly testName: string;
+  protected readonly isCascade: boolean;
+
   /**
    * Initialize the match class with its default values.
    *
@@ -28,13 +30,14 @@ export abstract class ExpectTest {
    * @param command The command to execute.
    * @param isNot Definition if this is a deny test.
    */
-  constructor(defaultParams: ExpectTestParams) {
-    this.isNot = defaultParams.isNot;
-    this.command = defaultParams.command;
-    this.cordeBot = defaultParams.cordeBot;
+  constructor({ isNot, command, cordeBot, timeout, testName, isCascade }: ExpectTestParams) {
+    this.isNot = isNot;
+    this.command = command;
+    this.cordeBot = cordeBot;
     this.hasPassed = false;
-    this.timeOut = defaultParams.timeout;
-    this.testName = defaultParams.testName;
+    this.timeOut = timeout;
+    this.testName = testName;
+    this.isCascade = isCascade ?? false;
   }
 
   /**
@@ -54,10 +57,16 @@ export abstract class ExpectTest {
    * Encapsulation of cordeBot.sendTextMessage
    * Sends `command` as message
    *
+   * @param forceSend Defines if the message should be send even if the test if
+   * is cascade (this is offen used only by the TodoInCascade test).
+   *
    * @returns Message sent
    */
-  protected sendCommandMessage() {
-    return this.cordeBot.sendTextMessage(this.command);
+  protected sendCommandMessage(forceSend?: boolean) {
+    if (!this.isCascade || forceSend) {
+      return this.cordeBot.sendTextMessage(this.command);
+    }
+    return;
   }
 
   protected createFailedTest(message?: string): TestReport {

@@ -16,6 +16,7 @@ export interface ExpectTestBaseParams {
   command: string | number | boolean;
   isNot: boolean;
   timeout: number;
+  isCascade: boolean;
 }
 export interface ExpectTestParams extends ExpectTestBaseParams {
   testName: string;
@@ -538,5 +539,4 @@ export interface Expect extends AllMatches<any> {
    * @since 1.0
    */
   <T extends (() => number | string) | number | string>(commandNameResolvable: T): AllMatches<void>;
-  any(): any;
 }

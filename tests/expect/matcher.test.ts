@@ -39,7 +39,7 @@ jest.mock("../../src/expect/matches/role/toRenameRole");
 jest.mock("../../src/expect/matches/role/toSetRolePosition");
 jest.mock("../../src/expect/matches/role/toSetRolePermission.ts");
 
-jest.mock("../../src/expect/matches/todoInCascade.ts.ts");
+jest.mock("../../src/expect/matches/todoInCascade.ts");
 
 let toEditMessageSpy: jest.SpyInstance;
 let toReturnSpy: jest.SpyInstance;
@@ -90,6 +90,7 @@ async function createDefaultTestFor<T extends ExpectTest>(
     cordeBot: runtime.bot,
     isNot: isNot,
     timeout: runtime.timeOut,
+    isCascade: false,
   };
   expect(testClass).toBeCalledWith(params);
   expect(testClassActionMock).toBeCalledWith(...callForActionMock);
@@ -746,25 +747,25 @@ describe("Testing matches class", () => {
     it("should add a todoInCascade function with correct values using id", async () => {
       const call = _expect.toReturn("test");
       initExpectMatch().todoInCascade(call);
-      await createDefaultTestFor(TodoInCascade, todoInCascadeActionMock, false, call);
+      await createDefaultTestFor(TodoInCascade, todoInCascadeActionMock, false, [call]);
     });
 
     it("should add a todoInCascade function with correct values using string id", async () => {
       const call = _expect.toReturn("test");
       initExpectMatch().todoInCascade(call);
-      await createDefaultTestFor(TodoInCascade, todoInCascadeActionMock, false, call);
+      await createDefaultTestFor(TodoInCascade, todoInCascadeActionMock, false, [call]);
     });
 
     it("should add a todoInCascade function with correct values (isNot false)", async () => {
       const call = _expect.toReturn("test");
       initExpectMatch().todoInCascade(call);
-      await createDefaultTestFor(TodoInCascade, todoInCascadeActionMock, false, call);
+      await createDefaultTestFor(TodoInCascade, todoInCascadeActionMock, false, [call]);
     });
 
     it("should add a todoInCascade function with correct values (isNot true)", async () => {
       const call = _expect.toReturn("test");
       initExpectMatch().todoInCascade(call);
-      await createDefaultTestFor(TodoInCascade, todoInCascadeActionMock, true, call);
+      await createDefaultTestFor(TodoInCascade, todoInCascadeActionMock, true, [call]);
     });
   });
 });

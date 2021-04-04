@@ -1,6 +1,6 @@
 import { Client } from "discord.js";
 import MockDiscord from "../../mocks/mockDiscord";
-import { createReport, initCordeClientWithChannel } from "../../testHelper";
+import { createReport, initCordeClientWithChannel, testUtils } from "../../testHelper";
 import { MockEvents } from "../../mocks/mockEvents";
 import { CordeBotLike, TestReport } from "../../../src/types";
 import { ToDeleteRole } from "../../../src/expect/matches";
@@ -17,7 +17,7 @@ describe("testing toDeleteRole function", () => {
   });
 
   function initTestClass(cordeBot: CordeBotLike, isNot: boolean, command?: string) {
-    return new ToDeleteRole({
+    return testUtils.initTestClass(ToDeleteRole, {
       command: command ?? "toDelete",
       cordeBot: cordeBot,
       isNot: isNot,

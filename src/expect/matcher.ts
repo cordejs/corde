@@ -206,6 +206,7 @@ export class ExpectMatches<TReturn extends MayReturnMatch> implements Matches<TR
       command: commandName,
       isNot: this._isNot,
       timeout: runtime.timeOut,
+      isCascade: this._isCascade,
     });
 
     if (

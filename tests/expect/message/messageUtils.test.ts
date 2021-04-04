@@ -23,6 +23,7 @@ const extension = new ExpectMessage({
   isNot: false,
   testName: "",
   timeout: 1000,
+  isCascade: false,
 });
 
 describe("testing extension", () => {

@@ -5,7 +5,7 @@ import { CordeBotLike, TestReport } from "../../../src/types";
 import { buildReportMessage, typeOf } from "../../../src/utils";
 import MockDiscord from "../../mocks/mockDiscord";
 import { MockEvents } from "../../mocks/mockEvents";
-import { createReport, initCordeClientWithChannel } from "../../testHelper";
+import { createReport, initCordeClientWithChannel, testUtils } from "../../testHelper";
 
 let mockDiscord = new MockDiscord();
 
@@ -19,7 +19,7 @@ function initClient() {
 }
 
 function initTestClass(cordeBot: CordeBotLike, isNot: boolean) {
-  return new ToSetRolePosition({
+  return testUtils.initTestClass(ToSetRolePosition, {
     command: "toDelete",
     cordeBot: cordeBot,
     isNot: isNot,

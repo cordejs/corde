@@ -1,6 +1,6 @@
 import { Client } from "discord.js";
 import MockDiscord from "../../mocks/mockDiscord";
-import { createCordeBotWithMockedFunctions } from "../../testHelper";
+import { createCordeBotWithMockedFunctions, testUtils } from "../../testHelper";
 import { CordeBotLike, TestReport } from "../../../src/types";
 import { ToEditMessage } from "../../../src/expect/matches";
 import { buildReportMessage, diff, formatObject } from "../../../src/utils";
@@ -15,11 +15,10 @@ describe("testing toEditMessage", () => {
   });
 
   function initTestClass(cordeBot: CordeBotLike, commandName?: string, isNot?: boolean) {
-    return new ToEditMessage({
+    return testUtils.initTestClass(ToEditMessage, {
       command: commandName,
       cordeBot: cordeBot,
       isNot: isNot,
-      timeout: runtime.timeOut,
     });
   }
 

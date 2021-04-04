@@ -6,7 +6,12 @@ import { CordeBotLike, TestReport } from "../../../src/types";
 import { buildReportMessage, Colors, resolveColor } from "../../../src/utils";
 import MockDiscord from "../../mocks/mockDiscord";
 import { MockEvents } from "../../mocks/mockEvents";
-import { createReport, initCordeClientWithChannel, removeANSIColorStyle } from "../../testHelper";
+import {
+  createReport,
+  initCordeClientWithChannel,
+  removeANSIColorStyle,
+  testUtils,
+} from "../../testHelper";
 
 let mockDiscord = new MockDiscord();
 
@@ -19,7 +24,7 @@ function initClient() {
 }
 
 function initTestClass(cordeBot: CordeBotLike, isNot: boolean) {
-  return new ToSetRoleColor({
+  return testUtils.initTestClass(ToSetRoleColor, {
     command: "toDelete",
     cordeBot: cordeBot,
     isNot: isNot,

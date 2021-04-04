@@ -1,7 +1,12 @@
 import { Client } from "discord.js";
 import { ToSetRolePermission } from "../../../src/expect/matches";
 import MockDiscord from "../../mocks/mockDiscord";
-import { createReport, initCordeClientWithChannel, removeANSIColorStyle } from "../../testHelper";
+import {
+  createReport,
+  initCordeClientWithChannel,
+  removeANSIColorStyle,
+  testUtils,
+} from "../../testHelper";
 import { CordeBotLike, TestReport } from "../../../src/types";
 import {
   buildReportMessage,
@@ -24,7 +29,7 @@ function initClient() {
 }
 
 function initTestClass(cordeBot: CordeBotLike, isNot: boolean) {
-  return new ToSetRolePermission({
+  return testUtils.initTestClass(ToSetRolePermission, {
     command: "toDelete",
     cordeBot: cordeBot,
     isNot: isNot,

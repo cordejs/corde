@@ -1,5 +1,5 @@
 import MockDiscord from "../../mocks/mockDiscord";
-import { createReport, initCordeClientWithChannel } from "../../testHelper";
+import { createReport, initCordeClientWithChannel, testUtils } from "../../testHelper";
 import { Client } from "discord.js";
 import { ToAddReaction } from "../../../src/expect/matches";
 import { CordeBotLike, TestReport } from "../../../src/types";
@@ -14,11 +14,10 @@ describe("testing toAddReaction function", () => {
   });
 
   function initTestClass(cordeBot: CordeBotLike, commandName?: string, isNot?: boolean) {
-    return new ToAddReaction({
+    return testUtils.initTestClass(ToAddReaction, {
       command: commandName,
       cordeBot: cordeBot,
       isNot: isNot,
-      timeout: runtime.timeOut,
     });
   }
 

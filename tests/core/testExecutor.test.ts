@@ -1,11 +1,12 @@
 import { TestExecutor } from "../../src/core/testExecutor";
-import { buildReportMessage, diff, LogUpdate } from "../../src/utils";
+import { buildReportMessage, diff, LogUpdate, utils } from "../../src/utils";
 import {
   generateTestFile,
   removeANSIColorStyle,
   TestFileGeneratorInfo,
   testFileNames,
   testNames,
+  testUtils,
 } from "../testHelper";
 
 import { mockTimer } from "../mocks/mockTimer";
@@ -154,12 +155,7 @@ it("should print report for 2 test file, 2 test closure and 2 test function", as
 it("should print report for 1 test file, 1 test closure and 1 test function that fail", async () => {
   const data: TestFileGeneratorInfo = {
     amountOfTestFiles: 1,
-    testFunctionsReport: [
-      {
-        pass: false,
-        message: buildReportMessage("expected: hi\n", "received: hi!"),
-      },
-    ],
+    testFunctionsReport: [testUtils.createFailedTestReport(["expected: hi\n", "received: hi!"])],
     amountOfTests: 1,
   };
 
@@ -185,11 +181,8 @@ it("should print report for 1 test file, 1 test closure and 1 failed function an
   const data: TestFileGeneratorInfo = {
     amountOfTestFiles: 1,
     testFunctionsReport: [
-      {
-        pass: false,
-        message: buildReportMessage("expected: hi\n", "received: hi!"),
-      },
-      { pass: true },
+      testUtils.createFailedTestReport(["expected: hi\n", "received: hi!"]),
+      testUtils.createPassReport(),
     ],
     amountOfTests: 1,
   };
@@ -215,11 +208,8 @@ it("should print report for 1 test file, 1 test closure and 1 failed function an
   const data: TestFileGeneratorInfo = {
     amountOfTestFiles: 1,
     testFunctionsReport: [
-      {
-        pass: false,
-        message: buildReportMessage("expected: hi\n", "received: hi!"),
-      },
-      { pass: true },
+      testUtils.createFailedTestReport(["expected: hi\n", "received: hi!"]),
+      testUtils.createPassReport(),
     ],
     amountOfTests: 1,
   };
@@ -245,11 +235,8 @@ it("should print report for 1 test file, 2 test closure and 1 failed function an
   const data: TestFileGeneratorInfo = {
     amountOfTestFiles: 1,
     testFunctionsReport: [
-      {
-        pass: false,
-        message: buildReportMessage("expected: hi\n", "received: hi!"),
-      },
-      { pass: true },
+      testUtils.createFailedTestReport(["expected: hi\n", "received: hi!"]),
+      testUtils.createPassReport(),
     ],
     amountOfTests: 2,
   };
@@ -275,11 +262,8 @@ it("should print report for 2 test file, 2 test closure and 1 failed function an
   const data: TestFileGeneratorInfo = {
     amountOfTestFiles: 2,
     testFunctionsReport: [
-      {
-        pass: false,
-        message: buildReportMessage("expected: hi\n", "received: hi!"),
-      },
-      { pass: true },
+      testUtils.createFailedTestReport(["expected: hi\n", "received: hi!"]),
+      testUtils.createPassReport(),
     ],
     amountOfTests: 2,
   };
@@ -312,16 +296,12 @@ it("should print report for 1 test file, 2 test closure and 1 failed function an
           tests: [
             {
               name: testNames[0],
-              testsFunctions: [() => Promise.resolve({ pass: true })],
+              testsFunctions: [() => testUtils.createResolvedPassReport()],
             },
             {
               name: testNames[1],
               testsFunctions: [
-                () =>
-                  Promise.resolve({
-                    pass: false,
-                    message: buildReportMessage("expected: hi\n", "received: hi!"),
-                  }),
+                () => testUtils.createResolvedFailedReport(["expected: hi\n", "received: hi!"]),
               ],
             },
           ],
@@ -356,7 +336,7 @@ it("should print for a empty test file name", async () => {
           tests: [
             {
               name: "",
-              testsFunctions: [() => Promise.resolve({ pass: true })],
+              testsFunctions: [() => testUtils.createResolvedPassReport()],
             },
           ],
         },
@@ -394,7 +374,7 @@ it("should print tests for a subgroup", async () => {
               tests: [
                 {
                   name: "test",
-                  testsFunctions: [() => Promise.resolve({ pass: true })],
+                  testsFunctions: [() => testUtils.createResolvedPassReport()],
                 },
               ],
             },
@@ -438,7 +418,7 @@ it("should print subtest for a subgroup", async () => {
                   subTests: [
                     {
                       name: "subtest",
-                      testsFunctions: [() => Promise.resolve({ pass: true })],
+                      testsFunctions: [() => testUtils.createResolvedPassReport()],
                     },
                   ],
                 },
@@ -508,7 +488,7 @@ it("should print empty test file", async () => {
                   subTests: [
                     {
                       name: "subtest",
-                      testsFunctions: [() => Promise.resolve({ pass: true })],
+                      testsFunctions: [() => testUtils.createResolvedPassReport()],
                     },
                   ],
                 },
@@ -543,12 +523,7 @@ it("should print empty test file", async () => {
 it("should print report for 1 test file, 2 test closure and 1 failed function and 1 passed function", async () => {
   const data: TestFileGeneratorInfo = {
     amountOfTestFiles: 1,
-    testFunctionsReport: [
-      {
-        pass: false,
-        message: buildReportMessage(diff({ a: 1 }, { a: 2 })),
-      },
-    ],
+    testFunctionsReport: [testUtils.createFailedTestReport([diff({ a: 1 }, { a: 2 })])],
     amountOfTests: 1,
   };
 
@@ -573,14 +548,13 @@ it("should print report for 1 test file, 2 test closure and 1 failed function an
   const data: TestFileGeneratorInfo = {
     amountOfTestFiles: 1,
     testFunctionsReport: [
-      {
-        pass: false,
-        message: buildReportMessage(diff({ a: 1 }, { a: 2 })),
-        trace: buildReportMessage(
+      testUtils.createFailedTestReport(
+        [diff({ a: 1 }, { a: 2 })],
+        buildReportMessage(
           "at TestExecutor.printReportData (src/core/testExecutor.ts:202:13)\n" +
             "at Object.<anonymous> (tests/utils/colors.test.ts:29:39)",
         ),
-      },
+      ),
     ],
     amountOfTests: 1,
   };
@@ -641,7 +615,7 @@ it("should execute hooks with failure", async () => {
   const report = await testRunner.runTest({
     testsFunctions: [
       (_: any) => {
-        return Promise.resolve({ pass: true });
+        return testUtils.createResolvedPassReport();
       },
     ],
   });
@@ -657,7 +631,7 @@ it("should execute hooks with failure (failure is not a Error instance)", async 
   const report = await testRunner.runTest({
     testsFunctions: [
       (_: any) => {
-        return Promise.resolve({ pass: true });
+        return Promise.resolve(testUtils.createPassReport());
       },
     ],
   });
@@ -673,10 +647,10 @@ it("should hook, but execute just once", async () => {
   const report = await testRunner.runTest({
     testsFunctions: [
       (_: any) => {
-        return Promise.resolve({ pass: true });
+        return testUtils.createResolvedPassReport();
       },
       (_: any) => {
-        return Promise.resolve({ pass: true });
+        return testUtils.createResolvedPassReport();
       },
     ],
   });

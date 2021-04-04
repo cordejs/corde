@@ -15,9 +15,9 @@ import { Stream } from "stream";
 import { Events } from "../core/events";
 
 export interface TestReport {
-  readonly pass: boolean;
-  message?: string;
+  pass: boolean;
   testName: string;
+  message?: string;
   trace?: string;
 }
 

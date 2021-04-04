@@ -5,7 +5,7 @@ import { CordeBotLike, TestReport } from "../../../src/types";
 import { buildReportMessage, typeOf } from "../../../src/utils";
 import MockDiscord from "../../mocks/mockDiscord";
 import { MockEvents } from "../../mocks/mockEvents";
-import { createCordeBotWithMockedFunctions } from "../../testHelper";
+import { createCordeBotWithMockedFunctions, testUtils } from "../../testHelper";
 
 let mockDiscord = new MockDiscord();
 
@@ -15,7 +15,7 @@ describe("testing pin message test", () => {
   });
 
   function initTestClass(cordeBot: CordeBotLike, isNot: boolean) {
-    return new ToPinMessage({
+    return testUtils.initTestClass(ToPinMessage, {
       command: "",
       cordeBot: cordeBot,
       isNot: isNot,

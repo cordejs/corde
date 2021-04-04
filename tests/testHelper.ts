@@ -4,6 +4,10 @@ import MockDiscord from "./mocks/mockDiscord";
 import { Client } from "discord.js";
 import { CordeBot } from "../src/core/cordeBot";
 import { CordeBotLike, Test, TestFile, TestFunctionType, TestReport } from "../src/types";
+import { ExpectTest } from "../src/expect/matches/expectTest";
+import { ExpectTestBaseParams } from "../src/expect/types";
+import { runtime } from "../src/common/runtime";
+import { buildReportMessage } from "../src/utils";
 
 export const normalTsPath = path.resolve(process.cwd(), "corde.ts");
 export const tempTsPath = path.resolve(process.cwd(), "__corde.ts");
@@ -178,6 +182,58 @@ export function generateTestFile(generatorData: TestFileGeneratorInfo) {
   }
 
   return testFiles;
+}
+
+export function _initTestSimpleInstance<T extends ExpectTest>(
+  type: new (params: ExpectTestBaseParams) => T,
+  params: Partial<ExpectTestBaseParams>,
+) {
+  return new type({
+    command: params.command ?? "",
+    cordeBot: params.cordeBot,
+    isNot: params.isNot ?? false,
+    timeout: params.timeout ?? runtime.timeOut,
+    isCascade: params.isCascade ?? false,
+  });
+}
+
+export namespace testUtils {
+  export function initTestClass<T extends ExpectTest>(
+    type: new (params: ExpectTestBaseParams) => T,
+    params: Partial<ExpectTestBaseParams>,
+  ) {
+    return new type({
+      command: params.command ?? "",
+      cordeBot: params.cordeBot,
+      isNot: params.isNot ?? false,
+      timeout: params.timeout ?? runtime.timeOut,
+      isCascade: params.isCascade ?? false,
+    });
+  }
+
+  export function createPassReport(): TestReport {
+    return {
+      pass: true,
+      testName: "",
+    };
+  }
+
+  export function createResolvedPassReport() {
+    return Promise.resolve(testUtils.createPassReport());
+  }
+
+  export function createResolvedFailedReport(message: string[], trace?: string) {
+    return Promise.resolve(testUtils.createFailedTestReport(message, trace));
+  }
+
+  export function createFailedTestReport(message: string[], trace?: string) {
+    return {
+      pass: false,
+      testName: "",
+      message: buildReportMessage(...message),
+      trace: trace,
+    };
+  }
 }
 
 export function createReport(entity: Object, pass: boolean, message?: string): TestReport {

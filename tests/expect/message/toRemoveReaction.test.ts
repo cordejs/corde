@@ -1,5 +1,5 @@
 import MockDiscord from "../../mocks/mockDiscord";
-import { initCordeClientWithChannel } from "../../testHelper";
+import { initCordeClientWithChannel, testUtils } from "../../testHelper";
 import { Client } from "discord.js";
 import { ToRemoveReaction } from "../../../src/expect/matches";
 import { CordeBotLike, TestReport } from "../../../src/types";
@@ -15,7 +15,7 @@ describe("testing toRemoveReaction function", () => {
   });
 
   function initTestClass(cordeBot: CordeBotLike, isNot: boolean) {
-    return new ToRemoveReaction({
+    return testUtils.initTestClass(ToRemoveReaction, {
       command: "",
       cordeBot: cordeBot,
       isNot: isNot,

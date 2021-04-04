@@ -18,7 +18,7 @@ export class TodoInCascade extends ExpectTest {
       return this.createReport("no assertions were provided to test");
     }
 
-    await this.sendCommandMessage();
+    await this.sendCommandMessage(true);
 
     let tests: TestReport[] = [];
     try {

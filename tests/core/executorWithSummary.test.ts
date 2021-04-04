@@ -20,9 +20,10 @@ it("should print report for 1 test file, 1 test closure and 1 failed function an
     testFunctionsReport: [
       {
         pass: false,
+        testName: "",
         message: buildReportMessage("expected: hi", "received: hi!"),
       },
-      { pass: true },
+      { pass: true, testName: "" },
     ],
     amountOfTests: 1,
   };

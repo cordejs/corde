@@ -1,6 +1,6 @@
 import { Client } from "discord.js";
 import MockDiscord from "../../mocks/mockDiscord";
-import { createCordeBotWithMockedFunctions } from "../../testHelper";
+import { createCordeBotWithMockedFunctions, testUtils } from "../../testHelper";
 import { CordeBotLike, MessageEmbedLike, TestReport } from "../../../src/types";
 import { ToReturn } from "../../../src/expect/matches";
 import { buildReportMessage, diff, formatObject } from "../../../src/utils";
@@ -14,7 +14,7 @@ describe("testing toReturn", () => {
   });
 
   function initTestClass(cordeBot: CordeBotLike, isNot: boolean) {
-    return new ToReturn({
+    return testUtils.initTestClass(ToReturn, {
       command: "toReturn",
       cordeBot: cordeBot,
       isNot: isNot,
