@@ -697,17 +697,23 @@ describe("Testing matches class", () => {
     it("should add a todoInCascade function with correct values using id", async () => {
       const call = _expect.toReturn("test");
       initExpectMatch().todoInCascade(call);
-      await createDefaultTestFor(TodoInCascade, todoInCascadeActionMock, false, [
+      await createDefaultTestFor(
+        TodoInCascade,
+        todoInCascadeActionMock,
+        false,
         expect.any(Function),
-      ]);
+      );
     });
 
     it("should add a todoInCascade function with correct values (isNot true)", async () => {
       const call = _expect.toReturn("test");
       initExpectMatch().not.todoInCascade(call);
-      await createDefaultTestFor(TodoInCascade, todoInCascadeActionMock, true, [
+      await createDefaultTestFor(
+        TodoInCascade,
+        todoInCascadeActionMock,
+        true,
         expect.any(Function),
-      ]);
+      );
     });
   });
 });

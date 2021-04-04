@@ -59,7 +59,7 @@ export class ExpectMatches<TReturn extends MayReturnMatch> implements Matches<TR
     this.returnOrAddToCollector((cordeBot) => {
       // Encapsulate the functions inside another so it do not be executed.
       const testEnhanced = tests.map((test) => () => test(cordeBot));
-      return this.operationFactory(trace, TodoInCascade, cordeBot, testEnhanced);
+      return this.operationFactory(trace, TodoInCascade, cordeBot, ...testEnhanced);
     });
   }
 
@@ -210,8 +210,9 @@ export class ExpectMatches<TReturn extends MayReturnMatch> implements Matches<TR
     });
 
     if (
-      commandName == undefined ||
-      (typeof commandName === "string" && stringIsNullOrEmpty(commandName))
+      !this._isCascade &&
+      (commandName == undefined ||
+        (typeof commandName === "string" && stringIsNullOrEmpty(commandName)))
     ) {
       return {
         pass: false,

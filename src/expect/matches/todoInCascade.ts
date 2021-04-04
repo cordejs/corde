@@ -1,7 +1,6 @@
 import chalk from "chalk";
 import { EXPECT_RECEIVED_TAB_SPACE } from "../../consts";
 import { TestReport } from "../../types";
-import { executePromiseWithTimeout } from "../../utils";
 import { ExpectTestBaseParams } from "../types";
 import { ExpectTest } from "./expectTest";
 
@@ -13,7 +12,7 @@ export class TodoInCascade extends ExpectTest {
     super({ ...params, testName: "todoInCascade" });
   }
 
-  async action(assertions: (() => Promise<TestReport>)[]): Promise<TestReport> {
+  async action(...assertions: (() => Promise<TestReport>)[]): Promise<TestReport> {
     if (!assertions || assertions.length === 0) {
       return this.createReport("no assertions were provided to test");
     }
@@ -22,11 +21,16 @@ export class TodoInCascade extends ExpectTest {
 
     let tests: TestReport[] = [];
     try {
-      tests = await this.waitTestsEnd(assertions);
+      tests = await Promise.all(assertions.map((assertion) => assertion()));
     } catch (error) {
       if (this.isNot) {
         return this.createPassTest();
       }
+
+      if (error instanceof Error) {
+        return this.createFailedTest(error.message);
+      }
+      return this.createFailedTest(error);
     }
 
     if (this.isNot && !tests.some((test) => test.pass)) {
@@ -55,28 +59,30 @@ export class TodoInCascade extends ExpectTest {
   private formatFailedTestsMessage(tests: TestReport[]) {
     return tests
       .filter((test) => !test.pass)
-      .map(
-        (test) =>
-          `${EXPECT_RECEIVED_TAB_SPACE} ${chalk.red(
-            `● ${test.testName}\n` + chalk.red(`${EXPECT_RECEIVED_TAB_SPACE} ${test.message}`),
-          )}`,
-      );
+      .map((test, index) => {
+        let partial = "";
+
+        if (index > 0) {
+          partial += "\n";
+        }
+        partial += `${EXPECT_RECEIVED_TAB_SPACE}${chalk.red(
+          `● ${test.testName}. Response: \n` + chalk.red(this.formatReportMessage(test.message)),
+        )}`;
+        return partial;
+      });
+  }
+
+  private formatReportMessage(message?: string) {
+    if (!message) {
+      return "";
+    }
+    const lineBreakRegex = new RegExp(/\n/g);
+    return message.replace("\n", "").replace(lineBreakRegex, "\n    ");
   }
 
   private filterTestsNames(tests: TestReport[], filterFn: (test: TestReport) => boolean) {
     return tests
       .filter(filterFn)
       .map((test) => `${EXPECT_RECEIVED_TAB_SPACE} ${chalk.red(`● ${test.testName}\n`)}`);
-  }
-
-  private async waitTestsEnd(assertions: (() => Promise<TestReport>)[]) {
-    return await executePromiseWithTimeout<TestReport[]>(async (resolve, reject) => {
-      try {
-        const values = await Promise.all(assertions.map((assertion) => assertion()));
-        resolve(values);
-      } catch (error) {
-        reject(error);
-      }
-    }, this.timeOut);
   }
 }

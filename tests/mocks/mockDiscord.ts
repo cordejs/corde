@@ -618,6 +618,7 @@ export default class MockDiscord {
       cordeBot: null,
       isNot: false,
       timeout: 100,
+      isCascade: false,
     }).embedMessageLikeToMessageEmbed(this._messageEmbedLike);
     embed.setColor(customColor);
     embed.setTitle(customTitle);
