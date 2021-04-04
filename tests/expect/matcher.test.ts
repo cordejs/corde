@@ -21,6 +21,8 @@ import { TestReport } from "../../src/types";
 import { ExpectTest } from "../../src/expect/matches/expectTest";
 import { ExpectTestBaseParams, ExpectTestParams } from "../../src/expect/types";
 import { buildReportMessage } from "../../src/utils";
+import { TodoInCascade } from "../../src/expect/matches/todoInCascade";
+import { expect as _expect } from "../../src/expect/expect";
 
 jest.mock("../../src/expect/matches/message/toReturn.ts");
 jest.mock("../../src/expect/matches/message/toRemoveReaction.ts");
@@ -37,6 +39,8 @@ jest.mock("../../src/expect/matches/role/toRenameRole");
 jest.mock("../../src/expect/matches/role/toSetRolePosition");
 jest.mock("../../src/expect/matches/role/toSetRolePermission.ts");
 
+jest.mock("../../src/expect/matches/todoInCascade.ts.ts");
+
 let toEditMessageSpy: jest.SpyInstance;
 let toReturnSpy: jest.SpyInstance;
 let toAddReactionSpy: jest.SpyInstance;
@@ -50,6 +54,7 @@ let toSetRolePositionSpy: jest.SpyInstance<any, any>;
 let toSetRolePermissionSpy: jest.SpyInstance<any, any>;
 let toPinMessageSpy: jest.SpyInstance<any, any>;
 let toUnpinMessageSpy: jest.SpyInstance<any, any>;
+let todoInCascadeSpy: jest.SpyInstance<any, any>;
 
 const toEditMessageActionMock = jest.fn();
 const toSetRoleMentionableActionMock = jest.fn();
@@ -64,6 +69,7 @@ const toSetRolePositionActionMock = jest.fn();
 const toSetRolePermissionActionMock = jest.fn();
 const toPinMessageActionMock = jest.fn();
 const toUnpinMessageActionMock = jest.fn();
+const todoInCascadeActionMock = jest.fn();
 
 const con = "test";
 
@@ -131,6 +137,9 @@ describe("Testing matches class", () => {
 
     toUnpinMessageSpy = ToUnPinMessage as jest.Mock;
     ToUnPinMessage.prototype.action = toUnpinMessageActionMock;
+
+    todoInCascadeSpy = TodoInCascade as jest.Mock;
+    TodoInCascade.prototype.action = todoInCascadeActionMock;
   });
 
   afterEach(() => {
@@ -720,6 +729,42 @@ describe("Testing matches class", () => {
     it("should add a toUnpin function with correct values (isNot true)", async () => {
       initExpectMatch().not.toUnPin(messageId);
       await createDefaultTestFor(ToUnPinMessage, toUnpinMessageActionMock, true, messageId);
+    });
+  });
+
+  describe("testing to todoInCascade", () => {
+    it("should add a function to hasIsolatedTestFunctions after call toUnpin", async () => {
+      initExpectMatch().todoInCascade();
+      expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
+    });
+
+    it("should add a todoInCascade function", async () => {
+      initExpectMatch().todoInCascade();
+      await createToBeCalledTestFor(toUnpinMessageActionMock);
+    });
+
+    it("should add a todoInCascade function with correct values using id", async () => {
+      const call = _expect.toReturn("test");
+      initExpectMatch().todoInCascade(call);
+      await createDefaultTestFor(TodoInCascade, todoInCascadeActionMock, false, call);
+    });
+
+    it("should add a todoInCascade function with correct values using string id", async () => {
+      const call = _expect.toReturn("test");
+      initExpectMatch().todoInCascade(call);
+      await createDefaultTestFor(TodoInCascade, todoInCascadeActionMock, false, call);
+    });
+
+    it("should add a todoInCascade function with correct values (isNot false)", async () => {
+      const call = _expect.toReturn("test");
+      initExpectMatch().todoInCascade(call);
+      await createDefaultTestFor(TodoInCascade, todoInCascadeActionMock, false, call);
+    });
+
+    it("should add a todoInCascade function with correct values (isNot true)", async () => {
+      const call = _expect.toReturn("test");
+      initExpectMatch().todoInCascade(call);
+      await createDefaultTestFor(TodoInCascade, todoInCascadeActionMock, true, call);
     });
   });
 });

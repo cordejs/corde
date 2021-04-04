@@ -43,7 +43,7 @@ import {
 } from "./types";
 import { TodoInCascade } from "./matches/todoInCascade";
 
-export class ExpectMatches<TResponseType extends MayReturnMatch> implements Matches<TResponseType> {
+export class ExpectMatches<TReturn extends MayReturnMatch> implements Matches<TReturn> {
   protected _commandName: unknown;
   protected _isNot: boolean;
   protected _isCascade: boolean;
@@ -56,14 +56,14 @@ export class ExpectMatches<TResponseType extends MayReturnMatch> implements Matc
 
   todoInCascade(...tests: TestFunctionType[]): void {
     const trace = getStackTrace(undefined, true, "todoInCascade");
-    testCollector.addTestFunction((cordeBot) => {
+    this.returnOrAddToCollector((cordeBot) => {
       // Encapsulate the functions inside another so it do not be executed.
       const testEnhanced = tests.map((test) => () => test(cordeBot));
       return this.operationFactory(trace, TodoInCascade, cordeBot, testEnhanced);
     });
   }
 
-  toReturn(expect: Primitive | MessageEmbedLike): TResponseType {
+  toReturn(expect: Primitive | MessageEmbedLike) {
     const trace = getStackTrace(undefined, true, "toReturn");
     return this.returnOrAddToCollector((cordeBot) =>
       this.operationFactory(trace, ToReturn, cordeBot, expect),
@@ -76,7 +76,7 @@ export class ExpectMatches<TResponseType extends MayReturnMatch> implements Matc
     guildId?: string,
   ) {
     const trace = getStackTrace(undefined, true, "toReturnInChannel");
-    testCollector.addTestFunction((cordeBot) => {
+    return this.returnOrAddToCollector((cordeBot) => {
       return this.operationFactory(trace, ToReturnInChannel, cordeBot, expect, channelId, guildId);
     });
   }
@@ -84,23 +84,23 @@ export class ExpectMatches<TResponseType extends MayReturnMatch> implements Matc
   toEditMessage(
     newValue: Primitive | MessageEmbedLike,
     messageIdentifier?: MessageEditedIdentifier | string,
-  ): void {
+  ) {
     const trace = getStackTrace(undefined, true, "toEditMessage");
-    testCollector.addTestFunction((cordeBot) => {
+    return this.returnOrAddToCollector((cordeBot) => {
       return this.operationFactory(trace, ToEditMessage, cordeBot, newValue, messageIdentifier);
     });
   }
 
-  toPin(messageIdentifier: string | MessageIdentifier): void {
+  toPin(messageIdentifier: string | MessageIdentifier) {
     const trace = getStackTrace(undefined, true, "toPin");
-    testCollector.addTestFunction((cordeBot) => {
+    return this.returnOrAddToCollector((cordeBot) => {
       return this.operationFactory(trace, ToPinMessage, cordeBot, messageIdentifier);
     });
   }
 
-  toUnPin(messageIdentifier: string | MessageIdentifier): void {
+  toUnPin(messageIdentifier: string | MessageIdentifier) {
     const trace = getStackTrace(undefined, true, "toUnPin");
-    testCollector.addTestFunction((cordeBot) => {
+    return this.returnOrAddToCollector((cordeBot) => {
       return this.operationFactory(trace, ToUnPinMessage, cordeBot, messageIdentifier);
     });
   }
@@ -108,9 +108,9 @@ export class ExpectMatches<TResponseType extends MayReturnMatch> implements Matc
   toAddReaction(
     emojis: string[] | EmojiLike[] | (string | EmojiLike)[],
     messageIdentifier?: string | MessageIdentifier,
-  ): void {
+  ) {
     const trace = getStackTrace(undefined, true, "toAddReaction");
-    testCollector.addTestFunction((cordeBot) =>
+    return this.returnOrAddToCollector((cordeBot) =>
       this.operationFactory(trace, ToAddReaction, cordeBot, emojis, messageIdentifier),
     );
   }
@@ -118,30 +118,30 @@ export class ExpectMatches<TResponseType extends MayReturnMatch> implements Matc
   toRemoveReaction(
     emojis: string[] | EmojiLike[] | (string | EmojiLike)[],
     messageIdentifier?: string | MessageIdentifier,
-  ): void {
+  ) {
     const trace = getStackTrace(undefined, true, "toRemoveReaction");
-    testCollector.addTestFunction((cordeBot) =>
+    return this.returnOrAddToCollector((cordeBot) =>
       this.operationFactory(trace, ToRemoveReaction, cordeBot, emojis, messageIdentifier),
     );
   }
 
   toSetRoleColor(color: ColorResolvable | Colors, roleIdentifier: string | RoleIdentifier) {
     const trace = getStackTrace(undefined, true, "toSetRoleColor");
-    testCollector.addTestFunction((cordeBot) => {
+    return this.returnOrAddToCollector((cordeBot) => {
       return this.operationFactory(trace, ToSetRoleColor, cordeBot, color, roleIdentifier);
     });
   }
 
   toDeleteRole(roleIdentifier: string | RoleIdentifier) {
     const trace = getStackTrace(undefined, true, "toDeleteRole");
-    testCollector.addTestFunction((cordeBot) => {
+    return this.returnOrAddToCollector((cordeBot) => {
       return this.operationFactory(trace, ToDeleteRole, cordeBot, roleIdentifier);
     });
   }
 
   toSetRoleMentionable(mentionable: boolean, roleIdentifier: string | RoleIdentifier) {
     const trace = getStackTrace(undefined, true, "toSetRoleMentionable");
-    testCollector.addTestFunction((cordeBot) => {
+    return this.returnOrAddToCollector((cordeBot) => {
       return this.operationFactory(
         trace,
         ToSetRoleMentionable,
@@ -154,28 +154,28 @@ export class ExpectMatches<TResponseType extends MayReturnMatch> implements Matc
 
   toSetRoleHoist(hoist: boolean, roleIdentifier: string | RoleIdentifier) {
     const trace = getStackTrace(undefined, true, "toSetRoleHoist");
-    testCollector.addTestFunction((cordeBot) => {
+    return this.returnOrAddToCollector((cordeBot) => {
       return this.operationFactory(trace, ToSetRoleHoist, cordeBot, hoist, roleIdentifier);
     });
   }
 
   toRenameRole(newName: string, roleIdentifier: string | RoleIdentifier) {
     const trace = getStackTrace(undefined, true, "toRenameRole");
-    testCollector.addTestFunction((cordeBot) => {
+    return this.returnOrAddToCollector((cordeBot) => {
       return this.operationFactory(trace, ToRenameRole, cordeBot, newName, roleIdentifier);
     });
   }
 
   toSetRolePosition(newPosition: number, roleIdentifier: string | RoleIdentifier) {
     const trace = getStackTrace(undefined, true, "toSetRolePosition");
-    testCollector.addTestFunction((cordeBot) => {
+    return this.returnOrAddToCollector((cordeBot) => {
       return this.operationFactory(trace, ToSetRolePosition, cordeBot, newPosition, roleIdentifier);
     });
   }
 
   toSetRolePermission(roleIdentifier: string | RoleIdentifier, ...permissions: RolePermission[]) {
     const trace = getStackTrace(undefined, true, "toSetRolePermission");
-    testCollector.addTestFunction((cordeBot) => {
+    return this.returnOrAddToCollector((cordeBot) => {
       return this.operationFactory(
         trace,
         ToSetRolePermission,
@@ -251,8 +251,7 @@ export class ExpectMatches<TResponseType extends MayReturnMatch> implements Matc
       return testFunction;
     }
 
-    testCollector.addTestFunction(testFunction);
-    return;
+    return testCollector.addTestFunction(testFunction);
   }
 }
 

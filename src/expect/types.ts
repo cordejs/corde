@@ -59,7 +59,7 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
     expect: bigint | boolean | number | string | MessageEmbedLike,
     channelId: string,
     guildId?: string,
-  ): void;
+  ): TReturn;
 
   /**
    * Defines the message expected to be returned by a
@@ -72,7 +72,7 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
   toReturnInChannel(
     expect: bigint | boolean | number | string | MessageEmbedLike,
     channelLocation: ChannelLocation,
-  ): void;
+  ): TReturn;
 
   /**
    * Defines [reactions](https://discordjs.guide/popular-topics/reactions.html#reacting-to-messages)
@@ -104,15 +104,15 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    *
    * @since 1.0
    */
-  toAddReaction(emojis: string[]): void;
-  toAddReaction(emojis: EmojiLike[]): void;
-  toAddReaction(emojis: (string | EmojiLike)[]): void;
-  toAddReaction(emojis: EmojiLike[], messageIdentifier: string): void;
-  toAddReaction(emojis: EmojiLike[], messageIdentifier: MessageIdentifier): void;
-  toAddReaction(emojis: (string | EmojiLike)[], messageIdentifier: string): void;
-  toAddReaction(emojis: (string | EmojiLike)[], messageIdentifier: MessageIdentifier): void;
-  toAddReaction(emojis: string[], messageIdentifier: string): void;
-  toAddReaction(emojis: string[], messageIdentifier: MessageIdentifier): void;
+  toAddReaction(emojis: string[]): TReturn;
+  toAddReaction(emojis: EmojiLike[]): TReturn;
+  toAddReaction(emojis: (string | EmojiLike)[]): TReturn;
+  toAddReaction(emojis: EmojiLike[], messageIdentifier: string): TReturn;
+  toAddReaction(emojis: EmojiLike[], messageIdentifier: MessageIdentifier): TReturn;
+  toAddReaction(emojis: (string | EmojiLike)[], messageIdentifier: string): TReturn;
+  toAddReaction(emojis: (string | EmojiLike)[], messageIdentifier: MessageIdentifier): TReturn;
+  toAddReaction(emojis: string[], messageIdentifier: string): TReturn;
+  toAddReaction(emojis: string[], messageIdentifier: MessageIdentifier): TReturn;
 
   /**
    * Check if a command removes a list of reactions from the last message sent
@@ -126,7 +126,7 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    *
    * @since 2.0
    */
-  toRemoveReaction(emojis: EmojiLike[], messageId?: string): void;
+  toRemoveReaction(emojis: EmojiLike[], messageId?: string): TReturn;
   /**
    * Check if a command removes a list of reactions from the last message sent
    * by someone who is not the the testing bot or corde's bot.
@@ -140,7 +140,7 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    *
    * @since 2.0
    */
-  toRemoveReaction(emojis: EmojiLike[], messageIdentifier?: MessageIdentifier): void;
+  toRemoveReaction(emojis: EmojiLike[], messageIdentifier?: MessageIdentifier): TReturn;
   /**
    * Check if a command removes a list of reactions from the last message sent
    * by someone who is not the the testing bot or corde's bot.
@@ -154,7 +154,7 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    *
    * @since 2.0
    */
-  toRemoveReaction(emojis: (string | EmojiLike)[], messageId?: string): void;
+  toRemoveReaction(emojis: (string | EmojiLike)[], messageId?: string): TReturn;
   /**
    * Check if a command removes a list of reactions from the last message sent
    * by someone who is not the the testing bot or corde's bot.
@@ -168,7 +168,7 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    *
    * @since 2.0
    */
-  toRemoveReaction(emojis: (string | EmojiLike)[], messageIdentifier?: MessageIdentifier): void;
+  toRemoveReaction(emojis: (string | EmojiLike)[], messageIdentifier?: MessageIdentifier): TReturn;
   /**
    * Check if a command removes a list of reactions from the last message sent
    * by someone who is not the the testing bot or corde's bot.
@@ -182,7 +182,7 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    *
    * @since 2.0
    */
-  toRemoveReaction(emojis: string[], messageId?: string): void;
+  toRemoveReaction(emojis: string[], messageId?: string): TReturn;
   /**
    * Check if a command removes a list of reactions from the last message sent
    * by someone who is not the the testing bot or corde's bot.
@@ -196,7 +196,7 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    *
    * @since 2.0
    */
-  toRemoveReaction(emojis: string[], messageIdentifier?: MessageIdentifier): void;
+  toRemoveReaction(emojis: string[], messageIdentifier?: MessageIdentifier): TReturn;
 
   /**
    * Verify if a command pinned a message.
@@ -204,14 +204,14 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    * @param messageId Id of the message
    * @since 2.0
    */
-  toPin(messageId: string): void;
+  toPin(messageId: string): TReturn;
   /**
    * Verify if a command pinned a message.
    *
    * @param messageIdentifier Object with **id** or **content** of the message.
    * @since 2.0
    */
-  toPin(messageIdentifier: MessageIdentifier): void;
+  toPin(messageIdentifier: MessageIdentifier): TReturn;
 
   /**
    * Verify if a command unpinned a message.
@@ -219,14 +219,14 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    * @param messageId Id of the message
    * @since 2.0
    */
-  toUnPin(messageId: string): void;
+  toUnPin(messageId: string): TReturn;
   /**
    * Verify if a command unpinned a message.
    *
    * @param message Object with **id** or **content** of the message.
    * @since 2.0
    */
-  toUnPin(messageIdentifier: MessageIdentifier): void;
+  toUnPin(messageIdentifier: MessageIdentifier): TReturn;
 
   /**
    * Verify if a command edited a message.
@@ -235,7 +235,7 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    * @param messageIdentifier Data object with the **id** or **oldContent** of the message.
    * @since 1.0
    */
-  toEditMessage(newValue: string, messageIdentifier?: MessageEditedIdentifier): void;
+  toEditMessage(newValue: string, messageIdentifier?: MessageEditedIdentifier): TReturn;
   /**
    * Verify if a command edited a message.
    *
@@ -243,7 +243,7 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    * @param messageId Id of the message.
    * @since 1.0
    */
-  toEditMessage(newValue: string, messageId?: string): void;
+  toEditMessage(newValue: string, messageId?: string): TReturn;
   /**
    * Verify if a command edited a message.
    *
@@ -251,7 +251,7 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    * @param messageIdentifier Data object with the **id** or **oldContent** of the message.
    * @since 1.0
    */
-  toEditMessage(newValue: number, messageIdentifier?: MessageEditedIdentifier): void;
+  toEditMessage(newValue: number, messageIdentifier?: MessageEditedIdentifier): TReturn;
   /**
    * Verify if a command edited a message.
    *
@@ -259,7 +259,7 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    * @param messageId Id of the message.
    * @since 1.0
    */
-  toEditMessage(newValue: number, messageId?: string): void;
+  toEditMessage(newValue: number, messageId?: string): TReturn;
   /**
    * Verify if a command edited a message.
    *
@@ -267,7 +267,7 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    * @param messageIdentifier Data object with the **id** or **oldContent** of the message.
    * @since 1.0
    */
-  toEditMessage(newValue: bigint, messageIdentifier?: MessageEditedIdentifier): void;
+  toEditMessage(newValue: bigint, messageIdentifier?: MessageEditedIdentifier): TReturn;
   /**
    * Verify if a command edited a message.
    *
@@ -275,7 +275,7 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    * @param messageId Id of the message.
    * @since 1.0
    */
-  toEditMessage(newValue: bigint, messageId?: string): void;
+  toEditMessage(newValue: bigint, messageId?: string): TReturn;
   /**
    * Verify if a command edited a message.
    *
@@ -283,7 +283,7 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    * @param messageId Id of the message.
    * @since 1.0
    */
-  toEditMessage(newValue: boolean, messageId?: string): void;
+  toEditMessage(newValue: boolean, messageId?: string): TReturn;
   /**
    * Verify if a command edited a message.
    *
@@ -291,7 +291,7 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    * @param messageIdentifier Data object with the **id** or **oldContent** of the message.
    * @since 1.0
    */
-  toEditMessage(newValue: boolean, messageIdentifier?: MessageEditedIdentifier): void;
+  toEditMessage(newValue: boolean, messageIdentifier?: MessageEditedIdentifier): TReturn;
   /**
    * Verify if a command edited a message.
    *
@@ -299,7 +299,7 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    * @param messageIdentifier Data object with the **id** or **oldContent** of the message.
    * @since 1.0
    */
-  toEditMessage(newValue: MessageEmbedLike, messageIdentifier?: MessageEditedIdentifier): void;
+  toEditMessage(newValue: MessageEmbedLike, messageIdentifier?: MessageEditedIdentifier): TReturn;
   /**
    * Verify if a command edited a message.
    *
@@ -307,13 +307,13 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    * @param messageId Data object with the **id** or **oldContent** of the message.
    * @since 1.0
    */
-  toEditMessage(newValue: MessageEmbedLike, messageId?: string): void;
+  toEditMessage(newValue: MessageEmbedLike, messageId?: string): TReturn;
 }
 
 /**
  * Tests for a **Role** structure.
  */
-export interface RoleMatches {
+export interface RoleMatches<TReturn extends MayReturnMatch> {
   /**
    * Check if a command changed a role color.
    *
@@ -321,7 +321,7 @@ export interface RoleMatches {
    * @param roleId Id of the role.
    * @since 2.0
    */
-  toSetRoleColor(color: ColorResolvable, roleId: string): void;
+  toSetRoleColor(color: ColorResolvable, roleId: string): TReturn;
   /**
    * Check if a command changed a role color.
    *
@@ -329,7 +329,7 @@ export interface RoleMatches {
    * @param roleIdentifier Object with the **id** or the **name** of the role.
    * @since 2.0
    */
-  toSetRoleColor(color: ColorResolvable, roleIdentifier: RoleIdentifier): void;
+  toSetRoleColor(color: ColorResolvable, roleIdentifier: RoleIdentifier): TReturn;
   /**
    * Check if a command changed a role color.
    *
@@ -337,7 +337,7 @@ export interface RoleMatches {
    * @param roleId Object with the **id** or the **name** of the role.
    * @since 2.0
    */
-  toSetRoleColor(color: Colors, roleId: string): void;
+  toSetRoleColor(color: Colors, roleId: string): TReturn;
   /**
    * Check if a command changed a role color.
    *
@@ -345,7 +345,7 @@ export interface RoleMatches {
    * @param roleId Object with the **id** or the **name** of the role.
    * @since 2.0
    */
-  toSetRoleColor(color: Colors, roleIdentifier: RoleIdentifier): void;
+  toSetRoleColor(color: Colors, roleIdentifier: RoleIdentifier): TReturn;
 
   /**
    * Check if a command deletes a role.
@@ -353,7 +353,7 @@ export interface RoleMatches {
    * @param roleId Id of the role.
    * @since 2.0
    */
-  toDeleteRole(roleId: string): void;
+  toDeleteRole(roleId: string): TReturn;
 
   /**
    * Check if a command deletes a role.
@@ -361,7 +361,7 @@ export interface RoleMatches {
    * @param roleIdentifier Object with **id** or **name** of the role.
    * @since 2.0
    */
-  toDeleteRole(roleIdentifier: RoleIdentifier): void;
+  toDeleteRole(roleIdentifier: RoleIdentifier): TReturn;
 
   /**
    * Check if a command defines a role as mentionable.
@@ -370,7 +370,7 @@ export interface RoleMatches {
    * @param roleId Id of the role.
    * @since 2.0
    */
-  toSetRoleMentionable(mentionable: boolean, roleId: string): void;
+  toSetRoleMentionable(mentionable: boolean, roleId: string): TReturn;
   /**
    * Check if a command define a role as mentionable.
    *
@@ -378,7 +378,7 @@ export interface RoleMatches {
    * @param roleIdentifier Object with **id** or **name** of the role.
    * @since 2.0
    */
-  toSetRoleMentionable(mentionable: boolean, roleIdentifier: RoleIdentifier): void;
+  toSetRoleMentionable(mentionable: boolean, roleIdentifier: RoleIdentifier): TReturn;
 
   /**
    * Check if a commend defines a role as a hoist.
@@ -397,7 +397,7 @@ export interface RoleMatches {
    * @see https://discord.com/developers/docs/topics/permissions
    * @since 2.0
    */
-  toSetRoleHoist(hoist: boolean, roleId: string): void;
+  toSetRoleHoist(hoist: boolean, roleId: string): TReturn;
   /**
    * Check if a commend define a role as hoist.
    *
@@ -415,7 +415,7 @@ export interface RoleMatches {
    * @see https://discord.com/developers/docs/topics/permissions
    * @since 2.0
    */
-  toSetRoleHoist(hoist: boolean, roleIdentifier: RoleIdentifier): void;
+  toSetRoleHoist(hoist: boolean, roleIdentifier: RoleIdentifier): TReturn;
 
   /**
    * Check if a command renames a role.
@@ -424,7 +424,7 @@ export interface RoleMatches {
    * @param roleId Id of the role.
    * @since 2.0
    */
-  toRenameRole(newName: string, roleId: string): void;
+  toRenameRole(newName: string, roleId: string): TReturn;
   /**
    * Check if a command rename a role.
    *
@@ -432,7 +432,7 @@ export interface RoleMatches {
    * @param roleIdentifier Object with **id** or **name** of the role.
    * @since 2.0
    */
-  toRenameRole(newName: string, roleIdentifier: RoleIdentifier): void;
+  toRenameRole(newName: string, roleIdentifier: RoleIdentifier): TReturn;
 
   /**
    * Check if a command changes a role's position.
@@ -447,7 +447,7 @@ export interface RoleMatches {
    * @see https://discord.com/developers/docs/topics/permissions
    * @since 2.0
    */
-  toSetRolePosition(newPosition: number, roleId: string): void;
+  toSetRolePosition(newPosition: number, roleId: string): TReturn;
   /**
    * Check if a command change a role's position.
    *
@@ -461,7 +461,7 @@ export interface RoleMatches {
    * @see https://discord.com/developers/docs/topics/permissions
    * @since 2.0
    */
-  toSetRolePosition(newPosition: number, roleIdentifier: RoleIdentifier): void;
+  toSetRolePosition(newPosition: number, roleIdentifier: RoleIdentifier): TReturn;
 
   /**
    * Check if a command change the
@@ -474,7 +474,7 @@ export interface RoleMatches {
    * @see https://discord.com/developers/docs/topics/permissions#permissions
    * @since 2.0
    */
-  toSetRolePermission(roleId: string, ...permissions: RolePermission[]): void;
+  toSetRolePermission(roleId: string, ...permissions: RolePermission[]): TReturn;
   /**
    * Check if a command change the
    * [permissions](https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags)
@@ -486,7 +486,7 @@ export interface RoleMatches {
    * @see https://discord.com/developers/docs/topics/permissions#permissions
    * @since 2.0
    */
-  toSetRolePermission(roleIdentifier: RoleIdentifier, ...permissions: RolePermission[]): void;
+  toSetRolePermission(roleIdentifier: RoleIdentifier, ...permissions: RolePermission[]): TReturn;
 }
 
 export interface MacherContructorArgs {
@@ -504,7 +504,7 @@ export interface CascadeMatch {
  * to check a bot reaction of a command.
  */
 export type Matches<TReturn extends MayReturnMatch> = MessageMatches<TReturn> &
-  RoleMatches &
+  RoleMatches<TReturn> &
   CascadeMatch;
 
 /**
