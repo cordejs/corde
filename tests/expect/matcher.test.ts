@@ -683,41 +683,33 @@ describe("Testing matches class", () => {
     });
   });
 
-  // describe("testing to todoInCascade", () => {
-  //   it("should add a function to hasIsolatedTestFunctions after call toUnpin", async () => {
-  //     initExpectMatch().todoInCascade();
-  //     expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
-  //   });
+  describe("testing to todoInCascade", () => {
+    it("should add a function to hasIsolatedTestFunctions after call toUnpin", async () => {
+      initExpectMatch().todoInCascade();
+      expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
+    });
 
-  //   it("should add a todoInCascade function", async () => {
-  //     initExpectMatch().todoInCascade();
-  //     await createToBeCalledTestFor(toUnpinMessageActionMock);
-  //   });
+    it("should add a todoInCascade function", async () => {
+      initExpectMatch().todoInCascade();
+      await createToBeCalledTestFor(toUnpinMessageActionMock);
+    });
 
-  //   it("should add a todoInCascade function with correct values using id", async () => {
-  //     const call = _expect.toReturn("test");
-  //     initExpectMatch().todoInCascade(call);
-  //     await createDefaultTestFor(TodoInCascade, todoInCascadeActionMock, false, [call]);
-  //   });
+    it("should add a todoInCascade function with correct values using id", async () => {
+      const call = _expect.toReturn("test");
+      initExpectMatch().todoInCascade(call);
+      await createDefaultTestFor(TodoInCascade, todoInCascadeActionMock, false, [
+        expect.any(Function),
+      ]);
+    });
 
-  //   it("should add a todoInCascade function with correct values using string id", async () => {
-  //     const call = _expect.toReturn("test");
-  //     initExpectMatch().todoInCascade(call);
-  //     await createDefaultTestFor(TodoInCascade, todoInCascadeActionMock, false, [call]);
-  //   });
-
-  //   it("should add a todoInCascade function with correct values (isNot false)", async () => {
-  //     const call = _expect.toReturn("test");
-  //     initExpectMatch().todoInCascade(call);
-  //     await createDefaultTestFor(TodoInCascade, todoInCascadeActionMock, false, [call]);
-  //   });
-
-  //   it("should add a todoInCascade function with correct values (isNot true)", async () => {
-  //     const call = _expect.toReturn("test");
-  //     initExpectMatch().todoInCascade(call);
-  //     await createDefaultTestFor(TodoInCascade, todoInCascadeActionMock, true, [call]);
-  //   });
-  // });
+    it("should add a todoInCascade function with correct values (isNot true)", async () => {
+      const call = _expect.toReturn("test");
+      initExpectMatch().not.todoInCascade(call);
+      await createDefaultTestFor(TodoInCascade, todoInCascadeActionMock, true, [
+        expect.any(Function),
+      ]);
+    });
+  });
 });
 
 function initExpectMatch(value?: any) {
