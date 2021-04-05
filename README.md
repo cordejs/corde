@@ -68,9 +68,7 @@ After installed, add the file `corde.config.json` in the root of your applicatio
 }
 ```
 
-Check the Config section for a more detailed explanation of each configuration property.
-
-Now that the config file is created, let's create some tests. You can keep the unity test natural file name structure, creating a `bot.test.js` with the follow structure:
+Test example:
 
 ```javascript
 const { group, test, command, beforeStart, afterAll } = require("corde");
@@ -90,23 +88,3 @@ afterAll(() => {
   client.destroy();
 });
 ```
-
-What is happening?
-
-1. `beforeStart` is a function that is used to run something **before** the execution of tests. Put there the instruction that makes the bot login i.e. You can also start the bot and then run all tests, with that, there is no need to use the `beforeStart` function.
-2. `group` Is a collection of tests that refers to some sort of tests.
-3. `test` Is the container of a test. it describes what will be tested, and what is the expectation.
-4. `command` is the core of Corde, that is what really with validate if a command is or not executing what it should. The simplest action that a bot can do is send a plain message, with that, `command` has a collection of options of expectations of the response of the bot, in this case, is tested that a command _ping_ should return _pong_. 5)`afterAll` is a function that is used to run something **after** the execution of tests. Put there the instructions that make the logoff of the bot, i.e.
-
-## ⚙️ Configurations
-
-| Option         | Description                                          |
-| -------------- | ---------------------------------------------------- |
-| cordeTestToken | Bot's token that will send commands to the test bot. |
-| botTestId      | Bot's id that is being tested.                       |
-| botTestToken   | Bot's token of your tested bot.                      |
-| botTestId      | Bot's id that is testing.                            |
-| guildId        | Guild that your and the test bot are.                |
-| channelId      | Channel that your and the test bot are.              |
-| botPrefix      | Bot invoke-command prefix                            |
-| testFiles      | Path where all tests files are                       |
