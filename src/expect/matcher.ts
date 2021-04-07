@@ -34,35 +34,88 @@ import { buildReportMessage, resolveName, stringIsNullOrEmpty } from "../utils";
 import { getStackTrace } from "../utils/getStackTrace";
 import { ToReturnInChannel } from "./matches/message/toReturnInChannel";
 import { runtime } from "../common/runtime";
-import {
-  Matches,
-  AllMatches,
-  MacherContructorArgs,
-  MayReturnMatch,
-  ExpectTestBaseParams,
-} from "./types";
+import { MacherContructorArgs, MayReturnMatch, ExpectTestBaseParams } from "./types";
 import { TodoInCascade } from "./matches/todoInCascade";
 
-export class ExpectMatches<TReturn extends MayReturnMatch> implements Matches<TReturn> {
+class BaseMatcher {
   protected _commandName: unknown;
   protected _isNot: boolean;
   protected _isCascade: boolean;
+  protected _guildId?: string;
+  protected _channelId?: string;
 
-  constructor({ commandName, isNot, isCascade }: MacherContructorArgs) {
+  constructor({ commandName, isNot, isCascade, channelId, guildId }: MacherContructorArgs) {
     this._commandName = commandName;
-    this._isNot = isNot;
+    this._isNot = isNot ?? false;
     this._isCascade = isCascade ?? false;
+    this._guildId = guildId;
+    this._channelId = channelId;
   }
 
-  todoInCascade(...tests: TestFunctionType[]): void {
-    const trace = getStackTrace(undefined, true, "todoInCascade");
-    this.returnOrAddToCollector((cordeBot) => {
-      // Encapsulate the functions inside another so it do not be executed.
-      const testEnhanced = tests.map((test) => () => test(cordeBot));
-      return this.operationFactory(trace, TodoInCascade, cordeBot, ...testEnhanced);
+  // Trace can not me added inside operationFactory because it do,
+  // it will get irrelevant data.
+
+  protected async operationFactory<T extends ExpectTest>(
+    trace: string,
+    type: new (params: ExpectTestBaseParams) => T,
+    cordeBot: CordeBotLike,
+    ...params: Parameters<T["action"]>
+  ): Promise<TestReport> {
+    const commandName = await resolveName(this._commandName);
+
+    const op = new type({
+      cordeBot,
+      command: commandName,
+      isNot: this._isNot,
+      timeout: runtime.timeOut,
+      isCascade: this._isCascade,
+      channelId: this._channelId,
+      guildId: this._guildId,
     });
+
+    if (
+      !this._isCascade &&
+      (commandName == undefined ||
+        (typeof commandName === "string" && stringIsNullOrEmpty(commandName)))
+    ) {
+      return {
+        pass: false,
+        message: buildReportMessage("command can not be null or an empty string"),
+        testName: op.toString(),
+      };
+    }
+
+    const report = await op.action(...params);
+
+    if (!report) {
+      return {
+        pass: false,
+        message: buildReportMessage("no report was provided by the test"),
+        testName: op.toString(),
+        trace,
+      };
+    }
+
+    if (report.pass) {
+      return report;
+    }
+
+    report.trace = trace;
+    return report;
   }
 
+  protected returnOrAddToCollector(testFunction: TestFunctionType): any {
+    if (this._isCascade) {
+      return testFunction;
+    }
+
+    return testCollector.addTestFunction(testFunction);
+  }
+}
+
+export class MessageMatches<TReturn extends MayReturnMatch>
+  extends BaseMatcher
+  implements MessageMatches<TReturn> {
   toReturn(expect: Primitive | MessageEmbedLike) {
     const trace = getStackTrace(undefined, true, "toReturn");
     return this.returnOrAddToCollector((cordeBot) =>
@@ -78,6 +131,13 @@ export class ExpectMatches<TReturn extends MayReturnMatch> implements Matches<TR
     const trace = getStackTrace(undefined, true, "toReturnInChannel");
     return this.returnOrAddToCollector((cordeBot) => {
       return this.operationFactory(trace, ToReturnInChannel, cordeBot, expect, channelId, guildId);
+    });
+  }
+
+  toRenameRole(newName: string, roleIdentifier: string | RoleIdentifier) {
+    const trace = getStackTrace(undefined, true, "toRenameRole");
+    return this.returnOrAddToCollector((cordeBot) => {
+      return this.operationFactory(trace, ToRenameRole, cordeBot, newName, roleIdentifier);
     });
   }
 
@@ -124,6 +184,19 @@ export class ExpectMatches<TReturn extends MayReturnMatch> implements Matches<TR
       this.operationFactory(trace, ToRemoveReaction, cordeBot, emojis, messageIdentifier),
     );
   }
+}
+
+export class RoleMatches<TReturn extends MayReturnMatch>
+  extends BaseMatcher
+  implements RoleMatches<TReturn> {
+  todoInCascade(...tests: TestFunctionType[]): void {
+    const trace = getStackTrace(undefined, true, "todoInCascade");
+    this.returnOrAddToCollector((cordeBot) => {
+      // Encapsulate the functions inside another so it do not be executed.
+      const testEnhanced = tests.map((test) => () => test(cordeBot));
+      return this.operationFactory(trace, TodoInCascade, cordeBot, ...testEnhanced);
+    });
+  }
 
   toSetRoleColor(color: ColorResolvable | Colors, roleIdentifier: string | RoleIdentifier) {
     const trace = getStackTrace(undefined, true, "toSetRoleColor");
@@ -159,13 +232,6 @@ export class ExpectMatches<TReturn extends MayReturnMatch> implements Matches<TR
     });
   }
 
-  toRenameRole(newName: string, roleIdentifier: string | RoleIdentifier) {
-    const trace = getStackTrace(undefined, true, "toRenameRole");
-    return this.returnOrAddToCollector((cordeBot) => {
-      return this.operationFactory(trace, ToRenameRole, cordeBot, newName, roleIdentifier);
-    });
-  }
-
   toSetRolePosition(newPosition: number, roleIdentifier: string | RoleIdentifier) {
     const trace = getStackTrace(undefined, true, "toSetRolePosition");
     return this.returnOrAddToCollector((cordeBot) => {
@@ -184,90 +250,5 @@ export class ExpectMatches<TReturn extends MayReturnMatch> implements Matches<TR
         permissions,
       );
     });
-  }
-
-  toString() {
-    return "ExpectMatches";
-  }
-
-  // Trace can not me added inside operationFactory because it do,
-  // it will get irrelevant data.
-
-  protected async operationFactory<T extends ExpectTest>(
-    trace: string,
-    type: new (params: ExpectTestBaseParams) => T,
-    cordeBot: CordeBotLike,
-    ...params: Parameters<T["action"]>
-  ): Promise<TestReport> {
-    const commandName = await resolveName(this._commandName);
-
-    const op = new type({
-      cordeBot,
-      command: commandName,
-      isNot: this._isNot,
-      timeout: runtime.timeOut,
-      isCascade: this._isCascade,
-    });
-
-    if (
-      !this._isCascade &&
-      (commandName == undefined ||
-        (typeof commandName === "string" && stringIsNullOrEmpty(commandName)))
-    ) {
-      return {
-        pass: false,
-        message: buildReportMessage("command can not be null or an empty string"),
-        testName: op.toString(),
-      };
-    }
-
-    const report = await op.action(...params);
-
-    if (!report) {
-      return {
-        pass: false,
-        message: buildReportMessage("no report was provided by the test"),
-        testName: op.toString(),
-        trace,
-      };
-    }
-
-    if (report.pass) {
-      return report;
-    }
-
-    report.trace = trace;
-    return report;
-  }
-
-  protected initExpectCascadeWithIsNot() {
-    return new AllExpectMatches<void>({
-      commandName: this._commandName,
-      isNot: this._isNot,
-      isCascade: true,
-    });
-  }
-
-  protected returnOrAddToCollector(testFunction: TestFunctionType): any {
-    if (this._isCascade) {
-      return testFunction;
-    }
-
-    return testCollector.addTestFunction(testFunction);
-  }
-}
-
-export class AllExpectMatches<TReturn extends MayReturnMatch>
-  extends ExpectMatches<TReturn>
-  implements AllMatches<TReturn> {
-  not: Matches<TReturn>;
-
-  constructor(commandName?: unknown, isCascade?: boolean) {
-    super({ commandName, isNot: false, isCascade });
-    this.not = new ExpectMatches({ commandName, isNot: true, isCascade });
-  }
-
-  toString() {
-    return "AllExpectMatches";
   }
 }

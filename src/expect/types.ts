@@ -17,6 +17,8 @@ export interface ExpectTestBaseParams {
   isNot: boolean;
   timeout: number;
   isCascade: boolean;
+  channelId?: string;
+  guildId?: string;
 }
 export interface ExpectTestParams extends ExpectTestBaseParams {
   testName: string;
@@ -492,7 +494,9 @@ export interface RoleMatches<TReturn extends MayReturnMatch> {
 
 export interface MacherContructorArgs {
   commandName: unknown;
-  isNot: boolean;
+  isNot?: boolean;
+  channelId?: string;
+  guildId?: string;
   isCascade?: boolean;
 }
 
@@ -505,24 +509,70 @@ export interface CascadeMatch {
  * to check a bot reaction of a command.
  */
 export type Matches<TReturn extends MayReturnMatch> = MessageMatches<TReturn> &
-  RoleMatches<TReturn> &
-  CascadeMatch;
+  RoleMatches<TReturn>;
 
 /**
  * Defines the initial value of expectations from
  * **command** function. It includes all matches and
  * the *not* statement. Witch will deny the executed match
  */
-export interface MatchesWithNot<TReturn extends MayReturnMatch> extends Matches<TReturn> {
+export interface IsNot<TMatchesResponse extends any> {
   /**
    * Defines that a command should **not** do something.
    * Use this if you can not precise what response a command will throw,
    * But know what it **can not** throw.
    */
-  not: Matches<TReturn>;
+  not: TMatchesResponse;
 }
 
-export type AllMatches<TReturn extends MayReturnMatch> = MatchesWithNot<TReturn>;
+export interface SetChannelMatchers<TReturn extends MayReturnMatch> {
+  /**
+   * Specify a channel where tests will be **validated** on.
+   *
+   * @example
+   *
+   * // Suposing that the config is:
+   * const cordeConfig = {
+   *  channelId: "123",
+   *  botPrefix: "!"
+   * };
+   *
+   * expect("ping").inChannel("321").toReturn("pong");
+   *
+   * @description This will send the message "!ping" in the channel defined in configs("123"),
+   * and check if a message with content "pong" will be sent to the text channel of if "321".
+   *
+   * @param id Id of the channel
+   */
+  inChannel(id: string): IsNot<MessageMatches<TReturn>> & MessageMatches<TReturn>;
+}
+
+export interface SetGuildMatchers<TReturn extends MayReturnMatch> {
+  /**
+   * Specify a guild where tests will be **validated** in.
+   *
+   * @example
+   *
+   * // Suposing that the config is:
+   * const cordeConfig = {
+   *  guildId: "123",
+   *  botPrefix: "!"
+   * };
+   *
+   * expect("ping").inGuild("321").toReturn("pong");
+   *
+   * @description This will send the message "!ping" in the channel defined in configs("123"),
+   * and check if a message with content "pong" will be sent to the text channel of if "321".
+   *
+   * @param id Id of the channel
+   */
+  inGuild(id: string): IsNot<RoleMatches<TReturn>> & RoleMatches<TReturn>;
+}
+
+export type AllMatches<TReturn extends MayReturnMatch> = SetChannelMatchers<TReturn> &
+  SetGuildMatchers<TReturn> &
+  IsNot<Matches<TReturn>> &
+  Matches<TReturn>;
 
 export interface Expect extends AllMatches<any> {
   /**

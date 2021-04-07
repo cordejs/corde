@@ -7,5 +7,6 @@ describe("Testing command function", () => {
 
   it("should get test functions as properties", () => {
     expect(cordeExpect.not.toReturn("")).toBeTruthy();
+    expect(cordeExpect("").toReturn).toBeTruthy();
   });
 });
