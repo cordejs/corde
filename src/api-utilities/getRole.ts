@@ -1,4 +1,4 @@
-import { RoleIdentifier } from "../types/types";
+import { RoleIdentifier } from "../types";
 import { Role } from "discord.js";
 import { runtime } from "../common/runtime";
 import { CordeClientError } from "../errors";

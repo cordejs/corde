@@ -1,5 +1,5 @@
 import { Queue } from "../data-structures";
-import { AssertionProps, Group, Test, TestFunctionType, VoidLikeFunction } from "../types/types";
+import { AssertionProps, Group, Test, TestFunctionType, VoidLikeFunction } from "../types";
 
 /**
  * Contain all information of data collected from files in runtime test

@@ -1,4 +1,4 @@
-import { ConfigOptions, CordeBotLike, TestFunctionType } from "../types/types";
+import { ConfigOptions, CordeBotLike, TestFunctionType } from "../types";
 import { Config } from "./config";
 import { Client } from "discord.js";
 import { CordeBot } from "../core/cordeBot";

@@ -1,6 +1,6 @@
 import {
+  BitField,
   Collection,
-  ColorResolvable,
   Guild,
   GuildChannel,
   Message,
@@ -9,10 +9,10 @@ import {
   RoleManager,
   TextChannel,
 } from "discord.js";
-import { Colors, RolePermission } from "../utils";
+import { Colors, ColorsHex, RolePermission } from "./utils";
 import { EmbedFieldData } from "discord.js";
 import { Stream } from "stream";
-import { Events } from "../core/events";
+import { Events } from "./core/events";
 
 export interface TestReport {
   pass: boolean;
@@ -391,3 +391,403 @@ export interface MessageEmbedLike {
    */
   url?: string;
 }
+
+export type Base64Resolvable = Buffer | string;
+
+export type VerificationLevelType = "NONE" | "LOW" | "MEDIUM" | "HIGH" | "VERY_HIGH";
+
+/**
+ * @see https://discord.com/developers/docs/resources/guild#guild-object-verification-level
+ */
+export enum VerificationLevel {
+  /**
+   * Unrestricted
+   */
+  NONE = "NONE",
+  /**
+   * Must have verified email on account
+   */
+  LOW = "LOW",
+  /**
+   * Must be registered on Discord for longer than 5 minutes
+   */
+  MEDIUM = "MEDIUM",
+  /**
+   * Must be a member of the server for longer than 10 minutes
+   */
+  HIGH = "HIGH",
+  /**
+   * Must have a verified phone number
+   */
+  VERY_HIGH = "VERY_HIGH",
+}
+
+export type ColorResolvable =
+  | "DEFAULT"
+  | "WHITE"
+  | "AQUA"
+  | "GREEN"
+  | "BLUE"
+  | "YELLOW"
+  | "PURPLE"
+  | "LUMINOUS_VIVID_PINK"
+  | "GOLD"
+  | "ORANGE"
+  | "RED"
+  | "GREY"
+  | "DARKER_GREY"
+  | "NAVY"
+  | "DARK_AQUA"
+  | "DARK_GREEN"
+  | "DARK_BLUE"
+  | "DARK_PURPLE"
+  | "DARK_VIVID_PINK"
+  | "DARK_GOLD"
+  | "DARK_ORANGE"
+  | "DARK_RED"
+  | "DARK_GREY"
+  | "LIGHT_GREY"
+  | "DARK_NAVY"
+  | "BLURPLE"
+  | "GREYPLE"
+  | "DARK_BUT_NOT_BLACK"
+  | "NOT_QUITE_BLACK"
+  | "RANDOM"
+  | [number, number, number]
+  | number
+  | ColorsHex
+  | Colors
+  | string;
+
+export type ImageSize = 16 | 32 | 64 | 128 | 256 | 512 | 1024 | 2048 | 4096;
+export type AllowedImageFormat = "webp" | "png" | "jpg" | "jpeg" | "gif";
+
+/**
+ * @see https://discord.com/developers/docs/resources/guild#guild-object-guild-features
+ */
+export type GuildFeaturesType =
+  | "ANIMATED_ICON"
+  | "BANNER"
+  | "COMMERCE"
+  | "COMMUNITY"
+  | "DISCOVERABLE"
+  | "FEATURABLE"
+  | "INVITE_SPLASH"
+  | "NEWS"
+  | "PARTNERED"
+  | "RELAY_ENABLED"
+  | "VANITY_URL"
+  | "VERIFIED"
+  | "VIP_REGIONS"
+  | "WELCOME_SCREEN_ENABLED";
+
+/**
+ * Defines Guild's features
+ *
+ * @see https://discord.com/developers/docs/resources/guild#guild-object-guild-features
+ */
+export enum GuildFeatures {
+  /**
+   * Guild has access to set an invite splash background
+   */
+  INVITE_SPLASH = "INVITE_SPLASH",
+  /**
+   * Guild has access to set 384kbps bitrate in voice (previously VIP voice servers)
+   */
+  VIP_REGIONS = "VIP_REGIONS",
+  /**
+   * Guild has access to set a vanity URL
+   */
+  VANITY_URL = "VANITY_URL",
+  /**
+   * Guild is verified
+   */
+  VERIFIED = "VERIFIED",
+  /**
+   * Guild is partnered
+   */
+  PARTNERED = "PARTNERED",
+  /**
+   * Guild can enable welcome screen, Membership Screening, and discovery, and receives community updates
+   */
+  COMMUNITY = "COMMUNITY",
+  /**
+   * Guild has access to use commerce features (i.e. create store channels)
+   */
+  COMMERCE = "COMMERCE",
+  /**
+   * Guild has access to create news channels
+   */
+  NEWS = "NEWS",
+  /**
+   * Guild is able to be discovered in the directory
+   */
+  DISCOVERABLE = "DISCOVERABLE",
+  /**
+   * Guild is able to be featured in the directory
+   */
+  FEATURABLE = "FEATURABLE",
+  /**
+   * Guild has access to set an animated guild icon
+   */
+  ANIMATED_ICON = "ANIMATED_ICON",
+  /**
+   * Guild has access to set a guild banner image
+   */
+  BANNER = "BANNER",
+  /**
+   * Guild has enabled the welcome screen
+   */
+  WELCOME_SCREEN_ENABLED = "WELCOME_SCREEN_ENABLED",
+  /**
+   * Guild has enabled [Membership Screening](https://discord.com/developers/docs/resources/guild#membership-screening-object)
+   */
+  MEMBER_VERIFICATION_GATE_ENABLED = "MEMBER_VERIFICATION_GATE_ENABLED",
+  /**
+   * Guild can be previewed before joining via Membership Screening or the directory
+   */
+  PREVIEW_ENABLED = "PREVIEW_ENABLED",
+}
+
+export type RecursiveReadonlyArray<T> = ReadonlyArray<T | RecursiveReadonlyArray<T>>;
+export type SystemChannelFlagsString = "WELCOME_MESSAGE_DISABLED" | "BOOST_MESSAGE_DISABLED";
+export type SystemChannelFlagsResolvable = BitFieldResolvable<SystemChannelFlagsString>;
+
+export type BitFieldResolvable<T extends string> =
+  | RecursiveReadonlyArray<T | number | Readonly<BitField<T>>>
+  | T
+  | number
+  | Readonly<BitField<T>>;
+
+export interface ImageURLOptions {
+  format?: AllowedImageFormat;
+  size?: ImageSize;
+}
+
+/**
+ * System channel flags of Discord
+ *
+ * @see https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags
+ */
+export enum SystemChannelFlag {
+  /**
+   * Suppress member join notifications
+   */
+  SUPPRESS_JOIN_NOTIFICATIONS = "SUPPRESS_JOIN_NOTIFICATIONS",
+  /**
+   * Suppress server boost notifications
+   */
+  SUPPRESS_PREMIUM_SUBSCRIPTIONS = "SUPPRESS_PREMIUM_SUBSCRIPTIONS",
+}
+
+export type Locale =
+  | "af-ZA"
+  | "am-ET"
+  | "ar-AE"
+  | "ar-BH"
+  | "ar-DZ"
+  | "ar-EG"
+  | "ar-IQ"
+  | "ar-JO"
+  | "ar-KW"
+  | "ar-LB"
+  | "ar-LY"
+  | "ar-MA"
+  | "arn-CL"
+  | "ar-OM"
+  | "ar-QA"
+  | "ar-SA"
+  | "ar-SY"
+  | "ar-TN"
+  | "ar-YE"
+  | "as-IN"
+  | "az-Cyrl-AZ"
+  | "az-Latn-AZ"
+  | "ba-RU"
+  | "be-BY"
+  | "bg-BG"
+  | "bn-BD"
+  | "bn-IN"
+  | "bo-CN"
+  | "br-FR"
+  | "bs-Cyrl-BA"
+  | "bs-Latn-BA"
+  | "ca-ES"
+  | "co-FR"
+  | "cs-CZ"
+  | "cy-GB"
+  | "da-DK"
+  | "de-AT"
+  | "de-CH"
+  | "de-DE"
+  | "de-LI"
+  | "de-LU"
+  | "dsb-DE"
+  | "dv-MV"
+  | "el-GR"
+  | "en-029"
+  | "en-AU"
+  | "en-BZ"
+  | "en-CA"
+  | "en-GB"
+  | "en-IE"
+  | "en-IN"
+  | "en-JM"
+  | "en-MY"
+  | "en-NZ"
+  | "en-PH"
+  | "en-SG"
+  | "en-TT"
+  | "en-US"
+  | "en-ZA"
+  | "en-ZW"
+  | "es-AR"
+  | "es-BO"
+  | "es-CL"
+  | "es-CO"
+  | "es-CR"
+  | "es-DO"
+  | "es-EC"
+  | "es-ES"
+  | "es-GT"
+  | "es-HN"
+  | "es-MX"
+  | "es-NI"
+  | "es-PA"
+  | "es-PE"
+  | "es-PR"
+  | "es-PY"
+  | "es-SV"
+  | "es-US"
+  | "es-UY"
+  | "es-VE"
+  | "et-EE"
+  | "eu-ES"
+  | "fa-IR"
+  | "fi-FI"
+  | "fil-PH"
+  | "fo-FO"
+  | "fr-BE"
+  | "fr-CA"
+  | "fr-CH"
+  | "fr-FR"
+  | "fr-LU"
+  | "fr-MC"
+  | "fy-NL"
+  | "ga-IE"
+  | "gd-GB"
+  | "gl-ES"
+  | "gsw-FR"
+  | "gu-IN"
+  | "ha-Latn-NG"
+  | "he-IL"
+  | "hi-IN"
+  | "hr-BA"
+  | "hr-HR"
+  | "hsb-DE"
+  | "hu-HU"
+  | "hy-AM"
+  | "id-ID"
+  | "ig-NG"
+  | "ii-CN"
+  | "is-IS"
+  | "it-CH"
+  | "it-IT"
+  | "iu-Cans-CA"
+  | "iu-Latn-CA"
+  | "ja-JP"
+  | "ka-GE"
+  | "kk-KZ"
+  | "kl-GL"
+  | "km-KH"
+  | "kn-IN"
+  | "kok-IN"
+  | "ko-KR"
+  | "ky-KG"
+  | "lb-LU"
+  | "lo-LA"
+  | "lt-LT"
+  | "lv-LV"
+  | "mi-NZ"
+  | "mk-MK"
+  | "ml-IN"
+  | "mn-MN"
+  | "mn-Mong-CN"
+  | "moh-CA"
+  | "mr-IN"
+  | "ms-BN"
+  | "ms-MY"
+  | "mt-MT"
+  | "nb-NO"
+  | "ne-NP"
+  | "nl-BE"
+  | "nl-NL"
+  | "nn-NO"
+  | "nso-ZA"
+  | "oc-FR"
+  | "or-IN"
+  | "pa-IN"
+  | "pl-PL"
+  | "prs-AF"
+  | "ps-AF"
+  | "pt-BR"
+  | "pt-PT"
+  | "qut-GT"
+  | "quz-BO"
+  | "quz-EC"
+  | "quz-PE"
+  | "rm-CH"
+  | "ro-RO"
+  | "ru-RU"
+  | "rw-RW"
+  | "sah-RU"
+  | "sa-IN"
+  | "se-FI"
+  | "se-NO"
+  | "se-SE"
+  | "si-LK"
+  | "sk-SK"
+  | "sl-SI"
+  | "sma-NO"
+  | "sma-SE"
+  | "smj-NO"
+  | "smj-SE"
+  | "smn-FI"
+  | "sms-FI"
+  | "sq-AL"
+  | "sr-Cyrl-BA"
+  | "sr-Cyrl-CS"
+  | "sr-Cyrl-ME"
+  | "sr-Cyrl-RS"
+  | "sr-Latn-BA"
+  | "sr-Latn-CS"
+  | "sr-Latn-ME"
+  | "sr-Latn-RS"
+  | "sv-FI"
+  | "sv-SE"
+  | "sw-KE"
+  | "syr-SY"
+  | "ta-IN"
+  | "te-IN"
+  | "tg-Cyrl-TJ"
+  | "th-TH"
+  | "tk-TM"
+  | "tn-ZA"
+  | "tr-TR"
+  | "tt-RU"
+  | "tzm-Latn-DZ"
+  | "ug-CN"
+  | "uk-UA"
+  | "ur-PK"
+  | "uz-Cyrl-UZ"
+  | "uz-Latn-UZ"
+  | "vi-VN"
+  | "wo-SN"
+  | "xh-ZA"
+  | "yo-NG"
+  | "zh-CN"
+  | "zh-HK"
+  | "zh-MO"
+  | "zh-SG"
+  | "zh-TW"
+  | "zu-ZA";

@@ -2,7 +2,7 @@ import { Command } from "commander";
 import { exec } from "./exec";
 import { init } from "./init";
 import { validate } from "./validate";
-import { configFileType } from "../types/types";
+import { configFileType } from "../types";
 import pack from "../package";
 import { runtime } from "../common/runtime";
 import { reader } from "../core/reader";
