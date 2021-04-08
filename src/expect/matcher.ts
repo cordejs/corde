@@ -33,7 +33,7 @@ import { buildReportMessage, resolveName, stringIsNullOrEmpty } from "../utils";
 import { getStackTrace } from "../utils/getStackTrace";
 import { ToReturnInChannel } from "./matches/message/toReturnInChannel";
 import { runtime } from "../common/runtime";
-import { MacherContructorArgs, MayReturnMatch, ExpectTestBaseParams } from "./types";
+import { MacherContructorArgs, MayReturnMatch, ExpectTestBaseParams } from "../types";
 import { TodoInCascade } from "./matches/todoInCascade";
 
 class BaseMatcher {
@@ -179,6 +179,8 @@ export class MessageMatches<TReturn extends MayReturnMatch>
     );
   }
 }
+
+export class TodoInCascadeMatcher {}
 
 export class RoleMatches<TReturn extends MayReturnMatch>
   extends BaseMatcher

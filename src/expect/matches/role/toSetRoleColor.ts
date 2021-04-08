@@ -3,7 +3,7 @@ import { ColorResolvable, Role } from "discord.js";
 import { RoleIdentifier, TestReport } from "../../../types";
 import { resolveColor, rgba, typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
-import { ExpectTestBaseParams } from "../../types";
+import { ExpectTestBaseParams } from "../../../types";
 import { ExpectTest } from "../expectTest";
 
 /**

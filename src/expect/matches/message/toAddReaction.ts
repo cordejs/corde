@@ -2,7 +2,7 @@ import { MessageReaction, PartialUser, User } from "discord.js";
 import { TimeoutError } from "../../../errors";
 import { EmojiLike, EmojisType, MessageIdentifier, TestReport } from "../../../types";
 import { typeOf } from "../../../utils";
-import { ExpectTestBaseParams } from "../../types";
+import { ExpectTestBaseParams } from "../../../types";
 import { ExpectTest } from "../expectTest";
 
 /**

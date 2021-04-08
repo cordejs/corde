@@ -1,6 +1,5 @@
-import { CordeBotLike, TestReport } from "../../types";
+import { CordeBotLike, ExpectTestParams, TestReport } from "../../types";
 import { buildReportMessage } from "../../utils";
-import { ExpectTestParams } from "../types";
 
 /**
  * Entity helper for expectation assertions used for Corde tests

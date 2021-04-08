@@ -1,5 +1,5 @@
 import { RoleMatches, MessageMatches } from "./matcher";
-import { Expect, MacherContructorArgs } from "./types";
+import { Expect, MacherContructorArgs } from "../types";
 
 function getMessageMatchers(): string[] {
   return getFunctions(MessageMatches);

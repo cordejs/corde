@@ -2,7 +2,7 @@ import { Role } from "discord.js";
 import { RoleIdentifier, TestReport } from "../../../types";
 import { diff, permissionsArray, RolePermission, typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
-import { ExpectTestBaseParams } from "../../types";
+import { ExpectTestBaseParams } from "../../../types";
 import { ExpectTest } from "../expectTest";
 
 /**

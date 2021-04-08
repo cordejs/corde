@@ -1,7 +1,7 @@
 import { RoleIdentifier, TestReport } from "../../../types";
 import { typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
-import { ExpectTestBaseParams } from "../../types";
+import { ExpectTestBaseParams } from "../../../types";
 import { ExpectTest } from "../expectTest";
 
 /**

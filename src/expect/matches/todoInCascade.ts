@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import { EXPECT_RECEIVED_TAB_SPACE } from "../../consts";
 import { TestReport } from "../../types";
-import { ExpectTestBaseParams } from "../types";
+import { ExpectTestBaseParams } from "../../types";
 import { ExpectTest } from "./expectTest";
 
 /**

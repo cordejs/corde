@@ -1,7 +1,7 @@
 import { Message, MessageEmbed, PartialMessage } from "discord.js";
 import { MessageEditedIdentifier, MessageEmbedLike, Primitive, TestReport } from "../../../types";
 import { isPrimitiveValue, typeOf } from "../../../utils";
-import { ExpectTestBaseParams } from "../../types";
+import { ExpectTestBaseParams } from "../../../types";
 import { MessageExpectTest } from "./messageExpectTest";
 
 /**

@@ -2,7 +2,7 @@ import { Message, MessageEmbed } from "discord.js";
 import { MessageEmbedLike, Primitive, TestReport } from "../../../types";
 
 import { typeOf } from "../../../utils";
-import { ExpectTestBaseParams } from "../../types";
+import { ExpectTestBaseParams } from "../../../types";
 import { MessageExpectTest } from "./messageExpectTest";
 
 /**
