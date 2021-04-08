@@ -45,7 +45,7 @@ export class ToSetRoleHoist extends ExpectTest {
     await this.sendCommandMessage();
     let role: Role;
     try {
-      role = await this.cordeBot.events.onceRoleHoistUpdate(identifier, this.timeOut);
+      role = await this.cordeBot.events.onceRoleHoistUpdate(identifier, this.timeOut, this.guildId);
     } catch {
       if (this.isNot) {
         return this.createPassTest();

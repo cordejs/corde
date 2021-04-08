@@ -11,7 +11,7 @@ import {
   removeANSIColorStyle,
   testUtils,
 } from "../testHelper";
-import { expect as _expect } from "../../src/expect/expect";
+import { expect as _expect } from "../../src/expect";
 
 let mockDiscord = new MockDiscord();
 let mockEvents: MockEvents;

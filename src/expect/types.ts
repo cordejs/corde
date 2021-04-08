@@ -16,7 +16,6 @@ export interface ExpectTestBaseParams {
   isNot: boolean;
   timeout: number;
   isCascade: boolean;
-  channelId?: string;
   guildId?: string;
 }
 export interface ExpectTestParams extends ExpectTestBaseParams {

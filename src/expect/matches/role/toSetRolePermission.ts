@@ -49,7 +49,11 @@ export class ToSetRolePermission extends ExpectTest {
     await this.sendCommandMessage();
     let role: Role;
     try {
-      role = await this.cordeBot.events.onceRolePermissionUpdate(identifier, this.timeOut);
+      role = await this.cordeBot.events.onceRolePermissionUpdate(
+        identifier,
+        this.timeOut,
+        this.guildId,
+      );
     } catch {
       if (this.isNot) {
         return this.createPassTest();

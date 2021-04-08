@@ -4,8 +4,9 @@ import { TestReport } from "../../src/types";
 describe("testing testCollector", () => {
   it("should clear testsFunctions", () => {
     testCollector.isInsideGroupClausure = true;
-    testCollector.addTestFunction((corde) => {
+    testCollector.addTestFunction(() => {
       const report: TestReport = {
+        testName: "",
         pass: true,
       };
       return Promise.resolve(report);

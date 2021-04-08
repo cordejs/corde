@@ -1,5 +1,4 @@
 import { Queue } from "../../src/data-structures";
-import { Guid } from "../../src/utils";
 
 describe("testing queue structure", () => {
   let queue: Queue<() => void>;
@@ -35,7 +34,7 @@ describe("testing queue structure", () => {
 
     it("should return a GUID for enqueued function", () => {
       const guid = queue.enqueue(() => {});
-      expect(Guid.validate(guid)).toBeTruthy();
+      expect(guid).toBeTruthy();
     });
 
     it("should throw error due to attempt to add a null | undefined value", () => {

@@ -68,7 +68,6 @@ class BaseMatcher {
       isNot: this._isNot,
       timeout: runtime.timeOut,
       isCascade: this._isCascade,
-      channelId: this._channelId,
       guildId: this._guildId,
     });
 

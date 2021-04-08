@@ -23,7 +23,11 @@ export class ToReturn extends MessageExpectTest {
     await this.sendCommandMessage();
     let returnedMessage: Message;
     try {
-      returnedMessage = await this.cordeBot.awaitMessagesFromTestingBot(this.timeOut);
+      returnedMessage = await this.cordeBot.events.onceMessage(
+        this.cordeBot.testBotId,
+        null,
+        this.timeOut,
+      );
     } catch {
       if (this.isNot) {
         return this.createPassTest();

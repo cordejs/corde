@@ -45,7 +45,11 @@ export class ToSetRoleMentionable extends ExpectTest {
     await this.sendCommandMessage();
     let role: Role;
     try {
-      role = await this.cordeBot.events.onceRoleMentionableUpdate(identifier, this.timeOut);
+      role = await this.cordeBot.events.onceRoleMentionableUpdate(
+        identifier,
+        this.timeOut,
+        this.guildId,
+      );
     } catch {
       if (this.isNot) {
         return this.createPassTest();

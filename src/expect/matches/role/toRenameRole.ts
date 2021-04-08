@@ -45,7 +45,7 @@ export class ToRenameRole extends ExpectTest {
 
     let newRole: Role;
     try {
-      newRole = await this.cordeBot.events.onceRoleRenamed(identifier, this.timeOut);
+      newRole = await this.cordeBot.events.onceRoleRenamed(identifier, this.timeOut, this.guildId);
     } catch {
       if (this.isNot) {
         return this.createPassTest();

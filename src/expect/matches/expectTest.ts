@@ -22,7 +22,6 @@ export abstract class ExpectTest {
   protected readonly timeOut: number;
   protected readonly testName: string;
   protected readonly isCascade: boolean;
-  protected readonly channelId: string | undefined;
   protected readonly guildId: string | undefined;
 
   /**
@@ -39,7 +38,6 @@ export abstract class ExpectTest {
     timeout,
     testName,
     isCascade,
-    channelId,
     guildId,
   }: ExpectTestParams) {
     this.isNot = isNot;
@@ -49,7 +47,6 @@ export abstract class ExpectTest {
     this.timeOut = timeout;
     this.testName = testName;
     this.isCascade = isCascade ?? false;
-    this.channelId = channelId;
     this.guildId = guildId;
   }
 
