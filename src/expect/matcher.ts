@@ -9,7 +9,6 @@ import {
   RoleIdentifier,
   TestReport,
   CordeBotLike,
-  ChannelLocation,
   TestFunctionType,
 } from "../types";
 import { Colors } from "../utils/colors";
@@ -123,14 +122,10 @@ export class MessageMatches<TReturn extends MayReturnMatch>
     );
   }
 
-  toReturnInChannel(
-    expect: string | number | boolean | MessageEmbedLike,
-    channelId: string | ChannelLocation,
-    guildId?: string,
-  ) {
+  toReturnInChannel(expect: string | number | boolean | MessageEmbedLike, channelId: string) {
     const trace = getStackTrace(undefined, true, "toReturnInChannel");
     return this.returnOrAddToCollector((cordeBot) => {
-      return this.operationFactory(trace, ToReturnInChannel, cordeBot, expect, channelId, guildId);
+      return this.operationFactory(trace, ToReturnInChannel, cordeBot, expect, channelId);
     });
   }
 

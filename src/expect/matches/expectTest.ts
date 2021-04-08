@@ -22,6 +22,8 @@ export abstract class ExpectTest {
   protected readonly timeOut: number;
   protected readonly testName: string;
   protected readonly isCascade: boolean;
+  protected readonly channelId: string | undefined;
+  protected readonly guildId: string | undefined;
 
   /**
    * Initialize the match class with its default values.
@@ -30,7 +32,16 @@ export abstract class ExpectTest {
    * @param command The command to execute.
    * @param isNot Definition if this is a deny test.
    */
-  constructor({ isNot, command, cordeBot, timeout, testName, isCascade }: ExpectTestParams) {
+  constructor({
+    isNot,
+    command,
+    cordeBot,
+    timeout,
+    testName,
+    isCascade,
+    channelId,
+    guildId,
+  }: ExpectTestParams) {
     this.isNot = isNot;
     this.command = command;
     this.cordeBot = cordeBot;
@@ -38,6 +49,8 @@ export abstract class ExpectTest {
     this.timeOut = timeout;
     this.testName = testName;
     this.isCascade = isCascade ?? false;
+    this.channelId = channelId;
+    this.guildId = guildId;
   }
 
   /**

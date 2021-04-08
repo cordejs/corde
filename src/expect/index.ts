@@ -17,7 +17,6 @@ function getFunctions<T>(type: new (...args: any[]) => T): string[] {
 
 const expectation = {
   not: {},
-  inChannel: {},
   inGuild: {},
 };
 
@@ -74,29 +73,6 @@ const _expect: any = <T extends (() => number | string) | number | string>(comma
 
   set(roleTests, expectation);
   set(isNotRoleTests, expectation.not);
-
-  expectation.inChannel = (channelId: string) => {
-    const channelMatchers: any = {
-      not: {},
-    };
-
-    const messageTests = createTestsFromMatches(
-      messageTestNames,
-      { commandName, channelId },
-      MessageMatches,
-    );
-
-    const isNotmessageTests = createTestsFromMatches(
-      messageTestNames,
-      { commandName, channelId, isNot: true },
-      MessageMatches,
-    );
-
-    set(messageTests, channelMatchers);
-    set(isNotmessageTests, channelMatchers.not);
-
-    return channelMatchers;
-  };
 
   expectation.inGuild = (guildId: string) => {
     const guildMatchers: any = {

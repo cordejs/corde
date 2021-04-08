@@ -1,5 +1,5 @@
 import { Message, MessageEmbed } from "discord.js";
-import { MessageEmbedLike, ChannelLocation, Primitive, TestReport } from "../../../types";
+import { MessageEmbedLike, Primitive, TestReport } from "../../../types";
 
 import { typeOf } from "../../../utils";
 import { ExpectTestBaseParams } from "../../types";
@@ -13,11 +13,7 @@ export class ToReturnInChannel extends MessageExpectTest {
     super({ ...params, testName: "toReturnInChannel" });
   }
 
-  async action(
-    expect: Primitive | MessageEmbedLike,
-    channel: string | ChannelLocation,
-    guildId?: string,
-  ): Promise<TestReport> {
+  async action(expect: Primitive | MessageEmbedLike, channelId: string): Promise<TestReport> {
     this.expectation = expect;
 
     const errorReport = this.validateExpect(expect);
@@ -26,36 +22,29 @@ export class ToReturnInChannel extends MessageExpectTest {
       return errorReport;
     }
 
-    let _channelData: ChannelLocation;
-
-    if (!channel) {
+    if (!channelId) {
       return this.createReport(
         "expected: channel to be a string with the channel id or an object with its id\n",
         `
-        received: ${typeOf(channel)}`,
+        received: ${typeOf(channelId)}`,
       );
-    }
-
-    if (typeof channel === "string") {
-      _channelData = {
-        channelId: channel,
-        guildId: guildId,
-      };
-    } else {
-      _channelData = channel;
     }
 
     await this.sendCommandMessage();
     let returnedMessage: Message;
     try {
-      returnedMessage = await this.cordeBot.awaitMessagesFromTestingBot(this.timeOut, _channelData);
+      returnedMessage = await this.cordeBot.events.onceMessage(
+        this.cordeBot.testBotId,
+        channelId,
+        this.timeOut,
+      );
     } catch {
       if (this.isNot) {
         return this.createPassTest();
       }
 
       return this.createReport(
-        `expected: testing bot to send a message in channel ${_channelData.channelId}\n`,
+        `expected: testing bot to send a message in channel ${channelId}\n`,
         "received: no message was sent in the specified channel",
       );
     }

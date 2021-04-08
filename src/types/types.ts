@@ -126,11 +126,6 @@ export interface CordeBotLike {
    */
   sendTextMessage(message: string | number | boolean): Promise<Message>;
   /**
-   * Observes for a message send by the testing bot after corde bot
-   * send it's message.
-   */
-  awaitMessagesFromTestingBot(timeout: number, location?: ChannelLocation): Promise<Message>;
-  /**
    * Checks if corde bot is connected
    */
   isLoggedIn(): boolean;
@@ -158,17 +153,6 @@ export type Primitive = number | string | boolean;
 export type ResolveFunction<TResult> = (value: TResult) => void;
 export type RejectFunction = (reason?: any) => void;
 export type EmojisType = string[] | EmojiLike[] | (string | EmojiLike)[];
-
-export interface ChannelLocation {
-  /**
-   * Guild to locate the channel
-   */
-  guildId?: string;
-  /**
-   * Id of the channel
-   */
-  channelId: string;
-}
 
 /**
  * Get all function `T` parameters as they may be

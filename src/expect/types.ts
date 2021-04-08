@@ -3,7 +3,6 @@ import {
   MessageIdentifier,
   MessageEditedIdentifier,
   MessageEmbedLike,
-  ChannelLocation,
   RoleIdentifier,
   TestFunctionType,
   CordeBotLike,
@@ -53,28 +52,13 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    * Defines the message expected to be returned by a
    * command in a specific channel and guild(optional).
    *
-   * @param expect A message returned by a bot after invoke a command
-   * @param channelId Id of the channel where the message must be sent to.
-   * @param guildId Id of the guild that contains the channel where the message must be sent to.
-   * @since 3.0
-   */
-  toReturnInChannel(
-    expect: boolean | number | string | MessageEmbedLike,
-    channelId: string,
-    guildId?: string,
-  ): TReturn;
-
-  /**
-   * Defines the message expected to be returned by a
-   * command in a specific channel and guild(optional).
-   *
    * @param expect A message returned by a bot after invoke a command.
    * @param channelLocation Object with to holds the id of the channel and of the guild (optional).
    * @since 3.0
    */
   toReturnInChannel(
     expect: boolean | number | string | MessageEmbedLike,
-    channelLocation: ChannelLocation,
+    channelId?: string,
   ): TReturn;
 
   /**
@@ -509,28 +493,6 @@ export interface IsNot<TMatchesResponse extends any> {
   not: TMatchesResponse;
 }
 
-export interface SetChannelMatchers<TReturn extends MayReturnMatch> {
-  /**
-   * Specify a channel where tests will be **validated** on.
-   *
-   * @example
-   *
-   * // Suposing that the config is:
-   * const cordeConfig = {
-   *  channelId: "123",
-   *  botPrefix: "!"
-   * };
-   *
-   * expect("ping").inChannel("321").toReturn("pong");
-   *
-   * @description This will send the message "!ping" in the channel defined in configs("123"),
-   * and check if a message with content "pong" will be sent to the text channel of if "321".
-   *
-   * @param id Id of the channel
-   */
-  inChannel(id: string): IsNot<MessageMatches<TReturn>> & MessageMatches<TReturn>;
-}
-
 export interface SetGuildMatchers<TReturn extends MayReturnMatch> {
   /**
    * Specify a guild where tests will be **validated** in.
@@ -553,8 +515,7 @@ export interface SetGuildMatchers<TReturn extends MayReturnMatch> {
   inGuild(id: string): IsNot<RoleMatches<TReturn>> & RoleMatches<TReturn>;
 }
 
-export type AllMatches<TReturn extends MayReturnMatch> = SetChannelMatchers<TReturn> &
-  SetGuildMatchers<TReturn> &
+export type AllMatches<TReturn extends MayReturnMatch> = SetGuildMatchers<TReturn> &
   IsNot<Matches<TReturn>> &
   Matches<TReturn>;
 

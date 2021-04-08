@@ -21,7 +21,7 @@ import {
 import { once } from "events";
 import { DEFAULT_TEST_TIMEOUT } from "../consts";
 import { TimeoutError } from "../errors";
-import { ChannelLocation, EmojiLike, MessageIdentifier, RoleIdentifier } from "../types";
+import { EmojiLike, MessageIdentifier, RoleIdentifier } from "../types";
 import { deepEqual, executePromiseWithTimeout } from "../utils";
 import { Validator } from "../utils";
 
@@ -548,19 +548,15 @@ export class Events {
    * @returns Created message.
    * @internal
    */
-  onceMessage(authorId?: string, location?: ChannelLocation, timeout?: number) {
+  onceMessage(authorId?: string, channelId?: string, timeout?: number) {
     const validator = new Validator<[Message]>();
 
     if (authorId) {
       validator.add((mgs) => mgs.author.id === authorId);
     }
 
-    if (location?.channelId) {
-      validator.add((mgs) => mgs.channel.id === location?.channelId);
-    }
-
-    if (location?.guildId) {
-      validator.add((mgs) => mgs.guild?.id === location?.guildId);
+    if (channelId) {
+      validator.add((mgs) => mgs.channel.id === channelId);
     }
 
     return executePromiseWithTimeout<Message>((resolve) => {
