@@ -39,7 +39,7 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    * @param expect A message returned by a bot after invoke a command
    * @since 1.0
    */
-  toReturn(expect: bigint | boolean | number | string): TReturn;
+  toReturn(expect: boolean | number | string): TReturn;
   /**
    * Defines the message expected to be returned by a
    * command.
@@ -59,7 +59,7 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    * @since 3.0
    */
   toReturnInChannel(
-    expect: bigint | boolean | number | string | MessageEmbedLike,
+    expect: boolean | number | string | MessageEmbedLike,
     channelId: string,
     guildId?: string,
   ): TReturn;
@@ -73,7 +73,7 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    * @since 3.0
    */
   toReturnInChannel(
-    expect: bigint | boolean | number | string | MessageEmbedLike,
+    expect: boolean | number | string | MessageEmbedLike,
     channelLocation: ChannelLocation,
   ): TReturn;
 
@@ -263,22 +263,6 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    * @since 1.0
    */
   toEditMessage(newValue: number, messageId?: string): TReturn;
-  /**
-   * Verify if a command edited a message.
-   *
-   * @param newValue New **bigint** value for the message.
-   * @param messageIdentifier Data object with the **id** or **oldContent** of the message.
-   * @since 1.0
-   */
-  toEditMessage(newValue: bigint, messageIdentifier?: MessageEditedIdentifier): TReturn;
-  /**
-   * Verify if a command edited a message.
-   *
-   * @param newValue New **bigint** value for the message.
-   * @param messageId Id of the message.
-   * @since 1.0
-   */
-  toEditMessage(newValue: bigint, messageId?: string): TReturn;
   /**
    * Verify if a command edited a message.
    *

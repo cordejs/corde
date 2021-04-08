@@ -124,7 +124,7 @@ export class MessageMatches<TReturn extends MayReturnMatch>
   }
 
   toReturnInChannel(
-    expect: string | number | bigint | boolean | MessageEmbedLike,
+    expect: string | number | boolean | MessageEmbedLike,
     channelId: string | ChannelLocation,
     guildId?: string,
   ) {
