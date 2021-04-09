@@ -1,6 +1,6 @@
 import { testCollector } from "../../src/common/testCollector";
 import { Group } from "../../src/types";
-import { group, test } from "../../src/clausures";
+import { group, test } from "../../src/closures";
 import { expect as cordeExpect } from "../../src/expect";
 
 describe("Testing group function", () => {

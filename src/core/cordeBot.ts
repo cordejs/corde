@@ -119,14 +119,6 @@ export class CordeBot implements CordeBotLike {
   }
 
   /**
-   * Observes for a message send by the testing bot after corde bot
-   * send it's message.
-   */
-  async awaitMessagesFromTestingBot(timeout: number) {
-    return this.events.onceMessage(this._testBotId, timeout);
-  }
-
-  /**
    * Checks if corde bot is connected
    */
   isLoggedIn() {

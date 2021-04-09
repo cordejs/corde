@@ -25,7 +25,13 @@ describe("Testing CordeBot object", () => {
 
   it("should add a test function", () => {
     testCollector.addTestFunction((corde) => {
-      const testCase = new ToReturn(corde, "test", false);
+      const testCase = new ToReturn({
+        cordeBot: corde,
+        command: "test",
+        isNot: false,
+        isCascade: false,
+        timeout: 100,
+      });
       return testCase.action("");
     });
     expect(testCollector.cloneIsolatedTestFunctions().length).toBe(1);
@@ -236,40 +242,6 @@ describe("Testing CordeBot object", () => {
       client.emit("ready");
       expect(await corde.sendTextMessage("ok")).toBe(mockDiscord.message);
       done();
-    });
-  });
-
-  describe("testing awaitMessagesFromTestingBot()", () => {
-    it("should call TextChannel.awaitMessages", async (done) => {
-      const client = new Client();
-      const corde = initCordeClientWithChannel(mockDiscord, client);
-      const mockEvent = new MockEvents(corde, mockDiscord);
-      mockEvent.mockOnceMessage();
-
-      const spy = jest.spyOn(corde.events, "onceMessage");
-      await corde.awaitMessagesFromTestingBot(10);
-      expect(spy).toBeCalledTimes(1);
-      done();
-    });
-
-    it("should fail to get message due to no message author id be equal to the expect", async () => {
-      const client = new Client();
-      const corde = initCordeClientWithChannel(mockDiscord, client);
-      mockDiscord.textChannel.awaitMessages = jest
-        .fn()
-        .mockImplementation((filter: CollectorFilter) => {
-          if (filter(mockDiscord.message)) {
-            return mockDiscord.messageCollection;
-          } else {
-            return null;
-          }
-        });
-      client.emit("ready");
-      try {
-        expect(await corde.awaitMessagesFromTestingBot(10));
-      } catch (error) {
-        expect(error).toBeTruthy();
-      }
     });
   });
 

@@ -1,18 +1,23 @@
 import { RoleIdentifier, TestReport } from "../../../types";
 import { typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
+import { ExpectTestBaseParams } from "../../../types";
 import { ExpectTest } from "../expectTest";
 
 /**
  * @internal
  */
 export class ToSetRolePosition extends ExpectTest {
+  constructor(params: ExpectTestBaseParams) {
+    super({ ...params, testName: "toSetRolePosition" });
+  }
+
   async action(newPosition: number, roleIdentifier: string | RoleIdentifier): Promise<TestReport> {
     const identifier = roleUtils.getRoleData(roleIdentifier);
     const error = roleUtils.getErrorForUndefinedRoleData(identifier);
 
     if (error) {
-      return { pass: false, message: error };
+      return this.createFailedTest(error);
     }
 
     if (typeof newPosition !== "number") {
@@ -26,7 +31,7 @@ export class ToSetRolePosition extends ExpectTest {
     const invalidRoleErrorMessage = roleUtils.validateRole(oldRole, identifier);
 
     if (invalidRoleErrorMessage) {
-      return { pass: false, message: invalidRoleErrorMessage };
+      return this.createFailedTest(invalidRoleErrorMessage);
     }
 
     let role = await this.cordeBot.findRole(identifier);
@@ -46,13 +51,17 @@ export class ToSetRolePosition extends ExpectTest {
       );
     }
 
-    await this.cordeBot.sendTextMessage(this.command);
+    await this.sendCommandMessage();
 
     try {
-      role = await this.cordeBot.events.onceRolePositionUpdate(identifier, this.timeOut);
+      role = await this.cordeBot.events.onceRolePositionUpdate(
+        identifier,
+        this.timeOut,
+        this.guildId,
+      );
     } catch {
       if (this.isNot) {
-        return { pass: true };
+        return this.createPassTest();
       }
 
       return this.createReport(
@@ -68,7 +77,7 @@ export class ToSetRolePosition extends ExpectTest {
     this.invertHasPassedIfIsNot();
 
     if (this.hasPassed) {
-      return { pass: true };
+      return this.createPassTest();
     }
 
     return this.createReport(

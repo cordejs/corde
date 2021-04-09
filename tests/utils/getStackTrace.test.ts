@@ -9,6 +9,7 @@ class ExpectExample {
     const trace = getStackTrace();
     executorList.push(() => {
       return Promise.resolve<TestReport>({
+        testName: "",
         pass: false,
         message: "error",
       }).then((r) => {

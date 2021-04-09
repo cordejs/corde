@@ -1,6 +1,6 @@
 import { testCollector } from "../../src/common/testCollector";
 import { Test } from "../../src/types";
-import { test as _test } from "../../src/clausures";
+import { test as _test } from "../../src/closures";
 import { expect as cordeExpect } from "../../src/expect";
 
 describe("Testing test function", () => {

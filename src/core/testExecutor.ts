@@ -244,6 +244,7 @@ export class TestExecutor {
         _report = await runtime.injectBot(testfn);
       } catch (error) {
         _report = {
+          testName: "",
           pass: false,
           message: this.getErrorMessage(error),
         };

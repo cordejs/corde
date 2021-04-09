@@ -1,12 +1,17 @@
 import { Role } from "discord.js";
-import { RoleIdentifier, TestReport } from "../../../types/types";
+import { RoleIdentifier, TestReport } from "../../../types";
 import { roleUtils } from "../../roleUtils";
+import { ExpectTestBaseParams } from "../../../types";
 import { ExpectTest } from "../expectTest";
 
 /**
  * @internal
  */
 export class ToDeleteRole extends ExpectTest {
+  constructor(params: ExpectTestBaseParams) {
+    super({ ...params, testName: "toDeleteRole" });
+  }
+
   async action(roleIdentifier: string | RoleIdentifier): Promise<TestReport> {
     const identifier = roleUtils.getRoleData(roleIdentifier);
     const roleOrFailObject = await this.getRoleOrInvalidMessage(identifier);
@@ -17,12 +22,12 @@ export class ToDeleteRole extends ExpectTest {
 
     const role = roleOrFailObject as Role;
 
-    await this.cordeBot.sendTextMessage(this.command);
+    await this.sendCommandMessage();
     try {
-      await this.cordeBot.events.onceRoleDelete(identifier, this.timeOut);
+      await this.cordeBot.events.onceRoleDelete(identifier, this.timeOut, this.guildId);
     } catch {
       if (this.isNot) {
-        return { pass: true };
+        return this.createPassTest();
       }
 
       return this.createReport(
@@ -38,7 +43,7 @@ export class ToDeleteRole extends ExpectTest {
     this.invertHasPassedIfIsNot();
 
     if (this.hasPassed) {
-      return { pass: true };
+      return this.createPassTest();
     }
 
     return this.createReport(`expected: role ${role.id} to ${this.isNot ? "not " : ""}be deleted`);
@@ -48,13 +53,13 @@ export class ToDeleteRole extends ExpectTest {
     const error = roleUtils.getErrorForUndefinedRoleData(roleIdentifier);
 
     if (error) {
-      return { pass: false, message: error };
+      return this.createFailedTest(error);
     }
 
     const role = await this.cordeBot.findRole(roleIdentifier);
 
     if (!role) {
-      return { pass: false, message: roleUtils.validateRole(role, roleIdentifier) };
+      return this.createFailedTest(roleUtils.validateRole(role, roleIdentifier));
     }
 
     if (role.deleted) {

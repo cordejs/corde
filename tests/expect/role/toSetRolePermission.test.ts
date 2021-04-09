@@ -1,8 +1,13 @@
 import { Client } from "discord.js";
 import { ToSetRolePermission } from "../../../src/expect/matches";
 import MockDiscord from "../../mocks/mockDiscord";
-import { initCordeClientWithChannel, removeANSIColorStyle } from "../../testHelper";
-import { TestReport } from "../../../src/types";
+import {
+  createReport,
+  initCordeClientWithChannel,
+  removeANSIColorStyle,
+  testUtils,
+} from "../../testHelper";
+import { CordeBotLike, TestReport } from "../../../src/types";
 import {
   buildReportMessage,
   calcPermissionsValue,
@@ -23,6 +28,15 @@ function initClient() {
   return corde;
 }
 
+function initTestClass(cordeBot: CordeBotLike, isNot: boolean) {
+  return testUtils.initTestClass(ToSetRolePermission, {
+    command: "toDelete",
+    cordeBot: cordeBot,
+    isNot: isNot,
+    timeout: 1000,
+  });
+}
+
 describe("testing toSetRolePermission operation", () => {
   afterEach(() => {
     mockDiscord = new MockDiscord();
@@ -30,7 +44,7 @@ describe("testing toSetRolePermission operation", () => {
 
   it("should fail due to undefined roleIdentifier", async () => {
     const corde = initClient();
-    const toSetRolePermission = new ToSetRolePermission(corde, "test", false);
+    const toSetRolePermission = initTestClass(corde, false);
     const report = await toSetRolePermission.action(undefined, ["ADD_REACTIONS"]);
 
     const message = buildReportMessage(
@@ -38,10 +52,7 @@ describe("testing toSetRolePermission operation", () => {
       `received: null`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRolePermission, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -49,7 +60,7 @@ describe("testing toSetRolePermission operation", () => {
 
   it("should return false due to invalid permission parameter (object)", async () => {
     const corde = initClient();
-    const toSetRolePermission = new ToSetRolePermission(corde, "test", false);
+    const toSetRolePermission = initTestClass(corde, false);
     // @ts-ignore
     const report = await toSetRolePermission.action({ id: "123" }, {});
 
@@ -58,10 +69,7 @@ describe("testing toSetRolePermission operation", () => {
       `received: object`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRolePermission, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -69,17 +77,14 @@ describe("testing toSetRolePermission operation", () => {
 
   it("should fail due to invalid permission value", async () => {
     const corde = initClient();
-    const toSetRolePermission = new ToSetRolePermission(corde, "test", false);
+    const toSetRolePermission = initTestClass(corde, false);
     // @ts-ignore
     const report = await toSetRolePermission.action({ id: "123" }, ["BANANA"]);
 
     const message = buildReportMessage(diff(permissionsArray, ["BANANA"]));
 
     console.log(message);
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRolePermission, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -87,7 +92,7 @@ describe("testing toSetRolePermission operation", () => {
 
   it("should return false due to invalid permission parameter (undefined)", async () => {
     const corde = initClient();
-    const toSetRolePermission = new ToSetRolePermission(corde, "test", false);
+    const toSetRolePermission = initTestClass(corde, false);
     // @ts-ignore
     const report = await toSetRolePermission.action({ id: "123" }, {});
 
@@ -96,10 +101,7 @@ describe("testing toSetRolePermission operation", () => {
       `received: object`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRolePermission, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -108,15 +110,12 @@ describe("testing toSetRolePermission operation", () => {
   it("should return false due to not found role", async () => {
     const corde = initClient();
     corde.findRole = jest.fn().mockReturnValue(null);
-    const toSetRolePermission = new ToSetRolePermission(corde, "test", false);
+    const toSetRolePermission = initTestClass(corde, false);
     const report = await toSetRolePermission.action({ id: "123" }, ["ATTACH_FILES"]);
 
     const message = buildReportMessage(`expected: role with id 123\n`, `received: null`);
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRolePermission, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -127,7 +126,7 @@ describe("testing toSetRolePermission operation", () => {
 
     runtime.setConfigs({ timeOut: 100 }, true);
 
-    const toSetRolePermission = new ToSetRolePermission(corde, "test", false);
+    const toSetRolePermission = initTestClass(corde, false);
     const report = await toSetRolePermission.action({ id: "123" }, ["ATTACH_FILES"]);
 
     const message = buildReportMessage(
@@ -135,10 +134,7 @@ describe("testing toSetRolePermission operation", () => {
       `received: permissions were not changed`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRolePermission, false, message);
 
     expect(report).toEqual(expectReport);
     const snapReport = {
@@ -153,12 +149,10 @@ describe("testing toSetRolePermission operation", () => {
 
     runtime.setConfigs({ timeOut: 100 }, true);
 
-    const toSetRolePermission = new ToSetRolePermission(corde, "test", true);
+    const toSetRolePermission = initTestClass(corde, true);
     const report = await toSetRolePermission.action({ id: "123" }, ["ATTACH_FILES"]);
 
-    const expectReport: TestReport = {
-      pass: true,
-    };
+    const expectReport = createReport(toSetRolePermission, true);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -174,12 +168,10 @@ describe("testing toSetRolePermission operation", () => {
       calcPermissionsValue(...mockDiscord.role.permissions.toArray().map((p) => Permission[p])),
     );
     mockEvent.mockOnceRolePermissionsUpdate(mockRole);
-    const toSetRolePermission = new ToSetRolePermission(corde, "test", false);
+    const toSetRolePermission = initTestClass(corde, false);
     const report = await toSetRolePermission.action({ id: "123" }, mockRole.permissions.toArray());
 
-    const expectReport: TestReport = {
-      pass: true,
-    };
+    const expectReport = createReport(toSetRolePermission, true);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -195,7 +187,7 @@ describe("testing toSetRolePermission operation", () => {
     const mockEvent = new MockEvents(corde, mockDiscord);
 
     mockEvent.mockOnceRolePermissionsUpdate(mockRole);
-    const toSetRolePermission = new ToSetRolePermission(corde, "test", true);
+    const toSetRolePermission = initTestClass(corde, true);
     const report = await toSetRolePermission.action({ id: "123" }, ["ADMINISTRATOR"]);
 
     const message = buildReportMessage(
@@ -205,10 +197,7 @@ describe("testing toSetRolePermission operation", () => {
       } others)`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRolePermission, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -224,7 +213,7 @@ describe("testing toSetRolePermission operation", () => {
     const mockEvent = new MockEvents(corde, mockDiscord);
 
     mockEvent.mockOnceRolePermissionsUpdate(mockRole);
-    const toSetRolePermission = new ToSetRolePermission(corde, "test", true);
+    const toSetRolePermission = initTestClass(corde, true);
     const report = await toSetRolePermission.action({ id: "123" }, [
       "ADMINISTRATOR",
       "BAN_MEMBERS",
@@ -237,10 +226,7 @@ describe("testing toSetRolePermission operation", () => {
       } others)`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRolePermission, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -256,7 +242,7 @@ describe("testing toSetRolePermission operation", () => {
     const mockEvent = new MockEvents(corde, mockDiscord);
 
     mockEvent.mockOnceRolePermissionsUpdate(mockRole);
-    const toSetRolePermission = new ToSetRolePermission(corde, "test", true);
+    const toSetRolePermission = initTestClass(corde, true);
     const report = await toSetRolePermission.action({ id: "123" }, [
       "ADMINISTRATOR",
       "BAN_MEMBERS",
@@ -273,6 +259,7 @@ describe("testing toSetRolePermission operation", () => {
     const expectReport: TestReport = {
       pass: false,
       message,
+      testName: toSetRolePermission.toString(),
     };
 
     expect(report).toEqual(expectReport);
@@ -285,7 +272,7 @@ describe("testing toSetRolePermission operation", () => {
     runtime.setConfigs({ timeOut: 100 }, true);
     const mockEvent = new MockEvents(corde, mockDiscord);
     mockEvent.mockOnceRolePermissionsUpdate(mockDiscord.role);
-    const toSetRolePermission = new ToSetRolePermission(corde, "test", false);
+    const toSetRolePermission = initTestClass(corde, false);
     const report = await toSetRolePermission.action({ id: "123" }, ["ATTACH_FILES"]);
 
     const message = buildReportMessage(
@@ -296,6 +283,7 @@ describe("testing toSetRolePermission operation", () => {
     const expectReport: TestReport = {
       pass: false,
       message,
+      testName: toSetRolePermission.toString(),
     };
 
     expect(report).toEqual(expectReport);
@@ -308,7 +296,7 @@ describe("testing toSetRolePermission operation", () => {
     runtime.setConfigs({ timeOut: 100 }, true);
     const mockEvent = new MockEvents(corde, mockDiscord);
     mockEvent.mockOnceRolePermissionsUpdate(mockDiscord.role);
-    const toSetRolePermission = new ToSetRolePermission(corde, "test", false);
+    const toSetRolePermission = initTestClass(corde, false);
     const report = await toSetRolePermission.action({ id: "123" }, null);
 
     const message = buildReportMessage(
@@ -319,6 +307,7 @@ describe("testing toSetRolePermission operation", () => {
     const expectReport: TestReport = {
       pass: false,
       message,
+      testName: toSetRolePermission.toString(),
     };
 
     expect(report).toEqual(expectReport);

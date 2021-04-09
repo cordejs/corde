@@ -1,4 +1,9 @@
 #!/usr/bin/env node
+
+/* eslint-disable quotes */
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable no-global-assign */
+
 "use strict";
 
 const MINIMAL_NODE_VERSION = 12;

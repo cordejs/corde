@@ -1,5 +1,14 @@
 import { GenericFunction, ParametersAsOptional } from "../types";
-import { Guid } from "../utils";
+import crypto from "crypto";
+
+export function createHash() {
+  const current_date = new Date().valueOf().toString();
+  const random = Math.random().toString();
+  return crypto
+    .createHash("sha1")
+    .update(current_date + random)
+    .digest("hex");
+}
 
 /**
  * Structure to handle a collection of functions and execute then.
@@ -44,7 +53,7 @@ export class Queue<T extends GenericFunction> {
    * @throws Error if `fn` is null, undefined, or if the value
    * is not a function.
    *
-   * @returns A **GUID** for the function
+   * @returns A **hash** for the function
    */
   enqueue(fn: T) {
     if (!fn) {
@@ -55,9 +64,9 @@ export class Queue<T extends GenericFunction> {
       throw new Error("Can not add a type that is not a function");
     }
 
-    const guid = Guid.new();
-    this._funcs.set(guid, fn);
-    return guid;
+    const hash = createHash();
+    this._funcs.set(hash, fn);
+    return hash;
   }
 
   /**

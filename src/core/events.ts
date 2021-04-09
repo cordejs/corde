@@ -20,7 +20,6 @@ import {
 } from "discord.js";
 import { once } from "events";
 import { DEFAULT_TEST_TIMEOUT } from "../consts";
-import { TimeoutError } from "../errors";
 import { EmojiLike, MessageIdentifier, RoleIdentifier } from "../types";
 import { deepEqual, executePromiseWithTimeout } from "../utils";
 import { Validator } from "../utils";
@@ -203,14 +202,24 @@ export class Events {
    * @returns Deleted role.
    * @internal
    */
-  onceRoleDelete(roleIdentifier?: RoleIdentifier, timeout?: number): Promise<Role> {
+  onceRoleDelete(
+    roleIdentifier?: RoleIdentifier,
+    timeout?: number,
+    guildId?: string,
+  ): Promise<Role> {
+    const validator = new Validator<[Role]>();
+
+    if (roleIdentifier) {
+      validator.add((role) => this.roleMatchRoleData(roleIdentifier, role));
+    }
+
+    if (guildId) {
+      validator.add((role) => role.guild.id === guildId);
+    }
+
     return executePromiseWithTimeout((resolve) => {
       this.onRoleDelete((deletedRole) => {
-        if (!roleIdentifier) {
-          resolve(deletedRole);
-        }
-
-        if (this.roleMatchRoleData(roleIdentifier, deletedRole)) {
+        if (validator.isValid(deletedRole)) {
           resolve(deletedRole);
         }
       });
@@ -548,17 +557,21 @@ export class Events {
    * @returns Created message.
    * @internal
    */
-  onceMessage(authorId?: string, timeout?: number) {
+  onceMessage(authorId?: string, channelId?: string | null, timeout?: number) {
+    const validator = new Validator<[Message]>();
+
+    if (authorId) {
+      validator.add((mgs) => mgs.author.id === authorId);
+    }
+
+    if (channelId) {
+      validator.add((mgs) => mgs.channel.id === channelId);
+    }
+
     return executePromiseWithTimeout<Message>((resolve) => {
       this.onMessage((message) => {
-        if (!authorId) {
+        if (validator.isValid(message)) {
           resolve(message);
-          return;
-        }
-
-        if (message.author.id === authorId) {
-          resolve(message);
-          return;
         }
       });
     }, timeout);
@@ -900,55 +913,60 @@ export class Events {
   /**
    * @internal
    */
-  onceRoleRenamed(roleIdentifier?: RoleIdentifier, timeout?: number) {
+  onceRoleRenamed(roleIdentifier?: RoleIdentifier, timeout?: number, guildId?: string) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.name !== newRole.name,
       timeout,
       roleIdentifier,
+      guildId,
     );
   }
 
   /**
    * @internal
    */
-  onceRolePositionUpdate(roleIdentifier?: RoleIdentifier, timeout?: number) {
+  onceRolePositionUpdate(roleIdentifier?: RoleIdentifier, timeout?: number, guildId?: string) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.rawPosition !== newRole.rawPosition,
       timeout,
       roleIdentifier,
+      guildId,
     );
   }
 
   /**
    * @internal
    */
-  onceRoleUpdateColor(roleIdentifier?: RoleIdentifier, timeout?: number) {
+  onceRoleUpdateColor(roleIdentifier?: RoleIdentifier, timeout?: number, guildId?: string) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.color !== newRole.color,
       timeout,
       roleIdentifier,
+      guildId,
     );
   }
 
   /**
    * @internal
    */
-  onceRoleHoistUpdate(roleIdentifier?: RoleIdentifier, timeout?: number) {
+  onceRoleHoistUpdate(roleIdentifier?: RoleIdentifier, timeout?: number, guildId?: string) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.hoist !== newRole.hoist,
       timeout,
       roleIdentifier,
+      guildId,
     );
   }
 
   /**
    * @internal
    */
-  onceRoleMentionableUpdate(roleIdentifier?: RoleIdentifier, timeout?: number) {
+  onceRoleMentionableUpdate(roleIdentifier?: RoleIdentifier, timeout?: number, guildId?: string) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.mentionable !== newRole.mentionable,
       timeout,
       roleIdentifier,
+      guildId,
     );
   }
 
@@ -958,21 +976,26 @@ export class Events {
    * @returns Specified role that had his permissions updated.
    * @internal
    */
-  onceRolePermissionUpdate(roleIdentifier: RoleIdentifier, timeout = DEFAULT_TEST_TIMEOUT) {
-    return new Promise<Role>((resolve, reject) => {
-      setTimeout(() => {
-        reject(new TimeoutError());
-      }, timeout);
+  onceRolePermissionUpdate(
+    roleIdentifier: RoleIdentifier,
+    timeout = DEFAULT_TEST_TIMEOUT,
+    guildId?: string,
+  ) {
+    const validator = new Validator<[Role, Role]>();
 
+    validator.add((_, newRole) => this.roleMatchRoleData(roleIdentifier, newRole));
+
+    if (guildId) {
+      validator.add((newRole) => newRole.guild.id === guildId);
+    }
+
+    return executePromiseWithTimeout<Role>((resolve) => {
       this.onRoleUpdate((oldRole, newRole) => {
-        if (
-          this.roleMatchRoleData(roleIdentifier, newRole) &&
-          !this.rolesPermissionsMatch(oldRole, newRole)
-        ) {
+        if (validator.isValid(oldRole, newRole)) {
           resolve(newRole);
         }
       });
-    });
+    }, timeout);
   }
 
   private roleMatchRoleData(roleIdentifier: RoleIdentifier | undefined, role: Role) {
@@ -1056,14 +1079,23 @@ export class Events {
     comparable: (oldRole: Role, newRole: Role) => boolean,
     timeout?: number,
     roleIdentifier?: RoleIdentifier,
+    guildId?: string,
   ) {
+    const validator = new Validator<[Role, Role]>();
+
+    validator.add((oldRole, newRole) => comparable(oldRole, newRole));
+
+    if (roleIdentifier) {
+      validator.add((_, newRole) => this.roleMatchRoleData(roleIdentifier, newRole));
+    }
+
+    if (guildId) {
+      validator.add((role) => role.guild.id === guildId);
+    }
+
     return executePromiseWithTimeout<Role>((resolve) => {
       this.onRoleUpdate((oldRole, newRole) => {
-        if (!roleIdentifier && comparable(oldRole, newRole)) {
-          resolve(newRole);
-        }
-
-        if (this.roleMatchRoleData(roleIdentifier, newRole) && comparable(oldRole, newRole)) {
+        if (validator.isValid(oldRole, newRole)) {
           resolve(newRole);
         }
       });

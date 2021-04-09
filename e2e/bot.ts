@@ -110,6 +110,8 @@ async function handleCommands(message: Message, command: string | undefined, arg
     await setRolePermission(message, id, args);
   } else if (command === "deleteRole") {
     await deleteRole(message, args[0]);
+  } else if (command === "sendMultiple") {
+    await sendMultiple(message, args[0]);
   }
 }
 
@@ -231,6 +233,14 @@ async function deleteRole(msg: Message, roleId: string) {
 
   if (role && !role.deleted) {
     await role.delete();
+  }
+}
+
+async function sendMultiple(msg: Message, channelId: string) {
+  await msg.channel.send("hello");
+  const channel = msg.guild?.channels.cache.get(channelId);
+  if (channel && channel.isText()) {
+    await channel.send("hello2");
   }
 }
 

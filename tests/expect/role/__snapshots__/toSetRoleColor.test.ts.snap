@@ -6,6 +6,7 @@ Object {
     toSetRoleColor: invalid color informed - 'null'
 ",
   "pass": false,
+  "testName": "toSetRoleColor",
 }
 `;
 
@@ -26,6 +27,7 @@ Object {
     received: null
 ",
   "pass": false,
+  "testName": "toSetRoleColor",
 }
 `;
 
@@ -56,17 +58,20 @@ Object {
     received: null
 ",
   "pass": false,
+  "testName": "toSetRoleColor",
 }
 `;
 
 exports[`testing toSetRoleColor should return true due to isNot true and no role change 1`] = `
 Object {
   "pass": true,
+  "testName": "toSetRoleColor",
 }
 `;
 
 exports[`testing toSetRoleColor should return true due to role has changed the color (isNot false) 1`] = `
 Object {
   "pass": true,
+  "testName": "toSetRoleColor",
 }
 `;

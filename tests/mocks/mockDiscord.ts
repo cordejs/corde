@@ -23,7 +23,7 @@ import {
   Activity,
   VoiceState,
 } from "discord.js";
-import messageUtils from "../../src/expect/messageUtils";
+import { ToReturn } from "../../src/expect/matches";
 import { MessageEmbedLike } from "../../src/types";
 
 /**
@@ -613,7 +613,13 @@ export default class MockDiscord {
   }
 
   createMockMessageEmbed(customColor = "#0099ff", customTitle = "Some title") {
-    const embed = messageUtils.embedMessageLikeToMessageEmbed(this._messageEmbedLike);
+    const embed = new ToReturn({
+      command: "",
+      cordeBot: null,
+      isNot: false,
+      timeout: 100,
+      isCascade: false,
+    }).embedMessageLikeToMessageEmbed(this._messageEmbedLike);
     embed.setColor(customColor);
     embed.setTitle(customTitle);
     return embed;

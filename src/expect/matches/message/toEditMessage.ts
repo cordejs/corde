@@ -1,19 +1,17 @@
 import { Message, MessageEmbed, PartialMessage } from "discord.js";
-import {
-  MessageEditedIdentifier,
-  MessageEmbedLike,
-  MinifiedEmbedMessage,
-  Primitive,
-  TestReport,
-} from "../../../types";
-import { diff, formatObject, isPrimitiveValue, typeOf } from "../../../utils";
-import { ExpectTest } from "../expectTest";
-import messageUtils from "../../messageUtils";
+import { MessageEditedIdentifier, MessageEmbedLike, Primitive, TestReport } from "../../../types";
+import { isPrimitiveValue, typeOf } from "../../../utils";
+import { ExpectTestBaseParams } from "../../../types";
+import { MessageExpectTest } from "./messageExpectTest";
 
 /**
  * @internal
  */
-export class ToEditMessage extends ExpectTest {
+export class ToEditMessage extends MessageExpectTest {
+  constructor(params: ExpectTestBaseParams) {
+    super({ ...params, testName: "toEditMessage" });
+  }
+
   async action(
     newValue: Primitive | MessageEmbedLike,
     messageIdentifier?: MessageEditedIdentifier | string,
@@ -27,7 +25,7 @@ export class ToEditMessage extends ExpectTest {
       );
     }
 
-    await this.cordeBot.sendTextMessage(this.command);
+    await this.sendCommandMessage();
 
     let _messageData: MessageEditedIdentifier | undefined;
 
@@ -46,7 +44,7 @@ export class ToEditMessage extends ExpectTest {
       );
     } catch {
       if (this.isNot) {
-        return { pass: true };
+        return this.createPassTest();
       }
 
       if (!_messageData) {
@@ -57,24 +55,22 @@ export class ToEditMessage extends ExpectTest {
       }
 
       return this.createReport(
-        `expected: testing bot to edit the ${messageUtils.humanizeMessageIdentifierObject(
-          _messageData,
-        )}\n`,
+        `expected: testing bot to edit the ${this.humanizeMessageIdentifierObject(_messageData)}\n`,
         "received: message was not edited",
       );
     }
 
     if (typeOf(newValue) === "object") {
-      _expect = messageUtils.embedMessageLikeToMessageEmbed(newValue as MessageEmbedLike);
+      _expect = this.embedMessageLikeToMessageEmbed(newValue as MessageEmbedLike);
     } else {
       _expect = newValue as Primitive;
     }
 
-    this.hasPassed = messageUtils.messagesMatches(returnedMessage, _expect);
+    this.hasPassed = this.messagesMatches(returnedMessage, _expect);
     this.invertHasPassedIfIsNot();
 
     if (this.hasPassed) {
-      return { pass: true };
+      return this.createPassTest();
     }
 
     if (this.isNot) {
@@ -84,40 +80,6 @@ export class ToEditMessage extends ExpectTest {
       );
     }
 
-    let embedExpect: MinifiedEmbedMessage | undefined;
-    if (typeOf(_expect) === "object") {
-      embedExpect = messageUtils.getMessageByType(
-        _expect as MessageEmbed,
-        "embed",
-      ) as MinifiedEmbedMessage;
-    }
-
-    let embedReturned: MinifiedEmbedMessage | undefined;
-    if (returnedMessage.embeds[0]) {
-      embedReturned = messageUtils.getMessageByType(
-        returnedMessage,
-        "embed",
-      ) as MinifiedEmbedMessage;
-    }
-
-    if (embedExpect && embedReturned) {
-      return this.createReport(diff(embedReturned, embedExpect));
-    }
-
-    if (embedExpect && !embedReturned) {
-      return this.createReport(
-        `expected: ${formatObject(embedExpect)}\n`,
-        `received: '${returnedMessage.content}'`,
-      );
-    }
-
-    if (!embedExpect && embedReturned) {
-      return this.createReport(
-        `expected: '${_expect}'\n`,
-        `received: ${formatObject(embedReturned)}`,
-      );
-    }
-
-    return this.createReport(`expected: '${_expect}'\n`, `received: '${returnedMessage.content}'`);
+    return this.createReportForExpectAndResponse(_expect, returnedMessage);
   }
 }

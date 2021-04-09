@@ -609,7 +609,7 @@ describe("testing events event", () => {
 
     it("should fail when get async once with messageIdentifier", async () => {
       expect(async () => {
-        const promise = events.onceMessage("123", 10);
+        const promise = events.onceMessage("123", null, 10);
         client.emit(eventName, mockDiscord.message);
         await promise;
       }).rejects.toBeTruthy();

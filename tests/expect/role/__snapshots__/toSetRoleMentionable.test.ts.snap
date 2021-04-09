@@ -7,6 +7,7 @@ Object {
     received: role mentionable was not updated
 ",
   "pass": false,
+  "testName": "toSetRoleMentionable",
 }
 `;
 
@@ -17,6 +18,7 @@ Object {
     received: null
 ",
   "pass": false,
+  "testName": "toSetRoleMentionable",
 }
 `;
 
@@ -27,6 +29,7 @@ Object {
     received: false
 ",
   "pass": false,
+  "testName": "toSetRoleMentionable",
 }
 `;
 
@@ -37,6 +40,7 @@ Object {
     received: false
 ",
   "pass": false,
+  "testName": "toSetRoleMentionable",
 }
 `;
 
@@ -47,6 +51,7 @@ Object {
     received: object
 ",
   "pass": false,
+  "testName": "toSetRoleMentionable",
 }
 `;
 
@@ -57,6 +62,7 @@ Object {
     received: undefined
 ",
   "pass": false,
+  "testName": "toSetRoleMentionable",
 }
 `;
 
@@ -67,17 +73,20 @@ Object {
     received: null
 ",
   "pass": false,
+  "testName": "toSetRoleMentionable",
 }
 `;
 
 exports[`testing toSetRoleMentionable operation should return true due to isNot true and no role change 1`] = `
 Object {
   "pass": true,
+  "testName": "toSetRoleMentionable",
 }
 `;
 
 exports[`testing toSetRoleMentionable operation should return true due to role changed the mentionable (isNot false) 1`] = `
 Object {
   "pass": true,
+  "testName": "toSetRoleMentionable",
 }
 `;

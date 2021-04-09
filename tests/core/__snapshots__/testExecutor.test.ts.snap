@@ -15,7 +15,7 @@ exports[`should print for a empty test file name 1`] = `
    ✔  <empty test name>   10ms"
 `;
 
-exports[`should print report for 1 test file, 1 test clausure and 1 failed function and 1 passed function 1`] = `
+exports[`should print report for 1 test file, 1 test closure and 1 failed function and 1 passed function 1`] = `
 "
  FAIL   /tests/file1.test.ts   10ms
    x group -> test case1   10ms
@@ -25,7 +25,7 @@ exports[`should print report for 1 test file, 1 test clausure and 1 failed funct
 "
 `;
 
-exports[`should print report for 1 test file, 1 test clausure and 1 failed function and 1 passed function 2`] = `
+exports[`should print report for 1 test file, 1 test closure and 1 failed function and 1 passed function 2`] = `
 "
  FAIL   /tests/file1.test.ts   10ms
    x group -> test case1   10ms
@@ -35,13 +35,13 @@ exports[`should print report for 1 test file, 1 test clausure and 1 failed funct
 "
 `;
 
-exports[`should print report for 1 test file, 1 test clausure and 1 test function 1`] = `
+exports[`should print report for 1 test file, 1 test closure and 1 test function 1`] = `
 "
  PASS   /tests/file1.test.ts   10ms
    ✔  group -> test case1   10ms"
 `;
 
-exports[`should print report for 1 test file, 1 test clausure and 1 test function that fail 1`] = `
+exports[`should print report for 1 test file, 1 test closure and 1 test function that fail 1`] = `
 "
  FAIL   /tests/file1.test.ts   10ms
    x group -> test case1   10ms
@@ -51,13 +51,13 @@ exports[`should print report for 1 test file, 1 test clausure and 1 test functio
 "
 `;
 
-exports[`should print report for 1 test file, 1 test clausure and 2 test function 1`] = `
+exports[`should print report for 1 test file, 1 test closure and 2 test function 1`] = `
 "
  PASS   /tests/file1.test.ts   10ms
    ✔  group -> test case1   10ms"
 `;
 
-exports[`should print report for 1 test file, 2 test clausure and 1 failed function and 1 passed function 1`] = `
+exports[`should print report for 1 test file, 2 test closure and 1 failed function and 1 passed function 1`] = `
 "
  FAIL   /tests/file1.test.ts   10ms
    x group -> test case1   10ms
@@ -72,7 +72,7 @@ exports[`should print report for 1 test file, 2 test clausure and 1 failed funct
 "
 `;
 
-exports[`should print report for 1 test file, 2 test clausure and 1 failed function and 1 passed function 2`] = `
+exports[`should print report for 1 test file, 2 test closure and 1 failed function and 1 passed function 2`] = `
 "
  FAIL   /tests/file1.test.ts   10ms
    ✔  group name -> test case1   10ms
@@ -83,7 +83,7 @@ exports[`should print report for 1 test file, 2 test clausure and 1 failed funct
 "
 `;
 
-exports[`should print report for 1 test file, 2 test clausure and 1 failed function and 1 passed function 3`] = `
+exports[`should print report for 1 test file, 2 test closure and 1 failed function and 1 passed function 3`] = `
 "
  FAIL   /tests/file1.test.ts   10ms
    x group -> test case1   10ms
@@ -98,7 +98,7 @@ exports[`should print report for 1 test file, 2 test clausure and 1 failed funct
 "
 `;
 
-exports[`should print report for 1 test file, 2 test clausure and 1 failed function and 1 passed function with stackTrace 1`] = `
+exports[`should print report for 1 test file, 2 test closure and 1 failed function and 1 passed function with stackTrace 1`] = `
 "
  FAIL   /tests/file1.test.ts   10ms
    x group -> test case1   10ms
@@ -117,7 +117,7 @@ exports[`should print report for 1 test file, 2 test clausure and 1 failed funct
 "
 `;
 
-exports[`should print report for 2 test file, 1 test clausure and 1 test function 1`] = `
+exports[`should print report for 2 test file, 1 test closure and 1 test function 1`] = `
 "
  PASS   /tests/file1.test.ts   10ms
    ✔  group -> test case1   10ms
@@ -125,7 +125,7 @@ exports[`should print report for 2 test file, 1 test clausure and 1 test functio
    ✔  group -> test case1   10ms"
 `;
 
-exports[`should print report for 2 test file, 1 test clausure and 2 test function 1`] = `
+exports[`should print report for 2 test file, 1 test closure and 2 test function 1`] = `
 "
  PASS   /tests/file1.test.ts   10ms
    ✔  group -> test case1   10ms
@@ -133,7 +133,7 @@ exports[`should print report for 2 test file, 1 test clausure and 2 test functio
    ✔  group -> test case1   10ms"
 `;
 
-exports[`should print report for 2 test file, 2 test clausure and 1 failed function and 1 passed function 1`] = `
+exports[`should print report for 2 test file, 2 test closure and 1 failed function and 1 passed function 1`] = `
 "
  FAIL   /tests/file1.test.ts   10ms
    x group -> test case1   10ms
@@ -159,7 +159,7 @@ exports[`should print report for 2 test file, 2 test clausure and 1 failed funct
 "
 `;
 
-exports[`should print report for 2 test file, 2 test clausure and 2 test function 1`] = `
+exports[`should print report for 2 test file, 2 test closure and 2 test function 1`] = `
 "
  PASS   /tests/file1.test.ts   10ms
    ✔  group -> test case1   10ms

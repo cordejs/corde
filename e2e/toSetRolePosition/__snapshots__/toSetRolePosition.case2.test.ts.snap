@@ -9,8 +9,8 @@ exports[`should fail when trying to set role as mentionable 1`] = `
     received: position didn't change
 
     at toSetRolePosition e2e\\\\toSetRolePosition\\\\__cordeTest__\\\\bot_case2.spec.ts:8:54
-    at _internalTest (lib\\\\src\\\\clausures\\\\test.js:29:13)
-    at lib\\\\src\\\\clausures\\\\test.js:52:65
+    at _internalTest (lib\\\\src\\\\closures\\\\test.js:29:13)
+    at lib\\\\src\\\\closures\\\\test.js:52:65
 
 Test Files: 1 failed. 1 total
 Tests:      1 failed. 1 total

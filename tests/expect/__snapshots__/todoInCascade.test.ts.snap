@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing todoInCascade function should fail due to no test was passed 1`] = `
+"    
+    no assertions were provided to test
+"
+`;
+
+exports[`testing todoInCascade function should return failed due to timeout and isNot false 1`] = `
+"    
+    expected: all tests to pass
+    received: some tests has failed
+        ● toReturn. Response: 
+            expected: testing bot to send a message
+            received: no message was sent
+        
+"
+`;
+
+exports[`testing todoInCascade function should return failed due to timeout and isNot false 2`] = `
+"    
+    expected: all tests to pass
+    received: some tests has failed
+        ● toReturn. Response: 
+            expected: testing bot to send a message
+            received: no message was sent
+        
+        ● toRenameRole. Response: 
+            expected: role 'WE DEM BOYZZ!!!!!! 1' to be renamed to newName
+            received: name was not changed
+        
+"
+`;

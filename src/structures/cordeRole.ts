@@ -1,5 +1,5 @@
 import { ColorResolvable, Role } from "discord.js";
-import { BaseRole } from "../types/types";
+import { BaseRole } from "../types";
 import { Colors, resolveColor, RolePermission } from "../utils";
 
 /**

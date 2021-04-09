@@ -1,11 +1,11 @@
 import { Client } from "discord.js";
 import { runtime } from "../../../src/common/runtime";
 import { ToSetRolePosition } from "../../../src/expect/matches";
-import { TestReport } from "../../../src/types";
+import { CordeBotLike, TestReport } from "../../../src/types";
 import { buildReportMessage, typeOf } from "../../../src/utils";
 import MockDiscord from "../../mocks/mockDiscord";
 import { MockEvents } from "../../mocks/mockEvents";
-import { initCordeClientWithChannel } from "../../testHelper";
+import { createReport, initCordeClientWithChannel, testUtils } from "../../testHelper";
 
 let mockDiscord = new MockDiscord();
 
@@ -16,6 +16,15 @@ function initClient() {
   corde.sendTextMessage = jest.fn().mockImplementation(() => {});
   runtime.setConfigs({ timeOut: 100 }, true);
   return corde;
+}
+
+function initTestClass(cordeBot: CordeBotLike, isNot: boolean) {
+  return testUtils.initTestClass(ToSetRolePosition, {
+    command: "toDelete",
+    cordeBot: cordeBot,
+    isNot: isNot,
+    timeout: 1000,
+  });
 }
 
 /**
@@ -29,7 +38,7 @@ describe("testing ToSetRolePosition operation", () => {
 
   it("should fail due to undefined roleIdentifier", async () => {
     const corde = initClient();
-    const toSetRolePosition = new ToSetRolePosition(corde, "test", false);
+    const toSetRolePosition = initTestClass(corde, false);
     const report = await toSetRolePosition.action(1, null);
 
     const message = buildReportMessage(
@@ -37,10 +46,7 @@ describe("testing ToSetRolePosition operation", () => {
       `received: null`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRolePosition, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -48,7 +54,7 @@ describe("testing ToSetRolePosition operation", () => {
 
   it("should fail due to newPosition is not a number", async () => {
     const corde = initClient();
-    const toSetRolePosition = new ToSetRolePosition(corde, "test", false);
+    const toSetRolePosition = initTestClass(corde, false);
     // @ts-ignore
     const report = await toSetRolePosition.action("batata", { id: "1231231" });
 
@@ -57,10 +63,7 @@ describe("testing ToSetRolePosition operation", () => {
       `received: ${typeOf("batata")}`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRolePosition, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -70,11 +73,11 @@ describe("testing ToSetRolePosition operation", () => {
     const corde = createCordeBotWithMockedFunctions();
     const mockEvent = new MockEvents(corde, mockDiscord);
     mockEvent.mockOnceRolePositionUpdate();
-    const toSetPosition = new ToSetRolePosition(corde, "test", false);
+    const toSetPosition = initTestClass(corde, false);
     const report = await toSetPosition.action(-1, { id: "123" });
-    const matchReport: TestReport = {
-      pass: true,
-    };
+
+    const matchReport = createReport(toSetPosition, true);
+
     expect(report).toEqual(matchReport);
   });
 
@@ -82,11 +85,10 @@ describe("testing ToSetRolePosition operation", () => {
     const corde = createCordeBotWithMockedFunctions();
     const mockEvent = new MockEvents(corde, mockDiscord);
     mockEvent.mockOnceRolePositionUpdate();
-    const toSetPosition = new ToSetRolePosition(corde, "test", true);
+
+    const toSetPosition = initTestClass(corde, true);
     const report = await toSetPosition.action(-2, { id: "123" });
-    const matchReport: TestReport = {
-      pass: true,
-    };
+    const matchReport = createReport(toSetPosition, true);
 
     expect(report).toEqual(matchReport);
     expect(report).toMatchSnapshot();
@@ -95,37 +97,32 @@ describe("testing ToSetRolePosition operation", () => {
   it("should not find a role and must return not passed (isNot true)", async () => {
     const corde = createCordeBotWithMockedFunctions(null);
 
-    const toSetPosition = new ToSetRolePosition(corde, "test", true);
+    const toSetPosition = initTestClass(corde, true);
     const report = await toSetPosition.action(1, { id: "123" });
 
     const message = buildReportMessage(`expected: role with id 123\n`, `received: null`);
 
-    const matchReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const matchReport = createReport(toSetPosition, false, message);
     expect(report).toEqual(matchReport);
     expect(report).toMatchSnapshot();
   });
 
   it("should not find a role and must return not passed (isNot false)", async () => {
     const corde = createCordeBotWithMockedFunctions(null);
-    const toSetPosition = new ToSetRolePosition(corde, "test", false);
+    const toSetPosition = initTestClass(corde, false);
     const report = await toSetPosition.action(2, { id: "123" });
 
     const message = buildReportMessage(`expected: role with id 123\n`, `received: null`);
 
-    const matchReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const matchReport = createReport(toSetPosition, false, message);
+
     expect(report).toEqual(matchReport);
     expect(report).toMatchSnapshot();
   });
 
   it("should return a not passed test due to new position be higher than the permitted (isNot false)", async () => {
     const corde = createCordeBotWithMockedFunctions();
-    const toSetPosition = new ToSetRolePosition(corde, "test", false);
+    const toSetPosition = initTestClass(corde, false);
     const report = await toSetPosition.action(2, { id: "123" });
 
     const message = buildReportMessage(
@@ -133,10 +130,8 @@ describe("testing ToSetRolePosition operation", () => {
       `received: 2`,
     );
 
-    const matchReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const matchReport = createReport(toSetPosition, false, message);
+
     expect(report).toEqual(matchReport);
     expect(report).toMatchSnapshot();
   });
@@ -145,15 +140,13 @@ describe("testing ToSetRolePosition operation", () => {
     const corde = createCordeBotWithMockedFunctions();
 
     corde.findRole = jest.fn().mockImplementation(null);
-    const toSetPosition = new ToSetRolePosition(corde, "test", false);
+    const toSetPosition = initTestClass(corde, false);
     const report = await toSetPosition.action(1, { id: "123" });
 
     const message = buildReportMessage(`expected: role with id 123\n`, `received: null`);
 
-    const matchReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const matchReport = createReport(toSetPosition, false, message);
+
     expect(report).toEqual(matchReport);
     expect(report).toMatchSnapshot();
   });
@@ -163,12 +156,10 @@ describe("testing ToSetRolePosition operation", () => {
 
     runtime.setConfigs({ timeOut: 10 }, true);
     corde.findRole = jest.fn().mockReturnValue(mockDiscord.role);
-    const toSetPosition = new ToSetRolePosition(corde, "test", true);
+    const toSetPosition = initTestClass(corde, true);
     const report = await toSetPosition.action(-2, { id: "123" });
 
-    const matchReport: TestReport = {
-      pass: true,
-    };
+    const matchReport = createReport(toSetPosition, true);
     expect(report).toEqual(matchReport);
     expect(report).toMatchSnapshot();
   });
@@ -178,7 +169,7 @@ describe("testing ToSetRolePosition operation", () => {
 
     runtime.setConfigs({ timeOut: 10 }, true);
     corde.findRole = jest.fn().mockReturnValue(mockDiscord.role);
-    const toSetPosition = new ToSetRolePosition(corde, "test", false);
+    const toSetPosition = initTestClass(corde, false);
     const report = await toSetPosition.action(-2, { id: "123" });
 
     const message = buildReportMessage(
@@ -186,10 +177,8 @@ describe("testing ToSetRolePosition operation", () => {
       `received: position didn't change`,
     );
 
-    const matchReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const matchReport = createReport(toSetPosition, false, message);
+
     expect(report).toEqual(matchReport);
     expect(report).toMatchSnapshot();
   });
@@ -202,7 +191,7 @@ describe("testing ToSetRolePosition operation", () => {
 
     const mockEvent = new MockEvents(corde, mockDiscord);
     mockEvent.mockOnceRolePositionUpdate();
-    const toSetPosition = new ToSetRolePosition(corde, "test", false);
+    const toSetPosition = initTestClass(corde, false);
     const report = await toSetPosition.action(-2, { id: "123" });
 
     const message = buildReportMessage(
@@ -210,10 +199,8 @@ describe("testing ToSetRolePosition operation", () => {
       `received: 1`,
     );
 
-    const matchReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const matchReport = createReport(toSetPosition, false, message);
+
     expect(report).toEqual(matchReport);
     expect(report).toMatchSnapshot();
   });

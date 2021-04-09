@@ -1,8 +1,8 @@
 import { Client } from "discord.js";
 import { ToSetRoleHoist } from "../../../src/expect/matches";
 import MockDiscord from "../../mocks/mockDiscord";
-import { initCordeClientWithChannel } from "../../testHelper";
-import { TestReport } from "../../../src/types";
+import { createReport, initCordeClientWithChannel, testUtils } from "../../testHelper";
+import { CordeBotLike, TestReport } from "../../../src/types";
 import { buildReportMessage } from "../../../src/utils";
 import { MockEvents } from "../../mocks/mockEvents";
 import { runtime } from "../../../src/common/runtime";
@@ -17,6 +17,15 @@ function initClient() {
   return corde;
 }
 
+function initTestClass(cordeBot: CordeBotLike, isNot: boolean) {
+  return testUtils.initTestClass(ToSetRoleHoist, {
+    command: "toDelete",
+    cordeBot: cordeBot,
+    isNot: isNot,
+    timeout: 1000,
+  });
+}
+
 describe("testing toSetRoleHoist operation", () => {
   afterEach(() => {
     mockDiscord = new MockDiscord();
@@ -24,7 +33,7 @@ describe("testing toSetRoleHoist operation", () => {
 
   it("should fail due to undefined roleIdentifier", async () => {
     const corde = initClient();
-    const toSetHoist = new ToSetRoleHoist(corde, "test", false);
+    const toSetHoist = initTestClass(corde, false);
     const report = await toSetHoist.action(true, undefined);
 
     const message = buildReportMessage(
@@ -32,10 +41,7 @@ describe("testing toSetRoleHoist operation", () => {
       `received: null`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetHoist, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -43,7 +49,7 @@ describe("testing toSetRoleHoist operation", () => {
 
   it("should return false due to invalid hoist parameter (object)", async () => {
     const corde = initClient();
-    const toSetHoist = new ToSetRoleHoist(corde, "test", false);
+    const toSetHoist = initTestClass(corde, false);
     // @ts-ignore
     const report = await toSetHoist.action({}, { id: "123" });
 
@@ -52,10 +58,7 @@ describe("testing toSetRoleHoist operation", () => {
       `received: object`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetHoist, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -63,7 +66,7 @@ describe("testing toSetRoleHoist operation", () => {
 
   it("should return false due to invalid hoist parameter (undefined)", async () => {
     const corde = initClient();
-    const toSetHoist = new ToSetRoleHoist(corde, "test", false);
+    const toSetHoist = initTestClass(corde, false);
     // @ts-ignore
     const report = await toSetHoist.action(undefined, { id: "123" });
 
@@ -72,10 +75,7 @@ describe("testing toSetRoleHoist operation", () => {
       `received: undefined`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetHoist, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -84,15 +84,12 @@ describe("testing toSetRoleHoist operation", () => {
   it("should return false due to not found role", async () => {
     const corde = initClient();
     corde.findRole = jest.fn().mockReturnValue(null);
-    const toSetHoist = new ToSetRoleHoist(corde, "test", false);
+    const toSetHoist = initTestClass(corde, false);
     const report = await toSetHoist.action(false, { id: "123" });
 
     const message = buildReportMessage(`expected: role with id 123\n`, `received: null`);
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetHoist, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -103,7 +100,7 @@ describe("testing toSetRoleHoist operation", () => {
 
     runtime.setConfigs({ timeOut: 100 }, true);
 
-    const toSetHoist = new ToSetRoleHoist(corde, "test", false);
+    const toSetHoist = initTestClass(corde, false);
     const report = await toSetHoist.action(false, { id: "123" });
 
     const message = buildReportMessage(
@@ -111,10 +108,7 @@ describe("testing toSetRoleHoist operation", () => {
       `received: role hoist was not updated`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetHoist, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -125,12 +119,10 @@ describe("testing toSetRoleHoist operation", () => {
 
     runtime.setConfigs({ timeOut: 100 }, true);
 
-    const toSetHoist = new ToSetRoleHoist(corde, "test", true);
+    const toSetHoist = initTestClass(corde, true);
     const report = await toSetHoist.action(false, { id: "123" });
 
-    const expectReport: TestReport = {
-      pass: true,
-    };
+    const expectReport = createReport(toSetHoist, true);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -142,12 +134,10 @@ describe("testing toSetRoleHoist operation", () => {
     runtime.setConfigs({ timeOut: 100 }, true);
     const mockEvent = new MockEvents(corde, mockDiscord);
     mockEvent.mockOnceHoistUpdate(mockDiscord.role);
-    const toSetHoist = new ToSetRoleHoist(corde, "test", false);
+    const toSetHoist = initTestClass(corde, false);
     const report = await toSetHoist.action(mockDiscord.role.hoist, { id: "123" });
 
-    const expectReport: TestReport = {
-      pass: true,
-    };
+    const expectReport = createReport(toSetHoist, true);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -159,7 +149,7 @@ describe("testing toSetRoleHoist operation", () => {
     runtime.setConfigs({ timeOut: 100 }, true);
     const mockEvent = new MockEvents(corde, mockDiscord);
     mockEvent.mockOnceHoistUpdate(mockDiscord.role);
-    const toSetHoist = new ToSetRoleHoist(corde, "test", true);
+    const toSetHoist = initTestClass(corde, true);
     const report = await toSetHoist.action(mockDiscord.role.hoist, { id: "123" });
 
     const message = buildReportMessage(
@@ -167,10 +157,7 @@ describe("testing toSetRoleHoist operation", () => {
       `received: ${mockDiscord.role.hoist}`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetHoist, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -182,15 +169,12 @@ describe("testing toSetRoleHoist operation", () => {
     runtime.setConfigs({ timeOut: 100 }, true);
     const mockEvent = new MockEvents(corde, mockDiscord);
     mockEvent.mockOnceHoistUpdate(mockDiscord.role);
-    const toSetHoist = new ToSetRoleHoist(corde, "test", false);
+    const toSetHoist = initTestClass(corde, false);
     const report = await toSetHoist.action(false, { id: "123" });
 
     const message = buildReportMessage(`expected: hoist to be false\n`, `received: true`);
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetHoist, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();

@@ -1,4 +1,3 @@
-export * from "./guid";
 export * from "./colors";
 export * from "./permission";
 export * from "./executeWithTimeout";

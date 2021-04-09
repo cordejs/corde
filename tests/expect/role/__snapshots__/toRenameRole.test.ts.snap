@@ -7,6 +7,7 @@ Object {
     received: name was not changed
 ",
   "pass": false,
+  "testName": "toRenameRole",
 }
 `;
 
@@ -17,6 +18,7 @@ Object {
     received: null
 ",
   "pass": false,
+  "testName": "toRenameRole",
 }
 `;
 
@@ -27,6 +29,7 @@ Object {
     received: name was not changed (actual: 'WE DEM BOYZZ!!!!!! 1')
 ",
   "pass": false,
+  "testName": "toRenameRole",
 }
 `;
 
@@ -37,6 +40,7 @@ Object {
     received: name was not changed (actual: 'WE DEM BOYZZ!!!!!! 1')
 ",
   "pass": false,
+  "testName": "toRenameRole",
 }
 `;
 
@@ -47,6 +51,7 @@ Object {
     received: object
 ",
   "pass": false,
+  "testName": "toRenameRole",
 }
 `;
 
@@ -57,6 +62,7 @@ Object {
     received: ''
 ",
   "pass": false,
+  "testName": "toRenameRole",
 }
 `;
 
@@ -67,17 +73,20 @@ Object {
     received: null
 ",
   "pass": false,
+  "testName": "toRenameRole",
 }
 `;
 
 exports[`testing ToRenameRole operation should return true due to isNot true and no role change 1`] = `
 Object {
   "pass": true,
+  "testName": "toRenameRole",
 }
 `;
 
 exports[`testing ToRenameRole operation should return true due to role has changed the name (isNot false) 1`] = `
 Object {
   "pass": true,
+  "testName": "toRenameRole",
 }
 `;

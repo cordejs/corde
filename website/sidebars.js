@@ -45,7 +45,7 @@ module.exports = {
         },
         {
           type: "doc",
-          id: "clausures",
+          id: "closures",
         },
         {
           type: "doc",

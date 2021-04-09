@@ -1,11 +1,11 @@
 import { Client } from "discord.js";
 import MockDiscord from "../../mocks/mockDiscord";
-import { createCordeBotWithMockedFunctions } from "../../testHelper";
-import { MessageEmbedLike, TestReport } from "../../../src/types";
+import { createCordeBotWithMockedFunctions, testUtils } from "../../testHelper";
+import { MockEvents } from "../../mocks/mockEvents";
+import { CordeBotLike, TestReport } from "../../../src/types";
 import { ToReturn } from "../../../src/expect/matches";
 import { buildReportMessage, diff, formatObject } from "../../../src/utils";
 import { runtime } from "../../../src/common/runtime";
-import messageUtils from "../../../src/expect/messageUtils";
 
 let mockDiscord = new MockDiscord();
 
@@ -13,6 +13,15 @@ describe("testing toReturn", () => {
   afterEach(() => {
     mockDiscord = new MockDiscord();
   });
+
+  function initTestClass(cordeBot: CordeBotLike, isNot: boolean) {
+    return testUtils.initTestClass(ToReturn, {
+      command: "toReturn",
+      cordeBot: cordeBot,
+      isNot: isNot,
+      timeout: 1000,
+    });
+  }
 
   it("should return a failed test due to invalid parameter (null)", async () => {
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
@@ -22,12 +31,14 @@ describe("testing toReturn", () => {
       `received: null`,
     );
 
+    const toReturn = initTestClass(cordeClient, false);
+
     const reportModel: TestReport = {
       pass: false,
+      testName: toReturn.toString(),
       message,
     };
 
-    const toReturn = new ToReturn(cordeClient, "ping", false);
     const report = await toReturn.action(null);
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
@@ -41,12 +52,14 @@ describe("testing toReturn", () => {
       `received: undefined`,
     );
 
+    const toReturn = initTestClass(cordeClient, false);
+
     const reportModel: TestReport = {
       pass: false,
+      testName: toReturn.toString(),
       message,
     };
 
-    const toReturn = new ToReturn(cordeClient, "ping", false);
     const report = await toReturn.action(undefined);
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
@@ -61,12 +74,14 @@ describe("testing toReturn", () => {
       `received: no message was sent`,
     );
 
+    const toReturn = initTestClass(cordeClient, false);
+
     const reportModel: TestReport = {
       pass: false,
+      testName: toReturn.toString(),
       message,
     };
 
-    const toReturn = new ToReturn(cordeClient, "ping", false);
     const report = await toReturn.action("pong");
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
@@ -76,11 +91,13 @@ describe("testing toReturn", () => {
     runtime.setConfigs({ timeOut: 100 }, true);
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
 
+    const toReturn = initTestClass(cordeClient, true);
+
     const reportModel: TestReport = {
       pass: true,
+      testName: toReturn.toString(),
     };
 
-    const toReturn = new ToReturn(cordeClient, "ping", true);
     const report = await toReturn.action("pong");
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
@@ -89,12 +106,17 @@ describe("testing toReturn", () => {
   it("should get success test due to bot returned equal message", async () => {
     runtime.setConfigs({ timeOut: 100 }, true);
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
-    cordeClient.awaitMessagesFromTestingBot = jest.fn().mockReturnValue(mockDiscord.message);
+
+    const events = new MockEvents(cordeClient, mockDiscord);
+    events.mockOnceMessage();
+
+    const toReturn = initTestClass(cordeClient, false);
+
     const reportModel: TestReport = {
       pass: true,
+      testName: toReturn.toString(),
     };
 
-    const toReturn = new ToReturn(cordeClient, "ping", false);
     const report = await toReturn.action(mockDiscord.message.content);
 
     expect(report).toEqual(reportModel);
@@ -104,12 +126,17 @@ describe("testing toReturn", () => {
   it("should get success test due to bot returned equal messages (string type)", async () => {
     runtime.setConfigs({ timeOut: 100 }, true);
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
-    cordeClient.awaitMessagesFromTestingBot = jest.fn().mockReturnValue(mockDiscord.message);
+
+    const events = new MockEvents(cordeClient, mockDiscord);
+    events.mockOnceMessage();
+
+    const toReturn = initTestClass(cordeClient, false);
+
     const reportModel: TestReport = {
       pass: true,
+      testName: toReturn.toString(),
     };
 
-    const toReturn = new ToReturn(cordeClient, "ping", false);
     const report = await toReturn.action(mockDiscord.message.content);
 
     expect(report).toEqual(reportModel);
@@ -120,12 +147,17 @@ describe("testing toReturn", () => {
     runtime.setConfigs({ timeOut: 100 }, true);
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
     mockDiscord.message.content = "2";
-    cordeClient.awaitMessagesFromTestingBot = jest.fn().mockReturnValue(mockDiscord.message);
+
+    const events = new MockEvents(cordeClient, mockDiscord);
+    events.mockOnceMessage();
+
+    const toReturn = initTestClass(cordeClient, false);
+
     const reportModel: TestReport = {
       pass: true,
+      testName: toReturn.toString(),
     };
 
-    const toReturn = new ToReturn(cordeClient, "ping", false);
     const report = await toReturn.action(2);
 
     expect(report).toEqual(reportModel);
@@ -135,12 +167,18 @@ describe("testing toReturn", () => {
   it("should get success test due to bot returned equal messages (type embed)", async () => {
     runtime.setConfigs({ timeOut: 100 }, true);
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
-    cordeClient.awaitMessagesFromTestingBot = jest.fn().mockReturnValue(mockDiscord.messageEmbed);
+
+    const events = new MockEvents(cordeClient, mockDiscord);
+    mockDiscord.message.embeds.push(mockDiscord.messageEmbed);
+    events.mockOnceMessage(mockDiscord.message);
+
+    const toReturn = initTestClass(cordeClient, false);
+
     const reportModel: TestReport = {
       pass: true,
+      testName: toReturn.toString(),
     };
 
-    const toReturn = new ToReturn(cordeClient, "ping", false);
     const report = await toReturn.action(mockDiscord.messageEmbedLike);
 
     expect(report).toEqual(reportModel);
@@ -151,16 +189,21 @@ describe("testing toReturn", () => {
     runtime.setConfigs({ timeOut: 100 }, true);
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
     mockDiscord.message.embeds.push(mockDiscord.messageEmbed);
-    cordeClient.awaitMessagesFromTestingBot = jest.fn().mockReturnValue(mockDiscord.message);
+
+    const events = new MockEvents(cordeClient, mockDiscord);
+    events.mockOnceMessage();
+
+    const toReturn = initTestClass(cordeClient, true);
+
     const reportModel: TestReport = {
       pass: false,
+      testName: toReturn.toString(),
       message: buildReportMessage(
         `expected: message from bot be different from expectation\n`,
         `received: both returned and expectation are equal`,
       ),
     };
 
-    const toReturn = new ToReturn(cordeClient, "ping", true);
     const report = await toReturn.action(mockDiscord.messageEmbedLike);
 
     expect(report).toEqual(reportModel);
@@ -170,12 +213,17 @@ describe("testing toReturn", () => {
   it("should get success test due to bot returned different messages (isNot true)", async () => {
     runtime.setConfigs({ timeOut: 100 }, true);
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
-    cordeClient.awaitMessagesFromTestingBot = jest.fn().mockReturnValue(mockDiscord.message);
+
+    const events = new MockEvents(cordeClient, mockDiscord);
+    events.mockOnceMessage();
+
+    const toReturn = initTestClass(cordeClient, true);
+
     const reportModel: TestReport = {
       pass: true,
+      testName: toReturn.toString(),
     };
 
-    const toReturn = new ToReturn(cordeClient, "ping", true);
     const report = await toReturn.action(mockDiscord.messageEmbedLike);
 
     expect(report).toEqual(reportModel);
@@ -187,23 +235,27 @@ describe("testing toReturn", () => {
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
 
     mockDiscord.message.embeds.push(mockDiscord.messageEmbed);
-    cordeClient.awaitMessagesFromTestingBot = jest.fn().mockReturnValue(mockDiscord.message);
 
-    const embedReturned = messageUtils.getMessageByType(mockDiscord.message, "embed");
+    const events = new MockEvents(cordeClient, mockDiscord);
+    events.mockOnceMessage();
+
+    const toReturn = initTestClass(cordeClient, false);
+
+    const embedReturned = toReturn.getMessageByType(mockDiscord.message, "embed");
     const embedLike = {
       author: "Test",
       fields: mockDiscord.messageEmbedLike.fields,
     };
 
-    const embedExpect = messageUtils.embedMessageLikeToMessageEmbed(embedLike);
-    const embedExpectedMinified = messageUtils.getMessageByType(embedExpect, "embed");
+    const embedExpect = toReturn.embedMessageLikeToMessageEmbed(embedLike);
+    const embedExpectedMinified = toReturn.getMessageByType(embedExpect, "embed");
 
     const reportModel: TestReport = {
       pass: false,
+      testName: toReturn.toString(),
       message: buildReportMessage(diff(embedReturned, embedExpectedMinified)),
     };
 
-    const toReturn = new ToReturn(cordeClient, "ping", false);
     const report = await toReturn.action(embedLike);
 
     expect(report).toEqual(reportModel);
@@ -215,20 +267,24 @@ describe("testing toReturn", () => {
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
 
     mockDiscord.message.embeds.push(mockDiscord.messageEmbed);
-    cordeClient.awaitMessagesFromTestingBot = jest.fn().mockReturnValue(mockDiscord.message);
+
+    const events = new MockEvents(cordeClient, mockDiscord);
+    events.mockOnceMessage();
+
+    const toReturn = initTestClass(cordeClient, false);
 
     const expectValue = "expect value";
-    const embedReturned = messageUtils.getMessageByType(mockDiscord.message, "embed");
+    const embedReturned = toReturn.getMessageByType(mockDiscord.message, "embed");
 
     const reportModel: TestReport = {
       pass: false,
+      testName: toReturn.toString(),
       message: buildReportMessage(
         `expected: '${expectValue}'\n`,
         `received: ${formatObject(embedReturned)}`,
       ),
     };
 
-    const toReturn = new ToReturn(cordeClient, "ping", false);
     const report = await toReturn.action(expectValue);
 
     expect(report).toEqual(reportModel);
@@ -239,19 +295,22 @@ describe("testing toReturn", () => {
     runtime.setConfigs({ timeOut: 100 }, true);
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
 
-    cordeClient.awaitMessagesFromTestingBot = jest.fn().mockReturnValue(mockDiscord.message);
+    const events = new MockEvents(cordeClient, mockDiscord);
+    events.mockOnceMessage();
 
-    const embedExpect = messageUtils.embedMessageLikeToMessageEmbed(mockDiscord.messageEmbedLike);
+    const toReturn = initTestClass(cordeClient, false);
+
+    const embedExpect = toReturn.embedMessageLikeToMessageEmbed(mockDiscord.messageEmbedLike);
 
     const reportModel: TestReport = {
       pass: false,
+      testName: toReturn.toString(),
       message: buildReportMessage(
         `expected: ${formatObject(embedExpect)}\n`,
         `received: '${mockDiscord.message}'`,
       ),
     };
 
-    const toReturn = new ToReturn(cordeClient, "ping", false);
     const report = await toReturn.action(mockDiscord.messageEmbedLike);
 
     expect(report).toEqual(reportModel);
@@ -262,19 +321,21 @@ describe("testing toReturn", () => {
     runtime.setConfigs({ timeOut: 100 }, true);
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
 
-    cordeClient.awaitMessagesFromTestingBot = jest.fn().mockReturnValue(mockDiscord.message);
+    const events = new MockEvents(cordeClient, mockDiscord);
+    events.mockOnceMessage();
 
+    const toReturn = initTestClass(cordeClient, false);
     const expectValue = "expect value";
 
     const reportModel: TestReport = {
       pass: false,
+      testName: toReturn.toString(),
       message: buildReportMessage(
         `expected: '${expectValue}'\n`,
         `received: '${mockDiscord.message.content}'`,
       ),
     };
 
-    const toReturn = new ToReturn(cordeClient, "ping", false);
     const report = await toReturn.action(expectValue);
 
     expect(report).toEqual(reportModel);

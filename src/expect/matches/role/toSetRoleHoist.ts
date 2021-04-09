@@ -3,17 +3,22 @@ import { Role } from "discord.js";
 import { RoleIdentifier, TestReport } from "../../../types";
 import { roleUtils } from "../../roleUtils";
 import { typeOf } from "../../../utils";
+import { ExpectTestBaseParams } from "../../../types";
 
 /**
  * @internal
  */
 export class ToSetRoleHoist extends ExpectTest {
+  constructor(params: ExpectTestBaseParams) {
+    super({ ...params, testName: "toSetRoleHoist" });
+  }
+
   async action(hoist: boolean, roleIdentifier: string | RoleIdentifier): Promise<TestReport> {
     const identifier = roleUtils.getRoleData(roleIdentifier);
     const error = roleUtils.getErrorForUndefinedRoleData(identifier);
 
     if (error) {
-      return { pass: false, message: error };
+      return this.createFailedTest(error);
     }
 
     if (hoist == undefined) {
@@ -34,16 +39,16 @@ export class ToSetRoleHoist extends ExpectTest {
     const invalidRoleErrorMessage = roleUtils.validateRole(oldRole, identifier);
 
     if (invalidRoleErrorMessage) {
-      return { pass: false, message: invalidRoleErrorMessage };
+      return this.createFailedTest(invalidRoleErrorMessage);
     }
 
-    await this.cordeBot.sendTextMessage(this.command);
+    await this.sendCommandMessage();
     let role: Role;
     try {
-      role = await this.cordeBot.events.onceRoleHoistUpdate(identifier, this.timeOut);
+      role = await this.cordeBot.events.onceRoleHoistUpdate(identifier, this.timeOut, this.guildId);
     } catch {
       if (this.isNot) {
-        return { pass: true };
+        return this.createPassTest();
       }
 
       return this.createReport(
@@ -58,7 +63,7 @@ export class ToSetRoleHoist extends ExpectTest {
     this.invertHasPassedIfIsNot();
 
     if (this.hasPassed) {
-      return { pass: true };
+      return this.createPassTest();
     }
 
     return this.createReport(

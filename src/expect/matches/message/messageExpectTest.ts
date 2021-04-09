@@ -1,18 +1,76 @@
 import assert from "assert";
 import { Message, MessageEmbed, PartialMessage } from "discord.js";
 import {
-  MessageIdentifier,
+  MessageEditedIdentifier,
   MessageEmbedLike,
+  MessageIdentifier,
   messageType,
   MinifiedEmbedMessage,
   Primitive,
-  MessageEditedIdentifier,
-} from "../types";
-import { pick } from "../utils/pick";
-import { isPrimitiveValue } from "../utils/isPrimitiveValue";
-import { typeOf } from "../utils";
+} from "../../../types";
+import { diff, formatObject, isPrimitiveValue, pick, typeOf } from "../../../utils";
+import { ExpectTest } from "../expectTest";
 
-class MessageUtils {
+export abstract class MessageExpectTest extends ExpectTest {
+  validateExpect(expect: Primitive | MessageEmbedLike) {
+    if (!isPrimitiveValue(expect) && typeOf(expect) !== "object") {
+      return this.createReport(
+        "expected: expect value to be a primitive value (string, boolean, number) or an MessageEmbedLike\n",
+        `received: ${typeOf(expect)}`,
+      );
+    }
+    return null;
+  }
+
+  createReportForExpectAndResponse(
+    expect: Primitive | MessageEmbed,
+    returnedMessage: Message | PartialMessage,
+  ) {
+    this.hasPassed = this.messagesMatches(returnedMessage, expect);
+    this.invertHasPassedIfIsNot();
+
+    if (this.hasPassed) {
+      return this.createPassTest();
+    }
+
+    if (this.isNot) {
+      return this.createReport(
+        "expected: message from bot be different from expectation\n",
+        "received: both returned and expectation are equal",
+      );
+    }
+
+    let embedExpect: MinifiedEmbedMessage | undefined;
+    if (typeOf(expect) === "object") {
+      embedExpect = this.getMessageByType(expect as MessageEmbed, "embed") as MinifiedEmbedMessage;
+    }
+
+    let embedReturned: MinifiedEmbedMessage | undefined;
+    if (returnedMessage.embeds[0]) {
+      embedReturned = this.getMessageByType(returnedMessage, "embed") as MinifiedEmbedMessage;
+    }
+
+    if (embedExpect && embedReturned) {
+      return this.createReport(diff(embedReturned, embedExpect));
+    }
+
+    if (embedExpect && !embedReturned) {
+      return this.createReport(
+        `expected: ${formatObject(embedExpect)}\n`,
+        `received: '${returnedMessage.content}'`,
+      );
+    }
+
+    if (!embedExpect && embedReturned) {
+      return this.createReport(
+        `expected: '${expect}'\n`,
+        `received: ${formatObject(embedReturned)}`,
+      );
+    }
+
+    return this.createReport(`expected: '${expect}'\n`, `received: '${returnedMessage.content}'`);
+  }
+
   messagesMatches(
     returnedMessage: Message | PartialMessage,
     expectation: Primitive | MessageEmbed,
@@ -96,40 +154,16 @@ class MessageUtils {
     if (!msgIdentifier) {
       return "";
     }
-
     if (msgIdentifier?.id) {
       return `message of id ${msgIdentifier.id}`;
     }
-
     if ((msgIdentifier as MessageIdentifier).content) {
       return `message of content "${(msgIdentifier as MessageIdentifier).content}"`;
     }
-
     if ((msgIdentifier as MessageEditedIdentifier).oldContent) {
       return `message of content "${(msgIdentifier as MessageEditedIdentifier).oldContent}"`;
     }
-
     return "";
-  }
-
-  createNotFoundMessageForMessageData(msgIdentifier: MessageIdentifier): string | null {
-    if (!msgIdentifier) {
-      return null;
-    }
-
-    if (msgIdentifier.id && msgIdentifier.content) {
-      return `Message with id ${msgIdentifier.id} or content '${msgIdentifier.content}' not found.`;
-    }
-
-    if (msgIdentifier.id) {
-      return `Message with id ${msgIdentifier.id} not found.`;
-    }
-
-    if (msgIdentifier.content) {
-      return `Message with content '${msgIdentifier.content}' not found.`;
-    }
-
-    return null;
   }
 
   embedMessageLikeToMessageEmbed(embedLike: MessageEmbedLike) {
@@ -197,9 +231,3 @@ class MessageUtils {
     return embed;
   }
 }
-
-/**
- * @internal
- */
-const messageUtils = new MessageUtils();
-export default messageUtils;

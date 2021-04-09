@@ -7,6 +7,7 @@ Object {
     received: message was not edited
 ",
   "pass": false,
+  "testName": "toEditMessage",
 }
 `;
 
@@ -17,6 +18,7 @@ Object {
     received: message was not edited
 ",
   "pass": false,
+  "testName": "toEditMessage",
 }
 `;
 
@@ -27,6 +29,7 @@ Object {
     received: message was not edited
 ",
   "pass": false,
+  "testName": "toEditMessage",
 }
 `;
 
@@ -37,6 +40,7 @@ Object {
     received: message was not edited
 ",
   "pass": false,
+  "testName": "toEditMessage",
 }
 `;
 
@@ -96,6 +100,7 @@ Object {
     [2m  }[22m
 ",
   "pass": false,
+  "testName": "toEditMessage",
 }
 `;
 
@@ -145,6 +150,7 @@ Object {
     received: 'this is the message content'
 ",
   "pass": false,
+  "testName": "toEditMessage",
 }
 `;
 
@@ -194,6 +200,7 @@ Object {
     }
 ",
   "pass": false,
+  "testName": "toEditMessage",
 }
 `;
 
@@ -204,6 +211,7 @@ Object {
     received: 'this is the message content'
 ",
   "pass": false,
+  "testName": "toEditMessage",
 }
 `;
 
@@ -214,42 +222,49 @@ Object {
     received: both returned and expectation are equal
 ",
   "pass": false,
+  "testName": "toEditMessage",
 }
 `;
 
 exports[`testing toEditMessage should get success test due to bot returned different messages (isNot true) 1`] = `
 Object {
   "pass": true,
+  "testName": "toEditMessage",
 }
 `;
 
 exports[`testing toEditMessage should get success test due to bot returned equal message 1`] = `
 Object {
   "pass": true,
+  "testName": "toEditMessage",
 }
 `;
 
 exports[`testing toEditMessage should get success test due to bot returned equal messages (string number) 1`] = `
 Object {
   "pass": true,
+  "testName": "toEditMessage",
 }
 `;
 
 exports[`testing toEditMessage should get success test due to bot returned equal messages (string type) 1`] = `
 Object {
   "pass": true,
+  "testName": "toEditMessage",
 }
 `;
 
 exports[`testing toEditMessage should get success test due to bot returned equal messages (type embed) 1`] = `
 Object {
   "pass": true,
+  "testName": "toEditMessage",
 }
 `;
 
 exports[`testing toEditMessage should get success test due to timeout but isNot = true 1`] = `
 Object {
   "pass": true,
+  "testName": "toEditMessage",
 }
 `;
 
@@ -260,6 +275,7 @@ Object {
     received: null
 ",
   "pass": false,
+  "testName": "toEditMessage",
 }
 `;
 
@@ -270,5 +286,6 @@ Object {
     received: undefined
 ",
   "pass": false,
+  "testName": "toEditMessage",
 }
 `;

@@ -2,12 +2,17 @@ import { MessageReaction, PartialUser, User } from "discord.js";
 import { TimeoutError } from "../../../errors";
 import { EmojiLike, EmojisType, MessageIdentifier, TestReport } from "../../../types";
 import { typeOf } from "../../../utils";
+import { ExpectTestBaseParams } from "../../../types";
 import { ExpectTest } from "../expectTest";
 
 /**
  * @internal
  */
 export class ToAddReaction extends ExpectTest {
+  constructor(params: ExpectTestBaseParams) {
+    super({ ...params, testName: "toAddReaction" });
+  }
+
   async action(
     emojis: EmojisType,
     messageIdentifier?: MessageIdentifier | string,
@@ -30,7 +35,7 @@ export class ToAddReaction extends ExpectTest {
       );
     }
 
-    await this.cordeBot.sendTextMessage(this.command);
+    await this.sendCommandMessage();
     let reactionsWithAuthors: [MessageReaction, User | PartialUser | void][];
     try {
       const emojiLike = emojis.map((e: string | EmojiLike) => {
@@ -51,7 +56,7 @@ export class ToAddReaction extends ExpectTest {
       });
     } catch (error) {
       if (this.isNot) {
-        return { pass: true };
+        return this.createPassTest();
       }
 
       if (error instanceof TimeoutError && (error.data as any[])?.length) {
@@ -75,7 +80,7 @@ export class ToAddReaction extends ExpectTest {
     this.invertHasPassedIfIsNot();
 
     if (this.hasPassed) {
-      return { pass: true };
+      return this.createPassTest();
     }
 
     const emojisReturned = reactionsFromResponse(reactionsWithAuthors);

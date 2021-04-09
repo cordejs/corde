@@ -2,11 +2,16 @@ import chalk, { Color } from "chalk";
 import { Client } from "discord.js";
 import { runtime } from "../../../src/common/runtime";
 import { ToSetRoleColor } from "../../../src/expect/matches";
-import { TestReport } from "../../../src/types";
+import { CordeBotLike, TestReport } from "../../../src/types";
 import { buildReportMessage, Colors, resolveColor } from "../../../src/utils";
 import MockDiscord from "../../mocks/mockDiscord";
 import { MockEvents } from "../../mocks/mockEvents";
-import { initCordeClientWithChannel, removeANSIColorStyle } from "../../testHelper";
+import {
+  createReport,
+  initCordeClientWithChannel,
+  removeANSIColorStyle,
+  testUtils,
+} from "../../testHelper";
 
 let mockDiscord = new MockDiscord();
 
@@ -18,13 +23,22 @@ function initClient() {
   return corde;
 }
 
+function initTestClass(cordeBot: CordeBotLike, isNot: boolean) {
+  return testUtils.initTestClass(ToSetRoleColor, {
+    command: "toDelete",
+    cordeBot: cordeBot,
+    isNot: isNot,
+    timeout: 1000,
+  });
+}
+
 describe("testing toSetRoleColor", () => {
   afterEach(() => {
     mockDiscord = new MockDiscord();
   });
   it("should fail due to undefined roleIdentifier", async () => {
     const corde = initClient();
-    const toSetRoleColor = new ToSetRoleColor(corde, "test", false);
+    const toSetRoleColor = initTestClass(corde, false);
     const report = await toSetRoleColor.action(Colors.BLUE, undefined);
 
     const message = buildReportMessage(
@@ -32,10 +46,7 @@ describe("testing toSetRoleColor", () => {
       `received: null`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRoleColor, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -43,15 +54,12 @@ describe("testing toSetRoleColor", () => {
 
   it("should fail due to invalid color", async () => {
     const corde = initClient();
-    const toSetRoleColor = new ToSetRoleColor(corde, "test", false);
+    const toSetRoleColor = initTestClass(corde, false);
     const report = await toSetRoleColor.action(null, { id: "132" });
 
     const message = buildReportMessage(`toSetRoleColor: invalid color informed - 'null'`);
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRoleColor, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -60,15 +68,12 @@ describe("testing toSetRoleColor", () => {
   it("should return false due to not found role", async () => {
     const corde = initClient();
     corde.findRole = jest.fn().mockReturnValue(null);
-    const toSetRoleColor = new ToSetRoleColor(corde, "test", false);
+    const toSetRoleColor = initTestClass(corde, false);
     const report = await toSetRoleColor.action(Colors.PURPLE, { id: "123" });
 
     const message = buildReportMessage(`expected: role with id 123\n`, `received: null`);
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRoleColor, false, message);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -79,7 +84,7 @@ describe("testing toSetRoleColor", () => {
 
     runtime.setConfigs({ timeOut: 100 }, true);
 
-    const toSetRoleColor = new ToSetRoleColor(corde, "test", false);
+    const toSetRoleColor = initTestClass(corde, false);
     const report = await toSetRoleColor.action(Colors.NAVY, { id: "123" });
 
     const message = buildReportMessage(
@@ -89,10 +94,7 @@ describe("testing toSetRoleColor", () => {
       `received: the color was not changed`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRoleColor, false, message);
 
     expect(report.pass).toEqual(expectReport.pass);
     expect(removeANSIColorStyle(report.message)).toEqual(expectReport.message);
@@ -107,12 +109,10 @@ describe("testing toSetRoleColor", () => {
 
     runtime.setConfigs({ timeOut: 100 }, true);
 
-    const toSetRoleColor = new ToSetRoleColor(corde, "test", true);
+    const toSetRoleColor = initTestClass(corde, true);
     const report = await toSetRoleColor.action(Colors.GREY, { id: "123" });
 
-    const expectReport: TestReport = {
-      pass: true,
-    };
+    const expectReport = createReport(toSetRoleColor, true);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -124,12 +124,10 @@ describe("testing toSetRoleColor", () => {
     runtime.setConfigs({ timeOut: 100 }, true);
     const mockEvent = new MockEvents(corde, mockDiscord);
     mockEvent.mockOnceRoleUpdateColor(mockDiscord.role);
-    const toSetRoleColor = new ToSetRoleColor(corde, "test", false);
+    const toSetRoleColor = initTestClass(corde, false);
     const report = await toSetRoleColor.action(mockDiscord.role.color, { id: "123" });
 
-    const expectReport: TestReport = {
-      pass: true,
-    };
+    const expectReport = createReport(toSetRoleColor, true);
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
@@ -141,7 +139,7 @@ describe("testing toSetRoleColor", () => {
     runtime.setConfigs({ timeOut: 100 }, true);
     const mockEvent = new MockEvents(corde, mockDiscord);
     mockEvent.mockOnceRoleUpdateColor(mockDiscord.role);
-    const toSetRoleColor = new ToSetRoleColor(corde, "test", false);
+    const toSetRoleColor = initTestClass(corde, false);
     const report = await toSetRoleColor.action(Colors.DARK_GOLD, { id: "123" });
 
     const message = buildReportMessage(
@@ -151,10 +149,7 @@ describe("testing toSetRoleColor", () => {
       `received: ${mockDiscord.role.color}`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRoleColor, false, message);
 
     expect(report.pass).toEqual(expectReport.pass);
     expect(removeANSIColorStyle(report.message)).toEqual(expectReport.message);
@@ -170,7 +165,7 @@ describe("testing toSetRoleColor", () => {
     runtime.setConfigs({ timeOut: 100 }, true);
     const mockEvent = new MockEvents(corde, mockDiscord);
     mockEvent.mockOnceRoleUpdateColor(mockDiscord.role);
-    const toSetRoleColor = new ToSetRoleColor(corde, "test", false);
+    const toSetRoleColor = initTestClass(corde, false);
     const report = await toSetRoleColor.action(Colors.AQUA, { id: "123" });
 
     const message = buildReportMessage(
@@ -180,10 +175,7 @@ describe("testing toSetRoleColor", () => {
       `received: ${resolveColor(mockDiscord.role.color)}`,
     );
 
-    const expectReport: TestReport = {
-      pass: false,
-      message,
-    };
+    const expectReport = createReport(toSetRoleColor, false, message);
 
     expect(report.pass).toEqual(expectReport.pass);
     expect(removeANSIColorStyle(report.message)).toEqual(expectReport.message);
