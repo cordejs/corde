@@ -29,7 +29,7 @@
     <a href="https://www.npmjs.com/package/corde">
       <img alt="Npm version" src="https://img.shields.io/npm/v/corde" />
     </a>
-    <a href="https://nodei.co/npm/corde/">
+    <a href="https://www.npmjs.com/package/corde">
       <img alt="npm" src="https://img.shields.io/npm/dt/corde"></a>
   </p>
 </div>
