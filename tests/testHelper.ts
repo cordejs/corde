@@ -5,7 +5,7 @@ import { Client } from "discord.js";
 import { CordeBot } from "../src/core/cordeBot";
 import { CordeBotLike, Test, TestFile, TestFunctionType, TestReport } from "../src/types";
 import { ExpectTest } from "../src/expect/matches/expectTest";
-import { ExpectTestBaseParams } from "../src/expect/types";
+import { ExpectTestBaseParams } from "../src/types";
 import { runtime } from "../src/common/runtime";
 import { buildReportMessage } from "../src/utils";
 
@@ -145,17 +145,21 @@ export function generateTestFile(generatorData: TestFileGeneratorInfo) {
   const testFunctions: TestFunctionType[] = [];
   const tests: Test[] = [];
 
-  for (const report of generatorData.testFunctionsReport || []) {
-    testFunctions.push(() => Promise.resolve(report));
+  if (generatorData.testFunctionsReport) {
+    for (const report of generatorData.testFunctionsReport) {
+      testFunctions.push(() => Promise.resolve(report));
+    }
   }
 
-  for (let i = 0; i < generatorData.amountOfTestFunctions; i++) {
-    testFunctions.push(() =>
-      Promise.resolve<TestReport>({
-        testName: "",
-        pass: true,
-      }),
-    );
+  if (generatorData.amountOfTestFunctions) {
+    for (let i = 0; i < generatorData.amountOfTestFunctions; i++) {
+      testFunctions.push(() =>
+        Promise.resolve<TestReport>({
+          testName: "",
+          pass: true,
+        }),
+      );
+    }
   }
 
   // Updates the value if pass testFunctions.
@@ -186,7 +190,7 @@ export function generateTestFile(generatorData: TestFileGeneratorInfo) {
 
 export function _initTestSimpleInstance<T extends ExpectTest>(
   type: new (params: ExpectTestBaseParams) => T,
-  params: Partial<ExpectTestBaseParams>,
+  params: ExpectTestBaseParams,
 ) {
   return new type({
     command: params.command ?? "",
@@ -200,7 +204,7 @@ export function _initTestSimpleInstance<T extends ExpectTest>(
 export namespace testUtils {
   export function initTestClass<T extends ExpectTest>(
     type: new (params: ExpectTestBaseParams) => T,
-    params: Partial<ExpectTestBaseParams>,
+    params: ExpectTestBaseParams,
   ) {
     return new type({
       command: params.command ?? "",

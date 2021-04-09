@@ -1,4 +1,4 @@
-import { RoleMatches, MessageMatches } from "./matcher";
+import { RoleMatches, MessageMatches, ToHaveResultMatcher } from "./matcher";
 import { Expect, MacherContructorArgs } from "../types";
 
 function getMessageMatchers(): string[] {
@@ -7,6 +7,10 @@ function getMessageMatchers(): string[] {
 
 function getRoleMatchers(): string[] {
   return getFunctions(RoleMatches);
+}
+
+function getToHaveResultsMatchers(): string[] {
+  return getFunctions(ToHaveResultMatcher);
 }
 
 function getFunctions<T>(type: new (...args: any[]) => T): string[] {
@@ -42,6 +46,7 @@ function set(from: [string, (...args: any[]) => any][], to: any) {
 
 const messageTestNames = getMessageMatchers();
 const roleMatchers = getRoleMatchers();
+const resultMatchers = getToHaveResultsMatchers();
 
 const _expect: any = <T extends (() => number | string) | number | string>(commandName: T) => {
   const messageTests = createTestsFromMatches(
@@ -49,6 +54,21 @@ const _expect: any = <T extends (() => number | string) | number | string>(comma
     { commandName, isNot: false },
     MessageMatches,
   );
+
+  const todoInCascadeMatcher = createTestsFromMatches(
+    resultMatchers,
+    { commandName, isNot: false },
+    ToHaveResultMatcher,
+  );
+
+  const todoInCascadeMatcherIsNot = createTestsFromMatches(
+    resultMatchers,
+    { commandName, isNot: false },
+    ToHaveResultMatcher,
+  );
+
+  set(todoInCascadeMatcher, expectation);
+  set(todoInCascadeMatcherIsNot, expectation.not);
 
   const isNotMessageTests = createTestsFromMatches(
     messageTestNames,

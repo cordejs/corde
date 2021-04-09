@@ -7,7 +7,7 @@ import { ExpectTest } from "./expectTest";
 /**
  * @internal
  */
-export class TodoInCascade extends ExpectTest {
+export class ToHaveResult extends ExpectTest {
   constructor(params: ExpectTestBaseParams) {
     super({ ...params, testName: "todoInCascade" });
   }

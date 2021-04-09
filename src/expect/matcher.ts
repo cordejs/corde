@@ -34,7 +34,7 @@ import { getStackTrace } from "../utils/getStackTrace";
 import { ToReturnInChannel } from "./matches/message/toReturnInChannel";
 import { runtime } from "../common/runtime";
 import { MacherContructorArgs, MayReturnMatch, ExpectTestBaseParams } from "../types";
-import { TodoInCascade } from "./matches/todoInCascade";
+import { ToHaveResult } from "./matches/toHaveResult";
 
 class BaseMatcher {
   protected _commandName: unknown;
@@ -180,20 +180,20 @@ export class MessageMatches<TReturn extends MayReturnMatch>
   }
 }
 
-export class TodoInCascadeMatcher {}
+export class ToHaveResultMatcher extends BaseMatcher {
+  toHaveResult(...tests: TestFunctionType[]): void {
+    const trace = getStackTrace(undefined, true, "todoInCascade");
+    testCollector.addTestFunction((cordeBot) => {
+      // Encapsulate the functions inside another so it do not be executed.
+      const testEnhanced = tests.map((test) => () => test(cordeBot));
+      return this.operationFactory(trace, ToHaveResult, cordeBot, ...testEnhanced);
+    });
+  }
+}
 
 export class RoleMatches<TReturn extends MayReturnMatch>
   extends BaseMatcher
   implements RoleMatches<TReturn> {
-  todoInCascade(...tests: TestFunctionType[]): void {
-    const trace = getStackTrace(undefined, true, "todoInCascade");
-    this.returnOrAddToCollector((cordeBot) => {
-      // Encapsulate the functions inside another so it do not be executed.
-      const testEnhanced = tests.map((test) => () => test(cordeBot));
-      return this.operationFactory(trace, TodoInCascade, cordeBot, ...testEnhanced);
-    });
-  }
-
   toSetRoleColor(color: ColorResolvable | Colors, roleIdentifier: string | RoleIdentifier) {
     const trace = getStackTrace(undefined, true, "toSetRoleColor");
     return this.returnOrAddToCollector((cordeBot) => {

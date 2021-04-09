@@ -1265,13 +1265,31 @@ export type Matches<TReturn extends MayReturnMatch> = MessageMatches<TReturn> &
  * **command** function. It includes all matches and
  * the *not* statement. Witch will deny the executed match
  */
-export interface IsNot<TMatchesResponse extends any> {
+export interface IsNot<TMatchesResponse extends any, TResponse2 = void> {
   /**
    * Defines that a command should **not** do something.
    * Use this if you can not precise what response a command will throw,
    * But know what it **can not** throw.
    */
-  not: TMatchesResponse;
+  not: TMatchesResponse & TResponse2;
+}
+
+// We intentionally hide the real type of parameters are passed to todoInCasdade,
+// to hide the implementaion from the user.
+export interface ToHaveResult {
+  /**
+   * Execute multiple assertions based in a single command.
+   *
+   * @example
+   *
+   * expect("command").toHaveResult(
+   *  expect.toReturn("hello1"),
+   *  expect.toReturnInChannel("hello2")
+   * );
+   *
+   * @param tests
+   */
+  toHaveResult(...tests: any[]): void;
 }
 
 export interface SetGuildMatchers<TReturn extends MayReturnMatch> {
@@ -1296,8 +1314,10 @@ export interface SetGuildMatchers<TReturn extends MayReturnMatch> {
   inGuild(id: string): IsNot<RoleMatches<TReturn>> & RoleMatches<TReturn>;
 }
 
+type IsNotWithHaveResults = IsNot<Matches<void>, ToHaveResult>;
+
 export type AllMatches<TReturn extends MayReturnMatch> = SetGuildMatchers<TReturn> &
-  IsNot<Matches<TReturn>> &
+  IsNot<Matches<any>> &
   Matches<TReturn>;
 
 export interface Expect extends AllMatches<any> {
@@ -1314,5 +1334,7 @@ export interface Expect extends AllMatches<any> {
    *
    * @since 1.0
    */
-  <T extends (() => number | string) | number | string>(commandNameResolvable: T): AllMatches<void>;
+  <T extends (() => number | string) | number | string>(
+    commandNameResolvable: T,
+  ): SetGuildMatchers<void> & Matches<void> & ToHaveResult & IsNotWithHaveResults;
 }

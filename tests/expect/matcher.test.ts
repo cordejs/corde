@@ -16,11 +16,10 @@ import {
   ToReturn,
   ToSetRoleColor,
 } from "../../src/expect/matches";
-import { TestReport } from "../../src/types";
+import { ExpectTestBaseParams, ExpectTestParams, TestReport } from "../../src/types";
 import { ExpectTest } from "../../src/expect/matches/expectTest";
-import { ExpectTestBaseParams, ExpectTestParams } from "../../src/expect/types";
 import { buildReportMessage } from "../../src/utils";
-import { TodoInCascade } from "../../src/expect/matches/todoInCascade";
+import { ToHaveResult } from "../../src/expect/matches/toHaveResult";
 import { expect as _expect } from "../../src/expect";
 
 jest.mock("../../src/expect/matches/message/toReturn.ts");
@@ -38,7 +37,7 @@ jest.mock("../../src/expect/matches/role/toRenameRole");
 jest.mock("../../src/expect/matches/role/toSetRolePosition");
 jest.mock("../../src/expect/matches/role/toSetRolePermission.ts");
 
-jest.mock("../../src/expect/matches/todoInCascade.ts");
+jest.mock("../../src/expect/matches/toHaveResult.ts");
 
 const toEditMessageActionMock = jest.fn();
 const toSetRoleMentionableActionMock = jest.fn();
@@ -53,7 +52,7 @@ const toSetRolePositionActionMock = jest.fn();
 const toSetRolePermissionActionMock = jest.fn();
 const toPinMessageActionMock = jest.fn();
 const toUnpinMessageActionMock = jest.fn();
-const todoInCascadeActionMock = jest.fn();
+const toHaveResultsActionMock = jest.fn();
 
 const con = "test";
 
@@ -100,7 +99,7 @@ describe("Testing matches class", () => {
     ToPinMessage.prototype.action = toPinMessageActionMock;
 
     ToUnPinMessage.prototype.action = toUnpinMessageActionMock;
-    TodoInCascade.prototype.action = todoInCascadeActionMock;
+    ToHaveResult.prototype.action = toHaveResultsActionMock;
   });
 
   afterEach(() => {
@@ -674,39 +673,34 @@ describe("Testing matches class", () => {
     });
   });
 
-  // describe("testing to todoInCascade", () => {
-  //   it("should add a function to hasIsolatedTestFunctions after call toUnpin", async () => {
-  //     initExpectMatch().todoInCascade();
-  //     expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
-  //   });
+  describe("testing to toHaveResult", () => {
+    it("should add a function to hasIsolatedTestFunctions after call toUnpin", async () => {
+      initExpectMatch().toHaveResult();
+      expect(testCollector.hasIsolatedTestFunctions()).toBe(true);
+    });
 
-  //   it("should add a todoInCascade function", async () => {
-  //     initExpectMatch().todoInCascade();
-  //     await createToBeCalledTestFor(toUnpinMessageActionMock);
-  //   });
+    it("should add a toHaveResult function", async () => {
+      initExpectMatch().toHaveResult();
+      await createToBeCalledTestFor(toUnpinMessageActionMock);
+    });
 
-  //   it("should add a todoInCascade function with correct values using id", async () => {
-  //     const call = _expect.toReturn("test");
-  //     initExpectMatch().todoInCascade(call);
-  //     await createDefaultTestFor(
-  //       TodoInCascade,
-  //       todoInCascadeActionMock,
-  //       false,
-  //       expect.any(Function),
-  //     );
-  //   });
+    it("should add a toHaveResult function with correct values using id", async () => {
+      const call = _expect.toReturn("test");
+      initExpectMatch().toHaveResult(call);
+      await createDefaultTestFor(
+        ToHaveResult,
+        toHaveResultsActionMock,
+        false,
+        expect.any(Function),
+      );
+    });
 
-  //   it("should add a todoInCascade function with correct values (isNot true)", async () => {
-  //     const call = _expect.toReturn("test");
-  //     initExpectMatch().not.todoInCascade(call);
-  //     await createDefaultTestFor(
-  //       TodoInCascade,
-  //       todoInCascadeActionMock,
-  //       true,
-  //       expect.any(Function),
-  //     );
-  //   });
-  // });
+    it("should add a toHaveResult function with correct values (isNot true)", async () => {
+      const call = _expect.toReturn("test");
+      initExpectMatch().not.toHaveResult(call);
+      await createDefaultTestFor(ToHaveResult, toHaveResultsActionMock, true, expect.any(Function));
+    });
+  });
 });
 
 function initExpectMatch(value?: any) {
