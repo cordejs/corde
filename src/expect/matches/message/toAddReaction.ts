@@ -35,7 +35,12 @@ export class ToAddReaction extends ExpectTest {
       );
     }
 
-    await this.sendCommandMessage();
+    try {
+      await this.sendCommandMessage();
+    } catch (error) {
+      return this.createFailedTest(error.message);
+    }
+
     let reactionsWithAuthors: [MessageReaction, User | PartialUser | void][];
     try {
       const emojiLike = emojis.map((e: string | EmojiLike) => {

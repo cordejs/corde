@@ -25,7 +25,11 @@ export class ToEditMessage extends MessageExpectTest {
       );
     }
 
-    await this.sendCommandMessage();
+    try {
+      await this.sendCommandMessage();
+    } catch (error) {
+      return this.createFailedTest(error.message);
+    }
 
     let _messageData: MessageEditedIdentifier | undefined;
 

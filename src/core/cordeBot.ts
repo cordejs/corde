@@ -111,11 +111,37 @@ export class CordeBot implements CordeBotLike {
    * @return Promise rejection if a testing bot does not send any message in the timeout value setted,
    * or a resolve for the promise with the message returned by the testing bot.
    */
-  async sendTextMessage(message: string | number | boolean): Promise<Message> {
+  async sendTextMessage(message: string | number | boolean, channelId?: string): Promise<Message> {
     this.validateMessageAndChannel(message);
     const formattedMessage = this._prefix + message;
+
+    if (channelId) {
+      const channel = await this.findChannelById(channelId);
+
+      if (!channel) {
+        throw new Error(`Channel ${channelId} was not found`);
+      }
+
+      if (channel.isText()) {
+        const returnedMessage = await channel.send(formattedMessage);
+        return returnedMessage;
+      }
+
+      throw new Error("Can not send a message to a non text channel");
+    }
+
     const returnedMessage = await this.textChannel.send(formattedMessage);
     return returnedMessage;
+  }
+
+  private async findChannelById(channelId: string) {
+    const channel = this._client.channels.cache.get(channelId);
+
+    if (channel) {
+      return channel;
+    }
+
+    return await this._client.channels.fetch(channelId, true);
   }
 
   /**

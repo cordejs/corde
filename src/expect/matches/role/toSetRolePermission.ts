@@ -46,7 +46,12 @@ export class ToSetRolePermission extends ExpectTest {
       return this.createFailedTest(invalidRoleErrorMessage);
     }
 
-    await this.sendCommandMessage();
+    try {
+      await this.sendCommandMessage();
+    } catch (error) {
+      return this.createFailedTest(error.message);
+    }
+
     let role: Role;
     try {
       role = await this.cordeBot.events.onceRolePermissionUpdate(

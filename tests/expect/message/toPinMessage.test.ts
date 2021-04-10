@@ -19,7 +19,6 @@ describe("testing pin message test", () => {
       command: "",
       cordeBot: cordeBot,
       isNot: isNot,
-      timeout: 1000,
     });
   }
 

@@ -42,13 +42,22 @@ class BaseMatcher {
   protected _isCascade: boolean;
   protected _guildId?: string;
   protected _channelId?: string;
+  protected _channelIdToSendCommand?: string;
 
-  constructor({ commandName, isNot, isCascade, channelId, guildId }: MacherContructorArgs) {
+  constructor({
+    commandName,
+    isNot,
+    isCascade,
+    channelId,
+    guildId,
+    channelIdToSendCommand,
+  }: MacherContructorArgs) {
     this._commandName = commandName;
     this._isNot = isNot ?? false;
     this._isCascade = isCascade ?? false;
     this._guildId = guildId;
     this._channelId = channelId;
+    this._channelIdToSendCommand = channelIdToSendCommand;
   }
 
   // Trace can not me added inside operationFactory because it do,
@@ -69,6 +78,7 @@ class BaseMatcher {
       timeout: runtime.timeOut,
       isCascade: this._isCascade,
       guildId: this._guildId,
+      channelIdToSendCommand: this._channelIdToSendCommand,
     });
 
     if (

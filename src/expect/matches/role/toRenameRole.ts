@@ -41,7 +41,11 @@ export class ToRenameRole extends ExpectTest {
       return this.createFailedTest(roleUtils.validateRole(oldRole, identifier));
     }
 
-    await this.sendCommandMessage();
+    try {
+      await this.sendCommandMessage();
+    } catch (error) {
+      return this.createFailedTest(error.message);
+    }
 
     let newRole: Role;
     try {

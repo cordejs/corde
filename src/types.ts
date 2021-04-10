@@ -124,7 +124,7 @@ export interface CordeBotLike {
    * @return Promise rejection if a testing bot does not send any message in the timeout value setted,
    * or a resolve for the promise with the message returned by the testing bot.
    */
-  sendTextMessage(message: string | number | boolean): Promise<Message>;
+  sendTextMessage(message: string | number | boolean, channelId?: string): Promise<Message>;
   /**
    * Checks if corde bot is connected
    */
@@ -799,6 +799,7 @@ export interface ExpectTestBaseParams {
   timeout: number;
   isCascade: boolean;
   guildId?: string;
+  channelIdToSendCommand?: string;
 }
 export interface ExpectTestParams extends ExpectTestBaseParams {
   testName: string;
@@ -828,19 +829,6 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    * @since 1.0
    */
   toReturn(expect: MessageEmbedLike): TReturn;
-
-  /**
-   * Defines the message expected to be returned by a
-   * command in a specific channel and guild(optional).
-   *
-   * @param expect A message returned by a bot after invoke a command.
-   * @param channelLocation Object with to holds the id of the channel and of the guild (optional).
-   * @since 3.0
-   */
-  toReturnInChannel(
-    expect: boolean | number | string | MessageEmbedLike,
-    channelId?: string,
-  ): TReturn;
 
   /**
    * Defines [reactions](https://discordjs.guide/popular-topics/reactions.html#reacting-to-messages)
@@ -1244,6 +1232,7 @@ export interface RoleMatches<TReturn extends MayReturnMatch> {
 export interface MacherContructorArgs {
   commandName: unknown;
   isNot?: boolean;
+  channelIdToSendCommand?: string;
   channelId?: string;
   guildId?: string;
   isCascade?: boolean;
@@ -1320,6 +1309,11 @@ export type AllMatches<TReturn extends MayReturnMatch> = SetGuildMatchers<TRetur
   IsNot<Matches<any>> &
   Matches<TReturn>;
 
+export type AllExpectMatches = SetGuildMatchers<void> &
+  Matches<void> &
+  ToHaveResult &
+  IsNotWithHaveResults;
+
 export interface Expect extends AllMatches<any> {
   /**
    * Receives which command will be tested.
@@ -1328,6 +1322,7 @@ export interface Expect extends AllMatches<any> {
    * it's already informed in **configs**
    *
    * @param commandNameResolvable Command name. (Empty strings will resolve failed test)
+   * @param channelId Defines the channel where the command should be send to.
    *
    * @returns An object with all possible tests to be done
    * in the bot.
@@ -1336,5 +1331,6 @@ export interface Expect extends AllMatches<any> {
    */
   <T extends (() => number | string) | number | string>(
     commandNameResolvable: T,
-  ): SetGuildMatchers<void> & Matches<void> & ToHaveResult & IsNotWithHaveResults;
+    channelId?: string,
+  ): AllExpectMatches;
 }

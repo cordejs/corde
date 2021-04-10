@@ -70,6 +70,8 @@ async function createDefaultTestFor<T extends ExpectTest>(
   await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
   const params: ExpectTestBaseParams = {
     command: con,
+    channelIdToSendCommand: undefined,
+    guildId: undefined,
     cordeBot: runtime.bot,
     isNot: isNot,
     timeout: runtime.timeOut,
@@ -126,6 +128,23 @@ describe("Testing matches class", () => {
   it("should not return a function", async () => {
     const matches = initExpectMatch("name");
     expect(matches.not).not.toBe(undefined);
+  });
+
+  it("should pass channelId as argumento of expect", async () => {
+    const channelId = "1231241212";
+    initExpectMatch(con, channelId).toReturn("12");
+    await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
+    const params: ExpectTestBaseParams = {
+      command: con,
+      cordeBot: runtime.bot,
+      isNot: false,
+      guildId: undefined,
+      timeout: runtime.timeOut,
+      isCascade: false,
+      channelIdToSendCommand: channelId,
+    };
+    expect(ToReturn).toBeCalledWith(params);
+    expect(toReturnActionMock).toBeCalledWith("12");
   });
 
   describe("testing operationFactory", () => {
@@ -703,6 +722,6 @@ describe("Testing matches class", () => {
   });
 });
 
-function initExpectMatch(value?: any) {
-  return _expect(value ?? con);
+function initExpectMatch(value?: any, channelId?: string) {
+  return _expect(value ?? con, channelId);
 }

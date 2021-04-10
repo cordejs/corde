@@ -16,10 +16,10 @@ describe("testing toReturn", () => {
 
   function initTestClass(cordeBot: CordeBotLike, isNot: boolean) {
     return testUtils.initTestClass(ToReturn, {
+      isCascade: false,
       command: "toReturn",
       cordeBot: cordeBot,
       isNot: isNot,
-      timeout: 1000,
     });
   }
 

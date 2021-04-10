@@ -22,7 +22,7 @@ export abstract class ExpectTest {
   protected readonly testName: string;
   protected readonly isCascade: boolean;
   protected readonly guildId: string | undefined;
-
+  protected readonly channelIdToSendCommand?: string;
   /**
    * Initialize the match class with its default values.
    *
@@ -38,6 +38,7 @@ export abstract class ExpectTest {
     testName,
     isCascade,
     guildId,
+    channelIdToSendCommand,
   }: ExpectTestParams) {
     this.isNot = isNot;
     this.command = command;
@@ -47,6 +48,7 @@ export abstract class ExpectTest {
     this.testName = testName;
     this.isCascade = isCascade ?? false;
     this.guildId = guildId;
+    this.channelIdToSendCommand = channelIdToSendCommand;
   }
 
   /**
@@ -73,7 +75,7 @@ export abstract class ExpectTest {
    */
   protected sendCommandMessage(forceSend?: boolean) {
     if (!this.isCascade || forceSend) {
-      return this.cordeBot.sendTextMessage(this.command);
+      return this.cordeBot.sendTextMessage(this.command, this.channelIdToSendCommand);
     }
     return Promise.resolve();
   }

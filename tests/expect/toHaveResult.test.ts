@@ -1,8 +1,7 @@
 import { Client } from "discord.js";
 import { runtime } from "../../src/common/runtime";
-import { TodoInCascade } from "../../src/expect/matches/todoInCascade";
+import { ToHaveResult } from "../../src/expect/matches/toHaveResult";
 import { CordeBotLike, TestFunctionType, TestReport } from "../../src/types";
-import { buildReportMessage } from "../../src/utils";
 import MockDiscord from "../mocks/mockDiscord";
 import { MockEvents } from "../mocks/mockEvents";
 import {
@@ -31,8 +30,9 @@ function matchMessageSnapshot(report: TestReport) {
 }
 
 function initTestClass(cordeBot: CordeBotLike, isNot: boolean, command?: string) {
-  return testUtils.initTestClass(TodoInCascade, {
+  return testUtils.initTestClass(ToHaveResult, {
     command: command ?? "toDelete",
+    isCascade: false,
     cordeBot: cordeBot,
     isNot: isNot,
     timeout: runtime.timeOut,

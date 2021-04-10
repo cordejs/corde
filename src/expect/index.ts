@@ -48,22 +48,30 @@ const messageTestNames = getMessageMatchers();
 const roleMatchers = getRoleMatchers();
 const resultMatchers = getToHaveResultsMatchers();
 
-const _expect: any = <T extends (() => number | string) | number | string>(commandName: T) => {
+const _expect: any = <T extends (() => number | string) | number | string>(
+  commandName: T,
+  channelId?: string,
+) => {
+  const baseMatcherConstructor: MacherContructorArgs = {
+    commandName,
+    channelIdToSendCommand: channelId,
+  };
+
   const messageTests = createTestsFromMatches(
     messageTestNames,
-    { commandName, isNot: false },
+    baseMatcherConstructor,
     MessageMatches,
   );
 
   const todoInCascadeMatcher = createTestsFromMatches(
     resultMatchers,
-    { commandName, isNot: false },
+    baseMatcherConstructor,
     ToHaveResultMatcher,
   );
 
   const todoInCascadeMatcherIsNot = createTestsFromMatches(
     resultMatchers,
-    { commandName, isNot: false },
+    { ...baseMatcherConstructor, isNot: true },
     ToHaveResultMatcher,
   );
 
@@ -72,15 +80,11 @@ const _expect: any = <T extends (() => number | string) | number | string>(comma
 
   const isNotMessageTests = createTestsFromMatches(
     messageTestNames,
-    { commandName, isNot: true },
+    { ...baseMatcherConstructor, isNot: true },
     MessageMatches,
   );
 
-  const roleTests = createTestsFromMatches(
-    roleMatchers,
-    { commandName, isNot: false },
-    RoleMatches,
-  );
+  const roleTests = createTestsFromMatches(roleMatchers, baseMatcherConstructor, RoleMatches);
 
   const isNotRoleTests = createTestsFromMatches(
     roleMatchers,
@@ -101,13 +105,13 @@ const _expect: any = <T extends (() => number | string) | number | string>(comma
 
     const roleTests = createTestsFromMatches(
       messageTestNames,
-      { commandName, guildId },
+      { ...baseMatcherConstructor, guildId },
       RoleMatches,
     );
 
     const isNotRoleTests = createTestsFromMatches(
       messageTestNames,
-      { commandName, guildId },
+      { ...baseMatcherConstructor, guildId, isNot: true },
       RoleMatches,
     );
 

@@ -204,7 +204,7 @@ export function _initTestSimpleInstance<T extends ExpectTest>(
 export namespace testUtils {
   export function initTestClass<T extends ExpectTest>(
     type: new (params: ExpectTestBaseParams) => T,
-    params: ExpectTestBaseParams,
+    params: Partial<ExpectTestBaseParams>,
   ) {
     return new type({
       command: params.command ?? "",

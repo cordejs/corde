@@ -19,9 +19,9 @@ describe("testing toDeleteRole function", () => {
   function initTestClass(cordeBot: CordeBotLike, isNot: boolean, command?: string) {
     return testUtils.initTestClass(ToDeleteRole, {
       command: command ?? "toDelete",
+      isCascade: false,
       cordeBot: cordeBot,
       isNot: isNot,
-      timeout: runtime.timeOut,
     });
   }
 
