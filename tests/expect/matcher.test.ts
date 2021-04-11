@@ -75,6 +75,7 @@ async function createDefaultTestFor<T extends ExpectTest>(
     cordeBot: runtime.bot,
     isNot: isNot,
     timeout: runtime.timeOut,
+    channelId: runtime.channelId,
     isCascade: false,
   };
   expect(testClass).toBeCalledWith(params);
@@ -140,6 +141,7 @@ describe("Testing matches class", () => {
       isNot: false,
       guildId: undefined,
       timeout: runtime.timeOut,
+      channelId: runtime.channelId,
       isCascade: false,
       channelIdToSendCommand: channelId,
     };

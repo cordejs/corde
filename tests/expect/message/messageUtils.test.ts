@@ -20,6 +20,9 @@ class ExpectMessage extends MessageExpectTest {
 const extension = new ExpectMessage({
   command: "",
   cordeBot: null,
+  channelId: null,
+  channelIdToSendCommand: null,
+  guildId: null,
   isNot: false,
   testName: "",
   timeout: 1000,

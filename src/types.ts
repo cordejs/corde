@@ -799,6 +799,7 @@ export interface ExpectTestBaseParams {
   timeout: number;
   isCascade: boolean;
   guildId?: string;
+  channelId: string;
   channelIdToSendCommand?: string;
 }
 export interface ExpectTestParams extends ExpectTestBaseParams {

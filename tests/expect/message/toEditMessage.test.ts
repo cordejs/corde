@@ -19,6 +19,7 @@ describe("testing toEditMessage", () => {
       command: commandName,
       cordeBot: cordeBot,
       isNot: isNot,
+      channelId: runtime.channelId,
     });
   }
 

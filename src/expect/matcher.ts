@@ -78,6 +78,7 @@ class BaseMatcher {
       timeout: runtime.timeOut,
       isCascade: this._isCascade,
       guildId: this._guildId,
+      channelId: this._channelId ?? runtime.channelId,
       channelIdToSendCommand: this._channelIdToSendCommand,
     });
 

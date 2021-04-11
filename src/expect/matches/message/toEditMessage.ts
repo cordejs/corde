@@ -45,6 +45,7 @@ export class ToEditMessage extends MessageExpectTest {
       returnedMessage = await this.cordeBot.events.onceMessageContentOrEmbedChange(
         _messageData,
         this.timeOut,
+        this.channelId,
       );
     } catch {
       if (this.isNot) {

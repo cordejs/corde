@@ -30,7 +30,7 @@ export class ToReturn extends MessageExpectTest {
     try {
       returnedMessage = await this.cordeBot.events.onceMessage(
         this.cordeBot.testBotId,
-        null,
+        this.channelId,
         this.timeOut,
       );
     } catch {

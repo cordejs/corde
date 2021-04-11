@@ -35,6 +35,7 @@ export interface SearchMessageReactionsOptions {
   messageIdentifier?: MessageIdentifier;
   authorId?: string;
   timeout?: number;
+  channelId?: string;
 }
 
 // https://gist.github.com/koad/316b265a91d933fd1b62dddfcc3ff584
@@ -654,7 +655,7 @@ export class Events {
     event: "onMessageReactionAdd" | "onMessageReactionRemoveEmoji",
     filter?: SearchMessageReactionsOptions,
   ) {
-    const { emojis, messageIdentifier, authorId, timeout } = filter ?? {};
+    const { emojis, messageIdentifier, authorId, timeout, channelId } = filter ?? {};
 
     const validator = new Validator<[MessageReaction, User | PartialUser | void]>();
 
@@ -662,6 +663,10 @@ export class Events {
       validator.add((reaction) =>
         emojis.some((e) => e.id === reaction.emoji.id || e.name === reaction.emoji.name),
       );
+    }
+
+    if (channelId) {
+      validator.add((reaction) => reaction.message.channel.id === channelId);
     }
 
     if (messageIdentifier) {
@@ -764,11 +769,12 @@ export class Events {
    * @returns The pinned message
    * @internal
    */
-  onceMessagePinned(messageIdentifier?: MessageIdentifier, timeout?: number) {
+  onceMessagePinned(messageIdentifier?: MessageIdentifier, timeout?: number, channelId?: string) {
     return this._onceMessageSetPinneble(
       (oldMessage, newMessage) => !(oldMessage.pinned as boolean) && (newMessage.pinned as boolean),
       messageIdentifier,
       timeout,
+      channelId,
     );
   }
 
@@ -780,11 +786,12 @@ export class Events {
    * @returns The pinned message
    * @internal
    */
-  onceMessageUnPinned(messageIdentifier?: MessageIdentifier, timeout?: number) {
+  onceMessageUnPinned(messageIdentifier?: MessageIdentifier, timeout?: number, channelId?: string) {
     return this._onceMessageSetPinneble(
       (oldMessage, newMessage) => (oldMessage.pinned as boolean) && !(newMessage.pinned as boolean),
       messageIdentifier,
       timeout,
+      channelId,
     );
   }
 
@@ -795,6 +802,7 @@ export class Events {
     ) => boolean,
     messageIdentifier?: MessageIdentifier,
     timeout?: number,
+    channelId?: string,
   ) {
     const validator = new Validator<[Message | PartialMessage, Message | PartialMessage]>();
     validator.add(validation);
@@ -805,6 +813,10 @@ export class Events {
           oldMessage.id === messageIdentifier.id ||
           oldMessage.content === messageIdentifier.content,
       );
+    }
+
+    if (channelId) {
+      validator.add((message) => message.channel.id === channelId);
     }
 
     return executePromiseWithTimeout<Message | PartialMessage>((resolve) => {
@@ -824,7 +836,11 @@ export class Events {
    * @returns A message who had his content changed
    * @internal
    */
-  onceMessageContentOrEmbedChange(messageIdentifier?: MessageIdentifier, timeout?: number) {
+  onceMessageContentOrEmbedChange(
+    messageIdentifier?: MessageIdentifier,
+    timeout?: number,
+    channelId?: string,
+  ) {
     const validator = new Validator<[Message | PartialMessage, Message | PartialMessage]>();
     validator.add(
       (oldMessage, newMessage) =>
@@ -838,6 +854,10 @@ export class Events {
           oldMessage.id === messageIdentifier.id ||
           oldMessage.content === messageIdentifier.content,
       );
+    }
+
+    if (channelId) {
+      validator.add((message) => message.channel.id === channelId);
     }
 
     return executePromiseWithTimeout<Message | PartialMessage>((resolve) => {

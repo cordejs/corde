@@ -58,6 +58,7 @@ export class ToAddReaction extends ExpectTest {
         emojis: emojiLike,
         messageIdentifier: _messageData,
         timeout: this.timeOut,
+        channelId: this.channelId,
       });
     } catch (error) {
       if (this.isNot) {
