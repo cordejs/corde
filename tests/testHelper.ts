@@ -195,6 +195,8 @@ export function _initTestSimpleInstance<T extends ExpectTest>(
   return new type({
     command: params.command ?? "",
     cordeBot: params.cordeBot,
+    channelId: params.channelId,
+    guildId: params.guildId ?? runtime.guildId,
     isNot: params.isNot ?? false,
     timeout: params.timeout ?? runtime.timeOut,
     isCascade: params.isCascade ?? false,
@@ -204,12 +206,14 @@ export function _initTestSimpleInstance<T extends ExpectTest>(
 export namespace testUtils {
   export function initTestClass<T extends ExpectTest>(
     type: new (params: ExpectTestBaseParams) => T,
-    params: ExpectTestBaseParams,
+    params: Partial<ExpectTestBaseParams>,
   ) {
     return new type({
       command: params.command ?? "",
       cordeBot: params.cordeBot,
       isNot: params.isNot ?? false,
+      channelId: params.channelId ?? runtime.channelId,
+      guildId: params.guildId ?? runtime.guildId,
       timeout: params.timeout ?? runtime.timeOut,
       isCascade: params.isCascade ?? false,
     });

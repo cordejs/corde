@@ -17,9 +17,9 @@ describe("testing toRemoveReaction function", () => {
   function initTestClass(cordeBot: CordeBotLike, isNot: boolean) {
     return testUtils.initTestClass(ToRemoveReaction, {
       command: "",
+      isCascade: false,
       cordeBot: cordeBot,
       isNot: isNot,
-      timeout: 1000,
     });
   }
 

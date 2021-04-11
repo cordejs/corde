@@ -33,7 +33,6 @@ function initTestClass(cordeBot: CordeBotLike, isNot: boolean) {
     command: "toDelete",
     cordeBot: cordeBot,
     isNot: isNot,
-    timeout: 1000,
   });
 }
 

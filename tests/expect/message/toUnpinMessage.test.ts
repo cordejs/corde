@@ -16,10 +16,10 @@ describe("testing unpin message test", () => {
 
   function initTestClass(cordeBot: CordeBotLike, isNot: boolean) {
     return testUtils.initTestClass(ToUnPinMessage, {
+      isCascade: false,
       command: "toPin",
       cordeBot: cordeBot,
       isNot: isNot,
-      timeout: 1000,
     });
   }
 

@@ -37,7 +37,12 @@ export class ToSetRoleColor extends ExpectTest {
 
     const numberColor = resolveColor(color);
 
-    await this.sendCommandMessage();
+    try {
+      await this.sendCommandMessage();
+    } catch (error) {
+      return this.createFailedTest(error.message);
+    }
+
     let role: Role;
 
     try {

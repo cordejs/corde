@@ -42,7 +42,12 @@ export class ToSetRoleHoist extends ExpectTest {
       return this.createFailedTest(invalidRoleErrorMessage);
     }
 
-    await this.sendCommandMessage();
+    try {
+      await this.sendCommandMessage();
+    } catch (error) {
+      return this.createFailedTest(error.message);
+    }
+
     let role: Role;
     try {
       role = await this.cordeBot.events.onceRoleHoistUpdate(identifier, this.timeOut, this.guildId);

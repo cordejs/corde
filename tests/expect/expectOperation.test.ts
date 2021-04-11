@@ -1,6 +1,5 @@
-import { runtime } from "../../src/common/runtime";
 import { ExpectTest } from "../../src/expect/matches/expectTest";
-import { ExpectTestBaseParams } from "../../src/expect/types";
+import { ExpectTestBaseParams } from "../../src/types";
 import { TestReport } from "../../src/types";
 import { testUtils } from "../testHelper";
 
@@ -16,6 +15,8 @@ class TestClass extends ExpectTest {
 
 function instanceTestClass(commandNane?: string, isNot?: boolean) {
   return testUtils.initTestClass(TestClass, {
+    cordeBot: null,
+    timeout: 1000,
     command: commandNane,
     isNot: isNot,
     isCascade: false,

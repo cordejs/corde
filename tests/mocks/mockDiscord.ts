@@ -409,7 +409,7 @@ export default class MockDiscord {
 
   createMockChannel() {
     return new Channel(this._client, {
-      id: "channel-id",
+      id: "124123124123124",
     });
   }
 
@@ -613,15 +613,22 @@ export default class MockDiscord {
   }
 
   createMockMessageEmbed(customColor = "#0099ff", customTitle = "Some title") {
-    const embed = new ToReturn({
+    let embed = new ToReturn({
       command: "",
       cordeBot: null,
+      channelId: "123123",
       isNot: false,
       timeout: 100,
       isCascade: false,
     }).embedMessageLikeToMessageEmbed(this._messageEmbedLike);
+
+    if (!embed) {
+      embed = new MessageEmbed();
+    }
+
     embed.setColor(customColor);
     embed.setTitle(customTitle);
+
     return embed;
   }
 

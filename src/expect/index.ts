@@ -1,12 +1,12 @@
-import { RoleMatches, MessageMatches, ToHaveResultMatcher } from "./matcher";
+import { RoleMatchesImpl, MessageMatchesImpl, ToHaveResultMatcher } from "./matcher";
 import { Expect, MacherContructorArgs } from "../types";
 
 function getMessageMatchers(): string[] {
-  return getFunctions(MessageMatches);
+  return getFunctions(MessageMatchesImpl);
 }
 
 function getRoleMatchers(): string[] {
-  return getFunctions(RoleMatches);
+  return getFunctions(RoleMatchesImpl);
 }
 
 function getToHaveResultsMatchers(): string[] {
@@ -22,6 +22,7 @@ function getFunctions<T>(type: new (...args: any[]) => T): string[] {
 const expectation = {
   not: {},
   inGuild: {},
+  inChannel: {},
 };
 
 function createTestFunction(classType: any, params: MacherContructorArgs, functionName: string) {
@@ -48,22 +49,30 @@ const messageTestNames = getMessageMatchers();
 const roleMatchers = getRoleMatchers();
 const resultMatchers = getToHaveResultsMatchers();
 
-const _expect: any = <T extends (() => number | string) | number | string>(commandName: T) => {
+const _expect: any = <T extends (() => number | string) | number | string>(
+  commandName: T,
+  channelId?: string,
+) => {
+  const baseMatcherConstructor: MacherContructorArgs = {
+    commandName,
+    channelIdToSendCommand: channelId,
+  };
+
   const messageTests = createTestsFromMatches(
     messageTestNames,
-    { commandName, isNot: false },
-    MessageMatches,
+    baseMatcherConstructor,
+    MessageMatchesImpl,
   );
 
   const todoInCascadeMatcher = createTestsFromMatches(
     resultMatchers,
-    { commandName, isNot: false },
+    baseMatcherConstructor,
     ToHaveResultMatcher,
   );
 
   const todoInCascadeMatcherIsNot = createTestsFromMatches(
     resultMatchers,
-    { commandName, isNot: false },
+    { ...baseMatcherConstructor, isNot: true },
     ToHaveResultMatcher,
   );
 
@@ -72,20 +81,16 @@ const _expect: any = <T extends (() => number | string) | number | string>(comma
 
   const isNotMessageTests = createTestsFromMatches(
     messageTestNames,
-    { commandName, isNot: true },
-    MessageMatches,
+    { ...baseMatcherConstructor, isNot: true },
+    MessageMatchesImpl,
   );
 
-  const roleTests = createTestsFromMatches(
-    roleMatchers,
-    { commandName, isNot: false },
-    RoleMatches,
-  );
+  const roleTests = createTestsFromMatches(roleMatchers, baseMatcherConstructor, RoleMatchesImpl);
 
   const isNotRoleTests = createTestsFromMatches(
     roleMatchers,
     { commandName, isNot: true },
-    RoleMatches,
+    RoleMatchesImpl,
   );
 
   set(messageTests, expectation);
@@ -95,26 +100,49 @@ const _expect: any = <T extends (() => number | string) | number | string>(comma
   set(isNotRoleTests, expectation.not);
 
   expectation.inGuild = (guildId: string) => {
-    const guildMatchers: any = {
+    const inGuildMatches: any = {
+      not: {},
+    };
+
+    const roleTests = createTestsFromMatches(
+      roleMatchers,
+      { ...baseMatcherConstructor, guildId },
+      RoleMatchesImpl,
+    );
+
+    const isNotRoleTests = createTestsFromMatches(
+      roleMatchers,
+      { ...baseMatcherConstructor, guildId, isNot: true },
+      RoleMatchesImpl,
+    );
+
+    set(roleTests, inGuildMatches);
+    set(isNotRoleTests, inGuildMatches.not);
+
+    return inGuildMatches;
+  };
+
+  expectation.inChannel = (channelId: string) => {
+    const inChannelMatches: any = {
       not: {},
     };
 
     const roleTests = createTestsFromMatches(
       messageTestNames,
-      { commandName, guildId },
-      RoleMatches,
+      { ...baseMatcherConstructor, channelId },
+      MessageMatchesImpl,
     );
 
     const isNotRoleTests = createTestsFromMatches(
       messageTestNames,
-      { commandName, guildId },
-      RoleMatches,
+      { ...baseMatcherConstructor, channelId, isNot: true },
+      MessageMatchesImpl,
     );
 
-    set(roleTests, guildMatchers);
-    set(isNotRoleTests, guildMatchers.not);
+    set(roleTests, inChannelMatches);
+    set(isNotRoleTests, inChannelMatches.not);
 
-    return guildMatchers;
+    return inChannelMatches;
   };
 
   return expectation;
@@ -123,25 +151,25 @@ const _expect: any = <T extends (() => number | string) | number | string>(comma
 const messageTests = createTestsFromMatches(
   messageTestNames,
   { commandName: "", isNot: false, isCascade: true },
-  MessageMatches,
+  MessageMatchesImpl,
 );
 
 const isNotMessageTests = createTestsFromMatches(
   messageTestNames,
   { commandName: "", isNot: true, isCascade: true },
-  MessageMatches,
+  MessageMatchesImpl,
 );
 
 const roleTests = createTestsFromMatches(
   roleMatchers,
   { commandName: "", isNot: false, isCascade: true },
-  RoleMatches,
+  RoleMatchesImpl,
 );
 
 const isNotRoleTests = createTestsFromMatches(
   roleMatchers,
   { commandName: "", isNot: true, isCascade: true },
-  RoleMatches,
+  RoleMatchesImpl,
 );
 
 _expect.not = {};

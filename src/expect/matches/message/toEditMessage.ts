@@ -25,7 +25,11 @@ export class ToEditMessage extends MessageExpectTest {
       );
     }
 
-    await this.sendCommandMessage();
+    try {
+      await this.sendCommandMessage();
+    } catch (error) {
+      return this.createFailedTest(error.message);
+    }
 
     let _messageData: MessageEditedIdentifier | undefined;
 
@@ -41,6 +45,7 @@ export class ToEditMessage extends MessageExpectTest {
       returnedMessage = await this.cordeBot.events.onceMessageContentOrEmbedChange(
         _messageData,
         this.timeOut,
+        this.channelId,
       );
     } catch {
       if (this.isNot) {

@@ -20,12 +20,17 @@ export class ToReturn extends MessageExpectTest {
       return errorReport;
     }
 
-    await this.sendCommandMessage();
+    try {
+      await this.sendCommandMessage();
+    } catch (error) {
+      return this.createFailedTest(error.message);
+    }
+
     let returnedMessage: Message;
     try {
       returnedMessage = await this.cordeBot.events.onceMessage(
         this.cordeBot.testBotId,
-        null,
+        this.channelId,
         this.timeOut,
       );
     } catch {

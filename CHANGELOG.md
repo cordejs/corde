@@ -1,3 +1,11 @@
+# 3.1.0-beta.1
+
+- Added toHaveResult, toReturnInChannel and make expect get tests functions without calling it.
+
+# 3.0.3
+
+- Update README
+
 # 3.0.2
 
 ## 💡 Miscellaneous

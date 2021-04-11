@@ -27,8 +27,8 @@ function initTestClass(cordeBot: CordeBotLike, isNot: boolean) {
   return testUtils.initTestClass(ToSetRoleColor, {
     command: "toDelete",
     cordeBot: cordeBot,
+    isCascade: false,
     isNot: isNot,
-    timeout: 1000,
   });
 }
 

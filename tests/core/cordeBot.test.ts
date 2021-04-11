@@ -4,6 +4,7 @@ import MockDiscord from "../mocks/mockDiscord";
 import { initCordeClient, initCordeClientWithChannel } from "../testHelper";
 import { ToReturn } from "../../src/expect/matches";
 import { MockEvents } from "../mocks/mockEvents";
+import { runtime } from "../../src/common/runtime";
 
 const DEFAULT_PREFIX = "!";
 const mockDiscord = new MockDiscord();
@@ -27,6 +28,8 @@ describe("Testing CordeBot object", () => {
     testCollector.addTestFunction((corde) => {
       const testCase = new ToReturn({
         cordeBot: corde,
+        channelId: runtime.channelId,
+        guildId: runtime.guildId,
         command: "test",
         isNot: false,
         isCascade: false,

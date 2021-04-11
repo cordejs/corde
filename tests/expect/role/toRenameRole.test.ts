@@ -20,9 +20,9 @@ function initClient() {
 function initTestClass(cordeBot: CordeBotLike, isNot: boolean) {
   return testUtils.initTestClass(ToRenameRole, {
     command: "toDelete",
+    isCascade: false,
     cordeBot: cordeBot,
     isNot: isNot,
-    timeout: 1000,
   });
 }
 

@@ -10,6 +10,8 @@ import {
   TestReport,
   CordeBotLike,
   TestFunctionType,
+  MessageMatches,
+  RoleMatches,
 } from "../types";
 import { Colors } from "../utils/colors";
 import { RolePermission } from "../utils/permission";
@@ -31,7 +33,6 @@ import {
 import { ExpectTest } from "./matches/expectTest";
 import { buildReportMessage, resolveName, stringIsNullOrEmpty } from "../utils";
 import { getStackTrace } from "../utils/getStackTrace";
-import { ToReturnInChannel } from "./matches/message/toReturnInChannel";
 import { runtime } from "../common/runtime";
 import { MacherContructorArgs, MayReturnMatch, ExpectTestBaseParams } from "../types";
 import { ToHaveResult } from "./matches/toHaveResult";
@@ -42,13 +43,22 @@ class BaseMatcher {
   protected _isCascade: boolean;
   protected _guildId?: string;
   protected _channelId?: string;
+  protected _channelIdToSendCommand?: string;
 
-  constructor({ commandName, isNot, isCascade, channelId, guildId }: MacherContructorArgs) {
+  constructor({
+    commandName,
+    isNot,
+    isCascade,
+    channelId,
+    guildId,
+    channelIdToSendCommand,
+  }: MacherContructorArgs) {
     this._commandName = commandName;
     this._isNot = isNot ?? false;
     this._isCascade = isCascade ?? false;
     this._guildId = guildId;
     this._channelId = channelId;
+    this._channelIdToSendCommand = channelIdToSendCommand;
   }
 
   // Trace can not me added inside operationFactory because it do,
@@ -68,7 +78,9 @@ class BaseMatcher {
       isNot: this._isNot,
       timeout: runtime.timeOut,
       isCascade: this._isCascade,
-      guildId: this._guildId,
+      guildId: this._guildId ?? runtime.guildId,
+      channelId: this._channelId ?? runtime.channelId,
+      channelIdToSendCommand: this._channelIdToSendCommand,
     });
 
     if (
@@ -111,7 +123,7 @@ class BaseMatcher {
   }
 }
 
-export class MessageMatches<TReturn extends MayReturnMatch>
+export class MessageMatchesImpl<TReturn extends MayReturnMatch>
   extends BaseMatcher
   implements MessageMatches<TReturn> {
   toReturn(expect: Primitive | MessageEmbedLike) {
@@ -119,20 +131,6 @@ export class MessageMatches<TReturn extends MayReturnMatch>
     return this.returnOrAddToCollector((cordeBot) =>
       this.operationFactory(trace, ToReturn, cordeBot, expect),
     );
-  }
-
-  toReturnInChannel(expect: string | number | boolean | MessageEmbedLike, channelId: string) {
-    const trace = getStackTrace(undefined, true, "toReturnInChannel");
-    return this.returnOrAddToCollector((cordeBot) => {
-      return this.operationFactory(trace, ToReturnInChannel, cordeBot, expect, channelId);
-    });
-  }
-
-  toRenameRole(newName: string, roleIdentifier: string | RoleIdentifier) {
-    const trace = getStackTrace(undefined, true, "toRenameRole");
-    return this.returnOrAddToCollector((cordeBot) => {
-      return this.operationFactory(trace, ToRenameRole, cordeBot, newName, roleIdentifier);
-    });
   }
 
   toEditMessage(
@@ -191,9 +189,16 @@ export class ToHaveResultMatcher extends BaseMatcher {
   }
 }
 
-export class RoleMatches<TReturn extends MayReturnMatch>
+export class RoleMatchesImpl<TReturn extends MayReturnMatch>
   extends BaseMatcher
   implements RoleMatches<TReturn> {
+  toRenameRole(newName: string, roleIdentifier: RoleIdentifier | string) {
+    const trace = getStackTrace(undefined, true, "toRenameRole");
+    return this.returnOrAddToCollector((cordeBot) => {
+      return this.operationFactory(trace, ToRenameRole, cordeBot, newName, roleIdentifier);
+    });
+  }
+
   toSetRoleColor(color: ColorResolvable | Colors, roleIdentifier: string | RoleIdentifier) {
     const trace = getStackTrace(undefined, true, "toSetRoleColor");
     return this.returnOrAddToCollector((cordeBot) => {

@@ -22,7 +22,12 @@ export class ToDeleteRole extends ExpectTest {
 
     const role = roleOrFailObject as Role;
 
-    await this.sendCommandMessage();
+    try {
+      await this.sendCommandMessage();
+    } catch (error) {
+      return this.createFailedTest(error.message);
+    }
+
     try {
       await this.cordeBot.events.onceRoleDelete(identifier, this.timeOut, this.guildId);
     } catch {

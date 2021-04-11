@@ -51,7 +51,11 @@ export class ToSetRolePosition extends ExpectTest {
       );
     }
 
-    await this.sendCommandMessage();
+    try {
+      await this.sendCommandMessage();
+    } catch (error) {
+      return this.createFailedTest(error.message);
+    }
 
     try {
       role = await this.cordeBot.events.onceRolePositionUpdate(
