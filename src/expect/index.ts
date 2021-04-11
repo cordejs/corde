@@ -1,12 +1,12 @@
-import { RoleMatches, MessageMatches, ToHaveResultMatcher } from "./matcher";
+import { RoleMatchesImpl, MessageMatchesImpl, ToHaveResultMatcher } from "./matcher";
 import { Expect, MacherContructorArgs } from "../types";
 
 function getMessageMatchers(): string[] {
-  return getFunctions(MessageMatches);
+  return getFunctions(MessageMatchesImpl);
 }
 
 function getRoleMatchers(): string[] {
-  return getFunctions(RoleMatches);
+  return getFunctions(RoleMatchesImpl);
 }
 
 function getToHaveResultsMatchers(): string[] {
@@ -60,7 +60,7 @@ const _expect: any = <T extends (() => number | string) | number | string>(
   const messageTests = createTestsFromMatches(
     messageTestNames,
     baseMatcherConstructor,
-    MessageMatches,
+    MessageMatchesImpl,
   );
 
   const todoInCascadeMatcher = createTestsFromMatches(
@@ -81,15 +81,15 @@ const _expect: any = <T extends (() => number | string) | number | string>(
   const isNotMessageTests = createTestsFromMatches(
     messageTestNames,
     { ...baseMatcherConstructor, isNot: true },
-    MessageMatches,
+    MessageMatchesImpl,
   );
 
-  const roleTests = createTestsFromMatches(roleMatchers, baseMatcherConstructor, RoleMatches);
+  const roleTests = createTestsFromMatches(roleMatchers, baseMatcherConstructor, RoleMatchesImpl);
 
   const isNotRoleTests = createTestsFromMatches(
     roleMatchers,
     { commandName, isNot: true },
-    RoleMatches,
+    RoleMatchesImpl,
   );
 
   set(messageTests, expectation);
@@ -106,13 +106,13 @@ const _expect: any = <T extends (() => number | string) | number | string>(
     const roleTests = createTestsFromMatches(
       messageTestNames,
       { ...baseMatcherConstructor, guildId },
-      RoleMatches,
+      RoleMatchesImpl,
     );
 
     const isNotRoleTests = createTestsFromMatches(
       messageTestNames,
       { ...baseMatcherConstructor, guildId, isNot: true },
-      RoleMatches,
+      RoleMatchesImpl,
     );
 
     set(roleTests, guildMatchers);
@@ -127,25 +127,25 @@ const _expect: any = <T extends (() => number | string) | number | string>(
 const messageTests = createTestsFromMatches(
   messageTestNames,
   { commandName: "", isNot: false, isCascade: true },
-  MessageMatches,
+  MessageMatchesImpl,
 );
 
 const isNotMessageTests = createTestsFromMatches(
   messageTestNames,
   { commandName: "", isNot: true, isCascade: true },
-  MessageMatches,
+  MessageMatchesImpl,
 );
 
 const roleTests = createTestsFromMatches(
   roleMatchers,
   { commandName: "", isNot: false, isCascade: true },
-  RoleMatches,
+  RoleMatchesImpl,
 );
 
 const isNotRoleTests = createTestsFromMatches(
   roleMatchers,
   { commandName: "", isNot: true, isCascade: true },
-  RoleMatches,
+  RoleMatchesImpl,
 );
 
 _expect.not = {};

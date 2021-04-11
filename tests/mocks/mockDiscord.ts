@@ -616,6 +616,7 @@ export default class MockDiscord {
     const embed = new ToReturn({
       command: "",
       cordeBot: null,
+      channelId: "123123",
       isNot: false,
       timeout: 100,
       isCascade: false,

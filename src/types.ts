@@ -1239,10 +1239,6 @@ export interface MacherContructorArgs {
   isCascade?: boolean;
 }
 
-export interface CascadeMatch {
-  todoInCascade(...tests: TestFunctionType[]): void;
-}
-
 /**
  * Defines all functions that can be used
  * to check a bot reaction of a command.
@@ -1274,7 +1270,7 @@ export interface ToHaveResult {
    *
    * expect("command").toHaveResult(
    *  expect.toReturn("hello1"),
-   *  expect.toReturnInChannel("hello2")
+   *  expect.toReturn("hello2", "123124124")
    * );
    *
    * @param tests
@@ -1282,38 +1278,10 @@ export interface ToHaveResult {
   toHaveResult(...tests: any[]): void;
 }
 
-export interface SetGuildMatchers<TReturn extends MayReturnMatch> {
-  /**
-   * Specify a guild where tests will be **validated** in.
-   *
-   * @example
-   *
-   * // Suposing that the config is:
-   * const cordeConfig = {
-   *  guildId: "123",
-   *  botPrefix: "!"
-   * };
-   *
-   * expect("ping").inGuild("321").toReturn("pong");
-   *
-   * @description This will send the message "!ping" in the channel defined in configs("123"),
-   * and check if a message with content "pong" will be sent to the text channel of if "321".
-   *
-   * @param id Id of the channel
-   */
-  inGuild(id: string): IsNot<RoleMatches<TReturn>> & RoleMatches<TReturn>;
-}
-
 type IsNotWithHaveResults = IsNot<Matches<void>, ToHaveResult>;
 
-export type AllMatches<TReturn extends MayReturnMatch> = SetGuildMatchers<TReturn> &
-  IsNot<Matches<any>> &
-  Matches<TReturn>;
-
-export type AllExpectMatches = SetGuildMatchers<void> &
-  Matches<void> &
-  ToHaveResult &
-  IsNotWithHaveResults;
+export type AllMatches<TReturn extends MayReturnMatch> = IsNot<Matches<any>> & Matches<TReturn>;
+export type AllExpectMatches = Matches<void> & ToHaveResult & IsNotWithHaveResults;
 
 export interface Expect extends AllMatches<any> {
   /**
