@@ -22,6 +22,7 @@ function getFunctions<T>(type: new (...args: any[]) => T): string[] {
 const expectation = {
   not: {},
   inGuild: {},
+  inChannel: {},
 };
 
 function createTestFunction(classType: any, params: MacherContructorArgs, functionName: string) {
@@ -99,26 +100,49 @@ const _expect: any = <T extends (() => number | string) | number | string>(
   set(isNotRoleTests, expectation.not);
 
   expectation.inGuild = (guildId: string) => {
-    const guildMatchers: any = {
+    const inGuildMatches: any = {
       not: {},
     };
 
     const roleTests = createTestsFromMatches(
-      messageTestNames,
+      roleMatchers,
       { ...baseMatcherConstructor, guildId },
       RoleMatchesImpl,
     );
 
     const isNotRoleTests = createTestsFromMatches(
-      messageTestNames,
+      roleMatchers,
       { ...baseMatcherConstructor, guildId, isNot: true },
       RoleMatchesImpl,
     );
 
-    set(roleTests, guildMatchers);
-    set(isNotRoleTests, guildMatchers.not);
+    set(roleTests, inGuildMatches);
+    set(isNotRoleTests, inGuildMatches.not);
 
-    return guildMatchers;
+    return inGuildMatches;
+  };
+
+  expectation.inChannel = (channelId: string) => {
+    const inChannelMatches: any = {
+      not: {},
+    };
+
+    const roleTests = createTestsFromMatches(
+      messageTestNames,
+      { ...baseMatcherConstructor, channelId },
+      MessageMatchesImpl,
+    );
+
+    const isNotRoleTests = createTestsFromMatches(
+      messageTestNames,
+      { ...baseMatcherConstructor, channelId, isNot: true },
+      MessageMatchesImpl,
+    );
+
+    set(roleTests, inChannelMatches);
+    set(isNotRoleTests, inChannelMatches.not);
+
+    return inChannelMatches;
   };
 
   return expectation;

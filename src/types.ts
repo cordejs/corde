@@ -68,7 +68,7 @@ export interface MessageIdentifier {
    * If there is more than one message with the same content,
    * Corde will handle the latest message sent.
    *
-   * ps: To avoid possible inconsistences, recommend to use **id** for message search.
+   * ps: To avoid possible inconsistencies, recommend using **id** for message search.
    */
   content?: string;
   /**
@@ -95,12 +95,12 @@ export interface CordeBotLike {
   readonly channel: TextChannel;
   readonly testBotId: string;
   /**
-   * Authenticate Corde bot to the installed bot in Discord server.
+   * Authenticate Corde bot to the installed bot in the Discord server.
    *
    * @param token Corde bot token
    *
    * @returns Promise resolve for success connection, or a promise
-   * rejection with a formatted message if there was found a error in
+   * rejection with a formatted message if there was found an error in
    * connection attempt.
    */
   login(token: string): Promise<string>;
@@ -110,7 +110,7 @@ export interface CordeBotLike {
   logout(): void;
   /**
    * Sends a pure message without prefix it.
-   * @param message Data to be send to channel
+   * @param message Data to be sent to channel
    */
   sendMessage(message: string | number | MessageEmbed): Promise<Message>;
   /**
@@ -121,8 +121,8 @@ export interface CordeBotLike {
    * @param message Message without prefix that will be sent to defined server's channel
    * @description The message is concatenated with the stored **prefix** and is sent to the channel.
    *
-   * @return Promise rejection if a testing bot does not send any message in the timeout value setted,
-   * or a resolve for the promise with the message returned by the testing bot.
+   * @return Promise rejection if a testing bot does not send any message in the timeout value set,
+   * or resolve for the promise with the message returned by the testing bot.
    */
   sendTextMessage(message: string | number | boolean, channelId?: string): Promise<Message>;
   /**
@@ -196,7 +196,7 @@ export interface Group {
 }
 
 /**
- * Contain all tests cases | groups of a test file.
+ * Contain all test cases | groups of a test file.
  */
 export interface TestFile {
   path: string;
@@ -218,7 +218,7 @@ export interface BaseRole {
  */
 export interface ConfigOptions {
   /**
-   * Fake bot used to test the really one
+   * Fake bot used to test the real one
    */
   cordeTestToken: string;
   /**
@@ -242,7 +242,7 @@ export interface ConfigOptions {
    */
   timeOut?: number;
   /**
-   * Defines how identify bot calls
+   * Defines how to identify bot calls
    */
   botPrefix: string;
   /**
@@ -252,8 +252,7 @@ export interface ConfigOptions {
 }
 
 /**
- * Object contract used to identify messages in message
- * edition tests.
+ * Object contract used to identify messages in message edition tests.
  */
 export interface MessageEditedIdentifier {
   /**
@@ -293,22 +292,22 @@ export interface MessageEmbedFooter {
    */
   text?: string;
   /**
-   * url of footer icon (only supports http(s) and attachments)
+   * URL of footer icon (only supports HTTP(s) and attachments)
    */
   iconURL?: string;
 }
 
 export interface MessageEmbedImage {
   /**
-   * source url of image (only supports http(s) and attachments)
+   * source URL of the image (only supports HTTP(s) and attachments)
    */
   url: string;
   /**
-   * height of image
+   * Height of the image
    */
   height?: number;
   /**
-   * width of image
+   * width of the image
    */
   width?: number;
 }
@@ -330,7 +329,7 @@ export interface MessageEmbedThumbnail {
 
 export interface FileLike {
   /**
-   * Buffer, URL or stream of the file.
+   * Buffer, URL, or stream of the file.
    *
    * @see https://nodejs.org/api/stream.html
    * @see https://nodejs.org/api/buffer.html
@@ -343,7 +342,7 @@ export interface FileLike {
 }
 
 /**
- * Main and optional informations about a embed message.
+ * Main and optional information about an embedded message.
  */
 export interface MessageEmbedLike {
   /**
@@ -359,11 +358,11 @@ export interface MessageEmbedLike {
    */
   description?: string;
   /**
-   * fields information. Array of embed field objects
+   * fields information. An array of embed field objects
    */
   fields?: EmbedFieldData[];
   /**
-   * files urls **or** informations of the embed.
+   * files URLs **or** information of the embed.
    */
   files?: (FileLike | string)[];
   /**
@@ -375,7 +374,7 @@ export interface MessageEmbedLike {
    */
   image?: MessageEmbedImage | string;
   /**
-   * Source url of thumbnail (only supports http(s) and attachments)
+   * Source url of thumbnail (only supports HTTP(s) and attachments)
    */
   thumbnailUrl?: string;
   /**
@@ -520,11 +519,11 @@ export enum GuildFeatures {
    */
   NEWS = "NEWS",
   /**
-   * Guild is able to be discovered in the directory
+   * Guild can be discovered in the directory
    */
   DISCOVERABLE = "DISCOVERABLE",
   /**
-   * Guild is able to be featured in the directory
+   * Guild can be featured in the directory
    */
   FEATURABLE = "FEATURABLE",
   /**
@@ -818,147 +817,45 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    * Defines the message expected to be returned by a
    * command.
    *
-   * @param expect A message returned by a bot after invoke a command
-   * @since 1.0
-   */
-  toReturn(expect: boolean | number | string): TReturn;
-  /**
-   * Defines the message expected to be returned by a
-   * command.
+   * @param expect A message returned by a bot after invoking a command
    *
-   * @param expect A message returned by a bot after invoke a command
    * @since 1.0
    */
-  toReturn(expect: MessageEmbedLike): TReturn;
-
+  toReturn(expect: boolean | number | string | MessageEmbedLike): TReturn;
   /**
    * Defines [reactions](https://discordjs.guide/popular-topics/reactions.html#reacting-to-messages)
    * that must be added to the command message.
    *
    * @param emojis Single or list of reactions that must be added to a message.
    * It can be **emojis** or [custom emojis](https://support.discord.com/hc/en-us/articles/360036479811-Custom-Emojis).
-   *
-   * @example
-   *
-   * // Checks if the first message sent by the testing bot receives emojis in reactions.
-   * expect("emoji").toAddReaction(['😄']);
-   * expect("emoji").toAddReaction([{ name: '😄' }]);
-   * expect("emoji").toAddReaction([{ name: '😄' }]);
-   * expect("emoji").toAddReaction(['🍊', { name: '😄' }]);
-   * expect("emoji").toAddReaction(['🍊', { name: '😄' }]);
-   *
-   * // Checks if a specific message receives emojis in reactions.
-   * expect("emoji").toAddReaction(['😄'], { id: '96008815106887111' });
-   * expect("emoji").toAddReaction([{ name: '😄' }], { id: '96008815106887111' });
-   *
-   * // This example will find for a message with content: 'message text'
-   * expect("emoji").toAddReaction([{ name: '😄' }], { name: 'message text' });
-   * expect("emoji").toAddReaction(['🍊', { name: '😄' }], { id: 'message text' });
-   * expect("emoji").toAddReaction(['🍊', { name: '😄' }], { id: 'message text' });
-   *
-   * // Its also possible to search the message directly by it's id:
-   * expect("emoji").toAddReaction(['😄'], '96008815106887111');
+   * @param messageIdentifier Id or object with the id or content of the message.
    *
    * @since 1.0
    */
-  toAddReaction(emojis: string[]): TReturn;
-  toAddReaction(emojis: EmojiLike[]): TReturn;
-  toAddReaction(emojis: (string | EmojiLike)[]): TReturn;
-  toAddReaction(emojis: EmojiLike[], messageIdentifier: string): TReturn;
-  toAddReaction(emojis: EmojiLike[], messageIdentifier: MessageIdentifier): TReturn;
-  toAddReaction(emojis: (string | EmojiLike)[], messageIdentifier: string): TReturn;
-  toAddReaction(emojis: (string | EmojiLike)[], messageIdentifier: MessageIdentifier): TReturn;
-  toAddReaction(emojis: string[], messageIdentifier: string): TReturn;
-  toAddReaction(emojis: string[], messageIdentifier: MessageIdentifier): TReturn;
+  toAddReaction(
+    emojis: string[] | EmojiLike[] | (string | EmojiLike)[],
+    messageIdentifier?: string | MessageIdentifier,
+  ): TReturn;
 
   /**
    * Check if a command removes a list of reactions from the last message sent
    * by someone who is not the testing bot or corde's bot.
    *
    * @param emojis Reactions to check if were removed. And/or reactions like (reactions that are customized).
-   * @example
-   *
-   * toRemoveReaction([{ id: "12321" }, "😆"]);
-   * toRemoveReaction([{ id: "12321" }, "😆"], "31241212512");
+   * @param messageIdentifier Id or object with the id or content of the message.
    *
    * @since 2.0
    */
-  toRemoveReaction(emojis: EmojiLike[], messageId?: string): TReturn;
-  /**
-   * Check if a command removes a list of reactions from the last message sent
-   * by someone who is not the the testing bot or corde's bot.
-   *
-   * @param emojis Reactions to check if were removed. And/or reactions like (reactions that are customized).
-   * @param messageIdentifier Object with **id** or **content** of the message.
-   * @example
-   *
-   * toRemoveReaction([{ id: "12321" }, { name: "😆" }]);
-   * toRemoveReaction([{ id: "12321" }, { name: "😆" }], { id: "1232142"});
-   *
-   * @since 2.0
-   */
-  toRemoveReaction(emojis: EmojiLike[], messageIdentifier?: MessageIdentifier): TReturn;
-  /**
-   * Check if a command removes a list of reactions from the last message sent
-   * by someone who is not the the testing bot or corde's bot.
-   *
-   * @param emojis Reactions to check if were removed. And/or reactions like (reactions that are customized).
-   * @param messageId Id of the message.
-   * @example
-   *
-   * toRemoveReaction([{ id: "12321" }, "😆"]);
-   * toRemoveReaction([{ id: "12321" }, "😆"], "4121512121");
-   *
-   * @since 2.0
-   */
-  toRemoveReaction(emojis: (string | EmojiLike)[], messageId?: string): TReturn;
-  /**
-   * Check if a command removes a list of reactions from the last message sent
-   * by someone who is not the the testing bot or corde's bot.
-   *
-   * @param emojis Reactions to check if were removed. And/or reactions like (reactions that are customized).
-   * @param messageIdentifier Object with **id** or **content** of the message.
-   * @example
-   *
-   * toRemoveReaction([{ id: "12321" }, "😆"]);
-   * toRemoveReaction([{ id: "12321" }, "😆"], { id: "4121512121" });
-   *
-   * @since 2.0
-   */
-  toRemoveReaction(emojis: (string | EmojiLike)[], messageIdentifier?: MessageIdentifier): TReturn;
-  /**
-   * Check if a command removes a list of reactions from the last message sent
-   * by someone who is not the the testing bot or corde's bot.
-   *
-   * @param emojis Reactions to check if were removed
-   * @param messageId Id of the message.
-   * @example
-   *
-   * toRemoveReaction(["😆"]);
-   * toRemoveReaction(["😆"], { id: "13124124" });
-   *
-   * @since 2.0
-   */
-  toRemoveReaction(emojis: string[], messageId?: string): TReturn;
-  /**
-   * Check if a command removes a list of reactions from the last message sent
-   * by someone who is not the the testing bot or corde's bot.
-   *
-   * @param emojis Reactions to check if were removed.
-   * @param messageIdentifier Object with **id** or **content** of the message.
-   * @example
-   *
-   * toRemoveReaction(["😆", "🥱"]);
-   * toRemoveReaction(["😆", "🥱"], { id: "1234871972" });
-   *
-   * @since 2.0
-   */
-  toRemoveReaction(emojis: string[], messageIdentifier?: MessageIdentifier): TReturn;
+  toRemoveReaction(
+    emojis: string[] | EmojiLike[] | (string | EmojiLike)[],
+    messageIdentifier?: string | MessageIdentifier,
+  ): TReturn;
 
   /**
    * Verify if a command pinned a message.
    *
    * @param messageId Id of the message
+   *
    * @since 2.0
    */
   toPin(messageId: string): TReturn;
@@ -966,6 +863,7 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    * Verify if a command pinned a message.
    *
    * @param messageIdentifier Object with **id** or **content** of the message.
+   *
    * @since 2.0
    */
   toPin(messageIdentifier: MessageIdentifier): TReturn;
@@ -974,6 +872,8 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    * Verify if a command unpinned a message.
    *
    * @param messageId Id of the message
+   * @param channelId Alternative channel that corde must check where the message will be pinned
+   *
    * @since 2.0
    */
   toUnPin(messageId: string): TReturn;
@@ -981,6 +881,7 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    * Verify if a command unpinned a message.
    *
    * @param message Object with **id** or **content** of the message.
+   *
    * @since 2.0
    */
   toUnPin(messageIdentifier: MessageIdentifier): TReturn;
@@ -988,67 +889,15 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
   /**
    * Verify if a command edited a message.
    *
-   * @param newValue New **string** value for the message.
+   * @param newValue New value for the message.
    * @param messageIdentifier Data object with the **id** or **oldContent** of the message.
-   * @since 1.0
-   */
-  toEditMessage(newValue: string, messageIdentifier?: MessageEditedIdentifier): TReturn;
-  /**
-   * Verify if a command edited a message.
    *
-   * @param newValue New **string** value for the message.
-   * @param messageId Id of the message.
    * @since 1.0
    */
-  toEditMessage(newValue: string, messageId?: string): TReturn;
-  /**
-   * Verify if a command edited a message.
-   *
-   * @param newValue New **number** value for the message.
-   * @param messageIdentifier Data object with the **id** or **oldContent** of the message.
-   * @since 1.0
-   */
-  toEditMessage(newValue: number, messageIdentifier?: MessageEditedIdentifier): TReturn;
-  /**
-   * Verify if a command edited a message.
-   *
-   * @param newValue New **number** value for the message.
-   * @param messageId Id of the message.
-   * @since 1.0
-   */
-  toEditMessage(newValue: number, messageId?: string): TReturn;
-  /**
-   * Verify if a command edited a message.
-   *
-   * @param newValue New **boolean** value for the message.
-   * @param messageId Id of the message.
-   * @since 1.0
-   */
-  toEditMessage(newValue: boolean, messageId?: string): TReturn;
-  /**
-   * Verify if a command edited a message.
-   *
-   * @param newValue New **boolean** value for the message.
-   * @param messageIdentifier Data object with the **id** or **oldContent** of the message.
-   * @since 1.0
-   */
-  toEditMessage(newValue: boolean, messageIdentifier?: MessageEditedIdentifier): TReturn;
-  /**
-   * Verify if a command edited a message.
-   *
-   * @param newValue New **MessageEmbedLike** value for the message.
-   * @param messageIdentifier Data object with the **id** or **oldContent** of the message.
-   * @since 1.0
-   */
-  toEditMessage(newValue: MessageEmbedLike, messageIdentifier?: MessageEditedIdentifier): TReturn;
-  /**
-   * Verify if a command edited a message.
-   *
-   * @param newValue New **MessageEmbedLike** value for the message.
-   * @param messageId Data object with the **id** or **oldContent** of the message.
-   * @since 1.0
-   */
-  toEditMessage(newValue: MessageEmbedLike, messageId?: string): TReturn;
+  toEditMessage(
+    newValue: string | number | boolean | MessageEmbedLike,
+    messageIdentifier?: string | MessageEditedIdentifier,
+  ): TReturn;
 }
 
 /**
@@ -1060,6 +909,7 @@ export interface RoleMatches<TReturn extends MayReturnMatch> {
    *
    * @param color The new color for the role.
    * @param roleId Id of the role.
+   *
    * @since 2.0
    */
   toSetRoleColor(color: ColorResolvable, roleId: string): TReturn;
@@ -1068,6 +918,7 @@ export interface RoleMatches<TReturn extends MayReturnMatch> {
    *
    * @param color The new color for the role.
    * @param roleIdentifier Object with the **id** or the **name** of the role.
+   *
    * @since 2.0
    */
   toSetRoleColor(color: ColorResolvable, roleIdentifier: RoleIdentifier): TReturn;
@@ -1076,6 +927,7 @@ export interface RoleMatches<TReturn extends MayReturnMatch> {
    *
    * @param color Color enum in hexadecimal format.
    * @param roleId Object with the **id** or the **name** of the role.
+   *
    * @since 2.0
    */
   toSetRoleColor(color: Colors, roleId: string): TReturn;
@@ -1083,14 +935,14 @@ export interface RoleMatches<TReturn extends MayReturnMatch> {
    * Check if a command changed a role color.
    *
    * @param color Color enum in hexadecimal format.
-   * @param roleId Object with the **id** or the **name** of the role.
+   * @param roleIdentifier Object with the **id** or the **name** of the role.
+   *
    * @since 2.0
    */
   toSetRoleColor(color: Colors, roleIdentifier: RoleIdentifier): TReturn;
 
   /**
    * Check if a command deletes a role.
-   *
    * @param roleId Id of the role.
    * @since 2.0
    */
@@ -1098,8 +950,7 @@ export interface RoleMatches<TReturn extends MayReturnMatch> {
 
   /**
    * Check if a command deletes a role.
-   *
-   * @param roleIdentifier Object with **id** or **name** of the role.
+   * @param roleIdentifier Object with **id** or **name** of the role
    * @since 2.0
    */
   toDeleteRole(roleIdentifier: RoleIdentifier): TReturn;
@@ -1109,14 +960,16 @@ export interface RoleMatches<TReturn extends MayReturnMatch> {
    *
    * @param mentionable If the role can or can not be mentionable.
    * @param roleId Id of the role.
+   *
    * @since 2.0
    */
   toSetRoleMentionable(mentionable: boolean, roleId: string): TReturn;
   /**
-   * Check if a command define a role as mentionable.
+   * Check if a command defines a role as mentionable.
    *
    * @param mentionable If the role can or can not be mentionable.
    * @param roleIdentifier Object with **id** or **name** of the role.
+   *
    * @since 2.0
    */
   toSetRoleMentionable(mentionable: boolean, roleIdentifier: RoleIdentifier): TReturn;
@@ -1140,7 +993,7 @@ export interface RoleMatches<TReturn extends MayReturnMatch> {
    */
   toSetRoleHoist(hoist: boolean, roleId: string): TReturn;
   /**
-   * Check if a commend define a role as hoist.
+   * Check if a commend defines a role as a hoist.
    *
    * @param hoist if this role is pinned in the user listing.
    * @param roleIdentifier Object with **id** or **name** of the role.
@@ -1163,14 +1016,16 @@ export interface RoleMatches<TReturn extends MayReturnMatch> {
    *
    * @param newName new name of the role
    * @param roleId Id of the role.
+   *
    * @since 2.0
    */
   toRenameRole(newName: string, roleId: string): TReturn;
   /**
-   * Check if a command rename a role.
+   * Check if a command renames a role.
    *
    * @param newName new name of the role
-   * @param roleIdentifier Object with **id** or **name** of the role.
+   * @param roleIdentifier Object with **id** or **name** of the role
+   *
    * @since 2.0
    */
   toRenameRole(newName: string, roleIdentifier: RoleIdentifier): TReturn;
@@ -1190,10 +1045,11 @@ export interface RoleMatches<TReturn extends MayReturnMatch> {
    */
   toSetRolePosition(newPosition: number, roleId: string): TReturn;
   /**
-   * Check if a command change a role's position.
+   * Check if a command changes a role's position.
    *
    * @param newPosition The new position of the role.
    * @param roleIdentifier Object with **id** or **name** of the role.
+   *
    *
    * @description Role's maximum value depends on the number of roles the guild has.
    * So, if there are only 3 roles (including the default *everyone*), the maximum
@@ -1249,11 +1105,11 @@ export type Matches<TReturn extends MayReturnMatch> = MessageMatches<TReturn> &
 /**
  * Defines the initial value of expectations from
  * **command** function. It includes all matches and
- * the *not* statement. Witch will deny the executed match
+ * the *not* statement. Which will deny the executed match
  */
 export interface IsNot<TMatchesResponse extends any, TResponse2 = void> {
   /**
-   * Defines that a command should **not** do something.
+   * Defines that command should **not** do something.
    * Use this if you can not precise what response a command will throw,
    * But know what it **can not** throw.
    */
@@ -1261,10 +1117,10 @@ export interface IsNot<TMatchesResponse extends any, TResponse2 = void> {
 }
 
 // We intentionally hide the real type of parameters are passed to todoInCasdade,
-// to hide the implementaion from the user.
+// to hide the implementation from the user.
 export interface ToHaveResult {
   /**
-   * Execute multiple assertions based in a single command.
+   * Execute multiple assertions based on a single command.
    *
    * @example
    *
@@ -1278,10 +1134,68 @@ export interface ToHaveResult {
   toHaveResult(...tests: any[]): void;
 }
 
+export type InChannelMatches<TReturn extends MayReturnMatch> = IsNot<MessageMatches<TReturn>> &
+  MessageMatches<TReturn>;
+
+export type InGuildMatches<TReturn extends MayReturnMatch> = IsNot<RoleMatches<TReturn>> &
+  RoleMatches<TReturn>;
+
+export interface SetGuildMatchers<TReturn extends MayReturnMatch> {
+  /**
+   * Specify a guild where tests will be **validated** in.
+   *
+   * @example
+   *
+   * // Suposing that the config is:
+   * const cordeConfig = {
+   *  guildId: "123",
+   *  botPrefix: "!"
+   * };
+   *
+   * expect("ping").inGuild("321").toRenameRole("new name", "1231241");
+   *
+   * @description This will send the message "!ping" in the channel defined in configs("123"),
+   * and check if a message with content "pong" will be sent to the text channel of if "321".
+   *
+   * @param id Id of the channel
+   */
+  inGuild(id: string): InGuildMatches<TReturn>;
+}
+
+export interface SetChannelMatchers<TReturn extends MayReturnMatch> {
+  /**
+   * Specify a channel where tests will be **validated** in.
+   *
+   * @example
+   *
+   * // Suposing that the config is:
+   * const cordeConfig = {
+   *  channelId: "123",
+   *  botPrefix: "!"
+   * };
+   *
+   * expect("ping").inChannel("321").toReturn("pong");
+   *
+   * @description This will send the message "!ping" in the channel defined in configs("123"),
+   * and check if a message with content "pong" will be sent to the text channel of if "321".
+   *
+   * @param id Id of the channel
+   */
+  inChannel(id: string): InChannelMatches<TReturn>;
+}
+
 type IsNotWithHaveResults = IsNot<Matches<void>, ToHaveResult>;
 
-export type AllMatches<TReturn extends MayReturnMatch> = IsNot<Matches<any>> & Matches<TReturn>;
-export type AllExpectMatches = Matches<void> & ToHaveResult & IsNotWithHaveResults;
+export type AllMatches<TReturn extends MayReturnMatch> = IsNot<Matches<any>> &
+  Matches<TReturn> &
+  SetChannelMatchers<TReturn> &
+  SetGuildMatchers<TReturn>;
+
+export type AllExpectMatches = Matches<void> &
+  ToHaveResult &
+  IsNotWithHaveResults &
+  SetChannelMatchers<void> &
+  SetGuildMatchers<void>;
 
 export interface Expect extends AllMatches<any> {
   /**
@@ -1291,7 +1205,7 @@ export interface Expect extends AllMatches<any> {
    * it's already informed in **configs**
    *
    * @param commandNameResolvable Command name. (Empty strings will resolve failed test)
-   * @param channelId Defines the channel where the command should be send to.
+   * @param channelId Defines the channel where the command should be sent to.
    *
    * @returns An object with all possible tests to be done
    * in the bot.
