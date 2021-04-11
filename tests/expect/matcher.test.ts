@@ -422,6 +422,17 @@ describe("Testing matches class", () => {
       );
     });
 
+    it("should add a toSetRoleColor function with message data and with guildId", async () => {
+      initExpectMatch().inGuild(guildId).toSetRoleColor(Colors.DARK_AQUA, "123");
+      await createDefaultTestFor(
+        ToSetRoleColor,
+        toSetRoleColorActionMock,
+        { isNot: false, guildId },
+        color,
+        "123",
+      );
+    });
+
     it("should add a toSetRoleColor function with correct values (isNot true)", async () => {
       initExpectMatch().not.toSetRoleColor(color, "123");
       await createDefaultTestFor(
@@ -463,6 +474,16 @@ describe("Testing matches class", () => {
     it("should add a toDeleteRole function with id in data object", async () => {
       initExpectMatch().toDeleteRole(roleId);
       await createDefaultTestFor(ToDeleteRole, toDeleteRoleActionMock, { isNot: false }, roleId);
+    });
+
+    it("should add a toDeleteRole function with id in data object and with guild id", async () => {
+      initExpectMatch().inGuild(guildId).toDeleteRole(roleId);
+      await createDefaultTestFor(
+        ToDeleteRole,
+        toDeleteRoleActionMock,
+        { isNot: false, guildId },
+        roleId,
+      );
     });
 
     it("should add a toDeleteRole function with name in data object", async () => {
@@ -509,6 +530,17 @@ describe("Testing matches class", () => {
       );
     });
 
+    it("should add a toSetRoleMentionable function with correct values (isNot false and guildId)", async () => {
+      initExpectMatch().inGuild(guildId).toSetRoleMentionable(mentionableTrue, roleId.id);
+      await createDefaultTestFor(
+        ToSetRoleMentionable,
+        toSetRoleMentionableActionMock,
+        { isNot: false, guildId },
+        mentionableTrue,
+        roleId.id,
+      );
+    });
+
     it("should add a toSetRoleMentionable function with correct values (isNot true)", async () => {
       initExpectMatch().not.toSetRoleMentionable(mentionableTrue, roleId.id);
       await createDefaultTestFor(
@@ -543,6 +575,17 @@ describe("Testing matches class", () => {
         ToSetRoleHoist,
         toSetHoistActionMock,
         { isNot: false },
+        mentionableTrue,
+        roleId.id,
+      );
+    });
+
+    it("should add a toSetRoleHoist function with correct values using id and guildId", async () => {
+      initExpectMatch().inGuild(guildId).toSetRoleHoist(mentionableTrue, "123");
+      await createDefaultTestFor(
+        ToSetRoleHoist,
+        toSetHoistActionMock,
+        { isNot: false, guildId },
         mentionableTrue,
         roleId.id,
       );
@@ -595,6 +638,19 @@ describe("Testing matches class", () => {
         ToRenameRole,
         toRenameRoleActionMock,
         { isNot: false },
+        newName,
+        id,
+      );
+    });
+
+    it("should add a toRenameRole function with correct values using id and guildId", async () => {
+      const newName = "newName";
+      const id = "123";
+      initExpectMatch().inGuild(guildId).toRenameRole(newName, id);
+      await createDefaultTestFor(
+        ToRenameRole,
+        toRenameRoleActionMock,
+        { isNot: false, guildId },
         newName,
         id,
       );
@@ -655,6 +711,17 @@ describe("Testing matches class", () => {
       );
     });
 
+    it("should add a toSetRolePosition function with correct values using id and guildId", async () => {
+      initExpectMatch().inGuild(guildId).toSetRolePosition(newPosition, roleId);
+      await createDefaultTestFor(
+        ToSetRolePosition,
+        toSetRolePositionActionMock,
+        { isNot: false, guildId },
+        newPosition,
+        roleId,
+      );
+    });
+
     it("should add a toSetRolePosition function with correct values (isNot false)", async () => {
       initExpectMatch().toSetRolePosition(newPosition, roleId);
       await createDefaultTestFor(
@@ -703,6 +770,17 @@ describe("Testing matches class", () => {
         ToSetRolePermission,
         toSetRolePermissionActionMock,
         { isNot: false },
+        roleId,
+        ["ADMINISTRATOR"],
+      );
+    });
+
+    it("should add a toSetRolePermission function with correct values using id and guildId", async () => {
+      initExpectMatch().inGuild(guildId).toSetRolePermission(roleId, "ADMINISTRATOR");
+      await createDefaultTestFor(
+        ToSetRolePermission,
+        toSetRolePermissionActionMock,
+        { isNot: false, guildId },
         roleId,
         ["ADMINISTRATOR"],
       );
@@ -762,6 +840,16 @@ describe("Testing matches class", () => {
       await createDefaultTestFor(ToPinMessage, toPinMessageActionMock, { isNot: false }, messageId);
     });
 
+    it("should add a toPin function with correct values (isNot false and channelId)", async () => {
+      initExpectMatch().inChannel(channelId).toPin(messageId);
+      await createDefaultTestFor(
+        ToPinMessage,
+        toPinMessageActionMock,
+        { isNot: false, channelId },
+        messageId,
+      );
+    });
+
     it("should add a toPin function with correct values (isNot true)", async () => {
       initExpectMatch().not.toPin(messageId);
       await createDefaultTestFor(ToPinMessage, toPinMessageActionMock, { isNot: true }, messageId);
@@ -789,6 +877,16 @@ describe("Testing matches class", () => {
         ToUnPinMessage,
         toUnpinMessageActionMock,
         { isNot: false },
+        messageId,
+      );
+    });
+
+    it("should add a toUnpin function with correct values using id and channelId", async () => {
+      initExpectMatch().inChannel(channelId).toUnPin(messageId);
+      await createDefaultTestFor(
+        ToUnPinMessage,
+        toUnpinMessageActionMock,
+        { isNot: false, channelId },
         messageId,
       );
     });
