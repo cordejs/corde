@@ -210,7 +210,7 @@ export namespace testUtils {
   ) {
     return new type({
       command: params.command ?? "",
-      cordeBot: params.cordeBot,
+      cordeBot: params.cordeBot ?? ({} as any),
       isNot: params.isNot ?? false,
       channelId: params.channelId ?? runtime.channelId,
       guildId: params.guildId ?? runtime.guildId,

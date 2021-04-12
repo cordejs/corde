@@ -5,16 +5,25 @@ custom_edit_url: https://github.com/lucasgmagalhaes/corde/blob/master/docs/Expec
 ---
 
 When testing functionalities with an bot, `expect` will let you define what a bot should do
-given a command passed to it. All tests current available in this version(2.0) are listed bellow:
+given a command passed to it. All tests current available in this version are listed bellow:
 
-- [`expect(command)`](/docs/expect#expectstring--number--function)
+- [`expect(command, channelId)`](/docs/expect#expectstring--number--function-customchannelid)
+- [`inChannel(channelId)`](/docs/expect#inchannelchannelid)
+- [`inGuild(guildId)`](/docs/expect#expectstring--number--function)
 - [`not`](/docs/expect#not)
+- [`toHaveResult`](/docs/expect#not)
+
+## Message tests
+
 - [`toAddReaction(emoji, messageIdentifier)`](/docs/expect#toaddreactionemojis-messageidentifier)
 - [`toEditMessage(value)`](/docs/expect#toeditmessagenewcontent-messageidentifier)
 - [`toPin(value)`](/docs/expect#topinstring--messageidentifier)
 - [`toRemoveReaction(value)`](/docs/expect#toremovereactionemojis-messageidentifier)
 - [`toReturn(value)`](/docs/expect#toreturnstring--boolean--number--messageembedlike)
 - [`toUnPin(value)`](/docs/expect#tounpinstring--messageidentifier)
+
+## Role tests
+
 - [`toDeleteRole(value)`](/docs/expect#todeleterolestring--roleidentifier)
 - [`toRenameRole(value)`](/docs/expect#torenamerolestring-string--roleidentifier)
 - [`toSetRoleColor(value)`](/docs/expect#tosetrolecolorcolorresolvable--colors-string--roleidentifier)
@@ -22,6 +31,9 @@ given a command passed to it. All tests current available in this version(2.0) a
 - [`toSetRoleMentionable(value)`](/docs/expect#tosetrolementionableboolean-string--roleidentifier)
 - [`toSetRolePermission(value)`](/docs/expect#tosetrolepermissionstring--roleidentifier-rolepermission)
 - [`toSetRolePosition(value)`](/docs/expect#tosetrolepositionnumber-string--roleidentifier)
+
+<br></br>
+<br></br>
 
 :::note
 All examples below are only to illustrate the functions called after
@@ -31,7 +43,7 @@ in a real use case.
 
 ## Reference
 
-### `expect(string | number | Function)`
+### `expect(string | number | Function, customChannelId)`
 
 Expect is a function that receives a command as an argument. The same argument that you would send to
 Discord to invoke some action from your bot. As there is a [prefix](/docs/configurations#botprefix) witch can
@@ -59,9 +71,46 @@ expect(() => Promise.resolve("createGuild")); // Valid
 
 This function returns several other functions to define what Corde should check after that command be invoke.
 
+`expect` also has a second optional parameter: `channelId`. It allows corde to send the command message to a custom channel.
+
+```typescript
+expect("ping", "831288248180408371");
+```
+
+This expect will send the command `ping` in channel `831288248180408371`.
+
 :::note
 If for some reason you what to pass the bot prefix in `expect`, do not use the config variable [prefix](/docs/configuration#botprefix).
 :::
+
+### `inChannel(channelId)`
+
+Use `inChannel` to define a custom channel to corde validate a test. _the default value is defiend in [config.channelId](/docs/configurations#channelid)_
+When using `inChannel`, only [message tests](/docs/expect#message-tests) will be available.
+
+I.E:
+
+```typescript
+expect("sendInChannel").inChannel("831288248180408371").toReturn("hello2");
+```
+
+The example above will check if the command `sendInChannel` sent the message `hello2` in the text channel of id `831288248180408371`.
+
+### `inGuild(guildId)`
+
+Use `inGuild` to define a custom guild to corde validate a test. _the default value is defiend in [config.guildId](/docs/configurations#guildid)_
+When using `inGuild`, only [role tests](/docs/expect#role-tests) will be available.
+
+I.E:
+
+```typescript
+expect("renameOtherRole")
+  .inGuild("522581719568744468")
+  .toRenameRole("newRole", "829873348309155851");
+```
+
+The example above will check if the command `renameOtherRole` renamed the role located of guild `522581719568744468`
+and id `829873348309155851` to `newRole`.
 
 ### `not`
 
@@ -73,6 +122,25 @@ I.E:
 ```javascript
 expect("hello").not.toReturn(1);
 ```
+
+### `toHaveResult(expectReport)`
+
+Use `toHaveResult` if you want to check if a command did many operations.
+This function make use of reports created by all tests functions that are called from **expect** as a property.
+
+I.E:
+
+```typescript
+expect("sendMultipleMessage").toHaveResult(
+  expect.toReturn("Hello"),
+  expect.inChannel("831288249254674453").toReturn("Hello2"),
+);
+```
+
+In the example above, corde will check if the command `sendMultipleMessage` sent the message `Hello` in the channel defined in
+configs, and the message `Hello2` in a channel of id `831288249254674453`.
+
+All test functions are available from the property `expect`.
 
 ### `toAddReaction(emojis, messageIdentifier)`
 
@@ -117,7 +185,7 @@ We also will allow adding the id of a message, in this test in the future.
 type of `newContent`
 
 ```
-string | number | bigint | boolean | MessageEmbedLike
+string | number | boolean | MessageEmbedLike
 ```
 
 type of `messageIdentifier`
