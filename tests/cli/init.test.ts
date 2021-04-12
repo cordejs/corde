@@ -1,6 +1,7 @@
 import { init } from "../../src/cli/init";
 import { FsMockUtils } from "../mockUtils/fs";
 import { ConfigOptions } from "../../src/types";
+import { logger } from "../../src/logger";
 
 // As there are a local config file for manual tests,
 // These files are renamed to avoid remotion after finish
@@ -46,7 +47,7 @@ describe("Testing creation of config file in init", () => {
   it("should print msg error if invalid file extension was informed", () => {
     let outputData = "";
     const storeLog = (inputs: string) => (outputData += inputs);
-    console.log = jest.fn(storeLog);
+    logger.log = jest.fn(storeLog);
     const invalidExtension = "asdf";
     // @ts-expect-error
     init(invalidExtension);

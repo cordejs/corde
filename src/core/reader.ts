@@ -6,6 +6,7 @@ import { testCollector } from "../common/testCollector";
 import { FileError } from "../errors";
 import { ConfigOptions, TestFile } from "../types";
 import { shortPathForPlataform } from "../utils";
+import { logger } from "../logger";
 
 class Reader {
   /**
@@ -51,7 +52,7 @@ class Reader {
       try {
         require(file);
       } catch (error) {
-        console.log(error);
+        logger.log(error);
         continue;
       }
 

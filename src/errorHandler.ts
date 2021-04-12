@@ -1,6 +1,7 @@
 import { runtime } from "./common/runtime";
 import { testCollector } from "./common/testCollector";
 import { exit } from "./exit";
+import { logger } from "./logger";
 
 export function initErrorHandlers() {
   process.on("uncaughtException", async (err: Error) => {
@@ -17,7 +18,7 @@ export function initErrorHandlers() {
 }
 
 async function printErrorAndExit(error: Error) {
-  console.error(error);
+  logger.error(error);
 
   if (runtime.isBotLoggedIn()) {
     runtime.logoffBot();

@@ -2,6 +2,7 @@ import chalk from "chalk";
 import fs from "fs";
 import path from "path";
 import { FileError } from "../errors";
+import { logger } from "../logger";
 import { ConfigOptions, configFileType } from "../types";
 
 const jsonFile: ConfigOptions = {
@@ -49,7 +50,7 @@ export function init(fileType: configFileType = "json") {
   } else if (fileType === "ts") {
     fileContent = tsFile;
   } else {
-    console.log(
+    logger.log(
       ` - ${chalk.bold(fileType)} is not a valid type. Use '${chalk.bold(
         "init --help",
       )}' to check valid types`,
@@ -61,7 +62,7 @@ export function init(fileType: configFileType = "json") {
     const filePath = path.resolve(process.cwd(), fileName);
     fileContent = formatFile(fileContent, fileType);
     fs.writeFileSync(filePath, fileContent);
-    console.log(
+    logger.log(
       `- ${chalk.green("Successfully")} generated corde config in ${chalk.bold(filePath)}`,
     );
   } catch (error) {

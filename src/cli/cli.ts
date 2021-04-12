@@ -7,8 +7,10 @@ import pack from "../package";
 import { runtime } from "../common/runtime";
 import { reader } from "../core/reader";
 import { initEnvVariables } from "../envVariables";
+import { logger } from "../logger";
 
 initEnvVariables();
+logger.mock();
 
 export const program = new Command();
 
@@ -56,7 +58,7 @@ program
   .action(() => {
     const configs = reader.loadConfig();
     validate(configs);
-    console.log("All configs are ok!");
+    logger.log("All configs are ok!");
   });
 
 if (process.env.ENV !== "UNITY_TEST" && process.env.ENV !== "E2E_TEST") {

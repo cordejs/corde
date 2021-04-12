@@ -8,6 +8,7 @@ import { reader } from "../core/reader";
 import { summary } from "../core/summary";
 import { TestExecutor } from "../core/testExecutor";
 import { FileError } from "../errors";
+import { logger } from "../logger";
 import { LogUpdate } from "../utils/logUpdate";
 import { validate } from "./validate";
 
@@ -48,7 +49,7 @@ async function runTests(files: string[]) {
   try {
     const testFiles = await reader.getTestsFromFiles(files);
     if (testFiles.length === 0) {
-      console.log(`${chalk.bgYellow(chalk.black(" INFO "))} No test were found.`);
+      logger.log(`${chalk.bgYellow(chalk.black(" INFO "))} No test were found.`);
       await finishProcess(0);
     }
     const log = new LogUpdate();
@@ -56,7 +57,7 @@ async function runTests(files: string[]) {
     const executionReport = await testRunner.runTestsAndPrint(testFiles);
 
     if (runtime.environment.isE2eTest) {
-      console.log(log.stdout);
+      logger.log(log.stdout);
     }
 
     summary.print(executionReport);
@@ -68,7 +69,7 @@ async function runTests(files: string[]) {
     }
   } catch (error) {
     spinner.stop();
-    console.error(error);
+    logger.error(error);
     await finishProcess(1);
   }
 }
@@ -76,13 +77,13 @@ async function runTests(files: string[]) {
 async function finishProcess(code: number, error?: any): Promise<never> {
   try {
     if (error) {
-      console.log(error);
+      logger.log(error);
     }
 
     if (testCollector.afterAllFunctions.hasFunctions) {
       const exceptions = await testCollector.afterAllFunctions.executeWithCatchCollectAsync();
       if (exceptions.length) {
-        console.log(...exceptions);
+        logger.log(...exceptions);
         code = 1;
       }
     }
