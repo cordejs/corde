@@ -108,7 +108,11 @@ class Logger implements Console {
   dir(item?: any, options?: any): void;
   dir(obj: any, options?: InspectOptions): void;
   dir(obj?: any, options?: any) {
-    this._dir(obj, options);
+    if (options) {
+      this._dir(obj, options);
+      return;
+    }
+    this._dir(obj);
   }
 
   dirxml(...data: any[]): void;
@@ -144,7 +148,12 @@ class Logger implements Console {
   table(tabularData?: any, properties?: string[]): void;
   table(tabularData: any, properties?: readonly string[]): void;
   table(tabularData?: any, properties?: any) {
-    this._table(tabularData, properties);
+    if (properties) {
+      this._table(tabularData, ...properties);
+      return;
+    }
+
+    this._table(tabularData);
   }
 
   time(label?: string): void;
@@ -179,11 +188,15 @@ class Logger implements Console {
   }
 
   profile(label?: string): void {
-    this._profile(label);
+    if (this._profile) {
+      this._profile(label);
+    }
   }
 
   profileEnd(label?: string): void {
-    this._profileEnd(label);
+    if (this._profileEnd) {
+      this._profileEnd(label);
+    }
   }
 
   /**
@@ -211,9 +224,15 @@ class Logger implements Console {
     console.group = this.createEmptyFunction();
     console.groupEnd = this.createEmptyFunction();
     console.groupCollapsed = this.createEmptyFunction();
-    console.profile = this.createEmptyFunction();
 
-    console.profileEnd = this.createEmptyFunction();
+    if (console.profile) {
+      console.profile = this.createEmptyFunction();
+    }
+
+    if (console.profileEnd) {
+      console.profileEnd = this.createEmptyFunction();
+    }
+
     console.timeStamp = this.createEmptyFunction();
 
     if (console.exception) {

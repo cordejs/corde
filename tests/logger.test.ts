@@ -139,17 +139,21 @@ describe("testing logger", () => {
     expect(spyGroupEnd).toBeCalledTimes(1);
   });
 
-  it("should call console.profile", () => {
-    logger.profile("label");
-    expect(spyProfile).toBeCalledTimes(1);
-    expect(spyProfile).toBeCalledWith("label");
-  });
+  if (console.profile) {
+    it("should call console.profile", () => {
+      logger.profile("label");
+      expect(spyProfile).toBeCalledTimes(1);
+      expect(spyProfile).toBeCalledWith("label");
+    });
+  }
 
-  it("should call console.profile", () => {
-    logger.profileEnd("label");
-    expect(spyProfileEnd).toBeCalledTimes(1);
-    expect(spyProfileEnd).toBeCalledWith("label");
-  });
+  if (console.profileEnd) {
+    it("should call console.profile", () => {
+      logger.profileEnd("label");
+      expect(spyProfileEnd).toBeCalledTimes(1);
+      expect(spyProfileEnd).toBeCalledWith("label");
+    });
+  }
 
   it("should call console.table", () => {
     logger.table("label");
