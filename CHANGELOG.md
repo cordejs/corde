@@ -1,3 +1,19 @@
+# 3.1.0
+
+## 🚀 Features
+
+- Addition of inChannel, inGuild and toHaveResult operators (#620, #604, #605)
+- Allow expect command to send the message in another channel(#618)
+
+## 🐛 Bug Fixes
+
+- Fix fix bug that prevents corde to assert tests only in the defined channel and guild (#619)
+- Fix error no treated in console (#598)
+
+- ## 💡 Miscellaneous
+
+- Several typos fixes.
+
 # 3.1.0-beta.1
 
 - Added toHaveResult, toReturnInChannel and make expect get tests functions without calling it.
