@@ -163,7 +163,7 @@ export type ParametersAsOptional<T extends GenericFunction> = Parameters<T> | vo
 /**
  * Available types of config files
  */
-export type configFileType = "js" | "json" | "ts";
+export type ConfigFileType = "js" | "json" | "ts";
 
 /**
  * Represents **command** structure
@@ -213,6 +213,11 @@ export interface BaseRole {
   isMentionable?: boolean;
 }
 
+export interface CliConfigOptions extends ConfigOptions {
+  config: string;
+  files: string;
+}
+
 /**
  * Contains a set of properties needed for execution of corde
  */
@@ -249,6 +254,10 @@ export interface ConfigOptions {
    * Path for case tests. Use this from the base directory of the application
    */
   testFiles: string[];
+  /**
+   * Defines if external console prints should be displayed
+   */
+  silent: boolean;
 }
 
 /**

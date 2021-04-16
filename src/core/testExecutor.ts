@@ -257,6 +257,9 @@ export class TestExecutor {
 
       reports.push(_report);
     }
+
+    runtime.printLoggerIfNotSilent();
+
     return reports;
   }
 

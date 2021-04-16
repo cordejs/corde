@@ -4,6 +4,7 @@ import { Client } from "discord.js";
 import { CordeBot } from "../core/cordeBot";
 import { ConfigError } from "../errors";
 import { DEFAULT_TEST_TIMEOUT } from "../consts";
+import { logger } from "../logger";
 
 const Environment = {
   isUnityTest: process.env.ENV === "UNITY_TEST",
@@ -44,6 +45,10 @@ class Runtime {
 
   get botTestId() {
     return this._configs.botTestId;
+  }
+
+  get silent() {
+    return this._configs.silent;
   }
 
   get botTestToken() {
@@ -109,6 +114,12 @@ class Runtime {
   logoffBot() {
     if (this._bot) {
       this._bot.logout();
+    }
+  }
+
+  printLoggerIfNotSilent() {
+    if (!runtime.silent) {
+      logger.printStacks();
     }
   }
 

@@ -54,11 +54,16 @@ async function runTests(files: string[]) {
     }
     const log = new LogUpdate();
     const testRunner = new TestExecutor(log);
+
+    runtime.printLoggerIfNotSilent();
+
     const executionReport = await testRunner.runTestsAndPrint(testFiles);
 
     if (runtime.environment.isE2eTest) {
       logger.log(log.stdout);
     }
+
+    runtime.printLoggerIfNotSilent();
 
     summary.print(executionReport);
 

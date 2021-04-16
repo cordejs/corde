@@ -2,7 +2,7 @@ import { Command } from "commander";
 import { exec } from "./exec";
 import { init } from "./init";
 import { validate } from "./validate";
-import { configFileType } from "../types";
+import { CliConfigOptions, ConfigFileType } from "../types";
 import pack from "../package";
 import { runtime } from "../common/runtime";
 import { reader } from "../core/reader";
@@ -23,22 +23,47 @@ program
 
 program
   .option("-c, --config <type>", "Set config file path")
+  .option("--silent", "Disable all logs from external applications")
+  .option("--botPrefix <type>", "Set the prefix of all commands")
+  .option("--timeout <type>", "Set the timeout of tests")
+  .option("--guildId <type>", "Set the id of the guild where tests iterations will be done")
+  .option("--channelId <type>", "Set the id of the channel where tests iterations will be done")
+  .option("--botTestToken <type>", "Set the token of the testing bot")
+  .option("--botTestId <type>", "Set the id of the testing bot")
+  .option("--cordeTestToken <type>", "Set the id of bot used by corde")
   .option(
     "-f, --files <path>",
     "Set the path for all tests. Use this if you wan to specify a single path." +
       " for Array, use only 'corde <path1> <path2>'",
   )
   .action(async (args: any) => {
-    const options = program.opts();
+    const options = program.opts() as CliConfigOptions;
     if (options.config) {
       runtime.configFilePath = options.config;
     }
+
     if (args) {
       runtime.setConfigs({ testFiles: program.args }, true);
     }
+
     if (options.files) {
       runtime.setConfigs({ testFiles: options.files.split(" ") }, true);
     }
+
+    runtime.setConfigs(
+      {
+        silent: options.silent,
+        botPrefix: options.botPrefix,
+        botTestId: options.botTestId,
+        botTestToken: options.botTestToken,
+        channelId: options.channelId,
+        cordeTestToken: options.cordeTestToken,
+        guildId: options.guildId,
+        timeOut: options.timeOut,
+      },
+      true,
+    );
+
     await exec();
   });
 
@@ -47,7 +72,7 @@ program
   .alias("i")
   .description("Initialize a config file with all possible options")
   .usage("[js ts json] or empty for default type (json)")
-  .action((type: configFileType) => {
+  .action((type: ConfigFileType) => {
     init(type);
   });
 

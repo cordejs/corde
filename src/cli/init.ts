@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import { FileError } from "../errors";
 import { logger } from "../logger";
-import { ConfigOptions, configFileType } from "../types";
+import { ConfigOptions, ConfigFileType } from "../types";
 
 const jsonFile: ConfigOptions = {
   botPrefix: "",
@@ -34,7 +34,7 @@ const tsFile = `
  *
  * @throws Error if could not create the config file
  */
-export function init(fileType: configFileType = "json") {
+export function init(fileType: ConfigFileType = "json") {
   let fileContent = "";
 
   // No declaration of fileType is considered 'json'
@@ -72,7 +72,7 @@ export function init(fileType: configFileType = "json") {
   }
 }
 
-function formatFile(file: string, type: configFileType) {
+function formatFile(file: string, type: ConfigFileType) {
   let formater: "object" | "json" = "json";
 
   if (type === "js" || type === "ts") {

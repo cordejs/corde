@@ -9,6 +9,7 @@ import { ConfigOptions } from "../types";
  *
  */
 export class Config implements ConfigOptions {
+  silent!: boolean;
   cordeTestToken!: string;
   botTestId!: string;
   botTestToken!: string;
@@ -68,6 +69,10 @@ export class Config implements ConfigOptions {
 
     if (config.botPrefix && (!this.botPrefix || forceUpdate)) {
       this.botPrefix = config.botPrefix;
+    }
+
+    if (config.silent && (!this.silent || forceUpdate)) {
+      this.silent = config.silent;
     }
 
     if (config.testFiles && (!this.testFiles || this.testFiles.length === 0 || forceUpdate)) {

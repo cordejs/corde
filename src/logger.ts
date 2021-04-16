@@ -13,11 +13,15 @@ export interface StackData {
   trace: string;
 }
 
+type StdoutStream = NodeJS.WriteStream & { fd: 1 };
+
 /**
  * @private
  */
 class Logger implements Console {
   public stack: Array<StackContainer> = [];
+
+  private _stdout: StdoutStream;
 
   private _log: Console["log"];
   private _error: Console["error"];
@@ -46,7 +50,9 @@ class Logger implements Console {
   private _timeStamp: Console["timeStamp"];
   private _trace: Console["trace"];
 
-  constructor() {
+  constructor(stdout: StdoutStream) {
+    this._stdout = stdout;
+
     this._log = console.log;
     this._error = console.error;
     this._debug = console.debug;
@@ -171,14 +177,15 @@ class Logger implements Console {
   timeLog(label?: string, ...data: any[]): void;
   timeLog(label?: string, ...data: any[]): void;
   timeLog(label?: any, ...data: any[]) {
-    this._log(this.timeLog);
     this._timeLog(label, ...data);
   }
 
   timeStamp(label?: string): void;
   timeStamp(label?: string): void;
   timeStamp(label?: any) {
-    this._timeStamp(label);
+    if (this._timeStamp) {
+      this._timeStamp(label);
+    }
   }
 
   trace(...data: any[]): void;
@@ -285,16 +292,19 @@ class Logger implements Console {
       return;
     }
 
+    this._stdout.cursorTo(0, 1);
+
     this.stack.forEach((stackItem) => {
-      this._log(`● console.${stackItem.name}`);
+      this._stdout.write(`● console.${stackItem.name}\n\n`);
 
       stackItem.data.values.forEach((value) => {
         stackItem.data.printFunction(`${MESSAGE_TAB_SPACE}${MESSAGE_TAB_SPACE}${value}`);
-        this._log("\n" + stackItem.data.trace);
+        this._stdout.write("\n" + stackItem.data.trace + "\n\n");
       });
     });
 
     this.stack = [];
+    this._stdout.cursorTo(0, this._stdout.rows);
   }
 
   private overridePrint(name: string, printFunction: (...args: any[]) => void) {
@@ -315,5 +325,5 @@ class Logger implements Console {
 /**
  * @internal
  */
-const logger = new Logger();
+const logger = new Logger(process.stdout);
 export { logger };
