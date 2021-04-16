@@ -1,7 +1,9 @@
+import type { Config } from "@jest/types";
+
 // Set TEST environment to avoid process to exit with code 1 inside aplicaton
 process.env.ENV = "UNITY_TEST";
 
-module.exports = {
+const config: Config.InitialOptions = {
   rootDir: ".",
   verbose: false,
   preset: "ts-jest/presets/js-with-babel",
@@ -23,3 +25,5 @@ module.exports = {
     "^.+\\.js?$": "babel-jest",
   },
 };
+
+export default config;
