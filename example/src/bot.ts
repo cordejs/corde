@@ -9,7 +9,7 @@ import * as Discord from "discord.js";
 import { commandHandler } from "./utils/commandHandler";
 import { PREFIX, reactionData } from "./utils/global";
 import { reactionHandle } from "./commands/shop";
-import { dbConnection, connect } from "../dbconn";
+import { connect } from "../dbconn";
 
 const client = new Discord.Client();
 
@@ -21,7 +21,7 @@ const events = {
 // Tell the world that we're ready!!
 client.on("ready", () => {
   console.log(`HeroBot is ready! ${client.user.tag} version: ${connections.projectVersion}`);
-  client.user.setActivity(`Serving ${client.guilds.size} servers`);
+  client.user.setActivity(`Serving ${client.guilds.cache.size} servers`);
 });
 
 // Correspond to the receptor of all messages sent by the users in Discord
@@ -39,13 +39,13 @@ client.on("guildCreate", (guild) => {
   console.log(
     `New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`,
   );
-  client.user.setActivity(`Serving ${client.guilds.size} servers`);
+  client.user.setActivity(`Serving ${client.guilds.cache.size} servers`);
 });
 
 client.on("guildDelete", (guild) => {
   // this event triggers when the bot is removed from a guild.
   console.log(`I have been removed from: ${guild.name} (id: ${guild.id})`);
-  client.user.setActivity(`Serving ${client.guilds.size} servers`);
+  client.user.setActivity(`Serving ${client.guilds.cache.size} servers`);
 });
 
 /**
@@ -70,7 +70,7 @@ client.on("guildDelete", (guild) => {
  */
 client.on("raw", async (event) => {
   // This will prevent from trying to build data that isn't relevant to that event.
-  if (!events.hasOwnProperty(event.t)) {
+  if (!events[event.t]) {
     return;
   } else if (reactionData.userId === null) {
     return;

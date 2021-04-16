@@ -2,6 +2,10 @@ import * as proficienceLevels from "../../data/proficienceLevel.json";
 import * as levels from "../../data/levels.json";
 import { Level } from "../interfaces/level.js";
 
+interface GenericJson<T> {
+  [value: string]: T;
+}
+
 /**
  * Class with static method for search of data in json files
  */
@@ -31,7 +35,7 @@ export class JsonHandle {
    * data = {value: example};
    * ```
    */
-  public static genericDataGetById<T>(imp: ImportMeta, dataId: number): T {
+  public static genericDataGetById<T>(imp: GenericJson<T>, dataId: number): T {
     const data: T = imp[dataId];
     if (data !== undefined) {
       if ("id" in data) {

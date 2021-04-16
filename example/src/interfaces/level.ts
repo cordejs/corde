@@ -1,5 +1,5 @@
 export interface Level {
-  value: number;
+  value?: number;
   exp: number;
-  hp: number;
+  hp?: number;
 }

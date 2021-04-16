@@ -115,7 +115,10 @@ export async function weaponShop(msg: Discord.Message) {
   });
 }
 
-export function backOneItem(reaction: Discord.MessageReaction, user: Discord.User) {
+export function backOneItem(
+  reaction: Discord.MessageReaction,
+  user: Discord.User | Discord.PartialUser,
+) {
   if (user.id === reactionData.userId && reactionData.index - 1 > -1) {
     reactionData.index--;
 
@@ -127,7 +130,10 @@ export function backOneItem(reaction: Discord.MessageReaction, user: Discord.Use
   }
 }
 
-export function fowardOneItem(reaction: Discord.MessageReaction, user: Discord.User) {
+export function fowardOneItem(
+  reaction: Discord.MessageReaction,
+  user: Discord.User | Discord.PartialUser,
+) {
   if (user.id === reactionData.userId && reactionData.index + 1 < reactionData.data.length) {
     reactionData.index++;
 
@@ -139,7 +145,10 @@ export function fowardOneItem(reaction: Discord.MessageReaction, user: Discord.U
   }
 }
 
-export function goToLastItem(reaction: Discord.MessageReaction, user: Discord.User) {
+export function goToLastItem(
+  reaction: Discord.MessageReaction,
+  user: Discord.User | Discord.PartialUser,
+) {
   if (user.id === reactionData.userId) {
     reactionData.index = reactionData.data.length - 1;
 
@@ -151,7 +160,10 @@ export function goToLastItem(reaction: Discord.MessageReaction, user: Discord.Us
   }
 }
 
-export function goToFirstItem(reaction: Discord.MessageReaction, user: Discord.User) {
+export function goToFirstItem(
+  reaction: Discord.MessageReaction,
+  user: Discord.User | Discord.PartialUser,
+) {
   if (user.id === reactionData.userId) {
     reactionData.index = 0;
 
@@ -163,7 +175,10 @@ export function goToFirstItem(reaction: Discord.MessageReaction, user: Discord.U
   }
 }
 
-export function reactionHandle(reaction: Discord.MessageReaction, user: Discord.User) {
+export function reactionHandle(
+  reaction: Discord.MessageReaction,
+  user: Discord.User | Discord.PartialUser,
+) {
   switch (reaction.emoji.name) {
     case EmojiSymbols["⏪"]: {
       goToFirstItem(reaction, user);

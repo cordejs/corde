@@ -23,7 +23,7 @@ export async function buy(msg: Discord.Message, equipId: string) {
     return;
   }
 
-  if (Number(equipId) === NaN) {
+  if (typeof equipId !== "number") {
     msg.channel.send("Well... I don't think that it is a equip id");
     return;
   }

@@ -1,5 +1,4 @@
 import * as Discord from "discord.js";
-import { EmbedMessage } from "../interfaces/embedMessage";
 import { getHeroRepository } from "../utils/repositoryHandler";
 
 /**
@@ -16,7 +15,7 @@ export async function inventory(msg: Discord.Message) {
       msg.channel.send("Create a hero before check his `status`");
       return;
     } else {
-      const messages: EmbedMessage[] = [];
+      const messages: Discord.EmbedField[] = [];
       const inventory = await hero.inventoryItens;
 
       inventory.forEach((inventoryItem) => {
@@ -28,13 +27,16 @@ export async function inventory(msg: Discord.Message) {
           }`;
 
           messages.push({
+            inline: false,
             name: `${equip.name}`,
             value: `${id} | ${value} | ${amount}`,
           });
         });
       });
 
-      msg.channel.sendEmbed({ fields: messages });
+      const embed = new Discord.MessageEmbed();
+      embed.fields.push(...messages);
+      msg.channel.send(embed);
     }
   } catch (error) {
     msg.channel.send(error);

@@ -17,5 +17,5 @@
     "preserveConstEnums": true
   },
   "include": ["src/**/*", "./*.ts", "./*.js"],
-  "exclude": ["./tests/**/*.spec.ts"]
+  "exclude": ["./tests/**/*.spec.ts", "node_modules/**/*"]
 }
