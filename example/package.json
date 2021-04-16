@@ -1,14 +1,71 @@
 {
-  "name": "example",
-  "version": "1.0.0",
-  "description": "",
-  "main": "bot.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "name": "herobot",
+  "version": "0.1.2",
+  "description": "A discord bot to play RPG",
+  "main": "./src/bot.ts",
+  "dependencies": {
+    "@types/node": "12.6.2",
+    "discord.js": "^11.4.2",
+    "dotenv": "^8.0.0",
+    "event-stream": "^4.0.1",
+    "nodemon": "1.19.2",
+    "pg": "^7.9.0",
+    "reflect-metadata": "^0.1.10",
+    "typeorm": "^0.2.16"
   },
-  "author": "Lucas Gomes",
-  "license": "ISC",
   "devDependencies": {
-    "corde": "^3.0.0"
-  }
+    "cloc": "^2.4.0",
+    "husky": "^3.0.0",
+    "jasmine-core": "^3.3.0",
+    "karma": "^4.0.1",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^2.0.1",
+    "markdownlint": "^0.16.0",
+    "prettier": "^1.18.1",
+    "pretty-quick": "^1.10.0",
+    "request": ">=2.68.0",
+    "ts-node": "^8.0.3",
+    "tslint": "^5.14.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.4.1",
+    "typings": "^2.1.1",
+    "uglify-js": "^3.5.4"
+  },
+  "scripts": {
+    "build-watch": "tsc --watch",
+    "build": "tsc -p .",
+    "bot": "node build/src/bot.js",
+    "build-docs": "typedoc --out ./doc",
+    "build:prod": "node -r build/config.js",
+    "postinstall": "tsc -p .",
+    "count": "cloc src/",
+    "install-hooks": ".scripts/symlinks.sh",
+    "start": "ts-node src/index.ts",
+    "ignore-reset": "bash .scripts/ignore.sh",
+    "commit": ".scripts/commit.sh",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+    "migrations": "typeorm migration:run",
+    "migration-revert": "typeorm migration:revert",
+    "migration-create": "typeorm migration:create -n migration",
+    "prettier-watch": "onchange '**/*.js' -- prettier --write {{changed}}",
+    "release": "bash .scripts/release.sh",
+    "tslint-check": "tslint-config-prettier-check ./tslint.json",
+    "pretty-quick": "pretty-quick"
+  },
+  "keywords": [
+    "heroku"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lgmagalhaes88/HeroBot.git"
+  },
+  "author": "lgmagalhaes88",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lgmagalhaes88/HeroBot/issues"
+  },
+  "engines": {
+    "node": "10.x"
+  },
+  "homepage": "https://github.com/lgmagalhaes88/HeroBot#readme"
 }
