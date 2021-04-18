@@ -63,8 +63,8 @@ class Runtime {
     return this._configs.guildId;
   }
 
-  get timeOut() {
-    return this._configs.timeOut ?? DEFAULT_TEST_TIMEOUT;
+  get timeout() {
+    return this._configs.timeout ?? DEFAULT_TEST_TIMEOUT;
   }
 
   get botPrefix() {

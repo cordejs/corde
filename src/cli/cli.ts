@@ -16,8 +16,15 @@ export const program = new Command();
 
 // Add basic information with default run all command
 program
-  .name("Corde")
-  .usage("to start testings o corde [option] to use a specific command.")
+  .usage(
+    `
+    corde <command> <subcommand> <args>
+
+    I.E:
+    corde --config ./tests/corde.config.js -> Will run corde with configs located in ./tests
+
+  `,
+  )
   .description(pack.description)
   .version(`v${pack.version}`, "-v, --version");
 
@@ -33,7 +40,7 @@ program
   .option("--cordeTestToken <type>", "Set the id of bot used by corde")
   .option(
     "-f, --files <path>",
-    "Set the path for all tests. Use this if you wan to specify a single path." +
+    "Set the path for all tests. Use this whether you wan to specify a single path." +
       " for Array, use only 'corde <path1> <path2>'",
   )
   .action(async (args: any) => {
@@ -50,6 +57,12 @@ program
       runtime.setConfigs({ testFiles: options.files.split(" ") }, true);
     }
 
+    let formatedTimeout = undefined;
+
+    if (options.timeout) {
+      formatedTimeout = Number(options.timeout);
+    }
+
     runtime.setConfigs(
       {
         silent: options.silent,
@@ -59,7 +72,7 @@ program
         channelId: options.channelId,
         cordeTestToken: options.cordeTestToken,
         guildId: options.guildId,
-        timeOut: options.timeOut,
+        timeout: formatedTimeout,
       },
       true,
     );

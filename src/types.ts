@@ -245,7 +245,7 @@ export interface ConfigOptions {
   /**
    * Defines max amount of time that a command can run
    */
-  timeOut?: number;
+  timeout?: number;
   /**
    * Defines how to identify bot calls
    */

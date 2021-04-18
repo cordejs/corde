@@ -105,4 +105,72 @@ describe("testing cli", () => {
     program.parse(["node", "test", "v"]);
     expect(spyValidate).toBeCalled();
   });
+
+  it("should call cli silently", () => {
+    program.exitOverride();
+    jest.spyOn(reader, "loadConfig").mockImplementation(() => null);
+    expect(runtime.silent).not.toBeTruthy();
+    program.parse(["node", "test", "--silent"]);
+    expect(runtime.silent).toBeTruthy();
+  });
+
+  it("should set botPrefix", () => {
+    program.exitOverride();
+    jest.spyOn(reader, "loadConfig").mockImplementation(() => null);
+    expect(runtime.botPrefix).toBeFalsy();
+    program.parse(["node", "test", "--botPrefix", "!"]);
+    expect(runtime.botPrefix).toEqual("!");
+  });
+
+  it("should set timeout", () => {
+    program.exitOverride();
+    jest.spyOn(reader, "loadConfig").mockImplementation(() => null);
+    program.parse(["node", "test", "--timeout", "1000"]);
+    expect(runtime.timeout).toEqual(1000);
+  });
+
+  it("should set guildId", () => {
+    program.exitOverride();
+    const param = "12312412421";
+    jest.spyOn(reader, "loadConfig").mockImplementation(() => null);
+    expect(runtime.guildId).toBeFalsy();
+    program.parse(["node", "test", "--guildId", param]);
+    expect(runtime.guildId).toEqual(param);
+  });
+
+  it("should set channelId", () => {
+    program.exitOverride();
+    const param = "12312412421";
+    jest.spyOn(reader, "loadConfig").mockImplementation(() => null);
+    expect(runtime.channelId).toBeFalsy();
+    program.parse(["node", "test", "--channelId", param]);
+    expect(runtime.channelId).toEqual(param);
+  });
+
+  it("should set botTestToken", () => {
+    program.exitOverride();
+    const param = "asdas1kl2j31lkjlas";
+    jest.spyOn(reader, "loadConfig").mockImplementation(() => null);
+    expect(runtime.botTestToken).toBeFalsy();
+    program.parse(["node", "test", "--botTestToken", param]);
+    expect(runtime.botTestToken).toEqual(param);
+  });
+
+  it("should set botTestId", () => {
+    program.exitOverride();
+    const param = "12312412312412312";
+    jest.spyOn(reader, "loadConfig").mockImplementation(() => null);
+    expect(runtime.botTestId).toBeFalsy();
+    program.parse(["node", "test", "--botTestId", param]);
+    expect(runtime.botTestId).toEqual(param);
+  });
+
+  it("should set cordeTestToken", () => {
+    program.exitOverride();
+    const param = "alsdj1çlk1j2d1ubça2";
+    jest.spyOn(reader, "loadConfig").mockImplementation(() => null);
+    expect(runtime.cordeTestToken).toBeFalsy();
+    program.parse(["node", "test", "--cordeTestToken", param]);
+    expect(runtime.cordeTestToken).toEqual(param);
+  });
 });

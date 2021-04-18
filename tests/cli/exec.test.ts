@@ -30,7 +30,7 @@ describe("testing default command", () => {
       guildId: "12312312",
       testFiles: [],
       botTestToken: "123123",
-      timeOut: 1000,
+      timeout: 1000,
     });
 
     const validateSpy = jest.spyOn(validateFn, "validate");
@@ -61,7 +61,7 @@ describe("testing default command", () => {
       guildId: "12312312",
       testFiles: ["tests/cli/testFolder"],
       botTestToken: "123123",
-      timeOut: 1000,
+      timeout: 1000,
     });
 
     await exec();

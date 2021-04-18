@@ -198,7 +198,7 @@ export function _initTestSimpleInstance<T extends ExpectTest>(
     channelId: params.channelId,
     guildId: params.guildId ?? runtime.guildId,
     isNot: params.isNot ?? false,
-    timeout: params.timeout ?? runtime.timeOut,
+    timeout: params.timeout ?? runtime.timeout,
     isCascade: params.isCascade ?? false,
   });
 }
@@ -214,7 +214,7 @@ export namespace testUtils {
       isNot: params.isNot ?? false,
       channelId: params.channelId ?? runtime.channelId,
       guildId: params.guildId ?? runtime.guildId,
-      timeout: params.timeout ?? runtime.timeOut,
+      timeout: params.timeout ?? runtime.timeout,
       isCascade: params.isCascade ?? false,
     });
   }

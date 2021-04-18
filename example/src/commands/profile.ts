@@ -1,4 +1,6 @@
 import * as Discord from "discord.js";
+import { Hero } from "../entity/hero";
+import { HeroRepository } from "../repositories/heroRepository";
 import { getHeroRepository } from "../utils/repositoryHandler";
 
 /**
@@ -7,8 +9,8 @@ import { getHeroRepository } from "../utils/repositoryHandler";
  * @param msg Discord last message related to the command
  */
 export async function profile(msg: Discord.Message) {
-  let heroRepository;
-  let hero;
+  let heroRepository: HeroRepository;
+  let hero: Hero;
 
   try {
     heroRepository = getHeroRepository();
@@ -45,7 +47,7 @@ export async function profile(msg: Discord.Message) {
       hero.levelMaxXp +
       " )\n" +
       "Damage proficience level: **" +
-      hero.damageProficience.level +
+      (await hero.damageProficience).level +
       "** (" +
       hero.damageProficience.xp +
       " / " +

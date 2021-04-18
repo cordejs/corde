@@ -15,7 +15,7 @@ export class Config implements ConfigOptions {
   botTestToken!: string;
   channelId!: string;
   guildId!: string;
-  timeOut?: number;
+  timeout?: number;
   botPrefix!: string;
   testFiles!: string[];
 
@@ -26,11 +26,11 @@ export class Config implements ConfigOptions {
    *
    * @example
    * const config = new Config();
-   * config.timeOut = 1000;
+   * config.timeout = 1000;
    *
-   * const newConfig: ConfigOptions = { ...timeOut: 3000 };
+   * const newConfig: ConfigOptions = { ...timeout: 3000 };
    * config.setConfigs(newConfig);
-   * console.log(config.timeOut) // print 1000;
+   * console.log(config.timeout) // print 1000;
    *
    * @param config new set of configs.
    */
@@ -59,11 +59,11 @@ export class Config implements ConfigOptions {
       this.guildId = config.guildId;
     }
 
-    if (!this.timeOut || forceUpdate) {
-      if (config.timeOut) {
-        this.timeOut = config.timeOut;
+    if (!this.timeout || forceUpdate) {
+      if (config.timeout) {
+        this.timeout = config.timeout;
       } else {
-        this.timeOut = DEFAULT_TEST_TIMEOUT;
+        this.timeout = DEFAULT_TEST_TIMEOUT;
       }
     }
 

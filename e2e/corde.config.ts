@@ -20,4 +20,4 @@ export const cordeTestToken = process.env.CORDE_TEST_TOKEN;
 export const guildId = process.env.GUILD_ID;
 export const testFiles = [process.env.TEST_FILES_DIR];
 export const botTestToken = process.env.BOT_TEST_TOKEN;
-export const timeOut = process.env.TIME_OUT;
+export const timeout = process.env.TIME_OUT;

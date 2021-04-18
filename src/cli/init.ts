@@ -9,11 +9,12 @@ const jsonFile: ConfigOptions = {
   botPrefix: "",
   botTestId: "",
   channelId: "",
+  silent: true,
   cordeTestToken: "",
   guildId: "",
   testFiles: [""],
   botTestToken: "",
-  timeOut: 5000,
+  timeout: 5000,
 };
 
 const jsFile = `

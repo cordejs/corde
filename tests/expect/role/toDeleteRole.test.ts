@@ -84,7 +84,7 @@ describe("testing toDeleteRole function", () => {
 
       const isNot = true;
       const roleIdentifier = { id: mockDiscord.role.id };
-      runtime.setConfigs({ timeOut: 100 }, true);
+      runtime.setConfigs({ timeout: 100 }, true);
 
       const toDeleteRole = initTestClass(corde, isNot);
       const report = await toDeleteRole.action(roleIdentifier);
@@ -116,13 +116,13 @@ describe("testing toDeleteRole function", () => {
 
       const isNot = false;
       const roleIdentifier = { id: mockDiscord.role.id };
-      runtime.setConfigs({ timeOut: 100 }, true);
+      runtime.setConfigs({ timeout: 100 }, true);
 
       const toDeleteRole = initTestClass(corde, isNot);
       const report = await toDeleteRole.action(roleIdentifier);
 
       const message = buildReportMessage(
-        `timeout: role ${mockDiscord.role.id} wasn't deleted in the expected time (${runtime.timeOut})`,
+        `timeout: role ${mockDiscord.role.id} wasn't deleted in the expected time (${runtime.timeout})`,
       );
 
       const model = createReport(toDeleteRole, false, message);

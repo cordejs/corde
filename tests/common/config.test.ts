@@ -9,12 +9,12 @@ describe("testing config", () => {
       botTestId: "123",
       guildId: "123",
       testFiles: ["123"],
-      timeOut: DEFAULT_TEST_TIMEOUT,
+      timeout: DEFAULT_TEST_TIMEOUT,
     };
 
     const config = new Config();
     config.setConfigs(configOptions);
-    expect(config).toEqual({ ...configOptions, timeOut: DEFAULT_TEST_TIMEOUT });
+    expect(config).toEqual({ ...configOptions, timeout: DEFAULT_TEST_TIMEOUT });
   });
 
   it("should force update settings", () => {
@@ -25,7 +25,7 @@ describe("testing config", () => {
       cordeTestToken: "333",
       guildId: "11111",
       testFiles: ["321", "32121"],
-      timeOut: 1222,
+      timeout: 1222,
       botTestToken: "lacjxlakjs12312",
     };
 
@@ -37,7 +37,7 @@ describe("testing config", () => {
       cordeTestToken: "",
       guildId: "123",
       testFiles: ["123"],
-      timeOut: undefined,
+      timeout: undefined,
       botTestToken: undefined,
     });
     config.setConfigs(updatadedConfig, true);

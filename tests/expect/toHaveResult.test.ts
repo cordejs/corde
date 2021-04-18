@@ -35,7 +35,7 @@ function initTestClass(cordeBot: CordeBotLike, isNot: boolean, command?: string)
     isCascade: false,
     cordeBot: cordeBot,
     isNot: isNot,
-    timeout: runtime.timeOut,
+    timeout: runtime.timeout,
   });
 }
 
@@ -79,7 +79,7 @@ describe("testing todoInCascade function", () => {
   });
 
   it("should return failed due to timeout and isNot false", async () => {
-    runtime.setConfigs({ timeOut: 100 });
+    runtime.setConfigs({ timeout: 100 });
     const corde = initClient();
     const todoInCascade = initTestClass(corde, false);
 

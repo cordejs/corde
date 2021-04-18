@@ -13,7 +13,7 @@ beforeEach(() => {
     guildId: "21685198465498",
     testFiles: ["./tests/dirTestFiles"],
     botTestToken: "1f77a63e0f60f3bf420edf67bfa3915b",
-    timeOut: 5000,
+    timeout: 5000,
   };
 });
 

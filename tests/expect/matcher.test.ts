@@ -91,7 +91,7 @@ async function createDefaultTestFor<T extends ExpectTest>(
     guildId: guildId ?? "22222222222",
     cordeBot: cordeBot ?? runtime.bot,
     isNot,
-    timeout: timeout ?? runtime.timeOut,
+    timeout: timeout ?? runtime.timeout,
     channelId: channelId ?? "33333333333333",
     isCascade: isCascade ?? false,
   };
