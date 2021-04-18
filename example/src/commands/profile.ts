@@ -18,6 +18,10 @@ export async function profile(msg: Discord.Message) {
     return;
   }
 
+  if (!hero) {
+    msg.channel.send(`Profile not found for user ${msg.author.id}`);
+  }
+
   msg.channel.send(
     "Name: `" +
       hero.name +
