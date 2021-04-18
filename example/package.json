@@ -11,7 +11,7 @@
     "nodemon": "2.0.7",
     "pg": "^8.6.0",
     "reflect-metadata": "^0.1.10",
-    "typeorm": "^0.2.16"
+    "typeorm": "^0.2.32"
   },
   "devDependencies": {
     "cloc": "^2.4.0",
@@ -34,18 +34,18 @@
   },
   "scripts": {
     "build-watch": "tsc --watch",
+    "dbup": "sh composeUp.sh",
     "build": "tsc -p .",
     "bot": "node build/src/bot.js",
     "build-docs": "typedoc --out ./doc",
     "build:prod": "node -r build/config.js",
-    "postinstall": "tsc -p .",
     "count": "cloc src/",
     "install-hooks": ".scripts/symlinks.sh",
     "start": "ts-node src/index.ts",
     "ignore-reset": "bash .scripts/ignore.sh",
     "commit": ".scripts/commit.sh",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
-    "migrations": "typeorm migration:run",
+    "migrate": "typeorm migration:run",
     "migration-revert": "typeorm migration:revert",
     "migration-create": "typeorm migration:create -n migration",
     "prettier-watch": "onchange '**/*.js' -- prettier --write {{changed}}",
