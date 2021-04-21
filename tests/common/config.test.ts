@@ -19,6 +19,7 @@ describe("testing config", () => {
 
   it("should force update settings", () => {
     const updatadedConfig: ConfigOptions = {
+      silent: true,
       botPrefix: "+",
       botTestId: "321",
       channelId: "111",

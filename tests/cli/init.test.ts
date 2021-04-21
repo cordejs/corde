@@ -57,6 +57,7 @@ describe("Testing creation of config file in init", () => {
 
 describe("Testing content of config file in init", () => {
   const configFile: ConfigOptions = {
+    silent: true,
     botPrefix: "",
     botTestId: "",
     channelId: "",

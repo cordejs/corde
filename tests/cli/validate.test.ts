@@ -6,6 +6,7 @@ let configs: ConfigOptions;
 
 beforeEach(() => {
   configs = {
+    silent: true,
     botPrefix: "!",
     botTestId: "12122216892126544",
     channelId: "12316351316252291",

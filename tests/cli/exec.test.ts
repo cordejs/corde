@@ -23,6 +23,7 @@ describe("testing default command", () => {
   it("should throw exception due to no files", async () => {
     const readerSpy = jest.spyOn(reader, "loadConfig");
     readerSpy.mockReturnValue({
+      silent: true,
       botPrefix: "!",
       botTestId: "123123123",
       channelId: "123123123",
@@ -54,6 +55,7 @@ describe("testing default command", () => {
     validateSpy.mockImplementation(() => null);
 
     readerSpy.mockReturnValue({
+      silent: true,
       botPrefix: "!",
       botTestId: "123123123",
       channelId: "123123123",

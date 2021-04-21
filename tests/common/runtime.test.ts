@@ -5,6 +5,7 @@ import { ConfigOptions } from "../../src/types";
 
 const config: ConfigOptions = {
   botPrefix: "!",
+  silent: true,
   botTestId: "123",
   channelId: "1241241",
   cordeTestToken: "321",
