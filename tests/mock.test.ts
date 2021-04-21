@@ -133,6 +133,61 @@ describe("testing corde mock", () => {
     expect(obj.sumOne(1)).toEqual(2);
   });
 
+  it("should mockImplementation and append multiple mockImplementationOnce", () => {
+    const obj = {
+      sumOne: (value: number) => {
+        return value + 1;
+      },
+    };
+
+    createMock(obj, "sumOne")
+      .mockImplementation(() => -1)
+      .mockImplementationOnce(() => 10)
+      .mockImplementationOnce(() => 20)
+      .mockImplementationOnce(() => 30);
+
+    expect(obj.sumOne(1)).toEqual(-1);
+    expect(obj.sumOne(1)).toEqual(10);
+    expect(obj.sumOne(1)).toEqual(20);
+    expect(obj.sumOne(1)).toEqual(30);
+  });
+
+  it("should append multiple mockImplementationOnce and back to original state", () => {
+    const obj = {
+      sumOne: (value: number) => {
+        return value + 1;
+      },
+    };
+
+    createMock(obj, "sumOne")
+      .mockImplementationOnce(() => 10)
+      .mockImplementationOnce(() => 20)
+      .mockImplementationOnce(() => 30);
+
+    expect(obj.sumOne(1)).toEqual(10);
+    expect(obj.sumOne(1)).toEqual(20);
+    expect(obj.sumOne(1)).toEqual(30);
+    expect(obj.sumOne(1)).toEqual(2);
+  });
+
+  it("should append multiple mockImplementation", () => {
+    const obj = {
+      sumOne: (value: number) => {
+        return value + 1;
+      },
+    };
+
+    createMock(obj, "sumOne")
+      .mockImplementation(() => 10)
+      .mockImplementation(() => 20)
+      .mockImplementation(() => 30);
+
+    expect(obj.sumOne(1)).toEqual(10);
+    expect(obj.sumOne(1)).toEqual(20);
+    expect(obj.sumOne(1)).toEqual(30);
+    expect(obj.sumOne(1)).toEqual(30);
+  });
+
   it("should mocked implementation more than one time", () => {
     const obj = {
       sumOne: (value: number) => {

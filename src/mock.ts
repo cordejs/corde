@@ -10,6 +10,33 @@ import {
 
 const THIS_DEFAULT_NAME = "$mock";
 
+class PropMockInstance<T> {
+  private _stackCall: Array<T>;
+  private _stackCalled: Array<T>;
+
+  constructor() {
+    this._stackCall = [];
+    this._stackCalled = [];
+  }
+
+  resetStack() {
+    this._stackCall.push(...this._stackCalled.map((v) => v));
+    this._stackCalled = [];
+  }
+
+  addToStack(value: T) {
+    this._stackCall.push(value);
+  }
+
+  shiftStack() {
+    return this._stackCall.shift();
+  }
+
+  addToCalledStack(value: T) {
+    this._stackCalled.push(value);
+  }
+}
+
 class ObjectMock<
   TEntity extends Record<string, unknown>,
   TKeyEntity extends keyof TEntity,
@@ -18,20 +45,24 @@ class ObjectMock<
   private _entity: TEntity;
   private _propName: TKeyEntity;
   private _primaryValue: any;
-  private _totalCalls: number;
-  private _instanceCalls: number;
 
-  private _implementationStack: Array<GenericFunction>;
-  private _returnValueStack: Array<any>;
+  private _totalCalls: number;
+  private _instanceCalls!: number;
+
+  private _implementationReference: PropMockInstance<GenericFunction>;
+  private _returnValueReference: PropMockInstance<any>;
 
   constructor(entity: TEntity, prop: TKeyEntity) {
     this._entity = entity;
     this._propName = prop;
     this._primaryValue = this.prop;
-    this._instanceCalls = 0;
+
     this._totalCalls = 0;
-    this._implementationStack = [];
-    this._returnValueStack = [];
+
+    this._instanceCalls = 0;
+
+    this._implementationReference = new PropMockInstance<GenericFunction>();
+    this._returnValueReference = new PropMockInstance<any>();
   }
 
   get callsCount() {
@@ -101,6 +132,8 @@ class ObjectMock<
 
   restoreCalls() {
     this._instanceCalls = 0;
+    this._returnValueReference.resetStack();
+    this._implementationReference.resetStack();
     return this;
   }
 
@@ -109,11 +142,12 @@ class ObjectMock<
     maxCalls?: number,
   ) {
     if (fn && typeof fn === "function") {
-      this._implementationStack.push(fn);
+      this.addInArray(this._implementationReference, fn, maxCalls);
     }
 
     this.prop = (...args: any[]) => {
       this._totalCalls++;
+      this._instanceCalls++;
       this._instanceCalls++;
       return this.callNextFunction(maxCalls, fn ?? (() => null), ...args);
     };
@@ -124,6 +158,7 @@ class ObjectMock<
     newValue: ReturnValueOrOwnType<TProp> | PromiseLike<any>,
     maxCalls?: number,
   ) {
+    this.addInArray(this._returnValueReference, newValue, maxCalls);
     this.setThisGetInObject();
     if (typeof this.prop === "function") {
       this.prop = () => {
@@ -147,17 +182,25 @@ class ObjectMock<
     maxCalls?: number,
     ...args: any[]
   ) {
-    this._returnValueStack.push(newValue);
     const mock = this.getThisInObject();
     this._totalCalls++;
-    if (!maxCalls || mock._instanceCalls < maxCalls) {
-      mock._instanceCalls++;
+    mock._instanceCalls++;
+    return this.callNextReturnValue(maxCalls, newValue, ...args);
+  }
 
-      if (maxCalls) {
-        const returnValue = this._returnValueStack.pop();
-        return returnValue ?? newValue;
-      }
+  private callNextReturnValue(
+    maxCalls: number | undefined,
+    newValue: ReturnValueOrOwnType<TProp> | PromiseLike<any>,
+    ...args: any[]
+  ) {
+    const returnValue = this._returnValueReference.shiftStack();
 
+    if (returnValue) {
+      this._returnValueReference.addToCalledStack(returnValue);
+      return returnValue;
+    }
+
+    if (!maxCalls || this._instanceCalls < maxCalls) {
       return newValue;
     }
 
@@ -167,9 +210,21 @@ class ObjectMock<
     return this._primaryValue;
   }
 
+  private addInArray(instance: PropMockInstance<any>, value: any, repeatTimes?: number) {
+    if (!repeatTimes) {
+      instance.addToStack(value);
+    } else {
+      for (let index = 0; index < repeatTimes; index++) {
+        instance.addToStack(value);
+      }
+    }
+  }
+
   private callNextFunction(maxCalls: number | undefined, fn: GenericFunction, ...args: any[]) {
-    const stackFunction = this._implementationStack.pop();
+    const stackFunction = this._implementationReference.shiftStack();
+
     if (stackFunction) {
+      this._implementationReference.addToCalledStack(stackFunction);
       return stackFunction(...args);
     }
 

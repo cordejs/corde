@@ -1232,21 +1232,237 @@ export type ResolvedValue<T> = T extends (...args: any[]) => PromiseLike<infer U
 export type RejectedValue<T> = T extends (...args: any[]) => PromiseLike<any> ? any : T;
 export type FunctionOrReturnObjType<T> = T extends (...args: any[]) => any ? T : () => T;
 
+/**
+ * Defines a instance of a objet with mocks
+ */
 export interface MockInstance<
   TEntity extends Record<string, unknown>,
   TKeyEntity extends keyof TEntity,
   TProp extends any = TEntity[TKeyEntity]
 > {
+  /**
+   * Inform the total amount of calls of the mock.
+   * This value is not changed by restore call
+   *
+   * @example
+   *
+   * const mock = createMock(obj, "someFunction").mockImplementation(() => 1);
+   * obj.someFunction() // callsCount: 1
+   * mock.restore() // callsCount: 1
+   * obj.someFunction() // callsCount: 2
+   *
+   */
   callsCount: number;
+  /**
+   * Inform the total amount of call of the mock.
+   * This value is reseted when restore function is called.
+   *
+   * @example
+   *
+   * const mock = createMock(obj, "someFunction").mockImplementation(() => 1);
+   * obj.someFunction() // callsCount: 1
+   * mock.restore() // callsCount: 0
+   * obj.someFunction() // callsCount: 1
+   *
+   */
   instanceCallsCount: number;
+  /**
+   * Mock the implemtation of a function just **one** time.
+   * The previous function's value is restored after call it.
+   *
+   * @param fn Empty or some implementation for a function.
+   *
+   * @example
+   *
+   * const obj = {
+   *    getNumber: () => {
+   *      return 1;
+   *    }
+   * }
+   *
+   * const mock = createMock(obj, "getNumber")
+   *              .mockImplementationOnce(() => 2);
+   *              .mockImplementationOnce(() => 3);
+   *
+   * obj.getNumber() // Returns 2
+   * obj.getNumber() // Returns 3
+   * obj.getNumber() // Returns 1
+   *
+   */
   mockImplementationOnce(fn?: FunctionOrReturnObjType<TProp>): this;
+  /**
+   * Mock the implementation of a function until `restore` function be called,
+   * or by the amount of calls this functions must have.
+   *
+   * If no value is passed to `maxCalls` the value of `fn` will be used as default implementation
+   * of the mocked function until `restore()` function be called.
+   *
+   * @param fn Empty or some implementation for a function.
+   * @param maxCalls Defines the max amount of calls the mocked return value will be valid for.
+   *
+   * @example
+   *
+   * const obj = {
+   *    getNumber: () => {
+   *      return 1;
+   *    }
+   * }
+   *
+   * const mock = createMock(obj, "getNumber")
+   *              .mockImplementation(() => 2);
+   *              .mockImplementation(() => 3);
+   *
+   * obj.getNumber() // Returns 2
+   * obj.getNumber() // Returns 3
+   * obj.getNumber() // Returns 3
+   * obj.getNumber() // Returns 3
+   * ...
+   */
   mockImplementation(fn?: FunctionOrReturnObjType<TProp>, maxCalls?: number): this;
+  /**
+   * Mocks the return value of a property or a function.
+   *
+   * If no value is passed to maxCalls, `newValue` will be used as return value
+   * until `restore()` function be called.
+   *
+   * @param newValue New return value for the given function or property
+   * @param maxCalls Defines the max amount of calls the mocked return value will be valid for.
+   *
+   * @example
+   *
+   * const obj = {
+   *    increment: (value: number) => {
+   *      return ++value;
+   *    }
+   * }
+   *
+   * const mock = createMock(obj, "increment")
+   *              .mockReturnValue(1);
+   *              .mockReturnValue(10);
+   *
+   * obj.increment(1) // Returns 1
+   * obj.increment(1) // Returns 10
+   * obj.increment(4) // Returns 10
+   */
   mockReturnValue(newValue: ReturnValueOrOwnType<TProp>, maxCalls?: number): this;
+  /**
+   * Same of `mockReturnValue`, but `newValue` is delimited by just one call
+   * @param newValue New return value for the given function or property
+   *
+   * @example
+   *
+   * const obj = {
+   *    increment: (value: number) => {
+   *      return ++value;
+   *    }
+   * }
+   *
+   * const mock = createMock(obj, "increment")
+   *              .mockReturnValueOnce(1);
+   *              .mockReturnValueOnce(10);
+   *
+   * obj.increment(1) // Returns 1
+   * obj.increment(1) // Returns 10
+   * obj.increment(4) // Returns 5
+   */
   mockReturnValueOnce(newValue: ReturnValueOrOwnType<TProp>): this;
+  /**
+   * Similar to **mockReturnValue**, but surround the return value with a Promise.resolve
+   *
+   * @param newValue New resolved value for a function.
+   * @param maxCalls Defines the max amount of calls the resolved mocked return value will be valid for.
+   *
+   * @example
+   *
+   * // this:
+   * createMock(obj, "incrementAsync").mockReturnValue(() => Promise.resolve(1));
+   * // is equal to:
+   * createMock(obj, "incrementAsync").mockResolvedValue(() => 1);
+   *
+   */
   mockResolvedValue(newValue: ResolvedValue<TProp>, maxCalls?: number): this;
+  /**
+   * Same of `mockResolvedValue`, but `newValue` is delimited by just one call.
+   *
+   * @param newValue New resolved value for a function.
+   *
+   * @example
+   *
+   * // this:
+   * createMock(obj, "incrementAsync").mockReturnValueOnce(() => Promise.resolve(1));
+   * // is equal to:
+   * createMock(obj, "incrementAsync").mockResolvedValueOnce(() => 1);
+   *
+   */
   mockResolvedValueOnce(newValue: ResolvedValue<TProp>): this;
+  /**
+   * Defines a new value for a function rejection.
+   * This function sorround `newValue` with a `Promise.reject`
+   *
+   * @param newValue New rejected value for a function.
+   * @param maxCalls Defines the max amount of calls the rejected mocked return value will be valid for.
+   *
+   * @example
+   *
+   * // this:
+   * createMock(obj, "incrementAsync").mockReturnValue(() => Promise.reject(1));
+   * // is equal to:
+   * createMock(obj, "incrementAsync").mockRejectedValue(() => 1);
+   *
+   */
   mockRejectedValue(newValue: RejectedValue<TProp>, maxCalls?: number): this;
+  /**
+   * Same of `mockRejectedValue`, but `newValue` is delimited by just one call.
+   *
+   * @param newValue New rejected value for a function.
+   *
+   * @example
+   *
+   * // this:
+   * createMock(obj, "incrementAsync").mockReturnValueOnce(() => Promise.reject(1));
+   * // is equal to:
+   * createMock(obj, "incrementAsync").mockRejectedValueOnce(() => 1);
+   *
+   */
   mockRejectedValueOnce(newValue: RejectedValue<TProp>): this;
+  /**
+   * Restores all calls and implementation of a mock
+   *
+   * *Do not restore callsCount*
+   *
+   * @example
+   *
+   * const obj = {
+   *    increment: (value: number) => {
+   *      return ++value;
+   *    }
+   * }
+   *
+   * const mock = createMock(obj, "increment").mockReturnValue(1);
+   *
+   * obj.increment(2) // Return 1 - Total calls: 1 - InstanceCalls: 1
+   * obj.increment(2) // Return 1 - Total calls: 2 - InstanceCalls: 2
+   * mock.restore()
+   * obj.increment(2) // Return 3 - Total calls: 3 - InstanceCalls: 1
+   */
   restore(): this;
+  /**
+   * Restore all calls of mocks without change the return value or implementation mock.
+   *
+   * @example
+   *
+   * const obj = {
+   *    increment: (value: number) => {
+   *      return ++value;
+   *    }
+   * }
+   *
+   * const mock = createMock(obj, "increment").mockReturnValue(1);
+   *
+   * obj.increment(2) // Return 1 - Total calls: 1 - InstanceCalls: 1
+   * obj.increment(2) // Return 1 - Total calls: 2 - InstanceCalls: 2
+   * mock.restoreCalls()
+   * obj.increment(2) // Return 1 - Total calls: 3 - InstanceCalls: 1
+   */
   restoreCalls(): this;
 }
