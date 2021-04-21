@@ -9,6 +9,7 @@ import {
   sendMessage as _sendMessage,
   getRole as _getRole,
   createRole as _createRole,
+  clearMocks as _clearMocks,
 } from "./api-utilities";
 
 import { expect as _expect } from "./expect";
@@ -31,4 +32,5 @@ export namespace corde {
   export const sendMessage = _sendMessage;
   export const getRole = _getRole;
   export const createRole = _createRole;
+  export const clearMocks = _clearMocks;
 }

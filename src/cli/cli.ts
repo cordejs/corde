@@ -8,8 +8,11 @@ import { runtime } from "../common/runtime";
 import { reader } from "../core/reader";
 import { initEnvVariables } from "../envVariables";
 import { logger } from "../logger";
+import { initErrorHandlers } from "../errorHandler";
 
 initEnvVariables();
+initErrorHandlers();
+
 logger.mock();
 
 export const program = new Command();
