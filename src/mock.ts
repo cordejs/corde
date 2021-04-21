@@ -141,13 +141,15 @@ class ObjectMock<
     fn?: FunctionOrReturnObjType<TProp> | (() => Promise<any>),
     maxCalls?: number,
   ) {
-    if (fn && typeof fn === "function") {
-      this.addInArray(this._implementationReference, fn, maxCalls);
-    }
+    const fnToAdd =
+      fn ??
+      (() => {
+        return null;
+      });
+    this.addInArray(this._implementationReference, fnToAdd, maxCalls);
 
     this.prop = (...args: any[]) => {
       this._totalCalls++;
-      this._instanceCalls++;
       this._instanceCalls++;
       return this.callNextFunction(maxCalls, fn ?? (() => null), ...args);
     };

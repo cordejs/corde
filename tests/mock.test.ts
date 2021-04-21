@@ -23,6 +23,22 @@ describe("testing corde mock", () => {
     expect(mock.callsCount).toEqual(3);
   });
 
+  it("should set null as return value", () => {
+    const obj = {
+      prop1: 1,
+    };
+    createMock(obj, "prop1").mockReturnValue(null);
+    expect(obj.prop1).toBeFalsy();
+  });
+
+  it("should set null as return value once", () => {
+    const obj = {
+      prop1: 1,
+    };
+    createMock(obj, "prop1").mockReturnValue(null);
+    expect(obj.prop1).toBeFalsy();
+  });
+
   it("should mock return value and reset count", () => {
     const obj = {
       prop1: 1,
@@ -34,6 +50,7 @@ describe("testing corde mock", () => {
     expect(obj.prop1).toEqual(2);
     expect(obj.prop1).toEqual(2);
     expect(mock.callsCount).toEqual(3);
+    expect(mock.instanceCallsCount).toEqual(2);
   });
 
   it("should mock value in object and restore it", () => {
@@ -131,6 +148,26 @@ describe("testing corde mock", () => {
     expect(obj.sumOne(1)).toEqual(3);
     mock.restore();
     expect(obj.sumOne(1)).toEqual(2);
+  });
+
+  it("should mock implementation giving null to it", () => {
+    const obj = {
+      sumOne: (value: number) => {
+        return value + 1;
+      },
+    };
+    createMock(obj, "sumOne").mockImplementation(null);
+    expect(obj.sumOne(1)).toBeFalsy();
+  });
+
+  it("should mock implementation giving null to it", () => {
+    const obj = {
+      sumOne: (value: number) => {
+        return value + 1;
+      },
+    };
+    createMock(obj, "sumOne").mockImplementationOnce(null);
+    expect(obj.sumOne(1)).toBeFalsy();
   });
 
   it("should mockImplementation and append multiple mockImplementationOnce", () => {
@@ -266,5 +303,35 @@ describe("testing corde mock", () => {
     const val2 = await obj.sumOneAsync(1);
     expect(val).toEqual(1);
     expect(val2).toEqual(2);
+  });
+
+  it("should mock promise.reject return value (after resolved)", async () => {
+    const obj = {
+      sumOneAsync: (value: number) => {
+        return Promise.resolve(value + 1);
+      },
+    };
+
+    try {
+      createMock(obj, "sumOneAsync").mockRejectedValue(1);
+      await obj.sumOneAsync(1);
+    } catch (error) {
+      expect(error).toEqual(1);
+    }
+  });
+
+  it("should mock promise.reject return value (after resolved) once", async () => {
+    const obj = {
+      sumOneAsync: (value: number) => {
+        return Promise.resolve(value + 1);
+      },
+    };
+
+    try {
+      createMock(obj, "sumOneAsync").mockRejectedValueOnce(1);
+      await obj.sumOneAsync(1);
+    } catch (error) {
+      expect(error).toEqual(1);
+    }
   });
 });
