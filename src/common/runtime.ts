@@ -1,4 +1,4 @@
-import { ConfigOptions, CordeBotLike, TestFunctionType } from "../types";
+import { ConfigOptions, CordeBotLike, MockInstance, TestFunctionType } from "../types";
 import { Config } from "./config";
 import { Client } from "discord.js";
 import { CordeBot } from "../core/cordeBot";
@@ -77,14 +77,17 @@ class Runtime {
 
   private constructor() {
     this._configs = new Config();
+    this._mocks = [];
   }
 
   private static _instance: Runtime;
+
   configFilePath!: string;
   files!: string[];
 
   private readonly _configs: Config;
   private _bot!: CordeBotLike;
+  private _mocks: Array<MockInstance<any, any, any>>;
 
   static getInstance() {
     if (!Runtime._instance) {
@@ -139,6 +142,14 @@ class Runtime {
       this._configs.botTestId,
       new Client(),
     );
+  }
+
+  addMock(mock: MockInstance<any, any, any>) {
+    this._mocks.push(mock);
+  }
+
+  resetAllMocks() {
+    this._mocks.forEach((mock) => mock.restore());
   }
 }
 

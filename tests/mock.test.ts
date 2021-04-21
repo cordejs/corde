@@ -1,4 +1,5 @@
 import { createMock } from "../src/mock";
+import * as fn from "./mocks/mockFunctionTest";
 
 describe("testing corde mock", () => {
   it("should mock value in object", () => {
@@ -130,5 +131,85 @@ describe("testing corde mock", () => {
     expect(obj.sumOne(1)).toEqual(3);
     mock.restore();
     expect(obj.sumOne(1)).toEqual(2);
+  });
+
+  it("should mocked implementation more than one time", () => {
+    const obj = {
+      sumOne: (value: number) => {
+        return value + 1;
+      },
+    };
+
+    expect(obj.sumOne(1)).toEqual(2);
+
+    createMock(obj, "sumOne").mockImplementation((value) => {
+      return value + 2;
+    });
+
+    expect(obj.sumOne(1)).toEqual(3);
+    expect(obj.sumOne(1)).toEqual(3);
+  });
+
+  it("should mock implementation once", () => {
+    const obj = {
+      sumOne: (value: number) => {
+        return value + 1;
+      },
+    };
+
+    expect(obj.sumOne(1)).toEqual(2);
+
+    createMock(obj, "sumOne").mockImplementationOnce((value) => {
+      return value + 2;
+    });
+
+    expect(obj.sumOne(1)).toEqual(3);
+    expect(obj.sumOne(1)).toEqual(2);
+  });
+
+  it("should mock a external function", () => {
+    createMock(fn, "sum").mockImplementation(() => {
+      return 2;
+    });
+
+    expect(fn.sum(10, 10)).toEqual(2);
+  });
+
+  it("should mock promise.resolve return value (after resolved)", async () => {
+    const obj = {
+      sumOneAsync: (value: number) => {
+        return Promise.resolve(value + 1);
+      },
+    };
+
+    createMock(obj, "sumOneAsync").mockResolvedValue(1);
+    const val = await obj.sumOneAsync(1);
+    expect(val).toEqual(1);
+  });
+
+  it("should mock promise.resolve return a promise", async () => {
+    const obj = {
+      sumOneAsync: (value: number) => {
+        return Promise.resolve(value + 1);
+      },
+    };
+
+    createMock(obj, "sumOneAsync").mockResolvedValue(1);
+    const promise = obj.sumOneAsync(1);
+    expect(promise).toBeInstanceOf(Promise);
+  });
+
+  it("should mock promise.resolve return value (after resolved) once", async () => {
+    const obj = {
+      sumOneAsync: (value: number) => {
+        return Promise.resolve(value + 1);
+      },
+    };
+
+    createMock(obj, "sumOneAsync").mockResolvedValueOnce(1);
+    const val = await obj.sumOneAsync(1);
+    const val2 = await obj.sumOneAsync(1);
+    expect(val).toEqual(1);
+    expect(val2).toEqual(2);
   });
 });

@@ -1226,3 +1226,27 @@ export interface Expect extends AllMatches<any> {
     channelId?: string,
   ): AllExpectMatches;
 }
+
+export type ReturnValueOrOwnType<T> = T extends (...args: any[]) => infer U ? U : T;
+export type ResolvedValue<T> = T extends (...args: any[]) => PromiseLike<infer U> ? U : T;
+export type RejectedValue<T> = T extends (...args: any[]) => PromiseLike<any> ? any : T;
+export type FunctionOrReturnObjType<T> = T extends (...args: any[]) => any ? T : () => T;
+
+export interface MockInstance<
+  TEntity extends Record<string, unknown>,
+  TKeyEntity extends keyof TEntity,
+  TProp extends any = TEntity[TKeyEntity]
+> {
+  callsCount: number;
+  instanceCallsCount: number;
+  mockImplementationOnce(fn?: FunctionOrReturnObjType<TProp>): this;
+  mockImplementation(fn?: FunctionOrReturnObjType<TProp>, maxCalls?: number): this;
+  mockReturnValue(newValue: ReturnValueOrOwnType<TProp>, maxCalls?: number): this;
+  mockReturnValueOnce(newValue: ReturnValueOrOwnType<TProp>): this;
+  mockResolvedValue(newValue: ResolvedValue<TProp>, maxCalls?: number): this;
+  mockResolvedValueOnce(newValue: ResolvedValue<TProp>): this;
+  mockRejectedValue(newValue: RejectedValue<TProp>, maxCalls?: number): this;
+  mockRejectedValueOnce(newValue: RejectedValue<TProp>): this;
+  restore(): this;
+  restoreCalls(): this;
+}
