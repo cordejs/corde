@@ -1,3 +1,9 @@
+# 3.1.2
+
+## 🐛 Bug Fixes
+
+- Fix new line ending conflicting in unix operation systems (#641)
+
 # 3.1.0
 
 ## 🚀 Features

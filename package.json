@@ -1,6 +1,6 @@
 {
   "name": "corde",
-  "version": "3.1.0",
+  "version": "3.1.2",
   "description": "A simple library for Discord bot tests",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -28,6 +28,7 @@
     "clearbuild": "gulp clear",
     "build": "bash tasks.sh build",
     "build:prod": "gulp && yarn prettier-lib",
+    "gulp": "gulp",
     "build:publish": "bash ./scripts/publish.sh",
     "generateStructureDocs": "typedoc --plugin typedoc-plugin-markdown src/structures",
     "prettier-lib": "prettier --write ./lib",
