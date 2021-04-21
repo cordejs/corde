@@ -2,7 +2,7 @@
 // Corde reader fail in import the test file because Node.js can not
 // import the submodule. To avoid the problem, this file is here is root of the project,
 // but it should be in ./e2e
-// Bug to fix: https://github.com/lucasgmagalhaes/corde/issues/490
+// Bug to fix: https://github.com/cordejs/corde/issues/490
 //
 // For some reason unknown by god, ts files get error, but js files works ok (???)
 // (it's why this is the only file that is js file in this folder)

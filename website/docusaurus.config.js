@@ -5,11 +5,11 @@ const versions = require("./versions.json");
 module.exports = {
   title: "Corde",
   tagline: "A simple library for Discord bot tests",
-  url: "https://lucasgmagalhaes.github.io/corde",
+  url: "https://cordejs.github.io/corde",
   baseUrl: "/",
   onBrokenLinks: "log",
   favicon: "img/logo/favicon.ico",
-  organizationName: "lucasgmagalhaes",
+  organizationName: "cordejs",
   projectName: "corde",
   themeConfig: {
     navbar: {
@@ -44,7 +44,7 @@ module.exports = {
           ],
         },
         {
-          href: "https://github.com/lucasgmagalhaes/corde",
+          href: "https://github.com/cordejs/corde",
           position: "right",
           className: "header-github-link",
           "aria-label": "GitHub repository",
@@ -84,7 +84,7 @@ module.exports = {
         docs: {
           path: "../docs",
           sidebarPath: require.resolve("./sidebars.js"),
-          editUrl: "https://github.com/lucasgmagalhaes/corde/edit/master/docs",
+          editUrl: "https://github.com/cordejs/corde/edit/master/docs",
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
           lastVersion: "current",

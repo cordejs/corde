@@ -7,23 +7,23 @@
    <!-- <a href="https://discord.gg/f3Gs7uU">
       <img src="https://img.shields.io/discord/768647567461449778?color=7289da&logo=discord&logoColor=white" alt="Discord server" />
     </a> -->
-    <a href="https://gitpod.io/#https://github.com/lucasgmagalhaes/corde">
+    <a href="https://gitpod.io/#https://github.com/cordejs/corde">
       <img
         alt="CircleCi"
         src="https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod"
       />
     </a>
     <br>
-    <a href="https://circleci.com/gh/lucasgmagalhaes/corde">
+    <a href="https://circleci.com/gh/cordejs/corde">
       <img
         alt="CircleCi"
-        src="https://img.shields.io/circleci/build/github/lucasgmagalhaes/corde"
+        src="https://img.shields.io/circleci/build/github/cordejs/corde"
       />
     </a>
-    <a href="https://codecov.io/gh/lucasgmagalhaes/corde">
+    <a href="https://codecov.io/gh/cordejs/corde">
       <img
         alt="Codecov"
-        src="https://img.shields.io/codecov/c/github/lucasgmagalhaes/corde"
+        src="https://img.shields.io/codecov/c/github/cordejs/corde"
       />
     </a>
     <a href="https://www.npmjs.com/package/corde">

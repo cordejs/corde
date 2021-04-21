@@ -125,7 +125,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lucasgmagalhaes/corde.git"
+    "url": "git+https://github.com/cordejs/corde.git"
   },
   "jest": {
     "projects": [
@@ -136,11 +136,11 @@
   "author": {
     "name": "Lucas Gomes",
     "email": "lucasgsm88@gmail.com",
-    "url": "https://github.com/lucasgmagalhaes"
+    "url": "https://github.com/cordejs"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lucasgmagalhaes/corde/issues"
+    "url": "https://github.com/cordejs/corde/issues"
   },
   "homepage": "https://corde.netlify.app",
   "files": [
