@@ -1540,27 +1540,27 @@ acorn-jsx@5.3.1, acorn-jsx@^5.2.0, acorn-jsx@^5.3.1:
   resolved "https://registry.yarnpkg.com/acorn-jsx/-/acorn-jsx-5.3.1.tgz#fc8661e11b7ac1539c47dbfea2e72b3af34d267b"
   integrity sha512-K0Ptm/47OKfQRpNQ2J/oIN/3QYiK6FwW+eJbILhsdxh2WTLdl+30o8aGdTbm5JbffpFFAg/g+zi1E+jvJha5ng==
 
-acorn-loose@8.0.2:
-  version "8.0.2"
-  resolved "https://registry.yarnpkg.com/acorn-loose/-/acorn-loose-8.0.2.tgz#a158e721c3cf7845d7d646465df89fb708292b14"
-  integrity sha512-h25FYjJONkLfEq0PWMax9p2Xjhj6Ex9aiOhwayUxT8R5alTt1+00xypWLxUBu7kASwiNTzjmq6ohOY6EdsVbVw==
+acorn-loose@8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/acorn-loose/-/acorn-loose-8.1.0.tgz#60056c516883e7df2ed6c57ef91a670bb08b8d36"
+  integrity sha512-+X1zk54qiOWwIRywGBhfz8sLHFJ/adQRuVqn25m4HuD7/+GTXM1c0b3LH0bWerQ0H97lTk2GyuScGbSiQK9M1g==
   dependencies:
-    acorn "^8.0.0"
+    acorn "^8.2.0"
 
-acorn-walk@8.0.2:
-  version "8.0.2"
-  resolved "https://registry.yarnpkg.com/acorn-walk/-/acorn-walk-8.0.2.tgz#d4632bfc63fd93d0f15fd05ea0e984ffd3f5a8c3"
-  integrity sha512-+bpA9MJsHdZ4bgfDcpk0ozQyhhVct7rzOmO0s1IIr0AGGgKBljss8n2zp11rRP2wid5VGeh04CgeKzgat5/25A==
+acorn-walk@8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/acorn-walk/-/acorn-walk-8.1.0.tgz#d3c6a9faf00987a5e2b9bdb506c2aa76cd707f83"
+  integrity sha512-mjmzmv12YIG/G8JQdQuz2MUDShEJ6teYpT5bmWA4q7iwoGen8xtt3twF3OvzIUl+Q06aWIjvnwQUKvQ6TtMRjg==
 
 acorn-walk@^7.1.1:
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/acorn-walk/-/acorn-walk-7.2.0.tgz#0de889a601203909b0fbe07b8938dc21d2e967bc"
   integrity sha512-OPdCF6GsMIP+Az+aWfAAOEt2/+iVDKE7oy6lJ098aoe59oAmK76qV6Gw60SbZ8jHuG2wH058GF4pLFbYamYrVA==
 
-acorn@8.1.1, acorn@^8.0.0:
-  version "8.1.1"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.1.1.tgz#fb0026885b9ac9f48bac1e185e4af472971149ff"
-  integrity sha512-xYiIVjNuqtKXMxlRMDc6mZUhXehod4a3gbZ1qRlM7icK4EbxUFNLhWoPblCvFtB2Y9CIqHP3CF/rdxLItaQv8g==
+acorn@8.2.1, acorn@^8.2.0:
+  version "8.2.1"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.2.1.tgz#0d36af126fb6755095879c1dc6fd7edf7d60a5fb"
+  integrity sha512-z716cpm5TX4uzOzILx8PavOE6C6DKshHDw1aQN52M/yNSqE9s5O8SMfyhCCfCJ3HmTL0NkVOi+8a/55T7YB3bg==
 
 acorn@^7.1.1, acorn@^7.4.0:
   version "7.4.1"
@@ -2227,10 +2227,10 @@ caseless@~0.12.0:
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
 
-chalk@4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/chalk/-/chalk-4.1.0.tgz#4e14870a618d9e2edd97dd8345fd9d9dc315646a"
-  integrity sha512-qwx12AxXe2Q5xQ43Ac//I6v5aXTipYrSESdOgzrN+9XjgEpyjpKuvSGaN4qE93f7TQTlerQQ8S+EQ0EyDoVL1A==
+chalk@4.1.1, chalk@^4.0.0, chalk@^4.1.0:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/chalk/-/chalk-4.1.1.tgz#c80b3fab28bf6371e6863325eee67e618b77e6ad"
+  integrity sha512-diHzdDKxcU+bAsUboHLPEDQiw0qEe0qd7SYUn3HgcFlWgbDcfLGswOHYeGrHKzG9z6UYf01d9VFMfZxPM1xZSg==
   dependencies:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
@@ -2248,14 +2248,6 @@ chalk@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-3.0.0.tgz#3f73c2bf526591f574cc492c51e2456349f844e4"
   integrity sha512-4D3B6Wf41KOYRFdszmDqMCGq5VV/uMAB273JILmO+3jAlh8X4qDtdtgCR3fxtbLEMzSx22QdhnDcJvu2u1fVwg==
-  dependencies:
-    ansi-styles "^4.1.0"
-    supports-color "^7.1.0"
-
-chalk@^4.0.0, chalk@^4.1.0:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/chalk/-/chalk-4.1.1.tgz#c80b3fab28bf6371e6863325eee67e618b77e6ad"
-  integrity sha512-diHzdDKxcU+bAsUboHLPEDQiw0qEe0qd7SYUn3HgcFlWgbDcfLGswOHYeGrHKzG9z6UYf01d9VFMfZxPM1xZSg==
   dependencies:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
@@ -2716,21 +2708,21 @@ delayed-stream@~1.0.0:
   integrity sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
 
 dependency-cruiser@^9.24.0:
-  version "9.25.1"
-  resolved "https://registry.yarnpkg.com/dependency-cruiser/-/dependency-cruiser-9.25.1.tgz#70cf75520fd0e991b7934df09b85a6148b3d6b85"
-  integrity sha512-1NrDNDJNwsW9SSD/FpMqaZKS2wjZxQDudHp9zXBdQVYq+aR0/gmuo46xjqgObJMOFIbD3NedVag4n906o7h+FQ==
+  version "9.26.0"
+  resolved "https://registry.yarnpkg.com/dependency-cruiser/-/dependency-cruiser-9.26.0.tgz#211ef308262490a628f62e530fd1d7a44b4c5633"
+  integrity sha512-vxDbpdVKMYE3/gviXHOSL2rFyHCu9yAcM9iSGns3UQq2YRTNV8APtQ46bCAt26DdDUT3Uj67VgukCOE6d7Ev5Q==
   dependencies:
-    acorn "8.1.1"
+    acorn "8.2.1"
     acorn-jsx "5.3.1"
     acorn-jsx-walk "2.0.0"
-    acorn-loose "8.0.2"
-    acorn-walk "8.0.2"
+    acorn-loose "8.1.0"
+    acorn-walk "8.1.0"
     ajv "8.1.0"
-    chalk "4.1.0"
+    chalk "4.1.1"
     commander "7.2.0"
     enhanced-resolve "5.1.0"
     figures "3.2.0"
-    get-stream "6.0.0"
+    get-stream "6.0.1"
     glob "7.1.6"
     handlebars "4.7.7"
     indent-string "4.0.0"
@@ -3718,10 +3710,10 @@ get-package-type@^0.1.0:
   resolved "https://registry.yarnpkg.com/get-package-type/-/get-package-type-0.1.0.tgz#8de2d803cff44df3bc6c456e6668b36c3926e11a"
   integrity sha512-pjzuKtY64GYfWizNAJ0fr9VqttZkNiK2iS430LtIHzjBEr6bX8Am2zm4sW4Ro5wjWW5cAlRL1qAMTcXbjNAO2Q==
 
-get-stream@6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/get-stream/-/get-stream-6.0.0.tgz#3e0012cb6827319da2706e601a1583e8629a6718"
-  integrity sha512-A1B3Bh1UmL0bidM/YX2NsCOTnGJePL9rO/M+Mw3m9f2gUpfokS0hi5Eah0WSUEWZdZhIZtMjkIYS7mDfOqNHbg==
+get-stream@6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/get-stream/-/get-stream-6.0.1.tgz#a262d8eef67aced57c2852ad6167526a43cbf7b7"
+  integrity sha512-ts6Wi+2j3jQjqi70w5AlN8DFnkSwC+MqmxEzdEALB2qXZYV3X/b1CTfgPLGJNMeAWxdPfU8FO1ms3NUfaHCPYg==
 
 get-stream@^4.0.0:
   version "4.1.0"
