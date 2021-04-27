@@ -1,6 +1,6 @@
 {
   "name": "corde",
-  "version": "3.1.2",
+  "version": "3.1.3",
   "description": "A simple library for Discord bot tests",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -126,7 +126,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lucasgmagalhaes/corde.git"
+    "url": "git+https://github.com/cordejs/corde.git"
   },
   "jest": {
     "projects": [
@@ -137,11 +137,11 @@
   "author": {
     "name": "Lucas Gomes",
     "email": "lucasgsm88@gmail.com",
-    "url": "https://github.com/lucasgmagalhaes"
+    "url": "https://github.com/cordejs"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lucasgmagalhaes/corde/issues"
+    "url": "https://github.com/cordejs/corde/issues"
   },
   "homepage": "https://corde.netlify.app",
   "files": [

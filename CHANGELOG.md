@@ -90,43 +90,43 @@
 ## Breaking changes: 😨
 
 - Renamed `command` to `expect` and test functions witch has prefix `must`(mustReturn) now is
-  `to` (toReturn) [#266](https://github.com/lucasgmagalhaes/corde/issues/266)
+  `to` (toReturn) [#266](https://github.com/cordejs/corde/issues/266)
 
 ## Feature: 🚀
 
-- Now is possible add `group` or `test` without add a name for then [#291](https://github.com/lucasgmagalhaes/corde/issues/291).
-- Allowed users to define test files in CLI [#317](https://github.com/lucasgmagalhaes/corde/issues/317)
-- Reviwed error messages [#302](https://github.com/lucasgmagalhaes/corde/issues/302)
-- Created toRemoveReaction command [#318](https://github.com/lucasgmagalhaes/corde/issues/318)
-- Created toSetRoleColor command [#271](https://github.com/lucasgmagalhaes/corde/issues/271)
-- Created toDeleteRole command [#272](https://github.com/lucasgmagalhaes/corde/issues/272)
-- Created toSetRoleHoist command [#273](https://github.com/lucasgmagalhaes/corde/issues/273)
-- Created toSetRoleMentionable command [#270](https://github.com/lucasgmagalhaes/corde/issues/270)
-- Created toRenameRole command [#269](https://github.com/lucasgmagalhaes/corde/issues/269)
-- Created toSetRolePosition command [#267](https://github.com/lucasgmagalhaes/corde/issues/267)
-- Created toSetRolePermissions command [#268](https://github.com/lucasgmagalhaes/corde/issues/268)
-- Created afterEach function [#191](https://github.com/lucasgmagalhaes/corde/issues/191)
-- Created beforeEach function [#265](https://github.com/lucasgmagalhaes/corde/issues/265)
-- Created toPinMessage command [#243](https://github.com/lucasgmagalhaes/corde/issues/243)
-- Created toUnpinMessage command [#244](https://github.com/lucasgmagalhaes/corde/issues/244)
-- Add default export "corde" with all available functions [#482](https://github.com/lucasgmagalhaes/corde/issues/482)
-- Allow send message of corde bot from API [#483](https://github.com/lucasgmagalhaes/corde/issues/483)
-- Created toEditMessage command [#242](https://github.com/lucasgmagalhaes/corde/issues/242)
+- Now is possible add `group` or `test` without add a name for then [#291](https://github.com/cordejs/corde/issues/291).
+- Allowed users to define test files in CLI [#317](https://github.com/cordejs/corde/issues/317)
+- Reviwed error messages [#302](https://github.com/cordejs/corde/issues/302)
+- Created toRemoveReaction command [#318](https://github.com/cordejs/corde/issues/318)
+- Created toSetRoleColor command [#271](https://github.com/cordejs/corde/issues/271)
+- Created toDeleteRole command [#272](https://github.com/cordejs/corde/issues/272)
+- Created toSetRoleHoist command [#273](https://github.com/cordejs/corde/issues/273)
+- Created toSetRoleMentionable command [#270](https://github.com/cordejs/corde/issues/270)
+- Created toRenameRole command [#269](https://github.com/cordejs/corde/issues/269)
+- Created toSetRolePosition command [#267](https://github.com/cordejs/corde/issues/267)
+- Created toSetRolePermissions command [#268](https://github.com/cordejs/corde/issues/268)
+- Created afterEach function [#191](https://github.com/cordejs/corde/issues/191)
+- Created beforeEach function [#265](https://github.com/cordejs/corde/issues/265)
+- Created toPinMessage command [#243](https://github.com/cordejs/corde/issues/243)
+- Created toUnpinMessage command [#244](https://github.com/cordejs/corde/issues/244)
+- Add default export "corde" with all available functions [#482](https://github.com/cordejs/corde/issues/482)
+- Allow send message of corde bot from API [#483](https://github.com/cordejs/corde/issues/483)
+- Created toEditMessage command [#242](https://github.com/cordejs/corde/issues/242)
 
 ## Bug fix: 🐛
 
-- Fix snipper bar [#324](https://github.com/lucasgmagalhaes/corde/issues/324)
-- Expect.not setting command name as null [#341](https://github.com/lucasgmagalhaes/corde/issues/341)
-- Corde does not execute [#421](https://github.com/lucasgmagalhaes/corde/issues/421)
-- Rename config file from corde.** to corde.config.** [#429](https://github.com/lucasgmagalhaes/corde/issues/429)
+- Fix snipper bar [#324](https://github.com/cordejs/corde/issues/324)
+- Expect.not setting command name as null [#341](https://github.com/cordejs/corde/issues/341)
+- Corde does not execute [#421](https://github.com/cordejs/corde/issues/421)
+- Rename config file from corde.** to corde.config.** [#429](https://github.com/cordejs/corde/issues/429)
 - Add test directly to corde.group returns empty test file #497
 
 ## Chore:
 
-- Add lin in CI [#277](https://github.com/lucasgmagalhaes/corde/issues/277)
-- Rewrite tests structures [#274](https://github.com/lucasgmagalhaes/corde/issues/274)
-- Create json schema for corde.config.json configs [#280](https://github.com/lucasgmagalhaes/corde/issues/280)
-- Implement e2e tests [#478](https://github.com/lucasgmagalhaes/corde/issues/478), #484
+- Add lin in CI [#277](https://github.com/cordejs/corde/issues/277)
+- Rewrite tests structures [#274](https://github.com/cordejs/corde/issues/274)
+- Create json schema for corde.config.json configs [#280](https://github.com/cordejs/corde/issues/280)
+- Implement e2e tests [#478](https://github.com/cordejs/corde/issues/478), #484
 
 # 2.0.0-beta.27
 

@@ -2,7 +2,7 @@
 // for some reason, tests will throw
 // Error: Cannot find module './corde.config'
 // A task to fix this problem is informed on
-// https://github.com/lucasgmagalhaes/corde/issues/490
+// https://github.com/cordejs/corde/issues/490
 
 import env from "dotenv";
 
