@@ -64,7 +64,7 @@
     "@types/gulp-strip-comments": "^2.5.0",
     "@types/jest": "^26.0.22",
     "@types/merge-stream": "^1.1.2",
-    "@types/node": "^14.0.22",
+    "@types/node": "^15.0.1",
     "@types/require-from-string": "^1.2.0",
     "@types/rewire": "^2.5.28",
     "@types/rimraf": "^3.0.0",
