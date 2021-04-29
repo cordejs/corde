@@ -1,6 +1,6 @@
 import chalk from "chalk";
-import { runtime } from "../common/runtime";
 import { Queue } from "../data-structures";
+import { runtime } from "../environment";
 import { VoidLikeFunction } from "../types";
 import { executePromiseWithTimeout, formatObject } from "../utils";
 

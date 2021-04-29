@@ -1,6 +1,6 @@
-import { InspectOptions } from "node:util";
-import { MESSAGE_TAB_SPACE } from "./consts";
-import { getStackTrace } from "./utils";
+import { InspectOptions } from "util";
+import { MESSAGE_TAB_SPACE } from "../consts";
+import { getStackTrace } from "../utils";
 
 export interface StackContainer {
   name: string;
@@ -18,7 +18,7 @@ type StdoutStream = NodeJS.WriteStream & { fd: 1 };
 /**
  * @private
  */
-class Logger implements Console {
+export class Logger implements Console {
   public stack: Array<StackContainer> = [];
 
   private _stdout: StdoutStream;
@@ -249,6 +249,36 @@ class Logger implements Console {
     console.countReset = this.createEmptyFunction();
   }
 
+  unmock() {
+    console.log = this._log;
+    console.error = this._error;
+    console.debug = this._debug;
+    console.info = this._info;
+
+    console.warn = this._warn;
+    console.dir = this._dir;
+    console.dirxml = this._dirxml;
+    console.table = this._table;
+    console.assert = this._assert;
+
+    console.count = this._count;
+    console.timeEnd = this._timeEnd;
+    console.trace = this._trace;
+
+    // We must avoid console clear up.
+    console.clear = this._clear;
+
+    console.group = this._group;
+    console.groupEnd = this._groupEnd;
+    console.groupCollapsed = this._groupCollapsed;
+    console.profile = this._profile;
+    console.profileEnd = this._profileEnd;
+    console.timeStamp = this._timeStamp;
+
+    console.exception = this._exception;
+    console.countReset = this._countReset;
+  }
+
   private createEmptyFunction() {
     return () => {
       return;
@@ -321,9 +351,3 @@ class Logger implements Console {
     };
   }
 }
-
-/**
- * @internal
- */
-const logger = new Logger(process.stdout);
-export { logger };

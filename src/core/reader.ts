@@ -1,12 +1,11 @@
 import fs from "fs";
 import path from "path";
-import { runtime } from "../common/runtime";
 import { printHookErrors } from "../common/printHookError";
 import { testCollector } from "../common/testCollector";
+import { logger, runtime } from "../environment";
 import { FileError } from "../errors";
 import { ConfigOptions, TestFile } from "../types";
 import { shortPathForPlataform } from "../utils";
-import { logger } from "../logger";
 
 class Reader {
   /**

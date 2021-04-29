@@ -5,7 +5,7 @@ import { createReport, initCordeClientWithChannel, testUtils } from "../../testH
 import { CordeBotLike, TestReport } from "../../../src/types";
 import { buildReportMessage } from "../../../src/utils";
 import { MockEvents } from "../../mocks/mockEvents";
-import { runtime } from "../../../src/common/runtime";
+import { runtime } from "../../../src/environment";
 
 let mockDiscord = new MockDiscord();
 

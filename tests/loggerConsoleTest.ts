@@ -1,4 +1,4 @@
-import { logger } from "../src/logger";
+import { logger } from "../src/environment";
 
 logger.mock();
 

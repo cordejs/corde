@@ -1,5 +1,5 @@
 import { Client } from "discord.js";
-import { runtime } from "../../../src/common/runtime";
+import { runtime } from "../../../src/environment";
 import { ToSetRolePosition } from "../../../src/expect/matches";
 import { CordeBotLike, TestReport } from "../../../src/types";
 import { buildReportMessage, typeOf } from "../../../src/utils";

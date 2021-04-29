@@ -6,7 +6,7 @@ import { CordeBotLike, TestReport } from "../../../src/types";
 import { ToDeleteRole } from "../../../src/expect/matches";
 import { roleUtils } from "../../../src/expect/roleUtils";
 import { buildReportMessage } from "../../../src/utils";
-import { runtime } from "../../../src/common/runtime";
+import { runtime } from "../../../src/environment";
 
 let mockDiscord = new MockDiscord();
 let mockEvents: MockEvents;

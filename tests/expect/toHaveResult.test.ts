@@ -1,5 +1,4 @@
 import { Client } from "discord.js";
-import { runtime } from "../../src/common/runtime";
 import { ToHaveResult } from "../../src/expect/matches/toHaveResult";
 import { CordeBotLike, TestFunctionType, TestReport } from "../../src/types";
 import MockDiscord from "../mocks/mockDiscord";
@@ -11,6 +10,7 @@ import {
   testUtils,
 } from "../testHelper";
 import { expect as _expect } from "../../src/expect";
+import { runtime } from "../../src/environment";
 
 let mockDiscord = new MockDiscord();
 let mockEvents: MockEvents;

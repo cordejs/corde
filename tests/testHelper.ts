@@ -6,8 +6,8 @@ import { CordeBot } from "../src/core/cordeBot";
 import { CordeBotLike, Test, TestFile, TestFunctionType, TestReport } from "../src/types";
 import { ExpectTest } from "../src/expect/matches/expectTest";
 import { ExpectTestBaseParams } from "../src/types";
-import { runtime } from "../src/common/runtime";
 import { buildReportMessage } from "../src/utils";
+import { runtime } from "../src/environment";
 
 export const normalTsPath = path.resolve(process.cwd(), "corde.ts");
 export const tempTsPath = path.resolve(process.cwd(), "__corde.ts");

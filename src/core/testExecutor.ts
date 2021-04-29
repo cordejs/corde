@@ -1,5 +1,4 @@
 import chalk from "chalk";
-import { runtime } from "../common/runtime";
 import { testCollector } from "../common/testCollector";
 import { printHookErrors } from "../common/printHookError";
 import {
@@ -26,6 +25,7 @@ import {
 } from "../types";
 import { formatObject, stringIsNullOrEmpty, Timer } from "../utils";
 import { LogUpdate } from "../utils";
+import { runtime } from "../environment";
 
 export class TestExecutor {
   private _logUpdate: LogUpdate;

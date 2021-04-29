@@ -35,6 +35,11 @@ export class ToSetRolePosition extends ExpectTest {
     }
 
     let role = await this.cordeBot.findRole(identifier);
+
+    if (!role) {
+      return this.createFailedTest("role not found");
+    }
+
     const lastRole = this.cordeBot
       .getRoles()
       .sort((r1, r2) => r2.position - r1.position)
@@ -74,7 +79,7 @@ export class ToSetRolePosition extends ExpectTest {
       );
     }
 
-    if (role.position === newPosition) {
+    if (role?.position === newPosition) {
       this.hasPassed = true;
     }
 
@@ -86,7 +91,7 @@ export class ToSetRolePosition extends ExpectTest {
 
     return this.createReport(
       `expected: role position to change to ${newPosition}\n`,
-      `received: ${role.rawPosition}`,
+      `received: ${role?.rawPosition}`,
     );
   }
 }

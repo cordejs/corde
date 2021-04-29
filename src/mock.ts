@@ -1,4 +1,4 @@
-import { runtime } from "./common/runtime";
+import { runtime } from "./environment";
 import {
   FunctionOrReturnObjType,
   ReturnValueOrOwnType,

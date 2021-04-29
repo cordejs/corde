@@ -4,8 +4,8 @@ import * as validateFunc from "../../src/cli/validate";
 import * as goFunc from "../../src/cli/exec";
 
 import { program } from "../../src/cli/cli";
-import { runtime } from "../../src/common/runtime";
 import { reader } from "../../src/core/reader";
+import { runtime } from "../../src/environment";
 
 describe("testing cli", () => {
   it("should get version", () => {

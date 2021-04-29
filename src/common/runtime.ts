@@ -4,7 +4,7 @@ import { Client } from "discord.js";
 import { CordeBot } from "../core/cordeBot";
 import { ConfigError } from "../errors";
 import { DEFAULT_TEST_TIMEOUT } from "../consts";
-import { logger } from "../logger";
+import { logger } from "../environment";
 
 const Environment = {
   isUnityTest: process.env.ENV === "UNITY_TEST",
@@ -14,12 +14,8 @@ const Environment = {
 /**
  * @internal
  */
-class Runtime {
+export class Runtime {
   get bot() {
-    if (!this._bot) {
-      this._bot = this.initBot();
-    }
-
     return this._bot;
   }
 
@@ -75,9 +71,16 @@ class Runtime {
     return this._configs.testFiles;
   }
 
-  private constructor() {
+  constructor() {
     this._configs = new Config();
     this._mocks = [];
+    this._bot = new CordeBot(
+      this._configs.botPrefix,
+      this._configs.guildId,
+      this._configs.channelId,
+      this._configs.botTestId,
+      new Client(),
+    );
   }
 
   private static _instance: Runtime;
@@ -121,7 +124,7 @@ class Runtime {
   }
 
   printLoggerIfNotSilent() {
-    if (!runtime.silent) {
+    if (!this.silent) {
       logger.printStacks();
     }
   }
@@ -134,16 +137,6 @@ class Runtime {
     return fn(this.bot);
   }
 
-  initBot() {
-    return new CordeBot(
-      this._configs.botPrefix,
-      this._configs.guildId,
-      this._configs.channelId,
-      this._configs.botTestId,
-      new Client(),
-    );
-  }
-
   addMock(mock: MockInstance<any, any, any>) {
     this._mocks.push(mock);
   }
@@ -152,9 +145,3 @@ class Runtime {
     this._mocks.forEach((mock) => mock.restore());
   }
 }
-
-/**
- * Singleton of Runtime.
- */
-const runtime = Runtime.getInstance();
-export { runtime };

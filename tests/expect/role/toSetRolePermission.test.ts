@@ -16,7 +16,7 @@ import {
   permissionsArray,
 } from "../../../src/utils";
 import { MockEvents } from "../../mocks/mockEvents";
-import { runtime } from "../../../src/common/runtime";
+import { runtime } from "../../../src/environment";
 
 let mockDiscord = new MockDiscord();
 
@@ -81,8 +81,6 @@ describe("testing toSetRolePermission operation", () => {
     const report = await toSetRolePermission.action({ id: "123" }, ["BANANA"]);
 
     const message = buildReportMessage(diff(permissionsArray, ["BANANA"]));
-
-    console.log(message);
     const expectReport = createReport(toSetRolePermission, false, message);
 
     expect(report).toEqual(expectReport);

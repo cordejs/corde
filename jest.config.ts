@@ -6,6 +6,7 @@ process.env.ENV = "UNITY_TEST";
 const config: Config.InitialOptions = {
   rootDir: ".",
   verbose: false,
+  setupFiles: ["<rootDir>/setup.ts"],
   preset: "ts-jest/presets/js-with-babel",
   testEnvironment: "node",
   collectCoverageFrom: ["./src/**/*.ts"],

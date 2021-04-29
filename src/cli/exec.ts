@@ -2,13 +2,12 @@ import chalk from "chalk";
 import fs from "fs";
 import ora, { Color, Ora } from "ora";
 import path from "path";
-import { runtime } from "../common/runtime";
 import { testCollector } from "../common/testCollector";
 import { reader } from "../core/reader";
 import { summary } from "../core/summary";
 import { TestExecutor } from "../core/testExecutor";
+import { logger, runtime } from "../environment";
 import { FileError } from "../errors";
-import { logger } from "../logger";
 import { LogUpdate } from "../utils/logUpdate";
 import { validate } from "./validate";
 

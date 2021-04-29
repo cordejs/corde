@@ -1,11 +1,10 @@
 import fs from "fs";
 import path from "path";
-import { runtime } from "../../src/common/runtime";
 import { testCollector } from "../../src/common/testCollector";
 import { reader } from "../../src/core/reader";
+import { logger, runtime } from "../../src/environment";
 import { FileError } from "../../src/errors";
 import { beforeStart as _beforeStart } from "../../src/hooks";
-import { logger } from "../../src/logger";
 import { TestFile } from "../../src/types";
 import consts from "../mocks/constsNames";
 

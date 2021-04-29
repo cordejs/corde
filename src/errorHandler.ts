@@ -1,7 +1,5 @@
-import { runtime } from "./common/runtime";
 import { testCollector } from "./common/testCollector";
-import { exit } from "./exit";
-import { logger } from "./logger";
+import { logger, runtime } from "./environment";
 
 export function initErrorHandlers() {
   process.on("uncaughtException", async (err: Error) => {
@@ -19,6 +17,7 @@ export function initErrorHandlers() {
 
 async function printErrorAndExit(error: Error) {
   logger.error(error);
+  logger.log(error);
 
   if (runtime.isBotLoggedIn()) {
     runtime.logoffBot();
@@ -27,7 +26,7 @@ async function printErrorAndExit(error: Error) {
     await testCollector.afterAllFunctions.executeAsync();
   }
 
-  if (process.env.ENV !== "TEST") {
-    exit(1);
-  }
+  // if (process.env.ENV !== "TEST") {
+  //   exit(1);
+  // }
 }

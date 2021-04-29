@@ -12,7 +12,6 @@ import {
 import { Colors, ColorsHex, RolePermission } from "./utils";
 import { EmbedFieldData } from "discord.js";
 import { Stream } from "stream";
-import { Events } from "./core/events";
 
 export interface TestReport {
   pass: boolean;
@@ -89,7 +88,7 @@ export interface RoleIdentifier extends Identifier {
  * Contract with necessary functions of Discord.js Client
  */
 export interface CordeBotLike {
-  readonly events: Events;
+  readonly events: any;
   readonly guild: Guild;
   readonly roleManager: RoleManager;
   readonly channel: TextChannel;

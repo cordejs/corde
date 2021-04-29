@@ -1,5 +1,5 @@
 import { TEXT_EMPTY, TEXT_FAIL, TEXT_PASS } from "../consts";
-import { logger } from "../logger";
+import { logger } from "../environment";
 import { RunnerReport } from "../types";
 
 interface SummaryLine {

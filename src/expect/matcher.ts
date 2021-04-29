@@ -33,9 +33,9 @@ import {
 import { ExpectTest } from "./matches/expectTest";
 import { buildReportMessage, resolveName, stringIsNullOrEmpty } from "../utils";
 import { getStackTrace } from "../utils/getStackTrace";
-import { runtime } from "../common/runtime";
 import { MacherContructorArgs, MayReturnMatch, ExpectTestBaseParams } from "../types";
 import { ToHaveResult } from "./matches/toHaveResult";
+import { runtime } from "../environment";
 
 class BaseMatcher {
   protected _commandName: unknown;

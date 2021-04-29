@@ -1,5 +1,4 @@
 import { testCollector } from "../../src/common/testCollector";
-import { runtime } from "../../src/common/runtime";
 import { Colors } from "../../src/utils/colors";
 import {
   ToSetRolePosition,
@@ -22,6 +21,7 @@ import { buildReportMessage } from "../../src/utils";
 import { ToHaveResult } from "../../src/expect/matches/toHaveResult";
 import { expect as _expect } from "../../src/expect";
 import MockDiscord from "../mocks/mockDiscord";
+import { runtime } from "../../src/environment";
 
 jest.mock("../../src/expect/matches/message/toReturn.ts");
 jest.mock("../../src/expect/matches/message/toRemoveReaction.ts");

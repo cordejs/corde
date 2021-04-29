@@ -1,6 +1,5 @@
-import chalk, { Color } from "chalk";
 import { Client } from "discord.js";
-import { runtime } from "../../../src/common/runtime";
+import { runtime } from "../../../src/environment";
 import { ToSetRoleColor } from "../../../src/expect/matches";
 import { CordeBotLike, TestReport } from "../../../src/types";
 import { buildReportMessage, Colors, resolveColor } from "../../../src/utils";

@@ -4,8 +4,8 @@ import { createCordeBotWithMockedFunctions, testUtils } from "../../testHelper";
 import { CordeBotLike, TestReport } from "../../../src/types";
 import { ToEditMessage } from "../../../src/expect/matches";
 import { buildReportMessage, diff, formatObject } from "../../../src/utils";
-import { runtime } from "../../../src/common/runtime";
 import { MockEvents } from "../../mocks/mockEvents";
+import { runtime } from "../../../src/environment";
 
 let mockDiscord = new MockDiscord();
 

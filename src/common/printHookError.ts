@@ -1,4 +1,4 @@
-import { logger } from "../logger";
+import { logger } from "../environment";
 import { buildReportMessage, formatObject, LogUpdate } from "../utils";
 
 /**

@@ -1,5 +1,5 @@
-import { runtime } from "../../src/common/runtime";
 import { DEFAULT_TEST_TIMEOUT } from "../../src/consts";
+import { runtime } from "../../src/environment";
 
 import { ConfigOptions } from "../../src/types";
 

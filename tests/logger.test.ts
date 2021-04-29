@@ -1,5 +1,5 @@
-const spyLog = jest.spyOn(console, "log");
 const spyInfo = jest.spyOn(console, "info");
+const spyLog = jest.spyOn(console, "log");
 const spyError = jest.spyOn(console, "error");
 const spyWarn = jest.spyOn(console, "warn");
 const spyDebug = jest.spyOn(console, "debug");
@@ -40,102 +40,104 @@ if (console.timeStamp) {
   spyTimeStamp = jest.spyOn(console, "timeStamp");
 }
 
-import { logger, StackContainer } from "../src/logger";
+import { Logger, StackContainer } from "../src/common/logger";
 
-describe("testing logger", () => {
+const _logger = new Logger(process.stdout);
+
+describe("testing _logger", () => {
   it("should call console.log", () => {
-    logger.log("log");
+    _logger.log("log");
     expect(spyLog).toBeCalledTimes(1);
     expect(spyLog).toBeCalledWith("log");
   });
 
   it("should call console.info", () => {
-    logger.info("info");
+    _logger.info("info");
     expect(spyInfo).toBeCalledTimes(1);
     expect(spyInfo).toBeCalledWith("info");
   });
 
   it("should call console.error", () => {
-    logger.error("error");
+    _logger.error("error");
     expect(spyError).toBeCalledTimes(1);
     expect(spyError).toBeCalledWith("error");
   });
 
   it("should call console.debug", () => {
-    logger.debug("debug");
+    _logger.debug("debug");
     expect(spyDebug).toBeCalledTimes(1);
     expect(spyDebug).toBeCalledWith("debug");
   });
 
   it("should call console.warn", () => {
-    logger.warn("warn");
+    _logger.warn("warn");
     expect(spyWarn).toBeCalledTimes(1);
     expect(spyWarn).toBeCalledWith("warn");
   });
 
   it("should call console.trace", () => {
-    logger.trace("trace");
+    _logger.trace("trace");
     expect(spyTrace).toBeCalledTimes(1);
     expect(spyTrace).toBeCalledWith("trace");
   });
 
   it("should call console.assert", () => {
-    logger.assert("assert");
+    _logger.assert("assert");
     expect(spyAssert).toBeCalledTimes(1);
     expect(spyAssert).toBeCalledWith("assert", undefined);
   });
 
   it("should call console.clear", () => {
-    logger.clear();
+    _logger.clear();
     expect(spyClear).toBeCalledTimes(1);
   });
 
   it("should call console.count", () => {
-    logger.count("count");
+    _logger.count("count");
     expect(spyCount).toBeCalledTimes(1);
     expect(spyCount).toBeCalledWith("count");
   });
 
   it("should call console.countReset", () => {
-    logger.countReset("test");
+    _logger.countReset("test");
     expect(spyCountReset).toBeCalledTimes(1);
     expect(spyCountReset).toBeCalledWith("test");
   });
 
   it("should call console.dir", () => {
-    logger.dir("dir");
+    _logger.dir("dir");
     expect(spyDir).toBeCalledTimes(1);
     expect(spyDir).toBeCalledWith("dir");
   });
 
   it("should call console.spyDirXml", () => {
-    logger.dirxml("spyDirXml");
+    _logger.dirxml("spyDirXml");
     expect(spyDirXml).toBeCalledTimes(1);
     expect(spyDirXml).toBeCalledWith("spyDirXml");
   });
 
   if (console.exception) {
     it("should call console.exception", () => {
-      logger.exception("exception");
+      _logger.exception("exception");
       expect(spyException).toBeCalledTimes(1);
       expect(spyException).toBeCalledWith("exception");
     });
   }
 
   it("should call console.group", () => {
-    logger.group("group");
+    _logger.group("group");
     expect(spyGroup).toBeCalledTimes(1);
     expect(spyGroup).toBeCalledWith("group");
   });
 
   it("should call console.groupEnd", () => {
-    logger.groupEnd();
+    _logger.groupEnd();
     expect(spyGroupEnd).toBeCalledTimes(1);
   });
 
   if (console.profile) {
     it("should call console.profile", () => {
-      logger.profile("profile");
+      _logger.profile("profile");
       expect(spyProfile).toBeCalledTimes(1);
       expect(spyProfile).toBeCalledWith("profile");
     });
@@ -143,33 +145,33 @@ describe("testing logger", () => {
 
   if (console.profileEnd) {
     it("should call console.profileEnd", () => {
-      logger.profileEnd("profileEnd");
+      _logger.profileEnd("profileEnd");
       expect(spyProfileEnd).toBeCalledTimes(1);
       expect(spyProfileEnd).toBeCalledWith("profileEnd");
     });
   }
 
   it("should call console.table", () => {
-    logger.table("table");
+    _logger.table("table");
     expect(spyTable).toBeCalledTimes(1);
     expect(spyTable).toBeCalledWith("table");
   });
 
   it("should call console.time", () => {
-    logger.time("time");
+    _logger.time("time");
     expect(spyTime).toBeCalledTimes(1);
     expect(spyTime).toBeCalledWith("time");
   });
 
   it("should call console.timeEnd", () => {
-    logger.timeEnd("timeEnd");
+    _logger.timeEnd("timeEnd");
     expect(spyTimeEnd).toBeCalledTimes(1);
     expect(spyTimeEnd).toBeCalledWith("timeEnd");
   });
 
   if (console.timeLog) {
     it("should call console.timeLog", () => {
-      logger.timeLog("timeLog");
+      _logger.timeLog("timeLog");
       expect(spyTimeLog).toBeCalledTimes(1);
       expect(spyTimeLog).toBeCalledWith("timeLog");
     });
@@ -177,7 +179,7 @@ describe("testing logger", () => {
 
   if (console.timeStamp) {
     it("should call console.spyTimeStamp", () => {
-      logger.timeStamp("spyTimeStamp");
+      _logger.timeStamp("spyTimeStamp");
       expect(spyTimeStamp).toBeCalledTimes(1);
       expect(spyTimeStamp).toBeCalledWith("spyTimeStamp");
     });
@@ -186,17 +188,17 @@ describe("testing logger", () => {
 
 describe("testing mocks", () => {
   beforeEach(() => {
-    logger.mock();
+    _logger.mock();
   });
 
   afterEach(() => {
-    logger.stack = [];
+    _logger.stack = [];
   });
 
   it("should not print in console.log", () => {
     const value = "messsage-log";
     console.log(value);
-    expect(logger.stack).toEqual<StackContainer[]>([
+    expect(_logger.stack).toEqual<StackContainer[]>([
       {
         name: "log",
         data: {
@@ -211,7 +213,7 @@ describe("testing mocks", () => {
   it("should not print in console.warn", () => {
     const value = "messsage-warn";
     console.warn(value);
-    expect(logger.stack).toEqual<StackContainer[]>([
+    expect(_logger.stack).toEqual<StackContainer[]>([
       {
         name: "warn",
         data: {
@@ -226,7 +228,7 @@ describe("testing mocks", () => {
   it("should not print in console.error", () => {
     const value = "messsage-error";
     console.error(value);
-    expect(logger.stack).toEqual<StackContainer[]>([
+    expect(_logger.stack).toEqual<StackContainer[]>([
       {
         name: "error",
         data: {
@@ -241,7 +243,7 @@ describe("testing mocks", () => {
   it("should not print in console.info", () => {
     const value = "messsage-info";
     console.info(value);
-    expect(logger.stack).toEqual<StackContainer[]>([
+    expect(_logger.stack).toEqual<StackContainer[]>([
       {
         name: "info",
         data: {
@@ -256,7 +258,7 @@ describe("testing mocks", () => {
   it("should not print in console.count", () => {
     const value = "messsage-count";
     console.count(value);
-    expect(logger.stack).toEqual<StackContainer[]>([
+    expect(_logger.stack).toEqual<StackContainer[]>([
       {
         name: "count",
         data: {

@@ -5,7 +5,7 @@ import { MockEvents } from "../../mocks/mockEvents";
 import { CordeBotLike, TestReport } from "../../../src/types";
 import { ToReturn } from "../../../src/expect/matches";
 import { buildReportMessage, diff, formatObject } from "../../../src/utils";
-import { runtime } from "../../../src/common/runtime";
+import { runtime } from "../../../src/environment";
 
 let mockDiscord = new MockDiscord();
 

@@ -4,16 +4,10 @@ import { init } from "./init";
 import { validate } from "./validate";
 import { CliConfigOptions, ConfigFileType } from "../types";
 import pack from "../package";
-import { runtime } from "../common/runtime";
 import { reader } from "../core/reader";
-import { initEnvVariables } from "../envVariables";
-import { logger } from "../logger";
-import { initErrorHandlers } from "../errorHandler";
+import { initCordeEnv, logger, runtime } from "../environment";
 
-initEnvVariables();
-initErrorHandlers();
-
-logger.mock();
+initCordeEnv();
 
 export const program = new Command();
 

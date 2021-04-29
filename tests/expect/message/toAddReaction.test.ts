@@ -5,7 +5,7 @@ import { ToAddReaction } from "../../../src/expect/matches";
 import { CordeBotLike, TestReport } from "../../../src/types";
 import { buildReportMessage, typeOf } from "../../../src/utils";
 import { MockEvents } from "../../mocks/mockEvents";
-import { runtime } from "../../../src/common/runtime";
+import { runtime } from "../../../src/environment";
 
 describe("testing toAddReaction function", () => {
   let mockDiscord = new MockDiscord();

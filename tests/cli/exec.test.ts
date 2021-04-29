@@ -2,10 +2,10 @@ import { reader } from "../../src/core/reader";
 import * as validateFn from "../../src/cli/validate";
 import { exec } from "../../src/cli/exec";
 import { FileError } from "../../src/errors";
-import { runtime } from "../../src/common/runtime";
 import { TestExecutor } from "../../src/core/testExecutor";
 import { summary } from "../../src/core/summary";
 import { mockProcess } from "../mocks";
+import { runtime } from "../../src/environment";
 
 jest.mock("ora", () => {
   const spinner = {
