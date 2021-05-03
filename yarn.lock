@@ -1608,10 +1608,10 @@ acorn-walk@^7.1.1:
   resolved "https://registry.yarnpkg.com/acorn-walk/-/acorn-walk-7.2.0.tgz#0de889a601203909b0fbe07b8938dc21d2e967bc"
   integrity sha512-OPdCF6GsMIP+Az+aWfAAOEt2/+iVDKE7oy6lJ098aoe59oAmK76qV6Gw60SbZ8jHuG2wH058GF4pLFbYamYrVA==
 
-acorn@8.2.1, acorn@^8.2.0:
-  version "8.2.1"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.2.1.tgz#0d36af126fb6755095879c1dc6fd7edf7d60a5fb"
-  integrity sha512-z716cpm5TX4uzOzILx8PavOE6C6DKshHDw1aQN52M/yNSqE9s5O8SMfyhCCfCJ3HmTL0NkVOi+8a/55T7YB3bg==
+acorn@8.2.2, acorn@^8.2.0:
+  version "8.2.2"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.2.2.tgz#c4574e4fea298d6e6ed4b85ab844b06dd59f26d6"
+  integrity sha512-VrMS8kxT0e7J1EX0p6rI/E0FbfOVcvBpbIqHThFv+f8YrZIlMfVotYcXKVPmTvPW8sW5miJzfUFrrvthUZg8VQ==
 
 acorn@^7.1.1, acorn@^7.4.0:
   version "7.4.1"
@@ -1630,10 +1630,10 @@ agent-base@6:
   dependencies:
     debug "4"
 
-ajv@8.1.0, ajv@^8.0.1:
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/ajv/-/ajv-8.1.0.tgz#45d5d3d36c7cdd808930cc3e603cf6200dbeb736"
-  integrity sha512-B/Sk2Ix7A36fs/ZkuGLIR86EdjbgR6fsAcbx9lOP/QBSXujDNbVmIS/U4Itz5k8fPFDeVZl/zQ/gJW4Jrq6XjQ==
+ajv@8.2.0, ajv@^8.0.1:
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/ajv/-/ajv-8.2.0.tgz#c89d3380a784ce81b2085f48811c4c101df4c602"
+  integrity sha512-WSNGFuyWd//XO8n/m/EaOlNLtO0yL8EXT/74LqT4khdhpZjP7lkj/kT5uwRmGitKEVp/Oj7ZUHeGfPtgHhQ5CA==
   dependencies:
     fast-deep-equal "^3.1.1"
     json-schema-traverse "^1.0.0"
@@ -2759,16 +2759,16 @@ delayed-stream@~1.0.0:
   integrity sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
 
 dependency-cruiser@^9.24.0:
-  version "9.26.0"
-  resolved "https://registry.yarnpkg.com/dependency-cruiser/-/dependency-cruiser-9.26.0.tgz#211ef308262490a628f62e530fd1d7a44b4c5633"
-  integrity sha512-vxDbpdVKMYE3/gviXHOSL2rFyHCu9yAcM9iSGns3UQq2YRTNV8APtQ46bCAt26DdDUT3Uj67VgukCOE6d7Ev5Q==
+  version "9.26.1"
+  resolved "https://registry.yarnpkg.com/dependency-cruiser/-/dependency-cruiser-9.26.1.tgz#dd423e6ec26d13be02bf5faf5f5871df76a120eb"
+  integrity sha512-VS1QmbKwx+U+oCkWp4qj59lCJkhqt/AtyXSamh/l2NQ4Nj0VWmv/Cmu63VF6Kyu1B665cAwNFDW6uO4mDB9lsA==
   dependencies:
-    acorn "8.2.1"
+    acorn "8.2.2"
     acorn-jsx "5.3.1"
     acorn-jsx-walk "2.0.0"
     acorn-loose "8.1.0"
     acorn-walk "8.1.0"
-    ajv "8.1.0"
+    ajv "8.2.0"
     chalk "4.1.1"
     commander "7.2.0"
     enhanced-resolve "5.1.0"
