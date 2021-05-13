@@ -1,0 +1,13 @@
+{
+  "configurations": [
+    {
+      "args": ["--files", "./bot.test.js"],
+      "runtimeArgs": ["--inspect-brk"],
+      "internalConsoleOptions": "openOnSessionStart",
+      "name": "Corde tests",
+      "program": "${workspaceFolder}/node_modules/corde/bin/corde",
+      "request": "launch",
+      "type": "node"
+    }
+  ]
+}
