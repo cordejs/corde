@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import fs from "fs";
 import path from "path";
-import { ConfigError, FileError, PropertyError } from "../errors";
+import { FileError, PropertyError } from "../errors";
 import { ConfigOptions } from "../types";
 import { stringIsNullOrEmpty } from "../utils";
 
@@ -33,25 +33,27 @@ export function validate(configs: ConfigOptions) {
 
   let errorsString = "";
 
-  if (errors.length === 1) {
-    errorsString = chalk.red("\n● An required property is missing in config file:");
-    buildMissingPropertiesErrorAndThrow(errorsString, errors);
-  }
+  if (errors.length > 0) {
+    errorsString = chalk.red("\n● Corde validation report:\n  ");
 
-  if (errors.length > 1) {
-    errorsString = chalk.red("\n● Some required properties are missing in config file:");
-    buildMissingPropertiesErrorAndThrow(errorsString, errors);
+    if (errors.length === 1) {
+      errorsString += chalk.red("an required property is missing in config file:\n");
+      buildMissingPropertiesErrorAndThrow(errorsString, errors);
+    }
+
+    if (errors.length > 1) {
+      errorsString += chalk.red("some required properties are missing in config file\n");
+      buildMissingPropertiesErrorAndThrow(errorsString, errors);
+    }
   }
 }
 
 function validatePaths(pathsDir: string[] | undefined, errors: string[]) {
-  if (!pathsDir || pathsDir.length === 0) {
-    errors.push("No test files informed");
-    return;
-  }
+  pathsDir = pathsDir?.filter((p) => p);
 
-  if (pathsDir.some((_path) => !_path)) {
-    throw new ConfigError(chalk.red("one of more paths are null or undefined. Check your config"));
+  if (!pathsDir || pathsDir.length === 0) {
+    errors.push("No test files informed." + chalk.cyan("(testFiles)"));
+    return;
   }
 
   for (const pathDir of pathsDir) {
@@ -84,6 +86,6 @@ function addToErrorsIfPropertyIsMissing(
 }
 
 function buildMissingPropertiesErrorAndThrow(errorString: string, erros: string[]) {
-  erros.forEach((error) => (errorString += `\n${chalk.red(`- ${error}`)}`));
+  erros.forEach((error) => (errorString += `\n    ${chalk.red(`- ${error}`)}`));
   throw new PropertyError(errorString);
 }

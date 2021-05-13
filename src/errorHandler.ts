@@ -17,11 +17,16 @@ export function initErrorHandlers() {
 }
 
 async function printErrorAndExit(error: Error) {
-  console.error(error);
+  if (error instanceof Error) {
+    console.error(error.message);
+  } else {
+    console.error(error);
+  }
 
   if (runtime.isBotLoggedIn()) {
     runtime.logoffBot();
   }
+
   if (testCollector.afterAllFunctions) {
     await testCollector.afterAllFunctions.executeAsync();
   }
