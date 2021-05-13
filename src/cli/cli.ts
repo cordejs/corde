@@ -7,7 +7,9 @@ import pack from "../package";
 import { runtime } from "../common/runtime";
 import { reader } from "../core/reader";
 import { initEnvVariables } from "../envVariables";
+import { initErrorHandlers } from "../errorHandler";
 
+initErrorHandlers();
 initEnvVariables();
 
 export const program = new Command();
