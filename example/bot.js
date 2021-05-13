@@ -33,7 +33,6 @@ bot.on("message", async (message) => {
  * @param {string} command
  */
 async function handleCommands(message, command) {
-  // TODO: Refact this. '-'
   if (command === "ping") {
     await ping(message);
   }

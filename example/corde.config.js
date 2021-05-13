@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 // This file must be .js. If it's .ts
 // for some reason, tests will throw
 // Error: Cannot find module './corde.config'
