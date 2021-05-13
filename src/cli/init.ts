@@ -2,9 +2,9 @@ import chalk from "chalk";
 import fs from "fs";
 import path from "path";
 import { FileError } from "../errors";
-import { ConfigOptions, configFileType } from "../types";
+import { IConfigOptions, configFileType } from "../types";
 
-const jsonFile: ConfigOptions = {
+const jsonFile: IConfigOptions = {
   botPrefix: "",
   botTestId: "",
   channelId: "",

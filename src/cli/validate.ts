@@ -1,9 +1,7 @@
 import chalk from "chalk";
-import fs from "fs";
-import path from "path";
 import { FileError, PropertyError } from "../errors";
-import { ConfigOptions } from "../types";
-import { stringIsNullOrEmpty } from "../utils";
+import { IConfigOptions } from "../types";
+import { stringIsNullOrEmpty, utils } from "../utils";
 
 /**
  * Check if configs are valid. Throws an exception
@@ -16,7 +14,7 @@ import { stringIsNullOrEmpty } from "../utils";
  *
  * @throws Error if any config is invalid.
  */
-export function validate(configs: ConfigOptions) {
+export async function validate(configs: IConfigOptions) {
   if (!configs) {
     throw new FileError(chalk.red("● configs not informed."));
   }
@@ -29,7 +27,7 @@ export function validate(configs: ConfigOptions) {
   addToErrorsIfPropertyIsMissing(configs.cordeTestToken, errors, "corde token");
   addToErrorsIfPropertyIsMissing(configs.guildId, errors, "guild ID");
   addToErrorsIfPropertyIsMissing(configs.botTestToken, errors, "bot test token");
-  validatePaths(configs.testFiles, errors);
+  await validatePaths(configs.testFiles, errors);
 
   let errorsString = "";
 
@@ -48,7 +46,7 @@ export function validate(configs: ConfigOptions) {
   }
 }
 
-function validatePaths(pathsDir: string[] | undefined, errors: string[]) {
+async function validatePaths(pathsDir: string[] | undefined, errors: string[]) {
   pathsDir = pathsDir?.filter((p) => p);
 
   if (!pathsDir || pathsDir.length === 0) {
@@ -57,19 +55,9 @@ function validatePaths(pathsDir: string[] | undefined, errors: string[]) {
   }
 
   for (const pathDir of pathsDir) {
-    const pathResolved = path.resolve(process.cwd(), pathDir);
-    if (fs.existsSync(pathResolved)) {
-      const stats = fs.lstatSync(pathResolved);
-      if (stats.isDirectory()) {
-        const files = fs.readdirSync(pathResolved);
-        const filesResolve = [];
-        for (const file of files) {
-          filesResolve.push(path.resolve(pathResolved, file));
-        }
+    const files = await utils.getFiles(pathDir);
 
-        validatePaths(filesResolve, errors);
-      }
-    } else {
+    if (files.length === 0) {
       errors.push(`path: ${pathDir} does not exists`);
     }
   }

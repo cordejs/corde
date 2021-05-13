@@ -1,8 +1,8 @@
-import { ConfigOptions } from "../../src/types";
+import { IConfigOptions } from "../../src/types";
 import { validate } from "../../src/cli/validate";
 import { FileError, PropertyError } from "../../src/errors";
 
-let configs: ConfigOptions;
+let configs: IConfigOptions;
 
 beforeEach(() => {
   configs = {

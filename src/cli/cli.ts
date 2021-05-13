@@ -55,9 +55,9 @@ program
   .command("validate")
   .alias("v")
   .description("Search for corde configs and check if all data are valid")
-  .action(() => {
+  .action(async () => {
     const configs = reader.loadConfig();
-    validate(configs);
+    await validate(configs);
     console.log("All configs are ok!");
   });
 

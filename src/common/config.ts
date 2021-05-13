@@ -1,5 +1,5 @@
 import { DEFAULT_TEST_TIMEOUT } from "../consts";
-import { ConfigOptions } from "../types";
+import { IConfigOptions } from "../types";
 
 /**
  * Default interface of JSON config
@@ -8,7 +8,7 @@ import { ConfigOptions } from "../types";
  * only inform if is desired to start test bot with corde
  *
  */
-export class Config implements ConfigOptions {
+export class Config implements IConfigOptions {
   cordeTestToken!: string;
   botTestId!: string;
   botTestToken!: string;
@@ -17,6 +17,7 @@ export class Config implements ConfigOptions {
   timeOut?: number;
   botPrefix!: string;
   testFiles!: string[];
+  modulePathIgnorePatterns?: string[];
 
   /**
    * Set values to config options that are not **filed** yet
@@ -27,13 +28,13 @@ export class Config implements ConfigOptions {
    * const config = new Config();
    * config.timeOut = 1000;
    *
-   * const newConfig: ConfigOptions = { ...timeOut: 3000 };
+   * const newConfig: IConfigOptions = { ...timeOut: 3000 };
    * config.setConfigs(newConfig);
    * console.log(config.timeOut) // print 1000;
    *
    * @param config new set of configs.
    */
-  setConfigs(config: Partial<ConfigOptions>, forceUpdate?: boolean) {
+  setConfigs(config: Partial<IConfigOptions>, forceUpdate?: boolean) {
     if (config.cordeTestToken && (!this.cordeTestToken || forceUpdate)) {
       this.cordeTestToken = config.cordeTestToken;
     }
@@ -68,6 +69,10 @@ export class Config implements ConfigOptions {
 
     if (config.botPrefix && (!this.botPrefix || forceUpdate)) {
       this.botPrefix = config.botPrefix;
+    }
+
+    if (config.modulePathIgnorePatterns && (!this.modulePathIgnorePatterns || forceUpdate)) {
+      this.modulePathIgnorePatterns = config.modulePathIgnorePatterns;
     }
 
     if (config.testFiles && (!this.testFiles || this.testFiles.length === 0 || forceUpdate)) {

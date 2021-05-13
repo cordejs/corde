@@ -216,7 +216,7 @@ export interface BaseRole {
 /**
  * Contains a set of properties needed for execution of corde
  */
-export interface ConfigOptions {
+export interface IConfigOptions {
   /**
    * Fake bot used to test the real one
    */
@@ -249,6 +249,7 @@ export interface ConfigOptions {
    * Path for case tests. Use this from the base directory of the application
    */
   testFiles: string[];
+  modulePathIgnorePatterns?: string[];
 }
 
 /**
@@ -1216,4 +1217,9 @@ export interface Expect extends AllMatches<any> {
     commandNameResolvable: T,
     channelId?: string,
   ): AllExpectMatches;
+}
+
+export interface ITestFilePattern {
+  filesPattren: string[];
+  ignorePattern?: string[];
 }

@@ -4,8 +4,8 @@ import { runtime } from "../common/runtime";
 import { printHookErrors } from "../common/printHookError";
 import { testCollector } from "../common/testCollector";
 import { FileError } from "../errors";
-import { ConfigOptions, TestFile } from "../types";
-import { shortPathForPlataform } from "../utils";
+import { IConfigOptions, ITestFilePattern, TestFile } from "../types";
+import { shortPathForPlataform, utils } from "../utils";
 
 class Reader {
   /**
@@ -13,8 +13,8 @@ class Reader {
    * and validates it
    * @throws
    */
-  loadConfig(): ConfigOptions {
-    let _config: ConfigOptions;
+  loadConfig(): IConfigOptions {
+    let _config: IConfigOptions;
 
     const jsonFilePath = path.resolve(process.cwd(), "corde.config.json");
     const tsFilePath = path.resolve(process.cwd(), "corde.config.ts");
@@ -41,13 +41,19 @@ class Reader {
     }
   }
 
-  async getTestsFromFiles(files: string[]): Promise<TestFile[]> {
+  async getTestsFromFiles(filesPattern: ITestFilePattern): Promise<TestFile[]> {
     const testFiles: TestFile[] = [];
-    if (!files || !files.length) {
+    if (!filesPattern || !filesPattern.filesPattren.length) {
       throw new FileError("No file was informed.");
     }
 
-    for (const file of files) {
+    const filesPath: string[] = [];
+
+    for (const filePattern of filesPattern.filesPattren) {
+      filesPath.push(...(await utils.getFiles(filePattern, filesPattern.ignorePattern)));
+    }
+
+    for (const file of filesPath) {
       try {
         require(file);
       } catch (error) {
@@ -96,7 +102,7 @@ class Reader {
     return testFiles;
   }
 
-  private loadConfigFromConfigFilePath(): ConfigOptions {
+  private loadConfigFromConfigFilePath(): IConfigOptions {
     let filePath = "";
     if (fs.existsSync(runtime.configFilePath)) {
       filePath = path.resolve(process.cwd(), runtime.configFilePath);

@@ -1,6 +1,6 @@
 import { init } from "../../src/cli/init";
 import { FsMockUtils } from "../mockUtils/fs";
-import { ConfigOptions } from "../../src/types";
+import { IConfigOptions } from "../../src/types";
 
 // As there are a local config file for manual tests,
 // These files are renamed to avoid remotion after finish
@@ -55,7 +55,7 @@ describe("Testing creation of config file in init", () => {
 });
 
 describe("Testing content of config file in init", () => {
-  const configFile: ConfigOptions = {
+  const configFile: IConfigOptions = {
     botPrefix: "",
     botTestId: "",
     channelId: "",

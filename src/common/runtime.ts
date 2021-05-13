@@ -1,4 +1,4 @@
-import { ConfigOptions, CordeBotLike, TestFunctionType } from "../types";
+import { IConfigOptions, CordeBotLike, TestFunctionType } from "../types";
 import { Config } from "./config";
 import { Client } from "discord.js";
 import { CordeBot } from "../core/cordeBot";
@@ -70,6 +70,10 @@ class Runtime {
     return this._configs.testFiles;
   }
 
+  get modulePathIgnorePatterns() {
+    return this._configs.modulePathIgnorePatterns;
+  }
+
   private constructor() {
     this._configs = new Config();
   }
@@ -88,7 +92,7 @@ class Runtime {
     return Runtime._instance;
   }
 
-  setConfigs(_configs: Partial<ConfigOptions>, forceUpdate?: boolean) {
+  setConfigs(_configs: Partial<IConfigOptions>, forceUpdate?: boolean) {
     if (!_configs) {
       throw new ConfigError("Invalid _configs");
     }
