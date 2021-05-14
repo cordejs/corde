@@ -248,7 +248,7 @@ export interface IConfigOptions {
   /**
    * Path for case tests. Use this from the base directory of the application
    */
-  testFiles: string[];
+  testMatch: string[];
   modulePathIgnorePatterns?: string[];
 }
 
@@ -1220,6 +1220,6 @@ export interface Expect extends AllMatches<any> {
 }
 
 export interface ITestFilePattern {
-  filesPattren: string[];
+  filesPattern: string[];
   ignorePattern?: string[];
 }

@@ -66,8 +66,8 @@ class Runtime {
     return this._configs.botPrefix;
   }
 
-  get testFiles() {
-    return this._configs.testFiles;
+  get testMatch() {
+    return this._configs.testMatch;
   }
 
   get modulePathIgnorePatterns() {

@@ -9,7 +9,7 @@ const config: IConfigOptions = {
   channelId: "1241241",
   cordeTestToken: "321",
   guildId: "123",
-  testFiles: ["123"],
+  testMatch: ["123"],
   timeOut: DEFAULT_TEST_TIMEOUT,
   botTestToken: "12412412123124",
 };

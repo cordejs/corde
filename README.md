@@ -64,7 +64,7 @@ After installed, add the file `corde.config.json` in the root of your applicatio
    "guildId":  "THE_GUID_OF_BOT_HERE",
    "channelId":  "CHANNELS_ID_HERE",
    "botPrefix":  "+",
-   "testFiles":  ["./test"]
+   "testMatch":  ["./test"]
 }
 ```
 

@@ -42,20 +42,24 @@ class Reader {
   }
 
   async getTestsFromFiles(filesPattern: ITestFilePattern): Promise<TestFile[]> {
-    const testFiles: TestFile[] = [];
-    if (!filesPattern || !filesPattern.filesPattren.length) {
+    const testMatch: TestFile[] = [];
+    if (!filesPattern || !filesPattern.filesPattern.length) {
       throw new FileError("No file was informed.");
     }
 
     const filesPath: string[] = [];
 
-    for (const filePattern of filesPattern.filesPattren) {
-      filesPath.push(...(await utils.getFiles(filePattern, filesPattern.ignorePattern)));
+    for (const filePattern of filesPattern.filesPattern) {
+      const matches = await utils.getFiles(filePattern, filesPattern.ignorePattern);
+      filesPath.push(...matches);
     }
 
     for (const file of filesPath) {
       try {
-        require(file);
+        const extension = path.extname(file);
+        if (extension == ".js" || extension === ".ts") {
+          require(file);
+        }
       } catch (error) {
         console.log(error);
         continue;
@@ -90,7 +94,7 @@ class Reader {
       this.addTestsGroupmentToGroupIfExist();
       this.addIsolatedTestFunctionsToGroupIfExists();
 
-      testFiles.push({
+      testMatch.push({
         path: shortPathForPlataform(file),
         groups: testCollector.groups.slice(),
         isEmpty: testCollector.groups.length === 0,
@@ -99,7 +103,7 @@ class Reader {
       testCollector.groups = [];
     }
 
-    return testFiles;
+    return testMatch;
   }
 
   private loadConfigFromConfigFilePath(): IConfigOptions {

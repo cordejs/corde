@@ -16,7 +16,7 @@ export class Config implements IConfigOptions {
   guildId!: string;
   timeOut?: number;
   botPrefix!: string;
-  testFiles!: string[];
+  testMatch!: string[];
   modulePathIgnorePatterns?: string[];
 
   /**
@@ -75,8 +75,8 @@ export class Config implements IConfigOptions {
       this.modulePathIgnorePatterns = config.modulePathIgnorePatterns;
     }
 
-    if (config.testFiles && (!this.testFiles || this.testFiles.length === 0 || forceUpdate)) {
-      this.testFiles = config.testFiles;
+    if (config.testMatch && (!this.testMatch || this.testMatch.length === 0 || forceUpdate)) {
+      this.testMatch = config.testMatch;
     }
   }
 }

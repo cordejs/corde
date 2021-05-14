@@ -48,37 +48,37 @@ describe("testing cli", () => {
   it("should call go command with -f option (single file)", () => {
     program.exitOverride();
     const spy = jest.spyOn(goFunc, "exec").mockImplementation(null);
-    const testFiles = "./tests";
-    program.parse(["node", "test", "-f", testFiles]);
+    const testMatch = "./tests";
+    program.parse(["node", "test", "-f", testMatch]);
     expect(spy).toBeCalled();
-    expect(runtime.testFiles).toEqual(testFiles.split(" "));
+    expect(runtime.testMatch).toEqual(testMatch.split(" "));
   });
 
   it("should call go command with -f option (multiple files)", () => {
     program.exitOverride();
     const spy = jest.spyOn(goFunc, "exec").mockImplementation(null);
-    const testFiles = "./tests ./tests2";
-    program.parse(["node", "test", "-f", testFiles]);
+    const testMatch = "./tests ./tests2";
+    program.parse(["node", "test", "-f", testMatch]);
     expect(spy).toBeCalled();
-    expect(runtime.testFiles).toEqual(testFiles.split(" "));
+    expect(runtime.testMatch).toEqual(testMatch.split(" "));
   });
 
   it("should call go command with --files option (single file)", () => {
     program.exitOverride();
     const spy = jest.spyOn(goFunc, "exec").mockImplementation(null);
-    const testFiles = "./tests";
-    program.parse(["node", "test", "--files", testFiles]);
+    const testMatch = "./tests";
+    program.parse(["node", "test", "--files", testMatch]);
     expect(spy).toBeCalled();
-    expect(runtime.testFiles).toEqual(testFiles.split(" "));
+    expect(runtime.testMatch).toEqual(testMatch.split(" "));
   });
 
   it("should call go command with --files option (multiple files)", () => {
     program.exitOverride();
     const spy = jest.spyOn(goFunc, "exec").mockImplementation(null);
-    const testFiles = "./tests ./tests2";
-    program.parse(["node", "test", "--files", testFiles]);
+    const testMatch = "./tests ./tests2";
+    program.parse(["node", "test", "--files", testMatch]);
     expect(spy).toBeCalled();
-    expect(runtime.testFiles).toEqual(testFiles.split(" "));
+    expect(runtime.testMatch).toEqual(testMatch.split(" "));
   });
 
   it("should call go command with --config option", () => {
@@ -101,7 +101,7 @@ describe("testing cli", () => {
   it("should call validate command with 'v' alias", () => {
     program.exitOverride();
     jest.spyOn(reader, "loadConfig").mockImplementation(() => null);
-    const spyValidate = jest.spyOn(validateFunc, "validate").mockImplementation(() => {});
+    const spyValidate = jest.spyOn(validateFunc, "validate").mockImplementation(() => null);
     program.parse(["node", "test", "v"]);
     expect(spyValidate).toBeCalled();
   });
