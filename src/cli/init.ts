@@ -27,10 +27,7 @@ const jsFile = `
     module.exports = ${configString}
 `;
 
-const tsFile = `
-    /** @type {import('corde/lib/src/types').IConfigOptions} */
-    const config ${configString}
-`;
+const tsFile = jsFile;
 
 /**
  * Initialize a config file with all available options.

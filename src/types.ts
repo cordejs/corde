@@ -255,6 +255,10 @@ export interface IConfigOptions {
   modulePathIgnorePatterns?: string[];
 }
 
+export interface IJSONFile {
+  $schema: string;
+}
+
 /**
  * Object contract used to identify messages in message edition tests.
  */
