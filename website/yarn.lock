@@ -2538,13 +2538,13 @@
     "@docusaurus/types" "2.0.0-alpha.73"
     tslib "^2.1.0"
 
-"@docusaurus/theme-live-codeblock@^2.0.0-alpha.73":
-  version "2.0.0-alpha.73"
-  resolved "https://registry.yarnpkg.com/@docusaurus/theme-live-codeblock/-/theme-live-codeblock-2.0.0-alpha.73.tgz#b27c66102e379266edaa188f41b63fd3874095d6"
-  integrity sha512-RrREiYeQ+w5m3XXxVaeB4Hc7rSPyV8ltJeMqxPMr1JQKmetsw2tzFZ0NOoczHxPR3q6Is5tDl5N+3hWg+/Meqw==
+"@docusaurus/theme-live-codeblock@^2.0.0-beta.0":
+  version "2.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@docusaurus/theme-live-codeblock/-/theme-live-codeblock-2.0.0-beta.0.tgz#3d43b9b4d524bf9cbd070dd078ad989480fe8aae"
+  integrity sha512-J/ZE90aQN66xM2NZf82FnodfuxMPvv9nW+oosTq/T/lcMxQ3Yy/z1XGSJkEAXgsd2Ry0oiewCfiTU6sbr37zAg==
   dependencies:
-    "@docusaurus/core" "2.0.0-alpha.73"
-    "@docusaurus/utils-validation" "2.0.0-alpha.73"
+    "@docusaurus/core" "2.0.0-beta.0"
+    "@docusaurus/utils-validation" "2.0.0-beta.0"
     "@philpl/buble" "^0.19.7"
     clsx "^1.1.1"
     parse-numeric-range "^1.2.0"
