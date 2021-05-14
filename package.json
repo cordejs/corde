@@ -75,7 +75,7 @@
     "babel-jest": "^26.0.1",
     "cli-spinners": "^2.4.0",
     "codecov": "^3.6.5",
-    "dependency-cruiser": "^9.24.0",
+    "dependency-cruiser": "^10.0.1",
     "dotenv": "^8.2.0",
     "eslint": "^7.23.0",
     "eslint-config-prettier": "^8.1.0",
