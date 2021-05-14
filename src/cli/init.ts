@@ -4,7 +4,7 @@ import path from "path";
 import { FileError } from "../errors";
 import { IConfigOptions, configFileType } from "../types";
 
-const jsonFile: IConfigOptions = {
+const config: IConfigOptions = {
   botPrefix: "",
   botTestId: "",
   channelId: "",
@@ -15,12 +15,21 @@ const jsonFile: IConfigOptions = {
   timeOut: 5000,
 };
 
+const configString = JSON.stringify(config);
+
+const jsonFile = {
+  $schema: "./node_modules/corde/schema/corde.schema.json",
+  ...config,
+};
+
 const jsFile = `
-    module.exports = ${JSON.stringify(jsonFile)}
+    /** @type {import('corde/lib/src/types').IConfigOptions} */
+    module.exports = ${configString}
 `;
 
 const tsFile = `
-    module.exports = ${JSON.stringify(jsonFile)}
+    /** @type {import('corde/lib/src/types').IConfigOptions} */
+    const config ${configString}
 `;
 
 /**

@@ -37,7 +37,6 @@
     "corde": "node ./bin/corde",
     "killProcess": "cd ./etc && bash ./build_and_kill.sh",
     "e2e": "jest --config ./e2e/jest.config.ts --runInBand",
-    "test": "jest --silent --detectOpenHandles",
     "test-with-coverage": "jest --silent --ci --detectOpenHandles --collect-coverage --collectCoverageFrom=src/**/*.ts",
     "refresh": "rm -rf ./node_modules ./package-lock.json && yarn install",
     "fix-lint": "eslint --fix ./src ./tests",
@@ -127,12 +126,6 @@
     "type": "git",
     "url": "git+https://github.com/cordejs/corde.git"
   },
-  "jest": {
-    "projects": [
-      "./jest.config.js",
-      "./e2e/jest.config.js"
-    ]
-  },
   "author": {
     "name": "Lucas Gomes",
     "email": "lucasgsm88@gmail.com",
@@ -145,6 +138,7 @@
   "homepage": "https://corde.netlify.app",
   "files": [
     "lib/**",
+    "schema/**",
     "bin/",
     "index.js",
     "index.d.ts"
