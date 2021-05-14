@@ -10,7 +10,7 @@ const jsonFile: IConfigOptions = {
   channelId: "",
   cordeTestToken: "",
   guildId: "",
-  testMatch: [""],
+  testMatches: [""],
   botTestToken: "",
   timeOut: 5000,
 };

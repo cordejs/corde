@@ -8,7 +8,7 @@ describe("testing config", () => {
       botPrefix: "!",
       botTestId: "123",
       guildId: "123",
-      testMatch: ["123"],
+      testMatches: ["123"],
       timeOut: DEFAULT_TEST_TIMEOUT,
     };
 
@@ -24,7 +24,7 @@ describe("testing config", () => {
       channelId: "111",
       cordeTestToken: "333",
       guildId: "11111",
-      testMatch: ["321", "32121"],
+      testMatches: ["321", "32121"],
       timeOut: 1222,
       botTestToken: "lacjxlakjs12312",
     };
@@ -36,7 +36,7 @@ describe("testing config", () => {
       channelId: "",
       cordeTestToken: "",
       guildId: "123",
-      testMatch: ["123"],
+      testMatches: ["123"],
       timeOut: undefined,
       botTestToken: undefined,
     });

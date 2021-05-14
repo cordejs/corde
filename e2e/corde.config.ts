@@ -18,6 +18,6 @@ export const botTestId = process.env.BOT_TEST_ID;
 export const channelId = process.env.CHANNEL_ID;
 export const cordeTestToken = process.env.CORDE_TEST_TOKEN;
 export const guildId = process.env.GUILD_ID;
-export const testMatch = [process.env.TEST_FILES_DIR];
+export const testMatches = [process.env.TEST_FILES_DIR];
 export const botTestToken = process.env.BOT_TEST_TOKEN;
 export const timeOut = process.env.TIME_OUT;

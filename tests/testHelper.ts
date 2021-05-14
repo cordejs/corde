@@ -141,7 +141,7 @@ export const testFileNames = [
 export const testNames = ["test case1", "test case2", "test case3", "test case4"];
 
 export function generateTestFile(generatorData: TestFileGeneratorInfo) {
-  const testMatch: TestFile[] = [];
+  const testMatches: TestFile[] = [];
   const testFunctions: TestFunctionType[] = [];
   const tests: Test[] = [];
 
@@ -173,7 +173,7 @@ export function generateTestFile(generatorData: TestFileGeneratorInfo) {
   }
 
   for (let i = 0; i < generatorData.amountOfTestFiles; i++) {
-    testMatch.push({
+    testMatches.push({
       path: testFileNames[i],
       isEmpty: false,
       groups: [
@@ -185,7 +185,7 @@ export function generateTestFile(generatorData: TestFileGeneratorInfo) {
     });
   }
 
-  return testMatch;
+  return testMatches;
 }
 
 export function _initTestSimpleInstance<T extends ExpectTest>(

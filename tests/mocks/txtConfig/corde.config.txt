@@ -3,6 +3,6 @@ botTestId: ""
 channelId: ""
 cordeTestToken: ""
 guildId: ""
-testMatch: [""]
+testMatches: [""]
 botTestToken: ""
 timeOut: 5000

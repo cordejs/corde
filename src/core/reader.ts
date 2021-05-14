@@ -42,7 +42,7 @@ class Reader {
   }
 
   async getTestsFromFiles(filesPattern: ITestFilePattern): Promise<TestFile[]> {
-    const testMatch: TestFile[] = [];
+    const testMatches: TestFile[] = [];
     if (!filesPattern || !filesPattern.filesPattern.length) {
       throw new FileError("No file was informed.");
     }
@@ -94,7 +94,7 @@ class Reader {
       this.addTestsGroupmentToGroupIfExist();
       this.addIsolatedTestFunctionsToGroupIfExists();
 
-      testMatch.push({
+      testMatches.push({
         path: shortPathForPlataform(file),
         groups: testCollector.groups.slice(),
         isEmpty: testCollector.groups.length === 0,
@@ -103,7 +103,7 @@ class Reader {
       testCollector.groups = [];
     }
 
-    return testMatch;
+    return testMatches;
   }
 
   private loadConfigFromConfigFilePath(): IConfigOptions {

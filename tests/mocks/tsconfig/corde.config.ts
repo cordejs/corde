@@ -4,7 +4,7 @@ module.exports = {
   channelId: "",
   cordeTestToken: "",
   guildId: "",
-  testMatch: [""],
+  testMatches: [""],
   botTestToken: "",
   timeOut: 5000,
 };

@@ -27,7 +27,7 @@ export async function validate(configs: IConfigOptions) {
   addToErrorsIfPropertyIsMissing(configs.cordeTestToken, errors, "corde token");
   addToErrorsIfPropertyIsMissing(configs.guildId, errors, "guild ID");
   addToErrorsIfPropertyIsMissing(configs.botTestToken, errors, "bot test token");
-  await validatePaths(configs.testMatch, errors);
+  await validatePaths(configs.testMatches, errors);
 
   let errorsString = "";
 
@@ -50,7 +50,7 @@ async function validatePaths(pathsDir: string[] | undefined, errors: string[]) {
   pathsDir = pathsDir?.filter((p) => p);
 
   if (!pathsDir || pathsDir.length === 0) {
-    errors.push("No test files informed." + chalk.cyan("(testMatch)"));
+    errors.push("No test files informed." + chalk.cyan("(testMatches)"));
     return;
   }
 

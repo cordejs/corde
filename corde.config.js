@@ -14,7 +14,7 @@ module.exports = {
   channelId: process.env.CHANNEL_ID,
   cordeTestToken: process.env.CORDE_TEST_TOKEN,
   guildId: process.env.GUILD_ID,
-  testMatch: [process.env.TEST_FILES_DIR],
+  testMatches: [process.env.TEST_FILES_DIR],
   botTestToken: process.env.BOT_TEST_TOKEN,
   timeOut: process.env.TIME_OUT,
 };

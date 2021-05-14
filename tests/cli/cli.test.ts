@@ -48,37 +48,37 @@ describe("testing cli", () => {
   it("should call go command with -f option (single file)", () => {
     program.exitOverride();
     const spy = jest.spyOn(goFunc, "exec").mockImplementation(null);
-    const testMatch = "./tests";
-    program.parse(["node", "test", "-f", testMatch]);
+    const testMatches = "./tests";
+    program.parse(["node", "test", "-f", testMatches]);
     expect(spy).toBeCalled();
-    expect(runtime.testMatch).toEqual(testMatch.split(" "));
+    expect(runtime.testMatches).toEqual(testMatches.split(" "));
   });
 
   it("should call go command with -f option (multiple files)", () => {
     program.exitOverride();
     const spy = jest.spyOn(goFunc, "exec").mockImplementation(null);
-    const testMatch = "./tests ./tests2";
-    program.parse(["node", "test", "-f", testMatch]);
+    const testMatches = "./tests ./tests2";
+    program.parse(["node", "test", "-f", testMatches]);
     expect(spy).toBeCalled();
-    expect(runtime.testMatch).toEqual(testMatch.split(" "));
+    expect(runtime.testMatches).toEqual(testMatches.split(" "));
   });
 
   it("should call go command with --files option (single file)", () => {
     program.exitOverride();
     const spy = jest.spyOn(goFunc, "exec").mockImplementation(null);
-    const testMatch = "./tests";
-    program.parse(["node", "test", "--files", testMatch]);
+    const testMatches = "./tests";
+    program.parse(["node", "test", "--files", testMatches]);
     expect(spy).toBeCalled();
-    expect(runtime.testMatch).toEqual(testMatch.split(" "));
+    expect(runtime.testMatches).toEqual(testMatches.split(" "));
   });
 
   it("should call go command with --files option (multiple files)", () => {
     program.exitOverride();
     const spy = jest.spyOn(goFunc, "exec").mockImplementation(null);
-    const testMatch = "./tests ./tests2";
-    program.parse(["node", "test", "--files", testMatch]);
+    const testMatches = "./tests ./tests2";
+    program.parse(["node", "test", "--files", testMatches]);
     expect(spy).toBeCalled();
-    expect(runtime.testMatch).toEqual(testMatch.split(" "));
+    expect(runtime.testMatches).toEqual(testMatches.split(" "));
   });
 
   it("should call go command with --config option", () => {

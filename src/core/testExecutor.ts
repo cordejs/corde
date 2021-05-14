@@ -34,7 +34,7 @@ export class TestExecutor {
     this._logUpdate = logUpdate;
   }
 
-  async runTestsAndPrint(testMatch: TestFile[]): Promise<RunnerReport> {
+  async runTestsAndPrint(testMatches: TestFile[]): Promise<RunnerReport> {
     const testsTimer = new Timer();
     testsTimer.start();
 
@@ -49,7 +49,7 @@ export class TestExecutor {
       totalEmptyTests: 0,
     };
 
-    for (const testFile of testMatch) {
+    for (const testFile of testMatches) {
       if (testFile.isEmpty) {
         this._logUpdate.append(`${TAG_PENDING("EMPTY")}  ${testFile.path}`);
         this._logUpdate.persist();

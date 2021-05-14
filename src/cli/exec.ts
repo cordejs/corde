@@ -39,19 +39,19 @@ async function runTests() {
   spinner.stop();
 
   try {
-    const testMatch = await reader.getTestsFromFiles({
-      filesPattern: runtime.testMatch,
+    const testMatches = await reader.getTestsFromFiles({
+      filesPattern: runtime.testMatches,
       ignorePattern: runtime.modulePathIgnorePatterns,
     });
 
-    if (testMatch.length === 0) {
+    if (testMatches.length === 0) {
       console.log(`${chalk.bgYellow(chalk.black(" INFO "))} No test were found.`);
       await finishProcess(0);
     }
 
     const log = new LogUpdate();
     const testRunner = new TestExecutor(log);
-    const executionReport = await testRunner.runTestsAndPrint(testMatch);
+    const executionReport = await testRunner.runTestsAndPrint(testMatches);
 
     if (runtime.environment.isE2eTest) {
       console.log(log.stdout);

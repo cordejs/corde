@@ -11,7 +11,7 @@ beforeEach(() => {
     channelId: "12316351316252291",
     cordeTestToken: "5e8862cd73694287ff341e75c95e3c6a",
     guildId: "21685198465498",
-    testMatch: ["./tests/dirTestFiles"],
+    testMatches: ["./tests/dirTestFiles"],
     botTestToken: "1f77a63e0f60f3bf420edf67bfa3915b",
     timeOut: 5000,
   };
@@ -43,23 +43,23 @@ describe("Testing validate CLI function", () => {
     expect(async () => await validate(configs)).rejects.toThrow(PropertyError);
   });
 
-  it("Should return false due to no testMatch", () => {
-    configs.testMatch = [];
+  it("Should return false due to no testMatches", () => {
+    configs.testMatches = [];
     expect(async () => await validate(configs)).rejects.toThrow(PropertyError);
   });
 
   it("Should return false due invlaid dir", () => {
-    configs.testMatch = ["./tests/dirTestF"];
+    configs.testMatches = ["./tests/dirTestF"];
     expect(async () => await validate(configs)).rejects.toThrow(PropertyError);
   });
 
   it("Should not throw error due to existance of file", () => {
-    configs.testMatch = ["./tests/dirTestFiles/testFile.test.ts"];
+    configs.testMatches = ["./tests/dirTestFiles/testFile.test.ts"];
     expect(async () => await validate(configs)).not.toThrow(PropertyError);
   });
 
   it("Should throw error due to inexistance of file", () => {
-    configs.testMatch = ["./tests/dirTestFiles/testF.test.ts"];
+    configs.testMatches = ["./tests/dirTestFiles/testF.test.ts"];
     expect(async () => await validate(configs)).rejects.toThrow(PropertyError);
   });
 

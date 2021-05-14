@@ -248,7 +248,7 @@ export interface IConfigOptions {
   /**
    * Path for case tests. Use this from the base directory of the application
    */
-  testMatch: string[];
+  testMatches: string[];
   modulePathIgnorePatterns?: string[];
 }
 

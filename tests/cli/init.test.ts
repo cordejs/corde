@@ -61,7 +61,7 @@ describe("Testing content of config file in init", () => {
     channelId: "",
     cordeTestToken: "",
     guildId: "",
-    testMatch: [""],
+    testMatches: [""],
     botTestToken: "",
     timeOut: 5000,
   };

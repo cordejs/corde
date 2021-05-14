@@ -34,10 +34,10 @@ program
       runtime.configFilePath = options.config;
     }
     if (args) {
-      runtime.setConfigs({ testMatch: program.args }, true);
+      runtime.setConfigs({ testMatches: program.args }, true);
     }
     if (options.files) {
-      runtime.setConfigs({ testMatch: options.files.split(" ") }, true);
+      runtime.setConfigs({ testMatches: options.files.split(" ") }, true);
     }
     await exec();
   });
