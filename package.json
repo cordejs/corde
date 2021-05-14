@@ -29,6 +29,7 @@
     "build": "bash tasks.sh build",
     "build:prod": "gulp && yarn prettier-lib",
     "gulp": "gulp",
+    "test": "jest --silent --detectOpenHandles",
     "build:publish": "bash ./scripts/publish.sh",
     "generateStructureDocs": "typedoc --plugin typedoc-plugin-markdown src/structures",
     "prettier-lib": "prettier --write ./lib",
