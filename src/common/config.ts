@@ -4,14 +4,14 @@ import { IConfigOptions } from "../types";
 /**
  * Default interface of JSON config
  *
- * @description `botTestToken` is not required.
+ * @description `botToken` is not required.
  * only inform if is desired to start test bot with corde
  *
  */
 export class Config implements IConfigOptions {
-  cordeTestToken!: string;
+  cordeBotToken!: string;
   botTestId!: string;
-  botTestToken!: string;
+  botToken!: string;
   channelId!: string;
   guildId!: string;
   timeOut?: number;
@@ -35,8 +35,8 @@ export class Config implements IConfigOptions {
    * @param config new set of configs.
    */
   setConfigs(config: Partial<IConfigOptions>, forceUpdate?: boolean) {
-    if (config.cordeTestToken && (!this.cordeTestToken || forceUpdate)) {
-      this.cordeTestToken = config.cordeTestToken;
+    if (config.cordeBotToken && (!this.cordeBotToken || forceUpdate)) {
+      this.cordeBotToken = config.cordeBotToken;
     }
 
     if (config.botPrefix && (!this.botPrefix || forceUpdate)) {
@@ -47,8 +47,8 @@ export class Config implements IConfigOptions {
       this.botTestId = config.botTestId;
     }
 
-    if (config.botTestToken && (!this.botTestToken || forceUpdate)) {
-      this.botTestToken = config.botTestToken;
+    if (config.botToken && (!this.botToken || forceUpdate)) {
+      this.botToken = config.botToken;
     }
 
     if (config.channelId && (!this.channelId || forceUpdate)) {

@@ -22,11 +22,11 @@ describe("testing config", () => {
       botPrefix: "+",
       botTestId: "321",
       channelId: "111",
-      cordeTestToken: "333",
+      cordeBotToken: "333",
       guildId: "11111",
       testMatches: ["321", "32121"],
       timeOut: 1222,
-      botTestToken: "lacjxlakjs12312",
+      botToken: "lacjxlakjs12312",
     };
 
     const config = new Config();
@@ -34,11 +34,11 @@ describe("testing config", () => {
       botPrefix: "!",
       botTestId: "123",
       channelId: "",
-      cordeTestToken: "",
+      cordeBotToken: "",
       guildId: "123",
       testMatches: ["123"],
       timeOut: undefined,
-      botTestToken: undefined,
+      botToken: undefined,
     });
     config.setConfigs(updatadedConfig, true);
     expect(config).toEqual(updatadedConfig);

@@ -34,10 +34,10 @@ describe("testing default command", () => {
       botPrefix: "!",
       botTestId: "123123123",
       channelId: "123123123",
-      cordeTestToken: "12312112312",
+      cordeBotToken: "12312112312",
       guildId: "12312312",
       testMatches: ["tests/cli/testFolder"],
-      botTestToken: "123123",
+      botToken: "123123",
       timeOut: 1000,
     });
 

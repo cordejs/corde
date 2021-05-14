@@ -38,16 +38,16 @@ class Runtime {
     return this._configs;
   }
 
-  get cordeTestToken() {
-    return this._configs.cordeTestToken;
+  get cordeBotToken() {
+    return this._configs.cordeBotToken;
   }
 
   get botTestId() {
     return this._configs.botTestId;
   }
 
-  get botTestToken() {
-    return this._configs.botTestToken;
+  get botToken() {
+    return this._configs.botToken;
   }
 
   get channelId() {

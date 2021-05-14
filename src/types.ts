@@ -220,7 +220,7 @@ export interface IConfigOptions {
   /**
    * Fake bot used to test the real one
    */
-  cordeTestToken: string;
+  cordeBotToken: string;
   /**
    * User's bot that will be tested
    */
@@ -228,7 +228,7 @@ export interface IConfigOptions {
   /**
    * User's bot token that will run.
    */
-  botTestToken: string;
+  botToken: string;
   /**
    * Channel where tests will run
    */
@@ -249,6 +249,9 @@ export interface IConfigOptions {
    * Path for case tests. Use this from the base directory of the application
    */
   testMatches: string[];
+  /**
+   * Definition of all paterns to ignore in tests search
+   */
   modulePathIgnorePatterns?: string[];
 }
 

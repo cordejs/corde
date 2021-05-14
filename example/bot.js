@@ -13,7 +13,7 @@ async function login() {
       resolve();
     });
   });
-  await bot.login(config.botTestToken);
+  await bot.login(config.botToken);
   await readyPromise;
 }
 

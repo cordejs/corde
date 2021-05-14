@@ -9,10 +9,10 @@ beforeEach(() => {
     botPrefix: "!",
     botTestId: "12122216892126544",
     channelId: "12316351316252291",
-    cordeTestToken: "5e8862cd73694287ff341e75c95e3c6a",
+    cordeBotToken: "5e8862cd73694287ff341e75c95e3c6a",
     guildId: "21685198465498",
     testMatches: ["./tests/dirTestFiles"],
-    botTestToken: "1f77a63e0f60f3bf420edf67bfa3915b",
+    botToken: "1f77a63e0f60f3bf420edf67bfa3915b",
     timeOut: 5000,
   };
 });
@@ -33,8 +33,8 @@ describe("Testing validate CLI function", () => {
     expect(async () => await validate(configs)).rejects.toThrow(PropertyError);
   });
 
-  it("Should return false due to no cordeTestToken", () => {
-    configs.cordeTestToken = "";
+  it("Should return false due to no cordeBotToken", () => {
+    configs.cordeBotToken = "";
     expect(async () => await validate(configs)).rejects.toThrow(PropertyError);
   });
 

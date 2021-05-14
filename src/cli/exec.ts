@@ -34,7 +34,7 @@ async function loadConfigs() {
 async function runTests() {
   startLoading("login to corde bot");
   // No need to await this function
-  runtime.loginBot(runtime.cordeTestToken);
+  runtime.loginBot(runtime.cordeBotToken);
   await runtime.events.onceReady();
   spinner.stop();
 

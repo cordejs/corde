@@ -17,19 +17,19 @@ if (!process.env.CI && result.error) {
 const botPrefix = process.env.BOT_PREFIX;
 const botTestId = process.env.BOT_TEST_ID;
 const channelId = process.env.CHANNEL_ID;
-const cordeTestToken = process.env.CORDE_TEST_TOKEN;
+const cordeBotToken = process.env.CORDE_TEST_TOKEN;
 const guildId = process.env.GUILD_ID;
 const testMatches = [process.env.TEST_FILES_DIR];
-const botTestToken = process.env.BOT_TEST_TOKEN;
+const botToken = process.env.BOT_TEST_TOKEN;
 const timeOut = process.env.TIME_OUT;
 
 module.exports = {
   botPrefix,
   botTestId,
   channelId,
-  cordeTestToken,
+  cordeBotToken,
   guildId,
-  botTestToken,
+  botToken,
   testMatches,
   timeOut,
 };
