@@ -1,11 +1,10 @@
 import chalk from "chalk";
 import ora, { Color, Ora } from "ora";
-import { runtime } from "../common/runtime";
 import { testCollector } from "../common/testCollector";
 import { reader } from "../core/reader";
 import { summary } from "../core/summary";
 import { TestExecutor } from "../core/testExecutor";
-import { logger } from "../environment";
+import { logger, runtime } from "../environment";
 import { LogUpdate } from "../utils/logUpdate";
 import { validate } from "./validate";
 
@@ -28,6 +27,7 @@ export async function exec() {
 
 async function loadConfigs() {
   const configs = reader.loadConfig();
+  console.log(configs);
   runtime.setConfigs(configs);
   await validate(runtime.configs);
 }

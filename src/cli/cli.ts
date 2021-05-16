@@ -5,6 +5,7 @@ import { validate } from "./validate";
 import pack from "../package";
 import { reader } from "../core/reader";
 import { initCordeEnv, logger, runtime } from "../environment";
+import { ICliConfigOptions, ConfigFileType } from "../types";
 
 initCordeEnv();
 
@@ -31,16 +32,16 @@ program
   .option("--timeout <type>", "Set the timeout of tests")
   .option("--guildId <type>", "Set the id of the guild where tests iterations will be done")
   .option("--channelId <type>", "Set the id of the channel where tests iterations will be done")
-  .option("--botTestToken <type>", "Set the token of the testing bot")
+  .option("--botToken <type>", "Set the token of the testing bot")
   .option("--botTestId <type>", "Set the id of the testing bot")
-  .option("--cordeTestToken <type>", "Set the id of bot used by corde")
+  .option("--cordeBotToken <type>", "Set the id of bot used by corde")
   .option(
     "-f, --files <path>",
     "Set the path for all tests. Use this whether you wan to specify a single path." +
       " for Array, use only 'corde <path1> <path2>'",
   )
   .action(async (args: any) => {
-    const options = program.opts() as CliConfigOptions;
+    const options = program.opts() as ICliConfigOptions;
     if (options.config) {
       runtime.configFilePath = options.config;
     }
@@ -64,9 +65,9 @@ program
         silent: options.silent,
         botPrefix: options.botPrefix,
         botTestId: options.botTestId,
-        botTestToken: options.botTestToken,
+        botToken: options.botToken,
         channelId: options.channelId,
-        cordeTestToken: options.cordeTestToken,
+        cordeBotToken: options.cordeBotToken,
         guildId: options.guildId,
         timeout: formatedTimeout,
       },

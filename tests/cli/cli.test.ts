@@ -8,6 +8,10 @@ import { reader } from "../../src/core/reader";
 import { runtime } from "../../src/environment";
 
 describe("testing cli", () => {
+  beforeEach(() => {
+    jest.spyOn(goFunc, "exec").mockImplementation(() => null);
+  });
+
   it("should get version", () => {
     program.exitOverride();
     expect(() => {
@@ -36,141 +40,141 @@ describe("testing cli", () => {
     expect(spy).toBeCalled();
   });
 
-  it("should call go command with -c option", () => {
+  it("should call go command with -c option", async () => {
     program.exitOverride();
     const spy = jest.spyOn(goFunc, "exec").mockImplementation(null);
     const testPath = "potatoe";
-    program.parse(["node", "test", "-c", testPath]);
+    await program.parseAsync(["node", "test", "-c", testPath]);
     expect(spy).toBeCalled();
     expect(runtime.configFilePath).toBe(testPath);
   });
 
-  it("should call go command with -f option (single file)", () => {
+  it("should call go command with -f option (single file)", async () => {
     program.exitOverride();
     const spy = jest.spyOn(goFunc, "exec").mockImplementation(null);
     const testMatches = "./tests";
-    program.parse(["node", "test", "-f", testMatches]);
+    await program.parseAsync(["node", "test", "-f", testMatches]);
     expect(spy).toBeCalled();
     expect(runtime.testMatches).toEqual(testMatches.split(" "));
   });
 
-  it("should call go command with -f option (multiple files)", () => {
+  it("should call go command with -f option (multiple files)", async () => {
     program.exitOverride();
     const spy = jest.spyOn(goFunc, "exec").mockImplementation(null);
     const testMatches = "./tests ./tests2";
-    program.parse(["node", "test", "-f", testMatches]);
+    await program.parseAsync(["node", "test", "-f", testMatches]);
     expect(spy).toBeCalled();
     expect(runtime.testMatches).toEqual(testMatches.split(" "));
   });
 
-  it("should call go command with --files option (single file)", () => {
+  it("should call go command with --files option (single file)", async () => {
     program.exitOverride();
     const spy = jest.spyOn(goFunc, "exec").mockImplementation(null);
     const testMatches = "./tests";
-    program.parse(["node", "test", "--files", testMatches]);
+    await program.parseAsync(["node", "test", "--files", testMatches]);
     expect(spy).toBeCalled();
     expect(runtime.testMatches).toEqual(testMatches.split(" "));
   });
 
-  it("should call go command with --files option (multiple files)", () => {
+  it("should call go command with --files option (multiple files)", async () => {
     program.exitOverride();
     const spy = jest.spyOn(goFunc, "exec").mockImplementation(null);
     const testMatches = "./tests ./tests2";
-    program.parse(["node", "test", "--files", testMatches]);
+    await program.parseAsync(["node", "test", "--files", testMatches]);
     expect(spy).toBeCalled();
     expect(runtime.testMatches).toEqual(testMatches.split(" "));
   });
 
-  it("should call go command with --config option", () => {
+  it("should call go command with --config option", async () => {
     program.exitOverride();
     const spy = jest.spyOn(goFunc, "exec").mockImplementation(null);
     const testPath = "potatoe";
-    program.parse(["node", "test", "--config", testPath]);
+    await program.parseAsync(["node", "test", "--config", testPath]);
     expect(spy).toBeCalled();
     expect(runtime.configFilePath).toBe(testPath);
   });
 
-  it("should call validate command", () => {
+  it("should call validate command", async () => {
     program.exitOverride();
     jest.spyOn(reader, "loadConfig").mockImplementation(null);
     const spyValidate = jest.spyOn(validateFunc, "validate").mockImplementation(null);
-    program.parse(["node", "test", "validate"]);
+    await program.parseAsync(["node", "test", "validate"]);
     expect(spyValidate).toBeCalled();
   });
 
-  it("should call validate command with 'v' alias", () => {
+  it("should call validate command with 'v' alias", async () => {
     program.exitOverride();
     jest.spyOn(reader, "loadConfig").mockImplementation(() => null);
     const spyValidate = jest.spyOn(validateFunc, "validate").mockImplementation(() => null);
-    program.parse(["node", "test", "v"]);
+    await program.parseAsync(["node", "test", "v"]);
     expect(spyValidate).toBeCalled();
   });
 
-  it("should call cli silently", () => {
+  it("should call cli silently", async () => {
     program.exitOverride();
     jest.spyOn(reader, "loadConfig").mockImplementation(() => null);
     expect(runtime.silent).not.toBeTruthy();
-    program.parse(["node", "test", "--silent"]);
+    await program.parseAsync(["node", "test", "--silent"]);
     expect(runtime.silent).toBeTruthy();
   });
 
-  it("should set botPrefix", () => {
+  it("should set botPrefix", async () => {
     program.exitOverride();
     jest.spyOn(reader, "loadConfig").mockImplementation(() => null);
     expect(runtime.botPrefix).toBeFalsy();
-    program.parse(["node", "test", "--botPrefix", "!"]);
+    await program.parseAsync(["node", "test", "--botPrefix", "!"]);
     expect(runtime.botPrefix).toEqual("!");
   });
 
-  it("should set timeout", () => {
+  it("should set timeout", async () => {
     program.exitOverride();
     jest.spyOn(reader, "loadConfig").mockImplementation(() => null);
-    program.parse(["node", "test", "--timeout", "1000"]);
+    await program.parseAsync(["node", "test", "--timeout", "1000"]);
     expect(runtime.timeout).toEqual(1000);
   });
 
-  it("should set guildId", () => {
+  it("should set guildId", async () => {
     program.exitOverride();
     const param = "12312412421";
     jest.spyOn(reader, "loadConfig").mockImplementation(() => null);
     expect(runtime.guildId).toBeFalsy();
-    program.parse(["node", "test", "--guildId", param]);
+    await program.parseAsync(["node", "test", "--guildId", param]);
     expect(runtime.guildId).toEqual(param);
   });
 
-  it("should set channelId", () => {
+  it("should set channelId", async () => {
     program.exitOverride();
     const param = "12312412421";
     jest.spyOn(reader, "loadConfig").mockImplementation(() => null);
     expect(runtime.channelId).toBeFalsy();
-    program.parse(["node", "test", "--channelId", param]);
+    await program.parseAsync(["node", "test", "--channelId", param]);
     expect(runtime.channelId).toEqual(param);
   });
 
-  it("should set botTestToken", () => {
+  it("should set botToken", async () => {
     program.exitOverride();
     const param = "asdas1kl2j31lkjlas";
     jest.spyOn(reader, "loadConfig").mockImplementation(() => null);
-    expect(runtime.botTestToken).toBeFalsy();
-    program.parse(["node", "test", "--botTestToken", param]);
-    expect(runtime.botTestToken).toEqual(param);
+    expect(runtime.botToken).toBeFalsy();
+    await program.parseAsync(["node", "test", "--botToken", param]);
+    expect(runtime.botToken).toEqual(param);
   });
 
-  it("should set botTestId", () => {
+  it("should set botTestId", async () => {
     program.exitOverride();
     const param = "12312412312412312";
     jest.spyOn(reader, "loadConfig").mockImplementation(() => null);
     expect(runtime.botTestId).toBeFalsy();
-    program.parse(["node", "test", "--botTestId", param]);
+    await program.parseAsync(["node", "test", "--botTestId", param]);
     expect(runtime.botTestId).toEqual(param);
   });
 
-  it("should set cordeTestToken", () => {
+  it("should set cordeBotToken", async () => {
     program.exitOverride();
     const param = "alsdj1çlk1j2d1ubça2";
     jest.spyOn(reader, "loadConfig").mockImplementation(() => null);
-    expect(runtime.cordeTestToken).toBeFalsy();
-    program.parse(["node", "test", "--cordeTestToken", param]);
-    expect(runtime.cordeTestToken).toEqual(param);
+    expect(runtime.cordeBotToken).toBeFalsy();
+    await program.parseAsync(["node", "test", "--cordeBotToken", param]);
+    expect(runtime.cordeBotToken).toEqual(param);
   });
 });

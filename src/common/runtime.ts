@@ -47,7 +47,6 @@ export class Runtime {
     return this._configs.silent;
   }
 
-
   get botToken() {
     return this._configs.botToken;
   }
@@ -88,25 +87,16 @@ export class Runtime {
     );
   }
 
-  private static _instance: Runtime;
-
   configFilePath!: string;
   files!: string[];
 
   private readonly _configs: Config;
   private _bot!: ICordeBot;
   private _mocks: Array<MockInstance<any, any, any>>;
-  
-  static getInstance() {
-    if (!Runtime._instance) {
-      Runtime._instance = new Runtime();
-    }
-    return Runtime._instance;
-  }
 
   setConfigs(_configs: Partial<IConfigOptions>, forceUpdate?: boolean) {
     if (!_configs) {
-      throw new ConfigError("Invalid _configs");
+      throw new ConfigError("Invalid configs");
     }
 
     this._configs.setConfigs(_configs, forceUpdate);

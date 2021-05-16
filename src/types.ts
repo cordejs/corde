@@ -213,7 +213,7 @@ export interface IBaseRole {
   isMentionable?: boolean;
 }
 
-export interface CliConfigOptions extends IConfigOptions {
+export interface ICliConfigOptions extends IConfigOptions {
   config: string;
   files: string;
 }
@@ -1235,10 +1235,15 @@ export interface IExpect extends AllMatches<any> {
   ): AllExpectMatches;
 }
 
+export type ReturnValueOrOwnType<T> = T extends (...args: any[]) => infer U ? U : T;
+export type ResolvedValue<T> = T extends (...args: any[]) => PromiseLike<infer U> ? U : T;
+export type RejectedValue<T> = T extends (...args: any[]) => PromiseLike<any> ? any : T;
+export type FunctionOrReturnObjType<T> = T extends (...args: any[]) => any ? T : () => T;
+
 export interface MockInstance<
   TEntity extends Record<string, unknown>,
   TKeyEntity extends keyof TEntity,
-  TProp extends any = TEntity[TKeyEntity]
+  TProp extends any = TEntity[TKeyEntity],
 > {
   /**
    * Inform the total amount of calls of the mock.

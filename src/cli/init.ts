@@ -3,17 +3,18 @@ import fs from "fs";
 import path from "path";
 import { logger } from "../environment";
 import { FileError } from "../errors";
-import { IConfigOptions, configFileType } from "../types";
+import { IConfigOptions, ConfigFileType } from "../types";
 
 const config: IConfigOptions = {
   botPrefix: "",
+  silent: false,
   botTestId: "",
   channelId: "",
   cordeBotToken: "",
   guildId: "",
   testMatches: [""],
   botToken: "",
-  timeOut: 5000,
+  timeout: 5000,
 };
 
 const configString = JSON.stringify(config);
@@ -78,7 +79,7 @@ export function init(fileType: ConfigFileType = "json") {
   }
 }
 
-function formatFile(file: string, type: IConfigFileType) {
+function formatFile(file: string, type: ConfigFileType) {
   let formater: "object" | "json" = "json";
 
   if (type === "js" || type === "ts") {

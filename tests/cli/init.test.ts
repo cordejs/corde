@@ -49,6 +49,7 @@ describe("Testing creation of config file in init", () => {
     const storeLog = (inputs: string) => (outputData += inputs);
     logger.log = jest.fn(storeLog);
     const invalidExtension = "asdf";
+    // @ts-ignore
     init(invalidExtension);
     expect(outputData).not.toBe("");
   });
