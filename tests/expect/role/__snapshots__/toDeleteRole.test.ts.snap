@@ -42,7 +42,7 @@ Object {
 }
 `;
 
-exports[`testing toDeleteRole function isNot false should return a failed test due to failure in message send 1`] = `
+exports[`testing toDeleteRole function isNot false should return a failed test due to failure in message sending 1`] = `
 Object {
   "message": "    
     can not send message to channel x
