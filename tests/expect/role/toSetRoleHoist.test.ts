@@ -2,7 +2,7 @@ import { Client } from "discord.js";
 import { ToSetRoleHoist } from "../../../src/expect/matches";
 import MockDiscord from "../../mocks/mockDiscord";
 import { createReport, initCordeClientWithChannel, testUtils } from "../../testHelper";
-import { CordeBotLike, TestReport } from "../../../src/types";
+import { ICordeBot, ITestReport } from "../../../src/types";
 import { buildReportMessage } from "../../../src/utils";
 import { MockEvents } from "../../mocks/mockEvents";
 import { runtime } from "../../../src/environment";
@@ -17,7 +17,7 @@ function initClient() {
   return corde;
 }
 
-function initTestClass(cordeBot: CordeBotLike, isNot: boolean) {
+function initTestClass(cordeBot: ICordeBot, isNot: boolean) {
   return testUtils.initTestClass(ToSetRoleHoist, {
     command: "toDelete",
     isCascade: false,
@@ -175,6 +175,26 @@ describe("testing toSetRoleHoist operation", () => {
     const message = buildReportMessage(`expected: hoist to be false\n`, `received: true`);
 
     const expectReport = createReport(toSetHoist, false, message);
+
+    expect(report).toEqual(expectReport);
+    expect(report).toMatchSnapshot();
+  });
+
+  it("should return a failed test due to failure in message sending", async () => {
+    const corde = initCordeClientWithChannel(mockDiscord, mockDiscord.client);
+
+    corde.findRole = jest.fn().mockReturnValue(mockDiscord.role);
+    corde.fetchRole = jest.fn().mockReturnValue(null);
+
+    const erroMessage = "can not send message to channel x";
+    corde.sendTextMessage = jest
+      .fn()
+      .mockImplementation(() => Promise.reject(new Error(erroMessage)));
+
+    const toSetHoist = initTestClass(corde, false);
+    const report = await toSetHoist.action(true, { id: "123" });
+
+    const expectReport = createReport(toSetHoist, false, buildReportMessage(erroMessage));
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();

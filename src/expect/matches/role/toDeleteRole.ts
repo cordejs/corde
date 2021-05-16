@@ -1,23 +1,23 @@
 import { Role } from "discord.js";
-import { RoleIdentifier, TestReport } from "../../../types";
+import { IRoleIdentifier, ITestReport } from "../../../types";
 import { roleUtils } from "../../roleUtils";
-import { ExpectTestBaseParams } from "../../../types";
+import { IExpectTestBaseParams } from "../../../types";
 import { ExpectTest } from "../expectTest";
 
 /**
  * @internal
  */
 export class ToDeleteRole extends ExpectTest {
-  constructor(params: ExpectTestBaseParams) {
+  constructor(params: IExpectTestBaseParams) {
     super({ ...params, testName: "toDeleteRole" });
   }
 
-  async action(roleIdentifier: string | RoleIdentifier): Promise<TestReport> {
+  async action(roleIdentifier: string | IRoleIdentifier): Promise<ITestReport> {
     const identifier = roleUtils.getRoleData(roleIdentifier);
     const roleOrFailObject = await this.getRoleOrInvalidMessage(identifier);
 
-    if ((roleOrFailObject as TestReport).message) {
-      return roleOrFailObject as TestReport;
+    if ((roleOrFailObject as ITestReport).message) {
+      return roleOrFailObject as ITestReport;
     }
 
     const role = roleOrFailObject as Role;
@@ -54,7 +54,7 @@ export class ToDeleteRole extends ExpectTest {
     return this.createReport(`expected: role ${role.id} to ${this.isNot ? "not " : ""}be deleted`);
   }
 
-  private async getRoleOrInvalidMessage(roleIdentifier: RoleIdentifier) {
+  private async getRoleOrInvalidMessage(roleIdentifier: IRoleIdentifier) {
     const error = roleUtils.getErrorForUndefinedRoleData(roleIdentifier);
 
     if (error) {
@@ -68,7 +68,7 @@ export class ToDeleteRole extends ExpectTest {
     }
 
     if (role.deleted) {
-      return this.createReport(
+      return this.createFailedTest(
         `expected: role ${role.id} not deleted\n`,
         `received: role was deleted before call the command '${this.command}'`,
       );

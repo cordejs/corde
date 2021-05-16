@@ -1,3 +1,39 @@
+# 4.0.0
+
+## 💣 Breaking changes
+
+- Define test files and ignore files using regex patterns. (#695)(#677)[https://github.com/cordejs/corde/pull/677]
+
+## 🐛 Bug Fixes
+
+- Corde validation error is being silent (#676)(#677)[https://github.com/cordejs/corde/pull/677]
+
+## 🚀 Features
+
+- Disable timeout when running corde in debug (#675)(#677)[https://github.com/cordejs/corde/pull/677]
+
+# 3.1.5
+
+## 💡 Miscellaneous
+
+- bump devDependency dotenv from 8.5.1 to 9.0.2
+- bump devDependency @types/node from 15.0.2 to 15.0.3
+- bump devDependency @babel/core from 7.14.0 to 7.14.2
+- bump devDependency prettier from 2.2.1 to 2.3.0
+- bump devDependency dependency-cruiser from 9.26.1 to 10.0.1
+- bump devDependency ts-jest from 26.5.5 to 26.5.6
+- bump devDependency @babel/preset-env from 7.14.1 to 7.14.2
+
+# 3.1.4
+
+## 💡 Miscellaneous
+
+- Bump dependencies version
+
+# 3.1.3
+
+- Change repo location in package.json
+
 # 3.1.2
 
 ## 🐛 Bug Fixes

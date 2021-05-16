@@ -1,6 +1,7 @@
 import { Client } from "discord.js";
-import { ToHaveResult } from "../../src/expect/matches/toHaveResult";
-import { CordeBotLike, TestFunctionType, TestReport } from "../../src/types";
+import { runtime } from "../../src/common/runtime";
+import { IToHaveResult } from "../../src/expect/matches/toHaveResult";
+import { ICordeBot, TestFunctionType, ITestReport } from "../../src/types";
 import MockDiscord from "../mocks/mockDiscord";
 import { MockEvents } from "../mocks/mockEvents";
 import {
@@ -10,7 +11,6 @@ import {
   testUtils,
 } from "../testHelper";
 import { expect as _expect } from "../../src/expect";
-import { runtime } from "../../src/environment";
 
 let mockDiscord = new MockDiscord();
 let mockEvents: MockEvents;
@@ -23,23 +23,23 @@ function initClient() {
   return corde;
 }
 
-function matchMessageSnapshot(report: TestReport) {
+function matchMessageSnapshot(report: ITestReport) {
   if (report.message) {
     expect(removeANSIColorStyle(report.message)).toMatchSnapshot();
   }
 }
 
-function initTestClass(cordeBot: CordeBotLike, isNot: boolean, command?: string) {
-  return testUtils.initTestClass(ToHaveResult, {
+function initTestClass(cordeBot: ICordeBot, isNot: boolean, command?: string) {
+  return testUtils.initTestClass(IToHaveResult, {
     command: command ?? "toDelete",
     isCascade: false,
     cordeBot: cordeBot,
     isNot: isNot,
-    timeout: runtime.timeout,
+    timeout: runtime.timeOut,
   });
 }
 
-function injectCordeBotToTests(cordeBot: CordeBotLike, ...tests: TestFunctionType[]) {
+function injectCordeBotToTests(cordeBot: ICordeBot, ...tests: TestFunctionType[]) {
   return tests.map((test) => () => test(cordeBot));
 }
 
@@ -79,7 +79,7 @@ describe("testing todoInCascade function", () => {
   });
 
   it("should return failed due to timeout and isNot false", async () => {
-    runtime.setConfigs({ timeout: 100 });
+    runtime.setConfigs({ timeOut: 100 });
     const corde = initClient();
     const todoInCascade = initTestClass(corde, false);
 

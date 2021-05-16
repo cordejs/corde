@@ -3,9 +3,9 @@ import fs from "fs";
 import MockDiscord from "./mocks/mockDiscord";
 import { Client } from "discord.js";
 import { CordeBot } from "../src/core/cordeBot";
-import { CordeBotLike, Test, TestFile, TestFunctionType, TestReport } from "../src/types";
+import { ICordeBot, ITest, ITestFile, TestFunctionType, ITestReport } from "../src/types";
 import { ExpectTest } from "../src/expect/matches/expectTest";
-import { ExpectTestBaseParams } from "../src/types";
+import { IExpectTestBaseParams } from "../src/types";
 import { buildReportMessage } from "../src/utils";
 import { runtime } from "../src/environment";
 
@@ -101,7 +101,7 @@ export function initCordeClient(
   mockDiscord: MockDiscord,
   clientInstance: Client,
   timeout = 500,
-): CordeBotLike {
+): ICordeBot {
   return new CordeBot(
     DEFAULT_PREFIX,
     mockDiscord.guild.id,
@@ -127,7 +127,7 @@ export function removeANSIColorStyle(value: string) {
 export interface TestFileGeneratorInfo {
   amountOfTests: number;
   amountOfTestFunctions?: number;
-  testFunctionsReport?: TestReport[];
+  testFunctionsReport?: ITestReport[];
   amountOfTestFiles: number;
 }
 
@@ -141,9 +141,9 @@ export const testFileNames = [
 export const testNames = ["test case1", "test case2", "test case3", "test case4"];
 
 export function generateTestFile(generatorData: TestFileGeneratorInfo) {
-  const testFiles: TestFile[] = [];
+  const testMatches: ITestFile[] = [];
   const testFunctions: TestFunctionType[] = [];
-  const tests: Test[] = [];
+  const tests: ITest[] = [];
 
   if (generatorData.testFunctionsReport) {
     for (const report of generatorData.testFunctionsReport) {
@@ -154,7 +154,7 @@ export function generateTestFile(generatorData: TestFileGeneratorInfo) {
   if (generatorData.amountOfTestFunctions) {
     for (let i = 0; i < generatorData.amountOfTestFunctions; i++) {
       testFunctions.push(() =>
-        Promise.resolve<TestReport>({
+        Promise.resolve<ITestReport>({
           testName: "",
           pass: true,
         }),
@@ -173,7 +173,7 @@ export function generateTestFile(generatorData: TestFileGeneratorInfo) {
   }
 
   for (let i = 0; i < generatorData.amountOfTestFiles; i++) {
-    testFiles.push({
+    testMatches.push({
       path: testFileNames[i],
       isEmpty: false,
       groups: [
@@ -185,12 +185,12 @@ export function generateTestFile(generatorData: TestFileGeneratorInfo) {
     });
   }
 
-  return testFiles;
+  return testMatches;
 }
 
 export function _initTestSimpleInstance<T extends ExpectTest>(
-  type: new (params: ExpectTestBaseParams) => T,
-  params: ExpectTestBaseParams,
+  type: new (params: IExpectTestBaseParams) => T,
+  params: IExpectTestBaseParams,
 ) {
   return new type({
     command: params.command ?? "",
@@ -205,8 +205,8 @@ export function _initTestSimpleInstance<T extends ExpectTest>(
 
 export namespace testUtils {
   export function initTestClass<T extends ExpectTest>(
-    type: new (params: ExpectTestBaseParams) => T,
-    params: Partial<ExpectTestBaseParams>,
+    type: new (params: IExpectTestBaseParams) => T,
+    params: Partial<IExpectTestBaseParams>,
   ) {
     return new type({
       command: params.command ?? "",
@@ -219,7 +219,7 @@ export namespace testUtils {
     });
   }
 
-  export function createPassReport(): TestReport {
+  export function createPassReport(): ITestReport {
     return {
       pass: true,
       testName: "",
@@ -231,10 +231,10 @@ export namespace testUtils {
   }
 
   export function createResolvedFailedReport(message: string[], trace?: string) {
-    return Promise.resolve(testUtils.createFailedTestReport(message, trace));
+    return Promise.resolve(testUtils.createFailedITestReport(message, trace));
   }
 
-  export function createFailedTestReport(message: string[], trace?: string) {
+  export function createFailedITestReport(message: string[], trace?: string) {
     return {
       pass: false,
       testName: "",
@@ -244,8 +244,8 @@ export namespace testUtils {
   }
 }
 
-export function createReport(entity: Object, pass: boolean, message?: string): TestReport {
-  const obj: TestReport = {
+export function createReport(entity: Object, pass: boolean, message?: string): ITestReport {
+  const obj: ITestReport = {
     pass,
     testName: entity.toString(),
   };

@@ -1,13 +1,11 @@
 import chalk from "chalk";
-import fs from "fs";
 import ora, { Color, Ora } from "ora";
-import path from "path";
+import { runtime } from "../common/runtime";
 import { testCollector } from "../common/testCollector";
 import { reader } from "../core/reader";
 import { summary } from "../core/summary";
 import { TestExecutor } from "../core/testExecutor";
-import { logger, runtime } from "../environment";
-import { FileError } from "../errors";
+import { logger } from "../environment";
 import { LogUpdate } from "../utils/logUpdate";
 import { validate } from "./validate";
 
@@ -24,39 +22,37 @@ process.on("uncaughtException", () => {
 let spinner: Ora;
 
 export async function exec() {
-  loadConfigs();
-  const files = readDir(runtime.testFiles);
-  if (!files || files.length === 0) {
-    throw new FileError(`No test file was found in the path '${runtime.testFiles}'`);
-  }
-  await runTests(files);
+  await loadConfigs();
+  await runTests();
 }
 
-function loadConfigs() {
+async function loadConfigs() {
   const configs = reader.loadConfig();
   runtime.setConfigs(configs);
-  validate(runtime.configs);
+  await validate(runtime.configs);
 }
 
-async function runTests(files: string[]) {
+async function runTests() {
   startLoading("login to corde bot");
   // No need to await this function
-  runtime.loginBot(runtime.cordeTestToken);
+  runtime.loginBot(runtime.cordeBotToken);
   await runtime.events.onceReady();
   spinner.stop();
 
   try {
-    const testFiles = await reader.getTestsFromFiles(files);
-    if (testFiles.length === 0) {
-      logger.log(`${chalk.bgYellow(chalk.black(" INFO "))} No test were found.`);
+    const testMatches = await reader.getTestsFromFiles({
+      filesPattern: runtime.testMatches,
+      ignorePattern: runtime.modulePathIgnorePatterns,
+    });
+
+    if (testMatches.length === 0) {
+      console.log(`${chalk.bgYellow(chalk.black(" INFO "))} No test were found.`);
       await finishProcess(0);
     }
+
     const log = new LogUpdate();
     const testRunner = new TestExecutor(log);
-
-    runtime.printLoggerIfNotSilent();
-
-    const executionReport = await testRunner.runTestsAndPrint(testFiles);
+    const executionReport = await testRunner.runTestsAndPrint(testMatches);
 
     if (runtime.environment.isE2eTest) {
       logger.log(log.stdout);
@@ -119,30 +115,4 @@ function stopLoading() {
     spinner.stop();
     spinner.clear();
   }
-}
-
-/**
- * Load tests files into configs
- */
-function readDir(directories: string[]) {
-  const files: string[] = [];
-  for (const dir of directories) {
-    const resolvedPath = path.resolve(process.cwd(), dir);
-
-    if (fs.existsSync(resolvedPath)) {
-      const stats = fs.lstatSync(resolvedPath);
-      if (stats.isDirectory()) {
-        const dirContent = fs.readdirSync(resolvedPath);
-        const dirContentPaths = [];
-        for (const singleDirContent of dirContent) {
-          dirContentPaths.push(path.resolve(dir, singleDirContent));
-        }
-        files.push(...readDir(dirContentPaths));
-      } else if (stats.isFile()) {
-        files.push(resolvedPath);
-      }
-    }
-  }
-
-  return files;
 }

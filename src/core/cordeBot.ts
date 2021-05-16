@@ -9,14 +9,14 @@ import {
   TextChannel,
 } from "discord.js";
 import { CordeClientError } from "../errors";
-import { CordeBotLike, MessageIdentifier, RoleIdentifier } from "../types";
+import { ICordeBot, IMessageIdentifier, IRoleIdentifier } from "../types";
 import { Events } from "./events";
 
 /**
  * Encapsulation of Discord Client with all specific
  * functions for corde test.
  */
-export class CordeBot implements CordeBotLike {
+export class CordeBot implements ICordeBot {
   readonly events: Events;
   private readonly _prefix: string;
   private readonly _guildId: string;
@@ -152,11 +152,11 @@ export class CordeBot implements CordeBotLike {
   }
 
   async findMessage(filter: (message: Message) => boolean): Promise<Message | undefined>;
-  async findMessage(data: MessageIdentifier): Promise<Message | undefined>;
+  async findMessage(data: IMessageIdentifier): Promise<Message | undefined>;
   async findMessage(
-    data: MessageIdentifier | ((message: Message) => boolean),
+    data: IMessageIdentifier | ((message: Message) => boolean),
   ): Promise<Message | undefined> {
-    const messageIdentifier: MessageIdentifier = data as MessageIdentifier;
+    const messageIdentifier: IMessageIdentifier = data as IMessageIdentifier;
 
     if (messageIdentifier && messageIdentifier.content) {
       return this._findMessage((m) => m.content === messageIdentifier.content);
@@ -178,11 +178,11 @@ export class CordeBot implements CordeBotLike {
     return await this.guild.roles.fetch();
   }
 
-  async hasRole(roleIdentifier: RoleIdentifier) {
+  async hasRole(roleIdentifier: IRoleIdentifier) {
     return !!(await this.findRole(roleIdentifier));
   }
 
-  async findRole(roleIdentifier: RoleIdentifier) {
+  async findRole(roleIdentifier: IRoleIdentifier) {
     const data = await this.guild.roles.fetch();
     if (roleIdentifier.id) {
       return data.cache.find((r) => r.id === roleIdentifier.id);

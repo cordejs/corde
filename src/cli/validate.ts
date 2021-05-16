@@ -1,9 +1,7 @@
 import chalk from "chalk";
-import fs from "fs";
-import path from "path";
-import { ConfigError, FileError, PropertyError } from "../errors";
-import { ConfigOptions } from "../types";
-import { stringIsNullOrEmpty } from "../utils";
+import { FileError, PropertyError } from "../errors";
+import { IConfigOptions } from "../types";
+import { stringIsNullOrEmpty, utils } from "../utils";
 
 /**
  * Check if configs are valid. Throws an exception
@@ -16,7 +14,7 @@ import { stringIsNullOrEmpty } from "../utils";
  *
  * @throws Error if any config is invalid.
  */
-export function validate(configs: ConfigOptions) {
+export async function validate(configs: IConfigOptions) {
   if (!configs) {
     throw new FileError(chalk.red("● configs not informed."));
   }
@@ -26,48 +24,40 @@ export function validate(configs: ConfigOptions) {
   addToErrorsIfPropertyIsMissing(configs.botPrefix, errors, "bot prefix");
   addToErrorsIfPropertyIsMissing(configs.botTestId, errors, "bot test ID");
   addToErrorsIfPropertyIsMissing(configs.channelId, errors, "channel ID");
-  addToErrorsIfPropertyIsMissing(configs.cordeTestToken, errors, "corde token");
+  addToErrorsIfPropertyIsMissing(configs.cordeBotToken, errors, "corde token");
   addToErrorsIfPropertyIsMissing(configs.guildId, errors, "guild ID");
-  addToErrorsIfPropertyIsMissing(configs.botTestToken, errors, "bot test token");
-  validatePaths(configs.testFiles, errors);
+  addToErrorsIfPropertyIsMissing(configs.botToken, errors, "bot test token");
+  await validatePaths(configs.testMatches, errors);
 
   let errorsString = "";
 
-  if (errors.length === 1) {
-    errorsString = chalk.red("\n● An required property is missing in config file:");
-    buildMissingPropertiesErrorAndThrow(errorsString, errors);
-  }
+  if (errors.length > 0) {
+    errorsString = chalk.red("\n● Corde validation report:\n  ");
 
-  if (errors.length > 1) {
-    errorsString = chalk.red("\n● Some required properties are missing in config file:");
-    buildMissingPropertiesErrorAndThrow(errorsString, errors);
+    if (errors.length === 1) {
+      errorsString += chalk.red("an required property is missing in config file:\n");
+      buildMissingPropertiesErrorAndThrow(errorsString, errors);
+    }
+
+    if (errors.length > 1) {
+      errorsString += chalk.red("some required properties are missing in config file\n");
+      buildMissingPropertiesErrorAndThrow(errorsString, errors);
+    }
   }
 }
 
-function validatePaths(pathsDir: string[] | undefined, errors: string[]) {
+async function validatePaths(pathsDir: string[] | undefined, errors: string[]) {
+  pathsDir = pathsDir?.filter((p) => p);
+
   if (!pathsDir || pathsDir.length === 0) {
-    errors.push("No test files informed");
+    errors.push("No test files informed." + chalk.cyan("(testMatches)"));
     return;
   }
 
-  if (pathsDir.some((_path) => !_path)) {
-    throw new ConfigError(chalk.red("one of more paths are null or undefined. Check your config"));
-  }
-
   for (const pathDir of pathsDir) {
-    const pathResolved = path.resolve(process.cwd(), pathDir);
-    if (fs.existsSync(pathResolved)) {
-      const stats = fs.lstatSync(pathResolved);
-      if (stats.isDirectory()) {
-        const files = fs.readdirSync(pathResolved);
-        const filesResolve = [];
-        for (const file of files) {
-          filesResolve.push(path.resolve(pathResolved, file));
-        }
+    const files = await utils.getFiles(pathDir);
 
-        validatePaths(filesResolve, errors);
-      }
-    } else {
+    if (files.length === 0) {
       errors.push(`path: ${pathDir} does not exists`);
     }
   }
@@ -84,6 +74,7 @@ function addToErrorsIfPropertyIsMissing(
 }
 
 function buildMissingPropertiesErrorAndThrow(errorString: string, erros: string[]) {
-  erros.forEach((error) => (errorString += `\n${chalk.red(`- ${error}`)}`));
+  erros.forEach((error) => (errorString += `\n    ${chalk.red(`- ${error}`)}`));
+  errorString += "\n";
   throw new PropertyError(errorString);
 }

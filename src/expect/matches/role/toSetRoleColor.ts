@@ -1,23 +1,23 @@
 import chalk from "chalk";
 import { ColorResolvable, Role } from "discord.js";
-import { RoleIdentifier, TestReport } from "../../../types";
+import { IRoleIdentifier, ITestReport } from "../../../types";
 import { resolveColor, rgba, typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
-import { ExpectTestBaseParams } from "../../../types";
+import { IExpectTestBaseParams } from "../../../types";
 import { ExpectTest } from "../expectTest";
 
 /**
  * @internal
  */
 export class ToSetRoleColor extends ExpectTest {
-  constructor(params: ExpectTestBaseParams) {
+  constructor(params: IExpectTestBaseParams) {
     super({ ...params, testName: "toSetRoleColor" });
   }
 
   async action(
     color: ColorResolvable,
-    roleIdentifier: string | RoleIdentifier,
-  ): Promise<TestReport> {
+    roleIdentifier: string | IRoleIdentifier,
+  ): Promise<ITestReport> {
     const identifier = roleUtils.getRoleData(roleIdentifier);
     const error = roleUtils.getErrorForUndefinedRoleData(identifier);
 

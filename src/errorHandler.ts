@@ -22,6 +22,7 @@ async function printErrorAndExit(error: Error) {
   if (runtime.isBotLoggedIn()) {
     runtime.logoffBot();
   }
+
   if (testCollector.afterAllFunctions) {
     await testCollector.afterAllFunctions.executeAsync();
   }

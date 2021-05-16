@@ -1,23 +1,24 @@
 import { DEFAULT_TEST_TIMEOUT } from "../consts";
-import { ConfigOptions } from "../types";
+import { IConfigOptions } from "../types";
 
 /**
  * Default interface of JSON config
  *
- * @description `botTestToken` is not required.
+ * @description `botToken` is not required.
  * only inform if is desired to start test bot with corde
  *
  */
-export class Config implements ConfigOptions {
-  silent!: boolean;
-  cordeTestToken!: string;
+export class Config implements IConfigOptions {
+  cordeBotToken!: string;
   botTestId!: string;
-  botTestToken!: string;
+  botToken!: string;
   channelId!: string;
   guildId!: string;
   timeout?: number;
   botPrefix!: string;
-  testFiles!: string[];
+  testMatches!: string[];
+  modulePathIgnorePatterns?: string[];
+  silent!: boolean;
 
   /**
    * Set values to config options that are not **filed** yet
@@ -28,15 +29,15 @@ export class Config implements ConfigOptions {
    * const config = new Config();
    * config.timeout = 1000;
    *
-   * const newConfig: ConfigOptions = { ...timeout: 3000 };
+   * const newConfig: IConfigOptions = { ...timeOut: 3000 };
    * config.setConfigs(newConfig);
    * console.log(config.timeout) // print 1000;
    *
    * @param config new set of configs.
    */
-  setConfigs(config: Partial<ConfigOptions>, forceUpdate?: boolean) {
-    if (config.cordeTestToken && (!this.cordeTestToken || forceUpdate)) {
-      this.cordeTestToken = config.cordeTestToken;
+  setConfigs(config: Partial<IConfigOptions>, forceUpdate?: boolean) {
+    if (config.cordeBotToken && (!this.cordeBotToken || forceUpdate)) {
+      this.cordeBotToken = config.cordeBotToken;
     }
 
     if (config.botPrefix && (!this.botPrefix || forceUpdate)) {
@@ -47,8 +48,8 @@ export class Config implements ConfigOptions {
       this.botTestId = config.botTestId;
     }
 
-    if (config.botTestToken && (!this.botTestToken || forceUpdate)) {
-      this.botTestToken = config.botTestToken;
+    if (config.botToken && (!this.botToken || forceUpdate)) {
+      this.botToken = config.botToken;
     }
 
     if (config.channelId && (!this.channelId || forceUpdate)) {
@@ -75,8 +76,12 @@ export class Config implements ConfigOptions {
       this.silent = config.silent;
     }
 
-    if (config.testFiles && (!this.testFiles || this.testFiles.length === 0 || forceUpdate)) {
-      this.testFiles = config.testFiles;
+    if (config.modulePathIgnorePatterns && (!this.modulePathIgnorePatterns || forceUpdate)) {
+      this.modulePathIgnorePatterns = config.modulePathIgnorePatterns;
+    }
+
+    if (config.testMatches && (!this.testMatches || this.testMatches.length === 0 || forceUpdate)) {
+      this.testMatches = config.testMatches;
     }
   }
 }

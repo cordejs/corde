@@ -4,8 +4,8 @@ import { printHookErrors } from "../common/printHookError";
 import { testCollector } from "../common/testCollector";
 import { logger, runtime } from "../environment";
 import { FileError } from "../errors";
-import { ConfigOptions, TestFile } from "../types";
-import { shortPathForPlataform } from "../utils";
+import { IConfigOptions, ITestFilePattern, ITestFile } from "../types";
+import { shortPathForPlataform, utils } from "../utils";
 
 class Reader {
   /**
@@ -13,8 +13,8 @@ class Reader {
    * and validates it
    * @throws
    */
-  loadConfig(): ConfigOptions {
-    let _config: ConfigOptions;
+  loadConfig(): IConfigOptions {
+    let _config: IConfigOptions;
 
     const jsonFilePath = path.resolve(process.cwd(), "corde.config.json");
     const tsFilePath = path.resolve(process.cwd(), "corde.config.ts");
@@ -41,15 +41,25 @@ class Reader {
     }
   }
 
-  async getTestsFromFiles(files: string[]): Promise<TestFile[]> {
-    const testFiles: TestFile[] = [];
-    if (!files || !files.length) {
+  async getTestsFromFiles(filesPattern: ITestFilePattern): Promise<ITestFile[]> {
+    const testMatches: ITestFile[] = [];
+    if (!filesPattern || !filesPattern.filesPattern.length) {
       throw new FileError("No file was informed.");
     }
 
-    for (const file of files) {
+    const filesPath: string[] = [];
+
+    for (const filePattern of filesPattern.filesPattern) {
+      const matches = await utils.getFiles(filePattern, filesPattern.ignorePattern);
+      filesPath.push(...matches);
+    }
+
+    for (const file of filesPath) {
       try {
-        require(file);
+        const extension = path.extname(file);
+        if (extension == ".js" || extension === ".ts") {
+          require(file);
+        }
       } catch (error) {
         logger.log(error);
         continue;
@@ -84,7 +94,7 @@ class Reader {
       this.addTestsGroupmentToGroupIfExist();
       this.addIsolatedTestFunctionsToGroupIfExists();
 
-      testFiles.push({
+      testMatches.push({
         path: shortPathForPlataform(file),
         groups: testCollector.groups.slice(),
         isEmpty: testCollector.groups.length === 0,
@@ -93,10 +103,10 @@ class Reader {
       testCollector.groups = [];
     }
 
-    return testFiles;
+    return testMatches;
   }
 
-  private loadConfigFromConfigFilePath(): ConfigOptions {
+  private loadConfigFromConfigFilePath(): IConfigOptions {
     let filePath = "";
     if (fs.existsSync(runtime.configFilePath)) {
       filePath = path.resolve(process.cwd(), runtime.configFilePath);

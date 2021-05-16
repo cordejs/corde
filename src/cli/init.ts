@@ -3,27 +3,32 @@ import fs from "fs";
 import path from "path";
 import { logger } from "../environment";
 import { FileError } from "../errors";
-import { ConfigOptions, ConfigFileType } from "../types";
+import { IConfigOptions, configFileType } from "../types";
 
-const jsonFile: ConfigOptions = {
+const config: IConfigOptions = {
   botPrefix: "",
   botTestId: "",
   channelId: "",
-  silent: true,
-  cordeTestToken: "",
+  cordeBotToken: "",
   guildId: "",
-  testFiles: [""],
-  botTestToken: "",
-  timeout: 5000,
+  testMatches: [""],
+  botToken: "",
+  timeOut: 5000,
+};
+
+const configString = JSON.stringify(config);
+
+const jsonFile = {
+  $schema: "./node_modules/corde/schema/corde.schema.json",
+  ...config,
 };
 
 const jsFile = `
-    module.exports = ${JSON.stringify(jsonFile)}
+    /** @type {import('corde/lib/src/types').IConfigOptions} */
+    module.exports = ${configString}
 `;
 
-const tsFile = `
-    module.exports = ${JSON.stringify(jsonFile)}
-`;
+const tsFile = jsFile;
 
 /**
  * Initialize a config file with all available options.
@@ -73,7 +78,7 @@ export function init(fileType: ConfigFileType = "json") {
   }
 }
 
-function formatFile(file: string, type: ConfigFileType) {
+function formatFile(file: string, type: IConfigFileType) {
   let formater: "object" | "json" = "json";
 
   if (type === "js" || type === "ts") {

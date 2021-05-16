@@ -27,10 +27,10 @@ describe("testing default command", () => {
       botPrefix: "!",
       botTestId: "123123123",
       channelId: "123123123",
-      cordeTestToken: "12312112312",
+      cordeBotToken: "12312112312",
       guildId: "12312312",
-      testFiles: [],
-      botTestToken: "123123",
+      testMatches: [],
+      botToken: "123123",
       timeout: 1000,
     });
 
@@ -59,10 +59,10 @@ describe("testing default command", () => {
       botPrefix: "!",
       botTestId: "123123123",
       channelId: "123123123",
-      cordeTestToken: "12312112312",
+      cordeBotToken: "12312112312",
       guildId: "12312312",
-      testFiles: ["tests/cli/testFolder"],
-      botTestToken: "123123",
+      testMatches: ["tests/cli/testFolder"],
+      botToken: "123123",
       timeout: 1000,
     });
 

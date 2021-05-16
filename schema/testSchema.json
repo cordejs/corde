@@ -1,0 +1,12 @@
+{
+  "$schema": "./corde.schema.json",
+  "cordeBotToken": "",
+  "botTestId": "",
+  "botToken": "",
+  "guildId": "",
+  "channelId": "",
+  "botPrefix": "+",
+  "testMatches": ["./test"],
+  "modulePathIgnorePatterns": [],
+  "timeOut": 5000
+}

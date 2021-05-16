@@ -60,7 +60,7 @@ export async function login(isDebugMode?: boolean) {
       resolve();
     });
   });
-  await bot.login(config.botTestToken);
+  await bot.login(config.botToken);
   await readyPromise;
 }
 

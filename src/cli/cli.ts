@@ -2,7 +2,6 @@ import { Command } from "commander";
 import { exec } from "./exec";
 import { init } from "./init";
 import { validate } from "./validate";
-import { CliConfigOptions, ConfigFileType } from "../types";
 import pack from "../package";
 import { reader } from "../core/reader";
 import { initCordeEnv, logger, runtime } from "../environment";
@@ -47,11 +46,11 @@ program
     }
 
     if (args) {
-      runtime.setConfigs({ testFiles: program.args }, true);
+      runtime.setConfigs({ testMatches: program.args }, true);
     }
 
     if (options.files) {
-      runtime.setConfigs({ testFiles: options.files.split(" ") }, true);
+      runtime.setConfigs({ testMatches: options.files.split(" ") }, true);
     }
 
     let formatedTimeout = undefined;
@@ -90,9 +89,9 @@ program
   .command("validate")
   .alias("v")
   .description("Search for corde configs and check if all data are valid")
-  .action(() => {
+  .action(async () => {
     const configs = reader.loadConfig();
-    validate(configs);
+    await validate(configs);
     logger.log("All configs are ok!");
   });
 

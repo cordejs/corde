@@ -1,9 +1,9 @@
 import { summary } from "../../src/core/summary";
-import { RunnerReport } from "../../src/types";
+import { IRunnerReport } from "../../src/types";
 import { removeANSIColorStyle } from "../testHelper";
 
 it("should print a summary for 1 test file, 1 test case, and 1 test function that has pass", () => {
-  const summaryData: RunnerReport = {
+  const summaryData: IRunnerReport = {
     testTimer: "2s",
     totalTestFiles: 1,
     totalTestFilesFailed: 0,
@@ -20,7 +20,7 @@ it("should print a summary for 1 test file, 1 test case, and 1 test function tha
 });
 
 it("should print a summary for 1 test file, 1 test case, and 1 test function that has pass, and 1 that don't", () => {
-  const summaryData: RunnerReport = {
+  const summaryData: IRunnerReport = {
     testTimer: "2s",
     totalTestFiles: 1,
     totalTestFilesFailed: 0,
@@ -37,7 +37,7 @@ it("should print a summary for 1 test file, 1 test case, and 1 test function tha
 });
 
 it("should print a summary for 10 test file, 10 test case, and 10 test functions", () => {
-  const summaryData: RunnerReport = {
+  const summaryData: IRunnerReport = {
     testTimer: "2s",
     totalTestFiles: 10,
     totalTestFilesFailed: 0,
@@ -54,7 +54,7 @@ it("should print a summary for 10 test file, 10 test case, and 10 test functions
 });
 
 it("should print a summary tests with timer ''", () => {
-  const summaryData: RunnerReport = {
+  const summaryData: IRunnerReport = {
     testTimer: "",
     totalTestFiles: 10,
     totalTestFilesFailed: 0,
@@ -71,7 +71,7 @@ it("should print a summary tests with timer ''", () => {
 });
 
 it("should print a summary tests with fail, success and empty", () => {
-  const summaryData: RunnerReport = {
+  const summaryData: IRunnerReport = {
     testTimer: "10.658s",
     totalTestFiles: 3,
     totalTestFilesFailed: 1,
@@ -88,7 +88,7 @@ it("should print a summary tests with fail, success and empty", () => {
 });
 
 it("should print a summary tests with only fail", () => {
-  const summaryData: RunnerReport = {
+  const summaryData: IRunnerReport = {
     testTimer: "10.658s",
     totalTestFiles: 3,
     totalTestFilesFailed: 3,
@@ -105,7 +105,7 @@ it("should print a summary tests with only fail", () => {
 });
 
 it("should print a summary tests with only empty", () => {
-  const summaryData: RunnerReport = {
+  const summaryData: IRunnerReport = {
     testTimer: "10.658s",
     totalTestFiles: 1,
     totalTestFilesFailed: 0,
@@ -122,7 +122,7 @@ it("should print a summary tests with only empty", () => {
 });
 
 it("should print summary with only one file that is empty", () => {
-  const summaryData: RunnerReport = {
+  const summaryData: IRunnerReport = {
     testTimer: "3ms",
     totalTests: 0,
     totalTestFiles: 1,

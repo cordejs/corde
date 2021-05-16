@@ -1,5 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`testing unpin message test should return a failed test due to failure in message sending 1`] = `
+Object {
+  "message": "    
+    can not send message to channel x
+",
+  "pass": false,
+  "testName": "toUnPinMessage",
+}
+`;
+
 exports[`testing unpin message test should return a failed test due to isNot false and timeout (messageIdentifier) 1`] = `
 Object {
   "message": "    
@@ -50,7 +60,7 @@ Object {
 exports[`testing unpin message test should return error message due to no mesageIdentifier (null) 1`] = `
 Object {
   "message": "    
-    expected: message identifier to be a string or a MessageIdentifier object
+    expected: message identifier to be a string or a IMessageIdentifier object
     received: null
 ",
   "pass": false,
@@ -61,7 +71,7 @@ Object {
 exports[`testing unpin message test should return error message due to no mesageIdentifier (undefined) 1`] = `
 Object {
   "message": "    
-    expected: message identifier to be a string or a MessageIdentifier object
+    expected: message identifier to be a string or a IMessageIdentifier object
     received: undefined
 ",
   "pass": false,

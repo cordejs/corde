@@ -1,6 +1,6 @@
 import { init } from "../../src/cli/init";
 import { FsMockUtils } from "../mockUtils/fs";
-import { ConfigOptions } from "../../src/types";
+import { IConfigOptions } from "../../src/types";
 import { logger } from "../../src/environment";
 
 // As there are a local config file for manual tests,
@@ -49,23 +49,22 @@ describe("Testing creation of config file in init", () => {
     const storeLog = (inputs: string) => (outputData += inputs);
     logger.log = jest.fn(storeLog);
     const invalidExtension = "asdf";
-    // @ts-expect-error
     init(invalidExtension);
     expect(outputData).not.toBe("");
   });
 });
 
 describe("Testing content of config file in init", () => {
-  const configFile: ConfigOptions = {
-    silent: true,
+  const configFile: IConfigOptions = {
     botPrefix: "",
     botTestId: "",
     channelId: "",
-    cordeTestToken: "",
+    cordeBotToken: "",
     guildId: "",
-    testFiles: [""],
-    botTestToken: "",
+    testMatches: [""],
+    botToken: "",
     timeout: 5000,
+    silent: false,
   };
 
   it("should js file have same values of configFile", () => {
@@ -81,7 +80,9 @@ describe("Testing content of config file in init", () => {
   it("should json file have same values of configFile", () => {
     init("json");
     const content = JSON.parse(fs.getCreatedFileContent.toString());
-    expect(configFile).toEqual(content);
+    expect({ $schema: "./node_modules/corde/schema/corde.schema.json", ...configFile }).toEqual(
+      content,
+    );
   });
 
   it("Should throw exception due to error in write", () => {

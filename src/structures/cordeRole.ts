@@ -1,5 +1,5 @@
 import { ColorResolvable, Role } from "discord.js";
-import { BaseRole } from "../types";
+import { IBaseRole } from "../types";
 import { Colors, resolveColor, RolePermission } from "../utils";
 
 /**
@@ -187,7 +187,7 @@ export class CordeRole {
    * @param data Informations to be updated.
    * @see https://discord.com/developers/docs/resources/guild#delete-guild-role
    */
-  async update(data: BaseRole) {
+  async update(data: IBaseRole) {
     if (!data) {
       return this;
     }

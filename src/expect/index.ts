@@ -1,5 +1,5 @@
 import { RoleMatchesImpl, MessageMatchesImpl, ToHaveResultMatcher } from "./matcher";
-import { Expect, MacherContructorArgs } from "../types";
+import { IExpect, IMacherContructorArgs } from "../types";
 
 function getMessageMatchers(): string[] {
   return getFunctions(MessageMatchesImpl);
@@ -25,13 +25,13 @@ const expectation = {
   inChannel: {},
 };
 
-function createTestFunction(classType: any, params: MacherContructorArgs, functionName: string) {
+function createTestFunction(classType: any, params: IMacherContructorArgs, functionName: string) {
   return (...args: any[]) => (new classType(params) as any)[functionName](...args);
 }
 
 function createTestsFromMatches<T>(
   names: string[],
-  params: MacherContructorArgs,
+  params: IMacherContructorArgs,
   classType: new (...args: any[]) => T,
 ): [string, (...args: any[]) => any][] {
   return names.map((name) => {
@@ -53,7 +53,7 @@ const _expect: any = <T extends (() => number | string) | number | string>(
   commandName: T,
   channelId?: string,
 ) => {
-  const baseMatcherConstructor: MacherContructorArgs = {
+  const baseMatcherConstructor: IMacherContructorArgs = {
     commandName,
     channelIdToSendCommand: channelId,
   };
@@ -180,6 +180,6 @@ set(isNotMessageTests, _expect.not);
 set(roleTests, _expect);
 set(isNotRoleTests, _expect.not);
 
-const expect = _expect as Expect;
+const expect = _expect as IExpect;
 
 export { expect };

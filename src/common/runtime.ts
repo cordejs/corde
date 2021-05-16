@@ -1,4 +1,4 @@
-import { ConfigOptions, CordeBotLike, MockInstance, TestFunctionType } from "../types";
+import { IConfigOptions, ICordeBot, MockInstance, TestFunctionType } from "../types";
 import { Config } from "./config";
 import { Client } from "discord.js";
 import { CordeBot } from "../core/cordeBot";
@@ -35,8 +35,8 @@ export class Runtime {
     return this._configs;
   }
 
-  get cordeTestToken() {
-    return this._configs.cordeTestToken;
+  get cordeBotToken() {
+    return this._configs.cordeBotToken;
   }
 
   get botTestId() {
@@ -47,8 +47,9 @@ export class Runtime {
     return this._configs.silent;
   }
 
-  get botTestToken() {
-    return this._configs.botTestToken;
+
+  get botToken() {
+    return this._configs.botToken;
   }
 
   get channelId() {
@@ -67,8 +68,12 @@ export class Runtime {
     return this._configs.botPrefix;
   }
 
-  get testFiles() {
-    return this._configs.testFiles;
+  get testMatches() {
+    return this._configs.testMatches;
+  }
+
+  get modulePathIgnorePatterns() {
+    return this._configs.modulePathIgnorePatterns;
   }
 
   constructor() {
@@ -89,9 +94,9 @@ export class Runtime {
   files!: string[];
 
   private readonly _configs: Config;
-  private _bot!: CordeBotLike;
+  private _bot!: ICordeBot;
   private _mocks: Array<MockInstance<any, any, any>>;
-
+  
   static getInstance() {
     if (!Runtime._instance) {
       Runtime._instance = new Runtime();
@@ -99,7 +104,7 @@ export class Runtime {
     return Runtime._instance;
   }
 
-  setConfigs(_configs: Partial<ConfigOptions>, forceUpdate?: boolean) {
+  setConfigs(_configs: Partial<IConfigOptions>, forceUpdate?: boolean) {
     if (!_configs) {
       throw new ConfigError("Invalid _configs");
     }

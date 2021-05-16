@@ -11,7 +11,7 @@ import {
 
 import { mockTimer } from "../mocks/mockTimer";
 import { afterEach as _afterEach, beforeEach as _beforeEach } from "../../src";
-import { SemiRunnerReport, TestFile } from "../../src/types";
+import { ISemiRunnerReport, ITestFile } from "../../src/types";
 
 let logUpdate: LogUpdate;
 let testRunner: TestExecutor;
@@ -35,7 +35,7 @@ it("should print report for 1 test file, 1 test closure and 1 test function", as
   const report = await testRunner.runTestsAndPrint(tests);
   const amountOfTest = data.amountOfTestFiles * data.amountOfTests * data.amountOfTestFunctions;
 
-  expect(report).toMatchObject<SemiRunnerReport>({
+  expect(report).toMatchObject<ISemiRunnerReport>({
     totalTestFiles: data.amountOfTestFiles,
     totalTestFilesFailed: 0,
     totalTestFilesPassed: data.amountOfTestFiles,
@@ -60,7 +60,7 @@ it("should print report for 1 test file, 1 test closure and 2 test function", as
   const report = await testRunner.runTestsAndPrint(tests);
   const amountOfTest = data.amountOfTestFiles * data.amountOfTests * data.amountOfTestFunctions;
 
-  expect(report).toMatchObject<SemiRunnerReport>({
+  expect(report).toMatchObject<ISemiRunnerReport>({
     totalTestFiles: data.amountOfTestFiles,
     totalTestFilesFailed: 0,
     totalTestFilesPassed: data.amountOfTestFiles,
@@ -89,7 +89,7 @@ it("should print report for 2 test file, 1 test closure and 1 test function", as
   const report = await testRunner.runTestsAndPrint(tests);
   const amountOfTest = data.amountOfTestFiles * data.amountOfTests * data.amountOfTestFunctions;
 
-  expect(report).toMatchObject<SemiRunnerReport>({
+  expect(report).toMatchObject<ISemiRunnerReport>({
     totalTestFiles: data.amountOfTestFiles,
     totalTestFilesFailed: 0,
     totalTestFilesPassed: data.amountOfTestFiles,
@@ -114,7 +114,7 @@ it("should print report for 2 test file, 1 test closure and 2 test function", as
   const report = await testRunner.runTestsAndPrint(tests);
   const amountOfTest = data.amountOfTestFiles * data.amountOfTests * data.amountOfTestFunctions;
 
-  expect(report).toMatchObject<SemiRunnerReport>({
+  expect(report).toMatchObject<ISemiRunnerReport>({
     totalTestFiles: data.amountOfTestFiles,
     totalTestFilesFailed: 0,
     totalTestFilesPassed: data.amountOfTestFiles,
@@ -139,7 +139,7 @@ it("should print report for 2 test file, 2 test closure and 2 test function", as
   const report = await testRunner.runTestsAndPrint(tests);
   const amountOfTest = data.amountOfTestFiles * data.amountOfTests * data.amountOfTestFunctions;
 
-  expect(report).toMatchObject<SemiRunnerReport>({
+  expect(report).toMatchObject<ISemiRunnerReport>({
     totalTestFiles: data.amountOfTestFiles,
     totalTestFilesFailed: 0,
     totalTestFilesPassed: data.amountOfTestFiles,
@@ -155,7 +155,7 @@ it("should print report for 2 test file, 2 test closure and 2 test function", as
 it("should print report for 1 test file, 1 test closure and 1 test function that fail", async () => {
   const data: TestFileGeneratorInfo = {
     amountOfTestFiles: 1,
-    testFunctionsReport: [testUtils.createFailedTestReport(["expected: hi\n", "received: hi!"])],
+    testFunctionsReport: [testUtils.createFailedITestReport(["expected: hi\n", "received: hi!"])],
     amountOfTests: 1,
   };
 
@@ -164,7 +164,7 @@ it("should print report for 1 test file, 1 test closure and 1 test function that
   const report = await testRunner.runTestsAndPrint(tests);
   const amountOfTest = data.amountOfTestFiles * data.amountOfTests * data.amountOfTestFunctions;
 
-  expect(report).toMatchObject<SemiRunnerReport>({
+  expect(report).toMatchObject<ISemiRunnerReport>({
     totalTestFiles: data.amountOfTestFiles,
     totalTestFilesFailed: 1,
     totalTestFilesPassed: 0,
@@ -181,7 +181,7 @@ it("should print report for 1 test file, 1 test closure and 1 failed function an
   const data: TestFileGeneratorInfo = {
     amountOfTestFiles: 1,
     testFunctionsReport: [
-      testUtils.createFailedTestReport(["expected: hi\n", "received: hi!"]),
+      testUtils.createFailedITestReport(["expected: hi\n", "received: hi!"]),
       testUtils.createPassReport(),
     ],
     amountOfTests: 1,
@@ -191,7 +191,7 @@ it("should print report for 1 test file, 1 test closure and 1 failed function an
 
   const report = await testRunner.runTestsAndPrint(tests);
 
-  expect(report).toMatchObject<SemiRunnerReport>({
+  expect(report).toMatchObject<ISemiRunnerReport>({
     totalTestFiles: data.amountOfTestFiles,
     totalTestFilesFailed: 1,
     totalTestFilesPassed: 0,
@@ -208,7 +208,7 @@ it("should print report for 1 test file, 1 test closure and 1 failed function an
   const data: TestFileGeneratorInfo = {
     amountOfTestFiles: 1,
     testFunctionsReport: [
-      testUtils.createFailedTestReport(["expected: hi\n", "received: hi!"]),
+      testUtils.createFailedITestReport(["expected: hi\n", "received: hi!"]),
       testUtils.createPassReport(),
     ],
     amountOfTests: 1,
@@ -218,7 +218,7 @@ it("should print report for 1 test file, 1 test closure and 1 failed function an
 
   const report = await testRunner.runTestsAndPrint(tests);
 
-  expect(report).toMatchObject<SemiRunnerReport>({
+  expect(report).toMatchObject<ISemiRunnerReport>({
     totalTestFiles: data.amountOfTestFiles,
     totalTestFilesFailed: 1,
     totalTestFilesPassed: 0,
@@ -235,7 +235,7 @@ it("should print report for 1 test file, 2 test closure and 1 failed function an
   const data: TestFileGeneratorInfo = {
     amountOfTestFiles: 1,
     testFunctionsReport: [
-      testUtils.createFailedTestReport(["expected: hi\n", "received: hi!"]),
+      testUtils.createFailedITestReport(["expected: hi\n", "received: hi!"]),
       testUtils.createPassReport(),
     ],
     amountOfTests: 2,
@@ -245,7 +245,7 @@ it("should print report for 1 test file, 2 test closure and 1 failed function an
 
   const report = await testRunner.runTestsAndPrint(tests);
 
-  expect(report).toMatchObject<SemiRunnerReport>({
+  expect(report).toMatchObject<ISemiRunnerReport>({
     totalTestFiles: data.amountOfTestFiles,
     totalTestFilesFailed: 1,
     totalTestFilesPassed: 0,
@@ -262,7 +262,7 @@ it("should print report for 2 test file, 2 test closure and 1 failed function an
   const data: TestFileGeneratorInfo = {
     amountOfTestFiles: 2,
     testFunctionsReport: [
-      testUtils.createFailedTestReport(["expected: hi\n", "received: hi!"]),
+      testUtils.createFailedITestReport(["expected: hi\n", "received: hi!"]),
       testUtils.createPassReport(),
     ],
     amountOfTests: 2,
@@ -272,7 +272,7 @@ it("should print report for 2 test file, 2 test closure and 1 failed function an
 
   const report = await testRunner.runTestsAndPrint(tests);
 
-  expect(report).toMatchObject<SemiRunnerReport>({
+  expect(report).toMatchObject<ISemiRunnerReport>({
     totalTestFiles: data.amountOfTestFiles,
     totalTestFilesFailed: 2,
     totalTestFilesPassed: 0,
@@ -286,7 +286,7 @@ it("should print report for 2 test file, 2 test closure and 1 failed function an
 });
 
 it("should print report for 1 test file, 2 test closure and 1 failed function and 1 passed function", async () => {
-  const tests: TestFile[] = [
+  const tests: ITestFile[] = [
     {
       path: testFileNames[0],
       isEmpty: false,
@@ -312,7 +312,7 @@ it("should print report for 1 test file, 2 test closure and 1 failed function an
 
   const report = await testRunner.runTestsAndPrint(tests);
 
-  expect(report).toMatchObject<SemiRunnerReport>({
+  expect(report).toMatchObject<ISemiRunnerReport>({
     totalTestFiles: 1,
     totalTestFilesFailed: 1,
     totalTestFilesPassed: 0,
@@ -326,7 +326,7 @@ it("should print report for 1 test file, 2 test closure and 1 failed function an
 });
 
 it("should print for a empty test file name", async () => {
-  const tests: TestFile[] = [
+  const tests: ITestFile[] = [
     {
       path: testFileNames[0],
       isEmpty: false,
@@ -346,7 +346,7 @@ it("should print for a empty test file name", async () => {
 
   const report = await testRunner.runTestsAndPrint(tests);
 
-  expect(report).toMatchObject<SemiRunnerReport>({
+  expect(report).toMatchObject<ISemiRunnerReport>({
     totalTestFiles: 1,
     totalTestFilesFailed: 0,
     totalTestFilesPassed: 1,
@@ -360,7 +360,7 @@ it("should print for a empty test file name", async () => {
 });
 
 it("should print tests for a subgroup", async () => {
-  const tests: TestFile[] = [
+  const tests: ITestFile[] = [
     {
       path: testFileNames[0],
       isEmpty: false,
@@ -386,7 +386,7 @@ it("should print tests for a subgroup", async () => {
 
   const report = await testRunner.runTestsAndPrint(tests);
 
-  expect(report).toMatchObject<SemiRunnerReport>({
+  expect(report).toMatchObject<ISemiRunnerReport>({
     totalTestFiles: 1,
     totalTestFilesFailed: 0,
     totalTestFilesPassed: 1,
@@ -400,7 +400,7 @@ it("should print tests for a subgroup", async () => {
 });
 
 it("should print subtest for a subgroup", async () => {
-  const tests: TestFile[] = [
+  const tests: ITestFile[] = [
     {
       path: testFileNames[0],
       isEmpty: false,
@@ -432,7 +432,7 @@ it("should print subtest for a subgroup", async () => {
 
   const report = await testRunner.runTestsAndPrint(tests);
 
-  expect(report).toMatchObject<SemiRunnerReport>({
+  expect(report).toMatchObject<ISemiRunnerReport>({
     totalTestFiles: 1,
     totalTestFilesFailed: 0,
     totalTestFilesPassed: 1,
@@ -446,7 +446,7 @@ it("should print subtest for a subgroup", async () => {
 });
 
 it("should print empty test file", async () => {
-  const tests: TestFile[] = [
+  const tests: ITestFile[] = [
     {
       path: testFileNames[0],
       isEmpty: true,
@@ -456,7 +456,7 @@ it("should print empty test file", async () => {
 
   const report = await testRunner.runTestsAndPrint(tests);
 
-  expect(report).toMatchObject<SemiRunnerReport>({
+  expect(report).toMatchObject<ISemiRunnerReport>({
     totalTestFiles: 1,
     totalTestFilesFailed: 0,
     totalTestFilesPassed: 0,
@@ -470,7 +470,7 @@ it("should print empty test file", async () => {
 });
 
 it("should print empty test file", async () => {
-  const tests: TestFile[] = [
+  const tests: ITestFile[] = [
     {
       path: testFileNames[0],
       isEmpty: false,
@@ -507,7 +507,7 @@ it("should print empty test file", async () => {
 
   const report = await testRunner.runTestsAndPrint(tests);
 
-  expect(report).toMatchObject<SemiRunnerReport>({
+  expect(report).toMatchObject<ISemiRunnerReport>({
     totalTestFiles: 2,
     totalTestFilesFailed: 0,
     totalTestFilesPassed: 1,
@@ -523,7 +523,7 @@ it("should print empty test file", async () => {
 it("should print report for 1 test file, 2 test closure and 1 failed function and 1 passed function", async () => {
   const data: TestFileGeneratorInfo = {
     amountOfTestFiles: 1,
-    testFunctionsReport: [testUtils.createFailedTestReport([diff({ a: 1 }, { a: 2 })])],
+    testFunctionsReport: [testUtils.createFailedITestReport([diff({ a: 1 }, { a: 2 })])],
     amountOfTests: 1,
   };
 
@@ -531,7 +531,7 @@ it("should print report for 1 test file, 2 test closure and 1 failed function an
 
   const report = await testRunner.runTestsAndPrint(tests);
 
-  expect(report).toMatchObject<SemiRunnerReport>({
+  expect(report).toMatchObject<ISemiRunnerReport>({
     totalTestFiles: data.amountOfTestFiles,
     totalTestFilesFailed: 1,
     totalTestFilesPassed: 0,
@@ -548,7 +548,7 @@ it("should print report for 1 test file, 2 test closure and 1 failed function an
   const data: TestFileGeneratorInfo = {
     amountOfTestFiles: 1,
     testFunctionsReport: [
-      testUtils.createFailedTestReport(
+      testUtils.createFailedITestReport(
         [diff({ a: 1 }, { a: 2 })],
         buildReportMessage(
           "at TestExecutor.printReportData (src/core/testExecutor.ts:202:13)\n" +
@@ -563,7 +563,7 @@ it("should print report for 1 test file, 2 test closure and 1 failed function an
 
   const report = await testRunner.runTestsAndPrint(tests);
 
-  expect(report).toMatchObject<SemiRunnerReport>({
+  expect(report).toMatchObject<ISemiRunnerReport>({
     totalTestFiles: data.amountOfTestFiles,
     totalTestFilesFailed: 1,
     totalTestFilesPassed: 0,

@@ -1,14 +1,14 @@
 import { ExpectTest } from "../../src/expect/matches/expectTest";
-import { ExpectTestBaseParams } from "../../src/types";
-import { TestReport } from "../../src/types";
+import { IExpectTestBaseParams } from "../../src/types";
+import { ITestReport } from "../../src/types";
 import { testUtils } from "../testHelper";
 
 class TestClass extends ExpectTest {
-  constructor(params: ExpectTestBaseParams) {
+  constructor(params: IExpectTestBaseParams) {
     super({ ...params, testName: "testClass" });
   }
 
-  action(p1: any, p2: any, p3: any): Promise<TestReport> {
+  action(p1: any, p2: any, p3: any): Promise<ITestReport> {
     return Promise.resolve(super.createReport());
   }
 }
@@ -28,7 +28,7 @@ describe("testing ExpectTest class", () => {
     const conName = "test";
     const testClass = instanceTestClass(conName, true);
     const report = await testClass.action(null, null, null);
-    const reportExpected: TestReport = {
+    const reportExpected: ITestReport = {
       pass: false,
       testName: testClass.toString(),
     };
@@ -39,7 +39,7 @@ describe("testing ExpectTest class", () => {
     const conName = "test";
     const testClass = instanceTestClass(conName, false);
     const report = await testClass.action(null, null, null);
-    const expectedReport: TestReport = {
+    const expectedReport: ITestReport = {
       pass: false,
       testName: testClass.toString(),
     };

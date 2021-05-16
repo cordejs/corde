@@ -1,5 +1,5 @@
 import { Queue } from "../data-structures";
-import { AssertionProps, Group, Test, TestFunctionType, VoidLikeFunction } from "../types";
+import { IAssertionProps, IGroup, ITest, TestFunctionType, VoidLikeFunction } from "../types";
 
 /**
  * Contain all information of data collected from files in runtime test
@@ -28,9 +28,9 @@ class TestCollector {
   isInsideGroupClausure: boolean;
   isInsideTestClausure: boolean;
 
-  assertions: AssertionProps[];
-  tests: Test[];
-  groups: Group[];
+  assertions: IAssertionProps[];
+  tests: ITest[];
+  groups: IGroup[];
 
   beforeStartFunctions: Queue<VoidLikeFunction>;
   afterAllFunctions: Queue<VoidLikeFunction>;

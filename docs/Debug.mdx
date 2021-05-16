@@ -1,0 +1,36 @@
+---
+id: debug
+title: Debug
+custom_edit_url: https://github.com/cordejs/corde/blob/master/docs/Debug.mdx
+---
+
+It's possible to debug corde using native operations in node. You can do it by:
+
+```bash
+node --inspect-brk node_modules/corde/bin/corde [any other arguments here]
+or on Windows
+node --inspect-brk ./node_modules/corde/bin/corde [any other arguments here]
+```
+
+## Debugging in VS Code
+
+Create a file `launch.json` in `.vscode` folder with the follow code:
+
+```json
+{
+  "configurations": [
+    {
+      "args": ["--files", "./bot.test.js"],
+      "runtimeArgs": ["--inspect-brk"],
+      "internalConsoleOptions": "openOnSessionStart",
+      "name": "Corde tests",
+      "program": "${workspaceFolder}/node_modules/corde/bin/corde",
+      "request": "launch",
+      "type": "node"
+    }
+  ]
+}
+```
+
+When corde is executed in debug mode, all timeout operations are disabled.
+It is done to prevent timeout exceptions to be thrown during execution

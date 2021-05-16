@@ -1,0 +1,90 @@
+{
+  "version-4.x/docs": [
+    {
+      "collapsed": false,
+      "type": "category",
+      "label": "Introduction",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-4.x/getting-started"
+        },
+        {
+          "type": "doc",
+          "id": "version-4.x/cli"
+        },
+        {
+          "type": "doc",
+          "id": "version-4.x/configurations"
+        }
+      ]
+    },
+    {
+      "collapsed": false,
+      "type": "category",
+      "label": "Guides",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-4.x/creatingdiscordbot"
+        }
+      ]
+    },
+    {
+      "collapsed": false,
+      "type": "category",
+      "label": "API Reference",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-4.x/expect"
+        },
+        {
+          "type": "doc",
+          "id": "version-4.x/hooks"
+        },
+        {
+          "type": "doc",
+          "id": "version-4.x/closures"
+        },
+        {
+          "type": "doc",
+          "id": "version-4.x/debug"
+        },
+        {
+          "type": "doc",
+          "id": "version-4.x/utilities"
+        },
+        {
+          "type": "doc",
+          "id": "version-4.x/colors"
+        },
+        {
+          "type": "doc",
+          "id": "version-4.x/permissions"
+        }
+      ]
+    }
+  ],
+  "version-4.x/structures": [
+    {
+      "collapsed": false,
+      "type": "category",
+      "label": "Structures",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-4.x/structures/home"
+        },
+        {
+          "type": "doc",
+          "id": "version-4.x/structures/corde_role"
+        },
+        {
+          "type": "doc",
+          "id": "version-4.x/structures/corde_guild"
+        }
+      ]
+    }
+  ]
+}

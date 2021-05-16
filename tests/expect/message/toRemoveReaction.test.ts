@@ -2,7 +2,7 @@ import MockDiscord from "../../mocks/mockDiscord";
 import { initCordeClientWithChannel, testUtils } from "../../testHelper";
 import { Client } from "discord.js";
 import { ToRemoveReaction } from "../../../src/expect/matches";
-import { CordeBotLike, TestReport } from "../../../src/types";
+import { ICordeBot, ITestReport } from "../../../src/types";
 import { buildReportMessage, typeOf } from "../../../src/utils";
 import { MockEvents } from "../../mocks/mockEvents";
 import { runtime } from "../../../src/environment";
@@ -13,7 +13,7 @@ describe("testing toRemoveReaction function", () => {
     mockDiscord = new MockDiscord();
   });
 
-  function initTestClass(cordeBot: CordeBotLike, isNot: boolean) {
+  function initTestClass(cordeBot: ICordeBot, isNot: boolean) {
     return testUtils.initTestClass(ToRemoveReaction, {
       command: "",
       isCascade: false,
@@ -28,7 +28,7 @@ describe("testing toRemoveReaction function", () => {
     // @ts-ignore
     const report = await toRemoveReaction.action(["1"], 1);
 
-    const expectedReport: TestReport = {
+    const expectedReport: ITestReport = {
       pass: false,
       testName: toRemoveReaction.toString(),
       message: buildReportMessage(
@@ -47,7 +47,7 @@ describe("testing toRemoveReaction function", () => {
     // @ts-ignore
     const report = await toRemoveReaction.action(undefined);
 
-    const expectedReport: TestReport = {
+    const expectedReport: ITestReport = {
       pass: false,
       testName: toRemoveReaction.toString(),
       message: buildReportMessage(
@@ -66,7 +66,7 @@ describe("testing toRemoveReaction function", () => {
     // @ts-ignore
     const report = await toRemoveReaction.action(null);
 
-    const expectedReport: TestReport = {
+    const expectedReport: ITestReport = {
       pass: false,
       testName: toRemoveReaction.toString(),
       message: buildReportMessage(
@@ -85,7 +85,7 @@ describe("testing toRemoveReaction function", () => {
     // @ts-ignore
     const report = await toRemoveReaction.action({});
 
-    const expectedReport: TestReport = {
+    const expectedReport: ITestReport = {
       pass: false,
       testName: toRemoveReaction.toString(),
       message: buildReportMessage(
@@ -106,7 +106,7 @@ describe("testing toRemoveReaction function", () => {
     cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
     const toRemoveReaction = initTestClass(cordeClient, false);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: true,
       testName: toRemoveReaction.toString(),
     };
@@ -122,7 +122,7 @@ describe("testing toRemoveReaction function", () => {
     cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
     const toRemoveReaction = initTestClass(cordeClient, true);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: true,
       testName: toRemoveReaction.toString(),
     };
@@ -138,7 +138,7 @@ describe("testing toRemoveReaction function", () => {
     cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
     const toRemoveReaction = initTestClass(cordeClient, false);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: false,
       testName: toRemoveReaction.toString(),
       message: buildReportMessage(
@@ -160,7 +160,7 @@ describe("testing toRemoveReaction function", () => {
     events.mockOnceMessageReactionsRemoveToReject();
     const toRemoveReaction = initTestClass(cordeClient, false);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: false,
       testName: toRemoveReaction.toString(),
       message: buildReportMessage(
@@ -182,7 +182,7 @@ describe("testing toRemoveReaction function", () => {
     events.mockOnceMessageReactionsRemove();
     const toRemoveReaction = initTestClass(cordeClient, false);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: true,
       testName: toRemoveReaction.toString(),
     };
@@ -200,7 +200,7 @@ describe("testing toRemoveReaction function", () => {
     events.mockOnceMessageReactionsRemove();
     const toRemoveReaction = initTestClass(cordeClient, true);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: false,
       testName: toRemoveReaction.toString(),
       message: buildReportMessage(
@@ -216,6 +216,29 @@ describe("testing toRemoveReaction function", () => {
       { id: mockDiscord.messageReaction.emoji.id },
       { name: mockDiscord.messageReaction.emoji.name },
     ]);
+
+    expect(report).toEqual(reportModel);
+    expect(report).toMatchSnapshot();
+  });
+
+  it("should return a failed test due to failure in message sending", async () => {
+    const corde = initCordeClientWithChannel(mockDiscord, new Client());
+    corde.getRoles = jest.fn().mockReturnValue(mockDiscord.roleManager.cache);
+    corde.findRole = jest.fn().mockReturnValue(mockDiscord.role);
+
+    const erroMessage = "can not send message to channel x";
+    corde.sendTextMessage = jest
+      .fn()
+      .mockImplementation(() => Promise.reject(new Error(erroMessage)));
+
+    const toRemoveReaction = initTestClass(corde, false);
+    const report = await toRemoveReaction.action(["😀"], { id: "123" });
+
+    const reportModel: ITestReport = {
+      pass: false,
+      message: buildReportMessage(erroMessage),
+      testName: toRemoveReaction.toString(),
+    };
 
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();

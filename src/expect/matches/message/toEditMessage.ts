@@ -1,26 +1,26 @@
 import { Message, MessageEmbed, PartialMessage } from "discord.js";
-import { MessageEditedIdentifier, MessageEmbedLike, Primitive, TestReport } from "../../../types";
+import { IMessageEditedIdentifier, IMessageEmbed, Primitive, ITestReport } from "../../../types";
 import { isPrimitiveValue, typeOf } from "../../../utils";
-import { ExpectTestBaseParams } from "../../../types";
+import { IExpectTestBaseParams } from "../../../types";
 import { MessageExpectTest } from "./messageExpectTest";
 
 /**
  * @internal
  */
 export class ToEditMessage extends MessageExpectTest {
-  constructor(params: ExpectTestBaseParams) {
+  constructor(params: IExpectTestBaseParams) {
     super({ ...params, testName: "toEditMessage" });
   }
 
   async action(
-    newValue: Primitive | MessageEmbedLike,
-    messageIdentifier?: MessageEditedIdentifier | string,
-  ): Promise<TestReport> {
+    newValue: Primitive | IMessageEmbed,
+    messageIdentifier?: IMessageEditedIdentifier | string,
+  ): Promise<ITestReport> {
     let _expect: Primitive | MessageEmbed;
 
     if (!isPrimitiveValue(newValue) && typeOf(newValue) !== "object") {
       return this.createReport(
-        "expected: expect value to be a primitive value (string, boolean, number) or an MessageEmbedLike object\n",
+        "expected: expect value to be a primitive value (string, boolean, number) or an IMessageEmbed object\n",
         `received: ${typeOf(newValue)}`,
       );
     }
@@ -31,7 +31,7 @@ export class ToEditMessage extends MessageExpectTest {
       return this.createFailedTest(error.message);
     }
 
-    let _messageData: MessageEditedIdentifier | undefined;
+    let _messageData: IMessageEditedIdentifier | undefined;
 
     if (typeof messageIdentifier === "string") {
       _messageData = { id: messageIdentifier };
@@ -66,7 +66,7 @@ export class ToEditMessage extends MessageExpectTest {
     }
 
     if (typeOf(newValue) === "object") {
-      _expect = this.embedMessageLikeToMessageEmbed(newValue as MessageEmbedLike);
+      _expect = this.embedMessageLikeToMessageEmbed(newValue as IMessageEmbed);
     } else {
       _expect = newValue as Primitive;
     }

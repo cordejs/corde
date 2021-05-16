@@ -1,5 +1,5 @@
 import { testCollector } from "../../src/common/testCollector";
-import { Test } from "../../src/types";
+import { ITest } from "../../src/types";
 import { test as _test } from "../../src/closures";
 import { expect as cordeExpect } from "../../src/expect";
 
@@ -20,7 +20,7 @@ describe("Testing test function", () => {
 
   it("Should add a test", async () => {
     const testName = "test group";
-    const testObj: Test = {
+    const testObj: ITest = {
       testsFunctions: [],
       name: testName,
     };

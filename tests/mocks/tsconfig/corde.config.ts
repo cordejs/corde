@@ -2,9 +2,9 @@ module.exports = {
   botPrefix: "",
   botTestId: "",
   channelId: "",
-  cordeTestToken: "",
+  cordeBotToken: "",
   guildId: "",
-  testFiles: [""],
-  botTestToken: "",
-  timeout: 5000,
+  testMatches: [""],
+  botToken: "",
+  timeOut: 5000,
 };

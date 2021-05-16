@@ -2,10 +2,10 @@
 // Offen for debug purpose
 
 import { bot } from "./bot";
-import { botTestToken } from "./corde.config";
+import { botToken } from "./corde.config";
 
 bot
-  .login(botTestToken)
+  .login(botToken)
   .then(() => {
     console.log("connected!");
   })
