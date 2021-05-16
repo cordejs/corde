@@ -1,3 +1,17 @@
+# 4.0.0
+
+## 💣 Breaking changes
+
+- Define test files and ignore files using regex patterns. (#695)(#677)[https://github.com/cordejs/corde/pull/677]
+
+## 🐛 Bug Fixes
+
+- Corde validation error is being silent (#676)(#677)[https://github.com/cordejs/corde/pull/677]
+
+## 🚀 Features
+
+- Disable timeout when running corde in debug (#675)(#677)[https://github.com/cordejs/corde/pull/677]
+
 # 3.1.5
 
 ## 💡 Miscellaneous
