@@ -2,7 +2,7 @@ import chalk, { Color } from "chalk";
 import { Client } from "discord.js";
 import { runtime } from "../../../src/common/runtime";
 import { ToSetRoleColor } from "../../../src/expect/matches";
-import { CordeBotLike, TestReport } from "../../../src/types";
+import { ICordeBot, ITestReport } from "../../../src/types";
 import { buildReportMessage, Colors, resolveColor } from "../../../src/utils";
 import MockDiscord from "../../mocks/mockDiscord";
 import { MockEvents } from "../../mocks/mockEvents";
@@ -23,7 +23,7 @@ function initClient() {
   return corde;
 }
 
-function initTestClass(cordeBot: CordeBotLike, isNot: boolean) {
+function initTestClass(cordeBot: ICordeBot, isNot: boolean) {
   return testUtils.initTestClass(ToSetRoleColor, {
     command: "toDelete",
     cordeBot: cordeBot,

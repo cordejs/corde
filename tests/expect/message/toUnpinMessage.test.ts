@@ -1,7 +1,7 @@
 import { Client } from "discord.js";
 import { runtime } from "../../../src/common/runtime";
 import { ToUnPinMessage } from "../../../src/expect/matches";
-import { CordeBotLike, TestReport } from "../../../src/types";
+import { ICordeBot, ITestReport } from "../../../src/types";
 import { buildReportMessage, typeOf } from "../../../src/utils";
 import MockDiscord from "../../mocks/mockDiscord";
 import { MockEvents } from "../../mocks/mockEvents";
@@ -14,7 +14,7 @@ describe("testing unpin message test", () => {
     mockDiscord = new MockDiscord();
   });
 
-  function initTestClass(cordeBot: CordeBotLike, isNot: boolean) {
+  function initTestClass(cordeBot: ICordeBot, isNot: boolean) {
     return testUtils.initTestClass(ToUnPinMessage, {
       isCascade: false,
       command: "toPin",
@@ -28,11 +28,11 @@ describe("testing unpin message test", () => {
     const toUnPinMessage = initTestClass(corde, false);
     const report = await toUnPinMessage.action(null);
 
-    const expectReport: TestReport = {
+    const expectReport: ITestReport = {
       pass: false,
       testName: toUnPinMessage.toString(),
       message: buildReportMessage(
-        `expected: message identifier to be a string or a MessageIdentifier object\n`,
+        `expected: message identifier to be a string or a IMessageIdentifier object\n`,
         `received: ${typeOf(null)}`,
       ),
     };
@@ -46,11 +46,11 @@ describe("testing unpin message test", () => {
     const toUnPinMessage = initTestClass(corde, false);
     const report = await toUnPinMessage.action(undefined);
 
-    const expectReport: TestReport = {
+    const expectReport: ITestReport = {
       pass: false,
       testName: toUnPinMessage.toString(),
       message: buildReportMessage(
-        `expected: message identifier to be a string or a MessageIdentifier object\n`,
+        `expected: message identifier to be a string or a IMessageIdentifier object\n`,
         `received: ${typeOf(undefined)}`,
       ),
     };
@@ -65,7 +65,7 @@ describe("testing unpin message test", () => {
     const toUnPinMessage = initTestClass(corde, true);
     const report = await toUnPinMessage.action("1233");
 
-    const expectReport: TestReport = {
+    const expectReport: ITestReport = {
       pass: true,
       testName: toUnPinMessage.toString(),
     };
@@ -81,7 +81,7 @@ describe("testing unpin message test", () => {
     const report = await toUnPinMessage.action("1233");
 
     const msgString = toUnPinMessage.humanizeMessageIdentifierObject({ id: "1233" });
-    const expectReport: TestReport = {
+    const expectReport: ITestReport = {
       pass: false,
       testName: toUnPinMessage.toString(),
       message: buildReportMessage(
@@ -101,7 +101,7 @@ describe("testing unpin message test", () => {
     const report = await toUnPinMessage.action({ id: "1233" });
 
     const msgString = toUnPinMessage.humanizeMessageIdentifierObject({ id: "1233" });
-    const expectReport: TestReport = {
+    const expectReport: ITestReport = {
       pass: false,
       testName: toUnPinMessage.toString(),
       message: buildReportMessage(
@@ -123,7 +123,7 @@ describe("testing unpin message test", () => {
 
     const report = await toUnPinMessage.action({ id: "1233" });
 
-    const expectReport: TestReport = {
+    const expectReport: ITestReport = {
       pass: true,
       testName: toUnPinMessage.toString(),
     };
@@ -142,7 +142,7 @@ describe("testing unpin message test", () => {
     const report = await toUnPinMessage.action({ id: "1233" });
     const msgString = toUnPinMessage.humanizeMessageIdentifierObject({ id: "1233" });
 
-    const expectReport: TestReport = {
+    const expectReport: ITestReport = {
       pass: false,
       testName: toUnPinMessage.toString(),
       message: buildReportMessage(
@@ -168,7 +168,7 @@ describe("testing unpin message test", () => {
     const toUnPinMessage = initTestClass(corde, false);
     const report = await toUnPinMessage.action("1");
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: false,
       message: buildReportMessage(erroMessage),
       testName: toUnPinMessage.toString(),

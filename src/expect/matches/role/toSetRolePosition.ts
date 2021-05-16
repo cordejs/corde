@@ -1,18 +1,21 @@
-import { RoleIdentifier, TestReport } from "../../../types";
+import { IRoleIdentifier, ITestReport } from "../../../types";
 import { typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
-import { ExpectTestBaseParams } from "../../../types";
+import { IExpectTestBaseParams } from "../../../types";
 import { ExpectTest } from "../expectTest";
 
 /**
  * @internal
  */
 export class ToSetRolePosition extends ExpectTest {
-  constructor(params: ExpectTestBaseParams) {
+  constructor(params: IExpectTestBaseParams) {
     super({ ...params, testName: "toSetRolePosition" });
   }
 
-  async action(newPosition: number, roleIdentifier: string | RoleIdentifier): Promise<TestReport> {
+  async action(
+    newPosition: number,
+    roleIdentifier: string | IRoleIdentifier,
+  ): Promise<ITestReport> {
     const identifier = roleUtils.getRoleData(roleIdentifier);
     const error = roleUtils.getErrorForUndefinedRoleData(identifier);
 

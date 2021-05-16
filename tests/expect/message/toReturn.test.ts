@@ -2,7 +2,7 @@ import { Client } from "discord.js";
 import MockDiscord from "../../mocks/mockDiscord";
 import { createCordeBotWithMockedFunctions, testUtils } from "../../testHelper";
 import { MockEvents } from "../../mocks/mockEvents";
-import { CordeBotLike, TestReport } from "../../../src/types";
+import { ICordeBot, ITestReport } from "../../../src/types";
 import { ToReturn } from "../../../src/expect/matches";
 import { buildReportMessage, diff, formatObject } from "../../../src/utils";
 import { runtime } from "../../../src/common/runtime";
@@ -14,7 +14,7 @@ describe("testing toReturn", () => {
     mockDiscord = new MockDiscord();
   });
 
-  function initTestClass(cordeBot: CordeBotLike, isNot: boolean) {
+  function initTestClass(cordeBot: ICordeBot, isNot: boolean) {
     return testUtils.initTestClass(ToReturn, {
       isCascade: false,
       command: "toReturn",
@@ -27,13 +27,13 @@ describe("testing toReturn", () => {
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
 
     const message = buildReportMessage(
-      `expected: expect value to be a primitive value (string, boolean, number) or an MessageEmbedLike\n`,
+      `expected: expect value to be a primitive value (string, boolean, number) or an IMessageEmbed\n`,
       `received: null`,
     );
 
     const toReturn = initTestClass(cordeClient, false);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: false,
       testName: toReturn.toString(),
       message,
@@ -48,13 +48,13 @@ describe("testing toReturn", () => {
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
 
     const message = buildReportMessage(
-      `expected: expect value to be a primitive value (string, boolean, number) or an MessageEmbedLike\n`,
+      `expected: expect value to be a primitive value (string, boolean, number) or an IMessageEmbed\n`,
       `received: undefined`,
     );
 
     const toReturn = initTestClass(cordeClient, false);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: false,
       testName: toReturn.toString(),
       message,
@@ -76,7 +76,7 @@ describe("testing toReturn", () => {
 
     const toReturn = initTestClass(cordeClient, false);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: false,
       testName: toReturn.toString(),
       message,
@@ -93,7 +93,7 @@ describe("testing toReturn", () => {
 
     const toReturn = initTestClass(cordeClient, true);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: true,
       testName: toReturn.toString(),
     };
@@ -112,7 +112,7 @@ describe("testing toReturn", () => {
 
     const toReturn = initTestClass(cordeClient, false);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: true,
       testName: toReturn.toString(),
     };
@@ -132,7 +132,7 @@ describe("testing toReturn", () => {
 
     const toReturn = initTestClass(cordeClient, false);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: true,
       testName: toReturn.toString(),
     };
@@ -153,7 +153,7 @@ describe("testing toReturn", () => {
 
     const toReturn = initTestClass(cordeClient, false);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: true,
       testName: toReturn.toString(),
     };
@@ -174,7 +174,7 @@ describe("testing toReturn", () => {
 
     const toReturn = initTestClass(cordeClient, false);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: true,
       testName: toReturn.toString(),
     };
@@ -195,7 +195,7 @@ describe("testing toReturn", () => {
 
     const toReturn = initTestClass(cordeClient, true);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: false,
       testName: toReturn.toString(),
       message: buildReportMessage(
@@ -219,7 +219,7 @@ describe("testing toReturn", () => {
 
     const toReturn = initTestClass(cordeClient, true);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: true,
       testName: toReturn.toString(),
     };
@@ -243,14 +243,14 @@ describe("testing toReturn", () => {
 
     const embedReturned = toReturn.getMessageByType(mockDiscord.message, "embed");
     const embedLike = {
-      author: "Test",
+      author: "ITest",
       fields: mockDiscord.messageEmbedLike.fields,
     };
 
     const embedExpect = toReturn.embedMessageLikeToMessageEmbed(embedLike);
     const embedExpectedMinified = toReturn.getMessageByType(embedExpect, "embed");
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: false,
       testName: toReturn.toString(),
       message: buildReportMessage(diff(embedReturned, embedExpectedMinified)),
@@ -276,7 +276,7 @@ describe("testing toReturn", () => {
     const expectValue = "expect value";
     const embedReturned = toReturn.getMessageByType(mockDiscord.message, "embed");
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: false,
       testName: toReturn.toString(),
       message: buildReportMessage(
@@ -302,7 +302,7 @@ describe("testing toReturn", () => {
 
     const embedExpect = toReturn.embedMessageLikeToMessageEmbed(mockDiscord.messageEmbedLike);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: false,
       testName: toReturn.toString(),
       message: buildReportMessage(
@@ -327,7 +327,7 @@ describe("testing toReturn", () => {
     const toReturn = initTestClass(cordeClient, false);
     const expectValue = "expect value";
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: false,
       testName: toReturn.toString(),
       message: buildReportMessage(
@@ -355,7 +355,7 @@ describe("testing toReturn", () => {
     const toReturn = initTestClass(corde, false);
     const report = await toReturn.action("");
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: false,
       message: buildReportMessage(erroMessage),
       testName: toReturn.toString(),

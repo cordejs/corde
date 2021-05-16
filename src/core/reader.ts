@@ -4,7 +4,7 @@ import { runtime } from "../common/runtime";
 import { printHookErrors } from "../common/printHookError";
 import { testCollector } from "../common/testCollector";
 import { FileError } from "../errors";
-import { IConfigOptions, ITestFilePattern, TestFile } from "../types";
+import { IConfigOptions, ITestFilePattern, ITestFile } from "../types";
 import { shortPathForPlataform, utils } from "../utils";
 
 class Reader {
@@ -41,8 +41,8 @@ class Reader {
     }
   }
 
-  async getTestsFromFiles(filesPattern: ITestFilePattern): Promise<TestFile[]> {
-    const testMatches: TestFile[] = [];
+  async getTestsFromFiles(filesPattern: ITestFilePattern): Promise<ITestFile[]> {
+    const testMatches: ITestFile[] = [];
     if (!filesPattern || !filesPattern.filesPattern.length) {
       throw new FileError("No file was informed.");
     }

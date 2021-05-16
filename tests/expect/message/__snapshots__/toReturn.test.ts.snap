@@ -23,7 +23,7 @@ Object {
     [32m-     \\"name\\": \\"Some name\\",[39m
     [32m-     \\"url\\": \\"https://discord.js.org\\",[39m
     [31m+     \\"icon_url\\": undefined,[39m
-    [31m+     \\"name\\": \\"Test\\",[39m
+    [31m+     \\"name\\": \\"ITest\\",[39m
     [31m+     \\"url\\": undefined,[39m
     [2m    },[22m
     [32m-   \\"color\\": 39423,[39m
@@ -248,7 +248,7 @@ Object {
 exports[`testing toReturn should return a failed test due to invalid parameter (null) 1`] = `
 Object {
   "message": "    
-    expected: expect value to be a primitive value (string, boolean, number) or an MessageEmbedLike
+    expected: expect value to be a primitive value (string, boolean, number) or an IMessageEmbed
     received: null
 ",
   "pass": false,
@@ -259,7 +259,7 @@ Object {
 exports[`testing toReturn should return a failed test due to invalid parameter (undefined) 1`] = `
 Object {
   "message": "    
-    expected: expect value to be a primitive value (string, boolean, number) or an MessageEmbedLike
+    expected: expect value to be a primitive value (string, boolean, number) or an IMessageEmbed
     received: undefined
 ",
   "pass": false,

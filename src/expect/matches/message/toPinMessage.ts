@@ -1,28 +1,28 @@
-import { MessageIdentifier, TestReport } from "../../../types";
+import { IMessageIdentifier, ITestReport } from "../../../types";
 import { typeOf } from "../../../utils";
-import { ExpectTestBaseParams } from "../../../types";
+import { IExpectTestBaseParams } from "../../../types";
 import { MessageExpectTest } from "./messageExpectTest";
 
 /**
  * @internal
  */
 export class ToPinMessage extends MessageExpectTest {
-  constructor(params: ExpectTestBaseParams) {
+  constructor(params: IExpectTestBaseParams) {
     super({ ...params, testName: "toPinMessage" });
   }
 
-  async action(messageIdentifier: MessageIdentifier | string): Promise<TestReport> {
+  async action(messageIdentifier: IMessageIdentifier | string): Promise<ITestReport> {
     if (
       !messageIdentifier ||
       (typeOf(messageIdentifier) !== "string" && typeOf(messageIdentifier) !== "object")
     ) {
       return this.createReport(
-        "expected: message identifier to be a string or a MessageIdentifier object\n",
+        "expected: message identifier to be a string or a IMessageIdentifier object\n",
         `received: ${typeOf(messageIdentifier)}`,
       );
     }
 
-    let _msgIdentifier: MessageIdentifier;
+    let _msgIdentifier: IMessageIdentifier;
 
     if (typeof messageIdentifier === "string") {
       _msgIdentifier = { id: messageIdentifier };
@@ -50,7 +50,7 @@ export class ToPinMessage extends MessageExpectTest {
       );
     }
 
-    // Test has passed due to event validation
+    // ITest has passed due to event validation
     this.hasPassed = true;
 
     this.invertHasPassedIfIsNot();

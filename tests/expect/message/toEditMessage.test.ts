@@ -1,7 +1,7 @@
 import { Client } from "discord.js";
 import MockDiscord from "../../mocks/mockDiscord";
 import { createCordeBotWithMockedFunctions, testUtils } from "../../testHelper";
-import { CordeBotLike, TestReport } from "../../../src/types";
+import { ICordeBot, ITestReport } from "../../../src/types";
 import { ToEditMessage } from "../../../src/expect/matches";
 import { buildReportMessage, diff, formatObject } from "../../../src/utils";
 import { runtime } from "../../../src/common/runtime";
@@ -14,7 +14,7 @@ describe("testing toEditMessage", () => {
     mockDiscord = new MockDiscord();
   });
 
-  function initTestClass(cordeBot: CordeBotLike, commandName?: string, isNot?: boolean) {
+  function initTestClass(cordeBot: ICordeBot, commandName?: string, isNot?: boolean) {
     return testUtils.initTestClass(ToEditMessage, {
       command: commandName,
       cordeBot: cordeBot,
@@ -27,13 +27,13 @@ describe("testing toEditMessage", () => {
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
 
     const message = buildReportMessage(
-      `expected: expect value to be a primitive value (string, boolean, number) or an MessageEmbedLike object\n`,
+      `expected: expect value to be a primitive value (string, boolean, number) or an IMessageEmbed object\n`,
       `received: null`,
     );
 
     const toEditMessage = initTestClass(cordeClient, "ping", false);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: false,
       message,
       testName: toEditMessage.toString(),
@@ -48,13 +48,13 @@ describe("testing toEditMessage", () => {
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
 
     const message = buildReportMessage(
-      `expected: expect value to be a primitive value (string, boolean, number) or an MessageEmbedLike object\n`,
+      `expected: expect value to be a primitive value (string, boolean, number) or an IMessageEmbed object\n`,
       `received: undefined`,
     );
 
     const toEditMessage = initTestClass(cordeClient, "ping", false);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: false,
       message,
       testName: toEditMessage.toString(),
@@ -76,7 +76,7 @@ describe("testing toEditMessage", () => {
 
     const toEditMessage = initTestClass(cordeClient, "ping", false);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: false,
       message,
       testName: toEditMessage.toString(),
@@ -98,7 +98,7 @@ describe("testing toEditMessage", () => {
 
     const toEditMessage = initTestClass(cordeClient, "ping", false);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: false,
       message,
       testName: toEditMessage.toString(),
@@ -120,7 +120,7 @@ describe("testing toEditMessage", () => {
 
     const toEditMessage = initTestClass(cordeClient, "ping", false);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: false,
       testName: toEditMessage.toString(),
       message,
@@ -142,7 +142,7 @@ describe("testing toEditMessage", () => {
 
     const toEditMessage = initTestClass(cordeClient, "ping", false);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: false,
       message,
       testName: toEditMessage.toString(),
@@ -159,7 +159,7 @@ describe("testing toEditMessage", () => {
 
     const toEditMessage = initTestClass(cordeClient, "ping", true);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: true,
       testName: toEditMessage.toString(),
     };
@@ -178,7 +178,7 @@ describe("testing toEditMessage", () => {
 
     const toEditMessage = initTestClass(cordeClient, "ping", false);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: true,
       testName: toEditMessage.toString(),
     };
@@ -198,7 +198,7 @@ describe("testing toEditMessage", () => {
 
     const toEditMessage = initTestClass(cordeClient, "ping", false);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: true,
       testName: toEditMessage.toString(),
     };
@@ -219,7 +219,7 @@ describe("testing toEditMessage", () => {
 
     const toEditMessage = initTestClass(cordeClient, "ping", false);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: true,
       testName: toEditMessage.toString(),
     };
@@ -239,7 +239,7 @@ describe("testing toEditMessage", () => {
 
     const toEditMessage = initTestClass(cordeClient, "ping", false);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: true,
       testName: toEditMessage.toString(),
     };
@@ -259,7 +259,7 @@ describe("testing toEditMessage", () => {
 
     const toEditMessage = initTestClass(cordeClient, "ping", true);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: false,
       testName: toEditMessage.toString(),
       message: buildReportMessage(
@@ -283,7 +283,7 @@ describe("testing toEditMessage", () => {
 
     const toEditMessage = initTestClass(cordeClient, "ping", true);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: true,
       testName: toEditMessage.toString(),
     };
@@ -305,14 +305,14 @@ describe("testing toEditMessage", () => {
 
     const embedReturned = toEditMessage.getMessageByType(mockDiscord.messageWithEmbed, "embed");
     const embedLike = {
-      author: "Test",
+      author: "ITest",
       fields: mockDiscord.messageEmbedLike.fields,
     };
 
     const embedExpect = toEditMessage.embedMessageLikeToMessageEmbed(embedLike);
     const embedExpectedMinified = toEditMessage.getMessageByType(embedExpect, "embed");
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: false,
       testName: toEditMessage.toString(),
       message: buildReportMessage(diff(embedReturned, embedExpectedMinified)),
@@ -335,7 +335,7 @@ describe("testing toEditMessage", () => {
     const expectValue = "expect value";
     const embedReturned = toEditMessage.getMessageByType(mockDiscord.messageWithEmbed, "embed");
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: false,
       testName: toEditMessage.toString(),
       message: buildReportMessage(
@@ -360,7 +360,7 @@ describe("testing toEditMessage", () => {
 
     const toEditMessage = initTestClass(cordeClient, "ping", false);
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: false,
       message: buildReportMessage(
         `expected: '${expectValue}'\n`,
@@ -389,7 +389,7 @@ describe("testing toEditMessage", () => {
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessageContentOrEmbedChange();
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: false,
       message: buildReportMessage(
         `expected: ${formatObject(embedExpect)}\n`,
@@ -417,7 +417,7 @@ describe("testing toEditMessage", () => {
     const toEditMessage = initTestClass(corde, "");
     const report = await toEditMessage.action("value", { id: "123" });
 
-    const reportModel: TestReport = {
+    const reportModel: ITestReport = {
       pass: false,
       message: buildReportMessage(erroMessage),
       testName: toEditMessage.toString(),

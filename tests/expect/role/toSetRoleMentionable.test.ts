@@ -2,7 +2,7 @@ import { Client } from "discord.js";
 import { ToSetRoleMentionable } from "../../../src/expect/matches";
 import MockDiscord from "../../mocks/mockDiscord";
 import { createReport, initCordeClientWithChannel, testUtils } from "../../testHelper";
-import { CordeBotLike, TestReport } from "../../../src/types";
+import { ICordeBot, ITestReport } from "../../../src/types";
 import { buildReportMessage } from "../../../src/utils";
 import { MockEvents } from "../../mocks/mockEvents";
 import { runtime } from "../../../src/common/runtime";
@@ -17,7 +17,7 @@ function initClient() {
   return corde;
 }
 
-function initTestClass(cordeBot: CordeBotLike, isNot: boolean) {
+function initTestClass(cordeBot: ICordeBot, isNot: boolean) {
   return testUtils.initTestClass(ToSetRoleMentionable, {
     command: "toDelete",
     cordeBot: cordeBot,

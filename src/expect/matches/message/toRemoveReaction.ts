@@ -1,8 +1,8 @@
 import { MessageReaction, PartialUser, User } from "discord.js";
 import { TimeoutError } from "../../../errors";
-import { EmojiLike, EmojisType, MessageIdentifier, TestReport } from "../../../types";
+import { IEmoji, EmojisType, IMessageIdentifier, ITestReport } from "../../../types";
 import { typeOf } from "../../../utils";
-import { ExpectTestBaseParams } from "../../../types";
+import { IExpectTestBaseParams } from "../../../types";
 import { ExpectTest } from "../expectTest";
 
 // TODO: refact it due to it's equal to ToAddReaction
@@ -11,14 +11,14 @@ import { ExpectTest } from "../expectTest";
  * @internal
  */
 export class ToRemoveReaction extends ExpectTest {
-  constructor(params: ExpectTestBaseParams) {
+  constructor(params: IExpectTestBaseParams) {
     super({ ...params, testName: "toRemoveReaction" });
   }
 
   async action(
     emojis: EmojisType,
-    messageIdentifier?: MessageIdentifier | string,
-  ): Promise<TestReport> {
+    messageIdentifier?: IMessageIdentifier | string,
+  ): Promise<ITestReport> {
     if (
       messageIdentifier != null &&
       typeOf(messageIdentifier) !== "object" &&
@@ -45,7 +45,7 @@ export class ToRemoveReaction extends ExpectTest {
 
     let reactionsWithAuthors: [MessageReaction, User | PartialUser | void][];
     try {
-      const emojiLike = emojis.map((e: string | EmojiLike) => {
+      const emojiLike = emojis.map((e: string | IEmoji) => {
         if (typeof e === "string") {
           return { name: e };
         }
@@ -110,7 +110,7 @@ function reactionsFromResponse(
 
 function stringifyReactionToPrint(emojis: EmojisType) {
   return emojis
-    .map((e: string | EmojiLike) => {
+    .map((e: string | IEmoji) => {
       if (typeof e !== "string") {
         if (e.id) {
           return e.id;

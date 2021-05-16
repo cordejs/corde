@@ -5,7 +5,7 @@ import { testCollector } from "../../src/common/testCollector";
 import { reader } from "../../src/core/reader";
 import { FileError } from "../../src/errors";
 import { beforeStart as _beforeStart } from "../../src/hooks";
-import { TestFile } from "../../src/types";
+import { ITestFile } from "../../src/types";
 import consts from "../mocks/constsNames";
 
 // TODO: This class must have more tests
@@ -103,7 +103,7 @@ describe("reader class", () => {
         const tests = await reader.getTestsFromFiles({
           filesPattern: [path.resolve(process.cwd(), pathFile)],
         });
-        const expectedTests: TestFile[] = [
+        const expectedTests: ITestFile[] = [
           {
             path: pathReturned,
             isEmpty: false,
@@ -128,7 +128,7 @@ describe("reader class", () => {
         const tests = await reader.getTestsFromFiles({
           filesPattern: [path.resolve(process.cwd(), pathFile)],
         });
-        const expectedTests: TestFile[] = [
+        const expectedTests: ITestFile[] = [
           {
             path: pathReturned,
             isEmpty: false,
@@ -164,7 +164,7 @@ describe("reader class", () => {
         const tests = await reader.getTestsFromFiles({
           filesPattern: [path.resolve(process.cwd(), pathFile)],
         });
-        const expectedTests: TestFile[] = [
+        const expectedTests: ITestFile[] = [
           {
             path: pathReturned,
             isEmpty: false,
@@ -192,7 +192,7 @@ describe("reader class", () => {
       const tests = await reader.getTestsFromFiles({
         filesPattern: [path.resolve(process.cwd(), pathFile)],
       });
-      const expectedTests: TestFile[] = [
+      const expectedTests: ITestFile[] = [
         {
           path: pathReturned,
           isEmpty: false,
@@ -219,7 +219,7 @@ describe("reader class", () => {
       const tests = await reader.getTestsFromFiles({
         filesPattern: [path.resolve(process.cwd(), pathFile)],
       });
-      const expectedTests: TestFile[] = [
+      const expectedTests: ITestFile[] = [
         {
           path: pathReturned,
           isEmpty: true,
@@ -236,7 +236,7 @@ describe("reader class", () => {
       const tests = await reader.getTestsFromFiles({
         filesPattern: [path.resolve(process.cwd(), pathFile)],
       });
-      const expectedTests: TestFile[] = [
+      const expectedTests: ITestFile[] = [
         {
           path: pathReturned,
           isEmpty: true,

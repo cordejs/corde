@@ -1,18 +1,18 @@
 import { EmbedFieldData, MessageEmbedImage, MessageEmbedThumbnail } from "discord.js";
 import { Stream } from "stream";
 import {
-  FileLike,
-  MessageEmbedAuthor,
-  MessageEmbedFooter,
-  MessageEmbedLike,
-  MinifiedEmbedMessage,
-  TestReport,
+  IFile,
+  IMessageEmbedAuthor,
+  IMessageEmbedFooter,
+  IMessageEmbed,
+  IMinifiedEmbedMessage,
+  ITestReport,
 } from "../../../src/types";
 
 import { MessageExpectTest } from "../../../src/expect/matches/message/messageExpectTest";
 
 class ExpectMessage extends MessageExpectTest {
-  action(..._: any[]): Promise<TestReport> {
+  action(..._: any[]): Promise<ITestReport> {
     throw new Error("Method not implemented.");
   }
 }
@@ -33,7 +33,7 @@ describe("testing extension", () => {
   describe("testing createNotFoundMessageForMessageData", () => {
     it("should convert messageEmbedLike simples data to messageEmbed", () => {
       const timeNow = Date.now();
-      const messageLike: MessageEmbedLike = {
+      const messageLike: IMessageEmbed = {
         color: 3447003,
         description: "test description",
         fields: [
@@ -71,17 +71,17 @@ describe("testing extension", () => {
     });
 
     it("should convert messageEmbedLike author string", () => {
-      const messageLike: MessageEmbedLike = {
+      const messageLike: IMessageEmbed = {
         author: "lucas",
       };
       const embed = extension.embedMessageLikeToMessageEmbed(messageLike);
-      expect(embed.author).toMatchObject<MessageEmbedAuthor>({
+      expect(embed.author).toMatchObject<IMessageEmbedAuthor>({
         name: "lucas",
       });
     });
 
     it("should convert messageEmbedLike author object", () => {
-      const messageLike: MessageEmbedLike = {
+      const messageLike: IMessageEmbed = {
         author: {
           name: "lucas",
         },
@@ -91,7 +91,7 @@ describe("testing extension", () => {
     });
 
     it("should convert messageEmbedLike files string", () => {
-      const messageLike: MessageEmbedLike = {
+      const messageLike: IMessageEmbed = {
         files: ["test 1"],
       };
       const embed = extension.embedMessageLikeToMessageEmbed(messageLike);
@@ -100,7 +100,7 @@ describe("testing extension", () => {
 
     it("should convert messageEmbedLike files object", () => {
       const stream = new Stream();
-      const messageLike: MessageEmbedLike = {
+      const messageLike: IMessageEmbed = {
         files: [
           {
             name: "file 1",
@@ -109,7 +109,7 @@ describe("testing extension", () => {
         ],
       };
       const embed = extension.embedMessageLikeToMessageEmbed(messageLike);
-      expect(embed.files).toMatchObject<FileLike[]>([
+      expect(embed.files).toMatchObject<IFile[]>([
         {
           name: "file 1",
           attachment: stream,
@@ -124,7 +124,7 @@ describe("testing extension", () => {
           value: "field 1 value",
         },
       ];
-      const messageLike: MessageEmbedLike = {
+      const messageLike: IMessageEmbed = {
         fields,
       };
       const embed = extension.embedMessageLikeToMessageEmbed(messageLike);
@@ -132,11 +132,11 @@ describe("testing extension", () => {
     });
 
     it("should convert messageEmbedLike footer object", () => {
-      const footer: MessageEmbedFooter = {
+      const footer: IMessageEmbedFooter = {
         iconURL: "www.google",
         text: "footer text",
       };
-      const messageLike: MessageEmbedLike = {
+      const messageLike: IMessageEmbed = {
         footer,
       };
       const embed = extension.embedMessageLikeToMessageEmbed(messageLike);
@@ -144,10 +144,10 @@ describe("testing extension", () => {
     });
 
     it("should convert messageEmbedLike footer string", () => {
-      const footer: MessageEmbedFooter = {
+      const footer: IMessageEmbedFooter = {
         text: "footer text",
       };
-      const messageLike: MessageEmbedLike = {
+      const messageLike: IMessageEmbed = {
         footer: "footer text",
       };
       const embed = extension.embedMessageLikeToMessageEmbed(messageLike);
@@ -158,7 +158,7 @@ describe("testing extension", () => {
       const thumbnail: MessageEmbedThumbnail = {
         url: "wwww.google",
       };
-      const messageLike: MessageEmbedLike = {
+      const messageLike: IMessageEmbed = {
         thumbnailUrl: "wwww.google",
       };
       const embed = extension.embedMessageLikeToMessageEmbed(messageLike);
@@ -175,7 +175,7 @@ describe("testing extension", () => {
       });
 
       expect(
-        (extension.getMessageByType(messageEmbed, "embed") as MinifiedEmbedMessage).image,
+        (extension.getMessageByType(messageEmbed, "embed") as IMinifiedEmbedMessage).image,
       ).toBeTruthy();
     });
   });

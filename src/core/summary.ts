@@ -1,5 +1,5 @@
 import { TEXT_EMPTY, TEXT_FAIL, TEXT_PASS } from "../consts";
-import { RunnerReport } from "../types";
+import { IRunnerReport } from "../types";
 
 interface SummaryLine {
   label: string;
@@ -10,7 +10,7 @@ interface SummaryLine {
 }
 
 class Summary {
-  print(runnerReport: RunnerReport) {
+  print(runnerReport: IRunnerReport) {
     let message = "\n";
     message += this.buildTestFilesSummary(runnerReport) + "\n";
     message += this.buildTestsSummary(runnerReport) + "\n";
@@ -21,7 +21,7 @@ class Summary {
     return message;
   }
 
-  private buildTestFilesSummary(runnerReport: RunnerReport) {
+  private buildTestFilesSummary(runnerReport: IRunnerReport) {
     return this.buildSummaryLine({
       fail: runnerReport.totalTestFilesFailed,
       label: "Test Files: ",
@@ -31,7 +31,7 @@ class Summary {
     });
   }
 
-  private buildTestsSummary(runnerReport: RunnerReport) {
+  private buildTestsSummary(runnerReport: IRunnerReport) {
     return this.buildSummaryLine({
       fail: runnerReport.totalTestsFailed,
       label: "Tests:      ",

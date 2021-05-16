@@ -14,53 +14,53 @@ import { EmbedFieldData } from "discord.js";
 import { Stream } from "stream";
 import { Events } from "./core/events";
 
-export interface TestReport {
+export interface ITestReport {
   pass: boolean;
   testName: string;
   message?: string;
   trace?: string;
 }
 
-export interface Author {
+export interface IAuthor {
   icon_url: string;
   name: string;
   url: string;
 }
 
-export interface Field {
+export interface IField {
   name: string;
   inline: boolean;
   value: string;
 }
 
-export interface Image {
+export interface IImage {
   url: string;
 }
 
-export interface Thumbnail {
+export interface IThumbnail {
   url: string;
 }
 
-export interface EmojiLike {
+export interface IEmoji {
   id?: string;
   name?: string;
 }
 
-export interface MinifiedEmbedMessage {
-  author: Author;
+export interface IMinifiedEmbedMessage {
+  author: IAuthor;
   color: number;
   description: string;
-  fields: Field[];
+  fields: IField[];
   footer?: any;
-  image: Image;
-  thumbnail: Thumbnail;
+  image: IImage;
+  thumbnail: IThumbnail;
   timestamp?: any;
   title: string;
   type: string;
   url: string;
 }
 
-export interface MessageIdentifier {
+export interface IMessageIdentifier {
   /**
    * Text of a message, use it to find a message if you don't know
    * it's **id**.
@@ -72,23 +72,23 @@ export interface MessageIdentifier {
    */
   content?: string;
   /**
-   * Identifier of the message
+   * IIdentifier of the message
    */
   id?: string;
 }
 
-export interface Identifier {
+export interface IIdentifier {
   id?: string;
 }
 
-export interface RoleIdentifier extends Identifier {
+export interface IRoleIdentifier extends IIdentifier {
   name?: string;
 }
 
 /**
  * Contract with necessary functions of Discord.js Client
  */
-export interface CordeBotLike {
+export interface ICordeBot {
   readonly events: Events;
   readonly guild: Guild;
   readonly roleManager: RoleManager;
@@ -130,29 +130,29 @@ export interface CordeBotLike {
    */
   isLoggedIn(): boolean;
   findMessage(filter: (message: Message) => boolean): Promise<Message | undefined>;
-  findMessage(data: MessageIdentifier): Promise<Message | undefined>;
+  findMessage(data: IMessageIdentifier): Promise<Message | undefined>;
   findMessage(
-    data: MessageIdentifier | ((message: Message) => boolean),
+    data: IMessageIdentifier | ((message: Message) => boolean),
   ): Promise<Message | undefined>;
   fetchRoles(): Promise<RoleManager | null>;
   fetchRole(id: string): Promise<Role | null>;
-  hasRole(roleIdentifier: RoleIdentifier): Promise<boolean>;
-  findRole(roleIdentifier: RoleIdentifier): Promise<Role | undefined>;
+  hasRole(roleIdentifier: IRoleIdentifier): Promise<boolean>;
+  findRole(roleIdentifier: IRoleIdentifier): Promise<Role | undefined>;
   getRoles(): Collection<string, Role>;
   findGuild(guildId: string): Guild;
   findChannel(guild: Guild, channelId: string): GuildChannel;
 }
 
 export type VoidLikeFunction = (() => void) | (() => PromiseLike<void>) | (() => Promise<void>);
-export type TestFunctionType = (cordeBot: CordeBotLike) => Promise<TestReport>;
-export type messageType = "text" | "embed";
-export type messageOutputType = Message | MinifiedEmbedMessage;
-export type messageExpectationType = string | MessageEmbed;
+export type TestFunctionType = (cordeBot: ICordeBot) => Promise<ITestReport>;
+export type MessageType = "text" | "embed";
+export type MessageOutputType = Message | IMinifiedEmbedMessage;
+export type MessageExpectationType = string | MessageEmbed;
 export type GenericFunction = (...args: any[]) => any;
 export type Primitive = number | string | boolean;
 export type ResolveFunction<TResult> = (value: TResult) => void;
 export type RejectFunction = (reason?: any) => void;
-export type EmojisType = string[] | EmojiLike[] | (string | EmojiLike)[];
+export type EmojisType = string[] | IEmoji[] | (string | IEmoji)[];
 
 /**
  * Get all function `T` parameters as they may be
@@ -168,43 +168,43 @@ export type configFileType = "js" | "json" | "ts";
 /**
  * Represents **command** structure
  */
-export interface AssertionProps {
+export interface IAssertionProps {
   commandName: string;
-  expectation: messageExpectationType;
+  expectation: MessageExpectationType;
   usingTrueStatement: boolean;
-  output?: messageOutputType;
-  messageType: messageType;
+  output?: MessageOutputType;
+  MessageType: MessageType;
 }
 
 /**
  * Represents **test** structure
  */
-export interface Test {
+export interface ITest {
   name?: string | number | boolean;
-  subTests?: Test[];
+  subTests?: ITest[];
   testsFunctions: TestFunctionType[];
-  testsReports?: TestReport[];
+  testsReports?: ITestReport[];
 }
 
 /**
  * Represents **group** structure
  */
-export interface Group {
+export interface IGroup {
   name?: string | number | boolean;
-  subGroups?: Group[];
-  tests: Test[];
+  subGroups?: IGroup[];
+  tests: ITest[];
 }
 
 /**
  * Contain all test cases | groups of a test file.
  */
-export interface TestFile {
+export interface ITestFile {
   path: string;
-  groups: Group[];
+  groups: IGroup[];
   isEmpty: boolean;
 }
 
-export interface BaseRole {
+export interface IBaseRole {
   name?: string;
   color?: ColorResolvable | Colors;
   isHoist?: boolean;
@@ -262,9 +262,9 @@ export interface IJSONFile {
 /**
  * Object contract used to identify messages in message edition tests.
  */
-export interface MessageEditedIdentifier {
+export interface IMessageEditedIdentifier {
   /**
-   * Identifier of the message
+   * IIdentifier of the message
    */
   id?: string;
   /**
@@ -273,7 +273,7 @@ export interface MessageEditedIdentifier {
   oldContent?: string;
 }
 
-export interface SemiRunnerReport {
+export interface ISemiRunnerReport {
   totalTests: number;
   totalEmptyTests: number;
   totalEmptyTestFiles: number;
@@ -284,17 +284,17 @@ export interface SemiRunnerReport {
   totalTestFilesFailed: number;
 }
 
-export interface RunnerReport extends SemiRunnerReport {
+export interface IRunnerReport extends ISemiRunnerReport {
   testTimer: string;
 }
 
-export interface MessageEmbedAuthor {
+export interface IMessageEmbedAuthor {
   name?: string;
   url?: string;
   iconURL?: string;
 }
 
-export interface MessageEmbedFooter {
+export interface IMessageEmbedFooter {
   /**
    * footer text
    */
@@ -305,7 +305,7 @@ export interface MessageEmbedFooter {
   iconURL?: string;
 }
 
-export interface MessageEmbedImage {
+export interface IMessageEmbedImage {
   /**
    * source URL of the image (only supports HTTP(s) and attachments)
    */
@@ -320,7 +320,7 @@ export interface MessageEmbedImage {
   width?: number;
 }
 
-export interface MessageEmbedThumbnail {
+export interface IMessageEmbedThumbnail {
   /**
    * Url of the thumbnail
    */
@@ -335,7 +335,7 @@ export interface MessageEmbedThumbnail {
   width?: number;
 }
 
-export interface FileLike {
+export interface IFile {
   /**
    * Buffer, URL, or stream of the file.
    *
@@ -352,11 +352,11 @@ export interface FileLike {
 /**
  * Main and optional information about an embedded message.
  */
-export interface MessageEmbedLike {
+export interface IMessageEmbed {
   /**
    * author name **or** information
    */
-  author?: MessageEmbedAuthor | string;
+  author?: IMessageEmbedAuthor | string;
   /**
    * color code of the embed
    */
@@ -372,15 +372,15 @@ export interface MessageEmbedLike {
   /**
    * files URLs **or** information of the embed.
    */
-  files?: (FileLike | string)[];
+  files?: (IFile | string)[];
   /**
    * Footer url **or** information
    */
-  footer?: MessageEmbedFooter | string;
+  footer?: IMessageEmbedFooter | string;
   /**
-   * Image URL **or** information
+   * IImage URL **or** information
    */
-  image?: MessageEmbedImage | string;
+  image?: IMessageEmbedImage | string;
   /**
    * Source url of thumbnail (only supports HTTP(s) and attachments)
    */
@@ -566,7 +566,7 @@ export type BitFieldResolvable<T extends string> =
   | number
   | Readonly<BitField<T>>;
 
-export interface ImageURLOptions {
+export interface IImageURLOptions {
   format?: AllowedImageFormat;
   size?: ImageSize;
 }
@@ -799,8 +799,8 @@ export type Locale =
   | "zh-TW"
   | "zu-ZA";
 
-export interface ExpectTestBaseParams {
-  cordeBot: CordeBotLike;
+export interface IExpectTestBaseParams {
+  cordeBot: ICordeBot;
   command: string | number | boolean;
   isNot: boolean;
   timeout: number;
@@ -809,18 +809,18 @@ export interface ExpectTestBaseParams {
   channelId: string;
   channelIdToSendCommand?: string;
 }
-export interface ExpectTestParams extends ExpectTestBaseParams {
+export interface IExpectTestParams extends IExpectTestBaseParams {
   testName: string;
 }
 
-export type MayReturnMatch = Matches<any> | void;
+export type MayReturnMatch = IMatches<any> | void;
 
 /**
  * Defines all functions that can be used
  * to check a bot reaction of a command.
  *
  */
-export interface MessageMatches<TReturn extends MayReturnMatch> {
+export interface IMessageMatches<TReturn extends MayReturnMatch> {
   /**
    * Defines the message expected to be returned by a
    * command.
@@ -829,7 +829,7 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    *
    * @since 1.0
    */
-  toReturn(expect: boolean | number | string | MessageEmbedLike): TReturn;
+  toReturn(expect: boolean | number | string | IMessageEmbed): TReturn;
   /**
    * Defines [reactions](https://discordjs.guide/popular-topics/reactions.html#reacting-to-messages)
    * that must be added to the command message.
@@ -841,8 +841,8 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    * @since 1.0
    */
   toAddReaction(
-    emojis: string[] | EmojiLike[] | (string | EmojiLike)[],
-    messageIdentifier?: string | MessageIdentifier,
+    emojis: string[] | IEmoji[] | (string | IEmoji)[],
+    messageIdentifier?: string | IMessageIdentifier,
   ): TReturn;
 
   /**
@@ -855,8 +855,8 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    * @since 2.0
    */
   toRemoveReaction(
-    emojis: string[] | EmojiLike[] | (string | EmojiLike)[],
-    messageIdentifier?: string | MessageIdentifier,
+    emojis: string[] | IEmoji[] | (string | IEmoji)[],
+    messageIdentifier?: string | IMessageIdentifier,
   ): TReturn;
 
   /**
@@ -874,7 +874,7 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    *
    * @since 2.0
    */
-  toPin(messageIdentifier: MessageIdentifier): TReturn;
+  toPin(messageIdentifier: IMessageIdentifier): TReturn;
 
   /**
    * Verify if a command unpinned a message.
@@ -892,7 +892,7 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    *
    * @since 2.0
    */
-  toUnPin(messageIdentifier: MessageIdentifier): TReturn;
+  toUnPin(messageIdentifier: IMessageIdentifier): TReturn;
 
   /**
    * Verify if a command edited a message.
@@ -903,15 +903,15 @@ export interface MessageMatches<TReturn extends MayReturnMatch> {
    * @since 1.0
    */
   toEditMessage(
-    newValue: string | number | boolean | MessageEmbedLike,
-    messageIdentifier?: string | MessageEditedIdentifier,
+    newValue: string | number | boolean | IMessageEmbed,
+    messageIdentifier?: string | IMessageEditedIdentifier,
   ): TReturn;
 }
 
 /**
  * Tests for a **Role** structure.
  */
-export interface RoleMatches<TReturn extends MayReturnMatch> {
+export interface IRoleMatches<TReturn extends MayReturnMatch> {
   /**
    * Check if a command changed a role color.
    *
@@ -929,7 +929,7 @@ export interface RoleMatches<TReturn extends MayReturnMatch> {
    *
    * @since 2.0
    */
-  toSetRoleColor(color: ColorResolvable, roleIdentifier: RoleIdentifier): TReturn;
+  toSetRoleColor(color: ColorResolvable, roleIdentifier: IRoleIdentifier): TReturn;
   /**
    * Check if a command changed a role color.
    *
@@ -947,7 +947,7 @@ export interface RoleMatches<TReturn extends MayReturnMatch> {
    *
    * @since 2.0
    */
-  toSetRoleColor(color: Colors, roleIdentifier: RoleIdentifier): TReturn;
+  toSetRoleColor(color: Colors, roleIdentifier: IRoleIdentifier): TReturn;
 
   /**
    * Check if a command deletes a role.
@@ -961,7 +961,7 @@ export interface RoleMatches<TReturn extends MayReturnMatch> {
    * @param roleIdentifier Object with **id** or **name** of the role
    * @since 2.0
    */
-  toDeleteRole(roleIdentifier: RoleIdentifier): TReturn;
+  toDeleteRole(roleIdentifier: IRoleIdentifier): TReturn;
 
   /**
    * Check if a command defines a role as mentionable.
@@ -980,7 +980,7 @@ export interface RoleMatches<TReturn extends MayReturnMatch> {
    *
    * @since 2.0
    */
-  toSetRoleMentionable(mentionable: boolean, roleIdentifier: RoleIdentifier): TReturn;
+  toSetRoleMentionable(mentionable: boolean, roleIdentifier: IRoleIdentifier): TReturn;
 
   /**
    * Check if a commend defines a role as a hoist.
@@ -1017,7 +1017,7 @@ export interface RoleMatches<TReturn extends MayReturnMatch> {
    * @see https://discord.com/developers/docs/topics/permissions
    * @since 2.0
    */
-  toSetRoleHoist(hoist: boolean, roleIdentifier: RoleIdentifier): TReturn;
+  toSetRoleHoist(hoist: boolean, roleIdentifier: IRoleIdentifier): TReturn;
 
   /**
    * Check if a command renames a role.
@@ -1036,7 +1036,7 @@ export interface RoleMatches<TReturn extends MayReturnMatch> {
    *
    * @since 2.0
    */
-  toRenameRole(newName: string, roleIdentifier: RoleIdentifier): TReturn;
+  toRenameRole(newName: string, roleIdentifier: IRoleIdentifier): TReturn;
 
   /**
    * Check if a command changes a role's position.
@@ -1066,7 +1066,7 @@ export interface RoleMatches<TReturn extends MayReturnMatch> {
    * @see https://discord.com/developers/docs/topics/permissions
    * @since 2.0
    */
-  toSetRolePosition(newPosition: number, roleIdentifier: RoleIdentifier): TReturn;
+  toSetRolePosition(newPosition: number, roleIdentifier: IRoleIdentifier): TReturn;
 
   /**
    * Check if a command change the
@@ -1091,10 +1091,10 @@ export interface RoleMatches<TReturn extends MayReturnMatch> {
    * @see https://discord.com/developers/docs/topics/permissions#permissions
    * @since 2.0
    */
-  toSetRolePermission(roleIdentifier: RoleIdentifier, ...permissions: RolePermission[]): TReturn;
+  toSetRolePermission(roleIdentifier: IRoleIdentifier, ...permissions: RolePermission[]): TReturn;
 }
 
-export interface MacherContructorArgs {
+export interface IMacherContructorArgs {
   commandName: unknown;
   isNot?: boolean;
   channelIdToSendCommand?: string;
@@ -1107,15 +1107,15 @@ export interface MacherContructorArgs {
  * Defines all functions that can be used
  * to check a bot reaction of a command.
  */
-export type Matches<TReturn extends MayReturnMatch> = MessageMatches<TReturn> &
-  RoleMatches<TReturn>;
+export type IMatches<TReturn extends MayReturnMatch> = IMessageMatches<TReturn> &
+  IRoleMatches<TReturn>;
 
 /**
  * Defines the initial value of expectations from
  * **command** function. It includes all matches and
  * the *not* statement. Which will deny the executed match
  */
-export interface IsNot<TMatchesResponse extends any, TResponse2 = void> {
+export interface IIsNot<TMatchesResponse extends any, TResponse2 = void> {
   /**
    * Defines that command should **not** do something.
    * Use this if you can not precise what response a command will throw,
@@ -1126,7 +1126,7 @@ export interface IsNot<TMatchesResponse extends any, TResponse2 = void> {
 
 // We intentionally hide the real type of parameters are passed to todoInCasdade,
 // to hide the implementation from the user.
-export interface ToHaveResult {
+export interface IToHaveResult {
   /**
    * Execute multiple assertions based on a single command.
    *
@@ -1142,13 +1142,13 @@ export interface ToHaveResult {
   toHaveResult(...tests: any[]): void;
 }
 
-export type InChannelMatches<TReturn extends MayReturnMatch> = IsNot<MessageMatches<TReturn>> &
-  MessageMatches<TReturn>;
+export type InChannelMatches<TReturn extends MayReturnMatch> = IIsNot<IMessageMatches<TReturn>> &
+  IMessageMatches<TReturn>;
 
-export type InGuildMatches<TReturn extends MayReturnMatch> = IsNot<RoleMatches<TReturn>> &
-  RoleMatches<TReturn>;
+export type InGuildMatches<TReturn extends MayReturnMatch> = IIsNot<IRoleMatches<TReturn>> &
+  IRoleMatches<TReturn>;
 
-export interface SetGuildMatchers<TReturn extends MayReturnMatch> {
+export interface ISetGuildMatchers<TReturn extends MayReturnMatch> {
   /**
    * Specify a guild where tests will be **validated** in.
    *
@@ -1170,7 +1170,7 @@ export interface SetGuildMatchers<TReturn extends MayReturnMatch> {
   inGuild(id: string): InGuildMatches<TReturn>;
 }
 
-export interface SetChannelMatchers<TReturn extends MayReturnMatch> {
+export interface ISetChannelMatchers<TReturn extends MayReturnMatch> {
   /**
    * Specify a channel where tests will be **validated** in.
    *
@@ -1192,20 +1192,20 @@ export interface SetChannelMatchers<TReturn extends MayReturnMatch> {
   inChannel(id: string): InChannelMatches<TReturn>;
 }
 
-type IsNotWithHaveResults = IsNot<Matches<void>, ToHaveResult>;
+type IsNotWithHaveResults = IIsNot<IMatches<void>, IToHaveResult>;
 
-export type AllMatches<TReturn extends MayReturnMatch> = IsNot<Matches<any>> &
-  Matches<TReturn> &
-  SetChannelMatchers<TReturn> &
-  SetGuildMatchers<TReturn>;
+export type AllMatches<TReturn extends MayReturnMatch> = IIsNot<IMatches<any>> &
+  IMatches<TReturn> &
+  ISetChannelMatchers<TReturn> &
+  ISetGuildMatchers<TReturn>;
 
-export type AllExpectMatches = Matches<void> &
-  ToHaveResult &
+export type AllExpectMatches = IMatches<void> &
+  IToHaveResult &
   IsNotWithHaveResults &
-  SetChannelMatchers<void> &
-  SetGuildMatchers<void>;
+  ISetChannelMatchers<void> &
+  ISetGuildMatchers<void>;
 
-export interface Expect extends AllMatches<any> {
+export interface IExpect extends AllMatches<any> {
   /**
    * Receives which command will be tested.
    *

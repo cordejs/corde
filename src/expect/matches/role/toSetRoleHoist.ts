@@ -1,19 +1,19 @@
 import { ExpectTest } from "../expectTest";
 import { Role } from "discord.js";
-import { RoleIdentifier, TestReport } from "../../../types";
+import { IRoleIdentifier, ITestReport } from "../../../types";
 import { roleUtils } from "../../roleUtils";
 import { typeOf } from "../../../utils";
-import { ExpectTestBaseParams } from "../../../types";
+import { IExpectTestBaseParams } from "../../../types";
 
 /**
  * @internal
  */
 export class ToSetRoleHoist extends ExpectTest {
-  constructor(params: ExpectTestBaseParams) {
+  constructor(params: IExpectTestBaseParams) {
     super({ ...params, testName: "toSetRoleHoist" });
   }
 
-  async action(hoist: boolean, roleIdentifier: string | RoleIdentifier): Promise<TestReport> {
+  async action(hoist: boolean, roleIdentifier: string | IRoleIdentifier): Promise<ITestReport> {
     const identifier = roleUtils.getRoleData(roleIdentifier);
     const error = roleUtils.getErrorForUndefinedRoleData(identifier);
 

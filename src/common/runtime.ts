@@ -1,4 +1,4 @@
-import { IConfigOptions, CordeBotLike, TestFunctionType } from "../types";
+import { IConfigOptions, ICordeBot, TestFunctionType } from "../types";
 import { Config } from "./config";
 import { Client } from "discord.js";
 import { CordeBot } from "../core/cordeBot";
@@ -83,7 +83,7 @@ class Runtime {
   files!: string[];
 
   private readonly _configs: Config;
-  private _bot!: CordeBotLike;
+  private _bot!: ICordeBot;
 
   static getInstance() {
     if (!Runtime._instance) {

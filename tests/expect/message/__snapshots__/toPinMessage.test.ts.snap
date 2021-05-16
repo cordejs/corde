@@ -60,7 +60,7 @@ Object {
 exports[`testing pin message test should return error message due to no mesageIdentifier (null) 1`] = `
 Object {
   "message": "    
-    expected: message identifier to be a string or a MessageIdentifier object
+    expected: message identifier to be a string or a IMessageIdentifier object
     received: null
 ",
   "pass": false,
@@ -71,7 +71,7 @@ Object {
 exports[`testing pin message test should return error message due to no mesageIdentifier (undefined) 1`] = `
 Object {
   "message": "    
-    expected: message identifier to be a string or a MessageIdentifier object
+    expected: message identifier to be a string or a IMessageIdentifier object
     received: undefined
 ",
   "pass": false,

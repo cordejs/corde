@@ -1,22 +1,22 @@
 import { Role } from "discord.js";
-import { RoleIdentifier, TestReport } from "../../../types";
+import { IRoleIdentifier, ITestReport } from "../../../types";
 import { diff, permissionsArray, RolePermission, typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
-import { ExpectTestBaseParams } from "../../../types";
+import { IExpectTestBaseParams } from "../../../types";
 import { ExpectTest } from "../expectTest";
 
 /**
  * @internal
  */
 export class ToSetRolePermission extends ExpectTest {
-  constructor(params: ExpectTestBaseParams) {
+  constructor(params: IExpectTestBaseParams) {
     super({ ...params, testName: "toSetRolePermission" });
   }
 
   async action(
-    roleIdentifier: string | RoleIdentifier,
+    roleIdentifier: string | IRoleIdentifier,
     permissions: RolePermission[],
-  ): Promise<TestReport> {
+  ): Promise<ITestReport> {
     const identifier = roleUtils.getRoleData(roleIdentifier);
     const error = roleUtils.getErrorForUndefinedRoleData(identifier);
 

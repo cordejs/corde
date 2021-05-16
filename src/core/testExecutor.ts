@@ -16,12 +16,12 @@ import {
 } from "../consts";
 import { Queue } from "../data-structures";
 import {
-  Group,
-  RunnerReport,
-  SemiRunnerReport,
-  Test,
-  TestFile,
-  TestReport,
+  IGroup,
+  IRunnerReport,
+  ISemiRunnerReport,
+  ITest,
+  ITestFile,
+  ITestReport,
   VoidLikeFunction,
 } from "../types";
 import { formatObject, stringIsNullOrEmpty, Timer } from "../utils";
@@ -34,11 +34,11 @@ export class TestExecutor {
     this._logUpdate = logUpdate;
   }
 
-  async runTestsAndPrint(testMatches: TestFile[]): Promise<RunnerReport> {
+  async runTestsAndPrint(testMatches: ITestFile[]): Promise<IRunnerReport> {
     const testsTimer = new Timer();
     testsTimer.start();
 
-    const semiReport: SemiRunnerReport = {
+    const semiReport: ISemiRunnerReport = {
       totalTests: 0,
       totalTestFiles: 0,
       totalTestsPassed: 0,
@@ -71,7 +71,7 @@ export class TestExecutor {
     };
   }
 
-  private async executeTestFile(testFile: TestFile, semiReport: SemiRunnerReport) {
+  private async executeTestFile(testFile: ITestFile, semiReport: ISemiRunnerReport) {
     const testFileTimer = new Timer();
     semiReport.totalTestFiles++;
     let fileHasPassed = true;
@@ -105,7 +105,7 @@ export class TestExecutor {
     return fileHasPassed;
   }
 
-  private async executeGroup(group: Group, semiReport: SemiRunnerReport) {
+  private async executeGroup(group: IGroup, semiReport: ISemiRunnerReport) {
     const tests = this.getAssertionPropsFromGroup(group);
     let fileHasPassed = true;
     for (const test of tests) {
@@ -117,8 +117,8 @@ export class TestExecutor {
   }
 
   private async executeTest(
-    test: Test,
-    semiReport: SemiRunnerReport,
+    test: ITest,
+    semiReport: ISemiRunnerReport,
     groupName?: string | number | boolean,
   ) {
     const testTimer = new Timer();
@@ -138,7 +138,7 @@ export class TestExecutor {
 
     const testDiff = testTimer.stop();
 
-    const testNameLabel = this.testReportLabelFunction(reports);
+    const testNameLabel = this.ITestReportLabelFunction(reports);
 
     const formatedGroupName = !stringIsNullOrEmpty(groupName) ? groupName + " -> " : "";
 
@@ -167,8 +167,8 @@ export class TestExecutor {
   }
 
   private printTestsReportAndUpdateRunnerReport(
-    reports: TestReport[],
-    semiReport: SemiRunnerReport,
+    reports: ITestReport[],
+    semiReport: ISemiRunnerReport,
   ) {
     let fileHasPassed = true;
     for (const report of reports) {
@@ -180,7 +180,7 @@ export class TestExecutor {
     return fileHasPassed;
   }
 
-  private testReportLabelFunction(reports: TestReport[]) {
+  private ITestReportLabelFunction(reports: ITestReport[]) {
     if (reports.length === 0) {
       return (text: string) => TEXT_EMPTY(" " + TEST_RUNNING_ICON + " " + text + " (empty)");
     }
@@ -191,7 +191,7 @@ export class TestExecutor {
     return (text: string) => TEXT_PASS(TEST_PASSED_ICON + " " + text);
   }
 
-  private printReportAndUpdateRunnerReport(report: TestReport, semiReport: SemiRunnerReport) {
+  private printReportAndUpdateRunnerReport(report: ITestReport, semiReport: ISemiRunnerReport) {
     if (report.pass) {
       semiReport.totalTestsPassed++;
       return true;
@@ -203,7 +203,7 @@ export class TestExecutor {
     return false;
   }
 
-  private printReportData(report: TestReport) {
+  private printReportData(report: ITestReport) {
     if (report.message) {
       this._logUpdate.appendLine(report.message);
     }
@@ -225,8 +225,8 @@ export class TestExecutor {
     return `${MESSAGE_TAB_SPACE}${icon} ${testName}`;
   }
 
-  async runTest(test: Test) {
-    const reports: TestReport[] = [];
+  async runTest(test: ITest) {
+    const reports: ITestReport[] = [];
 
     // before e after hooks will run just one time
     // for test structure (if the hook fail)
@@ -239,7 +239,7 @@ export class TestExecutor {
         testCollector.beforeEachFunctions,
       );
 
-      let _report: TestReport;
+      let _report: ITestReport;
       try {
         _report = await runtime.injectBot(testfn);
       } catch (error) {
@@ -283,8 +283,8 @@ export class TestExecutor {
     return formatObject(error);
   }
 
-  private getAssertionPropsFromGroup(group: Group) {
-    const assertions: Test[] = [];
+  private getAssertionPropsFromGroup(group: IGroup) {
+    const assertions: ITest[] = [];
     if (group.tests) {
       group.tests.forEach((test) => {
         assertions.push(...this.getAssertionsPropsFromTest(test));
@@ -301,8 +301,8 @@ export class TestExecutor {
     return assertions;
   }
 
-  private getAssertionsPropsFromTest(test: Test) {
-    const tests: Test[] = [test];
+  private getAssertionsPropsFromTest(test: ITest) {
+    const tests: ITest[] = [test];
 
     if (test.subTests) {
       test.subTests.forEach((subtest) => {

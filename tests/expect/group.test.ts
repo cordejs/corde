@@ -1,5 +1,5 @@
 import { testCollector } from "../../src/common/testCollector";
-import { Group } from "../../src/types";
+import { IGroup } from "../../src/types";
 import { group, test } from "../../src/closures";
 import { expect as cordeExpect } from "../../src/expect";
 
@@ -51,7 +51,7 @@ describe("Testing group function", () => {
 
     await testCollector.executeGroupClojure();
 
-    const groupsObj: Group[] = [];
+    const groupsObj: IGroup[] = [];
     groupsObj.push({
       name: "groupName",
       tests: [
@@ -83,7 +83,7 @@ describe("Testing group function", () => {
 
     await testCollector.executeGroupClojure();
 
-    const groupsObj: Group[] = [];
+    const groupsObj: IGroup[] = [];
     groupsObj.push(
       {
         name: "groupName",

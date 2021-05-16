@@ -1,18 +1,18 @@
 import { Message, MessageEmbed } from "discord.js";
-import { MessageEmbedLike, Primitive, TestReport } from "../../../types";
+import { IMessageEmbed, Primitive, ITestReport } from "../../../types";
 import { typeOf } from "../../../utils";
-import { ExpectTestBaseParams } from "../../../types";
+import { IExpectTestBaseParams } from "../../../types";
 import { MessageExpectTest } from "./messageExpectTest";
 
 /**
  * @internal
  */
 export class ToReturn extends MessageExpectTest {
-  constructor(params: ExpectTestBaseParams) {
+  constructor(params: IExpectTestBaseParams) {
     super({ ...params, testName: "toReturn" });
   }
 
-  async action(expect: Primitive | MessageEmbedLike): Promise<TestReport> {
+  async action(expect: Primitive | IMessageEmbed): Promise<ITestReport> {
     let _expect: Primitive | MessageEmbed;
     const errorReport = this.validateExpect(expect);
 
@@ -45,7 +45,7 @@ export class ToReturn extends MessageExpectTest {
     }
 
     if (typeOf(expect) === "object") {
-      _expect = this.embedMessageLikeToMessageEmbed(expect as MessageEmbedLike);
+      _expect = this.embedMessageLikeToMessageEmbed(expect as IMessageEmbed);
     } else {
       _expect = expect as Primitive;
     }

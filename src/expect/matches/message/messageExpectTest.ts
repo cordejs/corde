@@ -1,21 +1,21 @@
 import assert from "assert";
 import { Message, MessageEmbed, PartialMessage } from "discord.js";
 import {
-  MessageEditedIdentifier,
-  MessageEmbedLike,
-  MessageIdentifier,
-  messageType,
-  MinifiedEmbedMessage,
+  IMessageEditedIdentifier,
+  IMessageEmbed,
+  IMessageIdentifier,
+  MessageType,
+  IMinifiedEmbedMessage,
   Primitive,
 } from "../../../types";
 import { diff, formatObject, isPrimitiveValue, pick, typeOf } from "../../../utils";
 import { ExpectTest } from "../expectTest";
 
 export abstract class MessageExpectTest extends ExpectTest {
-  validateExpect(expect: Primitive | MessageEmbedLike) {
+  validateExpect(expect: Primitive | IMessageEmbed) {
     if (!isPrimitiveValue(expect) && typeOf(expect) !== "object") {
       return this.createReport(
-        "expected: expect value to be a primitive value (string, boolean, number) or an MessageEmbedLike\n",
+        "expected: expect value to be a primitive value (string, boolean, number) or an IMessageEmbed\n",
         `received: ${typeOf(expect)}`,
       );
     }
@@ -40,14 +40,14 @@ export abstract class MessageExpectTest extends ExpectTest {
       );
     }
 
-    let embedExpect: MinifiedEmbedMessage | undefined;
+    let embedExpect: IMinifiedEmbedMessage | undefined;
     if (typeOf(expect) === "object") {
-      embedExpect = this.getMessageByType(expect as MessageEmbed, "embed") as MinifiedEmbedMessage;
+      embedExpect = this.getMessageByType(expect as MessageEmbed, "embed") as IMinifiedEmbedMessage;
     }
 
-    let embedReturned: MinifiedEmbedMessage | undefined;
+    let embedReturned: IMinifiedEmbedMessage | undefined;
     if (returnedMessage.embeds[0]) {
-      embedReturned = this.getMessageByType(returnedMessage, "embed") as MinifiedEmbedMessage;
+      embedReturned = this.getMessageByType(returnedMessage, "embed") as IMinifiedEmbedMessage;
     }
 
     if (embedExpect && embedReturned) {
@@ -82,7 +82,7 @@ export abstract class MessageExpectTest extends ExpectTest {
       return msg == expectation;
     }
 
-    const jsonMessage = this.getMessageByType(returnedMessage, "embed") as MinifiedEmbedMessage;
+    const jsonMessage = this.getMessageByType(returnedMessage, "embed") as IMinifiedEmbedMessage;
     msg = JSON.stringify(jsonMessage);
     let result = true;
     try {
@@ -130,14 +130,14 @@ export abstract class MessageExpectTest extends ExpectTest {
    *  }
    *  ```
    */
-  getMessageByType(answer: Message | MessageEmbed | PartialMessage, type: messageType) {
+  getMessageByType(answer: Message | MessageEmbed | PartialMessage, type: MessageType) {
     if (type === "embed") {
       const embed = answer instanceof Message ? answer.embeds[0] : answer;
       if (!embed) {
         return null;
       }
 
-      const tempObject = embed.toJSON() as MinifiedEmbedMessage;
+      const tempObject = embed.toJSON() as IMinifiedEmbedMessage;
       if (tempObject.image) {
         tempObject.image = pick(tempObject.image, "url");
       }
@@ -150,23 +150,23 @@ export abstract class MessageExpectTest extends ExpectTest {
     }
   }
 
-  humanizeMessageIdentifierObject(msgIdentifier: MessageIdentifier | MessageEditedIdentifier) {
+  humanizeMessageIdentifierObject(msgIdentifier: IMessageIdentifier | IMessageEditedIdentifier) {
     if (!msgIdentifier) {
       return "";
     }
     if (msgIdentifier?.id) {
       return `message of id ${msgIdentifier.id}`;
     }
-    if ((msgIdentifier as MessageIdentifier).content) {
-      return `message of content "${(msgIdentifier as MessageIdentifier).content}"`;
+    if ((msgIdentifier as IMessageIdentifier).content) {
+      return `message of content "${(msgIdentifier as IMessageIdentifier).content}"`;
     }
-    if ((msgIdentifier as MessageEditedIdentifier).oldContent) {
-      return `message of content "${(msgIdentifier as MessageEditedIdentifier).oldContent}"`;
+    if ((msgIdentifier as IMessageEditedIdentifier).oldContent) {
+      return `message of content "${(msgIdentifier as IMessageEditedIdentifier).oldContent}"`;
     }
     return "";
   }
 
-  embedMessageLikeToMessageEmbed(embedLike: MessageEmbedLike) {
+  embedMessageLikeToMessageEmbed(embedLike: IMessageEmbed) {
     const embed = new MessageEmbed();
     if (!embedLike || typeOf(embedLike) !== "object") {
       return embed;

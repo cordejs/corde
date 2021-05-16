@@ -2,7 +2,7 @@ import { Client } from "discord.js";
 import MockDiscord from "../../mocks/mockDiscord";
 import { createReport, initCordeClientWithChannel, testUtils } from "../../testHelper";
 import { MockEvents } from "../../mocks/mockEvents";
-import { CordeBotLike, TestReport } from "../../../src/types";
+import { ICordeBot, ITestReport } from "../../../src/types";
 import { ToDeleteRole } from "../../../src/expect/matches";
 import { roleUtils } from "../../../src/expect/roleUtils";
 import { buildReportMessage } from "../../../src/utils";
@@ -16,7 +16,7 @@ describe("testing toDeleteRole function", () => {
     mockDiscord = new MockDiscord();
   });
 
-  function initTestClass(cordeBot: CordeBotLike, isNot: boolean, command?: string) {
+  function initTestClass(cordeBot: ICordeBot, isNot: boolean, command?: string) {
     return testUtils.initTestClass(ToDeleteRole, {
       command: command ?? "toDelete",
       isCascade: false,

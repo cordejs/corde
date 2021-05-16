@@ -7,7 +7,7 @@ import {
   removeANSIColorStyle,
   testUtils,
 } from "../../testHelper";
-import { CordeBotLike, TestReport } from "../../../src/types";
+import { ICordeBot, ITestReport } from "../../../src/types";
 import {
   buildReportMessage,
   calcPermissionsValue,
@@ -28,7 +28,7 @@ function initClient() {
   return corde;
 }
 
-function initTestClass(cordeBot: CordeBotLike, isNot: boolean) {
+function initTestClass(cordeBot: ICordeBot, isNot: boolean) {
   return testUtils.initTestClass(ToSetRolePermission, {
     command: "toDelete",
     cordeBot: cordeBot,
@@ -255,7 +255,7 @@ describe("testing toSetRolePermission operation", () => {
       } others)`,
     );
 
-    const expectReport: TestReport = {
+    const expectReport: ITestReport = {
       pass: false,
       message,
       testName: toSetRolePermission.toString(),
@@ -279,7 +279,7 @@ describe("testing toSetRolePermission operation", () => {
       `received: ADMINISTRATOR (and 30 others)`,
     );
 
-    const expectReport: TestReport = {
+    const expectReport: ITestReport = {
       pass: false,
       message,
       testName: toSetRolePermission.toString(),
@@ -303,7 +303,7 @@ describe("testing toSetRolePermission operation", () => {
       `received: ADMINISTRATOR (and 30 others)`,
     );
 
-    const expectReport: TestReport = {
+    const expectReport: ITestReport = {
       pass: false,
       message,
       testName: toSetRolePermission.toString(),

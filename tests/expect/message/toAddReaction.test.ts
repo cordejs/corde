@@ -2,7 +2,7 @@ import MockDiscord from "../../mocks/mockDiscord";
 import { createReport, initCordeClientWithChannel, testUtils } from "../../testHelper";
 import { Client } from "discord.js";
 import { ToAddReaction } from "../../../src/expect/matches";
-import { CordeBotLike, TestReport } from "../../../src/types";
+import { ICordeBot, ITestReport } from "../../../src/types";
 import { buildReportMessage, typeOf } from "../../../src/utils";
 import { MockEvents } from "../../mocks/mockEvents";
 import { runtime } from "../../../src/common/runtime";
@@ -13,7 +13,7 @@ describe("testing toAddReaction function", () => {
     mockDiscord = new MockDiscord();
   });
 
-  function initTestClass(cordeBot: CordeBotLike, commandName?: string, isNot?: boolean) {
+  function initTestClass(cordeBot: ICordeBot, commandName?: string, isNot?: boolean) {
     return testUtils.initTestClass(ToAddReaction, {
       command: commandName,
       cordeBot: cordeBot,

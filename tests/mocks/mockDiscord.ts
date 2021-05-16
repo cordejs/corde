@@ -24,7 +24,7 @@ import {
   VoiceState,
 } from "discord.js";
 import { ToReturn } from "../../src/expect/matches";
-import { MessageEmbedLike } from "../../src/types";
+import { IMessageEmbed } from "../../src/types";
 
 /**
  * @private
@@ -104,7 +104,7 @@ export default class MockDiscord {
   private _speaking!: Speaking;
   private _presence!: Presence;
   private _voiceState!: VoiceState;
-  private _messageEmbedLike: MessageEmbedLike;
+  private _messageEmbedLike: IMessageEmbed;
   private _messageWithEmbed: Message;
   private _pinnedMessage: Message;
   private _unPinnedMessage: Message;
@@ -590,7 +590,7 @@ export default class MockDiscord {
     return collection;
   }
 
-  createEmbedMessageLike(customColor = "#0099ff", customTitle = "Some title"): MessageEmbedLike {
+  createEmbedMessageLike(customColor = "#0099ff", customTitle = "Some title"): IMessageEmbed {
     return {
       color: customColor,
       title: customTitle,

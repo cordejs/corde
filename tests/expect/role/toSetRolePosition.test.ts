@@ -1,7 +1,7 @@
 import { Client } from "discord.js";
 import { runtime } from "../../../src/common/runtime";
 import { ToSetRolePosition } from "../../../src/expect/matches";
-import { CordeBotLike, TestReport } from "../../../src/types";
+import { ICordeBot, ITestReport } from "../../../src/types";
 import { buildReportMessage, typeOf } from "../../../src/utils";
 import MockDiscord from "../../mocks/mockDiscord";
 import { MockEvents } from "../../mocks/mockEvents";
@@ -18,7 +18,7 @@ function initClient() {
   return corde;
 }
 
-function initTestClass(cordeBot: CordeBotLike, isNot: boolean) {
+function initTestClass(cordeBot: ICordeBot, isNot: boolean) {
   return testUtils.initTestClass(ToSetRolePosition, {
     command: "toDelete",
     cordeBot: cordeBot,
