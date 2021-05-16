@@ -1,7 +1,7 @@
 import { TEXT_EMPTY, TEXT_FAIL, TEXT_PASS } from "../consts";
 import { IRunnerReport } from "../types";
 
-interface SummaryLine {
+interface ISummaryLine {
   label: string;
   total: number;
   fail: number;
@@ -41,7 +41,7 @@ class Summary {
     });
   }
 
-  private buildSummaryLine(data: SummaryLine) {
+  private buildSummaryLine(data: ISummaryLine) {
     const { label, fail, success, total, totalEmpty } = data;
 
     const partialLine: string[] = [];
