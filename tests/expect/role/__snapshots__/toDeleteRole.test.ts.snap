@@ -42,6 +42,16 @@ Object {
 }
 `;
 
+exports[`testing toDeleteRole function isNot false should return a failed test due to failure in message send 1`] = `
+Object {
+  "message": "    
+    can not send message to channel x
+",
+  "pass": false,
+  "testName": "toDeleteRole",
+}
+`;
+
 exports[`testing toDeleteRole function isNot false should return a passed report for a deleted role 1`] = `
 Object {
   "pass": true,

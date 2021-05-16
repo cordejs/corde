@@ -78,18 +78,17 @@ export abstract class ExpectTest {
    * @returns Message sent
    */
   protected sendCommandMessage(forceSend?: boolean) {
+    // Tests in cascade controus when the message should be sent.
     if (!this.isCascade || forceSend) {
       return this.cordeBot.sendTextMessage(this.command, this.channelIdToSendCommand);
     }
     return Promise.resolve();
   }
 
-  protected createFailedTest(message?: string): TestReport {
-    return {
-      pass: false,
-      message,
-      testName: this.testName,
-    };
+  protected createFailedTest(...messages: (string | null | undefined)[]): TestReport {
+    const report = this.createReport(...messages);
+    report.pass = false;
+    return report;
   }
 
   protected createPassTest(): TestReport {

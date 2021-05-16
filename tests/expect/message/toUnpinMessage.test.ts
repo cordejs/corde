@@ -154,4 +154,27 @@ describe("testing unpin message test", () => {
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
   });
+
+  it("should return a failed test due to failure in message sending", async () => {
+    const corde = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    corde.getRoles = jest.fn().mockReturnValue(mockDiscord.roleManager.cache);
+    corde.findRole = jest.fn().mockReturnValue(mockDiscord.role);
+
+    const erroMessage = "can not send message to channel x";
+    corde.sendTextMessage = jest
+      .fn()
+      .mockImplementation(() => Promise.reject(new Error(erroMessage)));
+
+    const toUnPinMessage = initTestClass(corde, false);
+    const report = await toUnPinMessage.action("1");
+
+    const reportModel: TestReport = {
+      pass: false,
+      message: buildReportMessage(erroMessage),
+      testName: toUnPinMessage.toString(),
+    };
+
+    expect(report).toEqual(reportModel);
+    expect(report).toMatchSnapshot();
+  });
 });

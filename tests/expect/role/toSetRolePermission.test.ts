@@ -312,4 +312,24 @@ describe("testing toSetRolePermission operation", () => {
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();
   });
+
+  it("should return a failed test due to failure in message sending", async () => {
+    const corde = initCordeClientWithChannel(mockDiscord, mockDiscord.client);
+
+    corde.findRole = jest.fn().mockReturnValue(mockDiscord.role);
+    corde.fetchRole = jest.fn().mockReturnValue(null);
+
+    const erroMessage = "can not send message to channel x";
+    corde.sendTextMessage = jest
+      .fn()
+      .mockImplementation(() => Promise.reject(new Error(erroMessage)));
+
+    const toSetRolePermission = initTestClass(corde, false);
+    const report = await toSetRolePermission.action({ id: "123" }, ["ATTACH_FILES"]);
+
+    const expectReport = createReport(toSetRolePermission, false, buildReportMessage(erroMessage));
+
+    expect(report).toEqual(expectReport);
+    expect(report).toMatchSnapshot();
+  });
 });

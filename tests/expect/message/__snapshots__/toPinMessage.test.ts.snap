@@ -1,5 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`testing pin message test should return a failed test due to failure in message sending 1`] = `
+Object {
+  "message": "    
+    can not send message to channel x
+",
+  "pass": false,
+  "testName": "toPinMessage",
+}
+`;
+
 exports[`testing pin message test should return a failed test due to isNot false and timeout (messageIdentifier) 1`] = `
 Object {
   "message": "    

@@ -31,6 +31,16 @@ Object {
 }
 `;
 
+exports[`testing toSetRoleColor should return a failed test due to failure in message sending 1`] = `
+Object {
+  "message": "    
+    can not send message to channel x
+",
+  "pass": false,
+  "testName": "toSetRoleColor",
+}
+`;
+
 exports[`testing toSetRoleColor should return a not passed test due expected name did not match to received 1`] = `
 Object {
   "message": "    

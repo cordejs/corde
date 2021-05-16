@@ -1,6 +1,6 @@
 import { Role } from "discord.js";
 import { RoleIdentifier } from "../types";
-import { buildReportMessage, formatObject } from "../utils";
+import { formatObject } from "../utils";
 
 class RoleUtils {
   createExpectedMessageForRoleData(roleIdentifier: RoleIdentifier) {
@@ -25,10 +25,7 @@ class RoleUtils {
 
   getErrorForUndefinedRoleData(roleIdentifier: RoleIdentifier) {
     if (!roleIdentifier) {
-      return buildReportMessage(
-        "expected: data to identifier the role (id or name)\n",
-        "received: null",
-      );
+      return "expected: data to identifier the role (id or name)\n" + "received: null";
     }
 
     return null;
@@ -39,12 +36,12 @@ class RoleUtils {
       const message = roleUtils.createExpectedMessageForRoleData(roleIdentifier);
 
       if (message) {
-        return buildReportMessage(`expected: ${message}\n`, "received: null");
+        return `expected: ${message}\n` + "received: null";
       }
 
-      return buildReportMessage(
-        "expected: a id or a name to identify the role\n",
-        `received: ${formatObject(roleIdentifier)}`,
+      return (
+        "expected: a id or a name to identify the role\n" +
+        `received: ${formatObject(roleIdentifier)}`
       );
     }
 

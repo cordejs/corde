@@ -235,6 +235,16 @@ Object {
 }
 `;
 
+exports[`testing toReturn should return a failed test due to failure in message sending 1`] = `
+Object {
+  "message": "    
+    can not send message to channel x
+",
+  "pass": false,
+  "testName": "toReturn",
+}
+`;
+
 exports[`testing toReturn should return a failed test due to invalid parameter (null) 1`] = `
 Object {
   "message": "    

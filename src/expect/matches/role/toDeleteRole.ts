@@ -68,7 +68,7 @@ export class ToDeleteRole extends ExpectTest {
     }
 
     if (role.deleted) {
-      return this.createReport(
+      return this.createFailedTest(
         `expected: role ${role.id} not deleted\n`,
         `received: role was deleted before call the command '${this.command}'`,
       );

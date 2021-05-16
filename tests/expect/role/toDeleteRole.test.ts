@@ -207,6 +207,39 @@ describe("testing toDeleteRole function", () => {
       expect(report).toMatchObject(model);
       expect(report).toMatchSnapshot();
     });
+
+    it("should return a failed test due to failure in message sending", async () => {
+      const corde = initCordeClientWithChannel(mockDiscord, mockDiscord.client);
+
+      corde.findRole = jest.fn().mockReturnValue(mockDiscord.role);
+      corde.fetchRole = jest.fn().mockReturnValue(null);
+
+      const erroMessage = "can not send message to channel x";
+      corde.sendTextMessage = jest
+        .fn()
+        .mockImplementation(() => Promise.reject(new Error(erroMessage)));
+
+      mockEvents = new MockEvents(corde, mockDiscord);
+
+      mockEvents.mockOnceRoleDelete();
+
+      const role = mockDiscord.role;
+      role.deleted = false;
+      corde.fetchRole = jest.fn().mockReturnValue(role);
+
+      const isNot = false;
+      const roleIdentifier = { id: "123" };
+      const command = "!deleteRole 123";
+      const toDeleteRole = initTestClass(corde, isNot, command);
+      const report = await toDeleteRole.action(roleIdentifier);
+
+      const message = buildReportMessage(erroMessage);
+
+      const model = createReport(toDeleteRole, false, message);
+
+      expect(report).toMatchObject(model);
+      expect(report).toMatchSnapshot();
+    });
   });
 });
 

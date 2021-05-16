@@ -215,4 +215,23 @@ describe("testing toAddReaction function", () => {
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
   });
+
+  it("should return a failed test due to failure in message sending", async () => {
+    const corde = initCordeClientWithChannel(mockDiscord, new Client());
+    corde.getRoles = jest.fn().mockReturnValue(mockDiscord.roleManager.cache);
+    corde.findRole = jest.fn().mockReturnValue(mockDiscord.role);
+
+    const erroMessage = "can not send message to channel x";
+    corde.sendTextMessage = jest
+      .fn()
+      .mockImplementation(() => Promise.reject(new Error(erroMessage)));
+
+    const toAddReaction = initTestClass(corde, "");
+    const report = await toAddReaction.action(["😃"], { id: "123" });
+
+    const expectReport = createReport(toAddReaction, false, buildReportMessage(erroMessage));
+
+    expect(report).toEqual(expectReport);
+    expect(report).toMatchSnapshot();
+  });
 });

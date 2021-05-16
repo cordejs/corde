@@ -188,10 +188,10 @@ concat-map@0.0.1:
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=
 
-corde@^3.1.4:
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/corde/-/corde-3.1.4.tgz#3fdcd4a87efb3eb8a8507c82c925356fda9be21d"
-  integrity sha512-ED/aj9S5pR4xJEI1YMNU+3mN9dfjiXwt2Tb+231RocDNB/nh6vEQKhSQvHKUn9pK7glrDSkaTturyLGnfRgcOw==
+corde@^3.1.5-beta.1:
+  version "3.1.5-beta.1"
+  resolved "https://registry.yarnpkg.com/corde/-/corde-3.1.5-beta.1.tgz#805014fbe1ef78e8be2f969abe631968b92c8377"
+  integrity sha512-OFqLTTRRmIu1GeclVAHKPrXdfrxLtBkLk/AY/7B4/W5LHkONURsZqMxXD4ZtvFT9XWkm++Q23xyGmMpZq1CHtA==
   dependencies:
     chalk "^4.1.0"
     commander "^7.0.0"
