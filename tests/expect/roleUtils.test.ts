@@ -38,7 +38,7 @@ describe("testing createExpectedMessageForRoleData", () => {
 describe("testing getErrorForUndefinedRoleData", () => {
   it("should get a error message for undefined roleIdentifier", () => {
     expect(roleUtils.getErrorForUndefinedRoleData(null)).toEqual(
-      buildReportMessage("expected: data to identifier the role (id or name)\n", `received: null`),
+      "expected: data to identifier the role (id or name)\n" + `received: null`,
     );
   });
 
@@ -64,16 +64,13 @@ describe("testing validateRole", () => {
     const roleIdentifier = { id: "1" };
     const message = roleUtils.validateRole(null, roleIdentifier);
     const errorMessage = roleUtils.createExpectedMessageForRoleData(roleIdentifier);
-    expect(message).toEqual(buildReportMessage(`expected: ${errorMessage}\n`, `received: null`));
+    expect(message).toEqual(`expected: ${errorMessage}\n` + `received: null`);
   });
 
   it("should return a error message due to null role and roleIdentifier null", () => {
     const message = roleUtils.validateRole(null, null);
     expect(message).toEqual(
-      buildReportMessage(
-        `expected: a id or a name to identify the role\n`,
-        `received: ${formatObject(null)}`,
-      ),
+      `expected: a id or a name to identify the role\n` + `received: ${formatObject(null)}`,
     );
   });
 

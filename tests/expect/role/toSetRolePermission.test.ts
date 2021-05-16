@@ -7,7 +7,7 @@ import {
   removeANSIColorStyle,
   testUtils,
 } from "../../testHelper";
-import { CordeBotLike, TestReport } from "../../../src/types";
+import { ICordeBot, ITestReport } from "../../../src/types";
 import {
   buildReportMessage,
   calcPermissionsValue,
@@ -28,7 +28,7 @@ function initClient() {
   return corde;
 }
 
-function initTestClass(cordeBot: CordeBotLike, isNot: boolean) {
+function initTestClass(cordeBot: ICordeBot, isNot: boolean) {
   return testUtils.initTestClass(ToSetRolePermission, {
     command: "toDelete",
     cordeBot: cordeBot,
@@ -255,7 +255,7 @@ describe("testing toSetRolePermission operation", () => {
       } others)`,
     );
 
-    const expectReport: TestReport = {
+    const expectReport: ITestReport = {
       pass: false,
       message,
       testName: toSetRolePermission.toString(),
@@ -279,7 +279,7 @@ describe("testing toSetRolePermission operation", () => {
       `received: ADMINISTRATOR (and 30 others)`,
     );
 
-    const expectReport: TestReport = {
+    const expectReport: ITestReport = {
       pass: false,
       message,
       testName: toSetRolePermission.toString(),
@@ -303,11 +303,31 @@ describe("testing toSetRolePermission operation", () => {
       `received: ADMINISTRATOR (and 30 others)`,
     );
 
-    const expectReport: TestReport = {
+    const expectReport: ITestReport = {
       pass: false,
       message,
       testName: toSetRolePermission.toString(),
     };
+
+    expect(report).toEqual(expectReport);
+    expect(report).toMatchSnapshot();
+  });
+
+  it("should return a failed test due to failure in message sending", async () => {
+    const corde = initCordeClientWithChannel(mockDiscord, mockDiscord.client);
+
+    corde.findRole = jest.fn().mockReturnValue(mockDiscord.role);
+    corde.fetchRole = jest.fn().mockReturnValue(null);
+
+    const erroMessage = "can not send message to channel x";
+    corde.sendTextMessage = jest
+      .fn()
+      .mockImplementation(() => Promise.reject(new Error(erroMessage)));
+
+    const toSetRolePermission = initTestClass(corde, false);
+    const report = await toSetRolePermission.action({ id: "123" }, ["ATTACH_FILES"]);
+
+    const expectReport = createReport(toSetRolePermission, false, buildReportMessage(erroMessage));
 
     expect(report).toEqual(expectReport);
     expect(report).toMatchSnapshot();

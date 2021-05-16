@@ -1,9 +1,9 @@
 import { Role } from "discord.js";
-import { RoleIdentifier } from "../types";
-import { buildReportMessage, formatObject } from "../utils";
+import { IRoleIdentifier } from "../types";
+import { formatObject } from "../utils";
 
 class RoleUtils {
-  createExpectedMessageForRoleData(roleIdentifier: RoleIdentifier) {
+  createExpectedMessageForRoleData(roleIdentifier: IRoleIdentifier) {
     if (!roleIdentifier) {
       return null;
     }
@@ -23,40 +23,37 @@ class RoleUtils {
     return null;
   }
 
-  getErrorForUndefinedRoleData(roleIdentifier: RoleIdentifier) {
+  getErrorForUndefinedRoleData(roleIdentifier: IRoleIdentifier) {
     if (!roleIdentifier) {
-      return buildReportMessage(
-        "expected: data to identifier the role (id or name)\n",
-        "received: null",
-      );
+      return "expected: data to identifier the role (id or name)\n" + "received: null";
     }
 
     return null;
   }
 
-  validateRole(role: Role | undefined, roleIdentifier: RoleIdentifier): string | undefined {
+  validateRole(role: Role | undefined, roleIdentifier: IRoleIdentifier): string | undefined {
     if (!role) {
       const message = roleUtils.createExpectedMessageForRoleData(roleIdentifier);
 
       if (message) {
-        return buildReportMessage(`expected: ${message}\n`, "received: null");
+        return `expected: ${message}\n` + "received: null";
       }
 
-      return buildReportMessage(
-        "expected: a id or a name to identify the role\n",
-        `received: ${formatObject(roleIdentifier)}`,
+      return (
+        "expected: a id or a name to identify the role\n" +
+        `received: ${formatObject(roleIdentifier)}`
       );
     }
 
     return undefined;
   }
 
-  getRoleData(roleIdentifier: string | RoleIdentifier) {
-    let data: RoleIdentifier;
+  getRoleData(roleIdentifier: string | IRoleIdentifier) {
+    let data: IRoleIdentifier;
     if (typeof roleIdentifier === "string") {
       data = { id: roleIdentifier };
     } else {
-      data = roleIdentifier as RoleIdentifier;
+      data = roleIdentifier as IRoleIdentifier;
     }
     return data;
   }

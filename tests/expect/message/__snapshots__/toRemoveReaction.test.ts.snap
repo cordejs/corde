@@ -44,6 +44,16 @@ Object {
 }
 `;
 
+exports[`testing toRemoveReaction function should return a failed test due to failure in message sending 1`] = `
+Object {
+  "message": "    
+    can not send message to channel x
+",
+  "pass": false,
+  "testName": "toRemoveReaction",
+}
+`;
+
 exports[`testing toRemoveReaction function should return a failed test with isNot = false 1`] = `
 Object {
   "message": "    

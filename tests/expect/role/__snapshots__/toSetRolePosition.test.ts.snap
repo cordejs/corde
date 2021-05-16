@@ -84,6 +84,16 @@ Object {
 }
 `;
 
+exports[`testing ToSetRolePosition operation should return a failed test due to failure in message sending 1`] = `
+Object {
+  "message": "    
+    can not send message to channel x
+",
+  "pass": false,
+  "testName": "toSetRolePosition",
+}
+`;
+
 exports[`testing ToSetRolePosition operation should return a not passed test due to new position be higher than the permitted (isNot false) 1`] = `
 Object {
   "message": "    

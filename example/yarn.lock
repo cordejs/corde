@@ -188,12 +188,12 @@ concat-map@0.0.1:
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=
 
-corde@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/corde/-/corde-3.0.0.tgz#5fe2dcca00735f5e452687b74a1f2133c22b3fd5"
-  integrity sha512-DNgZMcQ+lMpa5H3A1DwSVh65BosOSVPEap9quyM0TmhiHSFcZkPQlHB2bOpFkFTtfEA0tMkySFCwPzklBQ7P0A==
+corde@^3.1.5-beta.1:
+  version "3.1.5-beta.1"
+  resolved "https://registry.yarnpkg.com/corde/-/corde-3.1.5-beta.1.tgz#805014fbe1ef78e8be2f969abe631968b92c8377"
+  integrity sha512-OFqLTTRRmIu1GeclVAHKPrXdfrxLtBkLk/AY/7B4/W5LHkONURsZqMxXD4ZtvFT9XWkm++Q23xyGmMpZq1CHtA==
   dependencies:
-    chalk "^4.0.0"
+    chalk "^4.1.0"
     commander "^7.0.0"
     discord.js "^12.2.0"
     esm "^3.2.25"
@@ -203,7 +203,6 @@ corde@^3.0.0:
     ora "^5.0.0"
     pretty-format "^26.6.2"
     tslib "^2.1.0"
-    uuid "^8.3.1"
 
 defaults@^1.0.3:
   version "1.0.3"
@@ -512,11 +511,6 @@ util-deprecate@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
-
-uuid@^8.3.1:
-  version "8.3.2"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
-  integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
 
 wcwidth@^1.0.1:
   version "1.0.1"

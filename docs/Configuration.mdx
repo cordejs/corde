@@ -11,24 +11,24 @@ This is the full config file for Corde:
 
 ```javascript
 {
-    "cordeTestToken":  "YOUR_TESTING_BOT_TOKEN_HERE",
+    "cordeBotToken":  "YOUR_TESTING_BOT_TOKEN_HERE",
     "botTestId":  "YOUR_TESTING_BOT_ID_HERE",
-    "botTestToken":  "YOUR_BOT_TOKEN_HERE",
+    "botToken":  "YOUR_BOT_TOKEN_HERE",
     "guildId":  "THE_GUID_OF_BOT_HERE",
     "channelId":  "CHANNELS_ID_HERE",
     "botPrefix":  "+",
-    "testFiles":  ["./test"],
+    "testMatches":  ["./test"],
     "timeOut": 1000
 }
 ```
 
 :::note
-both `cordeTestToken` and `botTestToken` can be found in [Discord Developers portal](https://discord.com/developers/applications)
+both `cordeBotToken` and `botToken` can be found in [Discord Developers portal](https://discord.com/developers/applications)
 :::
 
 ## Configuration Options
 
-### `cordeTestToken`
+### `cordeBotToken`
 
 **Required: `true`**  
 **Type: `string`**  
@@ -48,7 +48,7 @@ Your bot's id.
 
 ---
 
-### `botTestToken`
+### `botToken`
 
 **Required: `true`**  
 **Type: `string`**  
@@ -88,7 +88,7 @@ Prefix for call your bot.
 
 ---
 
-### `testFiles`
+### `testMatches`
 
 **Required: `true`**  
 **Type: `string`**  

@@ -44,6 +44,16 @@ Object {
 }
 `;
 
+exports[`testing toAddReaction function should return a failed test due to failure in message sending 1`] = `
+Object {
+  "message": "    
+    can not send message to channel x
+",
+  "pass": false,
+  "testName": "toAddReaction",
+}
+`;
+
 exports[`testing toAddReaction function should return a failed test with isNot = false 1`] = `
 Object {
   "message": "    

@@ -7,7 +7,9 @@ import pack from "../package";
 import { runtime } from "../common/runtime";
 import { reader } from "../core/reader";
 import { initEnvVariables } from "../envVariables";
+import { initErrorHandlers } from "../errorHandler";
 
+initErrorHandlers();
 initEnvVariables();
 
 export const program = new Command();
@@ -32,10 +34,10 @@ program
       runtime.configFilePath = options.config;
     }
     if (args) {
-      runtime.setConfigs({ testFiles: program.args }, true);
+      runtime.setConfigs({ testMatches: program.args }, true);
     }
     if (options.files) {
-      runtime.setConfigs({ testFiles: options.files.split(" ") }, true);
+      runtime.setConfigs({ testMatches: options.files.split(" ") }, true);
     }
     await exec();
   });
@@ -53,9 +55,9 @@ program
   .command("validate")
   .alias("v")
   .description("Search for corde configs and check if all data are valid")
-  .action(() => {
+  .action(async () => {
     const configs = reader.loadConfig();
-    validate(configs);
+    await validate(configs);
     console.log("All configs are ok!");
   });
 

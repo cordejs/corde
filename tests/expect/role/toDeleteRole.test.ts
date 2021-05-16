@@ -2,7 +2,7 @@ import { Client } from "discord.js";
 import MockDiscord from "../../mocks/mockDiscord";
 import { createReport, initCordeClientWithChannel, testUtils } from "../../testHelper";
 import { MockEvents } from "../../mocks/mockEvents";
-import { CordeBotLike, TestReport } from "../../../src/types";
+import { ICordeBot, ITestReport } from "../../../src/types";
 import { ToDeleteRole } from "../../../src/expect/matches";
 import { roleUtils } from "../../../src/expect/roleUtils";
 import { buildReportMessage } from "../../../src/utils";
@@ -16,7 +16,7 @@ describe("testing toDeleteRole function", () => {
     mockDiscord = new MockDiscord();
   });
 
-  function initTestClass(cordeBot: CordeBotLike, isNot: boolean, command?: string) {
+  function initTestClass(cordeBot: ICordeBot, isNot: boolean, command?: string) {
     return testUtils.initTestClass(ToDeleteRole, {
       command: command ?? "toDelete",
       isCascade: false,
@@ -204,6 +204,39 @@ describe("testing toDeleteRole function", () => {
       const message = buildReportMessage(`expected: ${baseMessage}\n`, `received: null`);
 
       const model = createReport(toDeleteRole, false, message);
+      expect(report).toMatchObject(model);
+      expect(report).toMatchSnapshot();
+    });
+
+    it("should return a failed test due to failure in message sending", async () => {
+      const corde = initCordeClientWithChannel(mockDiscord, mockDiscord.client);
+
+      corde.findRole = jest.fn().mockReturnValue(mockDiscord.role);
+      corde.fetchRole = jest.fn().mockReturnValue(null);
+
+      const erroMessage = "can not send message to channel x";
+      corde.sendTextMessage = jest
+        .fn()
+        .mockImplementation(() => Promise.reject(new Error(erroMessage)));
+
+      mockEvents = new MockEvents(corde, mockDiscord);
+
+      mockEvents.mockOnceRoleDelete();
+
+      const role = mockDiscord.role;
+      role.deleted = false;
+      corde.fetchRole = jest.fn().mockReturnValue(role);
+
+      const isNot = false;
+      const roleIdentifier = { id: "123" };
+      const command = "!deleteRole 123";
+      const toDeleteRole = initTestClass(corde, isNot, command);
+      const report = await toDeleteRole.action(roleIdentifier);
+
+      const message = buildReportMessage(erroMessage);
+
+      const model = createReport(toDeleteRole, false, message);
+
       expect(report).toMatchObject(model);
       expect(report).toMatchSnapshot();
     });

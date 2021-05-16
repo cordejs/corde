@@ -49,6 +49,10 @@
         },
         {
           "type": "doc",
+          "id": "version-3.x/debug"
+        },
+        {
+          "type": "doc",
           "id": "version-3.x/utilities"
         },
         {

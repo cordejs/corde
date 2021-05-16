@@ -1,11 +1,11 @@
 import { testCollector } from "../../src/common/testCollector";
-import { TestReport } from "../../src/types";
+import { ITestReport } from "../../src/types";
 
 describe("testing testCollector", () => {
   it("should clear testsFunctions", () => {
     testCollector.isInsideGroupClausure = true;
     testCollector.addTestFunction(() => {
-      const report: TestReport = {
+      const report: ITestReport = {
         testName: "",
         pass: true,
       };

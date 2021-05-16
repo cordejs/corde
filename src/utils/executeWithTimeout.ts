@@ -1,3 +1,5 @@
+import { utils } from "./utils";
+
 /**
  * Executes a function with a timeout.
  * If the function takes more time to run than what was provided in
@@ -14,6 +16,10 @@ export async function executeWithTimeout<TResult extends any>(
 ) {
   if (!fn) {
     throw new Error("can not execute an null function");
+  }
+
+  if (utils.isInDebugMode()) {
+    return await fn();
   }
 
   const nodeTimeout = setTimeout(() => {

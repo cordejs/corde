@@ -2,26 +2,32 @@ import chalk from "chalk";
 import fs from "fs";
 import path from "path";
 import { FileError } from "../errors";
-import { ConfigOptions, configFileType } from "../types";
+import { IConfigOptions, configFileType } from "../types";
 
-const jsonFile: ConfigOptions = {
+const config: IConfigOptions = {
   botPrefix: "",
   botTestId: "",
   channelId: "",
-  cordeTestToken: "",
+  cordeBotToken: "",
   guildId: "",
-  testFiles: [""],
-  botTestToken: "",
+  testMatches: [""],
+  botToken: "",
   timeOut: 5000,
 };
 
+const configString = JSON.stringify(config);
+
+const jsonFile = {
+  $schema: "./node_modules/corde/schema/corde.schema.json",
+  ...config,
+};
+
 const jsFile = `
-    module.exports = ${JSON.stringify(jsonFile)}
+    /** @type {import('corde/lib/src/types').IConfigOptions} */
+    module.exports = ${configString}
 `;
 
-const tsFile = `
-    module.exports = ${JSON.stringify(jsonFile)}
-`;
+const tsFile = jsFile;
 
 /**
  * Initialize a config file with all available options.

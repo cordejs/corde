@@ -1,17 +1,17 @@
 import { runtime } from "../../src/common/runtime";
 import { DEFAULT_TEST_TIMEOUT } from "../../src/consts";
 
-import { ConfigOptions } from "../../src/types";
+import { IConfigOptions } from "../../src/types";
 
-const config: ConfigOptions = {
+const config: IConfigOptions = {
   botPrefix: "!",
   botTestId: "123",
   channelId: "1241241",
-  cordeTestToken: "321",
+  cordeBotToken: "321",
   guildId: "123",
-  testFiles: ["123"],
+  testMatches: ["123"],
   timeOut: DEFAULT_TEST_TIMEOUT,
-  botTestToken: "12412412123124",
+  botToken: "12412412123124",
 };
 
 describe("Testing runtime", () => {
@@ -51,9 +51,9 @@ describe("Testing runtime", () => {
     }
   });
 
-  it("should get cordeTestToken", () => {
+  it("should get cordeBotToken", () => {
     runtime.setConfigs(config);
-    expect(runtime.cordeTestToken).toBe(config.cordeTestToken);
+    expect(runtime.cordeBotToken).toBe(config.cordeBotToken);
   });
 
   it("should get botTestId", () => {
@@ -61,9 +61,9 @@ describe("Testing runtime", () => {
     expect(runtime.botTestId).toBe(config.botTestId);
   });
 
-  it("should get botTestToken", () => {
+  it("should get botToken", () => {
     runtime.setConfigs(config);
-    expect(runtime.botTestToken).toBe(config.botTestToken);
+    expect(runtime.botToken).toBe(config.botToken);
   });
 
   it("should get channelId", () => {

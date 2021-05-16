@@ -20,7 +20,7 @@ import {
 } from "discord.js";
 import { once } from "events";
 import { DEFAULT_TEST_TIMEOUT } from "../consts";
-import { EmojiLike, MessageIdentifier, RoleIdentifier } from "../types";
+import { IEmoji, IMessageIdentifier, IRoleIdentifier } from "../types";
 import { deepEqual, executePromiseWithTimeout } from "../utils";
 import { Validator } from "../utils";
 
@@ -31,8 +31,8 @@ export interface EventResume {
 }
 
 export interface SearchMessageReactionsOptions {
-  emojis?: EmojiLike[];
-  messageIdentifier?: MessageIdentifier;
+  emojis?: IEmoji[];
+  messageIdentifier?: IMessageIdentifier;
   authorId?: string;
   timeout?: number;
   channelId?: string;
@@ -204,7 +204,7 @@ export class Events {
    * @internal
    */
   onceRoleDelete(
-    roleIdentifier?: RoleIdentifier,
+    roleIdentifier?: IRoleIdentifier,
     timeout?: number,
     guildId?: string,
   ): Promise<Role> {
@@ -764,12 +764,12 @@ export class Events {
   /**
    * Emitted once a message is pinned
    *
-   * @param messageIdentifier Identifier of the message
+   * @param messageIdentifier IIdentifier of the message
    * @param timeout timeout to wait
    * @returns The pinned message
    * @internal
    */
-  onceMessagePinned(messageIdentifier?: MessageIdentifier, timeout?: number, channelId?: string) {
+  onceMessagePinned(messageIdentifier?: IMessageIdentifier, timeout?: number, channelId?: string) {
     return this._onceMessageSetPinneble(
       (oldMessage, newMessage) => !(oldMessage.pinned as boolean) && (newMessage.pinned as boolean),
       messageIdentifier,
@@ -781,12 +781,16 @@ export class Events {
   /**
    * Emitted once a message is unPinned
    *
-   * @param messageIdentifier Identifier of the message
+   * @param messageIdentifier IIdentifier of the message
    * @param timeout timeout to wait
    * @returns The pinned message
    * @internal
    */
-  onceMessageUnPinned(messageIdentifier?: MessageIdentifier, timeout?: number, channelId?: string) {
+  onceMessageUnPinned(
+    messageIdentifier?: IMessageIdentifier,
+    timeout?: number,
+    channelId?: string,
+  ) {
     return this._onceMessageSetPinneble(
       (oldMessage, newMessage) => (oldMessage.pinned as boolean) && !(newMessage.pinned as boolean),
       messageIdentifier,
@@ -800,7 +804,7 @@ export class Events {
       oldMessage: Message | PartialMessage,
       newMessage: Message | PartialMessage,
     ) => boolean,
-    messageIdentifier?: MessageIdentifier,
+    messageIdentifier?: IMessageIdentifier,
     timeout?: number,
     channelId?: string,
   ) {
@@ -831,13 +835,13 @@ export class Events {
   /**
    * Emitted once a message with `id` x or `content` y, or its embed message has changed.
    *
-   * @param messageIdentifier Identifier of the message
+   * @param messageIdentifier IIdentifier of the message
    * @param timeout time to wait for change
    * @returns A message who had his content changed
    * @internal
    */
   onceMessageContentOrEmbedChange(
-    messageIdentifier?: MessageIdentifier,
+    messageIdentifier?: IMessageIdentifier,
     timeout?: number,
     channelId?: string,
   ) {
@@ -933,7 +937,7 @@ export class Events {
   /**
    * @internal
    */
-  onceRoleRenamed(roleIdentifier?: RoleIdentifier, timeout?: number, guildId?: string) {
+  onceRoleRenamed(roleIdentifier?: IRoleIdentifier, timeout?: number, guildId?: string) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.name !== newRole.name,
       timeout,
@@ -945,7 +949,7 @@ export class Events {
   /**
    * @internal
    */
-  onceRolePositionUpdate(roleIdentifier?: RoleIdentifier, timeout?: number, guildId?: string) {
+  onceRolePositionUpdate(roleIdentifier?: IRoleIdentifier, timeout?: number, guildId?: string) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.rawPosition !== newRole.rawPosition,
       timeout,
@@ -957,7 +961,7 @@ export class Events {
   /**
    * @internal
    */
-  onceRoleUpdateColor(roleIdentifier?: RoleIdentifier, timeout?: number, guildId?: string) {
+  onceRoleUpdateColor(roleIdentifier?: IRoleIdentifier, timeout?: number, guildId?: string) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.color !== newRole.color,
       timeout,
@@ -969,7 +973,7 @@ export class Events {
   /**
    * @internal
    */
-  onceRoleHoistUpdate(roleIdentifier?: RoleIdentifier, timeout?: number, guildId?: string) {
+  onceRoleHoistUpdate(roleIdentifier?: IRoleIdentifier, timeout?: number, guildId?: string) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.hoist !== newRole.hoist,
       timeout,
@@ -981,7 +985,7 @@ export class Events {
   /**
    * @internal
    */
-  onceRoleMentionableUpdate(roleIdentifier?: RoleIdentifier, timeout?: number, guildId?: string) {
+  onceRoleMentionableUpdate(roleIdentifier?: IRoleIdentifier, timeout?: number, guildId?: string) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.mentionable !== newRole.mentionable,
       timeout,
@@ -997,7 +1001,7 @@ export class Events {
    * @internal
    */
   onceRolePermissionUpdate(
-    roleIdentifier: RoleIdentifier,
+    roleIdentifier: IRoleIdentifier,
     timeout = DEFAULT_TEST_TIMEOUT,
     guildId?: string,
   ) {
@@ -1018,7 +1022,7 @@ export class Events {
     }, timeout);
   }
 
-  private roleMatchRoleData(roleIdentifier: RoleIdentifier | undefined, role: Role) {
+  private roleMatchRoleData(roleIdentifier: IRoleIdentifier | undefined, role: Role) {
     return role.id === roleIdentifier?.id || role.name === roleIdentifier?.name;
   }
 
@@ -1098,7 +1102,7 @@ export class Events {
   private _onRoleUpdateWithTimeout(
     comparable: (oldRole: Role, newRole: Role) => boolean,
     timeout?: number,
-    roleIdentifier?: RoleIdentifier,
+    roleIdentifier?: IRoleIdentifier,
     guildId?: string,
   ) {
     const validator = new Validator<[Role, Role]>();

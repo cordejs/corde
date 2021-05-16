@@ -1,4 +1,4 @@
-import { CordeBotLike, ExpectTestParams, TestReport } from "../../types";
+import { ICordeBot, IExpectTestParams, ITestReport } from "../../types";
 import { buildReportMessage } from "../../utils";
 
 /**
@@ -17,7 +17,7 @@ export abstract class ExpectTest {
 
   protected readonly isNot: boolean;
   protected readonly command: string | number | boolean;
-  protected readonly cordeBot: CordeBotLike;
+  protected readonly cordeBot: ICordeBot;
   protected readonly timeOut: number;
   protected readonly testName: string;
   protected readonly isCascade: boolean;
@@ -42,7 +42,7 @@ export abstract class ExpectTest {
     guildId,
     channelId,
     channelIdToSendCommand,
-  }: ExpectTestParams) {
+  }: IExpectTestParams) {
     this.isNot = isNot;
     this.command = command;
     this.cordeBot = cordeBot;
@@ -60,7 +60,7 @@ export abstract class ExpectTest {
    *
    * @returns A report of the executed command.
    */
-  abstract action(...args: any[]): Promise<TestReport>;
+  abstract action(...args: any[]): Promise<ITestReport>;
 
   protected invertHasPassedIfIsNot() {
     if (this.isNot) {
@@ -78,27 +78,26 @@ export abstract class ExpectTest {
    * @returns Message sent
    */
   protected sendCommandMessage(forceSend?: boolean) {
+    // Tests in cascade controus when the message should be sent.
     if (!this.isCascade || forceSend) {
       return this.cordeBot.sendTextMessage(this.command, this.channelIdToSendCommand);
     }
     return Promise.resolve();
   }
 
-  protected createFailedTest(message?: string): TestReport {
-    return {
-      pass: false,
-      message,
-      testName: this.testName,
-    };
+  protected createFailedTest(...messages: (string | null | undefined)[]): ITestReport {
+    const report = this.createReport(...messages);
+    report.pass = false;
+    return report;
   }
 
-  protected createPassTest(): TestReport {
+  protected createPassTest(): ITestReport {
     return {
       pass: true,
       testName: this.testName,
     };
   }
-  protected createReport(...messages: (string | null | undefined)[]): TestReport {
+  protected createReport(...messages: (string | null | undefined)[]): ITestReport {
     let message = "";
     if (messages.length) {
       message = buildReportMessage(...messages);

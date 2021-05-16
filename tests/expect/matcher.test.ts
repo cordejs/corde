@@ -16,10 +16,10 @@ import {
   ToReturn,
   ToSetRoleColor,
 } from "../../src/expect/matches";
-import { ExpectTestBaseParams, ExpectTestParams, TestReport } from "../../src/types";
+import { IExpectTestBaseParams, IExpectTestParams, ITestReport } from "../../src/types";
 import { ExpectTest } from "../../src/expect/matches/expectTest";
 import { buildReportMessage } from "../../src/utils";
-import { ToHaveResult } from "../../src/expect/matches/toHaveResult";
+import { IToHaveResult } from "../../src/expect/matches/toHaveResult";
 import { expect as _expect } from "../../src/expect";
 import MockDiscord from "../mocks/mockDiscord";
 
@@ -68,9 +68,9 @@ async function createToBeCalledTestFor(actionMock: jest.Mock<any, any>) {
 }
 
 async function createDefaultTestFor<T extends ExpectTest>(
-  testClass: new (params: ExpectTestParams) => T,
+  testClass: new (params: IExpectTestParams) => T,
   testClassActionMock: jest.Mock<any, any>,
-  testClassParams: Partial<ExpectTestBaseParams>,
+  testClassParams: Partial<IExpectTestBaseParams>,
   ...callForActionMock: Parameters<T["action"]>
 ) {
   const {
@@ -85,7 +85,7 @@ async function createDefaultTestFor<T extends ExpectTest>(
   } = testClassParams;
 
   await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
-  const params: ExpectTestBaseParams = {
+  const params: IExpectTestBaseParams = {
     command: command ?? con,
     channelIdToSendCommand: channelIdToSendCommand,
     guildId: guildId ?? "22222222222",
@@ -119,7 +119,7 @@ describe("Testing matches class", () => {
     ToPinMessage.prototype.action = toPinMessageActionMock;
 
     ToUnPinMessage.prototype.action = toUnpinMessageActionMock;
-    ToHaveResult.prototype.action = toHaveResultsActionMock;
+    IToHaveResult.prototype.action = toHaveResultsActionMock;
   });
 
   afterEach(() => {
@@ -163,7 +163,7 @@ describe("Testing matches class", () => {
     it("should return failed test due to null command name", async () => {
       initExpectMatch("").toReturn("");
       const report = await runtime.injectBot(testCollector.cloneIsolatedTestFunctions()[0]);
-      expect(report).toEqual<TestReport>({
+      expect(report).toEqual<ITestReport>({
         pass: false,
         testName: undefined,
         message: buildReportMessage("command can not be null or an empty string"),
@@ -933,7 +933,7 @@ describe("Testing matches class", () => {
       const call = _expect.toReturn("test");
       initExpectMatch().toHaveResult(call);
       await createDefaultTestFor(
-        ToHaveResult,
+        IToHaveResult,
         toHaveResultsActionMock,
         { isNot: false },
         expect.any(Function),
@@ -944,7 +944,7 @@ describe("Testing matches class", () => {
       const call = _expect.toReturn("test");
       initExpectMatch().not.toHaveResult(call);
       await createDefaultTestFor(
-        ToHaveResult,
+        IToHaveResult,
         toHaveResultsActionMock,
         { isNot: true },
         expect.any(Function),

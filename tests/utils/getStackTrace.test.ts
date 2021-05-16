@@ -1,14 +1,14 @@
-import { TestReport } from "../../src/types";
+import { ITestReport } from "../../src/types";
 import { getStackTrace } from "../../src/utils";
 
-type TypeExecutor = () => Promise<TestReport>;
+type TypeExecutor = () => Promise<ITestReport>;
 const executorList: TypeExecutor[] = [];
 
 class ExpectExample {
   toReturn() {
     const trace = getStackTrace();
     executorList.push(() => {
-      return Promise.resolve<TestReport>({
+      return Promise.resolve<ITestReport>({
         testName: "",
         pass: false,
         message: "error",

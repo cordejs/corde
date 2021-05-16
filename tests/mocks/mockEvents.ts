@@ -1,13 +1,13 @@
 import { Message, MessageReaction, PartialUser, Role, User } from "discord.js";
 import { TimeoutError } from "../../src/errors";
-import { CordeBotLike } from "../../src/types";
+import { ICordeBot } from "../../src/types";
 import MockDiscord from "./mockDiscord";
 
 /**
  * @internal
  */
 export class MockEvents {
-  constructor(private _corde: CordeBotLike, private _mockDiscord: MockDiscord) {}
+  constructor(private _corde: ICordeBot, private _mockDiscord: MockDiscord) {}
 
   /**
    * @internal

@@ -1,7 +1,7 @@
 import { Client } from "discord.js";
 import { runtime } from "../../src/common/runtime";
-import { ToHaveResult } from "../../src/expect/matches/toHaveResult";
-import { CordeBotLike, TestFunctionType, TestReport } from "../../src/types";
+import { IToHaveResult } from "../../src/expect/matches/toHaveResult";
+import { ICordeBot, TestFunctionType, ITestReport } from "../../src/types";
 import MockDiscord from "../mocks/mockDiscord";
 import { MockEvents } from "../mocks/mockEvents";
 import {
@@ -23,14 +23,14 @@ function initClient() {
   return corde;
 }
 
-function matchMessageSnapshot(report: TestReport) {
+function matchMessageSnapshot(report: ITestReport) {
   if (report.message) {
     expect(removeANSIColorStyle(report.message)).toMatchSnapshot();
   }
 }
 
-function initTestClass(cordeBot: CordeBotLike, isNot: boolean, command?: string) {
-  return testUtils.initTestClass(ToHaveResult, {
+function initTestClass(cordeBot: ICordeBot, isNot: boolean, command?: string) {
+  return testUtils.initTestClass(IToHaveResult, {
     command: command ?? "toDelete",
     isCascade: false,
     cordeBot: cordeBot,
@@ -39,7 +39,7 @@ function initTestClass(cordeBot: CordeBotLike, isNot: boolean, command?: string)
   });
 }
 
-function injectCordeBotToTests(cordeBot: CordeBotLike, ...tests: TestFunctionType[]) {
+function injectCordeBotToTests(cordeBot: ICordeBot, ...tests: TestFunctionType[]) {
   return tests.map((test) => () => test(cordeBot));
 }
 

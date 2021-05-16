@@ -1,6 +1,6 @@
 import { init } from "../../src/cli/init";
 import { FsMockUtils } from "../mockUtils/fs";
-import { ConfigOptions } from "../../src/types";
+import { IConfigOptions, IJSONFile } from "../../src/types";
 
 // As there are a local config file for manual tests,
 // These files are renamed to avoid remotion after finish
@@ -55,14 +55,14 @@ describe("Testing creation of config file in init", () => {
 });
 
 describe("Testing content of config file in init", () => {
-  const configFile: ConfigOptions = {
+  const configFile: IConfigOptions = {
     botPrefix: "",
     botTestId: "",
     channelId: "",
-    cordeTestToken: "",
+    cordeBotToken: "",
     guildId: "",
-    testFiles: [""],
-    botTestToken: "",
+    testMatches: [""],
+    botToken: "",
     timeOut: 5000,
   };
 
@@ -79,7 +79,9 @@ describe("Testing content of config file in init", () => {
   it("should json file have same values of configFile", () => {
     init("json");
     const content = JSON.parse(fs.getCreatedFileContent.toString());
-    expect(configFile).toEqual(content);
+    expect({ $schema: "./node_modules/corde/schema/corde.schema.json", ...configFile }).toEqual(
+      content,
+    );
   });
 
   it("Should throw exception due to error in write", () => {
