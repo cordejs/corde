@@ -1,7 +1,7 @@
 import { reader } from "../../src/core/reader";
 import * as validateFn from "../../src/cli/validate";
 import { exec } from "../../src/cli/exec";
-import { FileError } from "../../src/errors";
+import { FileError, PropertyError } from "../../src/errors";
 import { TestExecutor } from "../../src/core/testExecutor";
 import { summary } from "../../src/core/summary";
 import { mockProcess } from "../mocks";
@@ -20,7 +20,7 @@ jest.mock("../../src/core/testExecutor.ts");
 TestExecutor.prototype.runTestsAndPrint = jest.fn().mockImplementation(() => Promise.resolve({}));
 
 describe("testing default command", () => {
-  it("should throw exception due to no files", async () => {
+  it.only("should throw exception due to no files", async () => {
     const readerSpy = jest.spyOn(reader, "loadConfig");
     readerSpy.mockReturnValue({
       silent: true,
@@ -34,13 +34,10 @@ describe("testing default command", () => {
       timeout: 1000,
     });
 
-    const validateSpy = jest.spyOn(validateFn, "validate");
-    validateSpy.mockImplementation(() => null);
-
     try {
       await exec();
     } catch (error) {
-      expect(error instanceof FileError).toBeTruthy();
+      expect(error instanceof PropertyError).toBeTruthy();
     }
   });
 

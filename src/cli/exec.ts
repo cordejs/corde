@@ -27,7 +27,6 @@ export async function exec() {
 
 async function loadConfigs() {
   const configs = reader.loadConfig();
-  console.log(configs);
   runtime.setConfigs(configs);
   await validate(runtime.configs);
 }
