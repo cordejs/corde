@@ -1,0 +1,40 @@
+---
+id: utilities
+title: Utilities
+custom_edit_url: https://github.com/cordejs/corde/blob/master/docs/Utilities.mdx
+---
+
+Utility functions are used to complement the communication between corde and Discord,
+it provides just a few functions to iterate tests with Discord using corde's bot or your self bot.
+
+- [`sendMessage(message)`](/docs/utilities#sendMessage)
+- [`createRole(roleData)`](/docs/utilities#createroleroledata)
+- [`getRole(roleIndentifier)`](/docs/utilities#getroleroleidentifier)
+
+### sendMessage(string | number | MessageEmbed)
+
+Use `sendMessage` to send a message as **corde bot**. This is useful if you do not want to depend directly on `expect` to wait for corde to send a message.
+
+```typescript
+const message = await corde.sendMessage("Hi Frodo!");
+```
+
+### createRole(RoleData)
+
+Creates a new role to the guild provided in configs.
+
+```typescript
+const role = await corde.createRole({
+  name: "role Banana",
+});
+```
+
+### getRole(RoleIdentifier)
+
+Finds a role in config guild's cache, basing on its **id** or **name**.
+
+```typescript
+const role = corde.getRole("123124");
+const role = corde.getRole({ id: "1231241" });
+const role = corde.getRole({ name: "role Banana" });
+```
