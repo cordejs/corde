@@ -16,6 +16,12 @@
     "removeComments": true,
     "preserveConstEnums": true
   },
-  "include": ["src/**/*", "./*.ts", "./*.js"],
+  "include": [
+    "src/**/*",
+    "./*.ts",
+    "./*.js",
+    "real-bot-example/bot.test.js",
+    "real-bot-example/bot.js"
+  ],
   "exclude": ["./tests/**/*.spec.ts", "node_modules/**/*"]
 }
