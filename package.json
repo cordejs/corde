@@ -1,6 +1,6 @@
 {
   "name": "corde",
-  "version": "4.1.0-beta.2",
+  "version": "4.1.0-beta.3",
   "description": "A simple library for Discord bot tests",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -47,7 +47,7 @@
     "lint": "eslint src/**/*.ts",
     "validate-ci": "circleci config validate",
     "jestClear": "jest --clearCache",
-    "_postinstall": "husky install",
+    "postinstall": "husky install",
     "prepublishOnly": "pinst --disable",
     "postpublish": "pinst --enable"
   },
