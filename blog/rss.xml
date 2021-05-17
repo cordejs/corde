@@ -2,14 +2,14 @@
 <rss version="2.0">
     <channel>
         <title>Corde Blog</title>
-        <link>https://lucasgmagalhaes.github.io/corde/blog</link>
+        <link>https://cordejs.github.io/corde/blog</link>
         <description>Corde Blog</description>
         <lastBuildDate>Tue, 30 Mar 2021 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <item>
             <title><![CDATA[Releasing Corde v3]]></title>
-            <link>https://lucasgmagalhaes.github.io/corde/blog/2021/03/30/corde-v3</link>
+            <link>https://cordejs.github.io/corde/blog/2021/03/30/corde-v3</link>
             <guid>Releasing Corde v3</guid>
             <pubDate>Tue, 30 Mar 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[Informations about version 3]]></description>
