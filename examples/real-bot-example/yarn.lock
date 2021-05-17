@@ -748,10 +748,10 @@ cookie@~0.4.1:
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.4.1.tgz#afd713fe26ebd21ba95ceb61f9a8116e50a537d1"
   integrity sha512-ZwrFkGJxUR3EIoXtO+yVE69Eb7KlixbaeAWfBQB9vVsNn/o+Yw69gBWSSDK825hQNdN+wF8zELf3dFNl/kxkUA==
 
-corde@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/corde/-/corde-3.1.0.tgz#db8429d24d32cfb568eb1230644e95b36fff68a2"
-  integrity sha512-4ZMG5E+35KT77XQwBkh4PeMLyCIcBcQvB6zrAP8RmPdDex1THRnFcc00oAzZtnPo3x2BaBXDn0MEA+37aNrwHQ==
+corde@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/corde/-/corde-4.0.0.tgz#fd5c8ad966d641e348d4e528db432aaa9e80bb06"
+  integrity sha512-xVXByPG/m//hHn7Ifbc8E7sPDX085fChlQG59darFu6PNhWZX4PedWVQZkKlvZPjGD6+i7a29cG1SsAXLw5QAQ==
   dependencies:
     chalk "^4.1.0"
     commander "^7.0.0"

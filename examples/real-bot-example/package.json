@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "cloc": "^2.4.0",
-    "corde": "^3.1.0",
+    "corde": "^4.0.0",
     "husky": "^6.0.0",
     "jasmine-core": "^3.3.0",
     "karma": "^6.3.2",
