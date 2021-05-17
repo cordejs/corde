@@ -1,13 +1,15 @@
+import { initCordeEnv, logger, runtime } from "../environment";
+
+// Loads main objects of corde environment.
+initCordeEnv();
+
 import { Command } from "commander";
 import { exec } from "./exec";
 import { init } from "./init";
 import { validate } from "./validate";
 import pack from "../package";
 import { reader } from "../core/reader";
-import { initCordeEnv, logger, runtime } from "../environment";
 import { ICliConfigOptions, ConfigFileType } from "../types";
-
-initCordeEnv();
 
 export const program = new Command();
 

@@ -13,12 +13,17 @@ const majorVer = +ver.split(".")[0];
 
 // Version required for Discord v12
 if (majorVer < MINIMAL_NODE_VERSION) {
-  console.error(
+  process.stderr.write(
     `Node version '${ver}' is not supported. Please use Node.js ${MINIMAL_NODE_VERSION} or higher.`,
     `\nsee https://nodejs.org/en/download`,
   );
   process.exit(1);
-} else {
-  require = require("esm")(module);
+}
+
+require = require("esm")(module);
+try {
   require("../lib/src/cli/cli");
+} catch (error) {
+  process.stderr.write(error);
+  process.exit(1);
 }
