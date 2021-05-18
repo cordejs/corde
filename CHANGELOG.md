@@ -2,12 +2,12 @@
 
 ## 💡 Miscellaneous
 
-- chalk from 4.1.0 to 4.1.1
-- commander from 7.0.0 to 7.2.0
-- discord.js from 12.2.0 to 12.5.3
-- glob from 7.1.6 to 7.1.7
-- ora from 5.0.0 to 5.4.0
-- tslib from 2.1.0 to 2.2.0
+- upgrade chalk from 4.1.0 to 4.1.1
+- upgrade commander from 7.0.0 to 7.2.0
+- upgrade discord.js from 12.2.0 to 12.5.3
+- upgrade glob from 7.1.6 to 7.1.7
+- upgrade ora from 5.0.0 to 5.4.0
+- upgrade tslib from 2.1.0 to 2.2.0
 
 # 4.0.0
 
