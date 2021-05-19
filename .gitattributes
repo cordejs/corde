@@ -1,8 +1,7 @@
 eol=lf
 
 # Auto detect text files and perform LF normalization
-* text=auto
-*.txt text eol=lf 
+* text=auto eol=lf
 
 
 # JS and TS files must always use LF for tools to work
