@@ -18,7 +18,12 @@ if (majorVer < MINIMAL_NODE_VERSION) {
     `\nsee https://nodejs.org/en/download`,
   );
   process.exit(1);
-} else {
+}
+
+try {
   require = require("esm")(module);
   require("../lib/src/cli/cli");
+} catch (error) {
+  process.stderr.write(error);
+  process.exit(1);
 }

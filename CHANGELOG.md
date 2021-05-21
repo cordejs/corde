@@ -1,3 +1,9 @@
+# 4.0.2
+
+## 🐛 Bug Fixes
+
+- fix corde execution due to CRLF format files
+
 # 4.0.1
 
 ## 💡 Miscellaneous
