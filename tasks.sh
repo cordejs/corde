@@ -3,6 +3,16 @@
 LIB_PATH=lib
 ROOT_PATH=.
 
+function formatToLF() {
+    find . ! -path './.git/**' \
+    ! -path './node_modules/**' \
+    ! -path './examples/real-bot-example/node_modules/**' \
+    ! -path './website/node_modules/**' \
+    ! -path './website/.docusaurus/**' \
+    -type f -exec dos2unix {} \;
+}
+
+
 function clear() {
     echo "cleaning $1 folder..."
     rm -rf $1
