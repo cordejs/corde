@@ -1,5 +1,4 @@
 import { Queue } from "../../src/data-structures";
-import { Guid } from "../../src/utils";
 
 describe("testing queue structure", () => {
   let queue: Queue<() => void>;
@@ -35,7 +34,7 @@ describe("testing queue structure", () => {
 
     it("should return a GUID for enqueued function", () => {
       const guid = queue.enqueue(() => {});
-      expect(Guid.validate(guid)).toBeTruthy();
+      expect(guid).toBeTruthy();
     });
 
     it("should throw error due to attempt to add a null | undefined value", () => {
@@ -515,6 +514,11 @@ describe("testing queue structure", () => {
   });
 
   describe("testing removeFromDefaultParameters", () => {
+    it("should not remove default parameter", () => {
+      numberQueue.removeFromDefaultParameter(1);
+      expect(numberQueue.defaultParametersSize).toBe(0);
+    });
+
     it("should remove default parameter", () => {
       numberQueue.addDefaultParameters(1);
       numberQueue.removeFromDefaultParameter(1);
@@ -556,6 +560,17 @@ describe("testing queue structure", () => {
       numberQueue.addDefaultParameters(1);
       numberQueue.addDefaultParameters(2);
       expect(numberQueue.isDefaultArgumentsValid()).toBeFalsy();
+    });
+  });
+
+  describe("testing first function", () => {
+    it("first should not return something", () => {
+      expect(numberQueue.first()).toBeFalsy();
+    });
+
+    it("first should return something", () => {
+      numberQueue.enqueue(() => 1);
+      expect(numberQueue.first()).toBeTruthy();
     });
   });
 });

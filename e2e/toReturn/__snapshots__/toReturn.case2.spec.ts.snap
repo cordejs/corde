@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`tests should not be sucessfull 1`] = `
+"node test --config ./e2e/corde.config.ts --files ./e2e/toReturn/__cordeTest__/bot_case2.spec.ts
+opa
+
+ FAIL   e2e\\\\toReturn\\\\__cordeTest__\\\\bot_case2.spec.ts   100ms
+   x Hello command should return... hello!!   100ms
+    
+    expected: '...'
+    received: 'Hello!!'
+
+    at toReturn e2e\\\\toReturn\\\\__cordeTest__\\\\bot_case2.spec.ts:6:35
+    at _internalTest (lib\\\\src\\\\closures\\\\test.js:29:13)
+    at lib\\\\src\\\\closures\\\\test.js:52:65
+
+Test Files: 1 failed. 1 total
+Tests:      1 failed. 1 total
+Time:       100ms
+"
+`;

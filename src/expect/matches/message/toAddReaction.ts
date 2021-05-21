@@ -1,41 +1,120 @@
-import { Message } from "discord.js";
-import { TestReport } from "../../../types";
-import { ExpectOperation } from "../operation";
+import { MessageReaction, PartialUser, User } from "discord.js";
+import { TimeoutError } from "../../../errors";
+import { IEmoji, EmojisType, IMessageIdentifier, ITestReport } from "../../../types";
+import { typeOf } from "../../../utils";
+import { IExpectTestBaseParams } from "../../../types";
+import { ExpectTest } from "../expectTest";
 
-export class ToAddReaction extends ExpectOperation<string[]> {
-  public async action(reactions: string[]): Promise<TestReport> {
-    this.expectation = reactions.join();
+/**
+ * @internal
+ */
+export class ToAddReaction extends ExpectTest {
+  constructor(params: IExpectTestBaseParams) {
+    super({ ...params, testName: "toAddReaction" });
+  }
+
+  async action(
+    emojis: EmojisType,
+    messageIdentifier?: IMessageIdentifier | string,
+  ): Promise<ITestReport> {
+    if (
+      messageIdentifier != null &&
+      typeOf(messageIdentifier) !== "object" &&
+      typeOf(messageIdentifier) !== "string"
+    ) {
+      return this.createReport(
+        "expect: message data to be null, undefined, string or an object with id or text properties\n",
+        `received: ${typeOf(messageIdentifier)}`,
+      );
+    }
+
+    if (!emojis || !Array.isArray(emojis)) {
+      return this.createReport(
+        "expected: emojis parameter to be an array with string or objects\n",
+        `received: ${typeOf(emojis)}`,
+      );
+    }
 
     try {
-      const message = await this.cordeBot.sendTextMessage(this.command);
-      await this.cordeBot.waitForAddedReactions(message, reactions);
-      this.hasPassed = isOutputEqualToExpect(message, reactions);
-      this.output = message.reactions.cache.map((v) => v.emoji.name).join();
-
-      this.invertHasPassedIfIsNot();
+      await this.sendCommandMessage();
     } catch (error) {
-      this.hasPassed = false;
-      if (error instanceof Error) {
-        this.output = error.message;
-      } else {
-        this.output = error;
-      }
+      return this.createFailedTest(error.message);
     }
-    return this.generateReport();
+
+    let reactionsWithAuthors: [MessageReaction, User | PartialUser | void][];
+    try {
+      const emojiLike = emojis.map((e: string | IEmoji) => {
+        if (typeof e === "string") {
+          return { name: e };
+        }
+        return e;
+      });
+
+      const _messageData =
+        typeof messageIdentifier === "string" ? { id: messageIdentifier } : messageIdentifier;
+
+      reactionsWithAuthors = await this.cordeBot.events.onceMessageReactionsAdd({
+        authorId: this.cordeBot.testBotId,
+        emojis: emojiLike,
+        messageIdentifier: _messageData,
+        timeout: this.timeOut,
+        channelId: this.channelId,
+      });
+    } catch (error) {
+      if (this.isNot) {
+        return this.createPassTest();
+      }
+
+      if (error instanceof TimeoutError && (error.data as any[])?.length) {
+        const _emojisReturned = reactionsFromResponse(error.data);
+        return this.createReport(
+          `expected: to add reactions ${stringifyReactionToPrint(emojis)}\n`,
+          `received: ${_emojisReturned}`,
+        );
+      }
+
+      return this.createReport(
+        `expected: to add reactions ${stringifyReactionToPrint(emojis)}\n`,
+        "received: no reaction was added to message",
+      );
+    }
+
+    // We can set it as passed due to all validations about if
+    // the reactions added matches with expected are defined in the event onceMessageReactionsAdd
+    this.hasPassed = true;
+
+    this.invertHasPassedIfIsNot();
+
+    if (this.hasPassed) {
+      return this.createPassTest();
+    }
+
+    const emojisReturned = reactionsFromResponse(reactionsWithAuthors);
+
+    return this.createReport(
+      `expected: ${this.isNot ? "not " : ""}to add reactions ${stringifyReactionToPrint(emojis)}\n`,
+      `received: ${emojisReturned}`,
+    );
   }
 }
 
-function isOutputEqualToExpect(message: Message, expectation: string | string[]) {
-  if (typeof expectation === "string" && message.reactions.cache.has(expectation)) {
-    return true;
-  } else {
-    for (const i in expectation as string[]) {
-      if (message.reactions.cache.has(expectation[i])) {
-        return true;
-      } else {
-        return false;
+function reactionsFromResponse(
+  reactionsWithAuthors: [MessageReaction, User | PartialUser | void][],
+) {
+  const emojis = reactionsWithAuthors.map((r) => r[0].emoji);
+  return emojis.map((e) => e.name).join(", ");
+}
+
+function stringifyReactionToPrint(emojis: EmojisType) {
+  return emojis
+    .map((e: string | IEmoji) => {
+      if (typeof e !== "string") {
+        if (e.id) {
+          return e.id;
+        }
+        return e.name;
       }
-    }
-  }
-  return false;
+      return e;
+    })
+    .join(", ");
 }

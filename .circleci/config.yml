@@ -91,16 +91,6 @@ jobs:
           name: Publish coverage
           command: yarn codecov -f coverage/*.json
 
-  publish_website:
-    <<: *work-dir
-    docker:
-      - image: circleci/node:latest
-    steps:
-      - checkout
-      - run:
-          name: Deploy Corde website if needed
-          command: sh ./.circleci/website.sh
-
 workflows:
   version: 2
 
@@ -146,10 +136,3 @@ workflows:
           filters:
             branches:
               ignore: gh-pages
-
-  website-build-deploy:
-    jobs:
-      - publish_website:
-          filters:
-            branches:
-              only: master # Restrict website deploy to only master branch

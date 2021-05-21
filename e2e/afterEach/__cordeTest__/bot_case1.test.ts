@@ -5,6 +5,6 @@ corde.afterAll(() => {
   console.log("test afterAll");
 });
 
-corde.test("", () => {
-  testCollector.addTestFunction(() => Promise.resolve({ hasPassed: true }));
+corde.it("", () => {
+  testCollector.addTestFunction(() => Promise.resolve({ pass: true }));
 });

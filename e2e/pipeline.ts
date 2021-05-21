@@ -1,6 +1,11 @@
 #!/usr/bin/env ts-node-script
 
 /**
+ * @deprecated
+ * package.json script: "e2e": "ts-node ./e2e/pipeline"
+ */
+
+/**
  * Corde script for end-to-end tests. In comparation with Jest, this script,
  * runs tests with avarage of ~5 seconds faster.
  * usage: ts-node pipeline.ts

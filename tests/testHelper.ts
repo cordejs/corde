@@ -2,7 +2,12 @@ import path from "path";
 import fs from "fs";
 import MockDiscord from "./mocks/mockDiscord";
 import { Client } from "discord.js";
-import { CordeBot } from "../src/core";
+import { CordeBot } from "../src/core/cordeBot";
+import { ICordeBot, ITest, ITestFile, TestFunctionType, ITestReport } from "../src/types";
+import { ExpectTest } from "../src/expect/matches/expectTest";
+import { IExpectTestBaseParams } from "../src/types";
+import { runtime } from "../src/common/runtime";
+import { buildReportMessage } from "../src/utils";
 
 export const normalTsPath = path.resolve(process.cwd(), "corde.ts");
 export const tempTsPath = path.resolve(process.cwd(), "__corde.ts");
@@ -12,6 +17,10 @@ export const tempJsPath = path.resolve(process.cwd(), "__corde.js");
 
 export const normalJsonPath = path.resolve(process.cwd(), "corde.json");
 export const tempJsonPath = path.resolve(process.cwd(), "__corde.json");
+
+export function getConsoleSpyStder(spy: jest.SpyInstance<void, any>) {
+  return getFullConsoleLog(spy.mock.calls);
+}
 
 export function getFullConsoleLog(log: [any?, ...any[]][]) {
   let stringValue = "";
@@ -88,12 +97,15 @@ export function initCordeClientWithChannel(
 
 export const DEFAULT_PREFIX = "!";
 
-export function initCordeClient(mockDiscord: MockDiscord, clientInstance: Client, timeout = 500) {
+export function initCordeClient(
+  mockDiscord: MockDiscord,
+  clientInstance: Client,
+  timeout = 500,
+): ICordeBot {
   return new CordeBot(
     DEFAULT_PREFIX,
     mockDiscord.guild.id,
     mockDiscord.channel.id,
-    timeout,
     mockDiscord.userBotId,
     clientInstance,
   );
@@ -103,4 +115,143 @@ export function executeWithDelay(fn: () => void, delay: number) {
   setTimeout(() => {
     fn();
   }, delay);
+}
+
+export function removeANSIColorStyle(value: string) {
+  return value.replace(
+    /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g,
+    "",
+  );
+}
+
+export interface TestFileGeneratorInfo {
+  amountOfTests: number;
+  amountOfTestFunctions?: number;
+  testFunctionsReport?: ITestReport[];
+  amountOfTestFiles: number;
+}
+
+export const testFileNames = [
+  "/tests/file1.test.ts",
+  "/tests/file2.test.ts",
+  "/tests/file3.test.ts",
+  "/tests/file4.test.ts",
+];
+
+export const testNames = ["test case1", "test case2", "test case3", "test case4"];
+
+export function generateTestFile(generatorData: TestFileGeneratorInfo) {
+  const testMatches: ITestFile[] = [];
+  const testFunctions: TestFunctionType[] = [];
+  const tests: ITest[] = [];
+
+  if (generatorData.testFunctionsReport) {
+    for (const report of generatorData.testFunctionsReport) {
+      testFunctions.push(() => Promise.resolve(report));
+    }
+  }
+
+  if (generatorData.amountOfTestFunctions) {
+    for (let i = 0; i < generatorData.amountOfTestFunctions; i++) {
+      testFunctions.push(() =>
+        Promise.resolve<ITestReport>({
+          testName: "",
+          pass: true,
+        }),
+      );
+    }
+  }
+
+  // Updates the value if pass testFunctions.
+  generatorData.amountOfTestFunctions = testFunctions.length;
+
+  for (let i = 0; i < generatorData.amountOfTests; i++) {
+    tests.push({
+      name: testNames[i],
+      testsFunctions: testFunctions,
+    });
+  }
+
+  for (let i = 0; i < generatorData.amountOfTestFiles; i++) {
+    testMatches.push({
+      path: testFileNames[i],
+      isEmpty: false,
+      groups: [
+        {
+          name: "group",
+          tests,
+        },
+      ],
+    });
+  }
+
+  return testMatches;
+}
+
+export function _initTestSimpleInstance<T extends ExpectTest>(
+  type: new (params: IExpectTestBaseParams) => T,
+  params: IExpectTestBaseParams,
+) {
+  return new type({
+    command: params.command ?? "",
+    cordeBot: params.cordeBot,
+    channelId: params.channelId,
+    guildId: params.guildId ?? runtime.guildId,
+    isNot: params.isNot ?? false,
+    timeout: params.timeout ?? runtime.timeOut,
+    isCascade: params.isCascade ?? false,
+  });
+}
+
+export namespace testUtils {
+  export function initTestClass<T extends ExpectTest>(
+    type: new (params: IExpectTestBaseParams) => T,
+    params: Partial<IExpectTestBaseParams>,
+  ) {
+    return new type({
+      command: params.command ?? "",
+      cordeBot: params.cordeBot ?? ({} as any),
+      isNot: params.isNot ?? false,
+      channelId: params.channelId ?? runtime.channelId,
+      guildId: params.guildId ?? runtime.guildId,
+      timeout: params.timeout ?? runtime.timeOut,
+      isCascade: params.isCascade ?? false,
+    });
+  }
+
+  export function createPassReport(): ITestReport {
+    return {
+      pass: true,
+      testName: "",
+    };
+  }
+
+  export function createResolvedPassReport() {
+    return Promise.resolve(testUtils.createPassReport());
+  }
+
+  export function createResolvedFailedReport(message: string[], trace?: string) {
+    return Promise.resolve(testUtils.createFailedITestReport(message, trace));
+  }
+
+  export function createFailedITestReport(message: string[], trace?: string) {
+    return {
+      pass: false,
+      testName: "",
+      message: buildReportMessage(...message),
+      trace: trace,
+    };
+  }
+}
+
+export function createReport(entity: Object, pass: boolean, message?: string): ITestReport {
+  const obj: ITestReport = {
+    pass,
+    testName: entity.toString(),
+  };
+
+  if (message) {
+    obj.message = message;
+  }
+  return obj;
 }

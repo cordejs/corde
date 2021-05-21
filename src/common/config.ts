@@ -1,26 +1,23 @@
 import { DEFAULT_TEST_TIMEOUT } from "../consts";
-import { ConfigOptions } from "../types";
+import { IConfigOptions } from "../types";
 
 /**
- * Default interface of json config
+ * Default interface of JSON config
  *
- * @description `botTestToken` is not required.
+ * @description `botToken` is not required.
  * only inform if is desired to start test bot with corde
  *
  */
-export class Config implements ConfigOptions {
-  public cordeTestToken: string;
-  public botTestId: string;
-  public botTestToken?: string;
-  public channelId: string;
-  public guildId: string;
-  public timeOut?: number;
-  public botPrefix: string;
-  public testFiles: string[];
-
-  constructor() {
-    this.timeOut = DEFAULT_TEST_TIMEOUT;
-  }
+export class Config implements IConfigOptions {
+  cordeBotToken!: string;
+  botTestId!: string;
+  botToken!: string;
+  channelId!: string;
+  guildId!: string;
+  timeOut?: number;
+  botPrefix!: string;
+  testMatches!: string[];
+  modulePathIgnorePatterns?: string[];
 
   /**
    * Set values to config options that are not **filed** yet
@@ -31,47 +28,55 @@ export class Config implements ConfigOptions {
    * const config = new Config();
    * config.timeOut = 1000;
    *
-   * const newConfig: ConfigOptions = { ...timeOut: 3000 };
-   * config.setNoFiledConfigsOptions(newConfig);
+   * const newConfig: IConfigOptions = { ...timeOut: 3000 };
+   * config.setConfigs(newConfig);
    * console.log(config.timeOut) // print 1000;
    *
    * @param config new set of configs.
    */
-  public setNoFiledConfigsOptions(config: ConfigOptions) {
-    if (!this.cordeTestToken) {
-      this.cordeTestToken = config.cordeTestToken;
+  setConfigs(config: Partial<IConfigOptions>, forceUpdate?: boolean) {
+    if (config.cordeBotToken && (!this.cordeBotToken || forceUpdate)) {
+      this.cordeBotToken = config.cordeBotToken;
     }
 
-    if (!this.botPrefix) {
+    if (config.botPrefix && (!this.botPrefix || forceUpdate)) {
       this.botPrefix = config.botPrefix;
     }
 
-    if (!this.botTestId) {
+    if (config.botTestId && (!this.botTestId || forceUpdate)) {
       this.botTestId = config.botTestId;
     }
 
-    if (!this.botTestToken) {
-      this.botTestToken = config.botTestToken;
+    if (config.botToken && (!this.botToken || forceUpdate)) {
+      this.botToken = config.botToken;
     }
 
-    if (!this.channelId) {
+    if (config.channelId && (!this.channelId || forceUpdate)) {
       this.channelId = config.channelId;
     }
 
-    if (!this.guildId) {
+    if (config.guildId && (!this.guildId || forceUpdate)) {
       this.guildId = config.guildId;
     }
 
-    if (!this.timeOut) {
-      this.timeOut = config.timeOut;
+    if (!this.timeOut || forceUpdate) {
+      if (config.timeOut) {
+        this.timeOut = config.timeOut;
+      } else {
+        this.timeOut = DEFAULT_TEST_TIMEOUT;
+      }
     }
 
-    if (!this.botPrefix) {
+    if (config.botPrefix && (!this.botPrefix || forceUpdate)) {
       this.botPrefix = config.botPrefix;
     }
 
-    if (!this.testFiles || this.testFiles.length === 0) {
-      this.testFiles = config.testFiles;
+    if (config.modulePathIgnorePatterns && (!this.modulePathIgnorePatterns || forceUpdate)) {
+      this.modulePathIgnorePatterns = config.modulePathIgnorePatterns;
+    }
+
+    if (config.testMatches && (!this.testMatches || this.testMatches.length === 0 || forceUpdate)) {
+      this.testMatches = config.testMatches;
     }
   }
 }

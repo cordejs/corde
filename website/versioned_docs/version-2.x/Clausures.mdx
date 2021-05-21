@@ -1,0 +1,50 @@
+---
+id: closures
+title: Closures
+custom_edit_url: https://github.com/cordejs/corde/blob/master/website/versioned_docs/version-2.x/Closures.mdx
+---
+
+Corde has some functions to group all tests, are they: `group` and `test`.
+
+- [`group(description, fn)`](/docs/closures#groupdescription-fn)
+- [`test(description, fn, timeout)`](/docs/closures#testdescription-fn-timeout)
+
+:::note
+Both `group` and `test` accepts async code, that will be resolved by corde runtime.
+:::
+
+### `group(description, fn)`
+
+Also under the alias: `describe(description, fn)`
+
+group(name, fn) creates a block that groups together several related tests.
+For instance:
+
+```typescript
+group("testing bot", () => {
+  test("command 'hi' should  return 'hello'", () => {
+    expect("hi").toReturn("hello");
+  });
+
+  test("command 'addReaction' should add a reaction to last message", () => {
+    expect("hi").toAddReaction(["🍊"]);
+  });
+});
+```
+
+### `test(description, fn, timeout)`
+
+Also under the alias: `it(description, fn, timeout)`
+
+All you need in a test file is the test method which runs a test.
+For example, let's take the famous "hi", "hello" test example:
+
+```typescript
+test("command 'hi' should  return 'hello'", () => {
+  expect("hi").toReturn("hello");
+});
+```
+
+The first argument is the test name; the second argument is a function that contains the expectations to test.
+The third argument (optional) is `timeout` (in milliseconds) for specifying how long to wait before aborting.
+Note: The default timeout is 5 seconds.

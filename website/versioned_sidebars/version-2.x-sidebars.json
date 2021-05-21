@@ -1,0 +1,65 @@
+{
+  "version-2.x/someSidebar": [
+    {
+      "collapsed": false,
+      "type": "category",
+      "label": "Introduction",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-2.x/getting-started"
+        },
+        {
+          "type": "doc",
+          "id": "version-2.x/cli"
+        },
+        {
+          "type": "doc",
+          "id": "version-2.x/configurations"
+        }
+      ]
+    },
+    {
+      "collapsed": false,
+      "type": "category",
+      "label": "Guides",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-2.x/creatingdiscordbot"
+        }
+      ]
+    },
+    {
+      "collapsed": false,
+      "type": "category",
+      "label": "API Reference",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-2.x/expect"
+        },
+        {
+          "type": "doc",
+          "id": "version-2.x/closures"
+        },
+        {
+          "type": "doc",
+          "id": "version-2.x/hooks"
+        },
+        {
+          "type": "doc",
+          "id": "version-2.x/utilities"
+        },
+        {
+          "type": "doc",
+          "id": "version-2.x/colors"
+        },
+        {
+          "type": "doc",
+          "id": "version-2.x/permissions"
+        }
+      ]
+    }
+  ]
+}

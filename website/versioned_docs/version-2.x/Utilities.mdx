@@ -1,0 +1,21 @@
+---
+id: utilities
+title: Utilities
+custom_edit_url: https://github.com/cordejs/corde/blob/master/website/docs/utilities.md
+---
+
+Utility functions are used to complement the comunication between corde and Discord, it provide just a few functions to iterate tests with Discord using corde's bot or your self bot.
+
+- [sendMessage](/docs/utilities#sendMessage)
+
+### sendMessage(string | number | MessageEmbed)
+
+Use `sendMessage` to send a message as **corde bot**. This is usefull if you do not want to depend directly of `expect` to wait corde to send a message.
+
+```typescript
+const message = await corde.sendMessage("Hi Frodo!");
+```
+
+### withClient(Client)
+
+Use `withClient` if you want

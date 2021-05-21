@@ -1,14 +1,16 @@
 import { Command } from "commander";
-import { go } from "./go";
+import { exec } from "./exec";
 import { init } from "./init";
 import { validate } from "./validate";
-import { configFileType } from "../types/types";
-import { initErrorHandlers } from "../errorHandler";
+import { configFileType } from "../types";
 import pack from "../package";
-import { runtime } from "../common";
-import { reader } from "../core";
+import { runtime } from "../common/runtime";
+import { reader } from "../core/reader";
+import { initEnvVariables } from "../envVariables";
+import { initErrorHandlers } from "../errorHandler";
 
 initErrorHandlers();
+initEnvVariables();
 
 export const program = new Command();
 
@@ -26,18 +28,18 @@ program
     "Set the path for all tests. Use this if you wan to specify a single path." +
       " for Array, use only 'corde <path1> <path2>'",
   )
-  .action(async (args) => {
+  .action(async (args: any) => {
     const options = program.opts();
     if (options.config) {
       runtime.configFilePath = options.config;
     }
     if (args) {
-      runtime.testFiles = program.args;
+      runtime.setConfigs({ testMatches: program.args }, true);
     }
     if (options.files) {
-      runtime.testFiles = options.files.split(" ");
+      runtime.setConfigs({ testMatches: options.files.split(" ") }, true);
     }
-    await go();
+    await exec();
   });
 
 program
@@ -53,15 +55,16 @@ program
   .command("validate")
   .alias("v")
   .description("Search for corde configs and check if all data are valid")
-  .action(() => {
+  .action(async () => {
     const configs = reader.loadConfig();
-    validate(configs);
+    await validate(configs);
     console.log("All configs are ok!");
   });
 
-// tslint:disable-next-line: deprecation
-if (process.env.ENV !== "TEST") {
-  program.parse(process.argv);
-} else {
-  program.exitOverride();
+if (process.env.ENV !== "UNITY_TEST" && process.env.ENV !== "E2E_TEST") {
+  _main();
+}
+
+export async function _main(args?: string[]) {
+  await program.parseAsync(args ?? process.argv);
 }

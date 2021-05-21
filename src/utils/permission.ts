@@ -195,11 +195,14 @@ export enum Permission {
   VIEW_GUILD_INSIGHTS = 0x00080000,
 }
 
+const permissionsArray = Object.keys(Permission);
+export { permissionsArray };
+
 /**
  * Convert a list of permissions into an integer value.
  * @param permissions Permissions to be converted
  */
-export function calcPermissionsValue(...permissions: Permission[]) {
+export function calcPermissionsValue(...permissions: Permission[]): number | undefined {
   // tslint:disable-next-line: no-bitwise
-  return permissions.reduce((p1, p2) => p1 | p2);
+  return permissions.reduce((p1, p2) => p1 | p2) as number;
 }

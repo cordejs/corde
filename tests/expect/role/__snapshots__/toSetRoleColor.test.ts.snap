@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing toSetRoleColor should fail due to invalid color 1`] = `
+Object {
+  "message": "    
+    toSetRoleColor: invalid color informed - 'null'
+",
+  "pass": false,
+  "testName": "toSetRoleColor",
+}
+`;
+
+exports[`testing toSetRoleColor should fail due to role hadn't color changed 1`] = `
+Object {
+  "message": "    
+    expected: change role color from 3447003 to 3426654
+    received: the color was not changed
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toSetRoleColor should fail due to undefined roleIdentifier 1`] = `
+Object {
+  "message": "    
+    expected: data to identifier the role (id or name)
+    received: null
+",
+  "pass": false,
+  "testName": "toSetRoleColor",
+}
+`;
+
+exports[`testing toSetRoleColor should return a failed test due to failure in message sending 1`] = `
+Object {
+  "message": "    
+    can not send message to channel x
+",
+  "pass": false,
+  "testName": "toSetRoleColor",
+}
+`;
+
+exports[`testing toSetRoleColor should return a not passed test due expected name did not match to received 1`] = `
+Object {
+  "message": "    
+    expected: change role color from 3447003 to 1752220
+    received: 3447003
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toSetRoleColor should return a not passed test due to color should not change (isNot true) 1`] = `
+Object {
+  "message": "    
+    expected: change role color from 3447003 to 12745742
+    received: 3447003
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toSetRoleColor should return false due to not found role 1`] = `
+Object {
+  "message": "    
+    expected: role with id 123
+    received: null
+",
+  "pass": false,
+  "testName": "toSetRoleColor",
+}
+`;
+
+exports[`testing toSetRoleColor should return true due to isNot true and no role change 1`] = `
+Object {
+  "pass": true,
+  "testName": "toSetRoleColor",
+}
+`;
+
+exports[`testing toSetRoleColor should return true due to role has changed the color (isNot false) 1`] = `
+Object {
+  "pass": true,
+  "testName": "toSetRoleColor",
+}
+`;

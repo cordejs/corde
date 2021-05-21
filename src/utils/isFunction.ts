@@ -3,6 +3,7 @@
  *
  * @param fn The value to check.
  * @returns A definition that the value is or not a function.
+ * @internal
  */
 export function isFunction<T>(fn: any): fn is (...args: any[]) => T {
   return typeof fn === "function";

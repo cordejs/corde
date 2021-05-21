@@ -15,7 +15,55 @@ import {
   MessageEmbed,
   Role,
   RoleManager,
+  GuildEmoji,
+  Speaking,
+  Presence,
+  PresenceStatus,
+  ActivityType,
+  Activity,
+  VoiceState,
 } from "discord.js";
+import { ToReturn } from "../../src/expect/matches";
+import { IMessageEmbed } from "../../src/types";
+
+/**
+ * @private
+ */
+export interface GuildEmojiData {
+  animated: boolean;
+  name: string;
+  id: string;
+  deleted: boolean;
+}
+
+export interface ActivityData {
+  name: string;
+  type: ActivityType;
+  url?: string;
+  details?: string;
+  state?: string;
+  application_id: string;
+  timestamp: Date;
+  party?: object;
+}
+
+export interface PresenceData {
+  user: User;
+  guild?: Guild;
+  status: PresenceStatus;
+  activities: ActivityData[];
+}
+
+export interface VoiceStateData {
+  user_id: string;
+  deaf?: boolean;
+  mute?: boolean;
+  self_deaf?: boolean;
+  self_mute?: boolean;
+  self_video?: boolean;
+  session_id?: string;
+  self_streaming?: boolean;
+}
 
 /**
  * Initialize mock values for Discord namespace
@@ -27,28 +75,39 @@ import {
  *       .fn()
  *       .mockReturnValue(mockDiscord.messageReactionCollection);
  *
+ *
+ * @internal
  */
 export default class MockDiscord {
-  private _id: string;
-  private _message: Message;
-  private _messageEmbed: MessageEmbed;
-  private _client: Client;
-  private _guild: Guild;
-  private _channel: Channel;
-  private _guildChannel: GuildChannel;
-  private _textChannel: TextChannel;
-  private _user: User;
-  private _userBot: User;
-  private _guildMember: GuildMember;
-  private _guildManager: GuildManager;
-  private _messageReaction: MessageReaction;
-  private _isolatedMessageReaction: MessageReaction;
-  private _messageCollection: Collection<string, Message>;
-  private _messageEmbedCollection: Collection<string, MessageEmbed>;
-  private _messageReactionCollection: Collection<string, MessageReaction>;
-  private _messageManager: MessageManager;
-  private _role: Role;
-  private _roleManager: RoleManager;
+  private _id!: string;
+  private _message!: Message;
+  private _messageEmbed!: MessageEmbed;
+  private _client!: Client;
+  private _guild!: Guild;
+  private _guildEmoji!: GuildEmoji;
+  private _channel!: Channel;
+  private _guildChannel!: GuildChannel;
+  private _textChannel!: TextChannel;
+  private _user!: User;
+  private _userBot!: User;
+  private _guildMember!: GuildMember;
+  private _guildManager!: GuildManager;
+  private _messageReaction!: MessageReaction;
+  private _isolatedMessageReaction!: MessageReaction;
+  private _messageCollection!: Collection<string, Message>;
+  private _messageEmbedCollection!: Collection<string, MessageEmbed>;
+  private _messageReactionCollection!: Collection<string, MessageReaction>;
+  private _guildMemberCollection!: Collection<string, GuildMember>;
+  private _messageManager!: MessageManager;
+  private _role!: Role;
+  private _roleManager!: RoleManager;
+  private _speaking!: Speaking;
+  private _presence!: Presence;
+  private _voiceState!: VoiceState;
+  private _messageEmbedLike: IMessageEmbed;
+  private _messageWithEmbed: Message;
+  private _pinnedMessage: Message;
+  private _unPinnedMessage: Message;
 
   /**
    * Initialize all mocks
@@ -61,81 +120,81 @@ export default class MockDiscord {
   /**
    * Get a mocked instance of Client
    */
-  public get client(): Client {
+  get client(): Client {
     return this._client;
   }
 
   /**
    * Shortcut for **this.guild.id**
    */
-  public get guildId() {
+  get guildId() {
     return this._guild.id;
   }
 
   /**
    * Get a mocked instance of Guild
    */
-  public get guild(): Guild {
+  get guild(): Guild {
     return this._guild;
   }
 
   /**
    * Shortcut for **this.channel.id**
    */
-  public get channelId() {
+  get channelId() {
     return this._channel.id;
   }
 
   /**
    * Get a mocked instance of Channel
    */
-  public get channel(): Channel {
+  get channel(): Channel {
     return this._channel;
   }
 
   /**
    * Get a mocked instance of GuildChannel
    */
-  public get guildChannel(): GuildChannel {
+  get guildChannel(): GuildChannel {
     return this._guildChannel;
   }
 
   /**
    * Get a mocked instance of TextChannel
    */
-  public get textChannel(): TextChannel {
+  get textChannel(): TextChannel {
     return this._textChannel;
   }
 
   /**
    * Get a mocked instance of User
    */
-  public get user(): User {
+  get user(): User {
     return this._user;
   }
 
-  public get userBot() {
+  get userBot() {
     return this._userBot;
   }
 
   /**
    * Get a mocked instance of GuildMember
    */
-  public get guildMember(): GuildMember {
+  get guildMember(): GuildMember {
     return this._guildMember;
   }
 
   /**
    * Get a mocked instance of Message
    */
-  public get message(): Message {
+  get message(): Message {
     return this._message;
   }
 
   /**
    * Get a mocked instance of GuildManager
    */
-  public get guildManager() {
+  get guildManager() {
     return this._guildManager;
   }
 
@@ -143,7 +202,7 @@ export default class MockDiscord {
    * Get a mocked instance of Collection<string, Message>
    * the content in this collection is **message**
    */
-  public get messageCollection() {
+  get messageCollection() {
     return this._messageCollection;
   }
 
@@ -151,7 +210,7 @@ export default class MockDiscord {
    * Get a message reaction mock. The reaction
    * is for **this.message**
    */
-  public get messageReaction() {
+  get messageReaction() {
     return this._messageReaction;
   }
 
@@ -159,80 +218,116 @@ export default class MockDiscord {
    * Get a message reaction mock that is not linked
    * to *this.message*
    */
-  public get isolatedMessageReaction() {
+  get isolatedMessageReaction() {
     return this._isolatedMessageReaction;
   }
 
   /**
    * Shortcut for **this.messageReaction.emoji.name**
    */
-  public get messageReactionEmojiName() {
+  get messageReactionEmojiName() {
     return this._messageReaction.emoji.name;
   }
 
   /**
    * Get a message reaction collection for **this.reaction**
    */
-  public get messageReactionCollection() {
+  get messageReactionCollection() {
     return this._messageReactionCollection;
   }
 
   /**
    * Get a id generated with *SnowflakeUtil.generate()*
    */
-  public get id() {
+  get id() {
     return this._id;
   }
 
   /**
    * Shortcut for *this.user.id*
    */
-  public get userId() {
+  get userId() {
     return this._user.id;
   }
 
   /**
    * Shortcut for *this.userbot.id*
    */
-  public get userBotId() {
+  get userBotId() {
     return this._userBot.id;
+  }
+
+  get presence() {
+    return this._presence;
   }
 
   /**
    * Recreates all mocks
    */
-  public resetMocks() {
+  resetMocks() {
     this.init();
   }
 
   /**
    * Encapsulation for *SnowflakeUtil.generate()*
    */
-  public generateId() {
+  generateId() {
     return SnowflakeUtil.generate();
   }
 
-  public get messageManager() {
+  get messageManager() {
     return this._messageManager;
   }
 
-  public get messageEmbed() {
+  get messageEmbed() {
     return this._messageEmbed;
   }
 
-  public get messageEmbedCollection() {
+  get messageEmbedCollection() {
     return this._messageEmbedCollection;
   }
 
-  public get role() {
+  get role() {
     return this._role;
   }
 
-  public get roleManager() {
+  get roleManager() {
     return this._roleManager;
   }
 
-  public get<T extends Collection<K, V>, K, V>(collection: T, index: number) {
+  get guildEmoji() {
+    return this._guildEmoji;
+  }
+
+  get guildMemberCollection() {
+    return this._guildMemberCollection;
+  }
+
+  get speaking() {
+    return this._speaking;
+  }
+
+  get voiceState() {
+    return this._voiceState;
+  }
+
+  get messageEmbedLike() {
+    return this._messageEmbedLike;
+  }
+
+  get messageWithEmbed() {
+    return this._messageWithEmbed;
+  }
+
+  get pinnedMessage() {
+    return this._pinnedMessage;
+  }
+
+  get unPinnedMessage() {
+    return this._unPinnedMessage;
+  }
+
+  get<T extends Collection<K, V>, K, V>(collection: T, index: number) {
     return collection.array()[index];
   }
 
@@ -254,29 +349,39 @@ export default class MockDiscord {
     this._message = this.createMockMessage();
     this._messageCollection = this.createMockMessageCollection();
 
+    this._unPinnedMessage = this.createMockUnPinnedMessage();
+    this._pinnedMessage = this.createMockPinnedMessage();
+
     this._messageReaction = this.createMockMessageReaction();
     this._isolatedMessageReaction = this.createIsolatedMockMessageReaction();
     this._messageReactionCollection = this.createMockMessageReactionCollection();
 
+    this._messageEmbedLike = this.createEmbedMessageLike();
     this._messageEmbed = this.createMockMessageEmbed();
-    this._messageEmbedCollection = this.createMockMessageEmbedCollection();
+    this._messageWithEmbed = this.createMockMessageWithEmbed();
 
+    this._messageEmbedCollection = this.createMockMessageEmbedCollection();
     this._role = this.createMockRole();
+
     this._roleManager = this.createMockRoleManager();
+    this._guildEmoji = this.createGuildEmoji();
+    this._guildMemberCollection = this.createGuildMemberCollection();
+
+    this._presence = this.createPresence();
   }
 
-  private createMockClient() {
+  createMockClient() {
     return new Client();
   }
 
-  private createMockId() {
+  createMockId() {
     return SnowflakeUtil.generate();
   }
 
-  private createMockGuild() {
+  createMockGuild() {
     return new Guild(this._client, {
       unavailable: false,
-      id: SnowflakeUtil.generate(),
+      id: "729334530350652501",
       name: "mocked js guild",
       icon: "mocked guild icon url",
       splash: "mocked guild splash url",
@@ -302,13 +407,13 @@ export default class MockDiscord {
     });
   }
 
-  private createMockChannel() {
+  createMockChannel() {
     return new Channel(this._client, {
-      id: "channel-id",
+      id: "124123124123124",
     });
   }
 
-  private createMockGuildChannel() {
+  createMockGuildChannel() {
     return new GuildChannel(this._guild, {
       ...this._channel,
       name: "guild-channel",
@@ -318,7 +423,23 @@ export default class MockDiscord {
     });
   }
 
-  private createMockTextChannel() {
+  createGuildEmoji(emojiData?: GuildEmojiData) {
+    const data: GuildEmojiData = {
+      animated: false,
+      name: "exampleEmoji",
+      id: this.generateId(),
+      deleted: false,
+    };
+    return new GuildEmoji(this._client, emojiData ?? data, this.guild);
+  }
+
+  createGuildMemberCollection() {
+    const col = new Collection<string, GuildMember>();
+    col.set(this.guildMember.id, this.guildMember);
+    return col;
+  }
+
+  createMockTextChannel() {
     return new TextChannel(this._guild, {
       ...this._guildChannel,
       topic: "topic",
@@ -329,9 +450,9 @@ export default class MockDiscord {
     });
   }
 
-  private createUserMock(isBot: boolean) {
+  createUserMock(isBot: boolean) {
     return new User(this._client, {
-      id: SnowflakeUtil.generate(),
+      id: "529112540350652502",
       username: "UserCorde",
       discriminator: "user#0101",
       avatar: "user avatar url",
@@ -339,7 +460,7 @@ export default class MockDiscord {
     });
   }
 
-  private createMockGuildMember() {
+  createMockGuildMember() {
     return new GuildMember(
       this._client,
       {
@@ -358,27 +479,29 @@ export default class MockDiscord {
     );
   }
 
-  private createMockMessageCollection() {
+  createMockMessageCollection() {
     const collection = new Collection<string, Message>();
     collection.set(this._message.id, this._message);
 
     const msg = this.createMockMessage("Hi");
+    msg.id = "1232142";
+
     collection.set(msg.id, msg);
 
     return collection;
   }
 
-  private createMockMessageReactionCollection() {
+  createMockMessageReactionCollection() {
     const collection = new Collection<string, MessageReaction>();
     collection.set(this._messageReaction.emoji.name, this._messageReaction);
     return collection;
   }
 
-  private createMockMessage(customMessage = "this is the message content") {
+  createMockMessage(customMessage = "this is the message content") {
     const msg = new Message(
       this._client,
       {
-        id: SnowflakeUtil.generate(),
+        id: "125332540654650541",
         type: "DEFAULT",
         content: customMessage,
         author: this._user,
@@ -402,14 +525,33 @@ export default class MockDiscord {
     return msg;
   }
 
-  public createMockMessageReaction(customEmoji = "😀") {
+  createMockPinnedMessage() {
+    const msg = this.createMockMessage();
+    msg.pinned = true;
+    return msg;
+  }
+
+  createMockUnPinnedMessage() {
+    const msg = this.createMockMessage();
+    msg.pinned = false;
+    return msg;
+  }
+
+  createMockMessageWithEmbed() {
+    const msg = this.createMockMessage();
+    msg.embeds.push(this._messageEmbed);
+    msg.content = "";
+    return msg;
+  }
+
+  createMockMessageReaction(customEmoji = "😀") {
     return new MessageReaction(
       this._client,
       {
         emoji: {
           animated: false,
           name: customEmoji,
-          id: SnowflakeUtil.generate(),
+          id: "312322220410652501",
           deleted: false,
         },
         me: false,
@@ -419,7 +561,7 @@ export default class MockDiscord {
     );
   }
 
-  private createIsolatedMockMessageReaction() {
+  createIsolatedMockMessageReaction() {
     const message = this.createMockMessage();
     return new MessageReaction(
       this._client,
@@ -437,40 +579,64 @@ export default class MockDiscord {
     );
   }
 
-  private createMockMessageManager() {
+  createMockMessageManager() {
     return new MessageManager(this._textChannel);
   }
 
-  private createMockMessageEmbedCollection() {
+  createMockMessageEmbedCollection() {
     const collection = new Collection<string, MessageEmbed>();
-    collection.set(SnowflakeUtil.generate(), this._messageEmbed);
-    collection.set(SnowflakeUtil.generate(), this.createMockMessageEmbed("#0088ff", "test"));
+    collection.set("123352640350652502", this._messageEmbed);
+    collection.set("329762565356654501", this.createMockMessageEmbed("#0088ff", "test"));
     return collection;
   }
 
-  private createMockMessageEmbed(customColor = "#0099ff", customTitle = "Some title") {
-    return new MessageEmbed()
-      .setColor(customColor)
-      .setTitle(customTitle)
-      .setURL("https://discord.js.org/")
-      .setAuthor("Some name", "https://i.imgur.com/wSTFkRM.png", "https://discord.js.org")
-      .setDescription("Some description here")
-      .setThumbnail("https://i.imgur.com/wSTFkRM.png")
-      .addFields(
+  createEmbedMessageLike(customColor = "#0099ff", customTitle = "Some title"): IMessageEmbed {
+    return {
+      color: customColor,
+      title: customTitle,
+      url: "https://discord.js.org/",
+      author: {
+        name: "Some name",
+        url: "https://discord.js.org",
+        iconURL: "https://i.imgur.com/wSTFkRM.png",
+      },
+      description: "Some description here",
+      fields: [
         { name: "Regular field title", value: "Some value here" },
         { name: "\u200B", value: "\u200B" },
         { name: "Inline field title", value: "Some value here", inline: true },
         { name: "Inline field title", value: "Some value here", inline: true },
-      )
-      .addField("Inline field title", "Some value here", true)
-      .setImage("https://i.imgur.com/wSTFkRM.png");
+      ],
+      thumbnailUrl: "https://i.imgur.com/wSTFkRM.png",
+      files: ["https://i.imgur.com/wSTFkRM.png"],
+    };
   }
 
-  public createMockRole(customName = "WE DEM BOYZZ!!!!!! 1", permissionBitField = 66321471) {
+  createMockMessageEmbed(customColor = "#0099ff", customTitle = "Some title") {
+    let embed = new ToReturn({
+      command: "",
+      cordeBot: null,
+      channelId: "123123",
+      isNot: false,
+      timeout: 100,
+      isCascade: false,
+    }).embedMessageLikeToMessageEmbed(this._messageEmbedLike);
+
+    if (!embed) {
+      embed = new MessageEmbed();
+    }
+
+    embed.setColor(customColor);
+    embed.setTitle(customTitle);
+
+    return embed;
+  }
+
+  createMockRole(customName = "WE DEM BOYZZ!!!!!! 1", permissionBitField = 66321471) {
     const role = new Role(
       this._client,
       {
-        id: SnowflakeUtil.generate(),
+        id: "819382540350652502",
         name: customName,
         color: 3447003,
         hoist: true,
@@ -478,19 +644,56 @@ export default class MockDiscord {
         rawPosition: 1,
         permissions: permissionBitField,
         permissions_new: permissionBitField,
-        managed: false,
+        // Make it false will resolve in a null pointer error.
+        // This is a workaround because I don't have patience to fix it, sorry
+        managed: true,
         mentionable: false,
+        deleted: false,
       },
       this._guild,
     );
     return role;
   }
 
-  public emitRoleDelete(role?: Role) {
+  createSpeaking() {
+    return new Speaking(1);
+  }
+
+  createPresence() {
+    const activityData: ActivityData = {
+      application_id: this.generateId(),
+      name: "test",
+      timestamp: new Date(),
+      type: "COMPETING",
+      details: null,
+      party: null,
+      state: null,
+      url: null,
+    };
+
+    const presenceData: PresenceData = {
+      status: "online",
+      activities: [activityData],
+      user: this._user,
+      guild: this._guild,
+    };
+
+    return new Presence(this._client, presenceData);
+  }
+
+  emitRoleDelete(role?: Role) {
     this._client.emit("roleDelete", role ?? this.role);
   }
 
-  private createMockRoleManager() {
+  createVoiceState() {
+    const voiceData: VoiceStateData = {
+      user_id: this.generateId(),
+    };
+
+    return new VoiceState(this.guild, voiceData);
+  }
+
+  createMockRoleManager() {
     const manager = new RoleManager(this._guild);
     manager.add(this._role, true);
 
@@ -501,6 +704,7 @@ export default class MockDiscord {
     }
 
     const newRole = this.createMockRole("batata 2");
+    newRole.id = "123321";
     manager.add(newRole, true);
 
     const cachedNewRole = manager.cache.find((r) => r.id === newRole.id);

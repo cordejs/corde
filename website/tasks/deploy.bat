@@ -1,3 +1,4 @@
 :: Corde documentation deploy using bat file
 @ECHO OFF
-cmd /C "set "GIT_USER=%1" && yarn docusaurus deploy"
+set USER=cordejs
+cmd /C "set "GIT_USER=%USER" && yarn docusaurus deploy"

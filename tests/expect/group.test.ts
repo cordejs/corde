@@ -1,6 +1,6 @@
-import { testCollector } from "../../src/common";
-import { Group } from "../../src/types";
-import { group, test } from "../../src/clausures";
+import { testCollector } from "../../src/common/testCollector";
+import { IGroup } from "../../src/types";
+import { group, test } from "../../src/closures";
 import { expect as cordeExpect } from "../../src/expect";
 
 describe("Testing group function", () => {
@@ -39,18 +39,7 @@ describe("Testing group function", () => {
     });
 
     await testCollector.executeGroupClojure();
-
-    const groupsObj: Group[] = [];
-    groupsObj.push({
-      name: "groupName",
-      tests: [
-        {
-          testsFunctions: [],
-          name: "testName",
-        },
-      ],
-    });
-    expect(testCollector.groups).toEqual(groupsObj);
+    expect(testCollector.groups).toEqual([]);
   });
 
   it("Should add group with test inside and testFunction (single group)", async () => {
@@ -62,7 +51,7 @@ describe("Testing group function", () => {
 
     await testCollector.executeGroupClojure();
 
-    const groupsObj: Group[] = [];
+    const groupsObj: IGroup[] = [];
     groupsObj.push({
       name: "groupName",
       tests: [
@@ -94,7 +83,7 @@ describe("Testing group function", () => {
 
     await testCollector.executeGroupClojure();
 
-    const groupsObj: Group[] = [];
+    const groupsObj: IGroup[] = [];
     groupsObj.push(
       {
         name: "groupName",

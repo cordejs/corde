@@ -1,53 +1,69 @@
 import { Message, MessageEmbed } from "discord.js";
-import { MinifiedEmbedMessage, TestReport } from "../../../types";
+import { IMessageEmbed, Primitive, ITestReport } from "../../../types";
+import { typeOf } from "../../../utils";
+import { IExpectTestBaseParams } from "../../../types";
+import { MessageExpectTest } from "./messageExpectTest";
 
 /**
- * For some reason, importing "isPrimitiveValue" from
- * "../../../utils" results in error in jest tests.
+ * @internal
  */
-import { isPrimitiveValue } from "../../../utils/isPrimitiveValue";
-import { ExpectOperation } from "../operation";
-import MessageUtils from "./messageUtils";
-
-export class ToReturn extends ExpectOperation<string | number | boolean | MessageEmbed> {
-  public async action(expect: string | number | boolean | MessageEmbed): Promise<TestReport> {
-    try {
-      this.expectation = expect;
-      this.showExpectAndOutputValue = true;
-      await this.cordeBot.sendTextMessage(this.command);
-      const returnedMessage = await this.cordeBot.awaitMessagesFromTestingBot();
-      if (!isPrimitiveValue(expect)) {
-        this.showExpectAndOutputValue = false;
-      }
-
-      this.hasPassed = MessageUtils.messagesMatches(returnedMessage, expect);
-      this.output = this.getMessageValue(returnedMessage, expect);
-      this.invertHasPassedIfIsNot();
-    } catch (error) {
-      this.hasPassed = false;
-      if (error instanceof Error) {
-        this.output = error.message;
-      } else {
-        this.output = error;
-      }
-    }
-
-    return this.generateReport();
+export class ToReturn extends MessageExpectTest {
+  constructor(params: IExpectTestBaseParams) {
+    super({ ...params, testName: "toReturn" });
   }
 
-  private getMessageValue(
-    returnedMessage: Message,
-    expect: string | number | boolean | MessageEmbed,
-  ) {
-    if (isPrimitiveValue(expect)) {
-      const formattedMsg = MessageUtils.getMessageByType(returnedMessage, "text") as Message;
-      return formattedMsg.content;
-    } else {
-      const jsonMessage = MessageUtils.getMessageByType(
-        returnedMessage,
-        "embed",
-      ) as MinifiedEmbedMessage;
-      return JSON.stringify(jsonMessage);
+  async action(expect: Primitive | IMessageEmbed): Promise<ITestReport> {
+    let _expect: Primitive | MessageEmbed;
+    const errorReport = this.validateExpect(expect);
+
+    if (errorReport) {
+      return errorReport;
     }
+
+    try {
+      await this.sendCommandMessage();
+    } catch (error) {
+      return this.createFailedTest(error.message);
+    }
+
+    let returnedMessage: Message;
+    try {
+      returnedMessage = await this.cordeBot.events.onceMessage(
+        this.cordeBot.testBotId,
+        this.channelId,
+        this.timeOut,
+      );
+    } catch {
+      if (this.isNot) {
+        return this.createPassTest();
+      }
+
+      return this.createReport(
+        "expected: testing bot to send a message\n",
+        "received: no message was sent",
+      );
+    }
+
+    if (typeOf(expect) === "object") {
+      _expect = this.embedMessageLikeToMessageEmbed(expect as IMessageEmbed);
+    } else {
+      _expect = expect as Primitive;
+    }
+
+    this.hasPassed = this.messagesMatches(returnedMessage, _expect);
+    this.invertHasPassedIfIsNot();
+
+    if (this.hasPassed) {
+      return this.createPassTest();
+    }
+
+    if (this.isNot) {
+      return this.createReport(
+        "expected: message from bot be different from expectation\n",
+        "received: both returned and expectation are equal",
+      );
+    }
+
+    return this.createReportForExpectAndResponse(_expect, returnedMessage);
   }
 }

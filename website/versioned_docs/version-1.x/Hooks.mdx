@@ -1,0 +1,51 @@
+---
+id: hooks
+title: Hooks
+custom_edit_url: https://github.com/cordejs/corde/blob/master/website/versioned_docs/version-1.0.0/hooks.md
+---
+
+Hooks are functions triggered in different ocassions in corde tests executions
+All hooks are available bellow:
+
+- [afterAll](/docs/hooks#afterAll)
+- [beforeStart](/docs/hooks#beforeStart)
+
+### afterAll(function)
+
+Use `afterAll` to execute something that you want to be executed after all tests run.
+A good example of something to be executed after all tests is the logout of your testing
+bot.
+
+I.E:
+
+```typescript
+afterAll(() => {
+  bot.destroy();
+});
+```
+
+:::note
+As corde self make it's bot login, it's make their logout also. So there is no need
+to worry about it.
+:::
+
+### beforeStart(function)
+
+Use `beforeStart` to execute some function before all tests begin.
+
+This can be, for instance, the login of your bot.
+
+```typescript
+beforeStart(async () => {
+  await bot.login();
+});
+```
+
+:::note
+In corde tests lifecycle, all these functions are executed **after** corde login, this
+bot. Functions to be executed before it will be created future versions of corde.
+:::
+
+The image bellow ilustrate the operation of each hook:
+
+![Corde hooks lifecycle](/img/corde_hooks_lifecycle.png)

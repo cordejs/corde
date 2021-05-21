@@ -1,14 +1,13 @@
 import { Message, MessageEmbed } from "discord.js";
-import { runtime } from "../common";
+import { runtime } from "../common/runtime";
 import { CordeClientError } from "../errors";
 
 /**
  * Sends a message to the connected textChannel.
- * *This message will not be sent as a command.*
  *
  * **This function does not work without a test case**
  *
- * @param message Message send
+ * @param message Message to send
  *
  * @example
  *
@@ -32,8 +31,7 @@ import { CordeClientError } from "../errors";
  */
 export function sendMessage(message: string | number | MessageEmbed): Promise<Message> {
   if (!message) {
-    console.log("can not send a empty message");
-    return null;
+    throw new Error("Can not send a empty message");
   }
 
   if (!runtime.isBotLoggedIn) {

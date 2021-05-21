@@ -10,7 +10,7 @@ describe("testing package.ts", () => {
   });
 
   it("should get correct version if not TEST env", () => {
-    process.env.ENV = null;
+    delete process.env.ENV;
     expect(pack.version).toBe(_pack.version);
   });
 });

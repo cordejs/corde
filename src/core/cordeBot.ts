@@ -1,48 +1,31 @@
 import {
-  AwaitMessagesOptions,
   Channel,
   Client,
   Collection,
-  CollectorFilter,
   Guild,
   Message,
   MessageEmbed,
-  MessageReaction,
+  Role,
   TextChannel,
 } from "discord.js";
-import { BehaviorSubject } from "rxjs";
-import { CordeClientError, TimeoutError } from "../errors";
-import { MessageData, RoleData } from "../types/types";
+import { CordeClientError } from "../errors";
+import { ICordeBot, IMessageIdentifier, IRoleIdentifier } from "../types";
 import { Events } from "./events";
-
-const DEFAULT_TEST_TIMEOUT = 5000;
 
 /**
  * Encapsulation of Discord Client with all specific
  * functions for corde test.
  */
-export class CordeBot extends Events {
-  /**
-   * Observes if corde bot is **ready**.
-   * This is invoked after onReady in Discord.Client.
-   * Used to initialize some data for CordeBot.
-   * **Do not use onReady declared in Events if the intention is to ensure that
-   * cordebot is ready for usage**
-   */
-  public get onStart() {
-    return this._onStart.asObservable();
-  }
-
-  private readonly _onStart: BehaviorSubject<boolean>;
+export class CordeBot implements ICordeBot {
+  readonly events: Events;
   private readonly _prefix: string;
   private readonly _guildId: string;
   private readonly _channelId: string;
-  private readonly _waitTimeOut: number;
   private readonly _testBotId: string;
+  private readonly _client: Client;
 
-  private textChannel: TextChannel;
-  private _reactionsObserved: BehaviorSubject<MessageReaction>;
-
+  private textChannel!: TextChannel;
+  private _isReady: boolean;
   /**
    * Starts new instance of Discord client with its events.
    *
@@ -56,31 +39,33 @@ export class CordeBot extends Events {
     prefix: string,
     guildId: string,
     channelId: string,
-    waitTimeOut: number = DEFAULT_TEST_TIMEOUT,
     testBotId: string,
     client: Client,
   ) {
-    super(client);
+    this.events = new Events(client);
+    this._client = client;
     this._channelId = channelId;
     this._prefix = prefix;
     this._guildId = guildId;
-    this._waitTimeOut = waitTimeOut;
     this._testBotId = testBotId;
-    this._onStart = new BehaviorSubject<boolean>(false);
-    this._reactionsObserved = new BehaviorSubject<MessageReaction>(null);
     this.loadClientEvents();
+    this._isReady = false;
   }
 
-  public get guild() {
+  get guild() {
     return this.textChannel.guild;
   }
 
-  public get roleManager() {
+  get roleManager() {
     return this.guild.roles;
   }
 
-  public get channel() {
+  get channel() {
     return this.textChannel;
+  }
+
+  get testBotId() {
+    return this._testBotId;
   }
 
   /**
@@ -92,7 +77,7 @@ export class CordeBot extends Events {
    * rejection with a formatted message if there was found a error in
    * connection attempt.
    */
-  public async login(token: string) {
+  async login(token: string) {
     try {
       return await this._client.login(token);
     } catch (error) {
@@ -103,7 +88,7 @@ export class CordeBot extends Events {
   /**
    * Destroy client connection.
    */
-  public logout() {
+  logout() {
     this._client.destroy();
   }
 
@@ -111,7 +96,7 @@ export class CordeBot extends Events {
    * Sends a pure message without prefix it.
    * @param message Data to be send to channel
    */
-  public async sendMessage(message: string | number | MessageEmbed) {
+  async sendMessage(message: string | number | MessageEmbed) {
     return await this.textChannel.send(message);
   }
 
@@ -126,168 +111,88 @@ export class CordeBot extends Events {
    * @return Promise rejection if a testing bot does not send any message in the timeout value setted,
    * or a resolve for the promise with the message returned by the testing bot.
    */
-  public async sendTextMessage(message: string): Promise<Message> {
-    return new Promise<Message>(async (resolve, reject) => {
-      try {
-        this.validateMessageAndChannel(message);
-        const formattedMessage = this._prefix + message;
-        const returnedMessage = await this.textChannel.send(formattedMessage);
-        resolve(returnedMessage);
-      } catch (error) {
-        reject(error);
+  async sendTextMessage(message: string | number | boolean, channelId?: string): Promise<Message> {
+    this.validateMessageAndChannel(message);
+    const formattedMessage = this._prefix + message;
+
+    if (channelId) {
+      const channel = await this.findChannelById(channelId);
+
+      if (!channel) {
+        throw new Error(`Channel ${channelId} was not found`);
       }
-    });
-  }
 
-  /**
-   * Observes for a message send by the testing bot after corde bot
-   * send it's message.
-   */
-  public async awaitMessagesFromTestingBot() {
-    const msg = await this.textChannel.awaitMessages(
-      (responseName) => this.responseAuthorIsTestingBot(responseName.author.id),
-      this.createWatchResponseConfigs(),
-    );
-
-    if (msg) {
-      return msg.first();
-    }
-    throw new CordeClientError("No message was send");
-  }
-
-  /**
-   * Observes for reactions in a message
-   */
-  public async waitForAddedReactions(
-    message: Message,
-    totalReactions?: number,
-  ): Promise<Collection<string, MessageReaction>>;
-  public async waitForAddedReactions(
-    message: Message,
-    reactions?: string[],
-  ): Promise<Collection<string, MessageReaction>>;
-  public async waitForAddedReactions(message: Message, reactions?: string[] | number) {
-    return new Promise<Collection<string, MessageReaction>>(async (resolve, reject) => {
-      try {
-        const filter = this.createWaitForAdedReactionsFilter(reactions);
-        const maxReactionsToWait = this.defineMaxReactionsToWaitForAddedReactions(reactions);
-        const collectedReactions = await message.awaitReactions(
-          filter,
-          this.createWatchResponseConfigs(maxReactionsToWait),
-        );
-        resolve(collectedReactions);
-      } catch (error) {
-        reject(new TimeoutError());
+      if (channel.isText()) {
+        const returnedMessage = await channel.send(formattedMessage);
+        return returnedMessage;
       }
-    });
-  }
 
-  private createWaitForAdedReactionsFilter(reactions: number | string[]): CollectorFilter {
-    if (reactions && Array.isArray(reactions)) {
-      return (reaction, user) => {
-        return reactions.includes(reaction.emoji.name) && this.responseAuthorIsTestingBot(user.id);
-      };
+      throw new Error("Can not send a message to a non text channel");
     }
 
-    return (_reaction, user) => {
-      return this.responseAuthorIsTestingBot(user.id);
-    };
+    const returnedMessage = await this.textChannel.send(formattedMessage);
+    return returnedMessage;
   }
 
-  private defineMaxReactionsToWaitForAddedReactions(reactions: number | string[]) {
-    if (reactions && Array.isArray(reactions)) {
-      return reactions.length;
-    }
-    if (typeof reactions === "number" && reactions > 0) {
-      return reactions;
-    }
-    return 1;
-  }
+  private async findChannelById(channelId: string) {
+    const channel = this._client.channels.cache.get(channelId);
 
-  public waitForRemovedReactions(message: Message, take: number) {
-    let amount = 0;
-    const reactions: MessageReaction[] = [];
-    return new Promise<MessageReaction[]>((resolve, reject) => {
-      setTimeout(
-        () => {
-          reject(new TimeoutError());
-        },
-        this._waitTimeOut ? this._waitTimeOut : DEFAULT_TEST_TIMEOUT,
-      );
+    if (channel) {
+      return channel;
+    }
 
-      this._reactionsObserved.subscribe((reaction) => {
-        if (reaction) {
-          if (reaction.message.id === message.id) {
-            amount++;
-            reactions.push(reaction);
-          }
-          if (amount >= take) {
-            this._reactionsObserved.unsubscribe();
-            resolve(reactions);
-          }
-        }
-      });
-    });
+    return await this._client.channels.fetch(channelId, true);
   }
 
   /**
    * Checks if corde bot is connected
    */
-  public isLoggedIn() {
-    return !!this._client && !!this._client.readyAt && this._onStart.value;
+  isLoggedIn() {
+    return !!this._client && !!this._client.readyAt && this._isReady;
   }
 
-  public async findMessage(filter: (message: Message) => boolean): Promise<Message>;
-  public async findMessage(data: MessageData): Promise<Message>;
-  public async findMessage(data: MessageData | ((message: Message) => boolean)): Promise<Message> {
-    const messageData: MessageData = data as MessageData;
+  async findMessage(filter: (message: Message) => boolean): Promise<Message | undefined>;
+  async findMessage(data: IMessageIdentifier): Promise<Message | undefined>;
+  async findMessage(
+    data: IMessageIdentifier | ((message: Message) => boolean),
+  ): Promise<Message | undefined> {
+    const messageIdentifier: IMessageIdentifier = data as IMessageIdentifier;
 
-    if (messageData && messageData.text) {
-      return this._findMessage((m) => m.content === messageData.text);
+    if (messageIdentifier && messageIdentifier.content) {
+      return this._findMessage((m) => m.content === messageIdentifier.content);
     }
-    if (messageData && messageData.id) {
-      return this._findMessage((m) => m.id === messageData.id);
+    if (messageIdentifier && messageIdentifier.id) {
+      return this._findMessage((m) => m.id === messageIdentifier.id);
     }
     if (data) {
       return this._findMessage(data as (message: Message) => boolean);
     }
-    return null;
+    return undefined;
   }
 
-  public async findPinnedMessage(messageData: MessageData) {
-    const msgs = await this.textChannel.messages.fetchPinned();
-    if (messageData && messageData.text) {
-      return msgs.find((m) => m.content === messageData.text);
-    }
-    if (messageData && messageData.id) {
-      return msgs.find((m) => m.id === messageData.id);
-    }
-    return null;
-  }
-
-  public async fetchRole(id: string) {
+  async fetchRole(id: string): Promise<Role | null> {
     return await this.guild.roles.fetch(id, false, true);
   }
 
-  public async fetchRoles() {
+  async fetchRoles() {
     return await this.guild.roles.fetch();
   }
 
-  public async hasRole(roleData: RoleData) {
-    return !!(await this.findRole(roleData));
+  async hasRole(roleIdentifier: IRoleIdentifier) {
+    return !!(await this.findRole(roleIdentifier));
   }
 
-  public async findRole(roleData: RoleData) {
+  async findRole(roleIdentifier: IRoleIdentifier) {
     const data = await this.guild.roles.fetch();
-    if (roleData.id) {
-      return data.cache.find((r) => r.id === roleData.id);
-    } else if (roleData.name) {
-      return data.cache.find((r) => r.name === roleData.name);
+    if (roleIdentifier.id) {
+      return data.cache.find((r) => r.id === roleIdentifier.id);
+    } else if (roleIdentifier.name) {
+      return data.cache.find((r) => r.name === roleIdentifier.name);
     }
-    return null;
+    return undefined;
   }
 
-  public getRoles() {
+  getRoles() {
     return this.guild.roles.cache;
   }
 
@@ -301,7 +206,7 @@ export class CordeBot extends Events {
     if (collection) {
       return collection.find(fn);
     }
-    return null;
+    return undefined;
   }
 
   /**
@@ -315,34 +220,22 @@ export class CordeBot extends Events {
     this.textChannel = this.convertToTextChannel(channel);
   }
 
-  private responseAuthorIsTestingBot(idAuthor: string) {
-    return idAuthor === this._testBotId;
-  }
-
-  private createWatchResponseConfigs(max: number = 1): AwaitMessagesOptions {
-    return {
-      max,
-      time: this._waitTimeOut ? this._waitTimeOut : DEFAULT_TEST_TIMEOUT,
-      errors: ["time"],
-    };
-  }
-
   private loadClientEvents() {
-    this.onReady(() => {
+    this.events.onReady(() => {
+      this._isReady = true;
       this.loadChannel();
-      this._onStart.next(true);
-    });
-
-    this.onMessageReactionRemoveEmoji((reaction) => {
-      this._reactionsObserved.next(reaction);
     });
   }
 
-  private buildLoginErrorMessage(token: string, error: object) {
+  // Don't use `object` as a type. The `object` type is currently hard to use
+  // ([see this issue](https://github.com/microsoft/TypeScript/issues/21732)).
+  // Consider using `Record<string, unknown>` instead, as it allows you to more easily inspect and use the keys
+
+  private buildLoginErrorMessage(token: string, error: Record<string, unknown>) {
     return `Error trying to login with token ${token}. \n` + error;
   }
 
-  private validateMessageAndChannel(message: string) {
+  private validateMessageAndChannel(message: string | number | boolean) {
     if (!message) {
       throw new CordeClientError("No tests were declared");
     }
@@ -352,7 +245,7 @@ export class CordeBot extends Events {
     }
   }
 
-  public findGuild(guildId: string) {
+  findGuild(guildId: string) {
     if (!this._client.guilds) {
       throw new CordeClientError(
         `corde bot isn't added in a guild. Please add it to the guild: ${guildId}`,
@@ -360,7 +253,7 @@ export class CordeBot extends Events {
     } else if (!this._client.guilds.cache.has(guildId)) {
       throw new CordeClientError(
         `Guild ${guildId} doesn't belong to corde bot. change the guild id ` +
-          ` in corde.config or add the bot to a valid guild`,
+          " in corde.config or add the bot to a valid guild",
       );
     } else {
       const guild = this._client.guilds.cache.find((_guild) => _guild.id === guildId);
@@ -379,7 +272,7 @@ export class CordeBot extends Events {
     }
   }
 
-  public findChannel(guild: Guild, channelId: string) {
+  findChannel(guild: Guild, channelId: string) {
     if (!guild.channels) {
       throw new CordeClientError(`Guild '${guild.name}' do not have any channel.`);
     } else if (!guild.channels.cache.has(channelId)) {

@@ -1,23 +1,22 @@
-import { RoleData } from "../types/types";
-import { Role as JSRole } from "discord.js";
-import { Role } from "../discord-structures";
-import { runtime } from "../common";
+import { IRoleIdentifier } from "../types";
+import { Role } from "discord.js";
+import { runtime } from "../common/runtime";
 import { CordeClientError } from "../errors";
+import { CordeRole } from "../structures/cordeRole";
 
 /**
- * Reach for a `role` in the informed guild in settings,
- * basing on it's **id** or **name**.
+ * Finds a role in config guild's cache, basing on it's **id**
  *
  * @param id Id of the role.
  * @throws CordeClientError if corde's bot is not connected.
  * @returns Role that matches the provided **id** or **name**
  */
-export function getRole(id: string): Role;
+export function getRole(id: string): CordeRole | undefined;
 /**
- * Reach for a `role` in the informed guild in settings,
- * basing on it's **id** or **name**.
+ * Finds a role in config guild's cache, basing on it's **id** or **name**.
  *
  * @param data Data of the role. It can be it's **name** or **id**.
+ *
  * if both informations be provided, and they are from two differents
  * roles, the result will correspond to the role that matchs with the parameter
  * **id**.
@@ -25,27 +24,29 @@ export function getRole(id: string): Role;
  * @throws CordeClientError if corde's bot is not connected.
  * @returns Role that matches the provided **id** or **name**
  */
-export function getRole(data: RoleData): Role;
-export function getRole(data: string | RoleData): Role {
+export function getRole(data: IRoleIdentifier): CordeRole | undefined;
+export function getRole(data: string | IRoleIdentifier) {
   if (!runtime.isBotLoggedIn()) {
     throw new CordeClientError("Bot is not connected yet. No role can be searched");
   }
 
-  try {
-    if (typeof data === "string") {
-      return convertToCordeRole(runtime.bot.getRoles().find((r) => r.id === data));
-    }
-    return convertToCordeRole(
-      runtime.bot.getRoles().find((r) => r.id === data.id || r.name === data.name),
-    );
-  } catch (error) {
-    throw new Error(`Could not find role ${data}`);
+  const _role = _getRole(data);
+  if (_role) {
+    return convertToCordeRole(_role);
   }
+  return undefined;
 }
 
-function convertToCordeRole(role: JSRole) {
-  if (role) {
-    return new Role(role);
+function _getRole(data: string | IRoleIdentifier) {
+  if (typeof data === "string") {
+    return runtime.bot.getRoles().find((r) => r.id === data);
   }
-  return null;
+  return runtime.bot.getRoles().find((r) => r.id === data.id || r.name === data.name);
+}
+
+function convertToCordeRole(role: Role) {
+  if (role) {
+    return new CordeRole(role);
+  }
+  return undefined;
 }

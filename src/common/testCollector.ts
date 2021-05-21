@@ -1,66 +1,16 @@
 import { Queue } from "../data-structures";
-import { AssertionProps, Group, Test, testFunctionType, VoidPromiseFunction } from "../types/types";
+import { IAssertionProps, IGroup, ITest, TestFunctionType, VoidLikeFunction } from "../types";
 
 /**
  * Contain all information of data collected from files in runtime test
  * collection.
+ * @internal
  */
 class TestCollector {
-  /**
-   * Defines if the system is collecting tests assertions from a file
-   * @description This is used to tell node process the type of process that is
-   * existing.
-   */
-  public isCollecting: boolean;
-
-  /**
-   * Defines if the thread running has a **group** function.
-   */
-  public hasGroup: boolean;
-
-  /**
-   * Defines if the thread running has a **test** function.
-   */
-  public hasTest: boolean;
-
-  /**
-   * List of assertions found in running file.
-   * @description Assertions are the minor type of object in
-   * position tree, but being the most important of all them.
-   */
-  public assertions: AssertionProps[];
-
-  /**
-   * List of tests found in running file.
-   * @description Tests are the second in position of objects,
-   * all tests are encapsulated inside groups in the end of processing.
-   */
-  public tests: Test[];
-
-  /**
-   * List of groups found in running file.
-   *
-   * @description Groups are the major object of the thread,
-   * all tests and assertions are converted encapsulated in this in the end,
-   * but not necessary all assertions need a group or a test, that is why
-   * group name are optional
-   */
-  public groups: Group[];
-
-  public beforeStartFunctions: Queue<VoidPromiseFunction>;
-  public afterAllFunctions: Queue<VoidPromiseFunction>;
-  public beforeEachFunctions: Queue<VoidPromiseFunction>;
-
-  public afterEachFunctions: Queue<VoidPromiseFunction>;
-  public testsFunctions: testFunctionType[];
-  public isolatedFunctions: testFunctionType[];
-
-  private testClousureFunction: Queue<VoidPromiseFunction>;
-  private groupClousureFunction: Queue<VoidPromiseFunction>;
-
-  constructor() {
+  private constructor() {
+    this.isInsideGroupClausure = false;
+    this.isInsideTestClausure = false;
     this.groups = [];
-
     this.beforeEachFunctions = new Queue();
     this.afterAllFunctions = new Queue();
     this.beforeStartFunctions = new Queue();
@@ -74,10 +24,35 @@ class TestCollector {
     this.isolatedFunctions = [];
     this.testsFunctions = [];
   }
+  private static _instance: TestCollector;
+  isInsideGroupClausure: boolean;
+  isInsideTestClausure: boolean;
 
-  public addTestFunction(testFunction: testFunctionType) {
+  assertions: IAssertionProps[];
+  tests: ITest[];
+  groups: IGroup[];
+
+  beforeStartFunctions: Queue<VoidLikeFunction>;
+  afterAllFunctions: Queue<VoidLikeFunction>;
+  beforeEachFunctions: Queue<VoidLikeFunction>;
+
+  afterEachFunctions: Queue<VoidLikeFunction>;
+  testsFunctions: TestFunctionType[];
+  isolatedFunctions: TestFunctionType[];
+
+  private testClousureFunction: Queue<VoidLikeFunction>;
+  private groupClousureFunction: Queue<VoidLikeFunction>;
+
+  static getInstance() {
+    if (!TestCollector._instance) {
+      TestCollector._instance = new TestCollector();
+    }
+    return TestCollector._instance;
+  }
+
+  addTestFunction(testFunction: TestFunctionType) {
     if (testFunction) {
-      if (this.hasGroup || this.hasTest) {
+      if (this.isInsideGroupClausure || this.isInsideTestClausure) {
         this.testsFunctions.push(testFunction);
       } else {
         this.isolatedFunctions.push(testFunction);
@@ -85,52 +60,52 @@ class TestCollector {
     }
   }
 
-  public hasTestFunctions() {
+  isInsideTestClausureFunctions() {
     return this.testsFunctions && this.testsFunctions.length > 0;
   }
 
-  public hasIsolatedTestFunctions() {
+  hasIsolatedTestFunctions() {
     return this.isolatedFunctions && this.isolatedFunctions.length > 0;
   }
 
-  public cloneTestFunctions() {
+  cloneTestFunctions() {
     return this.testsFunctions.map((m) => m);
   }
 
-  public cloneIsolatedTestFunctions() {
+  cloneIsolatedTestFunctions() {
     return this.isolatedFunctions.map((m) => m);
   }
 
-  public clearTestFunctions() {
+  clearTestFunctions() {
     this.testsFunctions = [];
   }
 
-  public clearIsolatedTestFunctions() {
+  clearIsolatedTestFunctions() {
     this.isolatedFunctions = [];
   }
 
-  public cleanAll() {
+  cleanAll() {
     this.tests = [];
     this.testsFunctions = [];
     this.groups = [];
   }
 
-  public addToGroupClousure(fn: () => void | Promise<void>) {
+  addToGroupClousure(fn: () => void | Promise<void>) {
     this.groupClousureFunction.enqueue(fn);
   }
 
-  public async executeGroupClojure() {
-    await this.groupClousureFunction?.executeAsync();
+  async executeGroupClojure() {
+    return await this.groupClousureFunction?.executeWithCatchCollectAsync();
   }
 
-  public addToTestClousure(fn: () => void | Promise<void>) {
+  addToTestClousure(fn: () => void | Promise<void>) {
     this.testClousureFunction.enqueue(fn);
   }
 
-  public async executeTestClojure() {
-    await this.testClousureFunction?.executeAsync();
+  async executeTestClojure() {
+    return await this.testClousureFunction?.executeWithCatchCollectAsync();
   }
 }
 
-const testCollector = new TestCollector();
+const testCollector = TestCollector.getInstance();
 export { testCollector };

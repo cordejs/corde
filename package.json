@@ -1,13 +1,15 @@
 {
   "name": "corde",
-  "version": "2.0.3",
+  "version": "4.0.2",
   "description": "A simple library for Discord bot tests",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "directories": {
     "lib": "bin"
   },
-  "bin": "bin/corde",
+  "bin": {
+    "corde": "bin/corde"
+  },
   "keywords": [
     "discord-bot",
     "discord-js",
@@ -23,46 +25,75 @@
     "bot"
   ],
   "scripts": {
+    "clearbuild": "gulp clear",
     "build": "bash tasks.sh build",
-    "prettier-lib": "prettier --write ./lib",
+    "build:prod": "gulp && yarn prettier-lib",
+    "gulp": "gulp",
+    "test": "jest --silent --detectOpenHandles",
+    "build:publish": "bash ./scripts/publish.sh",
+    "generateStructureDocs": "typedoc --plugin typedoc-plugin-markdown src/structures",
+    "prettier-lib": "prettier --write ./lib ./schema",
+    "dependencies": "depcruise --config ./etc/.dependency-cruiser.js src",
     "watch": "bash tasks.sh watch",
     "corde": "node ./bin/corde",
     "killProcess": "cd ./etc && bash ./build_and_kill.sh",
-    "e2e": "ts-node ./e2e/pipeline",
-    "test": "jest --silent --detectOpenHandles",
-    "test-with-coverage": "jest --silent --detectOpenHandles --collect-coverage --collectCoverageFrom=src/**/*.ts",
+    "e2e": "jest --config ./e2e/jest.config.ts --runInBand",
+    "test-with-coverage": "jest --silent --ci --detectOpenHandles --collect-coverage --collectCoverageFrom=src/**/*.ts",
     "refresh": "rm -rf ./node_modules ./package-lock.json && yarn install",
-    "fix-lint": "tslint --fix 'src/**/*.ts' 'tests/**/*.ts",
+    "fix-lint": "eslint --fix ./src ./tests",
     "np": "np --no-cleanup --no-yarn",
     "format": "prettier --write \"src/**/*.ts\"",
-    "lint": "tslint --project tsconfig.json -t stylish",
-    "validate-ci": "bash tasks.sh validade-ci",
+    "lint": "eslint src/**/*.ts",
+    "validate-ci": "circleci config validate",
     "jestClear": "jest --clearCache",
-    "init-test-bot": "bash tasks.sh init-test-bot",
-    "build-bot": "bash tasks.sh build-test-bot",
-    "task": "bash tasks.sh"
+    "postinstall": "husky install",
+    "prepublishOnly": "pinst --disable",
+    "postpublish": "pinst --enable"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",
+    "@babel/plugin-syntax-nullish-coalescing-operator": "^7.8.3",
+    "@babel/plugin-syntax-optional-chaining": "^7.8.3",
     "@babel/preset-env": "^7.10.2",
     "@babel/preset-typescript": "^7.10.1",
     "@microsoft/tsdoc": "^0.13.0",
     "@types/esm": "^3.2.0",
     "@types/glob": "^7.1.3",
-    "@types/jest": "^26.0.0",
-    "@types/node": "^14.0.22",
+    "@types/gulp": "^4.0.8",
+    "@types/gulp-babel": "^6.1.29",
+    "@types/gulp-strip-comments": "^2.5.0",
+    "@types/jest": "^26.0.22",
+    "@types/merge-stream": "^1.1.2",
+    "@types/node": "^15.0.1",
     "@types/require-from-string": "^1.2.0",
     "@types/rewire": "^2.5.28",
+    "@types/rimraf": "^3.0.0",
     "@types/uuid": "^8.3.0",
     "@types/ws": "^7.2.4",
+    "@typescript-eslint/eslint-plugin": "^4.20.0",
+    "@typescript-eslint/parser": "^4.20.0",
     "babel-jest": "^26.0.1",
     "cli-spinners": "^2.4.0",
     "codecov": "^3.6.5",
-    "dotenv": "^8.2.0",
-    "husky": "^5.0.9",
+    "dependency-cruiser": "^10.0.1",
+    "dotenv": "^9.0.2",
+    "eslint": "^7.23.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-import-resolver-typescript": "^2.4.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsdoc": "^34.6.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-promise": "^4.3.1",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-strip-comments": "^2.5.2",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "husky": "^6.0.0",
     "jest": "^26.6.3",
-    "jest-mock-process": "^1.4.0",
-    "prettier": "^2.1.2",
+    "pinst": "^2.1.6",
+    "prettier": "^2.2.1",
     "pretty-quick": "^3.0.0",
     "require-from-string": "^2.0.2",
     "rewire": "^5.0.0",
@@ -72,44 +103,43 @@
     "ts-node": "^9.1.1",
     "tslint": "^6.1.3",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^4.1.3"
+    "typedoc": "^0.20.34",
+    "typedoc-plugin-markdown": "^3.6.0",
+    "typescript": "^4.1.3",
+    "yarn": "^1.22.10"
   },
   "dependencies": {
-    "chalk": "^4.0.0",
-    "commander": "^7.0.0",
-    "discord.js": "^12.2.0",
+    "chalk": "^4.1.1",
+    "commander": "^7.2.0",
+    "discord.js": "^12.5.3",
     "esm": "^3.2.25",
-    "glob": "^7.1.6",
-    "ora": "^5.0.0",
-    "path": "^0.12.7",
-    "rxjs": "^6.5.5",
-    "uuid": "^8.3.1"
+    "glob": "^7.1.7",
+    "jest-diff": "^26.6.2",
+    "log-update": "^4.0.0",
+    "ora": "^5.4.0",
+    "pretty-format": "^26.6.2",
+    "tslib": "^2.2.0"
   },
   "engines": {
     "node": ">=12.0.0"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lucasgmagalhaes/corde.git"
-  },
-  "jest": {
-    "projects": [
-      "./jest.config.js",
-      "./e2e/jest.config.js"
-    ]
+    "url": "git+https://github.com/cordejs/corde.git"
   },
   "author": {
     "name": "Lucas Gomes",
     "email": "lucasgsm88@gmail.com",
-    "url": "https://github.com/lucasgmagalhaes"
+    "url": "https://github.com/cordejs"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lucasgmagalhaes/corde/issues"
+    "url": "https://github.com/cordejs/corde/issues"
   },
-  "homepage": "https://github.com/lucasgmagalhaes/corde#readme",
+  "homepage": "https://corde.netlify.app",
   "files": [
     "lib/**",
+    "schema/**",
     "bin/",
     "index.js",
     "index.d.ts"

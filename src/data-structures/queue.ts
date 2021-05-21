@@ -1,5 +1,14 @@
 import { GenericFunction, ParametersAsOptional } from "../types";
-import { Guid } from "../utils";
+import crypto from "crypto";
+
+export function createHash() {
+  const current_date = new Date().valueOf().toString();
+  const random = Math.random().toString();
+  return crypto
+    .createHash("sha1")
+    .update(current_date + random)
+    .digest("hex");
+}
 
 /**
  * Structure to handle a collection of functions and execute then.
@@ -12,23 +21,23 @@ export class Queue<T extends GenericFunction> {
   /**
    * Gets default parameters added.
    */
-  public get defaultParameters() {
+  get defaultParameters() {
     return this._defaultParameters;
   }
 
-  public get size() {
+  get size() {
     return this._funcs.size;
   }
 
-  public get hasFunctions() {
+  get hasFunctions() {
     return this._funcs.size > 0;
   }
 
-  public get hasDefaultParameters() {
+  get hasDefaultParameters() {
     return this._defaultParameters.length > 0;
   }
 
-  public get defaultParametersSize() {
+  get defaultParametersSize() {
     return this._defaultParameters.length;
   }
 
@@ -44,9 +53,9 @@ export class Queue<T extends GenericFunction> {
    * @throws Error if `fn` is null, undefined, or if the value
    * is not a function.
    *
-   * @returns A **GUID** for the function
+   * @returns A **hash** for the function
    */
-  public enqueue(fn: T) {
+  enqueue(fn: T) {
     if (!fn) {
       throw new Error("Can not add an null | undefined value");
     }
@@ -55,17 +64,17 @@ export class Queue<T extends GenericFunction> {
       throw new Error("Can not add a type that is not a function");
     }
 
-    const guid = Guid.new();
-    this._funcs.set(guid, fn);
-    return guid;
+    const hash = createHash();
+    this._funcs.set(hash, fn);
+    return hash;
   }
 
   /**
-   * Removes a function from queue
-   * @param fn Function to be removed from queue.
+   * Removes a function from the queue
+   * @param fn Function to be removed from the queue.
    */
 
-  public dequeue(guid: string) {
+  dequeue(guid: string) {
     if (!guid) {
       return false;
     }
@@ -77,7 +86,7 @@ export class Queue<T extends GenericFunction> {
    * Execute functions with parameters.
    * @param params Parameters to be injected on function in queue.
    */
-  public async executeAsync<K extends ParametersAsOptional<T>, U extends ReturnType<T>>(
+  async executeAsync<K extends ParametersAsOptional<T>, U extends ReturnType<T>>(
     ...params: K
   ): Promise<U[]> {
     if (!this.hasFunctions) {
@@ -102,9 +111,7 @@ export class Queue<T extends GenericFunction> {
    * Execute functions with parameters.
    * @param params Parameters to be injected on function in queue.
    */
-  public executeSync<K extends ParametersAsOptional<T>, U extends ReturnType<T>>(
-    ...params: K
-  ): U[] {
+  executeSync<K extends ParametersAsOptional<T>, U extends ReturnType<T>>(...params: K): U[] {
     if (!this.hasFunctions) {
       return [];
     }
@@ -130,7 +137,7 @@ export class Queue<T extends GenericFunction> {
    * @param catchAction Function to handle errors.
    * @param params Parameters to the functions.
    */
-  public tryExecuteSync<K extends ParametersAsOptional<T>, U extends ReturnType<T>>(
+  tryExecuteSync<K extends ParametersAsOptional<T>, U extends ReturnType<T>>(
     catchAction?: (error: any) => void,
     ...params: K
   ): U[] {
@@ -164,7 +171,7 @@ export class Queue<T extends GenericFunction> {
    * @param catchAction Function to handle errors.
    * @param params Parameters to the functions.
    */
-  public async tryExecuteAsync<K extends ParametersAsOptional<T>, U extends ReturnType<T>>(
+  async tryExecuteAsync<K extends ParametersAsOptional<T>, U extends ReturnType<T>>(
     catchAction?: GenericFunction,
     ...params: K
   ) {
@@ -197,7 +204,7 @@ export class Queue<T extends GenericFunction> {
    * occur.
    * @param params Parameters to the functions.
    */
-  public executeWithCatchCollectSync<K extends ParametersAsOptional<T>>(...params: K) {
+  executeWithCatchCollectSync<K extends ParametersAsOptional<T>>(...params: K) {
     if (!this.hasFunctions) {
       return [];
     }
@@ -222,7 +229,7 @@ export class Queue<T extends GenericFunction> {
    * occur.
    * @param params Parameters to the functions.
    */
-  public async executeWithCatchCollectAsync<K extends ParametersAsOptional<T>>(...params: K) {
+  async executeWithCatchCollectAsync<K extends ParametersAsOptional<T>>(...params: K) {
     if (!this.hasFunctions) {
       return [];
     }
@@ -246,17 +253,25 @@ export class Queue<T extends GenericFunction> {
    * Add parameters to be injected on queued functions
    * @param parameter Parameter value
    */
-  public addDefaultParameters<K extends Parameters<T>>(...parameter: K) {
+  addDefaultParameters<K extends Parameters<T>>(...parameter: K) {
     if (parameter) {
       this._defaultParameters.push(...parameter);
     }
   }
 
-  public clearDefaultParameters() {
+  /**
+   * Removes all default parameters from the queue
+   */
+  clearDefaultParameters() {
     this._defaultParameters = [];
   }
 
-  public removeFromDefaultParameter<K extends Parameters<T>>(...parameters: K) {
+  /**
+   * Removes a specific default parameter
+   * @param parameters Parameter to remove
+   *
+   */
+  removeFromDefaultParameter<K extends Parameters<T>>(...parameters: K) {
     if (!this.hasDefaultParameters) {
       return;
     }
@@ -269,16 +284,20 @@ export class Queue<T extends GenericFunction> {
     }
   }
 
-  public clear() {
+  /**
+   * Removes all elements from the queue
+   * @returns The own queue.
+   */
+  clear() {
     return this._funcs.clear();
   }
 
   /**
    * Check if default arguments correctly fill all expected arguments
-   * for functions in queue.
+   * for functions in the queue.
    *
    * @returns `true` if arguments are ok or there is no function added
-   * and `false` if it's going to pass more or less arguments than necessary.
+   * and `false` if it's going to pass more or fewer arguments than necessary.
    *
    * @example
    *
@@ -294,7 +313,7 @@ export class Queue<T extends GenericFunction> {
    * queue3.addDefaultParameters(1);
    * queue3.isDefaultArgumentsValid(1); // true - expect 1 arg, received 1
    */
-  public isDefaultArgumentsValid() {
+  isDefaultArgumentsValid() {
     if (!this.hasFunctions) {
       return true;
     }
@@ -307,7 +326,10 @@ export class Queue<T extends GenericFunction> {
     }
   }
 
-  private first() {
+  /**
+   * Gets the first functions queued or null if there no functions queued.
+   */
+  first() {
     if (!this.hasFunctions) {
       return null;
     }
@@ -316,7 +338,11 @@ export class Queue<T extends GenericFunction> {
     return keyValue[1];
   }
 
-  private checkFunctionArgumentsSize(fn: GenericFunction, argsToPass: any[]) {
+  private checkFunctionArgumentsSize(fn: GenericFunction | null, argsToPass: any[]) {
+    if (!fn) {
+      return;
+    }
+
     if (fn.length !== argsToPass.length) {
       throw new Error(
         `Could not pass more arguments ${argsToPass.length} than what the function ${fn.name} supports ${fn.length}`,

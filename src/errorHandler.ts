@@ -1,5 +1,6 @@
-import chalk from "chalk";
-import { runtime, testCollector } from "./common";
+import { runtime } from "./common/runtime";
+import { testCollector } from "./common/testCollector";
+import { exit } from "./exit";
 
 export function initErrorHandlers() {
   process.on("uncaughtException", async (err: Error) => {
@@ -16,17 +17,21 @@ export function initErrorHandlers() {
 }
 
 async function printErrorAndExit(error: Error) {
-  console.log(error.stack);
-  console.log(`${chalk.red("error")} Command failed with exit code 1`);
+  if (error instanceof Error) {
+    console.error(error.message);
+  } else {
+    console.error(error);
+  }
 
   if (runtime.isBotLoggedIn()) {
     runtime.logoffBot();
   }
+
   if (testCollector.afterAllFunctions) {
     await testCollector.afterAllFunctions.executeAsync();
   }
 
   if (process.env.ENV !== "TEST") {
-    process.exit(1);
+    exit(1);
   }
 }

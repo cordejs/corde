@@ -1,32 +1,79 @@
-import { RoleData, TestReport } from "../../../types/types";
-import { ExpectOperation } from "../operation";
+import { Role } from "discord.js";
+import { IRoleIdentifier, ITestReport } from "../../../types";
+import { roleUtils } from "../../roleUtils";
+import { IExpectTestBaseParams } from "../../../types";
+import { ExpectTest } from "../expectTest";
 
-export class ToDeleteRole extends ExpectOperation<RoleData> {
-  public async action(roleData: RoleData): Promise<TestReport> {
-    try {
-      let role = await this.cordeBot.findRole(roleData);
-      if (!role) {
-        this.output = "No role found";
-        return this.generateReport();
-      } else {
-        await this.cordeBot.sendTextMessage(this.command);
-        await this.cordeBot.onceRoleDelete();
-        role = await this.cordeBot.fetchRole(role.id);
-        if (!role || role.deleted) {
-          this.hasPassed = true;
-        }
+/**
+ * @internal
+ */
+export class ToDeleteRole extends ExpectTest {
+  constructor(params: IExpectTestBaseParams) {
+    super({ ...params, testName: "toDeleteRole" });
+  }
 
-        this.invertHasPassedIfIsNot();
-      }
-    } catch (error) {
-      this.hasPassed = false;
-      if (error instanceof Error) {
-        this.output = error.message;
-      } else {
-        this.output = error;
-      }
+  async action(roleIdentifier: string | IRoleIdentifier): Promise<ITestReport> {
+    const identifier = roleUtils.getRoleData(roleIdentifier);
+    const roleOrFailObject = await this.getRoleOrInvalidMessage(identifier);
+
+    if ((roleOrFailObject as ITestReport).message) {
+      return roleOrFailObject as ITestReport;
     }
 
-    return this.generateReport();
+    const role = roleOrFailObject as Role;
+
+    try {
+      await this.sendCommandMessage();
+    } catch (error) {
+      return this.createFailedTest(error.message);
+    }
+
+    try {
+      await this.cordeBot.events.onceRoleDelete(identifier, this.timeOut, this.guildId);
+    } catch {
+      if (this.isNot) {
+        return this.createPassTest();
+      }
+
+      return this.createReport(
+        `timeout: role ${role.id} wasn't deleted in the expected time (${this.timeOut})`,
+      );
+    }
+    const deletedRole = await this.cordeBot.fetchRole(role.id);
+
+    if (!deletedRole || deletedRole.deleted) {
+      this.hasPassed = true;
+    }
+
+    this.invertHasPassedIfIsNot();
+
+    if (this.hasPassed) {
+      return this.createPassTest();
+    }
+
+    return this.createReport(`expected: role ${role.id} to ${this.isNot ? "not " : ""}be deleted`);
+  }
+
+  private async getRoleOrInvalidMessage(roleIdentifier: IRoleIdentifier) {
+    const error = roleUtils.getErrorForUndefinedRoleData(roleIdentifier);
+
+    if (error) {
+      return this.createFailedTest(error);
+    }
+
+    const role = await this.cordeBot.findRole(roleIdentifier);
+
+    if (!role) {
+      return this.createFailedTest(roleUtils.validateRole(role, roleIdentifier));
+    }
+
+    if (role.deleted) {
+      return this.createFailedTest(
+        `expected: role ${role.id} not deleted\n`,
+        `received: role was deleted before call the command '${this.command}'`,
+      );
+    }
+
+    return role;
   }
 }

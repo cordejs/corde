@@ -1,6 +1,7 @@
 /**
  * Creates a promise that finish after a defined time in milliseconds
  * @param timeMilliseconds Time to the promise wait.
+ * @internal
  */
 export function wait(timeMilliseconds: number) {
   return new Promise<void>((resolve, reject) => {

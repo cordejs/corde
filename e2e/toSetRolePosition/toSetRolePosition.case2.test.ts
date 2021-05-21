@@ -1,12 +1,9 @@
 import Utils from "../testUtils";
-import { messages } from "../../src/messages";
-import cli from "../cliRunner";
-import { assert, spec } from "../pipeline";
+import { runCLI } from "../cliRunner";
 
-spec("should fail", async () => {
-  const command = Utils.buildCommandWithConfigPath("toSetRolePosition", "bot_case2.test.ts");
-  const results = await cli.exec(command);
-  assert(results.stdout).toContain(messages.ALL_TESTS_FAIL);
-  assert(results.stdout).toContain(messages.FAILURES + " 1");
-  assert(results.statusCode).toEqual(1);
+it("should fail when trying to set role as mentionable", async () => {
+  const command = Utils.buildCommandWithConfigPath("toSetRolePosition", "bot_case2.spec.ts");
+  const [mockProcess, stdout] = await runCLI(command);
+  expect(stdout).toMatchSnapshot();
+  expect(mockProcess).toBeCalledWith(1);
 });

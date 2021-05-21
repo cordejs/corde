@@ -1,32 +1,33 @@
 {
-  "$id": "https://raw.githubusercontent.com/lucasgmagalhaes/corde/master/schema/corde.schema.json",
+  "$id": "https://raw.githubusercontent.com/cordejs/corde/master/schema/corde.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Schema for Corde config",
   "type": "object",
   "description": "",
   "examples": [
     {
-      "cordeTestToken": "YaA4MDMiOTY2O4I2MjAwODMy.X2iRwg.Rf3-TqLExWuPQjxnVaDCGv9V7cB",
+      "cordeBotToken": "YaA4MDMiOTY2O4I2MjAwODMy.X2iRwg.Rf3-TqLExWuPQjxnVaDCGv9V7cB",
       "botTestId": "12412142412",
-      "botTestToken": "YaA4MDMiOTY2O4I2MjAwODMy.X2iRwg.Rf3-TqLExWuPQjxnVaDCGv9V7cB",
+      "botToken": "YaA4MDMiOTY2O4I2MjAwODMy.X2iRwg.Rf3-TqLExWuPQjxnVaDCGv9V7cB",
       "guildId": "514212632960122287894",
       "channelId": "514212632960122287894",
+      "modulePathIgnorePatterns": ["**/node_modules/**"],
       "botPrefix": "!",
-      "testFiles": ["./test"],
+      "testFiles": ["./test/**"],
       "timeOut": 1000
     }
   ],
   "required": [
-    "cordeTestToken",
+    "cordeBotToken",
     "botTestId",
-    "botTestToken",
+    "botToken",
     "guildId",
     "channelId",
     "botPrefix",
     "testFiles"
   ],
   "properties": {
-    "cordeTestToken": {
+    "cordeBotToken": {
       "default": "",
       "description": "",
       "title": "The bot token that Corde will use to simulate a user."
@@ -35,7 +36,7 @@
       "default": "",
       "title": "Your bot's id."
     },
-    "botTestToken": {
+    "botToken": {
       "default": "",
       "title": "Your bot's Token."
     },
@@ -51,14 +52,17 @@
       "default": "",
       "title": "Prefix for call your bot."
     },
-    "testFiles": {
+    "testMatches": {
       "default": [],
-      "title": "Array with the path of test folders | files.",
+      "title": "Array with the pattern for tests",
       "additionalItems": true
     },
     "timeOut": {
       "default": 5000,
       "title": "Timeout for each test. Value mesuared in miliseconds."
+    },
+    "modulePathIgnorePatterns": {
+      "title": "Definition of all paterns to ignore in tests search"
     }
   },
   "additionalProperties": false

@@ -1,7 +1,18 @@
-import { ColorResolvable, MessageEmbed, Snowflake } from "discord.js";
+import { ColorResolvable } from "discord.js";
 import { testCollector } from "../common/testCollector";
-import { CordeBot } from "../core";
-import { GenericFunction, MessageData, RoleData, TestReport } from "../types/types";
+import {
+  IEmoji,
+  IMessageIdentifier,
+  IMessageEditedIdentifier,
+  IMessageEmbed,
+  Primitive,
+  IRoleIdentifier,
+  ITestReport,
+  ICordeBot,
+  TestFunctionType,
+  IMessageMatches,
+  IRoleMatches,
+} from "../types";
 import { Colors } from "../utils/colors";
 import { RolePermission } from "../utils/permission";
 import {
@@ -16,191 +27,229 @@ import {
   ToEditMessage,
   ToPinMessage,
   ToRemoveReaction,
-  ToUnpinMessage,
+  ToUnPinMessage,
   ToSetRolePermission,
 } from "./matches";
-import { ExpectOperation } from "./matches/operation";
-import { MessageMatches } from "./matches/messageMatches.interface";
-import { RoleMatches } from "./matches/roleMatches";
+import { ExpectTest } from "./matches/expectTest";
+import { buildReportMessage, resolveName, stringIsNullOrEmpty } from "../utils";
+import { getStackTrace } from "../utils/getStackTrace";
+import { runtime } from "../common/runtime";
+import { IMacherContructorArgs, MayReturnMatch, IExpectTestBaseParams } from "../types";
+import { IToHaveResult } from "./matches/toHaveResult";
 
-/**
- * Defines all functions that can be used
- * to check a bot reaction of a command.
- */
-type Matches = MessageMatches & RoleMatches;
+class BaseMatcher {
+  protected _commandName: unknown;
+  protected _isNot: boolean;
+  protected _isCascade: boolean;
+  protected _guildId?: string;
+  protected _channelId?: string;
+  protected _channelIdToSendCommand?: string;
 
-/**
- * Defines the initial value of expectations from
- * **command** function. It includes all matches and
- * the *not* statement. Witch will deny the executed match
- */
-export interface MatchWithNot extends Matches {
-  /**
-   * Defines that a command should **not** do something.
-   * Use this if you can not precise what response a command will throw,
-   * But know what it **can not** throw.
-   */
-  not: Matches;
+  constructor({
+    commandName,
+    isNot,
+    isCascade,
+    channelId,
+    guildId,
+    channelIdToSendCommand,
+  }: IMacherContructorArgs) {
+    this._commandName = commandName;
+    this._isNot = isNot ?? false;
+    this._isCascade = isCascade ?? false;
+    this._guildId = guildId;
+    this._channelId = channelId;
+    this._channelIdToSendCommand = channelIdToSendCommand;
+  }
+
+  // Trace can not me added inside operationFactory because it do,
+  // it will get irrelevant data.
+
+  protected async operationFactory<T extends ExpectTest>(
+    trace: string,
+    type: new (params: IExpectTestBaseParams) => T,
+    cordeBot: ICordeBot,
+    ...params: Parameters<T["action"]>
+  ): Promise<ITestReport> {
+    const commandName = await resolveName(this._commandName);
+
+    const op = new type({
+      cordeBot,
+      command: commandName,
+      isNot: this._isNot,
+      timeout: runtime.timeOut,
+      isCascade: this._isCascade,
+      guildId: this._guildId ?? runtime.guildId,
+      channelId: this._channelId ?? runtime.channelId,
+      channelIdToSendCommand: this._channelIdToSendCommand,
+    });
+
+    if (
+      !this._isCascade &&
+      (commandName == undefined ||
+        (typeof commandName === "string" && stringIsNullOrEmpty(commandName)))
+    ) {
+      return {
+        pass: false,
+        message: buildReportMessage("command can not be null or an empty string"),
+        testName: op.toString(),
+      };
+    }
+
+    const report = await op.action(...params);
+
+    if (!report) {
+      return {
+        pass: false,
+        message: buildReportMessage("no report was provided by the test"),
+        testName: op.toString(),
+        trace,
+      };
+    }
+
+    if (report.pass) {
+      return report;
+    }
+
+    report.trace = trace;
+    return report;
+  }
+
+  protected returnOrAddToCollector(testFunction: TestFunctionType): any {
+    if (this._isCascade) {
+      return testFunction;
+    }
+
+    return testCollector.addTestFunction(testFunction);
+  }
 }
 
-class ExpectMatches implements Matches {
-  protected _commandName: string;
-  protected _isNot: boolean;
-
-  constructor(commandName: string, isNot: boolean) {
-    this._commandName = commandName;
-    this._isNot = isNot;
-  }
-
-  public toEditMessage(message: MessageData, newValue: string | MessageEmbed): void {
-    testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(ToEditMessage, cordeBot, message, newValue);
-    });
-  }
-
-  public toPin(messageId: string): void;
-  public toPin(message: MessageData): void;
-  public toPin(message: string | MessageData): void {
-    let data: MessageData;
-    if (typeof message === "string") {
-      data = { id: message };
-    } else {
-      data = message;
-    }
-
-    testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(ToPinMessage, cordeBot, data);
-    });
-  }
-
-  public toUnPin(messageId: string): void;
-  public toUnPin(message: MessageData): void;
-  public toUnPin(message: string | MessageData): void {
-    let data: MessageData;
-    if (typeof message === "string") {
-      data = { id: message };
-    } else {
-      data = message;
-    }
-
-    testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(ToUnpinMessage, cordeBot, data);
-    });
-  }
-
-  public toReturn(expect: string | number | boolean | MessageEmbed): void {
-    testCollector.addTestFunction((cordeBot) => this.operationFactory(ToReturn, cordeBot, expect));
-  }
-
-  public toAddReaction(...reaction: string[]): void {
-    testCollector.addTestFunction((cordeBot) =>
-      this.operationFactory(ToAddReaction, cordeBot, reaction),
+export class MessageMatchesImpl<TReturn extends MayReturnMatch>
+  extends BaseMatcher
+  implements IMessageMatches<TReturn> {
+  toReturn(expect: Primitive | IMessageEmbed) {
+    const trace = getStackTrace(undefined, true, "toReturn");
+    return this.returnOrAddToCollector((cordeBot) =>
+      this.operationFactory(trace, ToReturn, cordeBot, expect),
     );
   }
 
-  public toRemoveReaction(...reactions: string[]): void;
-  public toRemoveReaction(reactions: string[]): void;
-  public toRemoveReaction(reactions: string, message: MessageData): void;
-  public toRemoveReaction(reactions: string[], message: MessageData): void;
-  public toRemoveReaction(reactions: string | string[], message?: any) {
-    testCollector.addTestFunction((cordeBot) => {
-      if (Array.isArray(reactions)) {
-        return this.operationFactory(ToRemoveReaction, cordeBot, reactions, message);
-      }
-      return this.operationFactory(ToRemoveReaction, cordeBot, [reactions], message);
+  toEditMessage(
+    newValue: Primitive | IMessageEmbed,
+    messageIdentifier?: IMessageEditedIdentifier | string,
+  ) {
+    const trace = getStackTrace(undefined, true, "toEditMessage");
+    return this.returnOrAddToCollector((cordeBot) => {
+      return this.operationFactory(trace, ToEditMessage, cordeBot, newValue, messageIdentifier);
     });
   }
 
-  public toSetRoleColor(color: Colors, id: Snowflake): void;
-  public toSetRoleColor(color: Colors, name: RoleData): void;
-  public toSetRoleColor(color: ColorResolvable, id: Snowflake): void;
-  public toSetRoleColor(color: ColorResolvable, name: RoleData): void;
-  public toSetRoleColor(color: ColorResolvable | Colors, role: Snowflake | RoleData) {
-    const data = this.getRoleData(role);
-    testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(ToSetRoleColor, cordeBot, color, data);
+  toPin(messageIdentifier: string | IMessageIdentifier) {
+    const trace = getStackTrace(undefined, true, "toPin");
+    return this.returnOrAddToCollector((cordeBot) => {
+      return this.operationFactory(trace, ToPinMessage, cordeBot, messageIdentifier);
     });
   }
 
-  public toDeleteRole(id: string): void;
-  public toDeleteRole(name: RoleData): void;
-  public toDeleteRole(role: string | RoleData) {
-    const data = this.getRoleData(role);
-    testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(ToDeleteRole, cordeBot, data);
+  toUnPin(messageIdentifier: string | IMessageIdentifier) {
+    const trace = getStackTrace(undefined, true, "toUnPin");
+    return this.returnOrAddToCollector((cordeBot) => {
+      return this.operationFactory(trace, ToUnPinMessage, cordeBot, messageIdentifier);
     });
   }
 
-  public toSetRoleMentionable(mentionable: boolean, id: string): void;
-  public toSetRoleMentionable(mentionable: boolean, roleData: RoleData): void;
-  public toSetRoleMentionable(mentionable: boolean, roleData: string | RoleData) {
-    const data = this.getRoleData(roleData);
-    testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(ToSetRoleMentionable, cordeBot, mentionable, data);
-    });
+  toAddReaction(
+    emojis: string[] | IEmoji[] | (string | IEmoji)[],
+    messageIdentifier?: string | IMessageIdentifier,
+  ) {
+    const trace = getStackTrace(undefined, true, "toAddReaction");
+    return this.returnOrAddToCollector((cordeBot) =>
+      this.operationFactory(trace, ToAddReaction, cordeBot, emojis, messageIdentifier),
+    );
   }
 
-  public toSetRoleHoist(hoist: boolean, id: string): void;
-  public toSetRoleHoist(hoist: boolean, roleData: RoleData): void;
-  public toSetRoleHoist(hoist: boolean, roleData: string | RoleData) {
-    const data = this.getRoleData(roleData);
-    testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(ToSetRoleHoist, cordeBot, hoist, data);
-    });
-  }
-
-  public toRenameRole(newName: string, id: string): void;
-  public toRenameRole(newName: string, roleData: RoleData): void;
-  public toRenameRole(newName: string, roleData: string | RoleData) {
-    const data = this.getRoleData(roleData);
-    testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(ToRenameRole, cordeBot, newName, data);
-    });
-  }
-
-  public toSetRolePosition(newPosition: number, id: string): void;
-  public toSetRolePosition(newPosition: number, roleData: RoleData): void;
-  public toSetRolePosition(newPosition: number, roleData: string | RoleData) {
-    const data = this.getRoleData(roleData);
-    testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(ToSetRolePosition, cordeBot, newPosition, data);
-    });
-  }
-
-  public toSetRolePermission(id: string, ...permissions: RolePermission[]): void;
-  public toSetRolePermission(roleData: RoleData, ...permissions: RolePermission[]): void;
-  public toSetRolePermission(roleData: string | RoleData, ...permissions: RolePermission[]) {
-    const data = this.getRoleData(roleData);
-    testCollector.addTestFunction((cordeBot) => {
-      return this.operationFactory(ToSetRolePermission, cordeBot, permissions, data);
-    });
-  }
-
-  protected getRoleData(roleData: string | RoleData) {
-    let data: RoleData;
-    if (typeof roleData === "string") {
-      data = { id: roleData };
-    } else {
-      data = roleData as RoleData;
-    }
-    return data;
-  }
-
-  protected operationFactory<T extends ExpectOperation>(
-    type: new (cordeBot: CordeBot, command: string, isNot: boolean) => T,
-    cordeBot: CordeBot,
-    ...params: Parameters<T["action"]>
-  ): Promise<TestReport> {
-    const op = new type(cordeBot, this._commandName, this._isNot);
-    return (op.action as GenericFunction)(...params);
+  toRemoveReaction(
+    emojis: string[] | IEmoji[] | (string | IEmoji)[],
+    messageIdentifier?: string | IMessageIdentifier,
+  ) {
+    const trace = getStackTrace(undefined, true, "toRemoveReaction");
+    return this.returnOrAddToCollector((cordeBot) =>
+      this.operationFactory(trace, ToRemoveReaction, cordeBot, emojis, messageIdentifier),
+    );
   }
 }
 
-export class ExpectMatchesWithNot extends ExpectMatches implements MatchWithNot {
-  public not: ExpectMatches;
+export class ToHaveResultMatcher extends BaseMatcher {
+  toHaveResult(...tests: TestFunctionType[]): void {
+    const trace = getStackTrace(undefined, true, "todoInCascade");
+    testCollector.addTestFunction((cordeBot) => {
+      // Encapsulate the functions inside another so it do not be executed.
+      const testEnhanced = tests.map((test) => () => test(cordeBot));
+      return this.operationFactory(trace, IToHaveResult, cordeBot, ...testEnhanced);
+    });
+  }
+}
 
-  constructor(commandName: string) {
-    super(commandName, false);
-    this.not = new ExpectMatches(commandName, true);
+export class RoleMatchesImpl<TReturn extends MayReturnMatch>
+  extends BaseMatcher
+  implements IRoleMatches<TReturn> {
+  toRenameRole(newName: string, roleIdentifier: IRoleIdentifier | string) {
+    const trace = getStackTrace(undefined, true, "toRenameRole");
+    return this.returnOrAddToCollector((cordeBot) => {
+      return this.operationFactory(trace, ToRenameRole, cordeBot, newName, roleIdentifier);
+    });
+  }
+
+  toSetRoleColor(color: ColorResolvable | Colors, roleIdentifier: string | IRoleIdentifier) {
+    const trace = getStackTrace(undefined, true, "toSetRoleColor");
+    return this.returnOrAddToCollector((cordeBot) => {
+      return this.operationFactory(trace, ToSetRoleColor, cordeBot, color, roleIdentifier);
+    });
+  }
+
+  toDeleteRole(roleIdentifier: string | IRoleIdentifier) {
+    const trace = getStackTrace(undefined, true, "toDeleteRole");
+    return this.returnOrAddToCollector((cordeBot) => {
+      return this.operationFactory(trace, ToDeleteRole, cordeBot, roleIdentifier);
+    });
+  }
+
+  toSetRoleMentionable(mentionable: boolean, roleIdentifier: string | IRoleIdentifier) {
+    const trace = getStackTrace(undefined, true, "toSetRoleMentionable");
+    return this.returnOrAddToCollector((cordeBot) => {
+      return this.operationFactory(
+        trace,
+        ToSetRoleMentionable,
+        cordeBot,
+        mentionable,
+        roleIdentifier,
+      );
+    });
+  }
+
+  toSetRoleHoist(hoist: boolean, roleIdentifier: string | IRoleIdentifier) {
+    const trace = getStackTrace(undefined, true, "toSetRoleHoist");
+    return this.returnOrAddToCollector((cordeBot) => {
+      return this.operationFactory(trace, ToSetRoleHoist, cordeBot, hoist, roleIdentifier);
+    });
+  }
+
+  toSetRolePosition(newPosition: number, roleIdentifier: string | IRoleIdentifier) {
+    const trace = getStackTrace(undefined, true, "toSetRolePosition");
+    return this.returnOrAddToCollector((cordeBot) => {
+      return this.operationFactory(trace, ToSetRolePosition, cordeBot, newPosition, roleIdentifier);
+    });
+  }
+
+  toSetRolePermission(roleIdentifier: string | IRoleIdentifier, ...permissions: RolePermission[]) {
+    const trace = getStackTrace(undefined, true, "toSetRolePermission");
+    return this.returnOrAddToCollector((cordeBot) => {
+      return this.operationFactory(
+        trace,
+        ToSetRolePermission,
+        cordeBot,
+        roleIdentifier,
+        permissions,
+      );
+    });
   }
 }

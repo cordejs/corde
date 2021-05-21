@@ -1,3 +1,4 @@
 #!/bin/bash
 ## Corde documentation deploy using shell file
-GIT_USER=$1 yarn docusaurus deploy
+USER=cordejs
+GIT_USER=$USER yarn docusaurus deploy

@@ -1,13 +1,15 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 const versions = require("./versions.json");
 
 module.exports = {
   title: "Corde",
   tagline: "A simple library for Discord bot tests",
-  url: "https://lucasgmagalhaes.github.io/corde",
+  url: "https://cordejs.github.io/corde",
   baseUrl: "/",
   onBrokenLinks: "log",
   favicon: "img/logo/favicon.ico",
-  organizationName: "lucasgmagalhaes",
+  organizationName: "cordejs",
   projectName: "corde",
   themeConfig: {
     navbar: {
@@ -19,10 +21,17 @@ module.exports = {
       items: [
         {
           to: "docs/",
-          activeBasePath: "docs",
-          label: "Docs",
+          activeBaseRegex: "^(.*docs\\/(?!(structures\\/?)).*)",
+          label: "Documentation",
           position: "left",
         },
+        {
+          to: "docs/structures/",
+          activeBasePath: "docs/structures",
+          label: "Structures",
+          position: "left",
+        },
+        { to: "blog", label: "Blog", position: "left" },
         {
           type: "docsVersionDropdown",
           position: "right",
@@ -35,7 +44,7 @@ module.exports = {
           ],
         },
         {
-          href: "https://github.com/lucasgmagalhaes/corde",
+          href: "https://github.com/cordejs/corde",
           position: "right",
           className: "header-github-link",
           "aria-label": "GitHub repository",
@@ -73,11 +82,9 @@ module.exports = {
       "@docusaurus/preset-classic",
       {
         docs: {
-          path: "docs",
+          path: "../docs",
           sidebarPath: require.resolve("./sidebars.js"),
-          // Please change this to your repo.
-          editUrl: "https://github.com/lucasgmagalhaes/corde/edit/master/website/docs",
-
+          editUrl: "https://github.com/cordejs/corde/edit/master/docs",
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
           lastVersion: "current",

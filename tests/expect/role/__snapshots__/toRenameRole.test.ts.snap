@@ -1,0 +1,102 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing ToRenameRole operation should fail due to no role was renamed 1`] = `
+Object {
+  "message": "    
+    expected: role 'WE DEM BOYZZ!!!!!! 1' to be renamed to newName
+    received: name was not changed
+",
+  "pass": false,
+  "testName": "toRenameRole",
+}
+`;
+
+exports[`testing ToRenameRole operation should fail due to undefined roleIdentifier 1`] = `
+Object {
+  "message": "    
+    expected: data to identifier the role (id or name)
+    received: null
+",
+  "pass": false,
+  "testName": "toRenameRole",
+}
+`;
+
+exports[`testing ToRenameRole operation should return a failed test due to failure in message sending 1`] = `
+Object {
+  "message": "    
+    can not send message to channel x
+",
+  "pass": false,
+  "testName": "toRenameRole",
+}
+`;
+
+exports[`testing ToRenameRole operation should return a not passed test due expected name did not match to received 1`] = `
+Object {
+  "message": "    
+    expected: role change name to 'test'
+    received: name was not changed (actual: 'WE DEM BOYZZ!!!!!! 1')
+",
+  "pass": false,
+  "testName": "toRenameRole",
+}
+`;
+
+exports[`testing ToRenameRole operation should return a not passed test due to name should not change (isNot true) 1`] = `
+Object {
+  "message": "    
+    expected: role not change name to 'WE DEM BOYZZ!!!!!! 1'
+    received: name was not changed (actual: 'WE DEM BOYZZ!!!!!! 1')
+",
+  "pass": false,
+  "testName": "toRenameRole",
+}
+`;
+
+exports[`testing ToRenameRole operation should return false due to invalid newName value (null) 1`] = `
+Object {
+  "message": "    
+    expected: parameter newName must be a string or a number
+    received: object
+",
+  "pass": false,
+  "testName": "toRenameRole",
+}
+`;
+
+exports[`testing ToRenameRole operation should return false due to newName be a empty string 1`] = `
+Object {
+  "message": "    
+    expected: parameter newName must be a valid string
+    received: ''
+",
+  "pass": false,
+  "testName": "toRenameRole",
+}
+`;
+
+exports[`testing ToRenameRole operation should return false due to not found role 1`] = `
+Object {
+  "message": "    
+    expected: role with id 123
+    received: null
+",
+  "pass": false,
+  "testName": "toRenameRole",
+}
+`;
+
+exports[`testing ToRenameRole operation should return true due to isNot true and no role change 1`] = `
+Object {
+  "pass": true,
+  "testName": "toRenameRole",
+}
+`;
+
+exports[`testing ToRenameRole operation should return true due to role has changed the name (isNot false) 1`] = `
+Object {
+  "pass": true,
+  "testName": "toRenameRole",
+}
+`;

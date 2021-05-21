@@ -1,12 +1,14 @@
 import fs from "fs";
 import path from "path";
-import { runtime, testCollector } from "../../src/common";
+import { runtime } from "../../src/common/runtime";
+import { testCollector } from "../../src/common/testCollector";
 import { reader } from "../../src/core/reader";
-import { Group } from "../../src/types";
-import consts from "../mocks/constsNames";
 import { FileError } from "../../src/errors";
+import { beforeStart as _beforeStart } from "../../src/hooks";
+import { ITestFile } from "../../src/types";
+import consts from "../mocks/constsNames";
 
-//TODO: This class must have more tests
+// TODO: This class must have more tests
 
 const conf = require("../mocks/jsconfig/corde.config.js");
 const cwd = process.cwd();
@@ -64,6 +66,184 @@ describe("reader class", () => {
         );
         expect(() => reader.loadConfig()).toThrowError(FileError);
       });
+    });
+
+    describe("testing getTestsFromFiles", () => {
+      it("should throw error due to no file", async () => {
+        try {
+          await reader.getTestsFromFiles(null);
+          fail();
+        } catch (error) {
+          expect(error).toBeInstanceOf(FileError);
+        }
+      });
+
+      it("should get files with fail in execution of hook, but without stop execution", async () => {
+        _beforeStart(() => {
+          throw new Error();
+        });
+
+        const tests = await reader.getTestsFromFiles({
+          filesPattern: [process.cwd(), "tests/mocks/sampleSingleTest.ts"],
+        });
+        expect(tests).toBeTruthy();
+      });
+
+      it("should return empty due to inexistance of the file", async () => {
+        const tests = await reader.getTestsFromFiles({
+          filesPattern: [path.resolve(process.cwd(), "tests/mocks/sampleWithSingleTest.ts")],
+        });
+        expect(tests.length).toEqual(0);
+      });
+
+      it("should return group with only command", async () => {
+        const pathFile = "tests/mocks/onlyCommands.ts";
+        const pathReturned =
+          process.platform === "win32" ? "tests\\mocks\\onlyCommands.ts" : pathFile;
+        const tests = await reader.getTestsFromFiles({
+          filesPattern: [path.resolve(process.cwd(), pathFile)],
+        });
+        const expectedTests: ITestFile[] = [
+          {
+            path: pathReturned,
+            isEmpty: false,
+            groups: [
+              {
+                tests: [
+                  {
+                    testsFunctions: [expect.any(Function)],
+                  },
+                ],
+              },
+            ],
+          },
+        ];
+        expect(tests).toEqual(expectedTests);
+      });
+
+      it("should return group with double groups", async () => {
+        const pathFile = "tests/mocks/sampleDoubleGroup.ts";
+        const pathReturned =
+          process.platform === "win32" ? "tests\\mocks\\sampleDoubleGroup.ts" : pathFile;
+        const tests = await reader.getTestsFromFiles({
+          filesPattern: [path.resolve(process.cwd(), pathFile)],
+        });
+        const expectedTests: ITestFile[] = [
+          {
+            path: pathReturned,
+            isEmpty: false,
+            groups: [
+              {
+                name: consts.GROUP_1,
+                tests: [
+                  {
+                    name: consts.TEST_1,
+                    testsFunctions: [expect.any(Function)],
+                  },
+                ],
+              },
+              {
+                name: consts.GROUP_2,
+                tests: [
+                  {
+                    name: consts.TEST_2,
+                    testsFunctions: [expect.any(Function)],
+                  },
+                ],
+              },
+            ],
+          },
+        ];
+        expect(tests).toEqual(expectedTests);
+      });
+
+      it("should return group with only group and expect", async () => {
+        const pathFile = "tests/mocks/sampleOnlyWithGroup.ts";
+        const pathReturned =
+          process.platform === "win32" ? "tests\\mocks\\sampleOnlyWithGroup.ts" : pathFile;
+        const tests = await reader.getTestsFromFiles({
+          filesPattern: [path.resolve(process.cwd(), pathFile)],
+        });
+        const expectedTests: ITestFile[] = [
+          {
+            path: pathReturned,
+            isEmpty: false,
+            groups: [
+              {
+                name: consts.GROUP_1,
+                tests: [
+                  {
+                    testsFunctions: [expect.any(Function)],
+                  },
+                ],
+              },
+            ],
+          },
+        ];
+        expect(tests).toEqual(expectedTests);
+      });
+    });
+
+    it("should return group with single group and test", async () => {
+      const pathFile = "tests/mocks/sampleWithSingleGroup.ts";
+      const pathReturned =
+        process.platform === "win32" ? "tests\\mocks\\sampleWithSingleGroup.ts" : pathFile;
+
+      const tests = await reader.getTestsFromFiles({
+        filesPattern: [path.resolve(process.cwd(), pathFile)],
+      });
+      const expectedTests: ITestFile[] = [
+        {
+          path: pathReturned,
+          isEmpty: false,
+          groups: [
+            {
+              name: consts.GROUP_1,
+              tests: [
+                {
+                  name: consts.TEST_1,
+                  testsFunctions: [expect.any(Function)],
+                },
+              ],
+            },
+          ],
+        },
+      ];
+      expect(tests).toEqual(expectedTests);
+    });
+
+    it("should return empty test (only with group)", async () => {
+      const pathFile = "tests/mocks/sampleEmptyGroup.ts";
+      const pathReturned =
+        process.platform === "win32" ? "tests\\mocks\\sampleEmptyGroup.ts" : pathFile;
+      const tests = await reader.getTestsFromFiles({
+        filesPattern: [path.resolve(process.cwd(), pathFile)],
+      });
+      const expectedTests: ITestFile[] = [
+        {
+          path: pathReturned,
+          isEmpty: true,
+          groups: [],
+        },
+      ];
+      expect(tests).toEqual(expectedTests);
+    });
+
+    it("should return empty test (only with test)", async () => {
+      const pathFile = "tests/mocks/sampleEmptyTest.ts";
+      const pathReturned =
+        process.platform === "win32" ? "tests\\mocks\\sampleEmptyTest.ts" : pathFile;
+      const tests = await reader.getTestsFromFiles({
+        filesPattern: [path.resolve(process.cwd(), pathFile)],
+      });
+      const expectedTests: ITestFile[] = [
+        {
+          path: pathReturned,
+          isEmpty: true,
+          groups: [],
+        },
+      ];
+      expect(tests).toEqual(expectedTests);
     });
 
     describe("when working with auto search for config files (js, ts, json)", () => {
