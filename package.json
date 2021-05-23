@@ -32,7 +32,7 @@
     "test": "jest --silent --detectOpenHandles",
     "build:publish": "bash ./scripts/publish.sh",
     "generateStructureDocs": "typedoc --plugin typedoc-plugin-markdown src/structures",
-    "prettier-lib": "prettier --write ./lib",
+    "prettier-lib": "prettier --write ./lib ./schema",
     "dependencies": "depcruise --config ./etc/.dependency-cruiser.js src",
     "watch": "bash tasks.sh watch",
     "corde": "node ./bin/corde",
@@ -65,6 +65,7 @@
     "@types/gulp-strip-comments": "^2.5.0",
     "@types/jest": "^26.0.22",
     "@types/merge-stream": "^1.1.2",
+    "@types/mock-fs": "^4.13.0",
     "@types/node": "^15.0.1",
     "@types/require-from-string": "^1.2.0",
     "@types/rewire": "^2.5.28",
@@ -110,16 +111,16 @@
     "yarn": "^1.22.10"
   },
   "dependencies": {
-    "chalk": "^4.1.0",
-    "commander": "^7.0.0",
-    "discord.js": "^12.2.0",
+    "chalk": "^4.1.1",
+    "commander": "^7.2.0",
+    "discord.js": "^12.5.3",
     "esm": "^3.2.25",
-    "glob": "^7.1.6",
+    "fast-glob": "^3.2.5",
     "jest-diff": "^26.6.2",
     "log-update": "^4.0.0",
-    "ora": "^5.0.0",
+    "ora": "^5.4.0",
     "pretty-format": "^26.6.2",
-    "tslib": "^2.1.0"
+    "tslib": "^2.2.0"
   },
   "engines": {
     "node": ">=12.0.0"

@@ -64,7 +64,7 @@ After installed, add the file `corde.config.json` in the root of your applicatio
    "guildId":  "THE_GUID_OF_BOT_HERE",
    "channelId":  "CHANNELS_ID_HERE",
    "botPrefix":  "+",
-   "testMatches":  ["./test"]
+   "testMatches":  ["./test/**"]
 }
 ```
 
@@ -74,8 +74,8 @@ Test example:
 const { group, test, command, beforeStart, afterAll } = require("corde");
 const { client, loginBot } = require("..");
 
-beforeStart(() => {
-  loginBot();
+beforeStart(async () => {
+  await loginBot();
 });
 
 group("main commands", () => {
