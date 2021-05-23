@@ -1,5 +1,11 @@
 # 4.0.3
 
+## 💡 Miscellaneous
+
+- Fix tests pattern in README
+
+# 4.0.3
+
 ## 🐛 Bug Fixes
 
 - Fix tests read following a pattern #714
