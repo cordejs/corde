@@ -23,34 +23,36 @@ export async function createHero(msg: Discord.Message) {
 
   if (hero) {
     msg.channel.send("You already have a hero created called `" + hero.name + "`");
-  } else {
-    // If haven't, ask for hero's name
-    await msg.channel.send("What is your hero name ?");
+    return;
+  }
 
-    // The user has 10 seconds to answer before creation procedure be canceled
-    const getName = await msg.channel.awaitMessages(
-      (responseName) => responseName.author.id === msg.author.id,
-      {
-        max: 1,
-        time: 10000,
-        errors: ["time"],
-      },
+  // If haven't, ask for hero's name
+  await msg.channel.send("What is your hero name ?");
+
+  // The user has 10 seconds to answer before creation procedure be canceled
+  const getName = await msg.channel.awaitMessages(
+    (responseName) => responseName.author.id === msg.author.id,
+    {
+      max: 1,
+      time: 10000,
+      errors: ["time"],
+    },
+  );
+
+  const heroName = getName.first().content;
+
+  if (heroName === undefined || heroName.trim() === "") {
+    msg.channel.send(
+      "You can not create a hero without name " + EmojiPeople["😰"] + " I know that you exists",
     );
+    return;
+  }
 
-    const heroName = getName.first().content;
-
-    if (heroName === undefined || heroName.trim() === "") {
-      msg.channel.send(
-        "You can not create a hero without name " + EmojiPeople["😰"] + " I know that you exists",
-      );
-    } else {
-      try {
-        await heroRepository.createhero(heroName, Number.parseInt(msg.author.id));
-        msg.channel.send("Welcome to the game " + heroName + "!");
-      } catch (error) {
-        console.log("Fail at hero creation. Error: " + error);
-        msg.channel.send("Wasn't possible to create your hero");
-      }
-    }
+  try {
+    await heroRepository.createhero(heroName, Number.parseInt(msg.author.id));
+    msg.channel.send("Welcome to the game " + heroName + "!");
+  } catch (error) {
+    console.log("Fail at hero creation. Error: " + error);
+    msg.channel.send("Wasn't possible to create your hero");
   }
 }

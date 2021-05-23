@@ -19,7 +19,7 @@ const botTestId = process.env.BOT_TEST_ID;
 const channelId = process.env.CHANNEL_ID;
 const cordeBotToken = process.env.CORDE_TEST_TOKEN;
 const guildId = process.env.GUILD_ID;
-const testMatches = [process.env.TEST_FILES_DIR];
+const testMatches = ["**/tests/**.spec.ts"];
 const botToken = process.env.BOT_TEST_TOKEN;
 const timeOut = process.env.TIME_OUT;
 
