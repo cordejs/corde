@@ -11,8 +11,21 @@ export const TEXT_PENDING = chalk.yellow;
 export const TEXT_EMPTY = chalk.yellowBright;
 
 export const TAG_PENDING = (text = "RUNS") => chalk.bgYellow(chalk.black(` ${text} `));
-export const TAG_FAIL = (text = "FAIL") => chalk.bgRed(chalk.black(` ${text} `));
-export const TAG_PASS = (text = "PASS") => chalk.bgGreen(chalk.black(` ${text} `));
+
+// Tags FAIL and PASS must have an additional space to align with the tag EMPTY
+// I.E:
+//
+//  PASS    D:/github/corde/example/test/bot.test.js
+//  EMPTY   D:/github/corde/example/test/bot.test.js
+//  PASS    D:/github/corde/example/test/bot.test.js
+
+export const TAG_FAIL = (text = "FAIL") => {
+  return chalk.bgRed(chalk.black(` ${text} `)) + " ";
+};
+
+export const TAG_PASS = (text = "PASS") => {
+  return chalk.bgGreen(chalk.black(` ${text} `)) + " ";
+};
 
 export const TEST_RUNNING_ICON = "●";
 
