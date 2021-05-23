@@ -5,7 +5,7 @@ import { printHookErrors } from "../common/printHookError";
 import { testCollector } from "../common/testCollector";
 import { FileError } from "../errors";
 import { IConfigOptions, ITestFilePattern, ITestFile } from "../types";
-import { shortPathForPlataform, utils } from "../utils";
+import { utils } from "../utils";
 
 class Reader {
   /**
@@ -49,9 +49,11 @@ class Reader {
 
     const filesPath: string[] = [];
 
-    for (const filePattern of filesPattern.filesPattern) {
-      const matches = await utils.getFiles(filePattern, filesPattern.ignorePattern);
+    try {
+      const matches = await utils.getFiles(filesPattern.filesPattern, filesPattern.ignorePattern);
       filesPath.push(...matches);
+    } catch (error) {
+      console.log(error);
     }
 
     for (const file of filesPath) {
@@ -61,7 +63,7 @@ class Reader {
           require(file);
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
         continue;
       }
 
@@ -94,8 +96,10 @@ class Reader {
       this.addTestsGroupmentToGroupIfExist();
       this.addIsolatedTestFunctionsToGroupIfExists();
 
+      const resolvedCwd = process.cwd().replace(/\\/g, "/");
+
       testMatches.push({
-        path: shortPathForPlataform(file),
+        path: file.replace(resolvedCwd + "/", ""),
         groups: testCollector.groups.slice(),
         isEmpty: testCollector.groups.length === 0,
       });

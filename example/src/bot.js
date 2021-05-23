@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { Client } = require("discord.js");
-const config = require("./corde.config.json");
+const config = require("../corde.config.js");
 
 const bot = new Client();
 
