@@ -1,3 +1,9 @@
+# 4.0.3
+
+## 🐛 Bug Fixes
+
+- Fix tests read following a pattern #714
+
 # 4.0.2
 
 ## 🐛 Bug Fixes
