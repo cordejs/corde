@@ -78,13 +78,6 @@ export class Runtime {
   constructor() {
     this._configs = new Config();
     this._mocks = [];
-    this._bot = new CordeBot(
-      this._configs.botPrefix,
-      this._configs.guildId,
-      this._configs.channelId,
-      this._configs.botTestId,
-      new Client(),
-    );
   }
 
   configFilePath!: string;
@@ -107,6 +100,16 @@ export class Runtime {
    */
   isBotLoggedIn() {
     return this.bot && this.bot.isLoggedIn();
+  }
+
+  initBotFromConfigs() {
+    this._bot = new CordeBot(
+      this._configs.botPrefix,
+      this._configs.guildId,
+      this._configs.channelId,
+      this._configs.botTestId,
+      new Client(),
+    );
   }
 
   /**

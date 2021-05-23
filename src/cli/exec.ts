@@ -18,7 +18,7 @@ process.on("uncaughtException", () => {
   stopLoading();
 });
 
-let spinner: Ora;
+export let spinner: Ora;
 
 export async function exec() {
   await loadConfigs();
@@ -27,8 +27,9 @@ export async function exec() {
 
 async function loadConfigs() {
   const configs = reader.loadConfig();
+  await validate(configs);
   runtime.setConfigs(configs);
-  await validate(runtime.configs);
+  runtime.initBotFromConfigs();
 }
 
 async function runTests() {

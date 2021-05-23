@@ -1,5 +1,8 @@
+import { spinner } from "./cli/exec";
 import { testCollector } from "./common/testCollector";
+import { DOT } from "./consts";
 import { logger, runtime } from "./environment";
+import { exit } from "./exit";
 
 export function initErrorHandlers() {
   process.on("uncaughtException", async (err: Error) => {
@@ -16,8 +19,8 @@ export function initErrorHandlers() {
 }
 
 async function printErrorAndExit(error: Error) {
-  logger.error(error);
-  logger.log(error);
+  spinner?.stop();
+  logger.error(`${DOT} ${error.stack}`);
 
   if (runtime.isBotLoggedIn()) {
     runtime.logoffBot();
@@ -27,7 +30,7 @@ async function printErrorAndExit(error: Error) {
     await testCollector.afterAllFunctions.executeAsync();
   }
 
-  // if (process.env.ENV !== "TEST") {
-  //   exit(1);
-  // }
+  if (process.env.ENV !== "TEST") {
+    exit(1);
+  }
 }

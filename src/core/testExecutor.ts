@@ -8,7 +8,7 @@ import {
   TAG_PENDING,
   TEST_FAIL_ICON,
   TEST_PASSED_ICON,
-  TEST_RUNNING_ICON,
+  DOT,
   TEXT_EMPTY,
   TEXT_FAIL,
   TEXT_PASS,
@@ -182,7 +182,7 @@ export class TestExecutor {
 
   private ITestReportLabelFunction(reports: ITestReport[]) {
     if (reports.length === 0) {
-      return (text: string) => TEXT_EMPTY(" " + TEST_RUNNING_ICON + " " + text + " (empty)");
+      return (text: string) => TEXT_EMPTY(" " + DOT + " " + text + " (empty)");
     }
 
     if (reports.some((report) => !report.pass)) {
@@ -221,7 +221,7 @@ export class TestExecutor {
   }
 
   private createTestTextByStatus(testName?: string | number | boolean) {
-    const icon = TEST_RUNNING_ICON;
+    const icon = DOT;
     return `${MESSAGE_TAB_SPACE}${icon} ${testName}`;
   }
 

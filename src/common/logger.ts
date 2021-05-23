@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import { InspectOptions } from "util";
 import { MESSAGE_TAB_SPACE } from "../consts";
 import { getStackTrace } from "../utils";
@@ -306,7 +307,7 @@ export class Logger implements Console {
 
   error(...message: any[]): void;
   error(message?: any, ...optionalParams: any[]) {
-    this._error(message, ...optionalParams);
+    this._error(chalk.red(message), ...optionalParams);
   }
 
   debug(...message: any[]): void;
