@@ -36,6 +36,7 @@ describe("Testing runtime", () => {
 
   it("should call bot.logout", () => {
     runtime.setConfigs(config);
+    runtime.initBotFromConfigs();
     const spy = jest.spyOn(runtime.bot, "logout");
     runtime.logoffBot();
     expect(spy).toBeCalledTimes(1);
@@ -43,6 +44,7 @@ describe("Testing runtime", () => {
 
   it("should call bot.login", async (done) => {
     runtime.setConfigs(config);
+    runtime.initBotFromConfigs();
     const spy = jest.spyOn(runtime.bot, "login");
     try {
       await runtime.loginBot("13");
