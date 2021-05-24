@@ -1240,7 +1240,7 @@ export type ResolvedValue<T> = T extends (...args: any[]) => PromiseLike<infer U
 export type RejectedValue<T> = T extends (...args: any[]) => PromiseLike<any> ? any : T;
 export type FunctionOrReturnObjType<T> = T extends (...args: any[]) => any ? T : () => T;
 
-export interface MockInstance<
+export interface IMockInstance<
   TEntity extends Record<string, unknown>,
   TKeyEntity extends keyof TEntity,
   TProp extends any = TEntity[TKeyEntity],
@@ -1471,6 +1471,7 @@ export interface MockInstance<
    */
   restoreCalls(): this;
 }
+
 export interface ITestFilePattern {
   filesPattern: string[];
   ignorePattern?: string[];

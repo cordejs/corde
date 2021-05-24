@@ -1,4 +1,4 @@
-import { IConfigOptions, ICordeBot, MockInstance, TestFunctionType } from "../types";
+import { IConfigOptions, ICordeBot, IMockInstance, TestFunctionType } from "../types";
 import { Config } from "./config";
 import { Client } from "discord.js";
 import { CordeBot } from "../core/cordeBot";
@@ -85,7 +85,7 @@ export class Runtime {
 
   private readonly _configs: Config;
   private _bot!: ICordeBot;
-  private _mocks: Array<MockInstance<any, any, any>>;
+  private _mocks: Array<IMockInstance<any, any, any>>;
 
   setConfigs(_configs: Partial<IConfigOptions>, forceUpdate?: boolean) {
     if (!_configs) {
@@ -135,7 +135,7 @@ export class Runtime {
     return fn(this.bot);
   }
 
-  addMock(mock: MockInstance<any, any, any>) {
+  addMock(mock: IMockInstance<any, any, any>) {
     this._mocks.push(mock);
   }
 

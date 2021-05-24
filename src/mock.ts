@@ -4,7 +4,7 @@ import {
   ReturnValueOrOwnType,
   ResolvedValue,
   RejectedValue,
-  MockInstance,
+  IMockInstance,
   GenericFunction,
 } from "./types";
 
@@ -40,8 +40,9 @@ class PropMockInstance<T> {
 class ObjectMock<
   TEntity extends Record<string, unknown>,
   TKeyEntity extends keyof TEntity,
-  TProp extends any = TEntity[TKeyEntity]
-> implements MockInstance<TEntity, TKeyEntity, TProp> {
+  TProp extends any = TEntity[TKeyEntity],
+> implements IMockInstance<TEntity, TKeyEntity, TProp>
+{
   private _entity: TEntity;
   private _propName: TKeyEntity;
   private _primaryValue: any;
@@ -277,7 +278,7 @@ class ObjectMock<
 export function createMock<TEntity extends Record<string, unknown>, U extends keyof TEntity>(
   object: TEntity,
   prop: U,
-): MockInstance<TEntity, U, TEntity[U]> {
+): IMockInstance<TEntity, U, TEntity[U]> {
   const mockInstance = new ObjectMock(object, prop);
   runtime.addMock(mockInstance);
   return mockInstance;
