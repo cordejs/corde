@@ -323,7 +323,7 @@ export class Logger implements Console {
       return;
     }
 
-    this._stdout.cursorTo(0, 1);
+    this._stdout.write("\n");
 
     this.stack.forEach((stackItem) => {
       this._stdout.write(`● console.${stackItem.name}\n\n`);
@@ -333,9 +333,7 @@ export class Logger implements Console {
         this._stdout.write("\n" + stackItem.data.trace + "\n\n");
       });
     });
-
     this.stack = [];
-    this._stdout.cursorTo(0, this._stdout.rows);
   }
 
   private overridePrint(name: string, printFunction: (...args: any[]) => void) {

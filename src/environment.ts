@@ -14,6 +14,7 @@ export function initCordeEnv() {
 
   runtime = new Runtime();
   logger = new Logger(process.stdout);
+  logger.mock();
 }
 
 export function initEnvVariables() {

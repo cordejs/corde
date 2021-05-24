@@ -65,6 +65,8 @@ export class TestExecutor {
     }
     const testsDiff = testsTimer.stop();
 
+    runtime.printLoggerIfNotSilent();
+
     return {
       testTimer: testsDiff[0],
       ...semiReport,
@@ -257,8 +259,6 @@ export class TestExecutor {
 
       reports.push(_report);
     }
-
-    runtime.printLoggerIfNotSilent();
 
     return reports;
   }

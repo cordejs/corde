@@ -10,3 +10,7 @@ beforeStart(async () => {
 test("ping should return pong", () => {
   expect("ping").toReturn("pong");
 });
+
+test("ping should return pong", () => {
+  expect("ping").toReturn("pong");
+});
