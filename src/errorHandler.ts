@@ -1,7 +1,7 @@
 import { spinner } from "./cli/exec";
 import { testCollector } from "./common/testCollector";
-import { DOT } from "./consts";
 import { logger, runtime } from "./environment";
+import { PropertyError } from "./errors";
 import { exit } from "./exit";
 
 export function initErrorHandlers() {
@@ -20,7 +20,12 @@ export function initErrorHandlers() {
 
 async function printErrorAndExit(error: Error) {
   spinner?.stop();
-  logger.error(`${DOT} ${error.stack}`);
+
+  if (error instanceof PropertyError) {
+    logger.error(error.message);
+  } else {
+    logger.error(error.stack);
+  }
 
   if (runtime.isBotLoggedIn()) {
     runtime.logoffBot();
