@@ -1,23 +1,20 @@
-import { Message, MessageEmbed } from "discord.js";
-import { IMessageEmbed, Primitive, ITestReport } from "../../../types";
-import { typeOf } from "../../../utils";
+import { Message } from "discord.js";
+import { IMessageEmbed, ITestReport } from "../../../types";
 import { IExpectTestBaseParams } from "../../../types";
+import { objectMatches } from "../../../utils";
 import { MessageExpectTest } from "./messageExpectTest";
 
 /**
  * @internal
  */
-export class ToReturn extends MessageExpectTest {
+export class ToEmbedMatch extends MessageExpectTest {
   constructor(params: IExpectTestBaseParams) {
-    super({ ...params, testName: "toReturn" });
+    super({ ...params, testName: "toEmbedMatch" });
   }
 
-  async action(expect: Primitive | IMessageEmbed): Promise<ITestReport> {
-    let _expect: Primitive | MessageEmbed;
-    const errorReport = this.validateExpect(expect);
-
-    if (errorReport) {
-      return errorReport;
+  async action(embed: IMessageEmbed): Promise<ITestReport> {
+    if (!embed) {
+      return this.createFailedTest("expected embed message can not be null or undefined");
     }
 
     try {
@@ -44,14 +41,8 @@ export class ToReturn extends MessageExpectTest {
       );
     }
 
-    if (typeOf(expect) === "object") {
-      _expect = this.embedMessageLikeToMessageEmbed(expect as IMessageEmbed);
-    } else {
-      _expect = expect as Primitive;
-    }
-
-    this.hasPassed = this.messagesMatches(returnedMessage, _expect);
-
+    const formattedEmbed = this.embedMessageLikeToMessageEmbed(embed);
+    this.hasPassed = objectMatches(formattedEmbed, this.getMessageByType(returnedMessage, "embed"));
     this.invertHasPassedIfIsNot();
 
     if (this.hasPassed) {
@@ -65,6 +56,6 @@ export class ToReturn extends MessageExpectTest {
       );
     }
 
-    return this.createReportForExpectAndResponse(_expect, returnedMessage);
+    return this.createFailedTest(`expected ${returnedMessage.content} to contains ${expect}`);
   }
 }

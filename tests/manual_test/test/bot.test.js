@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-const { test, expect, beforeStart } = require("../../lib");
-const { login } = require("../src/bot");
+import { test, expect, beforeStart } from "../../../lib";
+import { login } from "../src/bot";
 
 beforeStart(async () => {
   await login();
@@ -9,4 +9,10 @@ beforeStart(async () => {
 
 test("ping should return pong", () => {
   expect("ping").toReturn("pong");
+});
+
+test("embed should return an embed message", () => {
+  expect("embed").toReturn({
+    description: "test",
+  });
 });

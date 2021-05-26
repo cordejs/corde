@@ -2,7 +2,7 @@ import { Client } from "discord.js";
 import MockDiscord from "../../mocks/mockDiscord";
 import { createCordeBotWithMockedFunctions, testUtils } from "../../testHelper";
 import { MockEvents } from "../../mocks/mockEvents";
-import { ICordeBot, ITestReport } from "../../../src/types";
+import { ICordeBot, IMessageEmbed, ITestReport } from "../../../src/types";
 import { ToReturn } from "../../../src/expect/matches";
 import { buildReportMessage, diff, formatObject } from "../../../src/utils";
 import { runtime } from "../../../src/common/runtime";
@@ -185,6 +185,30 @@ describe("testing toReturn", () => {
     expect(report).toMatchSnapshot();
   });
 
+  it("should get success test due to bot returned equal messages (type embed) without inform color", async () => {
+    runtime.setConfigs({ timeOut: 100 }, true);
+    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+
+    const events = new MockEvents(cordeClient, mockDiscord);
+    mockDiscord.message.embeds.push(mockDiscord.messageEmbed);
+    events.mockOnceMessage(mockDiscord.message);
+
+    const toReturn = initTestClass(cordeClient, false);
+
+    const reportModel: ITestReport = {
+      pass: true,
+      testName: toReturn.toString(),
+    };
+
+    const expectEmbed = { ...mockDiscord.messageEmbedLike };
+    expectEmbed.color = null;
+
+    const report = await toReturn.action(expectEmbed);
+
+    expect(report).toEqual(reportModel);
+    expect(report).toMatchSnapshot();
+  });
+
   it("should get failed test due to bot returned equal messages (isNot true)", async () => {
     runtime.setConfigs({ timeOut: 100 }, true);
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
@@ -225,38 +249,6 @@ describe("testing toReturn", () => {
     };
 
     const report = await toReturn.action(mockDiscord.messageEmbedLike);
-
-    expect(report).toEqual(reportModel);
-    expect(report).toMatchSnapshot();
-  });
-
-  it("should get fail test due to bot returned different messages (both embed)", async () => {
-    runtime.setConfigs({ timeOut: 100 }, true);
-    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
-
-    mockDiscord.message.embeds.push(mockDiscord.messageEmbed);
-
-    const events = new MockEvents(cordeClient, mockDiscord);
-    events.mockOnceMessage();
-
-    const toReturn = initTestClass(cordeClient, false);
-
-    const embedReturned = toReturn.getMessageByType(mockDiscord.message, "embed");
-    const embedLike = {
-      author: "ITest",
-      fields: mockDiscord.messageEmbedLike.fields,
-    };
-
-    const embedExpect = toReturn.embedMessageLikeToMessageEmbed(embedLike);
-    const embedExpectedMinified = toReturn.getMessageByType(embedExpect, "embed");
-
-    const reportModel: ITestReport = {
-      pass: false,
-      testName: toReturn.toString(),
-      message: buildReportMessage(diff(embedReturned, embedExpectedMinified)),
-    };
-
-    const report = await toReturn.action(embedLike);
 
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();

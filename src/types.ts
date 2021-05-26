@@ -10,7 +10,6 @@ import {
   TextChannel,
 } from "discord.js";
 import { Colors, ColorsHex, RolePermission } from "./utils";
-import { EmbedFieldData } from "discord.js";
 import { Stream } from "stream";
 import { Events } from "./core/events";
 
@@ -349,6 +348,12 @@ export interface IFile {
   name: string;
 }
 
+export interface IEmbedFieldData {
+  name: string;
+  value: string;
+  inline?: boolean;
+}
+
 /**
  * Main and optional information about an embedded message.
  */
@@ -368,7 +373,7 @@ export interface IMessageEmbed {
   /**
    * fields information. An array of embed field objects
    */
-  fields?: EmbedFieldData[];
+  fields?: IEmbedFieldData[];
   /**
    * files URLs **or** information of the embed.
    */
@@ -906,6 +911,39 @@ export interface IMessageMatches<TReturn extends MayReturnMatch> {
     newValue: string | number | boolean | IMessageEmbed,
     messageIdentifier?: string | IMessageEditedIdentifier,
   ): TReturn;
+
+  /**
+   * Verify if an embed message matches with the embed message sent by the bot
+   * giving a command.
+   *
+   * @example
+   *
+   * // giving the returned embed of the command "embed"
+   *
+   *  {
+   *    color: "#0099ff",
+   *    title: "some one",
+   *    description: "Some description here"
+   *  }
+   *
+   *  // The follow test will pass because we are only cheching if the returning embed
+   *  // has the color property equals.
+   *
+   *  expect("embed").toEmbedMatch({ color: "#0099ff" }); // Test pass
+   *
+   * @param embed Embed message to check with returned embed of an command.
+   * @since 4.0
+   */
+  toEmbedMatch(embed: IMessageEmbed): TReturn;
+
+  /**
+   * Verify if the content of a message sent given a command includes,
+   * a given text value.
+   *
+   * @param expectedContent expected content to match the content of the returned message.
+   * @since 4.0
+   */
+  toMessageContentContains(expectedContent: string): TReturn;
 }
 
 /**

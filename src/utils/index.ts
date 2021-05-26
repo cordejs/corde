@@ -25,3 +25,4 @@ export * from "./utils";
 export * from "./shortPathForPlataform";
 export * from "./isInDebugMode";
 export * from "./getFiles";
+export * from "./objectContains";

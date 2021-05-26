@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { Client } = require("discord.js");
+const { Client, MessageEmbed } = require("discord.js");
 const config = require("../corde.config.js");
 
 const bot = new Client();
@@ -35,15 +35,25 @@ bot.on("message", async (message) => {
 async function handleCommands(message, command) {
   if (command === "ping") {
     await ping(message);
+  } else if (command === "embed") {
+    await embed(message);
   }
 }
 
 /**
- * @param {Message} msg
+ * @param {import("discord.js").Message} msg
  * @param {string} msgId
  */
 async function ping(msg) {
   await msg.channel.send("pong");
+}
+
+/**
+ * @param {import("discord.js").Message} msg
+ * @param {string} msgId
+ */
+async function embed(msg) {
+  await msg.channel.send(new MessageEmbed().setDescription("test").setTitle("ue"));
 }
 
 exports.login = login;
