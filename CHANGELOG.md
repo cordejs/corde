@@ -1,3 +1,16 @@
+# 4.0.5
+
+## 💡 Miscellaneous
+
+- upgrade jest-diff from 26.6.2 to 27.0.1
+- upgrade pretty-format from 26.6.2 to 27.0.1
+
+# 4.0.4
+
+## 💡 Miscellaneous
+
+- Fix tests pattern in README
+
 # 4.0.3
 
 ## 💡 Miscellaneous
