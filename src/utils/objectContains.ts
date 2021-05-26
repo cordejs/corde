@@ -1,11 +1,27 @@
+type KeyValue = {
+  [key: string]: any;
+};
+
+type PartialWithAnyValue<T> = Partial<T> & KeyValue;
+
 /**
  *
  * @param holder
  * @param sample
  * @returns
  */
-export function objectMatches(sample: unknown, holder: unknown) {
-  // Create arrays of property names
+export function objectMatches<T extends unknown>(
+  sample: PartialWithAnyValue<T> & KeyValue,
+  holder: T,
+) {
+  if (!sample && !holder) {
+    return true;
+  }
+
+  if ((!sample && holder) || (sample && !holder)) {
+    return false;
+  }
+
   const sampleProps = Object.getOwnPropertyNames(sample);
 
   for (let i = 0; i < sampleProps.length; i++) {
