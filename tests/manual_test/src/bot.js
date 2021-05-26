@@ -37,12 +37,13 @@ async function handleCommands(message, command) {
     await ping(message);
   } else if (command === "embed") {
     await embed(message);
+  } else if (command === "embedPartial") {
+    await embedPartial(message);
   }
 }
 
 /**
  * @param {import("discord.js").Message} msg
- * @param {string} msgId
  */
 async function ping(msg) {
   await msg.channel.send("pong");
@@ -50,10 +51,19 @@ async function ping(msg) {
 
 /**
  * @param {import("discord.js").Message} msg
+ */
+async function embedPartial(msg) {
+  await msg.channel.send(
+    new MessageEmbed().setDescription("test").setTitle("title").setAuthor("author"),
+  );
+}
+
+/**
+ * @param {import("discord.js").Message} msg
  * @param {string} msgId
  */
 async function embed(msg) {
-  await msg.channel.send(new MessageEmbed().setDescription("test").setTitle("ue"));
+  await msg.channel.send(new MessageEmbed().setDescription("test"));
 }
 
 exports.login = login;

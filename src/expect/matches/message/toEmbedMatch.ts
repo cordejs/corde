@@ -1,7 +1,7 @@
 import { Message } from "discord.js";
 import { IMessageEmbed, ITestReport } from "../../../types";
 import { IExpectTestBaseParams } from "../../../types";
-import { objectMatches } from "../../../utils";
+import { diff, isPartialOf } from "../../../utils";
 import { MessageExpectTest } from "./messageExpectTest";
 
 /**
@@ -41,8 +41,11 @@ export class ToEmbedMatch extends MessageExpectTest {
       );
     }
 
-    const formattedEmbed = this.embedMessageLikeToMessageEmbed(embed);
-    this.hasPassed = objectMatches(formattedEmbed, this.getMessageByType(returnedMessage, "embed"));
+    if (!returnedMessage.embeds || !returnedMessage.embeds[0]) {
+      return this.createFailedTest("returned message has no embed message");
+    }
+    const formatedReturnedEmbed = this.getMessageByType(returnedMessage, "embed");
+    this.hasPassed = isPartialOf<any>(embed, formatedReturnedEmbed);
     this.invertHasPassedIfIsNot();
 
     if (this.hasPassed) {
@@ -56,6 +59,6 @@ export class ToEmbedMatch extends MessageExpectTest {
       );
     }
 
-    return this.createFailedTest(`expected ${returnedMessage.content} to contains ${expect}`);
+    return this.createFailedTest(diff<any>(embed, formatedReturnedEmbed));
   }
 }
