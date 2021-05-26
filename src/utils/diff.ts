@@ -1,4 +1,4 @@
-import diffDefault from "jest-diff";
+import { diff as jestDiff } from "jest-diff";
 
 /**
  * Binder of `jest-diff`.
@@ -30,7 +30,7 @@ import diffDefault from "jest-diff";
  * @internal
  */
 export function diff<T>(obj1: T, obj2: T): string | null {
-  return diffDefault(obj1, obj2, {
+  return jestDiff(obj1, obj2, {
     aAnnotation: "expected",
     bAnnotation: "received",
     includeChangeCounts: true,
