@@ -115,7 +115,7 @@
     "discord.js": "^12.5.3",
     "esm": "^3.2.25",
     "fast-glob": "^3.2.5",
-    "jest-diff": "^26.6.2",
+    "jest-diff": "^27.0.1",
     "log-update": "^4.0.0",
     "ora": "^5.4.0",
     "pretty-format": "^27.0.1",
