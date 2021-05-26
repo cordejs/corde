@@ -137,7 +137,7 @@
   "bugs": {
     "url": "https://github.com/cordejs/corde/issues"
   },
-  "homepage": "https://corde.netlify.app",
+  "homepage": "http://www.cordejs.org",
   "files": [
     "lib/**",
     "schema/**",

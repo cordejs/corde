@@ -7,7 +7,7 @@ import { CordeRole } from "../structures/cordeRole";
  * Creates a new role to the guild provided in configs.
  *
  * @param roleIdentifier Basic informations about the role.
- * @see https://corde.netlify.app/docs/configurations#guildid
+ * @see http://www.cordejs.org/docs/configurations#guildid
  *
  * @throws CordeClientError if corde has not yet connect it's bot.
  * @returns A promise that return the created role.
