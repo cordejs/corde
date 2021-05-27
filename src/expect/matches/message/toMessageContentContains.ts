@@ -50,8 +50,7 @@ export class ToMessageContentContains extends MessageExpectTest {
 
     if (this.isNot) {
       return this.createReport(
-        "expected: message from bot be different from expectation\n",
-        "received: both returned and expectation are equal",
+        `expected: message '${returnedMessage.content}' from bot to not inclues '${expect}'`,
       );
     }
 

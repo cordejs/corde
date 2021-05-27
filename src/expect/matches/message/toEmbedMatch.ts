@@ -54,8 +54,8 @@ export class ToEmbedMatch extends MessageExpectTest {
 
     if (this.isNot) {
       return this.createReport(
-        "expected: message from bot be different from expectation\n",
-        "received: both returned and expectation are equal",
+        "expected: embed message from bot be do not match with expectation\n",
+        "received: both returned and expectation embed messages matches",
       );
     }
 
