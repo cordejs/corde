@@ -1,6 +1,11 @@
 import { Client } from "discord.js";
 import MockDiscord from "../../mocks/mockDiscord";
-import { createReport, initCordeClientWithChannel, testUtils } from "../../testHelper";
+import {
+  createReport,
+  initCordeClientWithChannel,
+  initDefaultClient,
+  testUtils,
+} from "../../testHelper";
 import { MockEvents } from "../../mocks/mockEvents";
 import { ICordeBot, ITestReport } from "../../../src/types";
 import { ToDeleteRole } from "../../../src/expect/matches";
@@ -189,7 +194,7 @@ describe("testing toDeleteRole function", () => {
     });
 
     it("should fail due to inexistent role", async () => {
-      const corde = initCordeClientWithChannel(mockDiscord, new Client());
+      const corde = initCordeClientWithChannel(mockDiscord, initDefaultClient());
       mockEvents = new MockEvents(corde, mockDiscord);
       mockEvents.mockOnceRoleDelete();
 

@@ -16,7 +16,12 @@ let mockDiscord = new MockDiscord();
 let mockEvents: MockEvents;
 
 function initClient() {
-  const corde = initCordeClientWithChannel(mockDiscord, new Client());
+  const corde = initCordeClientWithChannel(
+    mockDiscord,
+    new Client({
+      restSweepInterval: 0,
+    }),
+  );
   corde.findRole = jest.fn().mockReturnValue(mockDiscord.role);
   corde.fetchRole = jest.fn().mockReturnValue(mockDiscord.role);
   corde.sendTextMessage = jest.fn().mockImplementation(() => {});

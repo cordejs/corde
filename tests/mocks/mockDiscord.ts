@@ -371,7 +371,9 @@ export default class MockDiscord {
   }
 
   createMockClient() {
-    return new Client();
+    return new Client({
+      restSweepInterval: 0,
+    });
   }
 
   createMockId() {

@@ -5,12 +5,17 @@ import { ICordeBot, ITestReport } from "../../../src/types";
 import { buildReportMessage, typeOf } from "../../../src/utils";
 import MockDiscord from "../../mocks/mockDiscord";
 import { MockEvents } from "../../mocks/mockEvents";
-import { createReport, initCordeClientWithChannel, testUtils } from "../../testHelper";
+import {
+  createReport,
+  initCordeClientWithChannel,
+  initDefaultClient,
+  testUtils,
+} from "../../testHelper";
 
 let mockDiscord = new MockDiscord();
 
 function initClient() {
-  const corde = initCordeClientWithChannel(mockDiscord, new Client());
+  const corde = initCordeClientWithChannel(mockDiscord, initDefaultClient());
   corde.findRole = jest.fn().mockReturnValue(mockDiscord.role);
   corde.fetchRole = jest.fn().mockReturnValue(mockDiscord.role);
   corde.sendTextMessage = jest.fn().mockImplementation(() => {});
@@ -206,7 +211,7 @@ describe("testing ToSetRolePosition operation", () => {
   });
 
   it("should return a failed test due to failure in message sending", async () => {
-    const corde = initCordeClientWithChannel(mockDiscord, new Client());
+    const corde = initCordeClientWithChannel(mockDiscord, initDefaultClient());
     corde.getRoles = jest.fn().mockReturnValue(mockDiscord.roleManager.cache);
     corde.findRole = jest.fn().mockReturnValue(mockDiscord.role);
 
@@ -226,7 +231,7 @@ describe("testing ToSetRolePosition operation", () => {
 });
 
 function createCordeBotWithMockedFunctions(findRoleMock: any = mockDiscord.role) {
-  const corde = initCordeClientWithChannel(mockDiscord, new Client());
+  const corde = initCordeClientWithChannel(mockDiscord, initDefaultClient());
   corde.getRoles = jest.fn().mockReturnValue(mockDiscord.roleManager.cache);
   corde.findRole = jest.fn().mockReturnValue(findRoleMock);
   corde.sendTextMessage = jest.fn().mockImplementation(() => {});

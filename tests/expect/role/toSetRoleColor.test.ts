@@ -9,6 +9,7 @@ import { MockEvents } from "../../mocks/mockEvents";
 import {
   createReport,
   initCordeClientWithChannel,
+  initDefaultClient,
   removeANSIColorStyle,
   testUtils,
 } from "../../testHelper";
@@ -16,7 +17,7 @@ import {
 let mockDiscord = new MockDiscord();
 
 function initClient() {
-  const corde = initCordeClientWithChannel(mockDiscord, new Client());
+  const corde = initCordeClientWithChannel(mockDiscord, initDefaultClient());
   corde.findRole = jest.fn().mockReturnValue(mockDiscord.role);
   corde.fetchRole = jest.fn().mockReturnValue(mockDiscord.role);
   corde.sendTextMessage = jest.fn().mockImplementation(() => {});

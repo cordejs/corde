@@ -1,5 +1,5 @@
 import MockDiscord from "../../mocks/mockDiscord";
-import { initCordeClientWithChannel, testUtils } from "../../testHelper";
+import { initDefaultClient, initCordeClientWithChannel, testUtils } from "../../testHelper";
 import { Client } from "discord.js";
 import { ToRemoveReaction } from "../../../src/expect/matches";
 import { ICordeBot, ITestReport } from "../../../src/types";
@@ -24,7 +24,7 @@ describe("testing toRemoveReaction function", () => {
   }
 
   it("should fail due to invalid messageIdentifier (number)", async () => {
-    const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
+    const cordeClient = initCordeClientWithChannel(mockDiscord, initDefaultClient(), 1000);
     const toRemoveReaction = initTestClass(cordeClient, false);
     // @ts-ignore
     const report = await toRemoveReaction.action(["1"], 1);
@@ -43,7 +43,7 @@ describe("testing toRemoveReaction function", () => {
   });
 
   it("should fail due to invalid emoji (undefined)", async () => {
-    const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
+    const cordeClient = initCordeClientWithChannel(mockDiscord, initDefaultClient(), 1000);
     const toRemoveReaction = initTestClass(cordeClient, false);
     // @ts-ignore
     const report = await toRemoveReaction.action(undefined);
@@ -62,7 +62,7 @@ describe("testing toRemoveReaction function", () => {
   });
 
   it("should fail due to invalid emoji (null)", async () => {
-    const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
+    const cordeClient = initCordeClientWithChannel(mockDiscord, initDefaultClient(), 1000);
     const toRemoveReaction = initTestClass(cordeClient, false);
     // @ts-ignore
     const report = await toRemoveReaction.action(null);
@@ -81,7 +81,7 @@ describe("testing toRemoveReaction function", () => {
   });
 
   it("should fail due to invalid emoji (object)", async () => {
-    const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
+    const cordeClient = initCordeClientWithChannel(mockDiscord, initDefaultClient(), 1000);
     const toRemoveReaction = initTestClass(cordeClient, false);
     // @ts-ignore
     const report = await toRemoveReaction.action({});
@@ -100,7 +100,7 @@ describe("testing toRemoveReaction function", () => {
   });
 
   it("should return a passed test with isNot = false", async () => {
-    const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
+    const cordeClient = initCordeClientWithChannel(mockDiscord, initDefaultClient(), 1000);
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessageReactionsRemove();
 
@@ -119,7 +119,7 @@ describe("testing toRemoveReaction function", () => {
 
   it("should return a passed test with isNot = true", async () => {
     runtime.setConfigs({ timeOut: 10 }, true);
-    const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
+    const cordeClient = initCordeClientWithChannel(mockDiscord, initDefaultClient(), 1000);
     cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
     const toRemoveReaction = initTestClass(cordeClient, true);
 
@@ -135,7 +135,7 @@ describe("testing toRemoveReaction function", () => {
 
   it("should return a failed test with isNot = false", async () => {
     runtime.setConfigs({ timeOut: 10 }, true);
-    const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
+    const cordeClient = initCordeClientWithChannel(mockDiscord, initDefaultClient(), 1000);
     cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
     const toRemoveReaction = initTestClass(cordeClient, false);
 
@@ -155,7 +155,7 @@ describe("testing toRemoveReaction function", () => {
 
   it("should return a failed test with isNot = false and timeout", async () => {
     runtime.setConfigs({ timeOut: 10 });
-    const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
+    const cordeClient = initCordeClientWithChannel(mockDiscord, initDefaultClient(), 1000);
     cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessageReactionsRemoveToReject();
@@ -177,7 +177,7 @@ describe("testing toRemoveReaction function", () => {
 
   it("should return a passed test with isNot = false", async () => {
     runtime.setConfigs({ timeOut: 10 });
-    const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
+    const cordeClient = initCordeClientWithChannel(mockDiscord, initDefaultClient(), 1000);
     cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessageReactionsRemove();
@@ -195,7 +195,7 @@ describe("testing toRemoveReaction function", () => {
 
   it("should return a failed test with isNot = true and emoji object with id and other with name", async () => {
     runtime.setConfigs({ timeOut: 10 });
-    const cordeClient = initCordeClientWithChannel(mockDiscord, new Client(), 1000);
+    const cordeClient = initCordeClientWithChannel(mockDiscord, initDefaultClient(), 1000);
     cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessageReactionsRemove();
@@ -223,7 +223,7 @@ describe("testing toRemoveReaction function", () => {
   });
 
   it("should return a failed test due to failure in message sending", async () => {
-    const corde = initCordeClientWithChannel(mockDiscord, new Client());
+    const corde = initCordeClientWithChannel(mockDiscord, initDefaultClient());
     corde.getRoles = jest.fn().mockReturnValue(mockDiscord.roleManager.cache);
     corde.findRole = jest.fn().mockReturnValue(mockDiscord.role);
 

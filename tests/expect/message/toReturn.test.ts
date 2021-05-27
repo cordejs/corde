@@ -1,6 +1,6 @@
 import { Client } from "discord.js";
 import MockDiscord from "../../mocks/mockDiscord";
-import { createCordeBotWithMockedFunctions, testUtils } from "../../testHelper";
+import { createCordeBotWithMockedFunctions, initDefaultClient, testUtils } from "../../testHelper";
 import { MockEvents } from "../../mocks/mockEvents";
 import { ICordeBot, ITestReport } from "../../../src/types";
 import { ToReturn } from "../../../src/expect/matches";
@@ -24,7 +24,7 @@ describe("testing toReturn", () => {
   }
 
   it("should return a failed test due to invalid parameter (null)", async () => {
-    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, initDefaultClient());
 
     const message = buildReportMessage(
       `expected: expect value to be a primitive value (string, boolean, number) or an IMessageEmbed\n`,
@@ -45,7 +45,7 @@ describe("testing toReturn", () => {
   });
 
   it("should return a failed test due to invalid parameter (undefined)", async () => {
-    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, initDefaultClient());
 
     const message = buildReportMessage(
       `expected: expect value to be a primitive value (string, boolean, number) or an IMessageEmbed\n`,
@@ -67,7 +67,7 @@ describe("testing toReturn", () => {
 
   it("should fail due to no message was sent by the bot", async () => {
     runtime.setConfigs({ timeOut: 100 }, true);
-    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, initDefaultClient());
 
     const message = buildReportMessage(
       `expected: testing bot to send a message\n`,
@@ -89,7 +89,7 @@ describe("testing toReturn", () => {
 
   it("should get success test due to timeout but isNot = true", async () => {
     runtime.setConfigs({ timeOut: 100 }, true);
-    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, initDefaultClient());
 
     const toReturn = initTestClass(cordeClient, true);
 
@@ -105,7 +105,7 @@ describe("testing toReturn", () => {
 
   it("should get success test due to bot returned equal message", async () => {
     runtime.setConfigs({ timeOut: 100 }, true);
-    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, initDefaultClient());
 
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessage();
@@ -125,7 +125,7 @@ describe("testing toReturn", () => {
 
   it("should get success test due to bot returned equal messages (string type)", async () => {
     runtime.setConfigs({ timeOut: 100 }, true);
-    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, initDefaultClient());
 
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessage();
@@ -145,7 +145,7 @@ describe("testing toReturn", () => {
 
   it("should get success test due to bot returned equal messages (string number)", async () => {
     runtime.setConfigs({ timeOut: 100 }, true);
-    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, initDefaultClient());
     mockDiscord.message.content = "2";
 
     const events = new MockEvents(cordeClient, mockDiscord);
@@ -166,7 +166,7 @@ describe("testing toReturn", () => {
 
   it("should get success test due to bot returned equal messages (type embed)", async () => {
     runtime.setConfigs({ timeOut: 100 }, true);
-    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, initDefaultClient());
 
     const events = new MockEvents(cordeClient, mockDiscord);
     mockDiscord.message.embeds.push(mockDiscord.messageEmbed);
@@ -187,7 +187,7 @@ describe("testing toReturn", () => {
 
   it("should get failed test due to bot returned equal messages (isNot true)", async () => {
     runtime.setConfigs({ timeOut: 100 }, true);
-    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, initDefaultClient());
     mockDiscord.message.embeds.push(mockDiscord.messageEmbed);
 
     const events = new MockEvents(cordeClient, mockDiscord);
@@ -212,7 +212,7 @@ describe("testing toReturn", () => {
 
   it("should get success test due to bot returned different messages (isNot true)", async () => {
     runtime.setConfigs({ timeOut: 100 }, true);
-    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, initDefaultClient());
 
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessage();
@@ -232,7 +232,7 @@ describe("testing toReturn", () => {
 
   it("should get fail test due to bot returned different messages (both embed)", async () => {
     runtime.setConfigs({ timeOut: 100 }, true);
-    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, initDefaultClient());
 
     mockDiscord.message.embeds.push(mockDiscord.messageEmbed);
 
@@ -264,7 +264,7 @@ describe("testing toReturn", () => {
 
   it("should get fail test due to bot returned different messages (expect primitive and returned embed)", async () => {
     runtime.setConfigs({ timeOut: 100 }, true);
-    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, initDefaultClient());
 
     mockDiscord.message.embeds.push(mockDiscord.messageEmbed);
 
@@ -293,7 +293,7 @@ describe("testing toReturn", () => {
 
   it("should get fail test due to bot returned different messages (expect embed and returned primitive)", async () => {
     runtime.setConfigs({ timeOut: 100 }, true);
-    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, initDefaultClient());
 
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessage();
@@ -319,7 +319,7 @@ describe("testing toReturn", () => {
 
   it("should get fail test due to bot returned different messages both primitive values", async () => {
     runtime.setConfigs({ timeOut: 100 }, true);
-    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, initDefaultClient());
 
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessage();
@@ -343,7 +343,7 @@ describe("testing toReturn", () => {
   });
 
   it("should return a failed test due to failure in message sending", async () => {
-    const corde = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const corde = createCordeBotWithMockedFunctions(mockDiscord, initDefaultClient());
     corde.getRoles = jest.fn().mockReturnValue(mockDiscord.roleManager.cache);
     corde.findRole = jest.fn().mockReturnValue(mockDiscord.role);
 

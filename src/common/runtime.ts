@@ -1,9 +1,9 @@
 import { IConfigOptions, ICordeBot, TestFunctionType } from "../types";
 import { Config } from "./config";
-import { Client } from "discord.js";
 import { CordeBot } from "../core/cordeBot";
 import { ConfigError } from "../errors";
 import { DEFAULT_TEST_TIMEOUT } from "../consts";
+import { initDiscordClient } from "../discordClient";
 
 const Environment = {
   isUnityTest: process.env.ENV === "UNITY_TEST",
@@ -130,7 +130,7 @@ class Runtime {
       this._configs.guildId,
       this._configs.channelId,
       this._configs.botTestId,
-      new Client(),
+      initDiscordClient(),
     );
   }
 }

@@ -8,6 +8,7 @@ import { ExpectTest } from "../src/expect/matches/expectTest";
 import { IExpectTestBaseParams } from "../src/types";
 import { runtime } from "../src/common/runtime";
 import { buildReportMessage } from "../src/utils";
+import { initDiscordClient } from "../src/discordClient";
 
 export const normalTsPath = path.resolve(process.cwd(), "corde.ts");
 export const tempTsPath = path.resolve(process.cwd(), "__corde.ts");
@@ -75,11 +76,17 @@ export function createCordeBotWithMockedFunctions(
   mockDiscord: MockDiscord,
   findRoleMock: any = mockDiscord.role,
 ) {
-  const corde = initCordeClientWithChannel(mockDiscord, new Client());
+  const corde = initCordeClientWithChannel(mockDiscord, initDefaultClient());
   corde.getRoles = jest.fn().mockReturnValue(mockDiscord.roleManager.cache);
   corde.findRole = jest.fn().mockReturnValue(findRoleMock);
   corde.sendTextMessage = jest.fn().mockImplementation(() => {});
   return corde;
+}
+
+export function initDefaultClient() {
+  return new Client({
+    restSweepInterval: 0,
+  });
 }
 
 export function initCordeClientWithChannel(
@@ -107,7 +114,7 @@ export function initCordeClient(
     mockDiscord.guild.id,
     mockDiscord.channel.id,
     mockDiscord.userBotId,
-    clientInstance,
+    clientInstance ?? initDiscordClient(),
   );
 }
 

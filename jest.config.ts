@@ -19,7 +19,4 @@ module.exports = {
       tsconfig: "./tsconfig.test.json",
     },
   },
-  transform: {
-    "^.+\\.ts?$": "babel-jest",
-  },
 };

@@ -19,8 +19,9 @@ import {
 } from "discord.js";
 import { EventResume, Events } from "../../src/core/events";
 import MockDiscord from "../mocks/mockDiscord";
+import { initDefaultClient } from "../testHelper";
 
-const client = new Client();
+const client = initDefaultClient();
 const mockDiscord = new MockDiscord();
 let events: Events;
 

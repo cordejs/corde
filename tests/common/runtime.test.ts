@@ -47,7 +47,6 @@ describe("Testing runtime", () => {
       await runtime.loginBot("13");
     } catch (error) {
       expect(spy).toBeCalledTimes(1);
-      done();
     }
   });
 

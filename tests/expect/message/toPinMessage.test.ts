@@ -5,7 +5,7 @@ import { ICordeBot, ITestReport } from "../../../src/types";
 import { buildReportMessage, typeOf } from "../../../src/utils";
 import MockDiscord from "../../mocks/mockDiscord";
 import { MockEvents } from "../../mocks/mockEvents";
-import { createCordeBotWithMockedFunctions, testUtils } from "../../testHelper";
+import { createCordeBotWithMockedFunctions, initDefaultClient, testUtils } from "../../testHelper";
 
 let mockDiscord = new MockDiscord();
 
@@ -23,7 +23,7 @@ describe("testing pin message test", () => {
   }
 
   it("should return error message due to no mesageIdentifier (null)", async () => {
-    const corde = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const corde = createCordeBotWithMockedFunctions(mockDiscord, initDefaultClient());
     const toPinMessage = initTestClass(corde, false);
     const report = await toPinMessage.action(null);
 
@@ -41,7 +41,7 @@ describe("testing pin message test", () => {
   });
 
   it("should return error message due to no mesageIdentifier (undefined)", async () => {
-    const corde = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const corde = createCordeBotWithMockedFunctions(mockDiscord, initDefaultClient());
     const toPinMessage = initTestClass(corde, false);
     const report = await toPinMessage.action(undefined);
 
@@ -60,7 +60,7 @@ describe("testing pin message test", () => {
 
   it("should return a passed test due to isNot true and timeout", async () => {
     runtime.setConfigs({ timeOut: 10 }, true);
-    const corde = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const corde = createCordeBotWithMockedFunctions(mockDiscord, initDefaultClient());
     const toPinMessage = initTestClass(corde, true);
     const report = await toPinMessage.action("1233");
 
@@ -75,7 +75,7 @@ describe("testing pin message test", () => {
 
   it("should return a failed test due to isNot false and timeout", async () => {
     runtime.setConfigs({ timeOut: 10 }, true);
-    const corde = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const corde = createCordeBotWithMockedFunctions(mockDiscord, initDefaultClient());
     const toPinMessage = initTestClass(corde, false);
     const report = await toPinMessage.action("1233");
 
@@ -95,7 +95,7 @@ describe("testing pin message test", () => {
 
   it("should return a failed test due to isNot false and timeout (messageIdentifier)", async () => {
     runtime.setConfigs({ timeOut: 10 }, true);
-    const corde = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const corde = createCordeBotWithMockedFunctions(mockDiscord, initDefaultClient());
     const toPinMessage = initTestClass(corde, false);
     const report = await toPinMessage.action({ id: "1233" });
 
@@ -114,7 +114,7 @@ describe("testing pin message test", () => {
   });
 
   it("should return a passed test due to message pinned", async () => {
-    const corde = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const corde = createCordeBotWithMockedFunctions(mockDiscord, initDefaultClient());
     const toPinMessage = initTestClass(corde, false);
 
     const mockEvent = new MockEvents(corde, mockDiscord);
@@ -132,7 +132,7 @@ describe("testing pin message test", () => {
   });
 
   it("should return a failed test due to message pinned but isNot true", async () => {
-    const corde = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const corde = createCordeBotWithMockedFunctions(mockDiscord, initDefaultClient());
     const toPinMessage = initTestClass(corde, true);
 
     const mockEvent = new MockEvents(corde, mockDiscord);
@@ -155,7 +155,7 @@ describe("testing pin message test", () => {
   });
 
   it("should return a failed test due to failure in message sending", async () => {
-    const corde = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const corde = createCordeBotWithMockedFunctions(mockDiscord, initDefaultClient());
     corde.getRoles = jest.fn().mockReturnValue(mockDiscord.roleManager.cache);
     corde.findRole = jest.fn().mockReturnValue(mockDiscord.role);
 
