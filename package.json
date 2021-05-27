@@ -1,6 +1,6 @@
 {
   "name": "corde",
-  "version": "4.0.4",
+  "version": "4.0.5",
   "description": "A simple library for Discord bot tests",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -73,7 +73,7 @@
     "@types/ws": "^7.2.4",
     "@typescript-eslint/eslint-plugin": "^4.20.0",
     "@typescript-eslint/parser": "^4.20.0",
-    "babel-jest": "^26.0.1",
+    "babel-jest": "^27.0.1",
     "cli-spinners": "^2.4.0",
     "codecov": "^3.6.5",
     "dependency-cruiser": "^10.0.1",
@@ -83,10 +83,10 @@
     "eslint-config-standard": "^16.0.2",
     "eslint-import-resolver-typescript": "^2.4.0",
     "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsdoc": "^34.6.3",
+    "eslint-plugin-jsdoc": "^35.0.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.3.1",
-    "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-promise": "^5.1.0",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-strip-comments": "^2.5.2",
@@ -118,7 +118,7 @@
     "jest-diff": "^26.6.2",
     "log-update": "^4.0.0",
     "ora": "^5.4.0",
-    "pretty-format": "^26.6.2",
+    "pretty-format": "^27.0.1",
     "tslib": "^2.2.0"
   },
   "engines": {
