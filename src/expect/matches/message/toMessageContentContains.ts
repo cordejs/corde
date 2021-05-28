@@ -40,7 +40,7 @@ export class ToMessageContentContains extends MessageExpectTest {
       );
     }
 
-    returnedMessage.content.includes(expect);
+    this.hasPassed = returnedMessage.content.includes(expect);
 
     this.invertHasPassedIfIsNot();
 
@@ -54,6 +54,6 @@ export class ToMessageContentContains extends MessageExpectTest {
       );
     }
 
-    return this.createFailedTest(`expected ${returnedMessage.content} to contains ${expect}`);
+    return this.createFailedTest(`expected '${returnedMessage.content}' to contains '${expect}'`);
   }
 }
