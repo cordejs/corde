@@ -12,6 +12,10 @@ module.exports = {
   organizationName: "cordejs",
   projectName: "corde",
   themeConfig: {
+    googleAnalytics: {
+      trackingID: "G-17JDX1TL5W",
+      anonymizeIP: true,
+    },
     navbar: {
       title: "Corde",
       logo: {
