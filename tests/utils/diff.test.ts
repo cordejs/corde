@@ -6,7 +6,7 @@ import { diff } from "../../src/utils";
 
 describe("testing diff function", () => {
   test("should call jest-diff", () => {
-    const differ = jest.spyOn(jestDiff, "default");
+    const differ = jest.spyOn(jestDiff, "diff");
     diff({}, {});
     expect(differ).toBeCalled();
   });
