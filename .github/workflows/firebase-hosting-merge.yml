@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: cd ./website
-      - run: npm run install
+      - run: npm install
       - run: npm run build
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
