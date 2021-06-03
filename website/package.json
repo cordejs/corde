@@ -7,12 +7,13 @@
     "start": "docusaurus start",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
-    "deploy": "bash ./tasks/deploy.sh",
+    "deploy": "firebase deploy",
     "newVersion": "docusaurus docs:version",
     "serve": "docusaurus serve"
   },
   "dependencies": {
     "@docusaurus/core": "^2.0.0-alpha.66",
+    "@docusaurus/plugin-google-analytics": "^2.0.0-beta.0",
     "@docusaurus/plugin-sitemap": "^2.0.0-beta.0",
     "@docusaurus/preset-classic": "^2.0.0-beta.0",
     "@docusaurus/theme-live-codeblock": "^2.0.0-beta.0",
@@ -32,5 +33,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "firebase-tools": "^9.12.1"
   }
 }
