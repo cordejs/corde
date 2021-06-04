@@ -179,7 +179,7 @@ describe("testing toReturn", () => {
       testName: toReturn.toString(),
     };
 
-    const report = await toReturn.action(mockDiscord.messageEmbedLike);
+    const report = await toReturn.action(mockDiscord.messageEmbedSimple);
 
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
@@ -204,7 +204,7 @@ describe("testing toReturn", () => {
       ),
     };
 
-    const report = await toReturn.action(mockDiscord.messageEmbedLike);
+    const report = await toReturn.action(mockDiscord.messageEmbedSimple);
 
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
@@ -224,7 +224,7 @@ describe("testing toReturn", () => {
       testName: toReturn.toString(),
     };
 
-    const report = await toReturn.action(mockDiscord.messageEmbedLike);
+    const report = await toReturn.action(mockDiscord.messageEmbedSimple);
 
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
@@ -272,12 +272,12 @@ describe("testing toReturn", () => {
       pass: false,
       testName: toReturn.toString(),
       message: buildReportMessage(
-        `expected: ${formatObject(mockDiscord.messageEmbedLike)}\n`,
+        `expected: ${formatObject(mockDiscord.messageEmbedSimple)}\n`,
         `received: '${mockDiscord.message}'`,
       ),
     };
 
-    const report = await toReturn.action(mockDiscord.messageEmbedLike);
+    const report = await toReturn.action(mockDiscord.messageEmbedSimple);
 
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();

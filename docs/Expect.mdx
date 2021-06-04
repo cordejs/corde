@@ -19,7 +19,7 @@ given a command passed to it. All tests current available in this version are li
 - [`toEditMessage(value)`](/docs/expect#toeditmessagenewcontent-messageidentifier)
 - [`toPin(value)`](/docs/expect#topinstring--messageidentifier)
 - [`toRemoveReaction(value)`](/docs/expect#toremovereactionemojis-messageidentifier)
-- [`toReturn(value)`](/docs/expect#toreturnstring--boolean--number--messageembedlike)
+- [`toReturn(value)`](/docs/expect#toreturnstring--boolean--number--messageEmbedSimple)
 - [`toUnPin(value)`](/docs/expect#tounpinstring--messageidentifier)
 
 ## Role tests
@@ -147,7 +147,7 @@ All test functions are available from the property `expect`.
 type of `emojis`:
 
 ```typescript
-string[] | EmojiLike[] | (string | EmojiLike)[]
+string[] | IEmoji[] | (string | IEmoji)[]
 ```
 
 type of `messageIdentifier`:
@@ -185,7 +185,7 @@ We also will allow adding the id of a message, in this test in the future.
 type of `newContent`
 
 ```
-string | number | boolean | MessageEmbedLike
+string | number | boolean | IMessageEmbed
 ```
 
 type of `messageIdentifier`
@@ -241,7 +241,7 @@ expect(`ping ${message.id}`).toPin(message.id);
 type of `emojis`:
 
 ```typescript
-string[] | EmojiLike[] | (string | EmojiLike)[]
+string[] | IEmoji[] | (string | IEmoji)[]
 ```
 
 type of `messageIdentifier`:
@@ -270,7 +270,7 @@ expect("removeReactions").toRemoveReaction([{ id: "121512312" }], { id: messageI
 expect("removeReactions").toRemoveReaction([{ id: "121512312" }], { content: "banana" });
 ```
 
-### `toReturn(string | boolean | number | MessageEmbedLike)`
+### `toReturn(string | boolean | number | messageEmbedSimple)`
 
 Use `toReturn` to check if the bot send a primitive message value or an EmbedMessage after the call of an
 command passed in `expect`.

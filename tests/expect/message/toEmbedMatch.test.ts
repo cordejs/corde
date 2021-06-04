@@ -67,7 +67,7 @@ describe("testing toEmbedMatch", () => {
     };
 
     const report = await toEmbedMatch.action({
-      author: mockDiscord.messageEmbedLike.author,
+      author: mockDiscord.messageEmbedSimple.author,
     });
 
     expect(report).toEqual(reportModel);
@@ -87,7 +87,7 @@ describe("testing toEmbedMatch", () => {
     };
 
     const report = await toEmbedMatch.action({
-      author: mockDiscord.messageEmbedLike.author,
+      author: mockDiscord.messageEmbedSimple.author,
     });
 
     expect(report).toEqual(reportModel);

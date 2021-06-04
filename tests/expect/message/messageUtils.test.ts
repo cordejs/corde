@@ -32,7 +32,7 @@ const extension = new ExpectMessage({
 
 describe("testing extension", () => {
   describe("testing createNotFoundMessageForMessageData", () => {
-    it("should convert messageEmbedLike simples data to messageEmbed", () => {
+    it("should convert messageEmbedSimple simples data to messageEmbed", () => {
       const timeNow = Date.now();
       const messageLike: IMessageEmbed = {
         color: 3447003,
@@ -71,7 +71,7 @@ describe("testing extension", () => {
       expect(embed.image).toMatchObject<MessageEmbedImage>({ url: "./png.png" });
     });
 
-    it("should convert messageEmbedLike author string", () => {
+    it("should convert messageEmbedSimple author string", () => {
       const messageLike: IMessageEmbed = {
         author: "lucas",
       };
@@ -81,7 +81,7 @@ describe("testing extension", () => {
       });
     });
 
-    it("should convert messageEmbedLike author object", () => {
+    it("should convert messageEmbedSimple author object", () => {
       const messageLike: IMessageEmbed = {
         author: {
           name: "lucas",
@@ -91,7 +91,7 @@ describe("testing extension", () => {
       expect(embed.author).toMatchObject(messageLike.author);
     });
 
-    it("should convert messageEmbedLike files string", () => {
+    it("should convert messageEmbedSimple files string", () => {
       const messageLike: IMessageEmbed = {
         files: ["test 1"],
       };
@@ -99,7 +99,7 @@ describe("testing extension", () => {
       expect(embed.files).toMatchObject<string[]>(["test 1"]);
     });
 
-    it("should convert messageEmbedLike files object", () => {
+    it("should convert messageEmbedSimple files object", () => {
       const stream = new Stream();
       const messageLike: IMessageEmbed = {
         files: [
@@ -118,7 +118,7 @@ describe("testing extension", () => {
       ]);
     });
 
-    it("should convert messageEmbedLike files string", () => {
+    it("should convert messageEmbedSimple files string", () => {
       const fields: EmbedFieldData[] = [
         {
           name: "field 1",
@@ -132,7 +132,7 @@ describe("testing extension", () => {
       expect(embed.fields).toMatchObject<EmbedFieldData[]>(fields);
     });
 
-    it("should convert messageEmbedLike footer object", () => {
+    it("should convert messageEmbedSimple footer object", () => {
       const footer: IMessageEmbedFooter = {
         iconURL: "www.google",
         text: "footer text",
@@ -144,7 +144,7 @@ describe("testing extension", () => {
       expect(embed.footer).toMatchObject(footer);
     });
 
-    it("should convert messageEmbedLike footer string", () => {
+    it("should convert messageEmbedSimple footer string", () => {
       const footer: IMessageEmbedFooter = {
         text: "footer text",
       };
@@ -155,7 +155,7 @@ describe("testing extension", () => {
       expect(embed.footer).toMatchObject(footer);
     });
 
-    it("should convert messageEmbedLike thumbnail string", () => {
+    it("should convert messageEmbedSimple thumbnail string", () => {
       const thumbnail: MessageEmbedThumbnail = {
         url: "wwww.google",
       };

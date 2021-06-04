@@ -105,7 +105,7 @@ export default class MockDiscord {
   private _speaking!: Speaking;
   private _presence!: Presence;
   private _voiceState!: VoiceState;
-  private _messageEmbedLike: IMessageEmbed;
+  private _messageEmbedSimple: IMessageEmbed;
   private _messageWithEmbed: Message;
   private _pinnedMessage: Message;
   private _unPinnedMessage: Message;
@@ -312,8 +312,8 @@ export default class MockDiscord {
     return this._voiceState;
   }
 
-  get messageEmbedLike() {
-    return this._messageEmbedLike;
+  get messageEmbedSimple() {
+    return this._messageEmbedSimple;
   }
 
   get messageWithEmbed() {
@@ -357,7 +357,7 @@ export default class MockDiscord {
     this._isolatedMessageReaction = this.createIsolatedMockMessageReaction();
     this._messageReactionCollection = this.createMockMessageReactionCollection();
 
-    this._messageEmbedLike = this.createEmbedMessageLike();
+    this._messageEmbedSimple = this.createEmbedMessageLike();
     this._messageEmbed = this.createMockMessageEmbed();
     this._messageWithEmbed = this.createMockMessageWithEmbed();
 
@@ -617,7 +617,7 @@ export default class MockDiscord {
   }
 
   createMockMessageEmbed(customColor = ColorsHex.DARK_BLUE, customTitle = "Some title") {
-    let embed = new ToReturn(null).embedMessageInterfaceToMessageEmbed(this._messageEmbedLike);
+    let embed = new ToReturn(null).embedMessageInterfaceToMessageEmbed(this._messageEmbedSimple);
 
     if (!embed) {
       embed = new MessageEmbed();

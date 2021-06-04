@@ -244,7 +244,7 @@ describe("testing toEditMessage", () => {
       testName: toEditMessage.toString(),
     };
 
-    const report = await toEditMessage.action(mockDiscord.messageEmbedLike);
+    const report = await toEditMessage.action(mockDiscord.messageEmbedSimple);
 
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
@@ -268,7 +268,7 @@ describe("testing toEditMessage", () => {
       ),
     };
 
-    const report = await toEditMessage.action(mockDiscord.messageEmbedLike);
+    const report = await toEditMessage.action(mockDiscord.messageEmbedSimple);
 
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
@@ -288,7 +288,7 @@ describe("testing toEditMessage", () => {
       testName: toEditMessage.toString(),
     };
 
-    const report = await toEditMessage.action(mockDiscord.messageEmbedLike);
+    const report = await toEditMessage.action(mockDiscord.messageEmbedSimple);
 
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
@@ -309,7 +309,7 @@ describe("testing toEditMessage", () => {
 
     const embedInternal: IMessageEmbed = {
       author: "ITest",
-      fields: mockDiscord.messageEmbedLike.fields,
+      fields: mockDiscord.messageEmbedSimple.fields,
     };
 
     const reportModel: ITestReport = {
@@ -390,13 +390,13 @@ describe("testing toEditMessage", () => {
     const reportModel: ITestReport = {
       pass: false,
       message: buildReportMessage(
-        `expected: ${formatObject(mockDiscord.messageEmbedLike)}\n`,
+        `expected: ${formatObject(mockDiscord.messageEmbedSimple)}\n`,
         `received: '${mockDiscord.message.content}'`,
       ),
       testName: toEditMessage.toString(),
     };
 
-    const report = await toEditMessage.action(mockDiscord.messageEmbedLike);
+    const report = await toEditMessage.action(mockDiscord.messageEmbedSimple);
 
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
