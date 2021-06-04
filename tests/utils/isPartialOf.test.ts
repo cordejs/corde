@@ -1,3 +1,4 @@
+import { IMessageEmbed } from "../../src/types";
 import { isPartialOf } from "../../src/utils";
 
 describe("testing isPartialOf", () => {

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`testing toReturn should fail due to no message was sent by the bot 1`] = `
+exports[`testing toMessageContentContains should fail due to no message was sent by the bot 1`] = `
 Object {
   "message": "    
     expected: testing bot to send a message
@@ -11,7 +11,7 @@ Object {
 }
 `;
 
-exports[`testing toReturn should get fail test due to bot returned different messages both primitive values 1`] = `
+exports[`testing toMessageContentContains should get fail test due to bot returned different messages both primitive values 1`] = `
 Object {
   "message": "    
     expected 'this is the message content' to contains 'expect value'
@@ -21,28 +21,28 @@ Object {
 }
 `;
 
-exports[`testing toReturn should get success test due to bot returned a contained message 1`] = `
+exports[`testing toMessageContentContains should get success test due to bot returned a contained message 1`] = `
 Object {
   "pass": true,
   "testName": "toMessageContentContains",
 }
 `;
 
-exports[`testing toReturn should get success test due to bot returned equal message 1`] = `
+exports[`testing toMessageContentContains should get success test due to bot returned equal message 1`] = `
 Object {
   "pass": true,
   "testName": "toMessageContentContains",
 }
 `;
 
-exports[`testing toReturn should get success test due to timeout but isNot = true 1`] = `
+exports[`testing toMessageContentContains should get success test due to timeout but isNot = true 1`] = `
 Object {
   "pass": true,
   "testName": "toMessageContentContains",
 }
 `;
 
-exports[`testing toReturn should return a failed test due to failure in message sending 1`] = `
+exports[`testing toMessageContentContains should return a failed test due to failure in message sending 1`] = `
 Object {
   "message": "    
     can not send message to channel x
@@ -52,7 +52,7 @@ Object {
 }
 `;
 
-exports[`testing toReturn should return a failed test due to invalid parameter (null) 1`] = `
+exports[`testing toMessageContentContains should return a failed test due to invalid parameter (null) 1`] = `
 Object {
   "message": "    
     expected content can not be null or empty
@@ -62,7 +62,7 @@ Object {
 }
 `;
 
-exports[`testing toReturn should return a failed test due to invalid parameter (undefined) 1`] = `
+exports[`testing toMessageContentContains should return a failed test due to invalid parameter (undefined) 1`] = `
 Object {
   "message": "    
     expected content can not be null or empty

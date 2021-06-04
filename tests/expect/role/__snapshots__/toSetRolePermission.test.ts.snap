@@ -3,8 +3,8 @@
 exports[`testing toSetRolePermission operation should fail due to invalid permission value 1`] = `
 Object {
   "message": "    
-    [32m- expected  - 62[39m
-    [31m+ received  +  1[39m
+    [32m- Expected  - 62[39m
+    [31m+ Received  +  1[39m
     
     [2m  Array [[22m
     [32m-   \\"1\\",[39m

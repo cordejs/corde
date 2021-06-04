@@ -4,12 +4,12 @@ import { createCordeBotWithMockedFunctions, testUtils } from "../../testHelper";
 import { MockEvents } from "../../mocks/mockEvents";
 import { ICordeBot, ITestReport } from "../../../src/types";
 import { ToMessageContentContains } from "../../../src/expect/matches";
-import { buildReportMessage, formatObject } from "../../../src/utils";
+import { buildReportMessage } from "../../../src/utils";
 import { runtime } from "../../../src/common/runtime";
 
 let mockDiscord = new MockDiscord();
 
-describe("testing toReturn", () => {
+describe("testing toMessageContentContains", () => {
   afterEach(() => {
     mockDiscord = new MockDiscord();
   });
@@ -17,7 +17,7 @@ describe("testing toReturn", () => {
   function initTestClass(cordeBot: ICordeBot, isNot: boolean) {
     return testUtils.initTestClass(ToMessageContentContains, {
       isCascade: false,
-      command: "toReturn",
+      command: "toMessageContentContains",
       cordeBot: cordeBot,
       isNot: isNot,
     });
@@ -28,15 +28,15 @@ describe("testing toReturn", () => {
 
     const message = buildReportMessage(`expected content can not be null or empty`);
 
-    const toReturn = initTestClass(cordeClient, false);
+    const toMessageContentContains = initTestClass(cordeClient, false);
 
     const reportModel: ITestReport = {
       pass: false,
-      testName: toReturn.toString(),
+      testName: toMessageContentContains.toString(),
       message,
     };
 
-    const report = await toReturn.action(null);
+    const report = await toMessageContentContains.action(null);
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
   });
@@ -44,15 +44,15 @@ describe("testing toReturn", () => {
   it("should return a failed test due to invalid parameter (undefined)", async () => {
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
     const message = buildReportMessage(`expected content can not be null or empty`);
-    const toReturn = initTestClass(cordeClient, false);
+    const toMessageContentContains = initTestClass(cordeClient, false);
 
     const reportModel: ITestReport = {
       pass: false,
-      testName: toReturn.toString(),
+      testName: toMessageContentContains.toString(),
       message,
     };
 
-    const report = await toReturn.action(undefined);
+    const report = await toMessageContentContains.action(undefined);
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
   });
@@ -66,15 +66,15 @@ describe("testing toReturn", () => {
       `received: no message was sent`,
     );
 
-    const toReturn = initTestClass(cordeClient, false);
+    const toMessageContentContains = initTestClass(cordeClient, false);
 
     const reportModel: ITestReport = {
       pass: false,
-      testName: toReturn.toString(),
+      testName: toMessageContentContains.toString(),
       message,
     };
 
-    const report = await toReturn.action("pong");
+    const report = await toMessageContentContains.action("pong");
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
   });
@@ -83,14 +83,14 @@ describe("testing toReturn", () => {
     runtime.setConfigs({ timeOut: 100 }, true);
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
 
-    const toReturn = initTestClass(cordeClient, true);
+    const toMessageContentContains = initTestClass(cordeClient, true);
 
     const reportModel: ITestReport = {
       pass: true,
-      testName: toReturn.toString(),
+      testName: toMessageContentContains.toString(),
     };
 
-    const report = await toReturn.action("pong");
+    const report = await toMessageContentContains.action("pong");
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
   });
@@ -102,14 +102,14 @@ describe("testing toReturn", () => {
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessage();
 
-    const toReturn = initTestClass(cordeClient, false);
+    const toMessageContentContains = initTestClass(cordeClient, false);
 
     const reportModel: ITestReport = {
       pass: true,
-      testName: toReturn.toString(),
+      testName: toMessageContentContains.toString(),
     };
 
-    const report = await toReturn.action(mockDiscord.message.content);
+    const report = await toMessageContentContains.action(mockDiscord.message.content);
 
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
@@ -123,14 +123,14 @@ describe("testing toReturn", () => {
     mockDiscord.message.content = "message to contain";
     events.mockOnceMessage();
 
-    const toReturn = initTestClass(cordeClient, false);
+    const toMessageContentContains = initTestClass(cordeClient, false);
 
     const reportModel: ITestReport = {
       pass: true,
-      testName: toReturn.toString(),
+      testName: toMessageContentContains.toString(),
     };
 
-    const report = await toReturn.action("message");
+    const report = await toMessageContentContains.action("message");
 
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
@@ -143,18 +143,18 @@ describe("testing toReturn", () => {
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessage();
 
-    const toReturn = initTestClass(cordeClient, false);
+    const toMessageContentContains = initTestClass(cordeClient, false);
     const expectValue = "expect value";
 
     const reportModel: ITestReport = {
       pass: false,
-      testName: toReturn.toString(),
+      testName: toMessageContentContains.toString(),
       message: buildReportMessage(
         `expected '${mockDiscord.message.content}' to contains '${expectValue}'`,
       ),
     };
 
-    const report = await toReturn.action(expectValue);
+    const report = await toMessageContentContains.action(expectValue);
 
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
@@ -170,13 +170,13 @@ describe("testing toReturn", () => {
       .fn()
       .mockImplementation(() => Promise.reject(new Error(erroMessage)));
 
-    const toReturn = initTestClass(corde, false);
-    const report = await toReturn.action("abc");
+    const toMessageContentContains = initTestClass(corde, false);
+    const report = await toMessageContentContains.action("abc");
 
     const reportModel: ITestReport = {
       pass: false,
       message: buildReportMessage(erroMessage),
-      testName: toReturn.toString(),
+      testName: toMessageContentContains.toString(),
     };
 
     expect(report).toEqual(reportModel);

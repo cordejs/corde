@@ -25,6 +25,7 @@ import {
 } from "discord.js";
 import { ToReturn } from "../../src/expect/matches";
 import { IMessageEmbed } from "../../src/types";
+import { Colors, ColorsHex } from "../../src/utils";
 
 /**
  * @private
@@ -586,11 +587,14 @@ export default class MockDiscord {
   createMockMessageEmbedCollection() {
     const collection = new Collection<string, MessageEmbed>();
     collection.set("123352640350652502", this._messageEmbed);
-    collection.set("329762565356654501", this.createMockMessageEmbed("#0088ff", "test"));
+    collection.set("329762565356654501", this.createMockMessageEmbed(ColorsHex.DARK_BLUE, "test"));
     return collection;
   }
 
-  createEmbedMessageLike(customColor = "#0099ff", customTitle = "Some title"): IMessageEmbed {
+  createEmbedMessageLike(
+    customColor = ColorsHex.DARK_BLUE,
+    customTitle = "Some title",
+  ): IMessageEmbed {
     return {
       color: customColor,
       title: customTitle,
@@ -602,8 +606,8 @@ export default class MockDiscord {
       },
       description: "Some description here",
       fields: [
-        { name: "Regular field title", value: "Some value here" },
-        { name: "\u200B", value: "\u200B" },
+        { name: "Regular field title", value: "Some value here", inline: false },
+        { name: "\u200B", value: "\u200B", inline: false },
         { name: "Inline field title", value: "Some value here", inline: true },
         { name: "Inline field title", value: "Some value here", inline: true },
       ],
@@ -612,15 +616,8 @@ export default class MockDiscord {
     };
   }
 
-  createMockMessageEmbed(customColor = "#0099ff", customTitle = "Some title") {
-    let embed = new ToReturn({
-      command: "",
-      cordeBot: null,
-      channelId: "123123",
-      isNot: false,
-      timeout: 100,
-      isCascade: false,
-    }).embedMessageLikeToMessageEmbed(this._messageEmbedLike);
+  createMockMessageEmbed(customColor = ColorsHex.DARK_BLUE, customTitle = "Some title") {
+    let embed = new ToReturn(null).embedMessageInterfaceToMessageEmbed(this._messageEmbedLike);
 
     if (!embed) {
       embed = new MessageEmbed();

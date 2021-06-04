@@ -1,7 +1,7 @@
-import { Message } from "discord.js";
+import { Message, MessageEmbed } from "discord.js";
 import { IMessageEmbed, ITestReport } from "../../../types";
 import { IExpectTestBaseParams } from "../../../types";
-import { diff, isPartialOf } from "../../../utils";
+import { diff, isPartialOf, keysOf, pick, typeOf } from "../../../utils";
 import { MessageExpectTest } from "./messageExpectTest";
 
 /**
@@ -13,8 +13,11 @@ export class ToEmbedMatch extends MessageExpectTest {
   }
 
   async action(embed: IMessageEmbed): Promise<ITestReport> {
-    if (!embed) {
-      return this.createFailedTest("expected embed message can not be null or undefined");
+    if (typeOf(embed) !== "object") {
+      return this.createFailedTest(
+        "expected: parameter to be an object of type IMesageEmbed \n",
+        `received: ${typeOf(embed)}`,
+      );
     }
 
     try {
@@ -44,8 +47,14 @@ export class ToEmbedMatch extends MessageExpectTest {
     if (!returnedMessage.embeds || !returnedMessage.embeds[0]) {
       return this.createFailedTest("returned message has no embed message");
     }
-    const formatedReturnedEmbed = this.getMessageByType(returnedMessage, "embed");
-    this.hasPassed = isPartialOf<any>(embed, formatedReturnedEmbed);
+
+    const formatedReturnedEmbed = this.messageEmbedToMessageEmbedInterface(embed as MessageEmbed);
+    const embedInterface = this.messageEmbedToMessageEmbedInterface(
+      formatedReturnedEmbed as MessageEmbed,
+    );
+
+    this.hasPassed = isPartialOf<any>(embed, embedInterface);
+
     this.invertHasPassedIfIsNot();
 
     if (this.hasPassed) {
@@ -54,11 +63,12 @@ export class ToEmbedMatch extends MessageExpectTest {
 
     if (this.isNot) {
       return this.createReport(
-        "expected: embed message from bot be do not match with expectation\n",
+        "expected: embed message from bot do not match with expectation\n",
         "received: both returned and expectation embed messages matches",
       );
     }
 
-    return this.createFailedTest(diff<any>(embed, formatedReturnedEmbed));
+    const partialReturned = pick(embedInterface, ...keysOf<IMessageEmbed>(embed));
+    return this.createFailedTest(diff<any>(embed, partialReturned));
   }
 }

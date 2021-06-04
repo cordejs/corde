@@ -16,11 +16,11 @@ Object {
   "message": "    
     expected: Object {
       \\"author\\": Object {
-        \\"icon_url\\": \\"https://i.imgur.com/wSTFkRM.png\\",
+        \\"iconURL\\": \\"https://i.imgur.com/wSTFkRM.png\\",
         \\"name\\": \\"Some name\\",
         \\"url\\": \\"https://discord.js.org\\",
       },
-      \\"color\\": 39423,
+      \\"color\\": 2123412,
       \\"description\\": \\"Some description here\\",
       \\"fields\\": Array [
         Object {
@@ -44,14 +44,11 @@ Object {
           \\"value\\": \\"Some value here\\",
         },
       ],
-      \\"footer\\": null,
-      \\"image\\": null,
-      \\"thumbnail\\": Object {
-        \\"url\\": \\"https://i.imgur.com/wSTFkRM.png\\",
-      },
-      \\"timestamp\\": null,
+      \\"files\\": Array [
+        \\"https://i.imgur.com/wSTFkRM.png\\",
+      ],
+      \\"thumbnailUrl\\": \\"https://i.imgur.com/wSTFkRM.png\\",
       \\"title\\": \\"Some title\\",
-      \\"type\\": \\"rich\\",
       \\"url\\": \\"https://discord.js.org/\\",
     }
     received: 'this is the message content'
@@ -67,11 +64,11 @@ Object {
     expected: 'expect value'
     received: Object {
       \\"author\\": Object {
-        \\"icon_url\\": \\"https://i.imgur.com/wSTFkRM.png\\",
+        \\"iconURL\\": \\"https://i.imgur.com/wSTFkRM.png\\",
         \\"name\\": \\"Some name\\",
         \\"url\\": \\"https://discord.js.org\\",
       },
-      \\"color\\": 39423,
+      \\"color\\": 2123412,
       \\"description\\": \\"Some description here\\",
       \\"fields\\": Array [
         Object {
@@ -95,14 +92,11 @@ Object {
           \\"value\\": \\"Some value here\\",
         },
       ],
-      \\"footer\\": null,
-      \\"image\\": null,
-      \\"thumbnail\\": Object {
-        \\"url\\": \\"https://i.imgur.com/wSTFkRM.png\\",
-      },
-      \\"timestamp\\": null,
+      \\"files\\": Array [
+        \\"https://i.imgur.com/wSTFkRM.png\\",
+      ],
+      \\"thumbnailUrl\\": \\"https://i.imgur.com/wSTFkRM.png\\",
       \\"title\\": \\"Some title\\",
-      \\"type\\": \\"rich\\",
       \\"url\\": \\"https://discord.js.org/\\",
     }
 ",
@@ -162,13 +156,6 @@ Object {
 `;
 
 exports[`testing toReturn should get success test due to bot returned equal messages (type embed) 1`] = `
-Object {
-  "pass": true,
-  "testName": "toReturn",
-}
-`;
-
-exports[`testing toReturn should get success test due to bot returned equal messages (type embed) without inform color 1`] = `
 Object {
   "pass": true,
   "testName": "toReturn",

@@ -345,7 +345,7 @@ export interface IFile {
   /**
    * Name of the file
    */
-  name: string;
+  name?: string | null;
 }
 
 export interface IEmbedFieldData {

@@ -1,7 +1,7 @@
 import { Client } from "discord.js";
 import MockDiscord from "../../mocks/mockDiscord";
 import { createCordeBotWithMockedFunctions, testUtils } from "../../testHelper";
-import { ICordeBot, ITestReport } from "../../../src/types";
+import { ICordeBot, IMessageEmbed, ITestReport } from "../../../src/types";
 import { ToEditMessage } from "../../../src/expect/matches";
 import { buildReportMessage, diff, formatObject } from "../../../src/utils";
 import { runtime } from "../../../src/common/runtime";
@@ -303,22 +303,22 @@ describe("testing toEditMessage", () => {
 
     const toEditMessage = initTestClass(cordeClient, "ping", false);
 
-    const embedReturned = toEditMessage.getMessageByType(mockDiscord.messageWithEmbed, "embed");
-    const embedLike = {
+    const embedReturned = toEditMessage.messageEmbedToMessageEmbedInterface(
+      mockDiscord.messageWithEmbed.embeds[0],
+    );
+
+    const embedInternal: IMessageEmbed = {
       author: "ITest",
       fields: mockDiscord.messageEmbedLike.fields,
     };
 
-    const embedExpect = toEditMessage.embedMessageLikeToMessageEmbed(embedLike);
-    const embedExpectedMinified = toEditMessage.getMessageByType(embedExpect, "embed");
-
     const reportModel: ITestReport = {
       pass: false,
       testName: toEditMessage.toString(),
-      message: buildReportMessage(diff(embedReturned, embedExpectedMinified)),
+      message: buildReportMessage(diff(embedReturned, embedInternal)),
     };
 
-    const report = await toEditMessage.action(embedLike);
+    const report = await toEditMessage.action(embedInternal);
 
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
@@ -384,16 +384,14 @@ describe("testing toEditMessage", () => {
 
     const toEditMessage = initTestClass(cordeClient, "ping", false);
 
-    const embedExpect = toEditMessage.embedMessageLikeToMessageEmbed(mockDiscord.messageEmbedLike);
-
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessageContentOrEmbedChange();
 
     const reportModel: ITestReport = {
       pass: false,
       message: buildReportMessage(
-        `expected: ${formatObject(embedExpect)}\n`,
-        `received: '${mockDiscord.message}'`,
+        `expected: ${formatObject(mockDiscord.messageEmbedLike)}\n`,
+        `received: '${mockDiscord.message.content}'`,
       ),
       testName: toEditMessage.toString(),
     };

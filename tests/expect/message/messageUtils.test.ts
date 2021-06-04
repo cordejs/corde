@@ -1,4 +1,4 @@
-import { EmbedFieldData, MessageEmbedImage, MessageEmbedThumbnail } from "discord.js";
+import { EmbedFieldData, MessageEmbed, MessageEmbedImage, MessageEmbedThumbnail } from "discord.js";
 import { Stream } from "stream";
 import {
   IFile,
@@ -10,6 +10,7 @@ import {
 } from "../../../src/types";
 
 import { MessageExpectTest } from "../../../src/expect/matches/message/messageExpectTest";
+import { Colors, ColorsHex } from "../../../src/utils";
 
 class ExpectMessage extends MessageExpectTest {
   action(..._: any[]): Promise<ITestReport> {
@@ -47,22 +48,22 @@ describe("testing extension", () => {
         timestamp: timeNow,
       };
 
-      const embed = extension.embedMessageLikeToMessageEmbed(messageLike);
+      const embed = extension.embedMessageInterfaceToMessageEmbed(messageLike);
       expect(embed).toMatchObject(messageLike);
     });
 
     it("should return empty message when pass null", () => {
-      const embed = extension.embedMessageLikeToMessageEmbed(null);
+      const embed = extension.embedMessageInterfaceToMessageEmbed(null);
       expect(embed).toBeTruthy();
     });
 
     it("should convert image(string)", () => {
-      const embed = extension.embedMessageLikeToMessageEmbed({ image: "./png.png" });
+      const embed = extension.embedMessageInterfaceToMessageEmbed({ image: "./png.png" });
       expect(embed.image).toMatchObject<MessageEmbedImage>({ url: "./png.png" });
     });
 
     it("should convert image(string)", () => {
-      const embed = extension.embedMessageLikeToMessageEmbed({
+      const embed = extension.embedMessageInterfaceToMessageEmbed({
         image: {
           url: "./png.png",
         },
@@ -74,7 +75,7 @@ describe("testing extension", () => {
       const messageLike: IMessageEmbed = {
         author: "lucas",
       };
-      const embed = extension.embedMessageLikeToMessageEmbed(messageLike);
+      const embed = extension.embedMessageInterfaceToMessageEmbed(messageLike);
       expect(embed.author).toMatchObject<IMessageEmbedAuthor>({
         name: "lucas",
       });
@@ -86,7 +87,7 @@ describe("testing extension", () => {
           name: "lucas",
         },
       };
-      const embed = extension.embedMessageLikeToMessageEmbed(messageLike);
+      const embed = extension.embedMessageInterfaceToMessageEmbed(messageLike);
       expect(embed.author).toMatchObject(messageLike.author);
     });
 
@@ -94,7 +95,7 @@ describe("testing extension", () => {
       const messageLike: IMessageEmbed = {
         files: ["test 1"],
       };
-      const embed = extension.embedMessageLikeToMessageEmbed(messageLike);
+      const embed = extension.embedMessageInterfaceToMessageEmbed(messageLike);
       expect(embed.files).toMatchObject<string[]>(["test 1"]);
     });
 
@@ -108,7 +109,7 @@ describe("testing extension", () => {
           },
         ],
       };
-      const embed = extension.embedMessageLikeToMessageEmbed(messageLike);
+      const embed = extension.embedMessageInterfaceToMessageEmbed(messageLike);
       expect(embed.files).toMatchObject<IFile[]>([
         {
           name: "file 1",
@@ -127,7 +128,7 @@ describe("testing extension", () => {
       const messageLike: IMessageEmbed = {
         fields,
       };
-      const embed = extension.embedMessageLikeToMessageEmbed(messageLike);
+      const embed = extension.embedMessageInterfaceToMessageEmbed(messageLike);
       expect(embed.fields).toMatchObject<EmbedFieldData[]>(fields);
     });
 
@@ -139,7 +140,7 @@ describe("testing extension", () => {
       const messageLike: IMessageEmbed = {
         footer,
       };
-      const embed = extension.embedMessageLikeToMessageEmbed(messageLike);
+      const embed = extension.embedMessageInterfaceToMessageEmbed(messageLike);
       expect(embed.footer).toMatchObject(footer);
     });
 
@@ -150,7 +151,7 @@ describe("testing extension", () => {
       const messageLike: IMessageEmbed = {
         footer: "footer text",
       };
-      const embed = extension.embedMessageLikeToMessageEmbed(messageLike);
+      const embed = extension.embedMessageInterfaceToMessageEmbed(messageLike);
       expect(embed.footer).toMatchObject(footer);
     });
 
@@ -161,14 +162,14 @@ describe("testing extension", () => {
       const messageLike: IMessageEmbed = {
         thumbnailUrl: "wwww.google",
       };
-      const embed = extension.embedMessageLikeToMessageEmbed(messageLike);
+      const embed = extension.embedMessageInterfaceToMessageEmbed(messageLike);
       expect(embed.thumbnail).toMatchObject(thumbnail);
     });
   });
 
   describe("testing getMessageByType", () => {
     it("should get message with image", () => {
-      const messageEmbed = extension.embedMessageLikeToMessageEmbed({
+      const messageEmbed = extension.embedMessageInterfaceToMessageEmbed({
         image: {
           url: "www.google.com",
         },
@@ -199,6 +200,115 @@ describe("testing extension", () => {
 
     it("should return '' for no object with no id or content", () => {
       expect(extension.humanizeMessageIdentifierObject({})).toEqual("");
+    });
+  });
+
+  describe("testing messageEmbedToMessageEmbedInterface", () => {
+    let embed: MessageEmbed;
+    beforeEach(() => {
+      embed = new MessageEmbed();
+    });
+
+    it("should return empty object", () => {
+      const msg = extension.messageEmbedToMessageEmbedInterface(null);
+      expect(msg).toEqual({});
+    });
+
+    it("should set color", () => {
+      embed.setColor(Colors.DARK_AQUA);
+      const msg = extension.messageEmbedToMessageEmbedInterface(embed);
+      expect(msg).toEqual<IMessageEmbed>({ color: ColorsHex.DARK_AQUA });
+    });
+
+    it("should set author object", () => {
+      const author: IMessageEmbedAuthor = {
+        name: "cordebot",
+        iconURL: "www.google.com?icon",
+        url: "www.google.com?url",
+      };
+      embed.setAuthor(author.name, author.iconURL, author.url);
+      const msg = extension.messageEmbedToMessageEmbedInterface(embed);
+      expect(msg).toEqual<IMessageEmbed>({
+        author,
+      });
+    });
+
+    it("should set author name string", () => {
+      embed.setAuthor("bot");
+      const msg = extension.messageEmbedToMessageEmbedInterface(embed);
+      expect(msg).toEqual<IMessageEmbed>({
+        author: "bot",
+      });
+    });
+
+    it("should set description", () => {
+      embed.setDescription("description");
+      const msg = extension.messageEmbedToMessageEmbedInterface(embed);
+      expect(msg).toEqual<IMessageEmbed>({
+        description: "description",
+      });
+    });
+
+    const footer: IMessageEmbedFooter = {
+      iconURL: "www.google.com",
+      text: "test footer",
+    };
+
+    it("should set footer object", () => {
+      embed.setFooter(footer.text, footer.iconURL);
+      const msg = extension.messageEmbedToMessageEmbedInterface(embed);
+      expect(msg).toEqual<IMessageEmbed>({
+        footer,
+      });
+    });
+
+    it("should set footer string", () => {
+      embed.setFooter(footer.text);
+      const msg = extension.messageEmbedToMessageEmbedInterface(embed);
+      expect(msg).toEqual<IMessageEmbed>({
+        footer: footer.text,
+      });
+    });
+
+    it("should set image", () => {
+      embed.setImage("wwww");
+      const msg = extension.messageEmbedToMessageEmbedInterface(embed);
+      expect(msg).toEqual<IMessageEmbed>({
+        image: "wwww",
+      });
+    });
+
+    it("should set thumbnail", () => {
+      embed.setThumbnail("wwww");
+      const msg = extension.messageEmbedToMessageEmbedInterface(embed);
+      expect(msg).toEqual<IMessageEmbed>({
+        thumbnailUrl: "wwww",
+      });
+    });
+
+    it("should set timestamp", () => {
+      const date = new Date();
+      embed.setTimestamp(date);
+      const msg = extension.messageEmbedToMessageEmbedInterface(embed);
+      expect(msg).toEqual<IMessageEmbed>({
+        timestamp: date.getTime(),
+      });
+    });
+
+    it("should set title", () => {
+      embed.setTitle("title");
+      const msg = extension.messageEmbedToMessageEmbedInterface(embed);
+      expect(msg).toEqual<IMessageEmbed>({
+        title: "title",
+      });
+    });
+
+    it("should set url", () => {
+      embed.setURL("www");
+      const msg = extension.messageEmbedToMessageEmbedInterface(embed);
+      expect(msg).toEqual<IMessageEmbed>({
+        url: "www",
+      });
     });
   });
 });

@@ -185,30 +185,6 @@ describe("testing toReturn", () => {
     expect(report).toMatchSnapshot();
   });
 
-  it("should get success test due to bot returned equal messages (type embed) without inform color", async () => {
-    runtime.setConfigs({ timeOut: 100 }, true);
-    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
-
-    const events = new MockEvents(cordeClient, mockDiscord);
-    mockDiscord.message.embeds.push(mockDiscord.messageEmbed);
-    events.mockOnceMessage(mockDiscord.message);
-
-    const toReturn = initTestClass(cordeClient, false);
-
-    const reportModel: ITestReport = {
-      pass: true,
-      testName: toReturn.toString(),
-    };
-
-    const expectEmbed = { ...mockDiscord.messageEmbedLike };
-    expectEmbed.color = null;
-
-    const report = await toReturn.action(expectEmbed);
-
-    expect(report).toEqual(reportModel);
-    expect(report).toMatchSnapshot();
-  });
-
   it("should get failed test due to bot returned equal messages (isNot true)", async () => {
     runtime.setConfigs({ timeOut: 100 }, true);
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
@@ -292,13 +268,11 @@ describe("testing toReturn", () => {
 
     const toReturn = initTestClass(cordeClient, false);
 
-    const embedExpect = toReturn.embedMessageLikeToMessageEmbed(mockDiscord.messageEmbedLike);
-
     const reportModel: ITestReport = {
       pass: false,
       testName: toReturn.toString(),
       message: buildReportMessage(
-        `expected: ${formatObject(embedExpect)}\n`,
+        `expected: ${formatObject(mockDiscord.messageEmbedLike)}\n`,
         `received: '${mockDiscord.message}'`,
       ),
     };

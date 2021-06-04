@@ -26,3 +26,4 @@ export * from "./shortPathForPlataform";
 export * from "./isInDebugMode";
 export * from "./getFiles";
 export * from "./isPartialOf";
+export * from "./keysOf";
