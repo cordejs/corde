@@ -193,7 +193,7 @@ export abstract class MessageExpectTest extends ExpectTest {
       });
     }
 
-    if (message.files && message.fields.length) {
+    if (message.files && message.files.length) {
       embedLike.files = [];
       message.files.forEach((file) => {
         if (file instanceof MessageAttachment) {

@@ -1,4 +1,4 @@
-import { Message, MessageEmbed } from "discord.js";
+import { Message } from "discord.js";
 import { IMessageEmbed, ITestReport } from "../../../types";
 import { IExpectTestBaseParams } from "../../../types";
 import { diff, isPartialOf, keysOf, pick, typeOf } from "../../../utils";
@@ -48,12 +48,11 @@ export class ToEmbedMatch extends MessageExpectTest {
       return this.createFailedTest("returned message has no embed message");
     }
 
-    const formatedReturnedEmbed = this.messageEmbedToMessageEmbedInterface(embed as MessageEmbed);
-    const embedInterface = this.messageEmbedToMessageEmbedInterface(
-      formatedReturnedEmbed as MessageEmbed,
+    const formatedReturnedEmbed = this.messageEmbedToMessageEmbedInterface(
+      returnedMessage.embeds[0],
     );
 
-    this.hasPassed = isPartialOf<any>(embed, embedInterface);
+    this.hasPassed = isPartialOf<any>(embed, formatedReturnedEmbed);
 
     this.invertHasPassedIfIsNot();
 
@@ -68,7 +67,7 @@ export class ToEmbedMatch extends MessageExpectTest {
       );
     }
 
-    const partialReturned = pick(embedInterface, ...keysOf<IMessageEmbed>(embed));
+    const partialReturned = pick(formatedReturnedEmbed, ...keysOf<IMessageEmbed>(embed));
     return this.createFailedTest(diff<any>(embed, partialReturned));
   }
 }

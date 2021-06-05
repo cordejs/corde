@@ -93,4 +93,90 @@ describe("testing toEmbedMatch", () => {
     expect(report).toEqual(reportModel);
     expect(report).toMatchSnapshot();
   });
+
+  interface TestOption {
+    only?: boolean;
+    isNot?: boolean;
+    pass?: boolean;
+  }
+
+  describe("testing each property of messageEmbed", () => {
+    const simpleEmbed = mockDiscord.messageEmbedSimple;
+    function testProperty(testName: string, messageEmbed: IMessageEmbed, options?: TestOption) {
+      const itFn = options?.only ? it.only : it;
+
+      itFn(testName, async () => {
+        const toEmbedMatch = mockEmbedMessageAndInitClass(options?.isNot);
+        const reportModel: ITestReport = {
+          pass: options?.pass ?? true,
+          testName: toEmbedMatch.toString(),
+        };
+
+        const report = await toEmbedMatch.action(messageEmbed);
+
+        expect(report).toEqual(reportModel);
+        expect(report).toMatchSnapshot();
+      });
+    }
+
+    testProperty("should get passed due to title match", {
+      title: simpleEmbed.title,
+    });
+
+    testProperty(
+      "should get passed due to title not match (isnot true)",
+      {
+        title: "",
+      },
+      {
+        isNot: true,
+      },
+    );
+
+    testProperty("should get passed due to color not match", {
+      color: simpleEmbed.color,
+    });
+
+    testProperty(
+      "should get passed due to color not match (isNot true)",
+      {
+        color: "",
+      },
+      {
+        isNot: true,
+      },
+    );
+
+    testProperty("should get passed due to description match", {
+      description: simpleEmbed.description,
+    });
+
+    testProperty("should get passed due to fields match", {
+      fields: simpleEmbed.fields,
+    });
+
+    testProperty("should get passed due to files match", {
+      files: simpleEmbed.files,
+    });
+
+    testProperty("should get passed due to footer match", {
+      footer: simpleEmbed.footer,
+    });
+
+    testProperty("should get passed due to image match", {
+      image: simpleEmbed.image,
+    });
+
+    testProperty("should get passed due to thumbnailUrl match", {
+      thumbnailUrl: simpleEmbed.thumbnailUrl,
+    });
+
+    testProperty("should get passed due to timestamp match", {
+      timestamp: simpleEmbed.timestamp,
+    });
+
+    testProperty("should get passed due to url match", {
+      url: simpleEmbed.url,
+    });
+  });
 });
