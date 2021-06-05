@@ -1,4 +1,10 @@
-import { EmbedFieldData, MessageEmbed, MessageEmbedImage, MessageEmbedThumbnail } from "discord.js";
+import {
+  EmbedFieldData,
+  MessageAttachment,
+  MessageEmbed,
+  MessageEmbedImage,
+  MessageEmbedThumbnail,
+} from "discord.js";
 import { Stream } from "stream";
 import {
   IFile,
@@ -11,6 +17,7 @@ import {
 
 import { MessageExpectTest } from "../../../src/expect/matches/message/messageExpectTest";
 import { Colors, ColorsHex } from "../../../src/utils";
+import MockDiscord from "../../mocks/mockDiscord";
 
 class ExpectMessage extends MessageExpectTest {
   action(..._: any[]): Promise<ITestReport> {
@@ -310,5 +317,61 @@ describe("testing extension", () => {
         url: "www",
       });
     });
+
+    it("should set files", () => {
+      embed.files.push(new MessageAttachment("www", "test"));
+      const msg = extension.messageEmbedToMessageEmbedInterface(embed);
+      expect(msg).toEqual<IMessageEmbed>({
+        files: [
+          {
+            attachment: "www",
+            name: "test",
+          },
+        ],
+      });
+    });
+
+    it("should set image", () => {
+      embed.image = {
+        url: "www",
+        height: 800,
+        width: 600,
+        proxyURL: "ww",
+      };
+      const msg = extension.messageEmbedToMessageEmbedInterface(embed);
+      expect(msg).toEqual<IMessageEmbed>({
+        image: {
+          url: "www",
+          height: 800,
+          width: 600,
+        },
+      });
+    });
+  });
+
+  describe("testing createReportForExpectAndResponse", () => {
+    it("should return a passed test for hasPassed true", () => {
+      jest.spyOn(extension, "isMessagesEquals").mockReturnValue(true);
+      const report = extension.createReportForExpectAndResponse(null, null);
+      expect(report.pass).toBeTruthy();
+    });
+  });
+
+  it("should return null due to no embed in message", () => {
+    const mockDiscord = new MockDiscord();
+    const msg = extension.getMessageByType(mockDiscord.message, "embed");
+    expect(msg).toBeFalsy();
+  });
+
+  it("should return message content", () => {
+    const mockDiscord = new MockDiscord();
+    const msg = extension.getMessageByType(mockDiscord.message, "text");
+    expect(msg).toEqual(mockDiscord.message.content);
+  });
+
+  it("should return own message", () => {
+    const mockDiscord = new MockDiscord();
+    const msg = extension.getMessageByType(mockDiscord.messageEmbed, "text");
+    expect(msg).toEqual(mockDiscord.messageEmbed);
   });
 });

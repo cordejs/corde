@@ -1,10 +1,4 @@
-import {
-  EmbedFieldData,
-  Message,
-  MessageAttachment,
-  MessageEmbed,
-  PartialMessage,
-} from "discord.js";
+import { EmbedFieldData, Message, MessageAttachment, MessageEmbed } from "discord.js";
 import {
   IMessageEditedIdentifier,
   IMessageEmbed,
@@ -32,13 +26,6 @@ export abstract class MessageExpectTest extends ExpectTest {
 
     if (this.hasPassed) {
       return this.createPassTest();
-    }
-
-    if (this.isNot) {
-      return this.createReport(
-        "expected: message from bot be different from expectation\n",
-        "received: both returned and expectation are equal",
-      );
     }
 
     let embedReturned: IMessageEmbed | undefined;
@@ -118,7 +105,7 @@ export abstract class MessageExpectTest extends ExpectTest {
    *  }
    *  ```
    */
-  getMessageByType(answer: Message | MessageEmbed | PartialMessage, type: MessageType) {
+  getMessageByType(answer: Message | MessageEmbed, type: MessageType) {
     if (type === "embed") {
       const embed = answer instanceof Message ? answer.embeds[0] : answer;
       if (!embed) {
@@ -126,9 +113,12 @@ export abstract class MessageExpectTest extends ExpectTest {
       }
 
       return this.messageEmbedToMessageEmbedInterface(embed as MessageEmbed);
-    } else {
-      return answer;
     }
+
+    if (answer instanceof Message) {
+      return answer.content;
+    }
+    return answer;
   }
 
   humanizeMessageIdentifierObject(msgIdentifier: IMessageIdentifier | IMessageEditedIdentifier) {
