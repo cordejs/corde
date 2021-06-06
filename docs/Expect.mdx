@@ -51,7 +51,7 @@ Expect is a function that receives a command as an argument. The same argument t
 Discord to invoke some action from your bot. As there is a [prefix](/docs/configurations#botprefix) witch can
 be passed in the config file, there is no need to pass that prefix in the `expect` function.
 
-The expect function receives by default a string, but it can the value can be of any type. This type will be resolved
+The expected function receives by default a string, but it can the value can be of any type. This type will be resolved
 for a string value that will be used as the command.
 
 I.E:
@@ -79,7 +79,7 @@ This function returns several other functions to define what Corde should check 
 expect("ping", "831288248180408371");
 ```
 
-This expect will send the command `ping` in channel `831288248180408371`.
+This expects will send the command `ping` in channel `831288248180408371`.
 
 :::note
 If for some reason you what to pass the bot prefix in `expect`, do not use the config variable [prefix](/docs/configuration#botprefix).
@@ -158,8 +158,8 @@ group("not", () => {
 
 ### `toHaveResult(expectReport)`
 
-Use `toHaveResult` if you want to check if a command did many operations.
-This function make use of reports created by all tests functions that are called from **expect** as a property.
+Use `toHaveResult` if you want to check if the command did many operations.
+This function makes use of reports created by all test functions that are called from **expect** as a property.
 
 I.E:
 
@@ -425,8 +425,8 @@ group("toDeleteRole", () => {
 ### `toMessageContentContains(value)`
 
 Use `toMessageContentContains` to check if a text message sent by a bot contains a determined value.
-This is usefull if you are not sure about the full content of a message. For example, if the message contains
-date, use this functions may help.
+This is useful if you are not sure about the full content of a message. For example, if the message contains
+a date, use these functions may help.
 
 ```typescript
 group("toMessageContentContains", () => {
@@ -439,8 +439,8 @@ group("toMessageContentContains", () => {
 
 ### `toEmbedMatch(embedMessage)`
 
-Use `toEmbedMatch` to check if a embed message sent by the bot contains some properties.
-It is usefull when you are not sure about how each property of the embed message will be filled with.
+Use `toEmbedMatch` to check if an embed message sent by the bot contains some properties.
+It is useful when you are not sure about how each property of the embed message will be filled with.
 
 ```typescript
 group("toEmbedMatch", () => {
@@ -519,7 +519,7 @@ Use `toSetRoleHoist` to check if a bot command sets or not a role as a hoist.
 </div>
 
 _In a hoisted configuration, the role hierarchy is visibly clear to server members; roles are sorted and displayed based on which role is higher in the role management menu.
-However, in a standard configuration, users are sorted alphabetically, meaning someone with the highest role will be sorted wherever their name exists in the alphabet._ [Discord](https://support.discord.com/hc/en-us/community/posts/360060076751-Un-hoisted-Role-Hierarchy)
+However, in a standard configuration, users are sorted alphabetically, meaning someone with the highest roll will be sorted wherever their name exists in the alphabet._ [Discord](https://support.discord.com/hc/en-us/community/posts/360060076751-Un-hoisted-Role-Hierarchy)
 
 ```typescript
 group("toSetRoleHoist", () => {
