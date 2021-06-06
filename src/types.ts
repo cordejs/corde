@@ -937,8 +937,14 @@ export interface IMessageMatches<TReturn extends MayReturnMatch> {
   toEmbedMatch(embed: IMessageEmbed): TReturn;
 
   /**
-   * Verify if the content of a message sent given a command includes,
-   * a given text value.
+   * Verify if a sent message **contains** the value informed in `expectedContent`.
+   *
+   * @example
+   *
+   * // Given the command "ping" that return "pong"
+   *
+   * expect("ping").toMessageContentContains("pon"); // Pass
+   *
    *
    * @param expectedContent expected content to match the content of the returned message.
    * @since 4.0
