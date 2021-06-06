@@ -85,7 +85,6 @@ describe("testing toSetRolePermission operation", () => {
     const expectReport = createReport(toSetRolePermission, false, message);
 
     expect(report).toEqual(expectReport);
-    expect(report).toMatchSnapshot();
   });
 
   it("should return false due to invalid permission parameter (undefined)", async () => {
