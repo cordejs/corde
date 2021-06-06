@@ -22,3 +22,7 @@ it("embed-partial should return an embed message", () => {
     description: "test",
   });
 });
+
+it("embed should return an embed message", () => {
+  expect("ping").toMessageContentContains("pon");
+});
