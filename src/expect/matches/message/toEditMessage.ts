@@ -1,4 +1,4 @@
-import { Message, MessageEmbed, PartialMessage } from "discord.js";
+import { Message } from "discord.js";
 import { IMessageEditedIdentifier, IMessageEmbed, Primitive, ITestReport } from "../../../types";
 import { isPrimitiveValue, typeOf } from "../../../utils";
 import { IExpectTestBaseParams } from "../../../types";
@@ -16,8 +16,6 @@ export class ToEditMessage extends MessageExpectTest {
     newValue: Primitive | IMessageEmbed,
     messageIdentifier?: IMessageEditedIdentifier | string,
   ): Promise<ITestReport> {
-    let _expect: Primitive | MessageEmbed;
-
     if (!isPrimitiveValue(newValue) && typeOf(newValue) !== "object") {
       return this.createReport(
         "expected: expect value to be a primitive value (string, boolean, number) or an IMessageEmbed object\n",
@@ -39,7 +37,7 @@ export class ToEditMessage extends MessageExpectTest {
       _messageData = messageIdentifier;
     }
 
-    let returnedMessage: Message | PartialMessage;
+    let returnedMessage: Message;
 
     try {
       returnedMessage = await this.cordeBot.events.onceMessageContentOrEmbedChange(
@@ -65,13 +63,7 @@ export class ToEditMessage extends MessageExpectTest {
       );
     }
 
-    if (typeOf(newValue) === "object") {
-      _expect = this.embedMessageLikeToMessageEmbed(newValue as IMessageEmbed);
-    } else {
-      _expect = newValue as Primitive;
-    }
-
-    this.hasPassed = this.messagesMatches(returnedMessage, _expect);
+    this.hasPassed = this.isMessagesEquals(returnedMessage, newValue);
     this.invertHasPassedIfIsNot();
 
     if (this.hasPassed) {
@@ -85,6 +77,6 @@ export class ToEditMessage extends MessageExpectTest {
       );
     }
 
-    return this.createReportForExpectAndResponse(_expect, returnedMessage);
+    return this.createReportForExpectAndResponse(newValue, returnedMessage);
   }
 }

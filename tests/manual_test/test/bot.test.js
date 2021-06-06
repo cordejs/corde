@@ -1,12 +1,28 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-const { test, expect, beforeStart } = require("../../lib");
-const { login } = require("../src/bot");
+import { it, expect, beforeStart } from "../../../lib";
+import { login } from "../src/bot";
 
 beforeStart(async () => {
   await login();
 });
 
-test("ping should return pong", () => {
+it("ping should return pong", () => {
   expect("ping").toReturn("pong");
+});
+
+it("embed should return an embed message", () => {
+  expect("embed").toReturn({
+    description: "test",
+  });
+});
+
+it("embed-partial should return an embed message", () => {
+  expect("embedPartial").toEmbedMatch({
+    description: "test",
+  });
+});
+
+it("embed should return an embed message", () => {
+  expect("ping").toMessageContentContains("pon");
 });

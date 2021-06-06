@@ -31,8 +31,6 @@ import { diff as jestDiff } from "jest-diff";
  */
 export function diff<T>(obj1: T, obj2: T): string | null {
   return jestDiff(obj1, obj2, {
-    aAnnotation: "expected",
-    bAnnotation: "received",
     includeChangeCounts: true,
   });
 }

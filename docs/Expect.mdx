@@ -19,8 +19,10 @@ given a command passed to it. All tests current available in this version are li
 - [`toEditMessage(value)`](/docs/expect#toeditmessagenewcontent-messageidentifier)
 - [`toPin(value)`](/docs/expect#topinstring--messageidentifier)
 - [`toRemoveReaction(value)`](/docs/expect#toremovereactionemojis-messageidentifier)
-- [`toReturn(value)`](/docs/expect#toreturnstring--boolean--number--messageembedlike)
+- [`toReturn(value)`](/docs/expect#toreturnstring--boolean--number--messageEmbedSimple)
 - [`toUnPin(value)`](/docs/expect#tounpinstring--messageidentifier)
+- [`toMessageContentContains(value)`](/docs/expect#tomessagecontentcontainsvalue)
+- [`toEmbedMatch(value)`](/docs/expect#toembedmatchembedmessage)
 
 ## Role tests
 
@@ -49,7 +51,7 @@ Expect is a function that receives a command as an argument. The same argument t
 Discord to invoke some action from your bot. As there is a [prefix](/docs/configurations#botprefix) witch can
 be passed in the config file, there is no need to pass that prefix in the `expect` function.
 
-The expect function receives by default a string, but it can the value can be of any type. This type will be resolved
+The expected function receives by default a string, but it can the value can be of any type. This type will be resolved
 for a string value that will be used as the command.
 
 I.E:
@@ -77,7 +79,7 @@ This function returns several other functions to define what Corde should check 
 expect("ping", "831288248180408371");
 ```
 
-This expect will send the command `ping` in channel `831288248180408371`.
+This expects will send the command `ping` in channel `831288248180408371`.
 
 :::note
 If for some reason you what to pass the bot prefix in `expect`, do not use the config variable [prefix](/docs/configuration#botprefix).
@@ -91,10 +93,21 @@ When using `inChannel`, only [message tests](/docs/expect#message-tests) will be
 I.E:
 
 ```typescript
-expect("sendInChannel").inChannel("831288248180408371").toReturn("hello2");
+group("inChannel", () => {
+  const message = {
+    channelId: "831288248180408371",
+    content: "hello2",
+  };
+
+  test("testing message in a outside channel", () => {
+    expect("sendInChannel").inChannel(message.channelId).toReturn(message.content);
+  });
+});
 ```
 
 The example above will check if the command `sendInChannel` sent the message `hello2` in the text channel of id `831288248180408371`.
+
+<br></br>
 
 ### `inGuild(guildId)`
 
@@ -104,13 +117,25 @@ When using `inGuild`, only [role tests](/docs/expect#role-tests) will be availab
 I.E:
 
 ```typescript
-expect("renameOtherRole")
-  .inGuild("522581719568744468")
-  .toRenameRole("newRole", "829873348309155851");
+group("inGuild", () => {
+  const roleGuild = {
+    guildId: "522581719568744468",
+    newName: "newRole",
+    id: "829873348309155851",
+  };
+
+  test("testing role in outside default guild", () => {
+    expect("renameOtherRole")
+      .inGuild(roleGuild.guildId)
+      .toRenameRole(roleGuild.newName, roleGuild.id);
+  });
+});
 ```
 
 The example above will check if the command `renameOtherRole` renamed the role located of guild `522581719568744468`
 and id `829873348309155851` to `newRole`.
+
+<br></br>
 
 ### `not`
 
@@ -119,22 +144,39 @@ made by a bot command is anything but **not** something.
 
 I.E:
 
-```javascript
-expect("hello").not.toReturn(1);
+```typescript
+group("not", () => {
+  const notExpectedValue = 1;
+
+  test("command hello should not return 1", () => {
+    expect("hello").not.toReturn(notExpectedValue);
+  });
+});
 ```
+
+<br></br>
 
 ### `toHaveResult(expectReport)`
 
-Use `toHaveResult` if you want to check if a command did many operations.
-This function make use of reports created by all tests functions that are called from **expect** as a property.
+Use `toHaveResult` if you want to check if the command did many operations.
+This function makes use of reports created by all test functions that are called from **expect** as a property.
 
 I.E:
 
 ```typescript
-expect("sendMultipleMessage").toHaveResult(
-  expect.toReturn("Hello"),
-  expect.inChannel("831288249254674453").toReturn("Hello2"),
-);
+group("toHaveResult", () => {
+  const expectedMessage = {
+    content: "Hello2",
+    channelId: "831288249254674453",
+  };
+
+  test("testing multiple tests", () => {
+    expect("sendMultipleMessage").toHaveResult(
+      expect.toReturn("Hello"),
+      expect.inChannel(expectedMessage.channelId).toReturn(expectedMessage.content),
+    );
+  });
+});
 ```
 
 In the example above, corde will check if the command `sendMultipleMessage` sent the message `Hello` in the channel defined in
@@ -142,12 +184,14 @@ configs, and the message `Hello2` in a channel of id `831288249254674453`.
 
 All test functions are available from the property `expect`.
 
+<br></br>
+
 ### `toAddReaction(emojis, messageIdentifier)`
 
 type of `emojis`:
 
 ```typescript
-string[] | EmojiLike[] | (string | EmojiLike)[]
+string[] | IEmoji[] | (string | IEmoji)[]
 ```
 
 type of `messageIdentifier`:
@@ -159,20 +203,24 @@ string | MessageIdentifier;
 Use `toAddReaction` to check if the bot added a reaction or a list of reactions to **the last message sent by someone who is not a bot**.
 
 ```typescript
-const messageId = "15198241251";
+group("toAddReaction", () => {
+  const messageId = "15198241251";
 
-// This will check if the emoji 😄 was added in the last message sent
-expect("addReactions").toAddReaction(["😄"]);
+  test("testing multiple reactions", () => {
+    // This will check if the emoji 😄 was added in the last message sent
+    expect("addReactions").toAddReaction(["😄"]);
 
-expect("addReactions").toAddReaction(["😄"], messageId);
-expect("addReactions").toAddReaction([{ name: "🍊" }], messageId);
-// Customized Reaction
-expect("addReactions").toAddReaction([{ id: "121512312" }], messageId);
+    expect("addReactions").toAddReaction(["😄"], messageId);
+    expect("addReactions").toAddReaction([{ name: "🍊" }], messageId);
+    // Customized Reaction
+    expect("addReactions").toAddReaction([{ id: "121512312" }], messageId);
 
-expect("addReactions").toAddReaction([{ id: "121512312" }], { id: messageId });
+    expect("addReactions").toAddReaction([{ id: "121512312" }], { id: messageId });
 
-// It's more assertive to find the message by it's id, but is possible to find using the content
-expect("addReactions").toAddReaction([{ id: "121512312" }], { content: "banana" });
+    // It's more assertive to find the message by it's id, but is possible to find using the content
+    expect("addReactions").toAddReaction([{ id: "121512312" }], { content: "banana" });
+  });
+});
 ```
 
 :::note
@@ -180,12 +228,14 @@ This example is only to illustrate how this test can be used, not a real case us
 We also will allow adding the id of a message, in this test in the future.
 :::
 
+<br></br>
+
 ### `toEditMessage(newContent, messageIdentifier)`
 
 type of `newContent`
 
 ```
-string | number | boolean | MessageEmbedLike
+string | number | boolean | IMessageEmbed
 ```
 
 type of `messageIdentifier`
@@ -197,29 +247,35 @@ MessageEditedIdentifier | string
 Use `toEditMessage` to check if a bot command edited a sent message.
 
 ```typescript
-// message: Message; -> content = "value";
-expect(`editMessage ${message.id}`).toEditMessage("new value", { id: message.id });
-expect(`editMessage ${message.id}`).toEditMessage(123, { id: message.id });
-// Don't know why someone would send a boolean message but its converted to "true"
-expect(`editMessage ${message.id}`).toEditMessage(true, { id: message.id });
-// Embed message
-expect(`editMessage ${message.id}`).toEditMessage(
-  {
-    color: 3447003,
-    description: "description of this message",
-    fields: [
+group("toEditMessage", () => {
+  test("testing multiple editions", () => {
+    // message: Message; -> content = "value";
+    expect(`editMessage ${message.id}`).toEditMessage("new value", { id: message.id });
+    expect(`editMessage ${message.id}`).toEditMessage(123, { id: message.id });
+    // Don't know why someone would send a boolean message but its converted to "true"
+    expect(`editMessage ${message.id}`).toEditMessage(true, { id: message.id });
+    // Embed message
+    expect(`editMessage ${message.id}`).toEditMessage(
       {
-        name: "field 1",
-        value: "1",
+        color: 3447003,
+        description: "description of this message",
+        fields: [
+          {
+            name: "field 1",
+            value: "1",
+          },
+        ],
+        url: "wwww.google.com.br",
+        title: "title message",
+        timestamp: timeNow,
       },
-    ],
-    url: "wwww.google.com.br",
-    title: "title message",
-    timestamp: timeNow,
-  },
-  { id: message.id },
-);
+      { id: message.id },
+    );
+  });
+});
 ```
+
+<br></br>
 
 ### `toPin(string | MessageIdentifier)`
 
@@ -232,16 +288,25 @@ use `toPin` to check if a bot command pinned a message in the channel.
 </div>
 
 ```typescript
-// message: Message; -> content = "IMPORTANT MESSAGE";
-expect(`ping ${message.id}`).toPin(message.id);
+group("toPing", () => {
+  const message = {
+    id: "241212917212",
+  };
+
+  test("should pin the message", () => {
+    expect(`ping ${message.id}`).toPin(message.id);
+  });
+});
 ```
+
+<br></br>
 
 ### `toRemoveReaction(emojis, messageIdentifier)`
 
 type of `emojis`:
 
 ```typescript
-string[] | EmojiLike[] | (string | EmojiLike)[]
+string[] | IEmoji[] | (string | IEmoji)[]
 ```
 
 type of `messageIdentifier`:
@@ -254,23 +319,29 @@ Use `toRemoveReaction` to check if a reaction or a list of reactions were remove
 after a command call.
 
 ```typescript
-const messageId = "15198241251";
+group("toRemoveReaction", () => {
+  const messageId = "15198241251";
 
-// This will check if the emoji 😄 was removed in the last message sent
-expect("removeReactions").toRemoveReaction(["😄"]);
+  test("testing reactions remotion", () => {
+    // This will check if the emoji 😄 was removed in the last message sent
+    expect("removeReactions").toRemoveReaction(["😄"]);
 
-expect("removeReactions").toRemoveReaction(["😄"], messageId);
-expect("removeReactions").toRemoveReaction([{ name: "🍊" }], messageId);
-// Customized Reaction
-expect("removeReactions").toRemoveReaction([{ id: "121512312" }], messageId);
+    expect("removeReactions").toRemoveReaction(["😄"], messageId);
+    expect("removeReactions").toRemoveReaction([{ name: "🍊" }], messageId);
+    // Customized Reaction
+    expect("removeReactions").toRemoveReaction([{ id: "121512312" }], messageId);
 
-expect("removeReactions").toRemoveReaction([{ id: "121512312" }], { id: messageId });
+    expect("removeReactions").toRemoveReaction([{ id: "121512312" }], { id: messageId });
 
-// It's more assertive to find the message by it's id, but is possible to find using the content
-expect("removeReactions").toRemoveReaction([{ id: "121512312" }], { content: "banana" });
+    // It's more assertive to find the message by it's id, but is possible to find using the content
+    expect("removeReactions").toRemoveReaction([{ id: "121512312" }], { content: "banana" });
+  });
+});
 ```
 
-### `toReturn(string | boolean | number | MessageEmbedLike)`
+<br></br>
+
+### `toReturn(string | boolean | number | messageEmbedSimple)`
 
 Use `toReturn` to check if the bot send a primitive message value or an EmbedMessage after the call of an
 command passed in `expect`.
@@ -280,32 +351,53 @@ I.E:
 Given a bot who has a command called `hi` and return `Hello!!`, you can test it with:
 
 ```typescript
-expect("hi").toReturn("Hello!!");
+group("toReturn", () => {
+  const expectedReturn = "Hello!!";
+
+  test("command hi should return Hello!", () => {
+    expect("hi").toReturn(expectedReturn);
+  });
+});
 ```
 
 ```typescript
-expect("hi").toReturn({
-  color: 3447003,
-  description: "description of this message",
-  fields: [
-    {
-      name: "field 1",
-      value: "1",
-    },
-  ],
-  url: "wwww.google.com.br",
-  title: "title message",
-  timestamp: timeNow,
+group("toReturn", () => {
+  const expectedReturn = "Hello!!";
+
+  test("command hi should return embed", () => {
+    expect("hi").toReturn({
+      color: 3447003,
+      description: "description of this message",
+      fields: [
+        {
+          name: "field 1",
+          value: "1",
+        },
+      ],
+      url: "wwww.google.com.br",
+      title: "title message",
+      timestamp: timeNow,
+    });
+  });
 });
 ```
+
+<br></br>
 
 ### `toUnpin(string | MessageIdentifier)`
 
 Use `toUnpin` to check if a bot command unpinned a message.
 
 ```typescript
-// message: Message; -> content = "IMPORTANT MESSAGE";
-expect(`ping ${message.id}`).toUnpin(message.id);
+group("toUnpin", () => {
+  const message = {
+    id: "241212917212",
+  };
+
+  test("should unpin the message", () => {
+    expect(`ping ${message.id}`).toUnpin(message.id);
+  });
+});
 ```
 
 ### `toDeleteRole(string | RoleIdentifier)`
@@ -314,23 +406,77 @@ Use `toDeleteRole` to check if a bot command deleted a role in guild
 defined in [guildId](/docs/configurations#guildid).
 
 ```typescript
-const role = getARoleFromSomewhere();
-expect(`deleteRole ${role.id}`).toDelete(role.id);
-expect(`deleteRole ${role.id}`).toDelete({ id: role.id });
-expect(`deleteRole ${role.id}`).toDelete({ name: role.name });
+group("toDeleteRole", () => {
+  const role = {
+    id: "1231249817231",
+    name: "hc",
+  };
+
+  test("should delete a role", () => {
+    expect(`deleteRole ${role.id}`).toDelete(role.id);
+    expect(`deleteRole ${role.id}`).toDelete({ id: role.id });
+    expect(`deleteRole ${role.id}`).toDelete({ name: role.name });
+  });
+});
 ```
+
+<br></br>
+
+### `toMessageContentContains(value)`
+
+Use `toMessageContentContains` to check if a text message sent by a bot contains a determined value.
+This is useful if you are not sure about the full content of a message. For example, if the message contains
+a date, use these functions may help.
+
+```typescript
+group("toMessageContentContains", () => {
+  const partialMessage = "pon";
+  test("bot message should contains 'pong'", () => {
+    expect("ping").toMessageContentContains(partialMessage);
+  });
+});
+```
+
+### `toEmbedMatch(embedMessage)`
+
+Use `toEmbedMatch` to check if an embed message sent by the bot contains some properties.
+It is useful when you are not sure about how each property of the embed message will be filled with.
+
+```typescript
+group("toEmbedMatch", () => {
+  const partialEmbedMessage = {
+    title: "embed title",
+    description: "embed description",
+  };
+  test("bot embed message title and description properties", () => {
+    expect("embed").toEmbedMatch(partialEmbedMessage);
+  });
+});
+```
+
+<br></br>
 
 ### `toRenameRole(string, string | RoleIdentifier)`
 
 Use `toRenameRole` to check if a bot command renamed a role.
 
 ```typescript
-const role = getARoleFromSomewhere();
-// role.name = hight-master
-expect(`renameRole ${role.id}`).toRenameRole("dm-hight-master", role.id);
-expect(`renameRole ${role.id}`).toRenameRole("dm-hight-master", { id: role.id });
-expect(`renameRole ${role.id}`).toRenameRole("dm-hight-master", { name: role.name });
+group("toRenameRole", () => {
+  const role = {
+    id: "1231212312",
+    name: "support",
+  };
+
+  test("should rename role", () => {
+    // role.name = hight-master
+    expect(`renameRole ${role.id}`).toRenameRole("dm-hight-master", role.id);
+    expect(`renameRole ${role.id}`).toRenameRole("dm-hight-master", { id: role.id });
+    expect(`renameRole ${role.id}`).toRenameRole("dm-hight-master", { name: role.name });
+  });
+});
 ```
+
+<br></br>
 
 ### `toSetRoleColor(ColorResolvable | Colors, string | RoleIdentifier)`
 
@@ -343,14 +489,24 @@ Use `toSetRoleColor` to check if a bot command sets a new color to a role.
 </div>
 
 ```typescript
-const role = getARoleFromSomewhere();
-// role.name = hight-master
-expect(`setColor ${role.id}`).toSetRoleColor("GREEN", role.id);
-expect(`setColor ${role.id}`).toSetRoleColor(Colors.GREEN, role.id);
-expect(`setColor ${role.id}`).toSetRoleColor("GREEN", { id: role.id });
-expect(`setColor ${role.id}`).toSetRoleColor(Colors.GREEN, { id: role.id });
-expect(`setColor ${role.id}`).toSetRoleColor("GREEN", { name: role.name });
+group("toSetRoleColor", () => {
+  const role = {
+    id: "321162516521",
+    name: "offlane",
+  };
+
+  test("should set role color", () => {
+    // role.name = hight-master
+    expect(`setColor ${role.id}`).toSetRoleColor("GREEN", role.id);
+    expect(`setColor ${role.id}`).toSetRoleColor(Colors.GREEN, role.id);
+    expect(`setColor ${role.id}`).toSetRoleColor("GREEN", { id: role.id });
+    expect(`setColor ${role.id}`).toSetRoleColor(Colors.GREEN, { id: role.id });
+    expect(`setColor ${role.id}`).toSetRoleColor("GREEN", { name: role.name });
+  });
+});
 ```
+
+<br></br>
 
 ### `toSetRoleHoist(boolean, string | RoleIdentifier)`
 
@@ -363,15 +519,25 @@ Use `toSetRoleHoist` to check if a bot command sets or not a role as a hoist.
 </div>
 
 _In a hoisted configuration, the role hierarchy is visibly clear to server members; roles are sorted and displayed based on which role is higher in the role management menu.
-However, in a standard configuration, users are sorted alphabetically, meaning someone with the highest role will be sorted wherever their name exists in the alphabet._ [Discord](https://support.discord.com/hc/en-us/community/posts/360060076751-Un-hoisted-Role-Hierarchy)
+However, in a standard configuration, users are sorted alphabetically, meaning someone with the highest roll will be sorted wherever their name exists in the alphabet._ [Discord](https://support.discord.com/hc/en-us/community/posts/360060076751-Un-hoisted-Role-Hierarchy)
 
 ```typescript
-const role = getARoleFromSomewhere();
-// role.name = hight-master
-expect(`setHoist ${role.id}`).toSetRoleHoist(true, role.id);
-expect(`setHoist ${role.id}`).toSetRoleHoist(true, { id: role.id });
-expect(`setHoist ${role.id}`).toSetRoleHoist(false, { name: role.name });
+group("toSetRoleHoist", () => {
+  const role = {
+    id: "12541612511",
+    name: "tank",
+  };
+
+  test("should set role as hoist", () => {
+    // role.name = hight-master
+    expect(`setHoist ${role.id}`).toSetRoleHoist(true, role.id);
+    expect(`setHoist ${role.id}`).toSetRoleHoist(true, { id: role.id });
+    expect(`setHoist ${role.id}`).toSetRoleHoist(false, { name: role.name });
+  });
+});
 ```
+
+<br></br>
 
 ### `toSetRoleMentionable(boolean, string | RoleIdentifier)`
 
@@ -384,12 +550,21 @@ Use `toSetRoleMentionable` to check if a bot command set or not a role as mentio
 </div>
 
 ```typescript
-const role = getARoleFromSomewhere();
-// role.name = hight-master
-expect(`setMentionable ${role.id}`).toSetRoleMentionable(true, role.id);
-expect(`setMentionable ${role.id}`).toSetRoleMentionable(true, { id: role.id });
-expect(`setMentionable ${role.id}`).toSetRoleMentionable(false, { name: role.name });
+group("toSetRoleMentionable", () => {
+  const role = {
+    id: "12541612511",
+    name: "support 4",
+  };
+
+  test("should set role mentionable state", () => {
+    expect(`setMentionable ${role.id}`).toSetRoleMentionable(true, role.id);
+    expect(`setMentionable ${role.id}`).toSetRoleMentionable(true, { id: role.id });
+    expect(`setMentionable ${role.id}`).toSetRoleMentionable(false, { name: role.name });
+  });
+});
 ```
+
+<br></br>
 
 ### `toSetRolePermission(string | RoleIdentifier, ...RolePermission[])`
 
@@ -403,23 +578,30 @@ or a list of permissions to a role.
 </div>
 
 ```typescript
-const role = getARoleFromSomewhere();
-// role.name = hight-master
-expect(`setPermission VIEW_CHANNEL EMBED_LINKS`).toSetRoleMentionable(
-  role.id,
-  "VIEW_CHANNEL",
-  "EMBED_LINKS",
-);
-expect(`setPermission VIEW_CHANNEL EMBED_LINKS`).toSetRoleMentionable(
-  { id: role.id },
-  "VIEW_CHANNEL",
-  "EMBED_LINKS",
-);
-expect(`setPermission VIEW_CHANNEL EMBED_LINKS`).toSetRoleMentionable(
-  { name: role.name },
-  "VIEW_CHANNEL",
-  "EMBED_LINKS",
-);
+group("toSetRolePermission", () => {
+  const role = {
+    id: "12541612511",
+    name: "support 5",
+  };
+
+  test("should set role permissions", () => {
+    expect(`setPermission VIEW_CHANNEL EMBED_LINKS`).toSetRolePermission(
+      role.id,
+      "VIEW_CHANNEL",
+      "EMBED_LINKS",
+    );
+    expect(`setPermission VIEW_CHANNEL EMBED_LINKS`).toSetRolePermission(
+      { id: role.id },
+      "VIEW_CHANNEL",
+      "EMBED_LINKS",
+    );
+    expect(`setPermission VIEW_CHANNEL EMBED_LINKS`).toSetRolePermission(
+      { name: role.name },
+      "VIEW_CHANNEL",
+      "EMBED_LINKS",
+    );
+  });
+});
 ```
 
 <div style={{textAlign: 'center'}}>
@@ -428,16 +610,25 @@ expect(`setPermission VIEW_CHANNEL EMBED_LINKS`).toSetRoleMentionable(
 
 </div>
 
+<br></br>
+
 ### `toSetRolePosition(number, string | RoleIdentifier)`
 
 Use `toSetRolePosition` to check if a command changes a role's position.
 
 ```typescript
-const role = getARoleFromSomewhere();
-// role.name = hight-master
-expect(`setPosition ${role.id}`).toSetRoleMentionable(1, role.id);
-expect(`setPosition ${role.id}`).toSetRoleMentionable(1, { id: role.id });
-expect(`setPosition ${role.id}`).toSetRoleMentionable(1, { name: role.name });
+group("toSetRolePosition", () => {
+  const role = {
+    id: "1231241241",
+    name: "mid",
+  };
+
+  test("should set role position", () => {
+    expect(`setPosition ${role.id}`).toSetRolePosition(1, role.id);
+    expect(`setPosition ${role.id}`).toSetRolePosition(1, { id: role.id });
+    expect(`setPosition ${role.id}`).toSetRolePosition(1, { name: role.name });
+  });
+});
 ```
 
 <div style={{textAlign: 'center'}}>

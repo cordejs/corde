@@ -2,7 +2,7 @@ import MockDiscord from "../../mocks/mockDiscord";
 import { createReport, initCordeClientWithChannel, testUtils } from "../../testHelper";
 import { Client } from "discord.js";
 import { ToAddReaction } from "../../../src/expect/matches";
-import { ICordeBot, ITestReport } from "../../../src/types";
+import { ICordeBot } from "../../../src/types";
 import { buildReportMessage, typeOf } from "../../../src/utils";
 import { MockEvents } from "../../mocks/mockEvents";
 import { runtime } from "../../../src/common/runtime";
