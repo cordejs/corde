@@ -24,6 +24,6 @@
     "allowUnreachableCode": false,
     "esModuleInterop": true
   },
-  "include": ["src/**/*", "index.ts", "tests/exit.test.ts"],
+  "include": ["src/**/*", "index.ts"],
   "exclude": ["node_modules", "lib", "tests", "e2e"]
 }
