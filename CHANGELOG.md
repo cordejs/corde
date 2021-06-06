@@ -1,3 +1,13 @@
+# 4.1.0
+
+## 🚀 Features
+
+- Addition of `toMessageContentContains` and `toEmbedMatch` test functions [#757](https://github.com/cordejs/corde/pull/757)
+
+## 💡 Miscellaneous
+
+- Change references to new website URL
+
 # 4.0.5
 
 ## 💡 Miscellaneous
