@@ -7,6 +7,8 @@ import {
   MessageEmbed,
   Role,
   TextChannel,
+  VoiceChannel,
+  VoiceConnection,
 } from "discord.js";
 import { CordeClientError } from "../errors";
 import { ICordeBot, IMessageIdentifier, IRoleIdentifier } from "../types";
@@ -23,6 +25,7 @@ export class CordeBot implements ICordeBot {
   private readonly _channelId: string;
   private readonly _testBotId: string;
   private readonly _client: Client;
+  private _voiceConnection!: VoiceConnection | null;
 
   private textChannel!: TextChannel;
   private _isReady: boolean;
@@ -288,6 +291,33 @@ export class CordeBot implements ICordeBot {
 
       return channel;
     }
+  }
+
+  async joinVoiceChannel(channelId: string) {
+    const channel = this._client.channels.cache.get(channelId);
+
+    if (!channel) {
+      throw new CordeClientError(`channel ${channelId} not found`);
+    }
+
+    if (channel.isText()) {
+      throw new CordeClientError("can not join a text channel");
+    }
+
+    if (channel instanceof VoiceChannel) {
+      this._voiceConnection = await channel.join();
+    }
+
+    throw new CordeClientError("channel is not a voice channel to connect");
+  }
+
+  isInVoiceChannel() {
+    return !!this._voiceConnection;
+  }
+
+  leaveVoiceConnection() {
+    this._voiceConnection?.disconnect();
+    this._voiceConnection = null;
   }
 
   private convertToTextChannel(channel: Channel): TextChannel {

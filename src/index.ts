@@ -1,6 +1,5 @@
 export { group, test, group as describe, test as it } from "./closures";
 export { expect } from "./expect";
-export { sendMessage, getRole, createRole } from "./api-utilities";
 export { afterAll, beforeStart, afterEach, beforeEach } from "./hooks";
 
 export { RolePermission, Permission } from "./utils/permission";

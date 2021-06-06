@@ -1,3 +1,11 @@
+/**
+ * All references and documentation is from Discord.js
+ * and Discord API documentations.
+ *
+ * @see https://discord.js.org/#/docs/main/stable/general/welcome
+ * @see https://discord.com/developers/docs/intro
+ */
+
 import { ColorResolvable, Role } from "discord.js";
 import { IBaseRole } from "../types";
 import { Colors, resolveColor, RolePermission } from "../utils";

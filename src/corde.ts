@@ -9,7 +9,7 @@ import {
   sendMessage as _sendMessage,
   getRole as _getRole,
   createRole as _createRole,
-} from "./api-utilities";
+} from "./corde-bot";
 
 import { expect as _expect } from "./expect";
 import { group as _group, test as _test } from "./closures";
