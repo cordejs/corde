@@ -137,7 +137,7 @@
   "bugs": {
     "url": "https://github.com/cordejs/corde/issues"
   },
-  "homepage": "http://www.cordejs.org",
+  "homepage": "https://cordejs.org",
   "files": [
     "lib/**",
     "schema/**",

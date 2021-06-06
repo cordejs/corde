@@ -46,7 +46,7 @@ Corde is a small testing library for Discord.js. As there is a tool to create bo
 
 ## Documentation
 
-The bellow documentation is a resume of what you can find in [Corde's site](http://www.cordejs.org)
+The bellow documentation is a resume of what you can find in [Corde's site](https://cordejs.org)
 
 ## 🚀 Getting started
 
