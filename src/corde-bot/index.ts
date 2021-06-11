@@ -1,26 +1,93 @@
-import { RoleData } from "discord.js";
+/**
+ * All references and documentation are from Discord.js
+ * and Discord API documentations.
+ *
+ * Thanks Discord.js for the rich documentation that helped so much ❤️
+ *
+ * @see https://discord.js.org/#/docs/main/stable/general/welcome
+ * @see https://discord.com/developers/docs/intro
+ * @see https://discordjs.guide/
+ * @see https://github.com/discordjs/guide
+ */
+
+import { Channel, DMChannel, NewsChannel, TextChannel } from "discord.js";
 import { CordeClientError } from "../errors";
 import { mapper } from "../mapper/messageMapper";
-import { CordeRole } from "../discordjs-structures/cordeRole";
-import { IBot, ICordeBot, IMessageEmbed, IRoleIdentifier } from "../types";
+import {
+  CordeDMChannel,
+  CordeGuild,
+  CordeMessage,
+  CordeNewsChannel,
+  CordeRole,
+  CordeTextChannel,
+} from "../structures";
+import { ICordeBot, IMessageEmbed, IRoleData, IRoleIdentifier, Primitive } from "../types";
 import { isPrimitiveValue } from "../utils";
+import { VoiceChannel } from "./voiceChannel";
 
-export class Bot implements IBot {
+export class Bot {
   private _bot: ICordeBot;
+  private _voiceChannel: VoiceChannel | undefined;
+
+  get voiceChannel() {
+    return this._voiceChannel;
+  }
+
   constructor(bot: ICordeBot) {
     this._bot = bot;
   }
 
   async joinVoiceChannel(channelId: string) {
-    this._bot.joinVoiceChannel(channelId);
+    await this._bot.joinVoiceChannel(channelId);
+    this._voiceChannel = new VoiceChannel(this._bot);
+    return this._voiceChannel;
   }
 
   leaveVoiceChannel() {
     this._bot.leaveVoiceConnection();
+    this._voiceChannel = undefined;
   }
 
   isInVoiceChannel() {
     return this._bot.isInVoiceChannel();
+  }
+
+  async fetchChannel(id: string) {
+    const channel = await this._bot.fetchChannel(id);
+
+    if (channel) {
+      return this.mapToCordeInheratedChannel(channel);
+    }
+    return undefined;
+  }
+
+  async fetchGuild(id: string) {
+    const guild = await this._bot.fetchGuild(id);
+
+    if (guild) {
+      return new CordeGuild(guild);
+    }
+
+    return undefined;
+  }
+
+  /**
+   * Gets the channel defined in `configs`
+   */
+  async getChannel() {
+    return new CordeTextChannel(this._bot.channel);
+  }
+
+  /**
+   * Gets the guild defined in `configs`
+   */
+  getGuild() {
+    return new CordeGuild(this._bot.guild);
+  }
+
+  fingGuild(id: string) {
+    const guild = this._bot.findGuild(id);
+    return new CordeGuild(guild);
   }
 
   /**
@@ -50,7 +117,9 @@ export class Bot implements IBot {
    *
    * @since 2.0
    */
-  send(message: string | number | IMessageEmbed) {
+  async send(message: string | number | boolean | bigint): Promise<CordeMessage>;
+  async send(message: IMessageEmbed): Promise<CordeMessage>;
+  async send(message: Primitive | IMessageEmbed): Promise<CordeMessage> {
     if (!message) {
       throw new Error("Can not send a empty message");
     }
@@ -62,11 +131,13 @@ export class Bot implements IBot {
     }
 
     if (isPrimitiveValue(message)) {
-      return this._bot.sendMessage(message);
+      const msg = await this._bot.sendMessage(message);
+      return new CordeMessage(msg);
     }
 
     const embed = mapper.embedInterfaceToMessageEmbed(message);
-    return this._bot.sendMessage(embed);
+    const msg = await this._bot.sendMessage(embed);
+    return new CordeMessage(msg);
   }
 
   /**
@@ -80,7 +151,7 @@ export class Bot implements IBot {
    *
    * @since 2.1
    */
-  async createRole(data: RoleData) {
+  async createRole(data: IRoleData) {
     if (!this._bot.isLoggedIn()) {
       throw new CordeClientError("Bot is not connected yet. Can not create a role");
     }
@@ -126,10 +197,27 @@ export class Bot implements IBot {
     return undefined;
   }
 
-  _getRole(data: string | IRoleIdentifier) {
+  private _getRole(data: string | IRoleIdentifier) {
     if (typeof data === "string") {
       return this._bot.getRoles().find((r) => r.id === data);
     }
     return this._bot.getRoles().find((r) => r.id === data.id || r.name === data.name);
+  }
+
+  private mapToCordeInheratedChannel(channel: Channel) {
+    if (channel instanceof TextChannel) {
+      return new CordeTextChannel(channel);
+    }
+
+    if (channel instanceof NewsChannel) {
+      return new CordeNewsChannel(channel);
+    }
+
+    if (channel instanceof DMChannel) {
+      return new CordeDMChannel(channel);
+    }
+
+    // TODO: Create VM Channel
+    throw new Error(`Channel '${channel.constructor.name}' not mapped`);
   }
 }

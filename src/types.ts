@@ -1,19 +1,19 @@
 import {
   BitField,
+  Channel,
   Collection,
   Guild,
   GuildChannel,
   Message,
   MessageEmbed,
   Role,
-  RoleData,
   RoleManager,
   TextChannel,
+  VoiceConnection,
 } from "discord.js";
 import { Colors, ColorsHex, RolePermission } from "./utils";
 import { Stream } from "stream";
 import { Events } from "./core/events";
-import { CordeRole } from "./discordjs-structures/cordeRole";
 
 export interface ITestReport {
   pass: boolean;
@@ -95,6 +95,8 @@ export interface ICordeBot {
   readonly roleManager: RoleManager;
   readonly channel: TextChannel;
   readonly testBotId: string;
+  readonly voiceConnection: VoiceConnection | null;
+
   /**
    * Authenticate Corde bot to the installed bot in the Discord server.
    *
@@ -113,7 +115,7 @@ export interface ICordeBot {
    * Sends a pure message without prefix it.
    * @param message Data to be sent to channel
    */
-  sendMessage(message: string | number | MessageEmbed): Promise<Message>;
+  sendMessage(message: Primitive | MessageEmbed): Promise<Message>;
   /**
    * Send a message to a channel defined in configs.
    *
@@ -125,10 +127,7 @@ export interface ICordeBot {
    * @return Promise rejection if a testing bot does not send any message in the timeout value set,
    * or resolve for the promise with the message returned by the testing bot.
    */
-  sendTextMessage(message: string | number | boolean, channelId?: string): Promise<Message>;
-  /**
-   * Checks if corde bot is connected
-   */
+  sendTextMessage(message: Primitive | boolean, channelId?: string): Promise<Message>;
   isLoggedIn(): boolean;
   findMessage(filter: (message: Message) => boolean): Promise<Message | undefined>;
   findMessage(data: IMessageIdentifier): Promise<Message | undefined>;
@@ -137,84 +136,17 @@ export interface ICordeBot {
   ): Promise<Message | undefined>;
   fetchRoles(): Promise<RoleManager | null>;
   fetchRole(id: string): Promise<Role | null>;
+  fetchChannel(id: string): Promise<Channel | undefined>;
+  fetchGuild(id: string): Promise<Guild | undefined>;
   hasRole(roleIdentifier: IRoleIdentifier): Promise<boolean>;
   findRole(roleIdentifier: IRoleIdentifier): Promise<Role | undefined>;
   getRoles(): Collection<string, Role>;
   findGuild(guildId: string): Guild;
-  findChannel(guild: Guild, channelId: string): GuildChannel;
+  findChannel(channelId: string): GuildChannel | undefined;
+  findChannel(guild: Guild, channelId: string): GuildChannel | undefined;
   joinVoiceChannel(channelId: string): Promise<void>;
   isInVoiceChannel(): boolean;
   leaveVoiceConnection(): void;
-}
-
-export interface IBot {
-  joinVoiceChannel(channelId: string): Promise<void>;
-  leaveVoiceChannel(): void;
-  isInVoiceChannel(): boolean;
-  /**
-   * Sends a message to the connected textChannel.
-   *
-   * **This function does not work without a test case**
-   *
-   * @param message Message to send
-   *
-   * @example
-   *
-   * // Works
-   * test("test 1", () => {
-   *    const message = await sendMessage("msg");
-   *    expect(`editMessage ${message.id}`).toEditMessage({ id: message.id }, "newValue");
-   * });
-   *
-   * // Do not Works
-   * test("test 1", () => {
-   *    const message = await sendMessage("msg");
-   * });
-   *
-   * @throws CordeClienteError - If bot is not connected yet.
-   *
-   * @returns null if message is empty, null or undefined.
-   * Message if **message** is not empty and it was send to Discord.
-   *
-   * @since 2.0
-   */
-  send(message: string | number | IMessageEmbed): Promise<Message>;
-
-  /**
-   * Creates a new role to the guild provided in configs.
-   *
-   * @param roleIdentifier Basic informations about the role.
-   * @see https://cordejs.org/docs/configurations#guildid
-   *
-   * @throws CordeClientError if corde has not yet connect it's bot.
-   * @returns A promise that return the created role.
-   *
-   * @since 2.1
-   */
-  createRole(data: RoleData): Promise<CordeRole>;
-
-  /**
-   * Finds a role in config guild's cache, basing on it's **id**
-   *
-   * @param id Id of the role.
-   * @throws CordeClientError if corde's bot is not connected.
-   * @returns Role that matches the provided **id** or **name**
-   */
-  getRole(id: string): CordeRole | undefined;
-  /**
-   * Finds a role in config guild's cache, basing on it's **id** or **name**.
-   *
-   * @param data Data of the role. It can be it's **name** or **id**.
-   *
-   * if both informations be provided, and they are from two differents
-   * roles, the result will correspond to the role that matchs with the parameter
-   * **id**.
-   *
-   * @throws CordeClientError if corde's bot is not connected.
-   * @returns Role that matches the provided **id** or **name**
-   */
-  getRole(data: IRoleIdentifier): CordeRole | undefined;
-  getRole(data: string | IRoleIdentifier): CordeRole | undefined;
 }
 
 export type VoidLikeFunction = (() => void) | (() => PromiseLike<void>) | (() => Promise<void>);
@@ -223,7 +155,7 @@ export type MessageType = "text" | "embed";
 export type MessageOutputType = Message | IMinifiedEmbedMessage;
 export type MessageExpectationType = string | MessageEmbed;
 export type GenericFunction = (...args: any[]) => any;
-export type Primitive = number | string | boolean;
+export type Primitive = number | string | boolean | bigint;
 export type ResolveFunction<TResult> = (value: TResult) => void;
 export type RejectFunction = (reason?: any) => void;
 export type EmojisType = string[] | IEmoji[] | (string | IEmoji)[];
@@ -1348,4 +1280,13 @@ export interface IExpect extends AllMatches<any> {
 export interface ITestFilePattern {
   filesPattern: string[];
   ignorePattern?: string[];
+}
+
+export interface IRoleData {
+  name?: string;
+  color?: ColorResolvable;
+  hoist?: boolean;
+  position?: number;
+  permissions?: RolePermission;
+  mentionable?: boolean;
 }

@@ -3,6 +3,7 @@ import {
   Client,
   Collection,
   Guild,
+  GuildChannel,
   Message,
   MessageEmbed,
   Role,
@@ -11,7 +12,7 @@ import {
   VoiceConnection,
 } from "discord.js";
 import { CordeClientError } from "../errors";
-import { ICordeBot, IMessageIdentifier, IRoleIdentifier } from "../types";
+import { ICordeBot, IMessageIdentifier, IRoleIdentifier, Primitive } from "../types";
 import { Events } from "./events";
 
 /**
@@ -29,6 +30,7 @@ export class CordeBot implements ICordeBot {
 
   private textChannel!: TextChannel;
   private _isReady: boolean;
+
   /**
    * Starts new instance of Discord client with its events.
    *
@@ -71,6 +73,10 @@ export class CordeBot implements ICordeBot {
     return this._testBotId;
   }
 
+  get voiceConnection() {
+    return this._voiceConnection;
+  }
+
   /**
    * Authenticate Corde bot to the installed bot in Discord server.
    *
@@ -88,6 +94,14 @@ export class CordeBot implements ICordeBot {
     }
   }
 
+  fetchChannel(id: string): Promise<Channel | undefined> {
+    return this._client.channels.fetch(id, true);
+  }
+
+  fetchGuild(id: string): Promise<Guild | undefined> {
+    return this._client.guilds.fetch(id, true);
+  }
+
   /**
    * Destroy client connection.
    */
@@ -99,7 +113,7 @@ export class CordeBot implements ICordeBot {
    * Sends a pure message without prefix it.
    * @param message Data to be send to channel
    */
-  async sendMessage(message: string | number | MessageEmbed) {
+  async sendMessage(message: Primitive | MessageEmbed) {
     return await this.textChannel.send(message);
   }
 
@@ -114,7 +128,7 @@ export class CordeBot implements ICordeBot {
    * @return Promise rejection if a testing bot does not send any message in the timeout value setted,
    * or a resolve for the promise with the message returned by the testing bot.
    */
-  async sendTextMessage(message: string | number | boolean, channelId?: string): Promise<Message> {
+  async sendTextMessage(message: Primitive, channelId?: string): Promise<Message> {
     this.validateMessageAndChannel(message);
     const formattedMessage = this._prefix + message;
 
@@ -220,6 +234,9 @@ export class CordeBot implements ICordeBot {
   private loadChannel() {
     const guild = this.findGuild(this._guildId);
     const channel = this.findChannel(guild, this._channelId);
+    if (!channel) {
+      throw new CordeClientError("Could not load channel " + this._channelId);
+    }
     this.textChannel = this.convertToTextChannel(channel);
   }
 
@@ -238,7 +255,7 @@ export class CordeBot implements ICordeBot {
     return `Error trying to login with token ${token}. \n` + error;
   }
 
-  private validateMessageAndChannel(message: string | number | boolean) {
+  private validateMessageAndChannel(message: Primitive) {
     if (!message) {
       throw new CordeClientError("No tests were declared");
     }
@@ -275,7 +292,19 @@ export class CordeBot implements ICordeBot {
     }
   }
 
-  findChannel(guild: Guild, channelId: string) {
+  findChannel(channelId: string): GuildChannel | undefined;
+  findChannel(guild: Guild, channelId: string): GuildChannel | undefined;
+  findChannel(channelIdOrGuild: Guild | string, channelId?: string): GuildChannel | undefined {
+    if (typeof channelIdOrGuild === "string") {
+      return this.guild.channels.cache.get(channelIdOrGuild);
+    }
+
+    const guild = channelIdOrGuild;
+
+    if (!channelId) {
+      throw new CordeClientError("no channel id provided");
+    }
+
     if (!guild.channels) {
       throw new CordeClientError(`Guild '${guild.name}' do not have any channel.`);
     } else if (!guild.channels.cache.has(channelId)) {
