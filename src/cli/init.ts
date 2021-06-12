@@ -1,6 +1,7 @@
 import chalk from "chalk";
 import fs from "fs";
 import path from "path";
+import { DEFAULT_TEST_TIMEOUT } from "../consts";
 import { FileError } from "../errors";
 import { IConfigOptions, configFileType } from "../types";
 
@@ -12,7 +13,7 @@ const config: IConfigOptions = {
   guildId: "",
   testMatches: [""],
   botToken: "",
-  timeOut: 5000,
+  timeOut: DEFAULT_TEST_TIMEOUT,
 };
 
 const configString = JSON.stringify(config);

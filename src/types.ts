@@ -1274,3 +1274,10 @@ export interface ITestFilePattern {
   filesPattern: string[];
   ignorePattern?: string[];
 }
+
+export namespace Config {
+  export interface ICLIOptions {
+    files: string;
+    config: string;
+  }
+}

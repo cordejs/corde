@@ -7,6 +7,7 @@ import { summary } from "../core/summary";
 import { TestExecutor } from "../core/testExecutor";
 import { LogUpdate } from "../utils/logUpdate";
 import { validate } from "./validate";
+import { Config } from "../types";
 
 declare module "ora" {
   interface Ora {
@@ -20,7 +21,17 @@ process.on("uncaughtException", () => {
 
 let spinner: Ora;
 
-export async function exec() {
+export async function exec(options: Config.ICLIOptions, args?: any) {
+  if (options.config) {
+    runtime.configFilePath = options.config;
+  }
+  if (args) {
+    runtime.setConfigs({ testMatches: args }, true);
+  }
+  if (options.files) {
+    runtime.setConfigs({ testMatches: options.files.split(" ") }, true);
+  }
+
   await loadConfigs();
   await runTests();
 }
@@ -31,14 +42,15 @@ async function loadConfigs() {
   await validate(runtime.configs);
 }
 
-async function runTests() {
+export async function runTests() {
   startLoading("login to corde bot");
-  // No need to await this function
-  runtime.loginBot(runtime.cordeBotToken);
-  await runtime.events.onceReady();
-  spinner.stop();
 
   try {
+    // No need to await this function
+    runtime.loginBot(runtime.cordeBotToken);
+    await runtime.events.onceReady();
+    spinner.stop();
+
     const testMatches = await reader.getTestsFromFiles({
       filesPattern: runtime.testMatches,
       ignorePattern: runtime.modulePathIgnorePatterns,
