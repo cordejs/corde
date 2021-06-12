@@ -1,11 +1,13 @@
-import { reader } from "../../src/core/reader";
+import { Reader, reader } from "../../src/core/reader";
 import * as validateFn from "../../src/cli/validate";
-import { exec } from "../../src/cli/exec";
-import { FileError } from "../../src/errors";
+import * as execCommand from "../../src/cli/exec";
 import { runtime } from "../../src/common/runtime";
 import { TestExecutor } from "../../src/core/testExecutor";
+import { DEFAULT_TEST_TIMEOUT } from "../../src/consts";
+import { IConfigOptions } from "../../src/types";
 import { summary } from "../../src/core/summary";
 import { mockProcess } from "../mocks";
+import { program } from "../../src/cli/cli";
 
 jest.mock("ora", () => {
   const spinner = {
@@ -16,32 +18,82 @@ jest.mock("ora", () => {
   return () => result;
 });
 
-jest.mock("../../src/core/testExecutor.ts");
-TestExecutor.prototype.runTestsAndPrint = jest.fn().mockImplementation(() => Promise.resolve({}));
+describe("testing configs load", () => {
+  const config: IConfigOptions = {
+    botPrefix: "",
+    botTestId: "",
+    channelId: "",
+    cordeBotToken: "",
+    guildId: "",
+    testMatches: [""],
+    botToken: "",
+    timeOut: DEFAULT_TEST_TIMEOUT,
+  };
+  it("should load configs overriding timout value", async () => {
+    // https://github.com/cordejs/corde/issues/771
+    const TIMEOUT = 100000;
+    config.timeOut = TIMEOUT;
+    mockExecProces(config);
+    await execCommand.exec(
+      {
+        files: "",
+        config: "",
+      },
+      [],
+    );
+    expect(runtime.timeOut).toEqual(TIMEOUT);
+  });
 
-describe("testing default command", () => {
-  it("Should read a file folder", async () => {
-    const exitMock = mockProcess.mockProcessExit();
-    const readerSpy = jest.spyOn(reader, "loadConfig");
-    runtime.loginBot = jest.fn().mockReturnValue(Promise.resolve());
-    runtime.events.onceReady = jest.fn().mockReturnValue(Promise.resolve());
-    summary.print = jest.fn().mockReturnValue("");
-    const validateSpy = jest.spyOn(validateFn, "validate");
+  it("should call go command with -c option", () => {
+    mockExecProces(config);
+    const testPath = "potatoe";
+    program.parse(["node", "test", "-c", testPath]);
+    expect(runtime.configFilePath).toBe(testPath);
+  });
 
-    validateSpy.mockImplementation(() => null);
+  it("should call go command with -f option (single file)", () => {
+    mockExecProces(config);
+    const testMatches = "./tests";
+    program.parse(["node", "test", "-f", testMatches]);
+    expect(runtime.testMatches).toEqual(testMatches.split(" "));
+  });
 
-    readerSpy.mockReturnValue({
-      botPrefix: "!",
-      botTestId: "123123123",
-      channelId: "123123123",
-      cordeBotToken: "12312112312",
-      guildId: "12312312",
-      testMatches: ["tests/cli/testFolder"],
-      botToken: "123123",
-      timeOut: 1000,
-    });
+  it("should call go command with -f option (multiple files)", () => {
+    mockExecProces(config);
+    const testMatches = "./tests ./tests2";
+    program.parse(["node", "test", "-f", testMatches]);
+    expect(runtime.testMatches).toEqual(testMatches.split(" "));
+  });
 
-    await exec();
-    expect(exitMock).toBeCalledWith(0);
+  it("should call go command with --files option (single file)", () => {
+    mockExecProces(config);
+    const testMatches = "./tests";
+    program.parse(["node", "test", "--files", testMatches]);
+    expect(runtime.testMatches).toEqual(testMatches.split(" "));
+  });
+
+  it("should call go command with --files option (multiple files)", () => {
+    mockExecProces(config);
+    const testMatches = "./tests ./tests2";
+    program.parse(["node", "test", "--files", testMatches]);
+    expect(runtime.testMatches).toEqual(testMatches.split(" "));
+  });
+
+  it("should call go command with --config option", () => {
+    mockExecProces(config);
+    const testPath = "potatoe";
+    program.parse(["node", "test", "--config", testPath]);
+    expect(runtime.configFilePath).toBe(testPath);
   });
 });
+
+function mockExecProces(config: IConfigOptions) {
+  Reader.prototype.loadConfig = jest.fn().mockReturnValue(config);
+  jest.spyOn(validateFn, "validate").mockImplementation(null);
+  jest.spyOn(execCommand, "runTests").mockImplementation(null);
+  mockProcess.mockProcessExit();
+  runtime.loginBot = jest.fn().mockReturnValue(Promise.resolve());
+  runtime.events.onceReady = jest.fn().mockReturnValue(Promise.resolve());
+  summary.print = jest.fn().mockReturnValue("");
+  jest.spyOn(validateFn, "validate");
+}
