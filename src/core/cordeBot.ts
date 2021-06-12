@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import {
   Channel,
   Client,
@@ -13,6 +14,7 @@ import {
 } from "discord.js";
 import { CordeClientError } from "../errors";
 import { ICordeBot, IMessageIdentifier, IRoleIdentifier, Primitive } from "../types";
+import { typeOf } from "../utils";
 import { Events } from "./events";
 
 /**
@@ -90,7 +92,7 @@ export class CordeBot implements ICordeBot {
     try {
       return await this._client.login(token);
     } catch (error) {
-      return Promise.reject(this.buildLoginErrorMessage(token, error));
+      throw new CordeClientError(this.buildLoginErrorMessage(token, error.message));
     }
   }
 
@@ -251,8 +253,11 @@ export class CordeBot implements ICordeBot {
   // ([see this issue](https://github.com/microsoft/TypeScript/issues/21732)).
   // Consider using `Record<string, unknown>` instead, as it allows you to more easily inspect and use the keys
 
-  private buildLoginErrorMessage(token: string, error: Record<string, unknown>) {
-    return `Error trying to login with token ${token}. \n` + error;
+  private buildLoginErrorMessage(token: string, error: string) {
+    if (!token) {
+      return `Error trying to login with ${chalk.bold(typeOf(token))} token`;
+    }
+    return `Error trying to login with token ${chalk.bold(token)}. \n` + error;
   }
 
   private validateMessageAndChannel(message: Primitive) {

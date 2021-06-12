@@ -1,3 +1,9 @@
+# 4.1.1
+
+## 🐛 Bug Fixes
+
+- Fix bug that prevents corde to override `timeout` setting [#771](https://github.com/cordejs/corde/pull/773)
+
 # 4.1.0
 
 ## 🚀 Features

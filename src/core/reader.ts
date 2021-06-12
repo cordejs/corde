@@ -7,7 +7,7 @@ import { FileError } from "../errors";
 import { IConfigOptions, ITestFilePattern, ITestFile } from "../types";
 import { utils } from "../utils";
 
-class Reader {
+export class Reader {
   /**
    * Read config file(*.json) from root of project
    * and validates it

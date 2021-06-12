@@ -1,4 +1,3 @@
-import { DEFAULT_TEST_TIMEOUT } from "../consts";
 import { IConfigOptions } from "../types";
 
 /**
@@ -59,12 +58,8 @@ export class Config implements IConfigOptions {
       this.guildId = config.guildId;
     }
 
-    if (!this.timeOut || forceUpdate) {
-      if (config.timeOut) {
-        this.timeOut = config.timeOut;
-      } else {
-        this.timeOut = DEFAULT_TEST_TIMEOUT;
-      }
+    if (config.timeOut && (!this.timeOut || forceUpdate)) {
+      this.timeOut = config.timeOut;
     }
 
     if (config.botPrefix && (!this.botPrefix || forceUpdate)) {

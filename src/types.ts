@@ -1290,3 +1290,10 @@ export interface IRoleData {
   permissions?: RolePermission;
   mentionable?: boolean;
 }
+
+export namespace Config {
+  export interface ICLIOptions {
+    files: string;
+    config: string;
+  }
+}

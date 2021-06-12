@@ -4,7 +4,7 @@ import { init } from "./init";
 import { validate } from "./validate";
 import { configFileType } from "../types";
 import pack from "../package";
-import { runtime } from "../common/runtime";
+import { Config } from "../types";
 import { reader } from "../core/reader";
 import { initEnvVariables } from "../envVariables";
 import { initErrorHandlers } from "../errorHandler";
@@ -29,17 +29,8 @@ program
       " for Array, use only 'corde <path1> <path2>'",
   )
   .action(async (args: any) => {
-    const options = program.opts();
-    if (options.config) {
-      runtime.configFilePath = options.config;
-    }
-    if (args) {
-      runtime.setConfigs({ testMatches: program.args }, true);
-    }
-    if (options.files) {
-      runtime.setConfigs({ testMatches: options.files.split(" ") }, true);
-    }
-    await exec();
+    const options = program.opts() as Config.ICLIOptions;
+    await exec(options, args);
   });
 
 program
