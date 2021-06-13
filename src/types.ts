@@ -9,6 +9,7 @@ import {
   Role,
   RoleManager,
   TextChannel,
+  VoiceChannel,
   VoiceConnection,
 } from "discord.js";
 import { Colors, ColorsHex, RolePermission } from "./utils";
@@ -95,7 +96,7 @@ export interface ICordeBot {
   readonly roleManager: RoleManager;
   readonly channel: TextChannel;
   readonly testBotId: string;
-  readonly voiceConnection: VoiceConnection | null;
+  readonly voiceConnection?: IVoiceChannelState;
 
   /**
    * Authenticate Corde bot to the installed bot in the Discord server.
@@ -146,7 +147,9 @@ export interface ICordeBot {
   findChannel(guild: Guild, channelId: string): GuildChannel | undefined;
   joinVoiceChannel(channelId: string): Promise<void>;
   isInVoiceChannel(): boolean;
-  leaveVoiceConnection(): void;
+  leaveVoiceChannel(): void;
+  isStreamingInVoiceChannel(): void;
+  stopStream(): void;
 }
 
 export type VoidLikeFunction = (() => void) | (() => PromiseLike<void>) | (() => Promise<void>);
@@ -159,6 +162,31 @@ export type Primitive = number | string | boolean | bigint;
 export type ResolveFunction<TResult> = (value: TResult) => void;
 export type RejectFunction = (reason?: any) => void;
 export type EmojisType = string[] | IEmoji[] | (string | IEmoji)[];
+export type Nullable<T> = T | undefined;
+
+export type FullPrimitives = (Primitive & undefined) | null;
+export type DeepReadonly<T> = T extends FullPrimitives ? T : DeepReadonlyObject<T>;
+
+type DeepReadonlyObject<T> = {
+  readonly [P in keyof T]: DeepReadonly<T[P]>;
+};
+
+/**
+ * Define a strict **object**.
+ *
+ * @see https://github.com/typescript-eslint/typescript-eslint/issues/842
+ *
+ * @description
+ *
+ * Definition used to make usage of object types more effectively.
+ *
+ * Don't use `{}` as a type. `{}` actually means "any non-nullish value".
+ * - If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+ * - If you want a type meaning "any value", you probably want `unknown` instead.
+ * - If you want a type meaning "empty object", you probably want `Record<string, never>` instead.
+ *
+ */
+export type StrictObject = Record<string, any>;
 
 /**
  * Get all function `T` parameters as they may be
@@ -1296,4 +1324,9 @@ export namespace Config {
     files: string;
     config: string;
   }
+}
+
+export interface IVoiceChannelState {
+  loggedVoiceChannel: VoiceChannel;
+  connection?: VoiceConnection;
 }
