@@ -1,6 +1,7 @@
 import { IConfigOptions } from "../../src/types";
 import { Config } from "../../src/common/config";
 import { DEFAULT_TEST_TIMEOUT } from "../../src/consts";
+import { config } from "process";
 
 describe("testing config", () => {
   it("should set all values to configs", () => {
@@ -15,6 +16,13 @@ describe("testing config", () => {
     const config = new Config();
     config.setConfigs(configOptions);
     expect(config).toEqual({ ...configOptions, timeOut: DEFAULT_TEST_TIMEOUT });
+  });
+
+  it("should not allow define testMatches as object {}", () => {
+    const config = new Config();
+    // @ts-ignore
+    config.setConfigs({ testMatches: {} });
+    expect(config.testMatches).toEqual([]);
   });
 
   it("should force update settings", () => {
