@@ -2,7 +2,7 @@
 
 ## 🐛 Bug Fixes
 
-- Fix corde attempt to set value `{}` to `config.testMatches`, causing error in initialization due to expectation
+- Fix corde attempt to set value `{}` to `config.testMatches`, causing an error in initialization due to the expectation
   of this property to be an array. [#774](https://github.com/cordejs/corde/pull/774)
 
 # 4.1.1
