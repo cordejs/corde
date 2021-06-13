@@ -10,30 +10,28 @@
  * @see https://github.com/discordjs/guide
  */
 
-import { GuildEmoji, Message, ReactionEmoji } from "discord.js";
+import { GuildEmoji, Message as DMessage, ReactionEmoji } from "discord.js";
 import { mapper } from "../mapper/messageMapper";
 import { IMessageEmbed } from "../types";
-import { CordeTextChannel } from "./cordeTextChannel";
-import { CordeGuild } from "./cordeGuild";
-import { CordeRole } from "./cordeRole";
-import { CordeDMChannel } from "./cordeDMChannel";
-import { CordeNewsChannel } from "./cordeNewsChannel";
-
-interface Author {
-  id: string;
-  isBot: boolean;
-  createdAt: Date;
-  username: string;
-}
+import { TextChannel } from "./TextChannel";
+import { Guild } from "./Guild";
+import { IMessageAuthor } from "../types";
+import { Role } from "./Role";
+import { DMChannel } from "./DMChannel";
+import { NewsChannel } from "./NewsChannel";
+import { AbstractEntity } from "./SnapshotlyEntity";
+import { IMessageSnapshot } from "../types/snapshot";
+import { GuildMember } from "./GuildMember";
 
 /**
  * Encapsulation of [Discord.js Message](https://discord.js.org/#/docs/main/master/class/Message)
  *
  * @see https://discord.com/developers/docs/resources/channel#message-object
  */
-export class CordeMessage {
-  private _message: Message;
-  constructor(message: Message) {
+export class Message extends AbstractEntity<IMessageSnapshot> implements IMessageSnapshot {
+  private _message: DMessage;
+  constructor(message: DMessage) {
+    super();
     if (message.partial) {
       throw new Error("message loaded can not be partial");
     }
@@ -45,7 +43,7 @@ export class CordeMessage {
    * Group activity
    */
   get activity() {
-    return this._message.activity;
+    return this._message.activity ?? undefined;
   }
 
   /**
@@ -66,20 +64,21 @@ export class CordeMessage {
    * Supplemental application information for group activities
    */
   get application() {
-    return this._message.application;
+    return this._message.application ?? undefined;
   }
 
   /**
    * A collection of attachments in the message - e.g. Pictures - mapped by their ID
    */
   get attachments() {
-    return this._message.attachments;
+    // TODO: Map Message Attachments
+    return this._message.attachments.array();
   }
 
   /**
    * The author of the message
    */
-  get author(): Author {
+  get author(): IMessageAuthor {
     const author = this._message.author;
     return {
       id: author.id,
@@ -94,14 +93,14 @@ export class CordeMessage {
    */
   get channel() {
     if (this._message.channel.type === "text") {
-      return new CordeTextChannel(this._message.channel);
+      return new TextChannel(this._message.channel);
     }
 
     if (this._message.channel.type === "dm") {
-      return new CordeDMChannel(this._message.channel);
+      return new DMChannel(this._message.channel);
     }
 
-    return new CordeNewsChannel(this._message.channel);
+    return new NewsChannel(this._message.channel);
   }
 
   /**
@@ -129,21 +128,21 @@ export class CordeMessage {
    * Roles specifically mentioned in this message.
    */
   get mentionedRoles() {
-    return this._message.mentions.roles.array().map((role) => new CordeRole(role));
+    return this._message.mentions.roles.array().map((role) => new Role(role));
   }
 
   /**
    * Roles specifically mentioned in this message.
    */
   get mentionedChannels() {
-    return this._message.mentions.channels.array().map((channel) => new CordeTextChannel(channel));
+    return this._message.mentions.channels.array().map((channel) => new TextChannel(channel));
   }
 
   /**
    * Used for validating a message was sent.
    */
   get nonce() {
-    return this._message.nonce;
+    return this._message.nonce ?? undefined;
   }
 
   /**
@@ -178,7 +177,7 @@ export class CordeMessage {
    * The time the message was last edited at (if applicable)
    */
   get editedAt() {
-    return this._message.editedAt;
+    return this._message.editedAt ?? undefined;
   }
 
   /**
@@ -200,9 +199,9 @@ export class CordeMessage {
    */
   get guild() {
     if (this._message.guild) {
-      return new CordeGuild(this._message.guild);
+      return new Guild(this._message.guild);
     }
-    return null;
+    return undefined;
   }
 
   /**
@@ -217,8 +216,10 @@ export class CordeMessage {
    * Only available if the message comes from a guild where the author is still a member.
    */
   get authorAsGuildMember() {
-    // TODO: Map GuildMember
-    return this._message.member;
+    if (this._message.member) {
+      return new GuildMember(this._message.member);
+    }
+    return undefined;
   }
 
   /**
@@ -255,7 +256,8 @@ export class CordeMessage {
    * Message reference data
    */
   get reference() {
-    return this._message.reference;
+    // TODO: Map messageReference
+    return this._message.reference ?? undefined;
   }
 
   /**
@@ -285,7 +287,7 @@ export class CordeMessage {
    * ID of the webhook that sent the message, if applicable
    */
   get webhookID() {
-    return this._message.webhookID;
+    return this._message.webhookID ?? undefined;
   }
 
   /**
@@ -323,7 +325,7 @@ export class CordeMessage {
    *
    * @returns This.
    */
-  async edit(newContent: string | number | boolean | bigint): Promise<CordeMessage>;
+  async edit(newContent: string | number | boolean | bigint): Promise<Message>;
   async edit(newContent: string | number | boolean | bigint, embed?: IMessageEmbed) {
     if (embed) {
       const mappedEmbed = mapper.embedInterfaceToMessageEmbed(embed);
@@ -398,7 +400,7 @@ export class CordeMessage {
    *
    * @returns Reaction added to message.
    */
-  async reply(content: string | number | boolean | bigint): Promise<CordeMessage>;
+  async reply(content: string | number | boolean | bigint): Promise<Message>;
   async reply(content: string | number | boolean | bigint, embed?: IMessageEmbed) {
     if (embed) {
       const mappedEmbed = mapper.embedInterfaceToMessageEmbed(embed);

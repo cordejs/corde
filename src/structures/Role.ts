@@ -10,24 +10,24 @@
  * @see https://github.com/discordjs/guide
  */
 
-import { ColorResolvable, Role } from "discord.js";
+import { ColorResolvable, Role as DRole } from "discord.js";
 import { IBaseRole } from "../types";
+import { IRoleSnapshot } from "../types/snapshot";
 import { Colors, resolveColor, RolePermission } from "../utils";
+import { AbstractEntity } from "./SnapshotlyEntity";
 
 /**
  * Encapsulation of [Discord.js Role](https://discord.js.org/#/docs/main/stable/class/Role).
  * @see https://discord.com/developers/docs/topics/permissions#role-object
  */
-export class CordeRole {
-  private _role: Role;
-  constructor(role: Role) {
+export class Role extends AbstractEntity<IRoleSnapshot> implements IRoleSnapshot {
+  private _role: DRole;
+  constructor(role: DRole) {
+    super();
     this._role = role;
   }
 
-  /**
-   * Integer representation of hexadecimal color code.
-   */
-  get color(): number {
+  get color() {
     return this._role.color;
   }
 

@@ -10,25 +10,21 @@
  * @see https://github.com/discordjs/guide
  */
 
-import { StreamOptions } from "discord.js";
+import { StreamOptions, VoiceChannel } from "discord.js";
 import internal from "stream";
-import { ICordeBot } from "../types";
 import { AudioStream } from "./audioStream";
 
 /**
  * Encapsulate functions of a voice channel connection.
  */
-export class VoiceChannel {
-  private _bot: ICordeBot;
+export class DescriptiveVoiceChannel {
   private _audioStream?: AudioStream;
 
   get stream() {
     return this._audioStream;
   }
 
-  constructor(bot: ICordeBot) {
-    this._bot = bot;
-  }
+  constructor(private voiceChannel: VoiceChannel) {}
 
   /**
    * Play an audio resource.
@@ -48,13 +44,12 @@ export class VoiceChannel {
    *
    * @returns this instance.
    */
-  play(input: string | internal.Readable, options?: StreamOptions) {
-    if (!this._bot.voiceConnection) {
-      throw new Error("can not play something outside a voice connection");
+  async play(input: string | internal.Readable, options?: StreamOptions) {
+    const con = await this.voiceChannel.join();
+    const dispatcher = con.play(input, options);
+    if (dispatcher) {
+      this._audioStream = new AudioStream(dispatcher);
     }
-
-    const dispatcher = this._bot.voiceConnection.play(input, options);
-    this._audioStream = new AudioStream(dispatcher);
     return this._audioStream;
   }
 
@@ -62,7 +57,7 @@ export class VoiceChannel {
    * Disconnects the voice connection, causing a disconnect and closing event to be emitted.
    */
   disconnect() {
-    this._bot.voiceConnection?.disconnect();
+    this.voiceChannel?.leave();
     this._audioStream?.destroy();
     this._audioStream = undefined;
     return this;

@@ -10,15 +10,19 @@
  * @see https://github.com/discordjs/guide
  */
 
-import { NewsChannel } from "discord.js";
-import { CordeTextBasedChannel } from "./cordeTextBasedChannel";
+import { NewsChannel as DNewsChannel } from "discord.js";
+import { INewsChannelSnapshot } from "../types/snapshot";
+import { TextBasedChannel } from "./TextBasedChannel";
 
 /**
  * Encapsulation of [Discord.js News Channel](https://discord.js.org/#/docs/main/master/class/NewsChannel)
  *
  */
-export class CordeNewsChannel extends CordeTextBasedChannel<NewsChannel> {
-  constructor(channel: NewsChannel) {
+export class NewsChannel
+  extends TextBasedChannel<DNewsChannel, INewsChannelSnapshot>
+  implements INewsChannelSnapshot
+{
+  constructor(channel: DNewsChannel) {
     super(channel);
   }
 
@@ -27,5 +31,13 @@ export class CordeNewsChannel extends CordeTextBasedChannel<NewsChannel> {
    */
   get isViewable() {
     return this._channel.viewable;
+  }
+
+  get nsfw() {
+    return this._channel.nsfw;
+  }
+
+  get topic() {
+    return this._channel.topic ?? undefined;
   }
 }

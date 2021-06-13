@@ -158,6 +158,9 @@ export class AudioStream {
     return this;
   }
 
+  /**
+   * Destroys this stream
+   */
   destroy() {
     this._streamDispatcher.destroy();
   }

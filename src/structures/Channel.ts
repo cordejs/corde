@@ -10,59 +10,43 @@
  * @see https://github.com/discordjs/guide
  */
 
-import { Channel } from "discord.js";
+import { Channel as DChannel } from "discord.js";
+import { IChannelSnapshot } from "../types/snapshot";
+import { AbstractEntity } from "./SnapshotlyEntity";
 
-export class CordeChannel<T extends Channel> {
+export class Channel<T extends DChannel, S extends IChannelSnapshot>
+  extends AbstractEntity<S>
+  implements IChannelSnapshot
+{
   protected _channel: T;
 
   constructor(channel: T) {
+    super();
     this._channel = channel;
   }
 
-  /**
-   * The unique ID of the channel.
-   */
   get id() {
     return this._channel.id;
   }
 
-  /**
-   *
-   */
   get createdAt() {
     return this._channel.createdAt;
   }
 
-  /**
-   * Whether the channel has been deleted.
-   */
   get isDeleted() {
     return this._channel.deleted;
   }
 
-  /**
-   * The type of the channel, either:
-   *
-   * * `dm` - a DM channel
-   * * `text` - a guild text channel
-   * * `voice` - a guild voice channel
-   * * `category` - a guild category channel
-   * * `news` - a guild news channel
-   * * `store` - a guild store channel
-   * * `stage` - a guild stage channel
-   * * `unknown` - a generic channel of unknown type, could be Channel or GuildChannel
-   *
-   */
   get type() {
     return this._channel.type;
   }
 
   /**
-   * Deletes this channel.
+   * Deletes this channel if it's not already deleted (`this.isDeleted`).
    */
   async delete() {
     if (!this.isDeleted) {
-      await this._channel.delete();
+      await this.executeWithErrorOverride(() => this._channel.delete());
     }
     return this;
   }

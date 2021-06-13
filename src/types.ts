@@ -1330,3 +1330,10 @@ export interface IVoiceChannelState {
   loggedVoiceChannel: VoiceChannel;
   connection?: VoiceConnection;
 }
+
+export interface IMessageAuthor {
+  id: string;
+  isBot: boolean;
+  createdAt: Date;
+  username: string;
+}

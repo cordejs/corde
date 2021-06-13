@@ -10,19 +10,21 @@
  * @see https://github.com/discordjs/guide
  */
 
-import { DMChannel, Message, NewsChannel, TextChannel } from "discord.js";
+import { DMChannel, Message as DMessage, NewsChannel, TextChannel } from "discord.js";
 import { mapper } from "../mapper/messageMapper";
-import { IMessageEmbed } from "../types";
+import { IMessageEmbed, Nullable } from "../types";
+import { IChannelSnapshot } from "../types/snapshot";
 import { isPrimitiveValue } from "../utils";
-import { CordeChannel } from "./cordeChannel";
-import { CordeMessage } from "./cordeMessage";
+import { Channel } from "./Channel";
+import { Message } from "./Message";
 
 /**
  * Partial Encapsulation of [Discord.js TextChannel](https://discord.js.org/#/docs/main/master/class/TextChannel).
  */
-export class CordeTextBasedChannel<
+export class TextBasedChannel<
   T extends TextChannel | DMChannel | NewsChannel,
-> extends CordeChannel<T> {
+  S extends IChannelSnapshot,
+> extends Channel<T, S> {
   constructor(channel: T) {
     super(channel);
   }
@@ -51,11 +53,11 @@ export class CordeTextBasedChannel<
   /**
    * The Message object of the last message in the channel, if one was sent.
    */
-  get lastMessage() {
+  get lastMessage(): Nullable<Message> {
     if (this._channel.lastMessage) {
-      return new CordeMessage(this._channel.lastMessage);
+      return new Message(this._channel.lastMessage);
     }
-    return null;
+    return undefined;
   }
 
   /**
@@ -146,13 +148,13 @@ export class CordeTextBasedChannel<
    *
    */
   async send(message: string | number | bigint | boolean | IMessageEmbed) {
-    let _message!: Message;
+    let _message!: DMessage;
     if (isPrimitiveValue(message)) {
       _message = await this._channel.send(message);
     } else {
       const embed = mapper.embedInterfaceToMessageEmbed(message);
       _message = await this._channel.send(embed);
     }
-    return new CordeMessage(_message);
+    return new Message(_message);
   }
 }

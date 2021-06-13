@@ -15,10 +15,12 @@ import {
   GuildChannelCloneOptions,
   InviteOptions,
   OverwriteData,
-  TextChannel,
+  TextChannel as DTextChannel,
 } from "discord.js";
-import { CordeGuild } from "./cordeGuild";
-import { CordeTextBasedChannel } from "./cordeTextBasedChannel";
+import { ITextChannelSnapshot } from "../types/snapshot";
+import { Guild } from "./Guild";
+import { GuildMember } from "./GuildMember";
+import { TextBasedChannel } from "./TextBasedChannel";
 
 interface WebhookOptions {
   avatar?: Buffer | string;
@@ -28,87 +30,55 @@ interface WebhookOptions {
 /**
  * Encapsulation of [Discord.js TextChannel](https://discord.js.org/#/docs/main/master/class/TextChannel).
  */
-export class CordeTextChannel extends CordeTextBasedChannel<TextChannel> {
-  constructor(channel: TextChannel) {
+export class TextChannel
+  extends TextBasedChannel<DTextChannel, ITextChannelSnapshot>
+  implements ITextChannelSnapshot
+{
+  constructor(channel: DTextChannel) {
     super(channel);
   }
 
-  /**
-   * Whether the channel is deletable by the client user.
-   */
   get isDeletable() {
     return this._channel.deletable;
   }
 
-  /**
-   * The guild the channel is in
-   */
   get guild() {
-    return new CordeGuild(this._channel.guild);
+    return new Guild(this._channel.guild);
   }
 
-  /**
-   * Whether the channel is manageable by the client user.
-   */
   get isManageable() {
     return this._channel.manageable;
   }
 
-  /**
-   * A collection of cached members of this channel, mapped by their ID.
-   * Members that can view this channel, if the channel is text based. Members in the channel, if the channel is voice based.
-   */
   get members() {
-    // TODO: map GuildMember
-    return this._channel.members.array();
+    return this._channel.members.map((member) => new GuildMember(member));
   }
 
-  /**
-   * The name of the guild channel.
-   */
   get name() {
     return this._channel.name;
   }
 
-  /**
-   * Whether the guild considers this channel NSFW (Not Safe for Work)
-   */
   get nsfw() {
     return this._channel.nsfw;
   }
 
-  /**
-   * A list of permission overwrites in this channel for roles and users
-   */
   get permissionOverwrites() {
     // TODO: map PermissionOverwrites
     return this._channel.permissionOverwrites.array();
   }
 
-  /**
-   * If the permissionOverwrites match the parent channel, null if no parent.
-   */
   get permissionsLocked() {
     return this._channel.permissionsLocked;
   }
 
-  /**
-   * The position of the channel
-   */
   get position() {
     return this._channel.position;
   }
 
-  /**
-   * The ratelimit per user for this channel in seconds.
-   */
   get rateLimitPerUser() {
     return this._channel.rateLimitPerUser;
   }
 
-  /**
-   * The raw position of the channel from discord.
-   */
   get rawPosition() {
     return this._channel.rawPosition;
   }
@@ -117,9 +87,6 @@ export class CordeTextChannel extends CordeTextBasedChannel<TextChannel> {
     return this._channel.topic;
   }
 
-  /**
-   * Whether the channel is viewable by the client user.
-   */
   get isViewable() {
     return this._channel.viewable;
   }
@@ -132,7 +99,7 @@ export class CordeTextChannel extends CordeTextBasedChannel<TextChannel> {
    */
   async clone(options?: GuildChannelCloneOptions) {
     const clone = await this._channel.clone(options);
-    return new CordeTextChannel(clone);
+    return new TextChannel(clone);
   }
 
   /**
@@ -180,7 +147,7 @@ export class CordeTextChannel extends CordeTextBasedChannel<TextChannel> {
       return this;
     }
 
-    this._channel = (await this._channel.delete()) as TextChannel;
+    this._channel = (await this._channel.delete()) as DTextChannel;
     return this;
   }
 

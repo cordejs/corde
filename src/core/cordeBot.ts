@@ -10,10 +10,15 @@ import {
   Role,
   TextChannel,
   VoiceChannel,
-  VoiceConnection,
 } from "discord.js";
 import { CordeClientError } from "../errors";
-import { ICordeBot, IMessageIdentifier, IRoleIdentifier, Primitive } from "../types";
+import {
+  ICordeBot,
+  IMessageIdentifier,
+  IRoleIdentifier,
+  IVoiceChannelState,
+  Primitive,
+} from "../types";
 import { typeOf } from "../utils";
 import { Events } from "./events";
 
@@ -28,7 +33,7 @@ export class CordeBot implements ICordeBot {
   private readonly _channelId: string;
   private readonly _testBotId: string;
   private readonly _client: Client;
-  private _voiceConnection!: VoiceConnection | null;
+  private _voiceConnection?: IVoiceChannelState;
 
   private textChannel!: TextChannel;
   private _isReady: boolean;
@@ -339,7 +344,10 @@ export class CordeBot implements ICordeBot {
     }
 
     if (channel instanceof VoiceChannel) {
-      this._voiceConnection = await channel.join();
+      this._voiceConnection = {
+        loggedVoiceChannel: channel,
+        connection: await channel.join(),
+      };
     }
 
     throw new CordeClientError("channel is not a voice channel to connect");
@@ -349,9 +357,17 @@ export class CordeBot implements ICordeBot {
     return !!this._voiceConnection;
   }
 
-  leaveVoiceConnection() {
-    this._voiceConnection?.disconnect();
-    this._voiceConnection = null;
+  isStreamingInVoiceChannel() {
+    return !!this._voiceConnection?.connection;
+  }
+
+  stopStream() {
+    this._voiceConnection?.connection?.disconnect();
+  }
+
+  leaveVoiceChannel() {
+    this._voiceConnection?.loggedVoiceChannel.leave();
+    this._voiceConnection = undefined;
   }
 
   private convertToTextChannel(channel: Channel): TextChannel {

@@ -16,7 +16,7 @@ import {
   ChannelResolvable,
   DefaultMessageNotifications,
   ExplicitContentFilterLevel,
-  Guild,
+  Guild as DGuild,
   GuildEditData,
   GuildMemberResolvable,
   GuildWidgetData,
@@ -29,225 +29,127 @@ import {
   VerificationLevelType,
 } from "../types";
 import { Locale } from "../types";
+import { IGuildSnapshot } from "../types/snapshot";
+import { AbstractEntity } from "./SnapshotlyEntity";
 
 /**
- * Encapsulation of [Discord.js Guild](https://discord.js.org/#/docs/main/stable/class/Guild)
+ * Descriptive encapsulation of [Discord.js Guild](https://discord.js.org/#/docs/main/stable/class/Guild)
  *
  * @see https://discord.com/developers/docs/resources/guild
  */
-export class CordeGuild {
-  constructor(private _guild: Guild) {}
+export class Guild extends AbstractEntity<IGuildSnapshot> implements IGuildSnapshot {
+  constructor(private _guild: DGuild) {
+    super();
+  }
 
-  /**
-   * The ID of the voice channel where AFK members are moved
-   */
   get afkChannelID(): string | null {
     return this._guild.afkChannelID;
   }
 
-  /**
-   * The time in seconds before a user is counted as "away from keyboard"
-   */
   get afkTimeout() {
     return this._guild.afkTimeout;
   }
 
-  /**
-   * The ID of the application that created this guild (if applicable)
-   */
   get applicationID() {
     return this._guild.applicationID;
   }
 
-  /**
-   * The approximate amount of members the guild has.
-   *
-   * *Needs call **fetch** if you want to receive this parameter*
-   */
   get approximateMemberCount() {
     return this._guild.approximateMemberCount;
   }
 
-  /**
-   * The approximate amount of presences the guild has.
-   *
-   * *Needs call **fetch** if you want to receive this parameter*
-   */
   get approximatePresenceCount() {
     return this._guild.approximatePresenceCount;
   }
 
-  /**
-   * Whether the guild is available to access. If it is not available, it indicates a server outage.
-   */
   get isAvailable() {
     return this._guild.available;
   }
 
-  /**
-   * The hash of the guild banner.
-   */
   get banner() {
     return this._guild.banner;
   }
 
-  /**
-   * Whether the bot has been removed from the guild.
-   */
   get isDeleted() {
     return this._guild.deleted;
   }
 
-  /**
-   * The description of the guild, if any.
-   */
   get description() {
     return this._guild.description;
   }
 
-  /**
-   * The hash of the guild discovery splash image.
-   */
   get discoverySplash() {
     return this._guild.discoverySplash;
   }
 
-  /**
-   * The hash of the guild icon.
-   */
   get icon() {
     return this._guild.icon;
   }
 
-  /**
-   * The Unique ID of the guild, useful for comparisons.
-   */
   get id() {
     return this._guild.id;
   }
 
-  /**
-   * The time corde's bot joined the guild.
-   */
   get joinedAt() {
     return this._guild.joinedAt;
   }
 
-  /**
-   * Whether has more than large_threshold members, 50 by default.
-   */
   get isLarge() {
     return this._guild.large;
   }
 
-  /**
-   * The maximum amount of members the guild can have.
-   */
   get maximumMembers() {
     return this._guild.maximumMembers;
   }
 
-  /**
-   * The maximum amount of presences the guild can have.
-   *
-   * *Needs call **fetch** if you want to receive this parameter*
-   */
   get maximumPresences() {
     return this._guild.maximumPresences;
   }
 
-  /**
-   * The full amount of members in this guild.
-   */
   get membersCount() {
     return this._guild.memberCount;
   }
 
-  /**
-   * The required MFA level for the guild
-   *
-   * @see https://discord.com/developers/docs/resources/guild#guild-object-mfa-level
-   */
   get mfaLevel() {
     return this._guild.mfaLevel;
   }
 
-  /**
-   * The name of the guild
-   */
   get name() {
     return this._guild.name;
   }
 
-  /**
-   * The user ID of this guild's owner
-   */
   get ownerId() {
     return this._guild.ownerID;
   }
 
-  /**
-   * If this guild is partnered
-   */
   get isPartnered() {
     return this._guild.partnered;
   }
 
-  /**
-   * The preferred locale of a Community guild.
-   * Used in server discovery and notices from Discord.
-   *
-   * Default is `en-US`
-   */
   get preferredLocale() {
     return this._guild.preferredLocale;
   }
 
-  /**
-   * The total number of boosts for this server
-   */
   get premiumSubscriptionCount() {
     return this._guild.premiumSubscriptionCount;
   }
 
-  /**
-   * The id of the channel where admins and moderators
-   * of Community guilds receive notices from Discord
-   */
   get publicUpdatesChannelId() {
     return this._guild.publicUpdatesChannelID;
   }
 
-  /**
-   * The region the guild is located in
-   *
-   * @see https://discord.com/developers/docs/resources/voice#voice-region-object
-   */
   get region() {
     return this._guild.region;
   }
 
-  /**
-   * An array of guild features partnered guilds have enabled.
-   *
-   * @see https://discord.com/developers/docs/resources/guild#guild-object-guild-features
-   */
   get features(): GuildFeaturesType[] {
     return this._guild.features;
   }
 
-  /**
-   * If this guild is verified
-   */
   get isVerified() {
     return this._guild.verified;
   }
 
-  /**
-   * Default message notification level.
-   *
-   * @see https://discord.com/developers/docs/resources/guild#guild-object-default-message-notification-level
-   */
   get defaultMessageNotifications() {
     return this._guild.defaultMessageNotifications;
   }
@@ -324,7 +226,7 @@ export class CordeGuild {
   async updateBanner(newBanner: string): Promise<this>;
   async updateBanner(newBanner: Buffer): Promise<this>;
   async updateBanner(newBanner: string | Buffer) {
-    const guild = await this._guild.setBanner(newBanner);
+    const guild = await this.executeWithErrorOverride(() => this._guild.setBanner(newBanner));
     this._guild = guild;
     return this;
   }
@@ -343,7 +245,7 @@ export class CordeGuild {
   async updateSplash(newSplash: string): Promise<this>;
   async updateSplash(newSplash: Buffer): Promise<this>;
   async updateSplash(newSplash: string | Buffer) {
-    const guild = await this._guild.setSplash(newSplash);
+    const guild = await this.executeWithErrorOverride(() => this._guild.setSplash(newSplash));
     this._guild = guild;
     return this;
   }
@@ -365,7 +267,9 @@ export class CordeGuild {
   async updateVerificationLevel(
     verificationLevel: VerificationLevel | number | VerificationLevelType,
   ) {
-    const guild = await this._guild.setVerificationLevel(verificationLevel);
+    const guild = await this.executeWithErrorOverride(() =>
+      this._guild.setVerificationLevel(verificationLevel),
+    );
     this._guild = guild;
     return this;
   }
@@ -384,7 +288,9 @@ export class CordeGuild {
   async updateSystemChannelFlags(
     newSystemChannelFlags: SystemChannelFlagsResolvable,
   ): Promise<this> {
-    const guild = await this._guild.setSystemChannelFlags(newSystemChannelFlags);
+    const guild = await this.executeWithErrorOverride(() =>
+      this._guild.setSystemChannelFlags(newSystemChannelFlags),
+    );
     this._guild = guild;
     return this;
   }
@@ -406,7 +312,7 @@ export class CordeGuild {
    * });
    */
   async updateWidget(newWidget: GuildWidgetData) {
-    this._guild = await this._guild.setWidget(newWidget);
+    this._guild = await this.executeWithErrorOverride(() => this._guild.setWidget(newWidget));
     return this;
   }
 
@@ -426,7 +332,9 @@ export class CordeGuild {
   async updateSystemChannel(newChannelId: string): Promise<this>;
   async updateSystemChannel(newChannel: Channel): Promise<this>;
   async updateSystemChannel(newChannel: string | Channel) {
-    this._guild = await this._guild.setSystemChannel(newChannel);
+    this._guild = await this.executeWithErrorOverride(() =>
+      this._guild.setSystemChannel(newChannel),
+    );
     return this;
   }
 
@@ -446,7 +354,9 @@ export class CordeGuild {
   async updateRulesChannel(newChannelId: string): Promise<this>;
   async updateRulesChannel(newChannel: Channel): Promise<this>;
   async updateRulesChannel(newChannel: string | Channel) {
-    this._guild = await this._guild.setRulesChannel(newChannel);
+    this._guild = await this.executeWithErrorOverride(() =>
+      this._guild.setRulesChannel(newChannel),
+    );
     return this;
   }
 
@@ -462,7 +372,9 @@ export class CordeGuild {
    *  { role: role2ID, position: updatedRole2Index })
    */
   async updateRolePosition(...newRolePositions: RolePosition[]) {
-    this._guild = await this._guild.setRolePositions(newRolePositions);
+    this._guild = await this.executeWithErrorOverride(() =>
+      this._guild.setRolePositions(newRolePositions),
+    );
     return this;
   }
 
@@ -482,7 +394,9 @@ export class CordeGuild {
   async updatePublicUpdatesChannel(newPublicUpdatesChannel: string): Promise<this>;
   async updatePublicUpdatesChannel(newPublicUpdatesChannel: Channel): Promise<this>;
   async updatePublicUpdatesChannel(newPublicUpdatesChannel: string | Channel) {
-    this._guild = await this._guild.setPublicUpdatesChannel(newPublicUpdatesChannel);
+    this._guild = await this.executeWithErrorOverride(() =>
+      this._guild.setPublicUpdatesChannel(newPublicUpdatesChannel),
+    );
     return this;
   }
 
@@ -496,7 +410,7 @@ export class CordeGuild {
    * guild.setOwner(guild.members.cache.first())
    */
   async updateOwner(newOwner: GuildMemberResolvable) {
-    this._guild = await this._guild.setOwner(newOwner);
+    this._guild = await this.executeWithErrorOverride(() => this._guild.setOwner(newOwner));
     return this;
   }
 
@@ -513,7 +427,7 @@ export class CordeGuild {
   async updateIcon(newIcon: string): Promise<this>;
   async updateIcon(newIcon: Buffer): Promise<this>;
   async updateIcon(newIcon: string | Buffer) {
-    this._guild = await this._guild.setIcon(newIcon);
+    this._guild = await this.executeWithErrorOverride(() => this._guild.setIcon(newIcon));
     return this;
   }
 
@@ -531,7 +445,9 @@ export class CordeGuild {
     newExplicitContentFilter: ExplicitContentFilterLevel,
   ): Promise<this>;
   async updateExplicitContentFilter(newExplicitContentFilter: number | ExplicitContentFilterLevel) {
-    this._guild = await this._guild.setExplicitContentFilter(newExplicitContentFilter);
+    this._guild = await this.executeWithErrorOverride(() =>
+      this._guild.setExplicitContentFilter(newExplicitContentFilter),
+    );
     return this;
   }
 
@@ -547,7 +463,9 @@ export class CordeGuild {
   async updateDiscoverySplash(newDiscoverySplash: string): Promise<this>;
   async updateDiscoverySplash(newDiscoverySplash: Buffer): Promise<this>;
   async updateDiscoverySplash(newDiscoverySplash: string | Buffer) {
-    this._guild = await this._guild.setDiscoverySplash(newDiscoverySplash);
+    this._guild = await this.executeWithErrorOverride(() =>
+      this._guild.setDiscoverySplash(newDiscoverySplash),
+    );
     return this;
   }
 
@@ -568,7 +486,9 @@ export class CordeGuild {
   async updateDefaultMessageNotifications(
     newDefaultMessageNotifications: number | DefaultMessageNotifications,
   ) {
-    this._guild = await this._guild.setDefaultMessageNotifications(newDefaultMessageNotifications);
+    this._guild = await this.executeWithErrorOverride(() =>
+      this._guild.setDefaultMessageNotifications(newDefaultMessageNotifications),
+    );
     return this;
   }
 
@@ -585,7 +505,9 @@ export class CordeGuild {
    * { channel: channel2ID, position: newChannel2Index })
    */
   async updateChannelPositions(...newChannelPositions: ChannelPosition[]) {
-    this._guild = await this._guild.setChannelPositions(newChannelPositions);
+    this._guild = await this.executeWithErrorOverride(() =>
+      this._guild.setChannelPositions(newChannelPositions),
+    );
     return this;
   }
 
@@ -599,7 +521,9 @@ export class CordeGuild {
    * guild.updateAFKTimeout(60)
    */
   async updateAFKTimeout(newAfkTimeout: number) {
-    this._guild = await this._guild.setAFKTimeout(newAfkTimeout);
+    this._guild = await this.executeWithErrorOverride(() =>
+      this._guild.setAFKTimeout(newAfkTimeout),
+    );
     return this;
   }
 
@@ -615,7 +539,9 @@ export class CordeGuild {
   async updateAFKChannel(newAfkChannel: string): Promise<this>;
   async updateAFKChannel(newAfkChannel: Channel): Promise<this>;
   async updateAFKChannel(newAfkChannel: ChannelResolvable) {
-    this._guild = await this._guild.setAFKChannel(newAfkChannel);
+    this._guild = await this.executeWithErrorOverride(() =>
+      this._guild.setAFKChannel(newAfkChannel),
+    );
     return this;
   }
 
@@ -633,7 +559,7 @@ export class CordeGuild {
    * })
    */
   async update(newGuildData: GuildEditData) {
-    this._guild = await this._guild.edit(newGuildData);
+    this._guild = await this.executeWithErrorOverride(() => this._guild.edit(newGuildData));
     return this;
   }
 }

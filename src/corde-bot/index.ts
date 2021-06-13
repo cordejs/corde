@@ -10,24 +10,22 @@
  * @see https://github.com/discordjs/guide
  */
 
-import { Channel, DMChannel, NewsChannel, TextChannel } from "discord.js";
+import {
+  Channel as DChannel,
+  DMChannel as DDMChannel,
+  NewsChannel as DNewsChannel,
+  TextChannel as DTextChannel,
+} from "discord.js";
 import { CordeClientError } from "../errors";
 import { mapper } from "../mapper/messageMapper";
-import {
-  CordeDMChannel,
-  CordeGuild,
-  CordeMessage,
-  CordeNewsChannel,
-  CordeRole,
-  CordeTextChannel,
-} from "../structures";
+import { DMChannel, Guild, Message, NewsChannel, Role, TextChannel } from "../structures";
 import { ICordeBot, IMessageEmbed, IRoleData, IRoleIdentifier, Primitive } from "../types";
 import { isPrimitiveValue } from "../utils";
-import { VoiceChannel } from "./voiceChannel";
+import { DescriptiveVoiceChannel } from "./voiceChannel";
 
 export class Bot {
   private _bot: ICordeBot;
-  private _voiceChannel: VoiceChannel | undefined;
+  private _voiceChannel: DescriptiveVoiceChannel | undefined;
 
   get voiceChannel() {
     return this._voiceChannel;
@@ -39,12 +37,16 @@ export class Bot {
 
   async joinVoiceChannel(channelId: string) {
     await this._bot.joinVoiceChannel(channelId);
-    this._voiceChannel = new VoiceChannel(this._bot);
+    if (this._bot.voiceConnection?.loggedVoiceChannel) {
+      this._voiceChannel = new DescriptiveVoiceChannel(
+        this._bot.voiceConnection?.loggedVoiceChannel,
+      );
+    }
     return this._voiceChannel;
   }
 
   leaveVoiceChannel() {
-    this._bot.leaveVoiceConnection();
+    this._bot.leaveVoiceChannel();
     this._voiceChannel = undefined;
   }
 
@@ -65,7 +67,7 @@ export class Bot {
     const guild = await this._bot.fetchGuild(id);
 
     if (guild) {
-      return new CordeGuild(guild);
+      return new Guild(guild);
     }
 
     return undefined;
@@ -75,19 +77,19 @@ export class Bot {
    * Gets the channel defined in `configs`
    */
   async getChannel() {
-    return new CordeTextChannel(this._bot.channel);
+    return new TextChannel(this._bot.channel);
   }
 
   /**
    * Gets the guild defined in `configs`
    */
   getGuild() {
-    return new CordeGuild(this._bot.guild);
+    return new Guild(this._bot.guild);
   }
 
-  fingGuild(id: string) {
+  findGuild(id: string) {
     const guild = this._bot.findGuild(id);
-    return new CordeGuild(guild);
+    return new Guild(guild);
   }
 
   /**
@@ -117,9 +119,9 @@ export class Bot {
    *
    * @since 2.0
    */
-  async send(message: string | number | boolean | bigint): Promise<CordeMessage>;
-  async send(message: IMessageEmbed): Promise<CordeMessage>;
-  async send(message: Primitive | IMessageEmbed): Promise<CordeMessage> {
+  async send(message: string | number | boolean | bigint): Promise<Message>;
+  async send(message: IMessageEmbed): Promise<Message>;
+  async send(message: Primitive | IMessageEmbed): Promise<Message> {
     if (!message) {
       throw new Error("Can not send a empty message");
     }
@@ -132,12 +134,12 @@ export class Bot {
 
     if (isPrimitiveValue(message)) {
       const msg = await this._bot.sendMessage(message);
-      return new CordeMessage(msg);
+      return new Message(msg);
     }
 
     const embed = mapper.embedInterfaceToMessageEmbed(message);
     const msg = await this._bot.sendMessage(embed);
-    return new CordeMessage(msg);
+    return new Message(msg);
   }
 
   /**
@@ -158,7 +160,7 @@ export class Bot {
 
     try {
       const createdRole = await this._bot.roleManager.create({ data });
-      return new CordeRole(createdRole);
+      return new Role(createdRole);
     } catch (error) {
       throw Error("Could not create the role. " + error);
     }
@@ -171,7 +173,7 @@ export class Bot {
    * @throws CordeClientError if corde's bot is not connected.
    * @returns Role that matches the provided **id** or **name**
    */
-  getRole(id: string): CordeRole | undefined;
+  getRole(id: string): Role | undefined;
   /**
    * Finds a role in config guild's cache, basing on it's **id** or **name**.
    *
@@ -184,7 +186,7 @@ export class Bot {
    * @throws CordeClientError if corde's bot is not connected.
    * @returns Role that matches the provided **id** or **name**
    */
-  getRole(data: IRoleIdentifier): CordeRole | undefined;
+  getRole(data: IRoleIdentifier): Role | undefined;
   getRole(data: string | IRoleIdentifier) {
     if (!this._bot.isLoggedIn()) {
       throw new CordeClientError("Bot is not connected yet. No role can be searched");
@@ -192,7 +194,7 @@ export class Bot {
 
     const _role = this._getRole(data);
     if (_role) {
-      return new CordeRole(_role);
+      return new Role(_role);
     }
     return undefined;
   }
@@ -204,17 +206,17 @@ export class Bot {
     return this._bot.getRoles().find((r) => r.id === data.id || r.name === data.name);
   }
 
-  private mapToCordeInheratedChannel(channel: Channel) {
-    if (channel instanceof TextChannel) {
-      return new CordeTextChannel(channel);
+  private mapToCordeInheratedChannel(channel: DChannel) {
+    if (channel instanceof DTextChannel) {
+      return new TextChannel(channel);
     }
 
-    if (channel instanceof NewsChannel) {
-      return new CordeNewsChannel(channel);
+    if (channel instanceof DNewsChannel) {
+      return new NewsChannel(channel);
     }
 
-    if (channel instanceof DMChannel) {
-      return new CordeDMChannel(channel);
+    if (channel instanceof DDMChannel) {
+      return new DMChannel(channel);
     }
 
     // TODO: Create VM Channel

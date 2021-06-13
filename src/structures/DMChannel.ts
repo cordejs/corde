@@ -10,16 +10,20 @@
  * @see https://github.com/discordjs/guide
  */
 
-import { DMChannel } from "discord.js";
-import { CordeTextBasedChannel } from "./cordeTextBasedChannel";
+import { DMChannel as DDMChannel } from "discord.js";
+import { IDMChannelSnapshot } from "../types/snapshot";
+import { TextBasedChannel } from "./TextBasedChannel";
 
 /**
  * Encapsulation of [Discord.js DM Channel](https://discord.js.org/#/docs/main/master/class/DMChannel)
  *
  * @see https://discord.com/developers/docs/resources/guild
  */
-export class CordeDMChannel extends CordeTextBasedChannel<DMChannel> {
-  constructor(dmChannel: DMChannel) {
+export class DMChannel
+  extends TextBasedChannel<DDMChannel, IDMChannelSnapshot>
+  implements IDMChannelSnapshot
+{
+  constructor(dmChannel: DDMChannel) {
     if (!dmChannel.partial) {
       throw new Error("Can not load a partial channel");
     }

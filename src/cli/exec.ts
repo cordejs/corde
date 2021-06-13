@@ -7,11 +7,11 @@ import { summary } from "../core/summary";
 import { TestExecutor } from "../core/testExecutor";
 import { LogUpdate } from "../utils/logUpdate";
 import { validate } from "./validate";
-import { Config } from "../types";
+import { Config, StrictObject } from "../types";
 
 declare module "ora" {
   interface Ora {
-    _spinner: Record<string, unknown>;
+    _spinner: StrictObject;
   }
 }
 
