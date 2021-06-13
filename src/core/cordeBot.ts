@@ -64,6 +64,10 @@ export class CordeBot implements ICordeBot {
     this._isReady = false;
   }
 
+  get client() {
+    return this._client;
+  }
+
   get guild() {
     return this.textChannel.guild;
   }
@@ -345,9 +349,10 @@ export class CordeBot implements ICordeBot {
 
     if (channel instanceof VoiceChannel) {
       this._voiceConnection = {
-        loggedVoiceChannel: channel,
+        channel: channel,
         connection: await channel.join(),
       };
+      return this._voiceConnection;
     }
 
     throw new CordeClientError("channel is not a voice channel to connect");
@@ -366,7 +371,7 @@ export class CordeBot implements ICordeBot {
   }
 
   leaveVoiceChannel() {
-    this._voiceConnection?.loggedVoiceChannel.leave();
+    this._voiceConnection?.channel.leave();
     this._voiceConnection = undefined;
   }
 

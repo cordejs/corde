@@ -1,6 +1,7 @@
 import {
   BitField,
   Channel,
+  Client,
   Collection,
   Guild,
   GuildChannel,
@@ -91,6 +92,7 @@ export interface IRoleIdentifier extends IIdentifier {
  * Contract with necessary functions of Discord.js Client
  */
 export interface ICordeBot {
+  readonly client: Client;
   readonly events: Events;
   readonly guild: Guild;
   readonly roleManager: RoleManager;
@@ -145,7 +147,7 @@ export interface ICordeBot {
   findGuild(guildId: string): Guild;
   findChannel(channelId: string): GuildChannel | undefined;
   findChannel(guild: Guild, channelId: string): GuildChannel | undefined;
-  joinVoiceChannel(channelId: string): Promise<void>;
+  joinVoiceChannel(channelId: string): Promise<IVoiceChannelState>;
   isInVoiceChannel(): boolean;
   leaveVoiceChannel(): void;
   isStreamingInVoiceChannel(): void;
@@ -1327,7 +1329,7 @@ export namespace Config {
 }
 
 export interface IVoiceChannelState {
-  loggedVoiceChannel: VoiceChannel;
+  channel: VoiceChannel;
   connection?: VoiceConnection;
 }
 

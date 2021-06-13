@@ -1,34 +1,14 @@
-/**
- * All references and documentation are from Discord.js
- * and Discord API documentations.
- *
- * Thanks Discord.js for the rich documentation that helped so much ❤️
- *
- * @see https://discord.js.org/#/docs/main/stable/general/welcome
- * @see https://discord.com/developers/docs/intro
- * @see https://discordjs.guide/
- * @see https://github.com/discordjs/guide
- */
-
-import {
-  Channel as DChannel,
-  DMChannel as DDMChannel,
-  NewsChannel as DNewsChannel,
-  TextChannel as DTextChannel,
-} from "discord.js";
+import { Message, Role } from "discord.js";
 import { CordeClientError } from "../errors";
 import { mapper } from "../mapper/messageMapper";
-import { DMChannel, Guild, Message, NewsChannel, Role, TextChannel } from "../structures";
 import { ICordeBot, IMessageEmbed, IRoleData, IRoleIdentifier, Primitive } from "../types";
 import { isPrimitiveValue } from "../utils";
-import { DescriptiveVoiceChannel } from "./voiceChannel";
 
 export class Bot {
   private _bot: ICordeBot;
-  private _voiceChannel: DescriptiveVoiceChannel | undefined;
 
   get voiceChannel() {
-    return this._voiceChannel;
+    return this._bot.voiceConnection?.channel;
   }
 
   constructor(bot: ICordeBot) {
@@ -36,18 +16,11 @@ export class Bot {
   }
 
   async joinVoiceChannel(channelId: string) {
-    await this._bot.joinVoiceChannel(channelId);
-    if (this._bot.voiceConnection?.loggedVoiceChannel) {
-      this._voiceChannel = new DescriptiveVoiceChannel(
-        this._bot.voiceConnection?.loggedVoiceChannel,
-      );
-    }
-    return this._voiceChannel;
+    return await this._bot.joinVoiceChannel(channelId);
   }
 
   leaveVoiceChannel() {
     this._bot.leaveVoiceChannel();
-    this._voiceChannel = undefined;
   }
 
   isInVoiceChannel() {
@@ -55,41 +28,30 @@ export class Bot {
   }
 
   async fetchChannel(id: string) {
-    const channel = await this._bot.fetchChannel(id);
-
-    if (channel) {
-      return this.mapToCordeInheratedChannel(channel);
-    }
-    return undefined;
+    return await this._bot.fetchChannel(id);
   }
 
   async fetchGuild(id: string) {
     const guild = await this._bot.fetchGuild(id);
-
-    if (guild) {
-      return new Guild(guild);
-    }
-
-    return undefined;
+    return guild;
   }
 
   /**
    * Gets the channel defined in `configs`
    */
   async getChannel() {
-    return new TextChannel(this._bot.channel);
+    return this._bot.channel;
   }
 
   /**
    * Gets the guild defined in `configs`
    */
   getGuild() {
-    return new Guild(this._bot.guild);
+    return this._bot.guild;
   }
 
   findGuild(id: string) {
-    const guild = this._bot.findGuild(id);
-    return new Guild(guild);
+    return this._bot.findGuild(id);
   }
 
   /**
@@ -133,13 +95,11 @@ export class Bot {
     }
 
     if (isPrimitiveValue(message)) {
-      const msg = await this._bot.sendMessage(message);
-      return new Message(msg);
+      return await this._bot.sendMessage(message);
     }
 
     const embed = mapper.embedInterfaceToMessageEmbed(message);
-    const msg = await this._bot.sendMessage(embed);
-    return new Message(msg);
+    return await this._bot.sendMessage(embed);
   }
 
   /**
@@ -159,8 +119,7 @@ export class Bot {
     }
 
     try {
-      const createdRole = await this._bot.roleManager.create({ data });
-      return new Role(createdRole);
+      return await this._bot.roleManager.create({ data });
     } catch (error) {
       throw Error("Could not create the role. " + error);
     }
@@ -192,11 +151,7 @@ export class Bot {
       throw new CordeClientError("Bot is not connected yet. No role can be searched");
     }
 
-    const _role = this._getRole(data);
-    if (_role) {
-      return new Role(_role);
-    }
-    return undefined;
+    return this._getRole(data);
   }
 
   private _getRole(data: string | IRoleIdentifier) {
@@ -204,22 +159,5 @@ export class Bot {
       return this._bot.getRoles().find((r) => r.id === data);
     }
     return this._bot.getRoles().find((r) => r.id === data.id || r.name === data.name);
-  }
-
-  private mapToCordeInheratedChannel(channel: DChannel) {
-    if (channel instanceof DTextChannel) {
-      return new TextChannel(channel);
-    }
-
-    if (channel instanceof DNewsChannel) {
-      return new NewsChannel(channel);
-    }
-
-    if (channel instanceof DDMChannel) {
-      return new DMChannel(channel);
-    }
-
-    // TODO: Create VM Channel
-    throw new Error(`Channel '${channel.constructor.name}' not mapped`);
   }
 }
