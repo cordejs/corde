@@ -71,7 +71,9 @@ export class Config implements IConfigOptions {
     }
 
     if (config.testMatches && (!this.testMatches || this.testMatches.length === 0 || forceUpdate)) {
-      this.testMatches = config.testMatches;
+      this.testMatches = this.testMatches = Array.isArray(config.testMatches)
+        ? config.testMatches
+        : [];
     }
   }
 }
