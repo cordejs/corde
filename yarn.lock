@@ -1634,10 +1634,10 @@ acorn-walk@^7.1.1:
   resolved "https://registry.yarnpkg.com/acorn-walk/-/acorn-walk-7.2.0.tgz#0de889a601203909b0fbe07b8938dc21d2e967bc"
   integrity sha512-OPdCF6GsMIP+Az+aWfAAOEt2/+iVDKE7oy6lJ098aoe59oAmK76qV6Gw60SbZ8jHuG2wH058GF4pLFbYamYrVA==
 
-acorn@8.2.4, acorn@^8.2.0:
-  version "8.2.4"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.2.4.tgz#caba24b08185c3b56e3168e97d15ed17f4d31fd0"
-  integrity sha512-Ibt84YwBDDA890eDiDCEqcbwvHlBvzzDkU2cGBBDDI1QWT12jTiXIOn2CIw5KK4i6N5Z2HUxwYjzriDyqaqqZg==
+acorn@8.4.0, acorn@^8.2.0:
+  version "8.4.0"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.4.0.tgz#af53266e698d7cffa416714b503066a82221be60"
+  integrity sha512-ULr0LDaEqQrMFGyQ3bhJkLsbtrQ8QibAseGZeaSUiT/6zb9IvIkomWHJIvgvwad+hinRAgsI51JcWk2yvwyL+w==
 
 acorn@^7.1.1, acorn@^7.4.0:
   version "7.4.1"
@@ -1651,10 +1651,10 @@ agent-base@6:
   dependencies:
     debug "4"
 
-ajv@8.3.0, ajv@^8.0.1:
-  version "8.3.0"
-  resolved "https://registry.yarnpkg.com/ajv/-/ajv-8.3.0.tgz#25ee7348e32cdc4a1dbb38256bf6bdc451dd577c"
-  integrity sha512-RYE7B5An83d7eWnDR8kbdaIFqmKCNsP16ay1hDbJEU+sa0e3H9SebskCt0Uufem6cfAVu7Col6ubcn/W+Sm8/Q==
+ajv@8.6.0, ajv@^8.0.1:
+  version "8.6.0"
+  resolved "https://registry.yarnpkg.com/ajv/-/ajv-8.6.0.tgz#60cc45d9c46a477d80d92c48076d972c342e5720"
+  integrity sha512-cnUG4NSBiM4YFBxgZIj/In3/6KX+rQ2l2YPRVcvAMQGWEPKuXoPIhxzwqh31jA3IPbI4qEOp/5ILI4ynioXsGQ==
   dependencies:
     fast-deep-equal "^3.1.1"
     json-schema-traverse "^1.0.0"
@@ -2814,16 +2814,16 @@ delayed-stream@~1.0.0:
   integrity sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
 
 dependency-cruiser@^10.0.1:
-  version "10.0.1"
-  resolved "https://registry.yarnpkg.com/dependency-cruiser/-/dependency-cruiser-10.0.1.tgz#030644327b747b39b5521eb29bf3d730f1d5d5b8"
-  integrity sha512-Fy38zE76Gw8reTqWTV8vP5RjuDS2Is+I41nr3z9loBk/raaahyl+UI2X1Y5hJh0fuubClTKgqFpRBoZklhpxTg==
+  version "10.0.2"
+  resolved "https://registry.yarnpkg.com/dependency-cruiser/-/dependency-cruiser-10.0.2.tgz#5adb19d36a6d96b11c52057bbf0040fd38b9891c"
+  integrity sha512-m1BwFeQIJ9h4n/oeQKZ3kNKYBL4vv5DOe3/sZH+/d5TU5SBnDsRoudKrQm4hYR2ZSWvOam5UEd7GFJpM3GAymQ==
   dependencies:
-    acorn "8.2.4"
+    acorn "8.4.0"
     acorn-jsx "5.3.1"
     acorn-jsx-walk "2.0.0"
     acorn-loose "8.1.0"
     acorn-walk "8.1.0"
-    ajv "8.3.0"
+    ajv "8.6.0"
     chalk "4.1.1"
     commander "7.2.0"
     enhanced-resolve "5.8.2"
@@ -2832,12 +2832,12 @@ dependency-cruiser@^10.0.1:
     glob "7.1.7"
     handlebars "4.7.7"
     indent-string "4.0.0"
-    inquirer "8.0.0"
+    inquirer "8.1.1"
     json5 "2.2.0"
     lodash "4.17.21"
     safe-regex "2.1.1"
     semver "7.3.5"
-    semver-try-require "4.0.1"
+    semver-try-require "5.0.0"
     teamcity-service-messages "0.1.11"
     tsconfig-paths-webpack-plugin "3.5.1"
     wrap-ansi "7.0.0"
@@ -4268,19 +4268,20 @@ ini@^1.3.4:
   resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.8.tgz#a29da425b48806f34767a4efce397269af28432c"
   integrity sha512-JV/yugV2uzW5iMRSiZAyDtQd+nxtUnjeLt0acNdw98kKLrvuRVyB80tsREOE7yvGVgalhZ6RNXCmEHkUKBKxew==
 
-inquirer@8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-8.0.0.tgz#957a46db1abcf0fdd2ab82deb7470e90afc7d0ac"
-  integrity sha512-ON8pEJPPCdyjxj+cxsYRe6XfCJepTxANdNnTebsTuQgXpRyZRRT9t4dJwjRubgmvn20CLSEnozRUayXyM9VTXA==
+inquirer@8.1.1:
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-8.1.1.tgz#7c53d94c6d03011c7bb2a947f0dca3b98246c26a"
+  integrity sha512-hUDjc3vBkh/uk1gPfMAD/7Z188Q8cvTGl0nxwaCdwSbzFh6ZKkZh+s2ozVxbE5G9ZNRyeY0+lgbAIOUFsFf98w==
   dependencies:
     ansi-escapes "^4.2.1"
-    chalk "^4.1.0"
+    chalk "^4.1.1"
     cli-cursor "^3.1.0"
     cli-width "^3.0.0"
     external-editor "^3.0.3"
     figures "^3.0.0"
     lodash "^4.17.21"
     mute-stream "0.0.8"
+    ora "^5.3.0"
     run-async "^2.4.0"
     rxjs "^6.6.6"
     string-width "^4.1.0"
@@ -5924,7 +5925,7 @@ optionator@^0.9.1:
     type-check "^0.4.0"
     word-wrap "^1.2.3"
 
-ora@^5.4.0:
+ora@^5.3.0, ora@^5.4.0:
   version "5.4.1"
   resolved "https://registry.yarnpkg.com/ora/-/ora-5.4.1.tgz#1b2678426af4ac4a509008e5e4ac9e9959db9e18"
   integrity sha512-5b6Y85tPxZZ7QytO+BQzysW31HJku27cRIlkbAXaNx+BdcVi+LlRFmVXzeF6a7JCwJpyw5c4b+YSVImQIrBpuQ==
@@ -6820,12 +6821,12 @@ semver-greatest-satisfied-range@^1.1.0:
   dependencies:
     sver-compat "^1.5.0"
 
-semver-try-require@4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/semver-try-require/-/semver-try-require-4.0.1.tgz#5a172d44cde1bc92af588f86585a8d193a5f6c53"
-  integrity sha512-XAsSrle6ADYwLqet5/OU6v2srIw9wNsAYJ8GNiWsFu6etwWaxTCzC3ILVSC1rFtunk8N4NkAsUmXu0zpZ0f2EA==
+semver-try-require@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/semver-try-require/-/semver-try-require-5.0.0.tgz#634d9b22376b90ccbbfaf48f0d364ca179d77dc6"
+  integrity sha512-7CBjNH5C49PLcDkuzQk02jj+jvZ+I1fSFC/eMsX7niuuPo2E2mJRzF6QbqD5K8cuXJO7AfmNlAYehfTPZdvTrw==
   dependencies:
-    semver "7.3.4"
+    semver "7.3.5"
 
 "semver@2 || 3 || 4 || 5", semver@^5.3.0, semver@^5.5.0:
   version "5.7.1"
@@ -6836,13 +6837,6 @@ semver@7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.0.0.tgz#5f3ca35761e47e05b206c6daff2cf814f0316b8e"
   integrity sha512-+GB6zVA9LWh6zovYQLALHwv5rb2PHGlJi3lfiqIHxR0uuwCgefcOJc59v9fv1w8GbStwxuuqqAjI9NMAOOgq1A==
-
-semver@7.3.4:
-  version "7.3.4"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-7.3.4.tgz#27aaa7d2e4ca76452f98d3add093a72c943edc97"
-  integrity sha512-tCfb2WLjqFAtXn4KEdxIhalnRtoKFN7nAwj0B3ZXCbQloV2tq5eDbcTmT68JJD3nRJq24/XgxtQKFIpQdtvmVw==
-  dependencies:
-    lru-cache "^6.0.0"
 
 semver@7.3.5, semver@7.x, semver@^7.2.1, semver@^7.3.2, semver@^7.3.5:
   version "7.3.5"
