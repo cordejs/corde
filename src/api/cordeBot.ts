@@ -1,4 +1,5 @@
 import { Message, Role } from "discord.js";
+import { runtime } from "../common/runtime";
 import { CordeClientError } from "../errors";
 import { mapper } from "../mapper/messageMapper";
 import { ICordeBot, IMessageEmbed, IRoleData, IRoleIdentifier, Primitive } from "../types";
@@ -11,8 +12,8 @@ export class Bot {
     return this._bot.voiceConnection?.channel;
   }
 
-  constructor(bot: ICordeBot) {
-    this._bot = bot;
+  constructor() {
+    this._bot = runtime.bot;
   }
 
   async joinVoiceChannel(channelId: string) {
