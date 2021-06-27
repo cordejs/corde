@@ -16,5 +16,5 @@ module.exports = {
   guildId: process.env.GUILD_ID,
   testMatches: [process.env.TEST_FILES_DIR],
   botToken: process.env.BOT_TEST_TOKEN,
-  timeOut: process.env.TIME_OUT,
+  timeout: process.env.TIME_OUT,
 };

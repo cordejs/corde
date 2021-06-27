@@ -78,7 +78,7 @@ class BaseMatcher {
       cordeBot,
       command: commandName,
       isNot: this._isNot,
-      timeout: runtime.timeOut,
+      timeout: runtime.timeout,
       isCascade: this._isCascade,
       guildId: this._guildId ?? runtime.guildId,
       channelId: this._channelId ?? runtime.channelId,

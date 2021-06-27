@@ -1,3 +1,9 @@
+# 4.2.0
+
+## 💣 Breaking changes
+
+- Renamed config prop `timeOut` to `timeout`. [#814](https://github.com/cordejs/corde/pull/814)
+
 # 4.1.2
 
 ## 🐛 Bug Fixes
