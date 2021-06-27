@@ -8,5 +8,5 @@
   "botPrefix": "+",
   "testMatches": ["./test"],
   "modulePathIgnorePatterns": [],
-  "timeOut": 5000
+  "timeout": 5000
 }

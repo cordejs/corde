@@ -5,4 +5,4 @@ cordeBotToken: ""
 guildId: ""
 testMatches: [""]
 botToken: ""
-timeOut: 5000
+timeout: 5000

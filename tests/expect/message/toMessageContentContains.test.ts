@@ -58,7 +58,7 @@ describe("testing toMessageContentContains", () => {
   });
 
   it("should fail due to no message was sent by the bot", async () => {
-    runtime.setConfigs({ timeOut: 100 }, true);
+    runtime.setConfigs({ timeout: 100 }, true);
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
 
     const message = buildReportMessage(
@@ -80,7 +80,7 @@ describe("testing toMessageContentContains", () => {
   });
 
   it("should get success test due to timeout but isNot = true", async () => {
-    runtime.setConfigs({ timeOut: 100 }, true);
+    runtime.setConfigs({ timeout: 100 }, true);
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
 
     const toMessageContentContains = initTestClass(cordeClient, true);
@@ -96,7 +96,7 @@ describe("testing toMessageContentContains", () => {
   });
 
   it("should get success test due to bot returned equal message", async () => {
-    runtime.setConfigs({ timeOut: 100 }, true);
+    runtime.setConfigs({ timeout: 100 }, true);
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
 
     const events = new MockEvents(cordeClient, mockDiscord);
@@ -116,7 +116,7 @@ describe("testing toMessageContentContains", () => {
   });
 
   it("should get success test due to bot returned a contained message", async () => {
-    runtime.setConfigs({ timeOut: 100 }, true);
+    runtime.setConfigs({ timeout: 100 }, true);
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
 
     const events = new MockEvents(cordeClient, mockDiscord);
@@ -137,7 +137,7 @@ describe("testing toMessageContentContains", () => {
   });
 
   it("should get fail test due to bot returned different messages both primitive values", async () => {
-    runtime.setConfigs({ timeOut: 100 }, true);
+    runtime.setConfigs({ timeout: 100 }, true);
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
 
     const events = new MockEvents(cordeClient, mockDiscord);

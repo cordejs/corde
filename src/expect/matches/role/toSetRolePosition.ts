@@ -63,7 +63,7 @@ export class ToSetRolePosition extends ExpectTest {
     try {
       role = await this.cordeBot.events.onceRolePositionUpdate(
         identifier,
-        this.timeOut,
+        this.timeout,
         this.guildId,
       );
     } catch {

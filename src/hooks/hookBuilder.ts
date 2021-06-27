@@ -28,7 +28,7 @@ export function hookBuilder(params: HookParams) {
         } catch (error) {
           reject(error);
         }
-      }, timeout ?? runtime.timeOut);
+      }, timeout ?? runtime.timeout);
     } catch (error) {
       let newError: Error;
       const errorLabel = chalk.bgRed(`● ${errorTitle}`);

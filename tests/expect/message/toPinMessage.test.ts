@@ -59,7 +59,7 @@ describe("testing pin message test", () => {
   });
 
   it("should return a passed test due to isNot true and timeout", async () => {
-    runtime.setConfigs({ timeOut: 10 }, true);
+    runtime.setConfigs({ timeout: 10 }, true);
     const corde = createCordeBotWithMockedFunctions(mockDiscord, new Client());
     const toPinMessage = initTestClass(corde, true);
     const report = await toPinMessage.action("1233");
@@ -74,7 +74,7 @@ describe("testing pin message test", () => {
   });
 
   it("should return a failed test due to isNot false and timeout", async () => {
-    runtime.setConfigs({ timeOut: 10 }, true);
+    runtime.setConfigs({ timeout: 10 }, true);
     const corde = createCordeBotWithMockedFunctions(mockDiscord, new Client());
     const toPinMessage = initTestClass(corde, false);
     const report = await toPinMessage.action("1233");
@@ -94,7 +94,7 @@ describe("testing pin message test", () => {
   });
 
   it("should return a failed test due to isNot false and timeout (messageIdentifier)", async () => {
-    runtime.setConfigs({ timeOut: 10 }, true);
+    runtime.setConfigs({ timeout: 10 }, true);
     const corde = createCordeBotWithMockedFunctions(mockDiscord, new Client());
     const toPinMessage = initTestClass(corde, false);
     const report = await toPinMessage.action({ id: "1233" });

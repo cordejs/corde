@@ -27,12 +27,12 @@ describe("testing configs load", () => {
     guildId: "",
     testMatches: [""],
     botToken: "",
-    timeOut: DEFAULT_TEST_TIMEOUT,
+    timeout: DEFAULT_TEST_TIMEOUT,
   };
   it("should load configs overriding timout value", async () => {
     // https://github.com/cordejs/corde/issues/771
     const TIMEOUT = 100000;
-    config.timeOut = TIMEOUT;
+    config.timeout = TIMEOUT;
     mockExecProces(config);
     await execCommand.exec(
       {
@@ -41,7 +41,7 @@ describe("testing configs load", () => {
       },
       [],
     );
-    expect(runtime.timeOut).toEqual(TIMEOUT);
+    expect(runtime.timeout).toEqual(TIMEOUT);
   });
 
   it("should call go command with -c option", () => {

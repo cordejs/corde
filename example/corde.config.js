@@ -21,7 +21,7 @@ const cordeBotToken = process.env.CORDE_TEST_TOKEN;
 const guildId = process.env.GUILD_ID;
 const testMatches = ["./test/**"];
 const botToken = process.env.BOT_TEST_TOKEN;
-const timeOut = process.env.TIME_OUT;
+const timeout = process.env.TIME_OUT;
 
 module.exports = {
   botPrefix,
@@ -31,5 +31,5 @@ module.exports = {
   guildId,
   botToken,
   testMatches,
-  timeOut,
+  timeout,
 };
