@@ -13,7 +13,7 @@ const config: IConfigOptions = {
   guildId: "",
   testMatches: [""],
   botToken: "",
-  timeOut: DEFAULT_TEST_TIMEOUT,
+  timeout: DEFAULT_TEST_TIMEOUT,
 };
 
 const configString = JSON.stringify(config);

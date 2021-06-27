@@ -24,7 +24,7 @@ describe("testing toEmbedMatch", () => {
   }
 
   function mockEmbedMessageAndInitClass(isnot = false) {
-    runtime.setConfigs({ timeOut: 100 }, true);
+    runtime.setConfigs({ timeout: 100 }, true);
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
 
     const events = new MockEvents(cordeClient, mockDiscord);

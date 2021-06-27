@@ -10,7 +10,7 @@ const config: IConfigOptions = {
   cordeBotToken: "321",
   guildId: "123",
   testMatches: ["123"],
-  timeOut: DEFAULT_TEST_TIMEOUT,
+  timeout: DEFAULT_TEST_TIMEOUT,
   botToken: "12412412123124",
 };
 
@@ -76,9 +76,9 @@ describe("Testing runtime", () => {
     expect(runtime.guildId).toBe(config.guildId);
   });
 
-  it("should get timeOut", () => {
+  it("should get timeout", () => {
     runtime.setConfigs(config);
-    expect(runtime.timeOut).toBe(config.timeOut);
+    expect(runtime.timeout).toBe(config.timeout);
   });
 
   it("should get botPrefix", () => {

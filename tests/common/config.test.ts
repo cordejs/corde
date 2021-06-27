@@ -10,12 +10,12 @@ describe("testing config", () => {
       botTestId: "123",
       guildId: "123",
       testMatches: ["123"],
-      timeOut: DEFAULT_TEST_TIMEOUT,
+      timeout: DEFAULT_TEST_TIMEOUT,
     };
 
     const config = new Config();
     config.setConfigs(configOptions);
-    expect(config).toEqual({ ...configOptions, timeOut: DEFAULT_TEST_TIMEOUT });
+    expect(config).toEqual({ ...configOptions, timeout: DEFAULT_TEST_TIMEOUT });
   });
 
   it("should not allow define testMatches as object {}", () => {
@@ -33,7 +33,7 @@ describe("testing config", () => {
       cordeBotToken: "333",
       guildId: "11111",
       testMatches: ["321", "32121"],
-      timeOut: 1222,
+      timeout: 1222,
       botToken: "lacjxlakjs12312",
     };
 
@@ -45,7 +45,7 @@ describe("testing config", () => {
       cordeBotToken: "",
       guildId: "123",
       testMatches: ["123"],
-      timeOut: undefined,
+      timeout: undefined,
       botToken: undefined,
     });
     config.setConfigs(updatadedConfig, true);
