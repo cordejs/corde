@@ -1633,10 +1633,10 @@ acorn-walk@^7.1.1:
   resolved "https://registry.yarnpkg.com/acorn-walk/-/acorn-walk-7.2.0.tgz#0de889a601203909b0fbe07b8938dc21d2e967bc"
   integrity sha512-OPdCF6GsMIP+Az+aWfAAOEt2/+iVDKE7oy6lJ098aoe59oAmK76qV6Gw60SbZ8jHuG2wH058GF4pLFbYamYrVA==
 
-acorn@8.4.0, acorn@^8.2.0:
-  version "8.4.0"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.4.0.tgz#af53266e698d7cffa416714b503066a82221be60"
-  integrity sha512-ULr0LDaEqQrMFGyQ3bhJkLsbtrQ8QibAseGZeaSUiT/6zb9IvIkomWHJIvgvwad+hinRAgsI51JcWk2yvwyL+w==
+acorn@8.4.1, acorn@^8.2.0:
+  version "8.4.1"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.4.1.tgz#56c36251fc7cabc7096adc18f05afe814321a28c"
+  integrity sha512-asabaBSkEKosYKMITunzX177CXxQ4Q8BSSzMTKD+FefUhipQC70gfW5SiUDhYQ3vk8G+81HqQk7Fv9OXwwn9KA==
 
 acorn@^7.1.1, acorn@^7.4.0:
   version "7.4.1"
@@ -2818,11 +2818,11 @@ delayed-stream@~1.0.0:
   integrity sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
 
 dependency-cruiser@^10.0.1:
-  version "10.0.2"
-  resolved "https://registry.yarnpkg.com/dependency-cruiser/-/dependency-cruiser-10.0.2.tgz#5adb19d36a6d96b11c52057bbf0040fd38b9891c"
-  integrity sha512-m1BwFeQIJ9h4n/oeQKZ3kNKYBL4vv5DOe3/sZH+/d5TU5SBnDsRoudKrQm4hYR2ZSWvOam5UEd7GFJpM3GAymQ==
+  version "10.0.4"
+  resolved "https://registry.yarnpkg.com/dependency-cruiser/-/dependency-cruiser-10.0.4.tgz#2afdffc978de7f7973da1ee2aef46b812f2ae6bc"
+  integrity sha512-a+oZkc/l68vQANkupPK4A9GTYxXQUzb7hwqa4A/IrGwfQzfwVfBhSQHYPWjhv4EM0bKrBWGVJkMNpxMVC1V3cw==
   dependencies:
-    acorn "8.4.0"
+    acorn "8.4.1"
     acorn-jsx "5.3.1"
     acorn-jsx-walk "2.0.0"
     acorn-loose "8.1.0"
