@@ -188,10 +188,10 @@ concat-map@0.0.1:
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=
 
-corde@^3.1.5-beta.1:
-  version "3.1.5-beta.1"
-  resolved "https://registry.yarnpkg.com/corde/-/corde-3.1.5-beta.1.tgz#805014fbe1ef78e8be2f969abe631968b92c8377"
-  integrity sha512-OFqLTTRRmIu1GeclVAHKPrXdfrxLtBkLk/AY/7B4/W5LHkONURsZqMxXD4ZtvFT9XWkm++Q23xyGmMpZq1CHtA==
+corde@^3.1.4:
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/corde/-/corde-3.1.5.tgz#ae336ebd2bce4830d7585735a4cd5e21695385d1"
+  integrity sha512-Ah/78WiAfA2ctRenIzbv3a11KYHpUY4otn8QGHn6l4CKtSi1FWKWe0o0wMSGYUbQtiBQhSs8VC6+wDfor0OixA==
   dependencies:
     chalk "^4.1.0"
     commander "^7.0.0"
@@ -361,6 +361,11 @@ minimatch@^3.0.4:
   integrity sha512-yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==
   dependencies:
     brace-expansion "^1.1.7"
+
+mock-fs@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/mock-fs/-/mock-fs-5.0.0.tgz#5574520ac824c01a10091bf951c66f677c71acaa"
+  integrity sha512-A5mm/SpSDwwc/klSaEvvKMGQQtiGiQy8UcDAd/vpVO1fV+4zaHjt39yKgCSErFzv2zYxZIUx9Ud/7ybeHBf8Fg==
 
 node-fetch@^2.6.1:
   version "2.6.1"

@@ -5,14 +5,10 @@ import {
   beforeEach as _beforeEach,
 } from "./hooks";
 
-import {
-  sendMessage as _sendMessage,
-  getRole as _getRole,
-  createRole as _createRole,
-} from "./api-utilities";
-
 import { expect as _expect } from "./expect";
 import { group as _group, test as _test } from "./closures";
+import { Bot } from "./api";
+import { runtime } from "./common/runtime";
 
 /**
  * Corde's utility namespace to call it's API functions.
@@ -28,7 +24,5 @@ export namespace corde {
   export const describe = _group;
   export const it = _test;
   export const test = _test;
-  export const sendMessage = _sendMessage;
-  export const getRole = _getRole;
-  export const createRole = _createRole;
+  export const bot = new Bot(runtime.bot);
 }

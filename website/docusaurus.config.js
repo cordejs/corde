@@ -5,13 +5,17 @@ const versions = require("./versions.json");
 module.exports = {
   title: "Corde",
   tagline: "A simple library for Discord bot tests",
-  url: "https://cordejs.github.io/corde",
+  url: "https://cordejs.org",
   baseUrl: "/",
   onBrokenLinks: "log",
   favicon: "img/logo/favicon.ico",
   organizationName: "cordejs",
   projectName: "corde",
   themeConfig: {
+    googleAnalytics: {
+      trackingID: "G-17JDX1TL5W",
+      anonymizeIP: true,
+    },
     navbar: {
       title: "Corde",
       logo: {

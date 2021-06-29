@@ -864,10 +864,11 @@ export class Events {
       validator.add((message) => message.channel.id === channelId);
     }
 
-    return executePromiseWithTimeout<Message | PartialMessage>((resolve) => {
-      this.onMessageUpdate((oldMessage, newMessage) => {
+    return executePromiseWithTimeout<Message>((resolve) => {
+      this.onMessageUpdate(async (oldMessage, newMessage) => {
         if (validator.isValid(oldMessage, newMessage)) {
-          resolve(newMessage);
+          const fullMessage = newMessage.partial ? await newMessage.fetch() : newMessage;
+          resolve(fullMessage);
         }
       });
     }, timeout);
@@ -1096,7 +1097,7 @@ export class Events {
     if (response.length === 1) {
       return response[0];
     }
-    return (response as unknown) as T;
+    return response as unknown as T;
   }
 
   private _onRoleUpdateWithTimeout(

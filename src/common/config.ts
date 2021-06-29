@@ -1,4 +1,3 @@
-import { DEFAULT_TEST_TIMEOUT } from "../consts";
 import { IConfigOptions } from "../types";
 
 /**
@@ -14,7 +13,7 @@ export class Config implements IConfigOptions {
   botToken!: string;
   channelId!: string;
   guildId!: string;
-  timeOut?: number;
+  timeout?: number;
   botPrefix!: string;
   testMatches!: string[];
   modulePathIgnorePatterns?: string[];
@@ -26,11 +25,11 @@ export class Config implements IConfigOptions {
    *
    * @example
    * const config = new Config();
-   * config.timeOut = 1000;
+   * config.timeout = 1000;
    *
-   * const newConfig: IConfigOptions = { ...timeOut: 3000 };
+   * const newConfig: IConfigOptions = { ...timeout: 3000 };
    * config.setConfigs(newConfig);
-   * console.log(config.timeOut) // print 1000;
+   * console.log(config.timeout) // print 1000;
    *
    * @param config new set of configs.
    */
@@ -59,12 +58,8 @@ export class Config implements IConfigOptions {
       this.guildId = config.guildId;
     }
 
-    if (!this.timeOut || forceUpdate) {
-      if (config.timeOut) {
-        this.timeOut = config.timeOut;
-      } else {
-        this.timeOut = DEFAULT_TEST_TIMEOUT;
-      }
+    if (config.timeout && (!this.timeout || forceUpdate)) {
+      this.timeout = config.timeout;
     }
 
     if (config.botPrefix && (!this.botPrefix || forceUpdate)) {
@@ -76,7 +71,9 @@ export class Config implements IConfigOptions {
     }
 
     if (config.testMatches && (!this.testMatches || this.testMatches.length === 0 || forceUpdate)) {
-      this.testMatches = config.testMatches;
+      this.testMatches = this.testMatches = Array.isArray(config.testMatches)
+        ? config.testMatches
+        : [];
     }
   }
 }

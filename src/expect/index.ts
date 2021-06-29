@@ -1,8 +1,8 @@
-import { RoleMatchesImpl, MessageMatchesImpl, ToHaveResultMatcher } from "./matcher";
+import { RoleMatchesImpl, MessageMatches, ToHaveResultMatcher } from "./matcher";
 import { IExpect, IMacherContructorArgs } from "../types";
 
 function getMessageMatchers(): string[] {
-  return getFunctions(MessageMatchesImpl);
+  return getFunctions(MessageMatches);
 }
 
 function getRoleMatchers(): string[] {
@@ -61,7 +61,7 @@ const _expect: any = <T extends (() => number | string) | number | string>(
   const messageTests = createTestsFromMatches(
     messageTestNames,
     baseMatcherConstructor,
-    MessageMatchesImpl,
+    MessageMatches,
   );
 
   const todoInCascadeMatcher = createTestsFromMatches(
@@ -82,7 +82,7 @@ const _expect: any = <T extends (() => number | string) | number | string>(
   const isNotMessageTests = createTestsFromMatches(
     messageTestNames,
     { ...baseMatcherConstructor, isNot: true },
-    MessageMatchesImpl,
+    MessageMatches,
   );
 
   const roleTests = createTestsFromMatches(roleMatchers, baseMatcherConstructor, RoleMatchesImpl);
@@ -130,13 +130,13 @@ const _expect: any = <T extends (() => number | string) | number | string>(
     const roleTests = createTestsFromMatches(
       messageTestNames,
       { ...baseMatcherConstructor, channelId },
-      MessageMatchesImpl,
+      MessageMatches,
     );
 
     const isNotRoleTests = createTestsFromMatches(
       messageTestNames,
       { ...baseMatcherConstructor, channelId, isNot: true },
-      MessageMatchesImpl,
+      MessageMatches,
     );
 
     set(roleTests, inChannelMatches);
@@ -151,13 +151,13 @@ const _expect: any = <T extends (() => number | string) | number | string>(
 const messageTests = createTestsFromMatches(
   messageTestNames,
   { commandName: "", isNot: false, isCascade: true },
-  MessageMatchesImpl,
+  MessageMatches,
 );
 
 const isNotMessageTests = createTestsFromMatches(
   messageTestNames,
   { commandName: "", isNot: true, isCascade: true },
-  MessageMatchesImpl,
+  MessageMatches,
 );
 
 const roleTests = createTestsFromMatches(

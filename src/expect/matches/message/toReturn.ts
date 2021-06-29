@@ -1,6 +1,5 @@
-import { Message, MessageEmbed } from "discord.js";
+import { Message } from "discord.js";
 import { IMessageEmbed, Primitive, ITestReport } from "../../../types";
-import { typeOf } from "../../../utils";
 import { IExpectTestBaseParams } from "../../../types";
 import { MessageExpectTest } from "./messageExpectTest";
 
@@ -13,7 +12,6 @@ export class ToReturn extends MessageExpectTest {
   }
 
   async action(expect: Primitive | IMessageEmbed): Promise<ITestReport> {
-    let _expect: Primitive | MessageEmbed;
     const errorReport = this.validateExpect(expect);
 
     if (errorReport) {
@@ -31,7 +29,7 @@ export class ToReturn extends MessageExpectTest {
       returnedMessage = await this.cordeBot.events.onceMessage(
         this.cordeBot.testBotId,
         this.channelId,
-        this.timeOut,
+        this.timeout,
       );
     } catch {
       if (this.isNot) {
@@ -44,13 +42,7 @@ export class ToReturn extends MessageExpectTest {
       );
     }
 
-    if (typeOf(expect) === "object") {
-      _expect = this.embedMessageLikeToMessageEmbed(expect as IMessageEmbed);
-    } else {
-      _expect = expect as Primitive;
-    }
-
-    this.hasPassed = this.messagesMatches(returnedMessage, _expect);
+    this.hasPassed = this.isMessagesEquals(returnedMessage, expect);
     this.invertHasPassedIfIsNot();
 
     if (this.hasPassed) {
@@ -64,6 +56,6 @@ export class ToReturn extends MessageExpectTest {
       );
     }
 
-    return this.createReportForExpectAndResponse(_expect, returnedMessage);
+    return this.createReportForExpectAndResponse(expect, returnedMessage);
   }
 }

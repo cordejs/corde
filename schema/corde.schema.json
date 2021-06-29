@@ -14,7 +14,7 @@
       "modulePathIgnorePatterns": ["**/node_modules/**"],
       "botPrefix": "!",
       "testFiles": ["./test/**"],
-      "timeOut": 1000
+      "timeout": 1000
     }
   ],
   "required": [
@@ -57,7 +57,7 @@
       "title": "Array with the pattern for tests",
       "additionalItems": true
     },
-    "timeOut": {
+    "timeout": {
       "default": 5000,
       "title": "Timeout for each test. Value mesuared in miliseconds."
     },

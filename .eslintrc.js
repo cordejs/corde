@@ -14,6 +14,7 @@ module.exports = {
     "space-before-function-paren": "off",
     "no-unused-vars": "off",
     "comma-dangle": "off",
+    "@typescript-eslint/no-empty-interface": "off",
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-explicit-any": "off",

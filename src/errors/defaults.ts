@@ -16,7 +16,7 @@ export const Errors = {
   CORDE_CLIENT_ERROR_MESSAGE: "There is a problem with corde client",
 
   DISCORD_ERROR: "DiscordError",
-  DISCORD_ERROR_MESSAGE: "Some Discord operation failed",
+  DISCORD_ERROR_MESSAGE: "Some Discord JS operation failed",
 
   FILE_ERROR: "FileError",
   FILE_ERROR_MESSAGE: "There is a problem when processing the file",

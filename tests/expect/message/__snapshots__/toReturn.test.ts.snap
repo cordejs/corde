@@ -11,76 +11,16 @@ Object {
 }
 `;
 
-exports[`testing toReturn should get fail test due to bot returned different messages (both embed) 1`] = `
-Object {
-  "message": "    
-    [32m- expected  - 10[39m
-    [31m+ received  +  8[39m
-    
-    [2m  Object {[22m
-    [2m    \\"author\\": Object {[22m
-    [32m-     \\"icon_url\\": \\"https://i.imgur.com/wSTFkRM.png\\",[39m
-    [32m-     \\"name\\": \\"Some name\\",[39m
-    [32m-     \\"url\\": \\"https://discord.js.org\\",[39m
-    [31m+     \\"icon_url\\": undefined,[39m
-    [31m+     \\"name\\": \\"ITest\\",[39m
-    [31m+     \\"url\\": undefined,[39m
-    [2m    },[22m
-    [32m-   \\"color\\": 39423,[39m
-    [32m-   \\"description\\": \\"Some description here\\",[39m
-    [31m+   \\"color\\": null,[39m
-    [31m+   \\"description\\": null,[39m
-    [2m    \\"fields\\": Array [[22m
-    [2m      Object {[22m
-    [2m        \\"inline\\": false,[22m
-    [2m        \\"name\\": \\"Regular field title\\",[22m
-    [2m        \\"value\\": \\"Some value here\\",[22m
-    [2m      },[22m
-    [2m      Object {[22m
-    [2m        \\"inline\\": false,[22m
-    [2m        \\"name\\": \\"​\\",[22m
-    [2m        \\"value\\": \\"​\\",[22m
-    [2m      },[22m
-    [2m      Object {[22m
-    [2m        \\"inline\\": true,[22m
-    [2m        \\"name\\": \\"Inline field title\\",[22m
-    [2m        \\"value\\": \\"Some value here\\",[22m
-    [2m      },[22m
-    [2m      Object {[22m
-    [2m        \\"inline\\": true,[22m
-    [2m        \\"name\\": \\"Inline field title\\",[22m
-    [2m        \\"value\\": \\"Some value here\\",[22m
-    [2m      },[22m
-    [2m    ],[22m
-    [2m    \\"footer\\": null,[22m
-    [2m    \\"image\\": null,[22m
-    [32m-   \\"thumbnail\\": Object {[39m
-    [32m-     \\"url\\": \\"https://i.imgur.com/wSTFkRM.png\\",[39m
-    [32m-   },[39m
-    [31m+   \\"thumbnail\\": null,[39m
-    [2m    \\"timestamp\\": null,[22m
-    [32m-   \\"title\\": \\"Some title\\",[39m
-    [31m+   \\"title\\": null,[39m
-    [2m    \\"type\\": \\"rich\\",[22m
-    [32m-   \\"url\\": \\"https://discord.js.org/\\",[39m
-    [31m+   \\"url\\": null,[39m
-    [2m  }[22m
-",
-  "pass": false,
-  "testName": "toReturn",
-}
-`;
-
 exports[`testing toReturn should get fail test due to bot returned different messages (expect embed and returned primitive) 1`] = `
 Object {
   "message": "    
     expected: Object {
       \\"author\\": Object {
-        \\"icon_url\\": \\"https://i.imgur.com/wSTFkRM.png\\",
+        \\"iconURL\\": \\"https://i.imgur.com/wSTFkRM.png\\",
         \\"name\\": \\"Some name\\",
         \\"url\\": \\"https://discord.js.org\\",
       },
-      \\"color\\": 39423,
+      \\"color\\": 2123412,
       \\"description\\": \\"Some description here\\",
       \\"fields\\": Array [
         Object {
@@ -104,14 +44,11 @@ Object {
           \\"value\\": \\"Some value here\\",
         },
       ],
-      \\"footer\\": null,
-      \\"image\\": null,
-      \\"thumbnail\\": Object {
-        \\"url\\": \\"https://i.imgur.com/wSTFkRM.png\\",
-      },
-      \\"timestamp\\": null,
+      \\"files\\": Array [
+        \\"https://i.imgur.com/wSTFkRM.png\\",
+      ],
+      \\"thumbnailUrl\\": \\"https://i.imgur.com/wSTFkRM.png\\",
       \\"title\\": \\"Some title\\",
-      \\"type\\": \\"rich\\",
       \\"url\\": \\"https://discord.js.org/\\",
     }
     received: 'this is the message content'
@@ -127,11 +64,11 @@ Object {
     expected: 'expect value'
     received: Object {
       \\"author\\": Object {
-        \\"icon_url\\": \\"https://i.imgur.com/wSTFkRM.png\\",
+        \\"iconURL\\": \\"https://i.imgur.com/wSTFkRM.png\\",
         \\"name\\": \\"Some name\\",
         \\"url\\": \\"https://discord.js.org\\",
       },
-      \\"color\\": 39423,
+      \\"color\\": 2123412,
       \\"description\\": \\"Some description here\\",
       \\"fields\\": Array [
         Object {
@@ -155,14 +92,11 @@ Object {
           \\"value\\": \\"Some value here\\",
         },
       ],
-      \\"footer\\": null,
-      \\"image\\": null,
-      \\"thumbnail\\": Object {
-        \\"url\\": \\"https://i.imgur.com/wSTFkRM.png\\",
-      },
-      \\"timestamp\\": null,
+      \\"files\\": Array [
+        \\"https://i.imgur.com/wSTFkRM.png\\",
+      ],
+      \\"thumbnailUrl\\": \\"https://i.imgur.com/wSTFkRM.png\\",
       \\"title\\": \\"Some title\\",
-      \\"type\\": \\"rich\\",
       \\"url\\": \\"https://discord.js.org/\\",
     }
 ",

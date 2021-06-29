@@ -1,3 +1,57 @@
+# 4.2.0
+
+## 💣 Breaking changes
+
+- Renamed config prop `timeOut` to `timeout`. [#814](https://github.com/cordejs/corde/pull/814)
+
+# 4.1.2
+
+## 🐛 Bug Fixes
+
+- Fix corde attempt to set value `{}` to `config.testMatches`, causing an error in initialization due to the expectation
+  of this property to be an array. [#774](https://github.com/cordejs/corde/pull/774)
+
+# 4.1.1
+
+## 🐛 Bug Fixes
+
+- Fix bug that prevents corde to override `timeout` setting [#771](https://github.com/cordejs/corde/pull/773)
+
+# 4.1.0
+
+## 🚀 Features
+
+- Addition of `toMessageContentContains` and `toEmbedMatch` test functions [#757](https://github.com/cordejs/corde/pull/757)
+
+## 💡 Miscellaneous
+
+- Change references to new website URL
+
+# 4.0.5
+
+## 💡 Miscellaneous
+
+- upgrade jest-diff from 26.6.2 to 27.0.1
+- upgrade pretty-format from 26.6.2 to 27.0.1
+
+# 4.0.4
+
+## 💡 Miscellaneous
+
+- Fix tests pattern in README
+
+# 4.0.3
+
+## 💡 Miscellaneous
+
+- Fix tests pattern in README
+
+# 4.0.3
+
+## 🐛 Bug Fixes
+
+- Fix tests read following a pattern #714
+
 # 4.0.2
 
 ## 🐛 Bug Fixes

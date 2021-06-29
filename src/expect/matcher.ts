@@ -12,9 +12,9 @@ import {
   TestFunctionType,
   IMessageMatches,
   IRoleMatches,
+  Colors,
+  RolePermission,
 } from "../types";
-import { Colors } from "../utils/colors";
-import { RolePermission } from "../utils/permission";
 import {
   ToAddReaction,
   ToDeleteRole,
@@ -29,6 +29,8 @@ import {
   ToRemoveReaction,
   ToUnPinMessage,
   ToSetRolePermission,
+  ToEmbedMatch,
+  ToMessageContentContains,
 } from "./matches";
 import { ExpectTest } from "./matches/expectTest";
 import { buildReportMessage, resolveName, stringIsNullOrEmpty } from "../utils";
@@ -76,7 +78,7 @@ class BaseMatcher {
       cordeBot,
       command: commandName,
       isNot: this._isNot,
-      timeout: runtime.timeOut,
+      timeout: runtime.timeout,
       isCascade: this._isCascade,
       guildId: this._guildId ?? runtime.guildId,
       channelId: this._channelId ?? runtime.channelId,
@@ -123,9 +125,24 @@ class BaseMatcher {
   }
 }
 
-export class MessageMatchesImpl<TReturn extends MayReturnMatch>
+export class MessageMatches<TReturn extends MayReturnMatch>
   extends BaseMatcher
-  implements IMessageMatches<TReturn> {
+  implements IMessageMatches<TReturn>
+{
+  toEmbedMatch(embed: IMessageEmbed): TReturn {
+    const trace = getStackTrace(undefined, true, "toEmbedMatch");
+    return this.returnOrAddToCollector((cordeBot) =>
+      this.operationFactory(trace, ToEmbedMatch, cordeBot, embed),
+    );
+  }
+
+  toMessageContentContains(expectedContent: string): TReturn {
+    const trace = getStackTrace(undefined, true, "toMessageContentContains");
+    return this.returnOrAddToCollector((cordeBot) =>
+      this.operationFactory(trace, ToMessageContentContains, cordeBot, expectedContent),
+    );
+  }
+
   toReturn(expect: Primitive | IMessageEmbed) {
     const trace = getStackTrace(undefined, true, "toReturn");
     return this.returnOrAddToCollector((cordeBot) =>
@@ -191,7 +208,8 @@ export class ToHaveResultMatcher extends BaseMatcher {
 
 export class RoleMatchesImpl<TReturn extends MayReturnMatch>
   extends BaseMatcher
-  implements IRoleMatches<TReturn> {
+  implements IRoleMatches<TReturn>
+{
   toRenameRole(newName: string, roleIdentifier: IRoleIdentifier | string) {
     const trace = getStackTrace(undefined, true, "toRenameRole");
     return this.returnOrAddToCollector((cordeBot) => {

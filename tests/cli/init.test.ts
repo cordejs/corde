@@ -63,7 +63,7 @@ describe("Testing content of config file in init", () => {
     guildId: "",
     testMatches: [""],
     botToken: "",
-    timeOut: 5000,
+    timeout: 5000,
   };
 
   it("should js file have same values of configFile", () => {

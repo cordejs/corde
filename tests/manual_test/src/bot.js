@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { Client } = require("discord.js");
-const config = require("./corde.config.json");
+const { Client, MessageEmbed } = require("discord.js");
+const config = require("../corde.config.js");
 
 const bot = new Client();
 
@@ -35,15 +35,35 @@ bot.on("message", async (message) => {
 async function handleCommands(message, command) {
   if (command === "ping") {
     await ping(message);
+  } else if (command === "embed") {
+    await embed(message);
+  } else if (command === "embedPartial") {
+    await embedPartial(message);
   }
 }
 
 /**
- * @param {Message} msg
- * @param {string} msgId
+ * @param {import("discord.js").Message} msg
  */
 async function ping(msg) {
   await msg.channel.send("pong");
+}
+
+/**
+ * @param {import("discord.js").Message} msg
+ */
+async function embedPartial(msg) {
+  await msg.channel.send(
+    new MessageEmbed().setDescription("test").setTitle("title").setAuthor("author"),
+  );
+}
+
+/**
+ * @param {import("discord.js").Message} msg
+ * @param {string} msgId
+ */
+async function embed(msg) {
+  await msg.channel.send(new MessageEmbed().setDescription("test"));
 }
 
 exports.login = login;

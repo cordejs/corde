@@ -1,6 +1,6 @@
 import { Role } from "discord.js";
-import { IRoleIdentifier, ITestReport } from "../../../types";
-import { diff, permissionsArray, RolePermission, typeOf } from "../../../utils";
+import { IRoleIdentifier, ITestReport, permissionsArray, RolePermission } from "../../../types";
+import { diff, typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
 import { IExpectTestBaseParams } from "../../../types";
 import { ExpectTest } from "../expectTest";
@@ -56,7 +56,7 @@ export class ToSetRolePermission extends ExpectTest {
     try {
       role = await this.cordeBot.events.onceRolePermissionUpdate(
         identifier,
-        this.timeOut,
+        this.timeout,
         this.guildId,
       );
     } catch {

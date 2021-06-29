@@ -1,14 +1,12 @@
-import assert from "assert";
-import { Message, MessageEmbed, PartialMessage } from "discord.js";
+import { EmbedFieldData, Message, MessageAttachment, MessageEmbed } from "discord.js";
 import {
   IMessageEditedIdentifier,
   IMessageEmbed,
   IMessageIdentifier,
   MessageType,
-  IMinifiedEmbedMessage,
   Primitive,
 } from "../../../types";
-import { diff, formatObject, isPrimitiveValue, pick, typeOf } from "../../../utils";
+import { deepEqual, diff, formatObject, isPrimitiveValue, typeOf } from "../../../utils";
 import { ExpectTest } from "../expectTest";
 
 export abstract class MessageExpectTest extends ExpectTest {
@@ -22,46 +20,31 @@ export abstract class MessageExpectTest extends ExpectTest {
     return null;
   }
 
-  createReportForExpectAndResponse(
-    expect: Primitive | MessageEmbed,
-    returnedMessage: Message | PartialMessage,
-  ) {
-    this.hasPassed = this.messagesMatches(returnedMessage, expect);
+  createReportForExpectAndResponse(expect: Primitive | IMessageEmbed, returnedMessage: Message) {
+    this.hasPassed = this.isMessagesEquals(returnedMessage, expect);
     this.invertHasPassedIfIsNot();
 
     if (this.hasPassed) {
       return this.createPassTest();
     }
 
-    if (this.isNot) {
-      return this.createReport(
-        "expected: message from bot be different from expectation\n",
-        "received: both returned and expectation are equal",
-      );
-    }
-
-    let embedExpect: IMinifiedEmbedMessage | undefined;
-    if (typeOf(expect) === "object") {
-      embedExpect = this.getMessageByType(expect as MessageEmbed, "embed") as IMinifiedEmbedMessage;
-    }
-
-    let embedReturned: IMinifiedEmbedMessage | undefined;
+    let embedReturned: IMessageEmbed | undefined;
     if (returnedMessage.embeds[0]) {
-      embedReturned = this.getMessageByType(returnedMessage, "embed") as IMinifiedEmbedMessage;
+      embedReturned = this.getMessageByType(returnedMessage, "embed") as IMessageEmbed;
     }
 
-    if (embedExpect && embedReturned) {
-      return this.createReport(diff(embedReturned, embedExpect));
+    if (typeOf(expect) === "object" && embedReturned) {
+      return this.createReport(diff(embedReturned, expect));
     }
 
-    if (embedExpect && !embedReturned) {
+    if (typeOf(expect) === "object" && !embedReturned) {
       return this.createReport(
-        `expected: ${formatObject(embedExpect)}\n`,
+        `expected: ${formatObject(expect)}\n`,
         `received: '${returnedMessage.content}'`,
       );
     }
 
-    if (!embedExpect && embedReturned) {
+    if (typeOf(expect) === "string" && embedReturned) {
       return this.createReport(
         `expected: '${expect}'\n`,
         `received: ${formatObject(embedReturned)}`,
@@ -71,26 +54,18 @@ export abstract class MessageExpectTest extends ExpectTest {
     return this.createReport(`expected: '${expect}'\n`, `received: '${returnedMessage.content}'`);
   }
 
-  messagesMatches(
-    returnedMessage: Message | PartialMessage,
-    expectation: Primitive | MessageEmbed,
-  ) {
-    let msg = "";
-    if (isPrimitiveValue(expectation)) {
-      const formattedMsg = this.getMessageByType(returnedMessage, "text") as Message;
-      msg = formattedMsg.content;
-      return msg == expectation;
+  isMessagesEquals(returnedMessage: Message, expectation: Primitive | IMessageEmbed) {
+    const embed = returnedMessage.embeds[0];
+    if (isPrimitiveValue(expectation) && !embed) {
+      return expectation == returnedMessage.content;
     }
 
-    const jsonMessage = this.getMessageByType(returnedMessage, "embed") as IMinifiedEmbedMessage;
-    msg = JSON.stringify(jsonMessage);
-    let result = true;
-    try {
-      assert.deepStrictEqual(expectation.toJSON(), jsonMessage);
-    } catch (error) {
-      result = false;
+    if (embed && typeOf(expectation) === "object") {
+      const embedInternal = this.messageEmbedToMessageEmbedInterface(embed);
+      return deepEqual(expectation, embedInternal);
     }
-    return result;
+
+    return false;
   }
 
   /**
@@ -130,24 +105,20 @@ export abstract class MessageExpectTest extends ExpectTest {
    *  }
    *  ```
    */
-  getMessageByType(answer: Message | MessageEmbed | PartialMessage, type: MessageType) {
+  getMessageByType(answer: Message | MessageEmbed, type: MessageType) {
     if (type === "embed") {
       const embed = answer instanceof Message ? answer.embeds[0] : answer;
       if (!embed) {
         return null;
       }
 
-      const tempObject = embed.toJSON() as IMinifiedEmbedMessage;
-      if (tempObject.image) {
-        tempObject.image = pick(tempObject.image, "url");
-      }
-      if (tempObject.thumbnail) {
-        tempObject.thumbnail = pick(tempObject.thumbnail, "url");
-      }
-      return tempObject;
-    } else {
-      return answer;
+      return this.messageEmbedToMessageEmbedInterface(embed as MessageEmbed);
     }
+
+    if (answer instanceof Message) {
+      return answer.content;
+    }
+    return answer;
   }
 
   humanizeMessageIdentifierObject(msgIdentifier: IMessageIdentifier | IMessageEditedIdentifier) {
@@ -166,7 +137,100 @@ export abstract class MessageExpectTest extends ExpectTest {
     return "";
   }
 
-  embedMessageLikeToMessageEmbed(embedLike: IMessageEmbed) {
+  messageEmbedToMessageEmbedInterface(message: MessageEmbed) {
+    if (!message) {
+      return {};
+    }
+
+    const embedLike: IMessageEmbed = {};
+
+    if (message.url) {
+      embedLike.url = message.url;
+    }
+
+    if (message.timestamp) {
+      embedLike.timestamp = message.timestamp;
+    }
+
+    if (message.author) {
+      if (message.author.iconURL || message.author.url) {
+        embedLike.author = {
+          iconURL: message.author.iconURL,
+          name: message.author.name,
+          url: message.author.url,
+        };
+      } else if (message.author.name) {
+        embedLike.author = message.author.name;
+      }
+    }
+
+    if (message.color) {
+      embedLike.color = message.color;
+    }
+
+    if (message.description) {
+      embedLike.description = message.description;
+    }
+
+    if (message.fields && message.fields.length) {
+      embedLike.fields = [];
+      message.fields.forEach((field) => {
+        embedLike.fields?.push({
+          name: field.name,
+          value: field.value,
+          inline: !!field.inline,
+        });
+      });
+    }
+
+    if (message.files && message.files.length) {
+      embedLike.files = [];
+      message.files.forEach((file) => {
+        if (file instanceof MessageAttachment) {
+          embedLike.files?.push({
+            attachment: file.attachment,
+            name: file.name,
+          });
+        } else {
+          embedLike.files?.push(file);
+        }
+      });
+    }
+
+    if (message.footer) {
+      if (message.footer.iconURL) {
+        embedLike.footer = {
+          iconURL: message.footer.iconURL,
+          text: message.footer.text,
+        };
+      } else if (message.footer.text) {
+        embedLike.footer = message.footer.text;
+      }
+    }
+
+    if (message.image) {
+      if (message.image.height || message.image.width) {
+        embedLike.image = {
+          url: message.image.url,
+          height: message.image.height,
+          width: message.image.width,
+        };
+      } else if (message.image.url) {
+        embedLike.image = message.image.url;
+      }
+    }
+
+    if (message.title) {
+      embedLike.title = message.title;
+    }
+
+    if (message.thumbnail) {
+      embedLike.thumbnailUrl = message.thumbnail.url;
+    }
+    return embedLike;
+  }
+
+  embedMessageInterfaceToMessageEmbed(embedLike: IMessageEmbed) {
     const embed = new MessageEmbed();
     if (!embedLike || typeOf(embedLike) !== "object") {
       return embed;
@@ -189,11 +253,33 @@ export abstract class MessageExpectTest extends ExpectTest {
     }
 
     if (embedLike.fields) {
-      embed.addFields(...embedLike.fields);
+      embed.addFields(
+        ...embedLike.fields.map<EmbedFieldData>((field) => {
+          return {
+            name: field.name,
+            value: field.value,
+            inline: !!field.inline,
+          };
+        }),
+      );
     }
 
     if (embedLike.files) {
-      embed.attachFiles(embedLike.files);
+      embed.attachFiles(
+        embedLike.files.map((file) => {
+          if (typeof file === "string") {
+            return file;
+          }
+
+          const attachment = new MessageAttachment(file.attachment);
+
+          if (file.name) {
+            attachment.setName(file.name);
+          }
+
+          return attachment;
+        }),
+      );
     }
 
     if (embedLike.footer) {

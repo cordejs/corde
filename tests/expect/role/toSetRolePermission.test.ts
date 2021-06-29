@@ -7,14 +7,8 @@ import {
   removeANSIColorStyle,
   testUtils,
 } from "../../testHelper";
-import { ICordeBot, ITestReport } from "../../../src/types";
-import {
-  buildReportMessage,
-  calcPermissionsValue,
-  diff,
-  Permission,
-  permissionsArray,
-} from "../../../src/utils";
+import { ICordeBot, ITestReport, Permission, permissionsArray } from "../../../src/types";
+import { buildReportMessage, calcPermissionsValue, diff } from "../../../src/utils";
 import { MockEvents } from "../../mocks/mockEvents";
 import { runtime } from "../../../src/common/runtime";
 
@@ -82,11 +76,9 @@ describe("testing toSetRolePermission operation", () => {
 
     const message = buildReportMessage(diff(permissionsArray, ["BANANA"]));
 
-    console.log(message);
     const expectReport = createReport(toSetRolePermission, false, message);
 
     expect(report).toEqual(expectReport);
-    expect(report).toMatchSnapshot();
   });
 
   it("should return false due to invalid permission parameter (undefined)", async () => {
@@ -123,7 +115,7 @@ describe("testing toSetRolePermission operation", () => {
   it("should fail due to role permissions was not updated", async () => {
     const corde = initClient();
 
-    runtime.setConfigs({ timeOut: 100 }, true);
+    runtime.setConfigs({ timeout: 100 }, true);
 
     const toSetRolePermission = initTestClass(corde, false);
     const report = await toSetRolePermission.action({ id: "123" }, ["ATTACH_FILES"]);
@@ -146,7 +138,7 @@ describe("testing toSetRolePermission operation", () => {
   it("should return true due to isNot true and no role change", async () => {
     const corde = initClient();
 
-    runtime.setConfigs({ timeOut: 100 }, true);
+    runtime.setConfigs({ timeout: 100 }, true);
 
     const toSetRolePermission = initTestClass(corde, true);
     const report = await toSetRolePermission.action({ id: "123" }, ["ATTACH_FILES"]);
@@ -160,7 +152,7 @@ describe("testing toSetRolePermission operation", () => {
   it("should return true due to role changed permissions (isNot false)", async () => {
     const corde = initClient();
 
-    runtime.setConfigs({ timeOut: 100 }, true);
+    runtime.setConfigs({ timeout: 100 }, true);
     const mockEvent = new MockEvents(corde, mockDiscord);
     const mockRole = mockDiscord.createMockRole(
       "test role",
@@ -182,7 +174,7 @@ describe("testing toSetRolePermission operation", () => {
       "test role",
       calcPermissionsValue(Permission.ADMINISTRATOR),
     );
-    runtime.setConfigs({ timeOut: 100 }, true);
+    runtime.setConfigs({ timeout: 100 }, true);
     const mockEvent = new MockEvents(corde, mockDiscord);
 
     mockEvent.mockOnceRolePermissionsUpdate(mockRole);
@@ -208,7 +200,7 @@ describe("testing toSetRolePermission operation", () => {
       "test role",
       calcPermissionsValue(Permission.ADMINISTRATOR, Permission.BAN_MEMBERS),
     );
-    runtime.setConfigs({ timeOut: 100 }, true);
+    runtime.setConfigs({ timeout: 100 }, true);
     const mockEvent = new MockEvents(corde, mockDiscord);
 
     mockEvent.mockOnceRolePermissionsUpdate(mockRole);
@@ -237,7 +229,7 @@ describe("testing toSetRolePermission operation", () => {
       "test role",
       calcPermissionsValue(Permission.ADMINISTRATOR, Permission.BAN_MEMBERS, Permission.CONNECT),
     );
-    runtime.setConfigs({ timeOut: 100 }, true);
+    runtime.setConfigs({ timeout: 100 }, true);
     const mockEvent = new MockEvents(corde, mockDiscord);
 
     mockEvent.mockOnceRolePermissionsUpdate(mockRole);
@@ -268,7 +260,7 @@ describe("testing toSetRolePermission operation", () => {
   it("should return a not passed test due expected name did not match to received", async () => {
     const corde = initClient();
 
-    runtime.setConfigs({ timeOut: 100 }, true);
+    runtime.setConfigs({ timeout: 100 }, true);
     const mockEvent = new MockEvents(corde, mockDiscord);
     mockEvent.mockOnceRolePermissionsUpdate(mockDiscord.role);
     const toSetRolePermission = initTestClass(corde, false);
@@ -292,7 +284,7 @@ describe("testing toSetRolePermission operation", () => {
   it("should return a not passed test due expected name did not match to received", async () => {
     const corde = initClient();
 
-    runtime.setConfigs({ timeOut: 100 }, true);
+    runtime.setConfigs({ timeout: 100 }, true);
     const mockEvent = new MockEvents(corde, mockDiscord);
     mockEvent.mockOnceRolePermissionsUpdate(mockDiscord.role);
     const toSetRolePermission = initTestClass(corde, false);
