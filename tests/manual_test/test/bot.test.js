@@ -1,13 +1,18 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-import { it, expect, beforeStart } from "../../../lib";
+import corde, { it, expect, beforeStart } from "../../../lib";
 import { login } from "../src/bot";
 
 beforeStart(async () => {
   await login();
 });
 
-it("ping should return pong", () => {
+corde.afterAll(() => {
+  corde.bot.leaveVoiceChannel();
+});
+
+it("ping should return pong", async () => {
+  await corde.bot.joinVoiceChannel("522581719568744472");
   expect("ping").toReturn("pong");
 });
 
