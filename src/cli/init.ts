@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import { DEFAULT_TEST_TIMEOUT } from "../consts";
 import { FileError } from "../errors";
-import { IConfigOptions, configFileType } from "../types";
+import { IConfigOptions, configFileType, StrictObject } from "../types";
 
 const config: IConfigOptions = {
   botPrefix: "",
@@ -128,7 +128,7 @@ function tabs(count: number, indentType: string) {
   return new Array(count + 1).join(indentType);
 }
 
-function format(json: Record<string, unknown> | string, config: Config) {
+function format(json: StrictObject | string, config: Config) {
   config = config || configDefault;
   const indent = indentConfig[config.type];
 

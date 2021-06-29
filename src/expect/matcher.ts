@@ -12,9 +12,9 @@ import {
   TestFunctionType,
   IMessageMatches,
   IRoleMatches,
+  Colors,
+  RolePermission,
 } from "../types";
-import { Colors } from "../utils/colors";
-import { RolePermission } from "../utils/permission";
 import {
   ToAddReaction,
   ToDeleteRole,

@@ -1,5 +1,5 @@
 export { CordeClientError } from "./cordeClientError";
-export { DiscordError } from "./discordError";
+export { DiscordJSError } from "./discordJSError";
 export { FileError } from "./fileError";
 export { ConfigError } from "./configError";
 export { PropertyError } from "./propertyError";

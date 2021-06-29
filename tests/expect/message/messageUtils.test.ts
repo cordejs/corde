@@ -13,10 +13,11 @@ import {
   IMessageEmbed,
   IMinifiedEmbedMessage,
   ITestReport,
+  ColorsHex,
+  Colors,
 } from "../../../src/types";
 
 import { MessageExpectTest } from "../../../src/expect/matches/message/messageExpectTest";
-import { Colors, ColorsHex } from "../../../src/utils";
 import MockDiscord from "../../mocks/mockDiscord";
 
 class ExpectMessage extends MessageExpectTest {

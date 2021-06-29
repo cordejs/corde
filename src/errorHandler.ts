@@ -16,7 +16,7 @@ export function initErrorHandlers() {
   });
 }
 
-async function printErrorAndExit(error: Error) {
+async function printErrorAndExit(error: unknown) {
   if (error instanceof Error) {
     console.error(error.message);
   } else {
