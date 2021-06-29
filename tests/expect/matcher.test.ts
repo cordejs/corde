@@ -1,6 +1,5 @@
 import { testCollector } from "../../src/common/testCollector";
 import { runtime } from "../../src/common/runtime";
-import { Colors } from "../../src/utils/colors";
 import {
   ToSetRolePosition,
   ToRenameRole,
@@ -16,7 +15,7 @@ import {
   ToReturn,
   ToSetRoleColor,
 } from "../../src/expect/matches";
-import { IExpectTestBaseParams, IExpectTestParams, ITestReport } from "../../src/types";
+import { Colors, IExpectTestBaseParams, IExpectTestParams, ITestReport } from "../../src/types";
 import { ExpectTest } from "../../src/expect/matches/expectTest";
 import { buildReportMessage } from "../../src/utils";
 import { IToHaveResult } from "../../src/expect/matches/toHaveResult";

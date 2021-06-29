@@ -7,14 +7,8 @@ import {
   removeANSIColorStyle,
   testUtils,
 } from "../../testHelper";
-import { ICordeBot, ITestReport } from "../../../src/types";
-import {
-  buildReportMessage,
-  calcPermissionsValue,
-  diff,
-  Permission,
-  permissionsArray,
-} from "../../../src/utils";
+import { ICordeBot, ITestReport, Permission, permissionsArray } from "../../../src/types";
+import { buildReportMessage, calcPermissionsValue, diff } from "../../../src/utils";
 import { MockEvents } from "../../mocks/mockEvents";
 import { runtime } from "../../../src/common/runtime";
 

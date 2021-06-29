@@ -1,9 +1,8 @@
-import chalk, { Color } from "chalk";
 import { Client } from "discord.js";
 import { runtime } from "../../../src/common/runtime";
 import { ToSetRoleColor } from "../../../src/expect/matches";
-import { ICordeBot, ITestReport } from "../../../src/types";
-import { buildReportMessage, Colors, resolveColor } from "../../../src/utils";
+import { Colors, ICordeBot } from "../../../src/types";
+import { buildReportMessage, resolveColor } from "../../../src/utils";
 import MockDiscord from "../../mocks/mockDiscord";
 import { MockEvents } from "../../mocks/mockEvents";
 import {

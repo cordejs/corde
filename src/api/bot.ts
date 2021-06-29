@@ -1,5 +1,4 @@
 import { Message, Role } from "discord.js";
-import { runtime } from "../common/runtime";
 import { CordeClientError } from "../errors";
 import { mapper } from "../mapper/messageMapper";
 import { ICordeBot, IMessageEmbed, IRoleData, IRoleIdentifier, Primitive } from "../types";
@@ -8,33 +7,74 @@ import { isPrimitiveValue } from "../utils";
 export class Bot {
   private _bot: ICordeBot;
 
-  get voiceChannel() {
-    return this._bot.voiceConnection?.channel;
+  /**
+   * Gets the voice channel state that corde's bot is connected in, IF it's connected.
+   * This property is filled when `joinVoiceChannel()` connects to a channel
+   * and is cleared when `leaveVoiceChannal()` is called.
+   */
+  get voiceState() {
+    return this._bot.voiceConnection;
   }
 
-  constructor() {
-    this._bot = runtime.bot;
+  /**
+   * Checks if corde's bot is connected and ready.
+   */
+  get isLoggedIn() {
+    return this._bot.isLoggedIn();
   }
 
+  constructor(bot: ICordeBot) {
+    this._bot = bot;
+  }
+
+  /**
+   * Checks if a given message was sent by corde's bot
+   * @param message Sent message
+   * @returns If corde's bot is the author of the message
+   */
+  isMessageAuthor(message: Message) {
+    return message.author.id === this._bot.id;
+  }
+
+  /**
+   * Joins corde's bot to a voice channel.
+   * @param channelId Voice channel to corde's bot connect
+   * @returns Voice connection state. This property can be get from `bot.voiceState`
+   */
   async joinVoiceChannel(channelId: string) {
     return await this._bot.joinVoiceChannel(channelId);
   }
 
+  /**
+   * Leaves a voice channel.
+   */
   leaveVoiceChannel() {
     this._bot.leaveVoiceChannel();
   }
 
+  /**
+   * Checks if corde's bot is in a voice channel
+   */
   isInVoiceChannel() {
     return this._bot.isInVoiceChannel();
   }
 
+  /**
+   * Makes a fetch of a channel based on it's `id`.
+   * @param id Id of the channel
+   * @returns Channel if it's found
+   */
   async fetchChannel(id: string) {
     return await this._bot.fetchChannel(id);
   }
 
+  /**
+   * Makes a fetch of a guild based on it's `id`.
+   * @param id Id of the guild
+   * @returns Guild if it's found
+   */
   async fetchGuild(id: string) {
-    const guild = await this._bot.fetchGuild(id);
-    return guild;
+    return await this._bot.fetchGuild(id);
   }
 
   /**
@@ -51,6 +91,11 @@ export class Bot {
     return this._bot.guild;
   }
 
+  /**
+   * Search for a guild in guild's cache, based on it's id
+   * @param id id of the guild
+   * @returns Guild if the id is valid and the guild is in the cache
+   */
   findGuild(id: string) {
     return this._bot.findGuild(id);
   }
@@ -133,7 +178,7 @@ export class Bot {
    * @throws CordeClientError if corde's bot is not connected.
    * @returns Role that matches the provided **id** or **name**
    */
-  getRole(id: string): Role | undefined;
+  findRole(id: string): Role | undefined;
   /**
    * Finds a role in config guild's cache, basing on it's **id** or **name**.
    *
@@ -146,16 +191,16 @@ export class Bot {
    * @throws CordeClientError if corde's bot is not connected.
    * @returns Role that matches the provided **id** or **name**
    */
-  getRole(data: IRoleIdentifier): Role | undefined;
-  getRole(data: string | IRoleIdentifier) {
+  findRole(data: IRoleIdentifier): Role | undefined;
+  findRole(data: string | IRoleIdentifier) {
     if (!this._bot.isLoggedIn()) {
       throw new CordeClientError("Bot is not connected yet. No role can be searched");
     }
 
-    return this._getRole(data);
+    return this._findRole(data);
   }
 
-  private _getRole(data: string | IRoleIdentifier) {
+  private _findRole(data: string | IRoleIdentifier) {
     if (typeof data === "string") {
       return this._bot.getRoles().find((r) => r.id === data);
     }

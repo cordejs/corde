@@ -36,6 +36,7 @@ export interface ITestReport {
  * Contract with necessary functions of Discord.js Client
  */
 export interface ICordeBot {
+  readonly id?: string;
   readonly client: Client;
   readonly events: Events;
   readonly guild: Guild;

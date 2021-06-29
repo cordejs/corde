@@ -47,47 +47,47 @@ Object {
 exports[`testing toEditMessage should get fail test due to bot returned different messages (both embed) 1`] = `
 Object {
   "message": "    
-    - Expected  - 13
-    + Received  +  1
+    [32m- Expected  - 13[39m
+    [31m+ Received  +  1[39m
     
-      Object {
-    -   \\"author\\": Object {
-    -     \\"iconURL\\": \\"https://i.imgur.com/wSTFkRM.png\\",
-    -     \\"name\\": \\"Some name\\",
-    -     \\"url\\": \\"https://discord.js.org\\",
-    -   },
-    -   \\"color\\": 2123412,
-    -   \\"description\\": \\"Some description here\\",
-    +   \\"author\\": \\"ITest\\",
-        \\"fields\\": Array [
-          Object {
-            \\"inline\\": false,
-            \\"name\\": \\"Regular field title\\",
-            \\"value\\": \\"Some value here\\",
-          },
-          Object {
-            \\"inline\\": false,
-            \\"name\\": \\"​\\",
-            \\"value\\": \\"​\\",
-          },
-          Object {
-            \\"inline\\": true,
-            \\"name\\": \\"Inline field title\\",
-            \\"value\\": \\"Some value here\\",
-          },
-          Object {
-            \\"inline\\": true,
-            \\"name\\": \\"Inline field title\\",
-            \\"value\\": \\"Some value here\\",
-          },
-        ],
-    -   \\"files\\": Array [
-    -     \\"https://i.imgur.com/wSTFkRM.png\\",
-    -   ],
-    -   \\"thumbnailUrl\\": \\"https://i.imgur.com/wSTFkRM.png\\",
-    -   \\"title\\": \\"Some title\\",
-    -   \\"url\\": \\"https://discord.js.org/\\",
-      }
+    [2m  Object {[22m
+    [32m-   \\"author\\": Object {[39m
+    [32m-     \\"iconURL\\": \\"https://i.imgur.com/wSTFkRM.png\\",[39m
+    [32m-     \\"name\\": \\"Some name\\",[39m
+    [32m-     \\"url\\": \\"https://discord.js.org\\",[39m
+    [32m-   },[39m
+    [32m-   \\"color\\": 2123412,[39m
+    [32m-   \\"description\\": \\"Some description here\\",[39m
+    [31m+   \\"author\\": \\"ITest\\",[39m
+    [2m    \\"fields\\": Array [[22m
+    [2m      Object {[22m
+    [2m        \\"inline\\": false,[22m
+    [2m        \\"name\\": \\"Regular field title\\",[22m
+    [2m        \\"value\\": \\"Some value here\\",[22m
+    [2m      },[22m
+    [2m      Object {[22m
+    [2m        \\"inline\\": false,[22m
+    [2m        \\"name\\": \\"​\\",[22m
+    [2m        \\"value\\": \\"​\\",[22m
+    [2m      },[22m
+    [2m      Object {[22m
+    [2m        \\"inline\\": true,[22m
+    [2m        \\"name\\": \\"Inline field title\\",[22m
+    [2m        \\"value\\": \\"Some value here\\",[22m
+    [2m      },[22m
+    [2m      Object {[22m
+    [2m        \\"inline\\": true,[22m
+    [2m        \\"name\\": \\"Inline field title\\",[22m
+    [2m        \\"value\\": \\"Some value here\\",[22m
+    [2m      },[22m
+    [2m    ],[22m
+    [32m-   \\"files\\": Array [[39m
+    [32m-     \\"https://i.imgur.com/wSTFkRM.png\\",[39m
+    [32m-   ],[39m
+    [32m-   \\"thumbnailUrl\\": \\"https://i.imgur.com/wSTFkRM.png\\",[39m
+    [32m-   \\"title\\": \\"Some title\\",[39m
+    [32m-   \\"url\\": \\"https://discord.js.org/\\",[39m
+    [2m  }[22m
 ",
   "pass": false,
   "testName": "toEditMessage",

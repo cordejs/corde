@@ -21,17 +21,6 @@ Object {
 }
 `;
 
-exports[`testing pin message test should return a failed test due to isNot false and timeout (messageIdentifier) 2`] = `
-Object {
-  "message": "    
-    expected: pin message of id 1233
-    received: informed message was not pinned
-",
-  "pass": false,
-  "testName": "toPinMessage",
-}
-`;
-
 exports[`testing pin message test should return a failed test due to isNot false and timeout 1`] = `
 Object {
   "message": "    

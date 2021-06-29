@@ -1,1 +1,1 @@
-export * from "./cordeBot";
+export * from "./bot";

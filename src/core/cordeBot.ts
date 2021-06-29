@@ -88,6 +88,10 @@ export class CordeBot implements ICordeBot {
     return this._voiceConnection;
   }
 
+  get id() {
+    return this._client.user?.id;
+  }
+
   /**
    * Authenticate Corde bot to the installed bot in Discord server.
    *

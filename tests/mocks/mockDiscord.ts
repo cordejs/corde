@@ -25,7 +25,7 @@ import {
 } from "discord.js";
 import { ToReturn } from "../../src/expect/matches";
 import { IMessageEmbed } from "../../src/types";
-import { Colors, ColorsHex } from "../../src/utils";
+import { ColorsHex } from "../../src/types";
 
 /**
  * @private
