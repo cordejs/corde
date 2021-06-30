@@ -1804,13 +1804,13 @@
     "@docusaurus/types" "2.0.0-beta.2"
     tslib "^2.1.0"
 
-"@docusaurus/theme-live-codeblock@^2.0.0-beta.2":
-  version "2.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@docusaurus/theme-live-codeblock/-/theme-live-codeblock-2.0.0-beta.2.tgz#56fb4d6cd3615c032eea7c2d8fc42be226f3d5f5"
-  integrity sha512-QzsGmCg6fv1wSAtwC136s9AcAGZ8MEChssegemIIB526Qd/oSE0EMrMIRmBq/PWuqT8xv8+PG1C/IoGMNHJpaw==
+"@docusaurus/theme-live-codeblock@^2.0.0-beta.3":
+  version "2.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@docusaurus/theme-live-codeblock/-/theme-live-codeblock-2.0.0-beta.3.tgz#c7fc9241356b8a6aef17843c16a2a800c9d68e20"
+  integrity sha512-L2rFxjHSNIs1tu6EyxS6EVp2/+7FjTv6r8MABikToR2mW71NZDSsGRgiWu7WWE2YO79JuvjwcALdxz+GOiJs/Q==
   dependencies:
-    "@docusaurus/core" "2.0.0-beta.2"
-    "@docusaurus/utils-validation" "2.0.0-beta.2"
+    "@docusaurus/core" "2.0.0-beta.3"
+    "@docusaurus/utils-validation" "2.0.0-beta.3"
     "@philpl/buble" "^0.19.7"
     clsx "^1.1.1"
     parse-numeric-range "^1.2.0"
