@@ -37,7 +37,7 @@ export async function exec(options: Config.ICLIOptions, args?: any) {
 }
 
 async function loadConfigs() {
-  const configs = reader.loadConfig();
+  const configs = await reader.loadConfig();
   runtime.setConfigs(configs);
   await validate(runtime.configs);
 }

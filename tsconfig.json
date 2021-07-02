@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "experimentalDecorators": true,
     "outDir": "lib",
     "rootDir": ".",
     "strict": true,
@@ -24,6 +25,12 @@
     "allowUnreachableCode": false,
     "esModuleInterop": true
   },
-  "include": ["src/**/*", "index.ts"],
+  "include": [
+    "src/**/*",
+    "index.ts",
+    "tests/core/tsJestCompiler/utils/memoize.test.ts",
+    "tests/core/tsJestCompiler/utils/backports.test.ts",
+    "tests/core/tsJestCompiler/utils/__mocks__"
+  ],
   "exclude": ["node_modules", "lib", "tests", "e2e"]
 }
