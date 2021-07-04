@@ -6,6 +6,7 @@ import { testCollector } from "../common/testCollector";
 import { FileError } from "../errors";
 import { IConfigOptions, ITestFilePattern, ITestFile } from "../types";
 import { utils } from "../utils";
+import { Compiler } from "./compiler";
 
 export class Reader {
   /**
@@ -59,6 +60,13 @@ export class Reader {
     for (const file of filesPath) {
       try {
         const extension = path.extname(file);
+
+        if (extension === ".ts") {
+          console.log(file);
+          const compiler = new Compiler();
+          compiler.compile("./test/bot.test.ts", "D:/github/corde/tests/manual_test");
+        }
+
         if (extension == ".js" || extension === ".ts") {
           require(file);
         }

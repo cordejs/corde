@@ -5962,6 +5962,11 @@ optionator@^0.9.1:
     type-check "^0.4.0"
     word-wrap "^1.2.3"
 
+options-defaults@^2.0.39:
+  version "2.0.39"
+  resolved "https://registry.yarnpkg.com/options-defaults/-/options-defaults-2.0.39.tgz#cf944237ae233fc506840fb6fc9eb36c3f89d0cd"
+  integrity sha512-oM3zz6IqQSXodCIpev4WcDIJeCKRLdNobGhZUsN1kKnmNXg18Rfwy7bolWLOwc3farTLRRRtp6qFarhUAa+23A==
+
 ora@^5.3.0, ora@^5.4.0:
   version "5.4.1"
   resolved "https://registry.yarnpkg.com/ora/-/ora-5.4.1.tgz#1b2678426af4ac4a509008e5e4ac9e9959db9e18"
@@ -7497,6 +7502,13 @@ tr46@^2.0.2:
   integrity sha512-3n1qG+/5kg+jrbTzwAykB5yRYtQCTqOGKq5U5PE3b0a1/mzo6snDhjGS0zJVJunO0NrT3Dg1MLy5TjWP/UJppg==
   dependencies:
     punycode "^2.1.1"
+
+ts-import@^2.0.39:
+  version "2.0.39"
+  resolved "https://registry.yarnpkg.com/ts-import/-/ts-import-2.0.39.tgz#d2302995f5b713c8d89ab6a692e47da03b266fe4"
+  integrity sha512-untSUsbDnXo9lDiF7ol5sZ301X3UO1moQyJGRVYOorkhmMO9UGZ+KLYGUq68Dti90Xlt/I+AttmvRuAPn7p9Cw==
+  dependencies:
+    options-defaults "^2.0.39"
 
 ts-jest@^26.4.4:
   version "26.5.6"

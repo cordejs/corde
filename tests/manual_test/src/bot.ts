@@ -8,8 +8,9 @@ export const bot = new Client();
  * Use this functions before use sendMessage (add it to **corde.beforeStart**)
  */
 export async function login() {
-  const readyPromise = new Promise((resolve) => {
+  const readyPromise = new Promise<void>((resolve) => {
     bot.once("ready", () => {});
+    resolve();
   });
   await bot.login(config.botToken);
   await readyPromise;
