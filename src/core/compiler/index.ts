@@ -2,12 +2,12 @@ import * as fs from "fs";
 import * as path from "path";
 import util from "util";
 
-import { importJsInDirectory, wasFileModified } from "./utils";
+import { importJS, wasFileModified } from "./utils";
 import { defaults } from "options-defaults";
 
 import ts from "typescript";
 
-const DEFAULTtranspileTStoJSFilesR_OPTIONS: ts.CompilerOptions = {
+const DEFAULT_COMPILER_OPTIONS: ts.CompilerOptions = {
   noEmitOnError: true,
   noImplicitAny: false,
   strict: false,
@@ -37,21 +37,11 @@ export interface CompilationContext {
   tsDir: string;
 }
 
-async function exists(filePath: string) {
-  const stat = util.promisify(fs.stat);
-  try {
-    const fileStatus = await stat(filePath);
-    return !!fileStatus;
-  } catch (error) {
-    return false;
-  }
-}
-
 export class TsCompiler {
-  private options: ts.CompilerOptions;
+  private _options: ts.CompilerOptions;
 
   constructor(options?: CompilerOptions) {
-    this.options = defaults(DEFAULTtranspileTStoJSFilesR_OPTIONS, options);
+    this._options = defaults(DEFAULT_COMPILER_OPTIONS, options);
   }
 
   /**
@@ -86,7 +76,7 @@ export class TsCompiler {
   async compile(relativeTsPath = "", cwd = process.cwd()): Promise<any> {
     // Check if file exists.
     const tsPath = path.resolve(cwd, relativeTsPath);
-    if (!(await exists(tsPath))) {
+    if (!(await this._exists(tsPath))) {
       throw new Error(`File ${tsPath} not found to compile.`);
     }
 
@@ -109,41 +99,39 @@ export class TsCompiler {
     const tsFileName = path.basename(tsPath);
     const jsFileName = tsFileName.replace(/\.[^/.]+$/u, ".js");
 
-    const cacheDir = path.resolve(process.cwd(), this.options.outDir || "");
+    const cacheDir = path.resolve(process.cwd(), this._options.outDir || "");
     const internalPath = (path.dirname(tsPath) + "\\" + jsFileName).replace(process.cwd(), "");
     const jsPath = path.join(cacheDir, internalPath);
 
     // Check if cached scripts.js exist.
-    if (!(await exists(jsPath))) {
+    if (!(await this._exists(jsPath))) {
       // Cache is correct, do nothing.
       const tsWasModified = await wasFileModified(tsPath, jsPath);
       if (!tsWasModified) {
-        return await importJsInDirectory(cwd, jsPath, tsDir);
+        return await importJS(cwd, jsPath, tsDir);
       }
 
       try {
         this.transpileTStoJSFiles([tsPath], cwd);
       } catch (error) {
         // If we don't want to fallback to last working version of compiled file, throw error.
-        if (!this.options.fallback && error instanceof Error) {
+        if (!this._options.fallback && error instanceof Error) {
           throw error;
         }
       }
 
-      return await importJsInDirectory(cwd, jsPath, tsDir);
+      return await importJS(cwd, jsPath, tsDir);
     }
 
     // Create cache directory if it does not exist.
-    if (!fs.existsSync(cacheDir)) {
-      fs.mkdirSync(cacheDir, {
-        recursive: true,
-      });
+    if (!(await this._exists(cacheDir))) {
+      await this._mkdir(cacheDir);
     }
 
     // Build cache.
     this.transpileTStoJSFiles([tsPath], cwd);
 
-    return await importJsInDirectory(cwd, jsPath, tsDir);
+    return await importJS(cwd, jsPath, tsDir);
   }
 
   private transpileTStoJSFiles(fileNames: string[], projectRootDir: string) {
@@ -151,12 +139,12 @@ export class TsCompiler {
     host.onUnRecoverableConfigFileDiagnostic = () => null;
 
     projectRootDir = path.normalize(projectRootDir);
-    this.options.outDir = path.join(
-      this.options.outDir || "",
+    this._options.outDir = path.join(
+      this._options.outDir || "",
       projectRootDir.replace(process.cwd(), ""),
     );
 
-    const program = ts.createProgram(fileNames, this.options);
+    const program = ts.createProgram(fileNames, this._options);
 
     //const sourceFile = program.getSourceFile(fileNames[0]);
 
@@ -180,5 +168,29 @@ export class TsCompiler {
       console.log(`Process exiting with code '${exitCode}'.`);
       process.exit(exitCode);
     }
+  }
+
+  private async _exists(filePath: string) {
+    const stat = util.promisify(fs.stat);
+    try {
+      const fileStatus = await stat(filePath);
+      return !!fileStatus;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  private async _mkdir(
+    dirPath: string,
+    options?:
+      | fs.Mode
+      | (fs.MakeDirectoryOptions & {
+          recursive?: false | undefined;
+        })
+      | null
+      | undefined,
+  ) {
+    const mkdir = util.promisify(fs.mkdir);
+    return await mkdir(dirPath, options);
   }
 }
