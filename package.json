@@ -65,7 +65,7 @@
     "@types/jest": "^26.0.22",
     "@types/merge-stream": "^1.1.2",
     "@types/mock-fs": "^4.13.0",
-    "@types/node": "^15.0.1",
+    "@types/node": "^16.0.0",
     "@types/require-from-string": "^1.2.0",
     "@types/rewire": "^2.5.28",
     "@types/rimraf": "^3.0.0",
