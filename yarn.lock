@@ -1447,9 +1447,9 @@
   integrity sha512-DxZZbyMAM9GWEzXL+BMZROWz9oo6A9EilwwOMET2UVu2uZTqMWS5S69KVtuVKaRjCUpcrOXRalet86/OpG4kqw==
 
 "@types/require-from-string@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@types/require-from-string/-/require-from-string-1.2.0.tgz#c18cfc8a2c1a0259e5841d1fef2b5e9d01c64242"
-  integrity sha512-5vE9WoOOC9/DoD3Zj53UISpM+5tSvh8k0mL4fe2zFI6vO715/W4IQ3EdVUrWVMrFi1/NZhyMvm2iKsDFkEGddQ==
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@types/require-from-string/-/require-from-string-1.2.1.tgz#50292d824e2244628c0b961c6a1a583fdc494554"
+  integrity sha512-mIDK7lTHc0uW67SxPIqkwCrxmdKBV5aAET560hyZnT8c6Ekp9Aah3GPqe8Pl1Yzn/i2NMYmYv+HiMLwjGDCIAQ==
 
 "@types/rewire@^2.5.28":
   version "2.5.28"
