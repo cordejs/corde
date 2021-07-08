@@ -1353,9 +1353,9 @@
     "@types/node" "*"
 
 "@types/gulp-babel@^6.1.29":
-  version "6.1.29"
-  resolved "https://registry.yarnpkg.com/@types/gulp-babel/-/gulp-babel-6.1.29.tgz#0e52ba5203da6ebf9b390220c0fc0c83c569873f"
-  integrity sha1-DlK6UgPabr+bOQIgwPwMg8Vphz8=
+  version "6.1.30"
+  resolved "https://registry.yarnpkg.com/@types/gulp-babel/-/gulp-babel-6.1.30.tgz#72220a2e72517bd2cf461fc6250849035ad58798"
+  integrity sha512-tMs5xeU3iZy0eXwMudKtLonhMrvZLj804lL68Sv+IofA9bReGWFukPYXxWVGWlw7vXdVloP10Fycs5ecrx+eMA==
   dependencies:
     "@types/node" "*"
 
