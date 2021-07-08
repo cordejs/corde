@@ -1360,9 +1360,9 @@
     "@types/node" "*"
 
 "@types/gulp-strip-comments@^2.5.0":
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/@types/gulp-strip-comments/-/gulp-strip-comments-2.5.0.tgz#4c2278434412d483a693ac28d24d6253c16399cd"
-  integrity sha512-5/6X3eaF26fFvAQcL/4LGl5cAVwq3/wzvZi3fXMUlqxc0oIcvUEqUuX2SszXJapIHaA1NfK+uOGXHxugnSkijw==
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/@types/gulp-strip-comments/-/gulp-strip-comments-2.5.1.tgz#f645d5760d5ffafa580556b7f242bce894cf995e"
+  integrity sha512-N4WRbn8VX8N4L6cNy0bXqhnqJCdOadFQSYD+ncWgWWu1c7cDMD/vwV1UE31y4pmavlVf987cVPv+1EN8S1PQRA==
   dependencies:
     "@types/node" "*"
 
