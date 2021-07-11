@@ -8,19 +8,65 @@ import { IConfigOptions } from "../types";
  *
  */
 export class Config implements IConfigOptions {
-  cordeBotToken!: string;
-  botTestId!: string;
-  botToken!: string;
-  channelId!: string;
-  guildId!: string;
-  timeout?: number;
-  botPrefix!: string;
-  testMatches!: string[];
-  modulePathIgnorePatterns?: string[];
-  project?: string;
-  exitOnFileReadingError?: boolean;
-  typeCheck?: boolean;
-  extentions?: string[];
+  private _cordeBotToken!: string;
+  private _botTestId!: string;
+  private _botToken!: string;
+  private _channelId!: string;
+  private _guildId!: string;
+  private _timeout?: number;
+  private _botPrefix!: string;
+  private _testMatches!: string[];
+  private _modulePathIgnorePatterns?: string[];
+  private _project?: string;
+  private _exitOnFileReadingError?: boolean;
+  private _extentions?: string[];
+
+  get cordeBotToken() {
+    return this._cordeBotToken;
+  }
+
+  get botTestId() {
+    return this._botTestId;
+  }
+
+  get botToken() {
+    return this._botToken;
+  }
+
+  get channelId() {
+    return this._channelId;
+  }
+
+  get guildId() {
+    return this._guildId;
+  }
+
+  get timeout() {
+    return this._timeout;
+  }
+
+  get botPrefix() {
+    return this._botPrefix;
+  }
+  get testMatches() {
+    return this._testMatches;
+  }
+
+  get modulePathIgnorePatterns() {
+    return this._modulePathIgnorePatterns;
+  }
+
+  get project() {
+    return this._project;
+  }
+
+  get exitOnFileReadingError() {
+    return this._exitOnFileReadingError;
+  }
+
+  get extentions() {
+    return this._extentions;
+  }
 
   /**
    * Set values to config options that are not **filed** yet
@@ -40,9 +86,13 @@ export class Config implements IConfigOptions {
   setConfigs(config: Partial<IConfigOptions>, forceUpdate?: boolean) {
     const keys = Object.keys(config) as (keyof typeof config)[];
     for (const key of keys) {
-      if (config[key] && (!this[key] || forceUpdate)) {
-        (this[key] as any) = config[key];
+      if (config[key] && (!this[this.getKey(key)] || forceUpdate)) {
+        (this[this.getKey(key)] as any) = config[key];
       }
     }
+  }
+
+  private getKey(key: keyof IConfigOptions) {
+    return (key = ("_" + key) as keyof IConfigOptions);
   }
 }
