@@ -27,10 +27,6 @@ bot.on("message", async (message) => {
   }
 });
 
-/**
- * @param {Message} message
- * @param {string} command
- */
 async function handleCommands(message: Message, command: string) {
   if (command === "ping") {
     await ping(message);
@@ -41,26 +37,16 @@ async function handleCommands(message: Message, command: string) {
   }
 }
 
-/**
- * @param {import("discord.js").Message} msg
- */
-async function ping(msg) {
+async function ping(msg: Message) {
   await msg.channel.send("pong");
 }
 
-/**
- * @param {import("discord.js").Message} msg
- */
-async function embedPartial(msg) {
+async function embedPartial(msg: Message) {
   await msg.channel.send(
     new MessageEmbed().setDescription("test").setTitle("title").setAuthor("author"),
   );
 }
 
-/**
- * @param {import("discord.js").Message} msg
- * @param {string} msgId
- */
-async function embed(msg) {
+async function embed(msg: Message) {
   await msg.channel.send(new MessageEmbed().setDescription("test"));
 }
