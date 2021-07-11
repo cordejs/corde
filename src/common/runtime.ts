@@ -3,7 +3,6 @@ import { Config } from "./config";
 import { Client } from "discord.js";
 import { CordeBot } from "../core/cordeBot";
 import { ConfigError } from "../errors";
-import { DEFAULT_TEST_TIMEOUT } from "../consts";
 
 const Environment = {
   isUnityTest: process.env.ENV === "UNITY_TEST",
@@ -13,7 +12,7 @@ const Environment = {
 /**
  * @internal
  */
-class Runtime {
+class Runtime implements IConfigOptions {
   get bot() {
     if (!this._bot) {
       this._bot = this.initBot();
@@ -28,6 +27,14 @@ class Runtime {
 
   get environment() {
     return Environment;
+  }
+
+  get exitOnFileReadingError() {
+    return this._configs.exitOnFileReadingError;
+  }
+
+  get extensions() {
+    return this._configs.extentions;
   }
 
   get events() {
@@ -63,7 +70,8 @@ class Runtime {
   }
 
   get timeout() {
-    return this._configs.timeout ?? DEFAULT_TEST_TIMEOUT;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return this._configs.timeout!;
   }
 
   get botPrefix() {

@@ -211,6 +211,7 @@ export interface IConfigOptions {
   guildId: string;
   /**
    * Defines max amount of time that a command can run
+   * @default 5000
    */
   timeout?: number;
   /**
@@ -223,12 +224,28 @@ export interface IConfigOptions {
   testMatches: string[];
   /**
    * Definition of all paterns to ignore in tests search
+   *
+   * @default ["(?:^|/)node_modules/"]
    */
   modulePathIgnorePatterns?: string[];
   /**
    * Definition of tsconfig path.
+   *
+   * @default <rootDir>/tsconfig.json
    */
   project?: string;
+  /**
+   * Define if corde should stop if any problem
+   * occour when importing a test file.
+   *
+   * @default true
+   */
+  exitOnFileReadingError?: boolean;
+  /**
+   * Define file extensions to be loaded
+   * @default [".js",".ts"]
+   */
+  extentions?: string[];
 }
 
 export interface IJSONFile {

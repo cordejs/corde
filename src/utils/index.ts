@@ -27,3 +27,4 @@ export * from "./getFiles";
 export * from "./isPartialOf";
 export * from "./keysOf";
 export * from "./deepFreeze";
+export * from "./isNumber";

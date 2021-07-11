@@ -5,7 +5,7 @@ import { printHookErrors } from "../common/printHookError";
 import { testCollector } from "../common/testCollector";
 import { FileError } from "../errors";
 import { IConfigOptions, ITestFilePattern, ITestFile } from "../types";
-import { utils } from "../utils";
+import { isNumber, utils } from "../utils";
 
 export class Reader {
   /**
@@ -29,7 +29,7 @@ export class Reader {
     } else if (fs.existsSync(tsFilePath)) {
       _config = require(tsFilePath);
     } else if (fs.existsSync(jsFilePath)) {
-      return require(jsFilePath);
+      _config = require(jsFilePath);
     } else {
       throw new FileError("No config file was found");
     }
@@ -37,6 +37,9 @@ export class Reader {
     if (!_config || Object.keys(_config).length === 0) {
       throw new FileError("This appears to be a invalid config file");
     } else {
+      if (_config.timeout && isNumber(_config.timeout)) {
+        _config.timeout = +_config.timeout;
+      }
       return _config;
     }
   }
@@ -57,19 +60,18 @@ export class Reader {
     }
 
     for (const file of filesPath) {
-      try {
-        const extension = path.extname(file);
-
-        if (extension === ".ts") {
+      const extension = path.extname(file);
+      if (runtime.extensions?.includes(extension)) {
+        if (runtime.exitOnFileReadingError) {
           require(file);
+        } else {
+          try {
+            require(file);
+          } catch (error) {
+            console.error(error);
+            continue;
+          }
         }
-
-        if (extension == ".js" || extension === ".ts") {
-          require(file);
-        }
-      } catch (error) {
-        console.error(error);
-        continue;
       }
 
       /**

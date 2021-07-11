@@ -27,9 +27,6 @@ bot.on("message", async (message) => {
   }
 });
 
-const a = "";
-a = 2;
-
 /**
  * @param {Message} message
  * @param {string} command

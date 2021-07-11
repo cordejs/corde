@@ -4,7 +4,7 @@
   "description": "",
   "main": "bot.js",
   "scripts": {
-    "test": "node ../../bin/corde"
+    "test": "set CORDE_DEBUG_MODE=1 && node ../../bin/corde"
   },
   "author": "Lucas Gomes",
   "license": "ISC",

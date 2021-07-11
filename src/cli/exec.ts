@@ -9,6 +9,9 @@ import { LogUpdate } from "../utils/logUpdate";
 import { validate } from "./validate";
 import { Config, StrictObject } from "../types";
 import registerTsNode from "../core/tsRegister";
+import { DEFAULT_TEST_TIMEOUT } from "../consts";
+import path from "path";
+import { debug } from "../common/debug";
 declare module "ora" {
   interface Ora {
     _spinner: StrictObject;
@@ -21,25 +24,47 @@ process.on("uncaughtException", () => {
 
 let spinner: Ora;
 
+function setDefaultConfigs() {
+  runtime.setConfigs(
+    {
+      timeout: DEFAULT_TEST_TIMEOUT,
+      project: path.resolve(process.cwd(), "tsconfig.json"),
+      exitOnFileReadingError: true,
+      extentions: [".js", ".ts"],
+      modulePathIgnorePatterns: ["(?:^|/)node_modules/"],
+    },
+    true,
+  );
+}
+
 export async function exec(options: Config.ICLIOptions, args?: any) {
+  setDefaultConfigs();
+
   if (options.config) {
     runtime.configFilePath = options.config;
   }
-  if (args) {
+
+  debug("runtime.configFilePath: " + runtime.configFilePath);
+
+  await loadConfigs();
+
+  if (args && Array.isArray(args) && args.length > 0) {
     runtime.setConfigs({ testMatches: args }, true);
   }
-  if (options.files) {
+
+  if (options.files && options.files.length > 0) {
     runtime.setConfigs({ testMatches: options.files.split(" ") }, true);
   }
 
-  await loadConfigs();
-  registerTsNode(runtime.project);
+  registerTsNode(runtime.configs);
+  debug("loaded configs: ", runtime.configs);
+
   await runTests();
 }
 
 async function loadConfigs() {
   const configs = await reader.loadConfig();
-  runtime.setConfigs(configs);
+  runtime.setConfigs(configs, true);
   await validate(runtime.configs);
 }
 
