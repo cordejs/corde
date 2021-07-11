@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { Client, MessageEmbed } from "discord.js";
-const config = require("../corde.config.js");
+import { Client, Message, MessageEmbed } from "discord.js";
+import * as config from "../corde.config";
 
 export const bot = new Client();
 
@@ -27,11 +27,14 @@ bot.on("message", async (message) => {
   }
 });
 
+const a = "";
+a = 2;
+
 /**
  * @param {Message} message
  * @param {string} command
  */
-async function handleCommands(message, command) {
+async function handleCommands(message: Message, command: string) {
   if (command === "ping") {
     await ping(message);
   } else if (command === "embed") {

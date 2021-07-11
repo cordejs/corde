@@ -17,6 +17,7 @@ export class Config implements IConfigOptions {
   botPrefix!: string;
   testMatches!: string[];
   modulePathIgnorePatterns?: string[];
+  project?: string;
 
   /**
    * Set values to config options that are not **filed** yet
@@ -48,6 +49,10 @@ export class Config implements IConfigOptions {
 
     if (config.botToken && (!this.botToken || forceUpdate)) {
       this.botToken = config.botToken;
+    }
+
+    if (config.project && (!this.project || forceUpdate)) {
+      this.project = config.project;
     }
 
     if (config.channelId && (!this.channelId || forceUpdate)) {

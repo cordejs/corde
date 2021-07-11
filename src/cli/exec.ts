@@ -8,7 +8,7 @@ import { TestExecutor } from "../core/testExecutor";
 import { LogUpdate } from "../utils/logUpdate";
 import { validate } from "./validate";
 import { Config, StrictObject } from "../types";
-
+import registerTsNode from "../core/tsRegister";
 declare module "ora" {
   interface Ora {
     _spinner: StrictObject;
@@ -33,6 +33,7 @@ export async function exec(options: Config.ICLIOptions, args?: any) {
   }
 
   await loadConfigs();
+  registerTsNode(runtime.project);
   await runTests();
 }
 

@@ -23,6 +23,7 @@ program
 
 program
   .option("-c, --config <type>", "Set config file path")
+  .option("-p, --project <type>", "Set tsconfig path")
   .option(
     "-f, --files <path>",
     "Set the path for all tests. Use this if you wan to specify a single path." +
@@ -47,7 +48,7 @@ program
   .alias("v")
   .description("Search for corde configs and check if all data are valid")
   .action(async () => {
-    const configs = reader.loadConfig();
+    const configs = await reader.loadConfig();
     await validate(configs);
     console.log("All configs are ok!");
   });

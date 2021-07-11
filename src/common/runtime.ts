@@ -46,6 +46,10 @@ class Runtime {
     return this._configs.botTestId;
   }
 
+  get project() {
+    return this._configs.project;
+  }
+
   get botToken() {
     return this._configs.botToken;
   }

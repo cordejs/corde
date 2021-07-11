@@ -225,6 +225,10 @@ export interface IConfigOptions {
    * Definition of all paterns to ignore in tests search
    */
   modulePathIgnorePatterns?: string[];
+  /**
+   * Definition of tsconfig path.
+   */
+  project?: string;
 }
 
 export interface IJSONFile {

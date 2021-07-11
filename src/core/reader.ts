@@ -6,7 +6,6 @@ import { testCollector } from "../common/testCollector";
 import { FileError } from "../errors";
 import { IConfigOptions, ITestFilePattern, ITestFile } from "../types";
 import { utils } from "../utils";
-import { Compiler } from "./compiler";
 
 export class Reader {
   /**
@@ -14,7 +13,7 @@ export class Reader {
    * and validates it
    * @throws
    */
-  loadConfig(): IConfigOptions {
+  async loadConfig(): Promise<IConfigOptions> {
     let _config: IConfigOptions;
 
     const jsonFilePath = path.resolve(process.cwd(), "corde.config.json");
@@ -30,7 +29,7 @@ export class Reader {
     } else if (fs.existsSync(tsFilePath)) {
       _config = require(tsFilePath);
     } else if (fs.existsSync(jsFilePath)) {
-      _config = require(jsFilePath);
+      return require(jsFilePath);
     } else {
       throw new FileError("No config file was found");
     }
@@ -62,9 +61,7 @@ export class Reader {
         const extension = path.extname(file);
 
         if (extension === ".ts") {
-          console.log(file);
-          const compiler = new Compiler();
-          compiler.compile("./test/bot.test.ts", "D:/github/corde/tests/manual_test");
+          require(file);
         }
 
         if (extension == ".js" || extension === ".ts") {

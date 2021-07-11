@@ -5,7 +5,7 @@
 // A task to fix this problem is informed on
 // https://github.com/cordejs/corde/issues/490
 
-const env = require("dotenv");
+import env from "dotenv";
 
 var result = env.config();
 
@@ -23,13 +23,4 @@ const testMatches = ["./test/**"];
 const botToken = process.env.BOT_TEST_TOKEN;
 const timeout = process.env.TIME_OUT;
 
-module.exports = {
-  botPrefix,
-  botTestId,
-  channelId,
-  cordeBotToken,
-  guildId,
-  botToken,
-  testMatches,
-  timeout,
-};
+export { botPrefix, botTestId, channelId, cordeBotToken, guildId, botToken, testMatches, timeout };
