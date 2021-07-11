@@ -127,7 +127,6 @@
     "log-update": "^4.0.0",
     "ora": "^5.4.0",
     "pretty-format": "^27.0.1",
-    "ts-import": "^2.0.39",
     "tslib": "^2.2.0"
   },
   "engines": {
