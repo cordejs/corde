@@ -1,9 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
-import util from "util";
 
 import { importJS, wasFileModified } from "./utils";
-import { defaults } from "options-defaults";
 
 import ts from "typescript";
 
@@ -14,22 +12,12 @@ const DEFAULT_COMPILER_OPTIONS: ts.CompilerOptions = {
   resolveJsonModule: true,
   outDir: path.resolve(__dirname, "../../../@cache"),
   target: ts.ScriptTarget.ES5,
+  // Avoid default imports error: "can only be default-imported using the 'esModuleInterop' flag"
+  esModuleInterop: true,
   module: ts.ModuleKind.CommonJS,
   allowJs: false,
   moduleResolution: ts.ModuleResolutionKind.NodeJs,
 };
-
-export interface CompilerOptions {
-  /**
-   * If TypeScript compilation fails but there is cached file, should it be loaded? Default: false
-   */
-  fallback?: boolean;
-
-  /**
-   * Typescript tsconfig.json compilerOptions.
-   */
-  compilerOptions?: CompilerOptions;
-}
 
 export interface CompilationContext {
   cwd: string;
@@ -40,8 +28,8 @@ export interface CompilationContext {
 export class TsCompiler {
   private _options: ts.CompilerOptions;
 
-  constructor(options?: CompilerOptions) {
-    this._options = defaults(DEFAULT_COMPILER_OPTIONS, options);
+  constructor(options?: ts.CompilerOptions) {
+    this._options = options ?? DEFAULT_COMPILER_OPTIONS;
   }
 
   /**
@@ -73,10 +61,10 @@ export class TsCompiler {
    * ```
    *
    */
-  async compile(relativeTsPath = "", cwd = process.cwd()): Promise<any> {
+  async compile<TExports extends any>(relativeTsPath = "", cwd = process.cwd()) {
     // Check if file exists.
     const tsPath = path.resolve(cwd, relativeTsPath);
-    if (!(await this._exists(tsPath))) {
+    if (!fs.existsSync(tsPath)) {
       throw new Error(`File ${tsPath} not found to compile.`);
     }
 
@@ -90,10 +78,10 @@ export class TsCompiler {
       tsDir,
     };
 
-    return await this.compileOrFail(ctx);
+    return await this.compileOrFail<TExports>(ctx);
   }
 
-  private async compileOrFail(ctx: CompilationContext) {
+  private async compileOrFail<TExports extends any>(ctx: CompilationContext) {
     const { tsPath, tsDir, cwd } = ctx;
 
     const tsFileName = path.basename(tsPath);
@@ -104,34 +92,26 @@ export class TsCompiler {
     const jsPath = path.join(cacheDir, internalPath);
 
     // Check if cached scripts.js exist.
-    if (!(await this._exists(jsPath))) {
+    if (fs.existsSync(jsPath)) {
       // Cache is correct, do nothing.
       const tsWasModified = await wasFileModified(tsPath, jsPath);
       if (!tsWasModified) {
-        return await importJS(cwd, jsPath, tsDir);
+        return await importJS<TExports>(cwd, jsPath, tsDir);
       }
 
-      try {
-        this.transpileTStoJSFiles([tsPath], cwd);
-      } catch (error) {
-        // If we don't want to fallback to last working version of compiled file, throw error.
-        if (!this._options.fallback && error instanceof Error) {
-          throw error;
-        }
-      }
-
-      return await importJS(cwd, jsPath, tsDir);
+      this.transpileTStoJSFiles([tsPath], cwd);
+      return await importJS<TExports>(cwd, jsPath, tsDir);
     }
 
     // Create cache directory if it does not exist.
-    if (!(await this._exists(cacheDir))) {
-      await this._mkdir(cacheDir);
+    if (!fs.existsSync(cacheDir)) {
+      fs.mkdirSync(cacheDir);
     }
 
     // Build cache.
     this.transpileTStoJSFiles([tsPath], cwd);
 
-    return await importJS(cwd, jsPath, tsDir);
+    return await importJS<TExports>(cwd, jsPath, tsDir);
   }
 
   private transpileTStoJSFiles(fileNames: string[], projectRootDir: string) {
@@ -150,47 +130,21 @@ export class TsCompiler {
 
     const emitResult = program.emit();
 
+    let errorMsg = "";
     ts.getPreEmitDiagnostics(program)
       .concat(emitResult.diagnostics)
       .forEach((diagnostic) => {
-        let msg = ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n");
+        errorMsg = ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n");
         if (diagnostic.file) {
           const { line, character } = diagnostic.file.getLineAndCharacterOfPosition(
             diagnostic.start ?? 0,
           );
-          msg = `${diagnostic.file.fileName} (${line + 1},${character + 1}): ${msg}`;
+          errorMsg = `${diagnostic.file.fileName} (${line + 1},${character + 1}): ${errorMsg}`;
         }
-        console.error(msg);
       });
 
-    const exitCode = emitResult.emitSkipped ? 1 : 0;
-    if (exitCode) {
-      console.log(`Process exiting with code '${exitCode}'.`);
-      process.exit(exitCode);
+    if (errorMsg) {
+      throw new Error(errorMsg);
     }
-  }
-
-  private async _exists(filePath: string) {
-    const stat = util.promisify(fs.stat);
-    try {
-      const fileStatus = await stat(filePath);
-      return !!fileStatus;
-    } catch (error) {
-      return false;
-    }
-  }
-
-  private async _mkdir(
-    dirPath: string,
-    options?:
-      | fs.Mode
-      | (fs.MakeDirectoryOptions & {
-          recursive?: false | undefined;
-        })
-      | null
-      | undefined,
-  ) {
-    const mkdir = util.promisify(fs.mkdir);
-    return await mkdir(dirPath, options);
   }
 }

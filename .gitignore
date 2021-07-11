@@ -71,3 +71,4 @@ typings/
 .yarn/build-state.yml
 
 /examples/typescript/.env
+/@cache
