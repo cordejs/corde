@@ -14,9 +14,9 @@
   "dependencies": {
     "@docusaurus/core": "^2.0.0-beta.1",
     "@docusaurus/plugin-google-analytics": "^2.0.0-beta.0",
-    "@docusaurus/plugin-sitemap": "^2.0.0-beta.2",
-    "@docusaurus/preset-classic": "^2.0.0-beta.2",
-    "@docusaurus/theme-live-codeblock": "^2.0.0-beta.2",
+    "@docusaurus/plugin-sitemap": "^2.0.0-beta.3",
+    "@docusaurus/preset-classic": "^2.0.0-beta.3",
+    "@docusaurus/theme-live-codeblock": "^2.0.0-beta.3",
     "@mdx-js/react": "^1.6.22",
     "clsx": "^1.1.1",
     "react": "^17.0.2",
@@ -35,6 +35,6 @@
     ]
   },
   "devDependencies": {
-    "firebase-tools": "^9.14.0"
+    "firebase-tools": "^9.16.0"
   }
 }

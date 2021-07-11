@@ -7,7 +7,7 @@ beforeStart(async () => {
   await login();
 });
 
-it("ping should return pong", () => {
+it("ping should return pong", async () => {
   expect("ping").toReturn("pong");
 });
 
