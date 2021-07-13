@@ -962,12 +962,12 @@
     combined-stream "^1.0.8"
     mime-types "^2.1.12"
 
-"@es-joy/jsdoccomment@^0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@es-joy/jsdoccomment/-/jsdoccomment-0.8.0.tgz#1add451f50f57597676ab85ee7bd0a273d7b7c43"
-  integrity sha512-Xd3GzYsL2sz2pcdtYt5Q0Wz1ol/o9Nt2UQL4nFPDcaEomvPmwjJsbjkKx1SKhl2h3TgwazNBLdcNr2m0UiGiFA==
+"@es-joy/jsdoccomment@^0.9.0-alpha.1":
+  version "0.9.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@es-joy/jsdoccomment/-/jsdoccomment-0.9.0-alpha.1.tgz#f48bd162e185ec7f9f222273a282d10e52fe52f7"
+  integrity sha512-Clxxc0PwpISoYYBibA+1L2qFJ7gvFVhI2Hos87S06K+Q0cXdOhZQJNKWuaQGPAeHjZEuUB/YoWOfwjuF2wirqA==
   dependencies:
-    comment-parser "^1.1.5"
+    comment-parser "1.1.6-beta.0"
     esquery "^1.4.0"
     jsdoc-type-pratt-parser "1.0.4"
 
@@ -1451,9 +1451,9 @@
     "@types/node" "*"
 
 "@types/node@*", "@types/node@^16.0.0":
-  version "16.3.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.3.0.tgz#1836664e4fad13b51b07eb6e882a53925e6543c4"
-  integrity sha512-OydMCocGMGqw/1BnWbhtK+AtwyWTOigtrQlRe57OQmTNcI3HKlVI5FGlh+c4mSqInMPLynFrTlYjfajPu9O/eQ==
+  version "16.3.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.3.1.tgz#24691fa2b0c3ec8c0d34bfcfd495edac5593ebb4"
+  integrity sha512-N87VuQi7HEeRJkhzovao/JviiqKjDKMVKxKMfUvSKw+MbkbW8R0nA3fi/MQhhlxV2fQ+2ReM+/Nt4efdrJx3zA==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -1649,10 +1649,10 @@ acorn-jsx-walk@2.0.0:
   resolved "https://registry.yarnpkg.com/acorn-jsx-walk/-/acorn-jsx-walk-2.0.0.tgz#a5ed648264e68282d7c2aead80216bfdf232573a"
   integrity sha512-uuo6iJj4D4ygkdzd6jPtcxs8vZgDX9YFIkqczGImoypX2fQ4dVImmu3UzA4ynixCIMTrEOWW+95M2HuBaCEOVA==
 
-acorn-jsx@5.3.1, acorn-jsx@^5.2.0, acorn-jsx@^5.3.1:
-  version "5.3.1"
-  resolved "https://registry.yarnpkg.com/acorn-jsx/-/acorn-jsx-5.3.1.tgz#fc8661e11b7ac1539c47dbfea2e72b3af34d267b"
-  integrity sha512-K0Ptm/47OKfQRpNQ2J/oIN/3QYiK6FwW+eJbILhsdxh2WTLdl+30o8aGdTbm5JbffpFFAg/g+zi1E+jvJha5ng==
+acorn-jsx@5.3.2, acorn-jsx@^5.2.0, acorn-jsx@^5.3.1:
+  version "5.3.2"
+  resolved "https://registry.yarnpkg.com/acorn-jsx/-/acorn-jsx-5.3.2.tgz#7ed5bb55908b3b2f1bc55c6af1653bada7f07937"
+  integrity sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==
 
 acorn-loose@8.1.0:
   version "8.1.0"
@@ -1661,10 +1661,10 @@ acorn-loose@8.1.0:
   dependencies:
     acorn "^8.2.0"
 
-acorn-walk@8.1.0:
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/acorn-walk/-/acorn-walk-8.1.0.tgz#d3c6a9faf00987a5e2b9bdb506c2aa76cd707f83"
-  integrity sha512-mjmzmv12YIG/G8JQdQuz2MUDShEJ6teYpT5bmWA4q7iwoGen8xtt3twF3OvzIUl+Q06aWIjvnwQUKvQ6TtMRjg==
+acorn-walk@8.1.1:
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/acorn-walk/-/acorn-walk-8.1.1.tgz#3ddab7f84e4a7e2313f6c414c5b7dac85f4e3ebc"
+  integrity sha512-FbJdceMlPHEAWJOILDk1fXD8lnTlEIWFkqtfk+MvmL5q/qlHfN7GEHcsFZWt/Tea9jRNPWUZG4G976nqAAmU9w==
 
 acorn-walk@^7.1.1:
   version "7.2.0"
@@ -1688,10 +1688,10 @@ agent-base@6:
   dependencies:
     debug "4"
 
-ajv@8.6.0, ajv@^8.0.1:
-  version "8.6.0"
-  resolved "https://registry.yarnpkg.com/ajv/-/ajv-8.6.0.tgz#60cc45d9c46a477d80d92c48076d972c342e5720"
-  integrity sha512-cnUG4NSBiM4YFBxgZIj/In3/6KX+rQ2l2YPRVcvAMQGWEPKuXoPIhxzwqh31jA3IPbI4qEOp/5ILI4ynioXsGQ==
+ajv@8.6.1, ajv@^8.0.1:
+  version "8.6.1"
+  resolved "https://registry.yarnpkg.com/ajv/-/ajv-8.6.1.tgz#ae65764bf1edde8cd861281cda5057852364a295"
+  integrity sha512-42VLtQUOLefAvKFAQIxIZDaThq6om/PrfP0CYk3/vn+y4BMNkKnbli8ON2QCiHov4KkzOSJ/xSoBJdayiiYvVQ==
   dependencies:
     fast-deep-equal "^3.1.1"
     json-schema-traverse "^1.0.0"
@@ -2610,25 +2610,20 @@ combined-stream@^1.0.6, combined-stream@^1.0.8, combined-stream@~1.0.6:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@7.2.0:
-  version "7.2.0"
-  resolved "https://registry.yarnpkg.com/commander/-/commander-7.2.0.tgz#a36cb57d0b501ce108e4d20559a150a391d97ab7"
-  integrity sha512-QrWXB+ZQSVPmIWIhtEO9H+gwHaMGYiF5ChvoJ+K9ZGHG/sVsa6yiesAD1GC/x46sET00Xlwo1u49RVVVzvcSkw==
+commander@8.0.0, commander@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-8.0.0.tgz#1da2139548caef59bd23e66d18908dfb54b02258"
+  integrity sha512-Xvf85aAtu6v22+E5hfVoLHqyul/jyxh91zvqk/ioJTQuJR7Z78n7H558vMPKanPSRgIEeZemT92I2g9Y8LPbSQ==
 
 commander@^2.12.1:
   version "2.20.3"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
   integrity sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
 
-commander@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/commander/-/commander-8.0.0.tgz#1da2139548caef59bd23e66d18908dfb54b02258"
-  integrity sha512-Xvf85aAtu6v22+E5hfVoLHqyul/jyxh91zvqk/ioJTQuJR7Z78n7H558vMPKanPSRgIEeZemT92I2g9Y8LPbSQ==
-
-comment-parser@1.1.5, comment-parser@^1.1.5:
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/comment-parser/-/comment-parser-1.1.5.tgz#453627ef8f67dbcec44e79a9bd5baa37f0bce9b2"
-  integrity sha512-RePCE4leIhBlmrqiYTvaqEeGYg7qpSl4etaIabKtdOQVi+mSTIBBklGUwIr79GXYnl3LpMwmDw4KeR2stNc6FA==
+comment-parser@1.1.6-beta.0:
+  version "1.1.6-beta.0"
+  resolved "https://registry.yarnpkg.com/comment-parser/-/comment-parser-1.1.6-beta.0.tgz#57e503b18d0a5bd008632dcc54b1f95c2fffe8f6"
+  integrity sha512-q3cA8TSMyqW7wcPSYWzbO/rMahnXgzs4SLG/UIWXdEsnXTFPZkEkWAdNgPiHig2OzxgpPLOh4WwsmClDxndwHw==
 
 component-emitter@^1.2.1:
   version "1.3.0"
@@ -2856,18 +2851,18 @@ delayed-stream@~1.0.0:
   integrity sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
 
 dependency-cruiser@^10.0.1:
-  version "10.0.4"
-  resolved "https://registry.yarnpkg.com/dependency-cruiser/-/dependency-cruiser-10.0.4.tgz#2afdffc978de7f7973da1ee2aef46b812f2ae6bc"
-  integrity sha512-a+oZkc/l68vQANkupPK4A9GTYxXQUzb7hwqa4A/IrGwfQzfwVfBhSQHYPWjhv4EM0bKrBWGVJkMNpxMVC1V3cw==
+  version "10.0.5"
+  resolved "https://registry.yarnpkg.com/dependency-cruiser/-/dependency-cruiser-10.0.5.tgz#327e6e0a17393fd5c38ec9fdfc082da04b6164df"
+  integrity sha512-nMc4Yr3karxJeB4prn7PHIeQzKiCjCnaL5hCqKNHfToB+GaRx0A99JEV78Q7sTRQFG0T+rDCDJK7iEZkcpMaqA==
   dependencies:
     acorn "8.4.1"
-    acorn-jsx "5.3.1"
+    acorn-jsx "5.3.2"
     acorn-jsx-walk "2.0.0"
     acorn-loose "8.1.0"
-    acorn-walk "8.1.0"
-    ajv "8.6.0"
+    acorn-walk "8.1.1"
+    ajv "8.6.1"
     chalk "4.1.1"
-    commander "7.2.0"
+    commander "8.0.0"
     enhanced-resolve "5.8.2"
     figures "3.2.0"
     get-stream "6.0.1"
@@ -3197,12 +3192,12 @@ eslint-plugin-import@^2.22.1:
     tsconfig-paths "^3.9.0"
 
 eslint-plugin-jsdoc@^35.0.0:
-  version "35.4.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-35.4.2.tgz#d368de130c52f1d04c6a7d08b527522f41c92af9"
-  integrity sha512-Ls6a1DDWS0XHx0ZH9iMaHNy/HltQseG2kO0S0xlaS1vataPSPjGpv2vSdQUAHnvwpH75VfNad6OvlLCfKalL+w==
+  version "35.4.3"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-35.4.3.tgz#54deb74b0f53bda4bda5ee1ccfd0deace71c8943"
+  integrity sha512-hBEn+VNjVX0IKoZ2OdZs0Z1fU8CqZkBSzLqD8ZpwZEamrdi2TUgKvujvETe8gXYQ/67hpRtbR5iPFTgmWpRevw==
   dependencies:
-    "@es-joy/jsdoccomment" "^0.8.0"
-    comment-parser "1.1.5"
+    "@es-joy/jsdoccomment" "^0.9.0-alpha.1"
+    comment-parser "1.1.6-beta.0"
     debug "^4.3.2"
     esquery "^1.4.0"
     jsdoc-type-pratt-parser "^1.0.4"
@@ -7525,9 +7520,9 @@ ts-jest@^26.4.4:
     yargs-parser "20.x"
 
 ts-node@^10.0.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-10.0.0.tgz#05f10b9a716b0b624129ad44f0ea05dac84ba3be"
-  integrity sha512-ROWeOIUvfFbPZkoDis0L/55Fk+6gFQNZwwKPLinacRl6tsxstTF1DbAcLKkovwnpKMVvOMHP1TIbnwXwtLg1gg==
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-10.1.0.tgz#e656d8ad3b61106938a867f69c39a8ba6efc966e"
+  integrity sha512-6szn3+J9WyG2hE+5W8e0ruZrzyk1uFLYye6IGMBadnOzDh8aP7t8CbFpsfCiEx2+wMixAhjFt7lOZC4+l+WbEA==
   dependencies:
     "@tsconfig/node10" "^1.0.7"
     "@tsconfig/node12" "^1.0.7"
@@ -7710,13 +7705,12 @@ typedoc-plugin-markdown@^3.6.0:
     handlebars "^4.7.7"
 
 typedoc@^0.21.0:
-  version "0.21.2"
-  resolved "https://registry.yarnpkg.com/typedoc/-/typedoc-0.21.2.tgz#cf5094314d3d63e95a8ef052ceff06a6cafd509d"
-  integrity sha512-SR1ByJB3USg+jxoxwzMRP07g/0f/cQUE5t7gOh1iTUyjTPyJohu9YSKRlK+MSXXqlhIq+m0jkEHEG5HoY7/Adg==
+  version "0.21.4"
+  resolved "https://registry.yarnpkg.com/typedoc/-/typedoc-0.21.4.tgz#fced3cffdc30180db60a5dbfec9dbbb273cb5b31"
+  integrity sha512-slZQhvD9U0d9KacktYAyuNMMOXJRFNHy+Gd8xY2Qrqq3eTTTv3frv3N4au/cFnab9t3T5WA0Orb6QUjMc+1bDA==
   dependencies:
     glob "^7.1.7"
     handlebars "^4.7.7"
-    lodash "^4.17.21"
     lunr "^2.3.9"
     marked "^2.1.1"
     minimatch "^3.0.0"
