@@ -20,6 +20,7 @@ export class Config implements IConfigOptions {
   private _project?: string;
   private _exitOnFileReadingError?: boolean;
   private _extentions?: string[];
+  private _rootDir?: string;
 
   get cordeBotToken() {
     return this._cordeBotToken;
@@ -64,8 +65,12 @@ export class Config implements IConfigOptions {
     return this._exitOnFileReadingError;
   }
 
-  get extentions() {
+  get extensions() {
     return this._extentions;
+  }
+
+  get rootDir() {
+    return this._rootDir;
   }
 
   /**

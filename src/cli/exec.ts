@@ -12,6 +12,7 @@ import registerTsNode from "../core/tsRegister";
 import { DEFAULT_TEST_TIMEOUT } from "../consts";
 import path from "path";
 import { debug } from "../common/debug";
+
 declare module "ora" {
   interface Ora {
     _spinner: StrictObject;
@@ -30,7 +31,7 @@ function setDefaultConfigs() {
       timeout: DEFAULT_TEST_TIMEOUT,
       project: path.resolve(process.cwd(), "tsconfig.json"),
       exitOnFileReadingError: true,
-      extentions: [".js", ".ts"],
+      extensions: [".js", ".ts"],
       modulePathIgnorePatterns: ["(?:^|/)node_modules/"],
     },
     true,
@@ -57,6 +58,7 @@ export async function exec(options: Config.ICLIOptions, args?: any) {
   }
 
   registerTsNode(runtime.configs);
+  runtime.setConfigs({ project: runtime.getPathWithRootDir("tsconfig.json") }, true);
   debug("loaded configs: ", runtime.configs);
 
   await runTests();

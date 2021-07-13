@@ -3,6 +3,7 @@ import { Config } from "./config";
 import { Client } from "discord.js";
 import { CordeBot } from "../core/cordeBot";
 import { ConfigError } from "../errors";
+import path from "path/posix";
 
 const Environment = {
   isUnityTest: process.env.ENV === "UNITY_TEST",
@@ -34,7 +35,7 @@ class Runtime implements IConfigOptions {
   }
 
   get extensions() {
-    return this._configs.extentions;
+    return this._configs.extensions;
   }
 
   get events() {
@@ -112,6 +113,13 @@ class Runtime implements IConfigOptions {
     this._configs.setConfigs(_configs, forceUpdate);
   }
 
+  getPathWithRootDir(partialPath: string) {
+    if (this._configs.rootDir) {
+      return path.resolve(process.cwd(), this._configs.rootDir, partialPath);
+    }
+    return path.resolve(process.cwd(), partialPath);
+  }
+
   /**
    * Shortcut for *bot.isLoggedIn*
    */
@@ -128,8 +136,8 @@ class Runtime implements IConfigOptions {
     }
   }
 
-  async loginBot(token: string) {
-    return await this.bot.login(token);
+  loginBot(token: string) {
+    return this.bot.login(token);
   }
 
   injectBot(fn: TestFunctionType) {

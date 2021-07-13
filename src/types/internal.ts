@@ -245,7 +245,13 @@ export interface IConfigOptions {
    * Define file extensions to be loaded
    * @default [".js",".ts"]
    */
-  extentions?: string[];
+  extensions?: string[];
+  /**
+   * Defines root dir of the project.
+   *
+   * @default '.'
+   */
+  rootDir?: string;
 }
 
 export interface IJSONFile {
