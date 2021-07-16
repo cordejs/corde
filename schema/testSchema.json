@@ -5,8 +5,12 @@
   "botToken": "",
   "guildId": "",
   "channelId": "",
-  "botPrefix": "+",
+  "botPrefix": "!",
   "testMatches": ["./test"],
   "modulePathIgnorePatterns": [],
-  "timeout": 5000
+  "timeout": 5000,
+  "extentions": [".js", ".ts"],
+  "project": "<rootDir>/tsconfig.json",
+  "rootDir": ".",
+  "exitOnFileReadingError": true
 }

@@ -3,7 +3,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Schema for Corde config",
   "type": "object",
-  "description": "",
+  "description": "Corde's config",
   "examples": [
     {
       "cordeBotToken": "YaA4MDMiOTY2O4I2MjAwODMy.X2iRwg.Rf3-TqLExWuPQjxnVaDCGv9V7cB",
@@ -11,10 +11,10 @@
       "botToken": "YaA4MDMiOTY2O4I2MjAwODMy.X2iRwg.Rf3-TqLExWuPQjxnVaDCGv9V7cB",
       "guildId": "514212632960122287894",
       "channelId": "514212632960122287894",
-      "modulePathIgnorePatterns": ["**/node_modules/**"],
+      "modulePathIgnorePatterns": ["(?:^|/)node_modules/"],
       "botPrefix": "!",
-      "testFiles": ["./test/**"],
-      "timeout": 1000
+      "testMatches": ["./test/**"],
+      "timeout": 5000
     }
   ],
   "required": [
@@ -24,7 +24,7 @@
     "guildId",
     "channelId",
     "botPrefix",
-    "testFiles"
+    "testMatches"
   ],
   "properties": {
     "cordeBotToken": {
@@ -59,11 +59,36 @@
     },
     "timeout": {
       "default": 5000,
-      "title": "Timeout for each test. Value mesuared in miliseconds."
+      "title": "Timeout for each test. Value mesuared in miliseconds.",
+      "type": "number"
     },
     "modulePathIgnorePatterns": {
-      "title": "Definition of all paterns to ignore in tests search"
+      "title": "Definition of all paterns to ignore in tests search",
+      "default": ["(?:^|/)node_modules/"],
+      "additionalItems": true,
+      "type": "array"
+    },
+    "extentions": {
+      "title": "Define file extensions to be loaded",
+      "default": "['.js','.ts']",
+      "additionalItems": true,
+      "type": "array"
+    },
+    "rootDir": {
+      "title": "Defines root dir of the project.",
+      "default": ".",
+      "type": "string"
+    },
+    "project": {
+      "title": "Definition of tsconfig path.",
+      "default": "<rootDir>/tsconfig.json",
+      "type": "string"
+    },
+    "exitOnFileReadingError": {
+      "title": "Define if corde should stop if any problem occour when importing a test file.",
+      "default": true,
+      "type": "boolean"
     }
   },
-  "additionalProperties": false
+  "additionalProperties": true
 }
