@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing creation of config file in init should create corde.config.js file 1`] = `
+"module.exports = {
+  botPrefix: \\"\\",
+  botTestId: \\"\\",
+  channelId: \\"\\",
+  cordeBotToken: \\"\\",
+  guildId: \\"\\",
+  testMatches: [\\"\\"],
+  botToken: \\"\\",
+  project: \\"\\",
+  timeout: 5000,
+  exitOnFileReadingError: true,
+  extensions: [\\".js\\", \\".ts\\"],
+  modulePathIgnorePatterns: [\\"(?:^|/)node_modules/\\"],
+  rootDir: \\"\\"
+}"
+`;
+
+exports[`Testing creation of config file in init should create corde.config.json file 1`] = `
+"{
+  \\"$schema\\": \\"./node_modules/corde/schema/corde.schema.json\\",
+  \\"botPrefix\\": \\"\\",
+  \\"botTestId\\": \\"\\",
+  \\"channelId\\": \\"\\",
+  \\"cordeBotToken\\": \\"\\",
+  \\"guildId\\": \\"\\",
+  \\"testMatches\\": [\\"\\"],
+  \\"botToken\\": \\"\\",
+  \\"project\\": \\"\\",
+  \\"timeout\\": 5000,
+  \\"exitOnFileReadingError\\": true,
+  \\"extensions\\": [\\".js\\", \\".ts\\"],
+  \\"modulePathIgnorePatterns\\": [\\"(?:^|/)node_modules/\\"],
+  \\"rootDir\\": \\"\\"
+}"
+`;
+
+exports[`Testing creation of config file in init should create corde.config.ts file 1`] = `
+"export = {
+  botPrefix: \\"\\",
+  botTestId: \\"\\",
+  channelId: \\"\\",
+  cordeBotToken: \\"\\",
+  guildId: \\"\\",
+  testMatches: [\\"\\"],
+  botToken: \\"\\",
+  project: \\"\\",
+  timeout: 5000,
+  exitOnFileReadingError: true,
+  extensions: [\\".js\\", \\".ts\\"],
+  modulePathIgnorePatterns: [\\"(?:^|/)node_modules/\\"],
+  rootDir: \\"\\"
+}"
+`;

@@ -144,7 +144,7 @@ export type ParametersAsOptional<T extends GenericFunction> = Parameters<T> | vo
 /**
  * Available types of config files
  */
-export type configFileType = "js" | "json" | "ts";
+export type ConfigFileType = "js" | "json" | "ts";
 
 /**
  * Represents **command** structure
@@ -243,6 +243,7 @@ export interface IConfigOptions {
   exitOnFileReadingError?: boolean;
   /**
    * Define file extensions to be loaded
+   *
    * @default [".js",".ts"]
    */
   extensions?: string[];

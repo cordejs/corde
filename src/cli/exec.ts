@@ -9,7 +9,7 @@ import { LogUpdate } from "../utils/logUpdate";
 import { validate } from "./validate";
 import { Config, StrictObject } from "../types";
 import registerTsNode from "../core/tsRegister";
-import { DEFAULT_TEST_TIMEOUT } from "../consts";
+import { DEFAULT_CONFIG } from "../consts";
 import path from "path";
 import { debug } from "../common/debug";
 
@@ -28,7 +28,7 @@ let spinner: Ora;
 function setDefaultConfigs() {
   runtime.setConfigs(
     {
-      timeout: DEFAULT_TEST_TIMEOUT,
+      timeout: DEFAULT_CONFIG.timeout,
       project: path.resolve(process.cwd(), "tsconfig.json"),
       exitOnFileReadingError: true,
       extensions: [".js", ".ts"],
@@ -58,7 +58,7 @@ export async function exec(options: Config.ICLIOptions, args?: any) {
   }
 
   registerTsNode(runtime.configs);
-  runtime.setConfigs({ project: runtime.getPathWithRootDir("tsconfig.json") }, true);
+  runtime.setConfigs({ project: runtime.resolvePathWithRootDir("tsconfig.json") }, true);
   debug("loaded configs: ", runtime.configs);
 
   await runTests();

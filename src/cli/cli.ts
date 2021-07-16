@@ -2,7 +2,7 @@ import { Command } from "commander";
 import { exec } from "./exec";
 import { init } from "./init";
 import { validate } from "./validate";
-import { configFileType } from "../types";
+import { ConfigFileType } from "../types";
 import pack from "../package";
 import { Config } from "../types";
 import { reader } from "../core/reader";
@@ -39,7 +39,7 @@ program
   .alias("i")
   .description("Initialize a config file with all possible options")
   .usage("[js ts json] or empty for default type (json)")
-  .action((type: configFileType) => {
+  .action((type: ConfigFileType) => {
     init(type);
   });
 

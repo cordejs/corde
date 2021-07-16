@@ -1,4 +1,6 @@
 import chalk from "chalk";
+import path from "path";
+import { IConfigOptions } from "./types";
 
 export const DEFAULT_TEST_TIMEOUT = 5000;
 export const MESSAGE_TAB_SPACE = "   ";
@@ -9,6 +11,23 @@ export const TEXT_PASS = chalk.green;
 export const TEXT_FAIL = chalk.red;
 export const TEXT_PENDING = chalk.yellow;
 export const TEXT_EMPTY = chalk.yellowBright;
+export const ROOT_DIR = "<rootDir>";
+
+export const DEFAULT_CONFIG: IConfigOptions = {
+  botPrefix: "",
+  botTestId: "",
+  channelId: "",
+  cordeBotToken: "",
+  guildId: "",
+  testMatches: [""],
+  botToken: "",
+  project: path.resolve(process.cwd(), "tsconfig.json"),
+  timeout: DEFAULT_TEST_TIMEOUT,
+  exitOnFileReadingError: true,
+  extensions: [".js", ".ts"],
+  modulePathIgnorePatterns: ["(?:^|/)node_modules/"],
+  rootDir: ".",
+};
 
 export const TAG_PENDING = (text = "RUNS") => chalk.bgYellow(chalk.black(` ${text} `));
 

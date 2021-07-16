@@ -4,6 +4,8 @@ import { Client } from "discord.js";
 import { CordeBot } from "../core/cordeBot";
 import { ConfigError } from "../errors";
 import path from "path/posix";
+import { replaceAll } from "../utils";
+import { ROOT_DIR } from "../consts";
 
 const Environment = {
   isUnityTest: process.env.ENV === "UNITY_TEST",
@@ -113,7 +115,14 @@ class Runtime implements IConfigOptions {
     this._configs.setConfigs(_configs, forceUpdate);
   }
 
-  getPathWithRootDir(partialPath: string) {
+  replaceWithRootDir(text: string) {
+    if (this._configs.rootDir) {
+      return replaceAll(text, ROOT_DIR, this._configs.rootDir);
+    }
+    return text;
+  }
+
+  resolvePathWithRootDir(partialPath: string) {
     if (this._configs.rootDir) {
       return path.resolve(process.cwd(), this._configs.rootDir, partialPath);
     }
