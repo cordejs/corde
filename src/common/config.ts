@@ -1,7 +1,7 @@
 import path from "path";
 import { DEFAULT_CONFIG, ROOT_DIR } from "../consts";
 import { IConfigOptions } from "../types";
-import { replaceAll } from "../utils";
+import { isNumber, replaceAll } from "../utils";
 
 /**
  * Default interface of JSON config
@@ -83,6 +83,10 @@ export class Config implements Readonly<IConfigOptions> {
     this.setConfigs(DEFAULT_CONFIG, true);
   }
 
+  get<T extends keyof IConfigOptions>(configName: T): IConfigOptions[T] {
+    return this[configName];
+  }
+
   /**
    * Set values to config options that are not **filed** yet
    * It means that all options that are already with a value will not lose
@@ -112,11 +116,7 @@ export class Config implements Readonly<IConfigOptions> {
     }
 
     if (config.project && (!this.project || forceUpdate)) {
-      this._project = path.resolve(
-        process.cwd(),
-        this.rootDir,
-        replaceAll(config.project, ROOT_DIR, this.rootDir),
-      );
+      this._project = path.normalize(replaceAll(config.project, ROOT_DIR, this.rootDir));
     }
 
     if (config.botTestId && (!this.botTestId || forceUpdate)) {
@@ -131,7 +131,10 @@ export class Config implements Readonly<IConfigOptions> {
       this._botToken = config.botToken;
     }
 
-    if (config.exitOnFileReadingError && (!this.exitOnFileReadingError || forceUpdate)) {
+    if (
+      typeof config.exitOnFileReadingError !== "undefined" &&
+      (!this.exitOnFileReadingError || forceUpdate)
+    ) {
       this._exitOnFileReadingError = config.exitOnFileReadingError;
     }
 
@@ -143,8 +146,9 @@ export class Config implements Readonly<IConfigOptions> {
       this._guildId = config.guildId;
     }
 
-    if (config.timeout && (!this.timeout || forceUpdate)) {
-      this._timeout = config.timeout;
+    if (isNumber(config.timeout) && (!this.timeout || forceUpdate)) {
+      // Forces to set timeout to a number
+      this._timeout = +(config.timeout as any);
     }
 
     if (config.botPrefix && (!this.botPrefix || forceUpdate)) {
@@ -152,19 +156,25 @@ export class Config implements Readonly<IConfigOptions> {
     }
 
     if (config.modulePathIgnorePatterns && (!this.modulePathIgnorePatterns || forceUpdate)) {
-      this._modulePathIgnorePatterns = this.getArrayWithRootReplaced(
-        config.modulePathIgnorePatterns,
-      );
+      this._modulePathIgnorePatterns = config.modulePathIgnorePatterns;
     }
 
     if (config.testMatches && (!this.testMatches || this.testMatches.length === 0 || forceUpdate)) {
       if (Array.isArray(config.testMatches)) {
         this._testMatches = this.getArrayWithRootReplaced(config.testMatches);
+      } else {
+        this._testMatches = [];
       }
     }
   }
 
   private getArrayWithRootReplaced(array: string[]) {
-    return array.map((val) => replaceAll(val, ROOT_DIR, this._rootDir));
+    return array.map((val) => {
+      if (val.includes(ROOT_DIR)) {
+        console.log(replaceAll(val, ROOT_DIR, this._rootDir));
+        return path.normalize(replaceAll(val, ROOT_DIR, this._rootDir));
+      }
+      return val;
+    });
   }
 }
