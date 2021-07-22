@@ -47,7 +47,7 @@ describe("testing configs load", () => {
     expect(runtime.configFilePath).toBe(testPath);
   });
 
-  it.only("should call go command with -f option (single file)", async () => {
+  it("should call go command with -f option (single file)", async () => {
     mockExecProces(config);
     const testMatches = "./tests";
     await program.parseAsync(["node", "test", "-f", testMatches]);

@@ -79,7 +79,7 @@ describe("testing todoInCascade function", () => {
   });
 
   it("should return failed due to timeout and isNot false", async () => {
-    runtime.setConfigs({ timeout: 100 });
+    runtime.setConfigs({ timeout: 100 }, true);
     const corde = initClient();
     const todoInCascade = initTestClass(corde, false);
 
