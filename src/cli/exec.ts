@@ -9,8 +9,6 @@ import { LogUpdate } from "../utils/logUpdate";
 import { validate } from "./validate";
 import { Config, StrictObject } from "../types";
 import registerTsNode from "../core/tsRegister";
-import { DEFAULT_CONFIG } from "../consts";
-import path from "path";
 import { debug } from "../common/debug";
 
 declare module "ora" {
@@ -25,22 +23,7 @@ process.on("uncaughtException", () => {
 
 let spinner: Ora;
 
-function setDefaultConfigs() {
-  runtime.setConfigs(
-    {
-      timeout: DEFAULT_CONFIG.timeout,
-      project: path.resolve(process.cwd(), "tsconfig.json"),
-      exitOnFileReadingError: true,
-      extensions: [".js", ".ts"],
-      modulePathIgnorePatterns: ["(?:^|/)node_modules/"],
-    },
-    true,
-  );
-}
-
-export async function exec(options: Config.ICLIOptions, args?: any) {
-  setDefaultConfigs();
-
+export async function exec(options: Config.ICLIOptions) {
   if (options.config) {
     runtime.configFilePath = options.config;
   }
@@ -48,24 +31,29 @@ export async function exec(options: Config.ICLIOptions, args?: any) {
   debug("runtime.configFilePath: " + runtime.configFilePath);
 
   await loadConfigs();
-
-  if (args && Array.isArray(args) && args.length > 0) {
-    runtime.setConfigs({ testMatches: args }, true);
-  }
-
-  if (options.files && options.files.length > 0) {
-    runtime.setConfigs({ testMatches: options.files.split(" ") }, true);
-  }
-
-  registerTsNode(runtime.configs);
   runtime.setConfigs({ project: runtime.resolvePathWithRootDir("tsconfig.json") }, true);
+
+  if (options.files) {
+    runtime.setConfigs({ testMatches: options.files.split(" ") }, true);
+    console.log(runtime.testMatches);
+  }
+
+  if (runtime.project) {
+    registerTsNode(runtime.configs);
+  }
+
   debug("loaded configs: ", runtime.configs);
 
   await runTests();
 }
 
 async function loadConfigs() {
-  const configs = await reader.loadConfig();
+  const configs = reader.loadConfig();
+
+  if (configs.timeout && Number.isInteger(configs.timeout)) {
+    configs.timeout = +configs.timeout;
+  }
+
   runtime.setConfigs(configs, true);
   await validate(runtime.configs);
 }

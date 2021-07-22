@@ -29,9 +29,9 @@ program
     "Set the path for all tests. Use this if you wan to specify a single path." +
       " for Array, use only 'corde <path1> <path2>'",
   )
-  .action(async (args: any) => {
+  .action(async () => {
     const options = program.opts() as Config.ICLIOptions;
-    await exec(options, args);
+    await exec(options);
   });
 
 program
@@ -48,7 +48,7 @@ program
   .alias("v")
   .description("Search for corde configs and check if all data are valid")
   .action(async () => {
-    const configs = await reader.loadConfig();
+    const configs = reader.loadConfig();
     await validate(configs);
     console.log("All configs are ok!");
   });

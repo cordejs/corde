@@ -2,6 +2,7 @@ import { IConfigOptions } from "../../src/types";
 import { Config } from "../../src/common/config";
 import { DEFAULT_TEST_TIMEOUT } from "../../src/consts";
 import { config } from "process";
+import path from "path";
 
 describe("testing config", () => {
   it("should set all values to configs", () => {
@@ -50,5 +51,18 @@ describe("testing config", () => {
     });
     config.setConfigs(updatadedConfig, true);
     expect(config).toEqual(updatadedConfig);
+  });
+
+  it.only("should set prop to resolve with <rootDir>", () => {
+    const config = new Config();
+    config.setConfigs(
+      {
+        rootDir: "../",
+        project: "<rootDir>/tsconfig.json",
+      },
+      true,
+    );
+    expect(config.rootDir).toEqual(path.resolve(process.cwd(), "../"));
+    expect(config.project).toEqual(path.resolve(process.cwd(), "../", "tsconfig.json"));
   });
 });

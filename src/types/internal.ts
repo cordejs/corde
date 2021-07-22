@@ -250,7 +250,7 @@ export interface IConfigOptions {
   /**
    * Defines root dir of the project.
    *
-   * @default '.'
+   * @default process.cwd()
    */
   rootDir?: string;
 }

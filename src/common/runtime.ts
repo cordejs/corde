@@ -15,7 +15,7 @@ const Environment = {
 /**
  * @internal
  */
-class Runtime implements IConfigOptions {
+class Runtime {
   get bot() {
     if (!this._bot) {
       this._bot = this.initBot();

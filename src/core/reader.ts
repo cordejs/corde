@@ -5,7 +5,7 @@ import { printHookErrors } from "../common/printHookError";
 import { testCollector } from "../common/testCollector";
 import { FileError } from "../errors";
 import { IConfigOptions, ITestFilePattern, ITestFile } from "../types";
-import { isNumber, utils } from "../utils";
+import { utils } from "../utils";
 
 export class Reader {
   /**
@@ -13,7 +13,7 @@ export class Reader {
    * and validates it
    * @throws
    */
-  async loadConfig(): Promise<IConfigOptions> {
+  loadConfig() {
     let _config: IConfigOptions;
 
     const jsonFilePath = path.resolve(process.cwd(), "corde.config.json");
@@ -37,9 +37,6 @@ export class Reader {
     if (!_config || Object.keys(_config).length === 0) {
       throw new FileError("This appears to be a invalid config file");
     } else {
-      if (_config.timeout && isNumber(_config.timeout)) {
-        _config.timeout = +_config.timeout;
-      }
       return _config;
     }
   }
@@ -63,10 +60,10 @@ export class Reader {
       const extension = path.extname(file);
       if (runtime.extensions?.includes(extension)) {
         if (runtime.exitOnFileReadingError) {
-          require(file);
+          await import(file);
         } else {
           try {
-            require(file);
+            await import(file);
           } catch (error) {
             console.error(error);
             continue;

@@ -19,14 +19,14 @@ export const DEFAULT_CONFIG: IConfigOptions = {
   channelId: "",
   cordeBotToken: "",
   guildId: "",
-  testMatches: [""],
+  testMatches: [],
   botToken: "",
   project: path.resolve(process.cwd(), "tsconfig.json"),
   timeout: DEFAULT_TEST_TIMEOUT,
   exitOnFileReadingError: true,
   extensions: [".js", ".ts"],
   modulePathIgnorePatterns: ["(?:^|/)node_modules/"],
-  rootDir: ".",
+  rootDir: process.cwd(),
 };
 
 export const TAG_PENDING = (text = "RUNS") => chalk.bgYellow(chalk.black(` ${text} `));

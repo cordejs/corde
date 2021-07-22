@@ -1,8 +1,7 @@
-import { Reader, reader } from "../../src/core/reader";
+import { Reader } from "../../src/core/reader";
 import * as validateFn from "../../src/cli/validate";
 import * as execCommand from "../../src/cli/exec";
 import { runtime } from "../../src/common/runtime";
-import { TestExecutor } from "../../src/core/testExecutor";
 import { DEFAULT_TEST_TIMEOUT } from "../../src/consts";
 import { IConfigOptions } from "../../src/types";
 import { summary } from "../../src/core/summary";
@@ -34,13 +33,10 @@ describe("testing configs load", () => {
     const TIMEOUT = 100000;
     config.timeout = TIMEOUT;
     mockExecProces(config);
-    await execCommand.exec(
-      {
-        files: "",
-        config: "",
-      },
-      [],
-    );
+    await execCommand.exec({
+      files: "",
+      config: "",
+    });
     expect(runtime.timeout).toEqual(TIMEOUT);
   });
 
@@ -51,10 +47,10 @@ describe("testing configs load", () => {
     expect(runtime.configFilePath).toBe(testPath);
   });
 
-  it("should call go command with -f option (single file)", () => {
+  it.only("should call go command with -f option (single file)", async () => {
     mockExecProces(config);
     const testMatches = "./tests";
-    program.parse(["node", "test", "-f", testMatches]);
+    await program.parseAsync(["node", "test", "-f", testMatches]);
     expect(runtime.testMatches).toEqual(testMatches.split(" "));
   });
 
