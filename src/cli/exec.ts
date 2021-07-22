@@ -31,11 +31,10 @@ export async function exec(options: Config.ICLIOptions) {
   debug("runtime.configFilePath: " + runtime.configFilePath);
 
   await loadConfigs();
-  runtime.setConfigs({ project: runtime.resolvePathWithRootDir("tsconfig.json") }, true);
 
+  // Configs provied in CLI overrides configs in config file
   if (options.files) {
     runtime.setConfigs({ testMatches: options.files.split(" ") }, true);
-    console.log(runtime.testMatches);
   }
 
   if (runtime.project) {
@@ -49,11 +48,6 @@ export async function exec(options: Config.ICLIOptions) {
 
 async function loadConfigs() {
   const configs = reader.loadConfig();
-
-  if (configs.timeout && Number.isInteger(configs.timeout)) {
-    configs.timeout = +configs.timeout;
-  }
-
   runtime.setConfigs(configs, true);
   await validate(runtime.configs);
 }
