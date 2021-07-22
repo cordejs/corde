@@ -40,10 +40,10 @@ describe("testing configs load", () => {
     expect(runtime.timeout).toEqual(TIMEOUT);
   });
 
-  it("should call go command with -c option", () => {
+  it("should call go command with -c option", async () => {
     mockExecProces(config);
     const testPath = "potatoe";
-    program.parse(["node", "test", "-c", testPath]);
+    await program.parseAsync(["node", "test", "-c", testPath]);
     expect(runtime.configFilePath).toBe(testPath);
   });
 
@@ -54,31 +54,31 @@ describe("testing configs load", () => {
     expect(runtime.testMatches).toEqual(testMatches.split(" "));
   });
 
-  it("should call go command with -f option (multiple files)", () => {
+  it("should call go command with -f option (multiple files)", async () => {
     mockExecProces(config);
     const testMatches = "./tests ./tests2";
-    program.parse(["node", "test", "-f", testMatches]);
+    await program.parseAsync(["node", "test", "-f", testMatches]);
     expect(runtime.testMatches).toEqual(testMatches.split(" "));
   });
 
-  it("should call go command with --files option (single file)", () => {
+  it("should call go command with --files option (single file)", async () => {
     mockExecProces(config);
     const testMatches = "./tests";
-    program.parse(["node", "test", "--files", testMatches]);
+    await program.parseAsync(["node", "test", "--files", testMatches]);
     expect(runtime.testMatches).toEqual(testMatches.split(" "));
   });
 
-  it("should call go command with --files option (multiple files)", () => {
+  it("should call go command with --files option (multiple files)", async () => {
     mockExecProces(config);
     const testMatches = "./tests ./tests2";
-    program.parse(["node", "test", "--files", testMatches]);
+    await program.parseAsync(["node", "test", "--files", testMatches]);
     expect(runtime.testMatches).toEqual(testMatches.split(" "));
   });
 
-  it("should call go command with --config option", () => {
+  it("should call go command with --config option", async () => {
     mockExecProces(config);
     const testPath = "potatoe";
-    program.parse(["node", "test", "--config", testPath]);
+    await program.parseAsync(["node", "test", "--config", testPath]);
     expect(runtime.configFilePath).toBe(testPath);
   });
 });
