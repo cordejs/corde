@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Command } from "commander";
 import { exec } from "./exec";
 import { init } from "./init";

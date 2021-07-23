@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { runtime } from "./common/runtime";
 import { testCollector } from "./common/testCollector";
 import { exit } from "./exit";
