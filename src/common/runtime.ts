@@ -3,7 +3,7 @@ import { Config } from "./config";
 import { Client } from "discord.js";
 import { CordeBot } from "../core/cordeBot";
 import { ConfigError } from "../errors";
-import path from "path/posix";
+import path from "path";
 import { replaceAll } from "../utils";
 import { ROOT_DIR } from "../consts";
 
