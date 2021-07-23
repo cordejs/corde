@@ -49,11 +49,6 @@ describe("testing config", () => {
     expect(config.project).toEqual(path.resolve(process.cwd(), "../", "tsconfig.json"));
   });
 
-  it("should set testMatches replacing <rootDir>", () => {
-    config.setConfigs({ rootDir: "../", testMatches: ["./<rootDir>/tests/**"] }, true);
-    expect(config.testMatches).toEqual([path.resolve(process.cwd(), "../", "tests/**")]);
-  });
-
   it("should remove empty values from testMatches array", () => {
     config.setConfigs({ testMatches: ["./tests/**", ""] }, true);
     expect(config.testMatches).toEqual(["./tests/**"]);
