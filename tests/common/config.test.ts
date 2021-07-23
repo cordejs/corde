@@ -53,4 +53,29 @@ describe("testing config", () => {
     config.setConfigs({ rootDir: "../", testMatches: ["./<rootDir>/tests/**"] }, true);
     expect(config.testMatches).toEqual([path.resolve(process.cwd(), "../", "tests/**")]);
   });
+
+  it("should remove empty values from testMatches array", () => {
+    config.setConfigs({ testMatches: ["./tests/**", ""] }, true);
+    expect(config.testMatches).toEqual(["./tests/**"]);
+  });
+
+  it("should remove duplicates", () => {
+    config.setConfigs({ testMatches: ["./tests/**", "./tests/**"] }, true);
+    expect(config.testMatches).toEqual(["./tests/**"]);
+  });
+
+  it("should remove duplicates", () => {
+    config.setConfigs({ testMatches: ["./tests/**", "./tests/**"] }, true);
+    expect(config.testMatches).toEqual(["./tests/**"]);
+  });
+
+  it("should remove duplicates", () => {
+    config.setConfigs({ modulePathIgnorePatterns: ["./tests/**", ""] }, true);
+    expect(config.modulePathIgnorePatterns).toEqual(["./tests/**"]);
+  });
+
+  it("should remove duplicates", () => {
+    config.setConfigs({ modulePathIgnorePatterns: ["./tests/**", "./tests/**"] }, true);
+    expect(config.modulePathIgnorePatterns).toEqual(["./tests/**"]);
+  });
 });

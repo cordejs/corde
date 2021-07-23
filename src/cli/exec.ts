@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import chalk from "chalk";
 import ora, { Color, Ora } from "ora";
 import { runtime } from "../common/runtime";

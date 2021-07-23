@@ -157,21 +157,29 @@ export class Config implements Readonly<IConfigOptions> {
 
     if (config.modulePathIgnorePatterns && (!this.modulePathIgnorePatterns || forceUpdate)) {
       this._modulePathIgnorePatterns = config.modulePathIgnorePatterns;
+      this._modulePathIgnorePatterns = this.clearArray(this._modulePathIgnorePatterns);
     }
 
     if (config.testMatches && (!this.testMatches || this.testMatches.length === 0 || forceUpdate)) {
       if (Array.isArray(config.testMatches)) {
         this._testMatches = this.getArrayWithRootReplaced(config.testMatches);
+        this._testMatches = this.clearArray(this._testMatches);
       } else {
         this._testMatches = [];
       }
     }
   }
 
+  private clearArray(array: string[]) {
+    // Removes empty elements
+    const cleaned = array.filter((val) => val);
+    // Removes duplicated elements
+    return [...new Set(cleaned)];
+  }
+
   private getArrayWithRootReplaced(array: string[]) {
     return array.map((val) => {
       if (val.includes(ROOT_DIR)) {
-        console.log(replaceAll(val, ROOT_DIR, this._rootDir));
         return path.normalize(replaceAll(val, ROOT_DIR, this._rootDir));
       }
       return val;
