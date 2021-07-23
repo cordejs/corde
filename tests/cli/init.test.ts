@@ -1,6 +1,7 @@
 import { init } from "../../src/cli/init";
 import { FsMockUtils } from "../mockUtils/fs";
 import { IConfigOptions, IJSONFile } from "../../src/types";
+import { DEFAULT_CONFIG } from "../../src/consts";
 
 // As there are a local config file for manual tests,
 // These files are renamed to avoid remotion after finish
@@ -20,12 +21,17 @@ afterEach(() => {
 describe("Testing creation of config file in init", () => {
   it("should create corde.config.js file", () => {
     init("js");
-    expect(fs.writeFileSyncArgs).toContain(fs.buildFilePath("corde.config.js"));
+    expect(fs.getCreatedFileContent).toMatchSnapshot();
   });
 
   it("should create corde.config.ts file", () => {
     init("ts");
-    expect(fs.writeFileSyncArgs).toContain(fs.buildFilePath("corde.config.ts"));
+    expect(fs.getCreatedFileContent).toMatchSnapshot();
+  });
+
+  it("should create corde.config.json file", () => {
+    init("json");
+    expect(fs.getCreatedFileContent).toMatchSnapshot();
   });
 
   it("should create corde.config.json file with directly argument", () => {
@@ -55,35 +61,6 @@ describe("Testing creation of config file in init", () => {
 });
 
 describe("Testing content of config file in init", () => {
-  const configFile: IConfigOptions = {
-    botPrefix: "",
-    botTestId: "",
-    channelId: "",
-    cordeBotToken: "",
-    guildId: "",
-    testMatches: [""],
-    botToken: "",
-    timeout: 5000,
-  };
-
-  it("should js file have same values of configFile", () => {
-    init("js");
-    expect(configFile).toEqual(fs.convertCreatedFileContentToModule());
-  });
-
-  it("should ts file have same values of configFile", () => {
-    init("ts");
-    expect(configFile).toEqual(fs.convertCreatedFileContentToModule());
-  });
-
-  it("should json file have same values of configFile", () => {
-    init("json");
-    const content = JSON.parse(fs.getCreatedFileContent.toString());
-    expect({ $schema: "./node_modules/corde/schema/corde.schema.json", ...configFile }).toEqual(
-      content,
-    );
-  });
-
   it("Should throw exception due to error in write", () => {
     fs.createMockForWriteFileSync(() => {
       throw new Error("testing error");

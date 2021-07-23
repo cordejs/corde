@@ -1,4 +1,5 @@
-import { resolveColor, Colors, ColorsHex } from "../../src/utils/colors";
+import { Colors, ColorsHex } from "../../src/types";
+import { resolveColor } from "../../src/utils/colors";
 
 describe("testing colors", () => {
   it("should get a color by key", () => {

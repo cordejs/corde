@@ -1,8 +1,7 @@
-import { Reader, reader } from "../../src/core/reader";
+import { Reader } from "../../src/core/reader";
 import * as validateFn from "../../src/cli/validate";
 import * as execCommand from "../../src/cli/exec";
 import { runtime } from "../../src/common/runtime";
-import { TestExecutor } from "../../src/core/testExecutor";
 import { DEFAULT_TEST_TIMEOUT } from "../../src/consts";
 import { IConfigOptions } from "../../src/types";
 import { summary } from "../../src/core/summary";
@@ -34,55 +33,52 @@ describe("testing configs load", () => {
     const TIMEOUT = 100000;
     config.timeout = TIMEOUT;
     mockExecProces(config);
-    await execCommand.exec(
-      {
-        files: "",
-        config: "",
-      },
-      [],
-    );
+    await execCommand.exec({
+      files: "",
+      config: "",
+    });
     expect(runtime.timeout).toEqual(TIMEOUT);
   });
 
-  it("should call go command with -c option", () => {
+  it("should call go command with -c option", async () => {
     mockExecProces(config);
     const testPath = "potatoe";
-    program.parse(["node", "test", "-c", testPath]);
+    await program.parseAsync(["node", "test", "-c", testPath]);
     expect(runtime.configFilePath).toBe(testPath);
   });
 
-  it("should call go command with -f option (single file)", () => {
+  it("should call go command with -f option (single file)", async () => {
     mockExecProces(config);
     const testMatches = "./tests";
-    program.parse(["node", "test", "-f", testMatches]);
+    await program.parseAsync(["node", "test", "-f", testMatches]);
     expect(runtime.testMatches).toEqual(testMatches.split(" "));
   });
 
-  it("should call go command with -f option (multiple files)", () => {
+  it("should call go command with -f option (multiple files)", async () => {
     mockExecProces(config);
     const testMatches = "./tests ./tests2";
-    program.parse(["node", "test", "-f", testMatches]);
+    await program.parseAsync(["node", "test", "-f", testMatches]);
     expect(runtime.testMatches).toEqual(testMatches.split(" "));
   });
 
-  it("should call go command with --files option (single file)", () => {
+  it("should call go command with --files option (single file)", async () => {
     mockExecProces(config);
     const testMatches = "./tests";
-    program.parse(["node", "test", "--files", testMatches]);
+    await program.parseAsync(["node", "test", "--files", testMatches]);
     expect(runtime.testMatches).toEqual(testMatches.split(" "));
   });
 
-  it("should call go command with --files option (multiple files)", () => {
+  it("should call go command with --files option (multiple files)", async () => {
     mockExecProces(config);
     const testMatches = "./tests ./tests2";
-    program.parse(["node", "test", "--files", testMatches]);
+    await program.parseAsync(["node", "test", "--files", testMatches]);
     expect(runtime.testMatches).toEqual(testMatches.split(" "));
   });
 
-  it("should call go command with --config option", () => {
+  it("should call go command with --config option", async () => {
     mockExecProces(config);
     const testPath = "potatoe";
-    program.parse(["node", "test", "--config", testPath]);
+    await program.parseAsync(["node", "test", "--config", testPath]);
     expect(runtime.configFilePath).toBe(testPath);
   });
 });

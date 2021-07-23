@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { TEXT_EMPTY, TEXT_FAIL, TEXT_PASS } from "../consts";
 import { IRunnerReport } from "../types";
 

@@ -3,7 +3,9 @@ import { Config } from "./config";
 import { Client } from "discord.js";
 import { CordeBot } from "../core/cordeBot";
 import { ConfigError } from "../errors";
-import { DEFAULT_TEST_TIMEOUT } from "../consts";
+import path from "path";
+import { replaceAll } from "../utils";
+import { ROOT_DIR } from "../consts";
 
 const Environment = {
   isUnityTest: process.env.ENV === "UNITY_TEST",
@@ -30,6 +32,14 @@ class Runtime {
     return Environment;
   }
 
+  get exitOnFileReadingError() {
+    return this._configs.exitOnFileReadingError;
+  }
+
+  get extensions() {
+    return this._configs.extensions;
+  }
+
   get events() {
     return this.bot.events;
   }
@@ -46,6 +56,10 @@ class Runtime {
     return this._configs.botTestId;
   }
 
+  get project() {
+    return this._configs.project;
+  }
+
   get botToken() {
     return this._configs.botToken;
   }
@@ -59,7 +73,8 @@ class Runtime {
   }
 
   get timeout() {
-    return this._configs.timeout ?? DEFAULT_TEST_TIMEOUT;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return this._configs.timeout!;
   }
 
   get botPrefix() {
@@ -100,6 +115,20 @@ class Runtime {
     this._configs.setConfigs(_configs, forceUpdate);
   }
 
+  replaceWithRootDir(text: string) {
+    if (this._configs.rootDir) {
+      return replaceAll(text, ROOT_DIR, this._configs.rootDir);
+    }
+    return text;
+  }
+
+  resolvePathWithRootDir(partialPath: string) {
+    if (this._configs.rootDir) {
+      return path.resolve(process.cwd(), this._configs.rootDir, partialPath);
+    }
+    return path.resolve(process.cwd(), partialPath);
+  }
+
   /**
    * Shortcut for *bot.isLoggedIn*
    */
@@ -116,8 +145,8 @@ class Runtime {
     }
   }
 
-  async loginBot(token: string) {
-    return await this.bot.login(token);
+  loginBot(token: string) {
+    return this.bot.login(token);
   }
 
   injectBot(fn: TestFunctionType) {

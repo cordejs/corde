@@ -50,7 +50,7 @@ The bellow documentation is a resume of what you can find in [Corde's site](http
 
 ## 🚀 Getting started
 
-**Node.js 12.0.0 or newer is required**
+**Node.js 14.0.0 or newer is required**
 
 Starting to create tests with Corde is simple. First, install it locally with npm `npm i -D corde` or yarn `yarn add -D corde`. You can also install it globally: `npm i -g corde` or `yarn global add corde`.
 

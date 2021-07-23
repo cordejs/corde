@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import fs from "fs";
 import path from "path";
 import { runtime } from "../common/runtime";
@@ -13,7 +14,7 @@ export class Reader {
    * and validates it
    * @throws
    */
-  loadConfig(): IConfigOptions {
+  loadConfig() {
     let _config: IConfigOptions;
 
     const jsonFilePath = path.resolve(process.cwd(), "corde.config.json");
@@ -57,14 +58,18 @@ export class Reader {
     }
 
     for (const file of filesPath) {
-      try {
-        const extension = path.extname(file);
-        if (extension == ".js" || extension === ".ts") {
-          require(file);
+      const extension = path.extname(file);
+      if (runtime.extensions?.includes(extension)) {
+        if (runtime.exitOnFileReadingError) {
+          await import(file);
+        } else {
+          try {
+            await import(file);
+          } catch (error) {
+            console.error(error);
+            continue;
+          }
         }
-      } catch (error) {
-        console.error(error);
-        continue;
       }
 
       /**

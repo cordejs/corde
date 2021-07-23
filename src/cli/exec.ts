@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import chalk from "chalk";
 import ora, { Color, Ora } from "ora";
 import { runtime } from "../common/runtime";
@@ -8,6 +9,8 @@ import { TestExecutor } from "../core/testExecutor";
 import { LogUpdate } from "../utils/logUpdate";
 import { validate } from "./validate";
 import { Config, StrictObject } from "../types";
+import registerTsNode from "../core/tsRegister";
+import { debug } from "../common/debug";
 
 declare module "ora" {
   interface Ora {
@@ -21,24 +24,32 @@ process.on("uncaughtException", () => {
 
 let spinner: Ora;
 
-export async function exec(options: Config.ICLIOptions, args?: any) {
+export async function exec(options: Config.ICLIOptions) {
   if (options.config) {
     runtime.configFilePath = options.config;
   }
-  if (args) {
-    runtime.setConfigs({ testMatches: args }, true);
-  }
+
+  debug("runtime.configFilePath: " + runtime.configFilePath);
+
+  await loadConfigs();
+
+  // Configs provied in CLI overrides configs in config file
   if (options.files) {
     runtime.setConfigs({ testMatches: options.files.split(" ") }, true);
   }
 
-  await loadConfigs();
+  if (runtime.project) {
+    registerTsNode(runtime.configs);
+  }
+
+  debug("loaded configs: ", runtime.configs);
+
   await runTests();
 }
 
 async function loadConfigs() {
   const configs = reader.loadConfig();
-  runtime.setConfigs(configs);
+  runtime.setConfigs(configs, true);
   await validate(runtime.configs);
 }
 

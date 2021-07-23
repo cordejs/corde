@@ -1,54 +1,76 @@
 import { IConfigOptions } from "../../src/types";
 import { Config } from "../../src/common/config";
-import { DEFAULT_TEST_TIMEOUT } from "../../src/consts";
-import { config } from "process";
+import path from "path";
+
+let config: Config;
+
+beforeEach(() => {
+  config = new Config();
+});
 
 describe("testing config", () => {
-  it("should set all values to configs", () => {
-    const configOptions: Partial<IConfigOptions> = {
+  it("should set props correctly", () => {
+    const configExample: Partial<IConfigOptions> = {
       botPrefix: "!",
-      botTestId: "123",
-      guildId: "123",
-      testMatches: ["123"],
-      timeout: DEFAULT_TEST_TIMEOUT,
+      botTestId: "id123",
+      botToken: "token",
+      channelId: "1231321",
+      cordeBotToken: "121241414141",
+      exitOnFileReadingError: false,
+      extensions: [".js"],
+      guildId: "124124123124",
+      modulePathIgnorePatterns: [".*\\.test\\.ts$"],
+      testMatches: ["./tests/**"],
+      timeout: 1000,
     };
 
-    const config = new Config();
-    config.setConfigs(configOptions);
-    expect(config).toEqual({ ...configOptions, timeout: DEFAULT_TEST_TIMEOUT });
+    config.setConfigs(
+      {
+        rootDir: "../",
+        project: "<rootDir>/tsconfig.json",
+        ...configExample,
+      },
+      true,
+    );
+    expect(config.botPrefix).toEqual(configExample.botPrefix);
+    expect(config.botPrefix).toEqual(configExample.botPrefix);
+    expect(config.botToken).toEqual(configExample.botToken);
+    expect(config.channelId).toEqual(configExample.channelId);
+
+    expect(config.cordeBotToken).toEqual(configExample.cordeBotToken);
+    expect(config.exitOnFileReadingError).toEqual(configExample.exitOnFileReadingError);
+    expect(config.extensions).toEqual(configExample.extensions);
+    expect(config.guildId).toEqual(configExample.guildId);
+
+    expect(config.modulePathIgnorePatterns).toEqual(configExample.modulePathIgnorePatterns);
+    expect(config.testMatches).toEqual(configExample.testMatches);
+    expect(config.timeout).toEqual(configExample.timeout);
+    expect(config.rootDir).toEqual(path.resolve(process.cwd(), "../"));
+    expect(config.project).toEqual(path.resolve(process.cwd(), "../", "tsconfig.json"));
   });
 
-  it("should not allow define testMatches as object {}", () => {
-    const config = new Config();
-    // @ts-ignore
-    config.setConfigs({ testMatches: {} });
-    expect(config.testMatches).toEqual([]);
+  it("should remove empty values from testMatches array", () => {
+    config.setConfigs({ testMatches: ["./tests/**", ""] }, true);
+    expect(config.testMatches).toEqual(["./tests/**"]);
   });
 
-  it("should force update settings", () => {
-    const updatadedConfig: IConfigOptions = {
-      botPrefix: "+",
-      botTestId: "321",
-      channelId: "111",
-      cordeBotToken: "333",
-      guildId: "11111",
-      testMatches: ["321", "32121"],
-      timeout: 1222,
-      botToken: "lacjxlakjs12312",
-    };
+  it("should remove duplicates", () => {
+    config.setConfigs({ testMatches: ["./tests/**", "./tests/**"] }, true);
+    expect(config.testMatches).toEqual(["./tests/**"]);
+  });
 
-    const config = new Config();
-    config.setConfigs({
-      botPrefix: "!",
-      botTestId: "123",
-      channelId: "",
-      cordeBotToken: "",
-      guildId: "123",
-      testMatches: ["123"],
-      timeout: undefined,
-      botToken: undefined,
-    });
-    config.setConfigs(updatadedConfig, true);
-    expect(config).toEqual(updatadedConfig);
+  it("should remove duplicates", () => {
+    config.setConfigs({ testMatches: ["./tests/**", "./tests/**"] }, true);
+    expect(config.testMatches).toEqual(["./tests/**"]);
+  });
+
+  it("should remove duplicates", () => {
+    config.setConfigs({ modulePathIgnorePatterns: ["./tests/**", ""] }, true);
+    expect(config.modulePathIgnorePatterns).toEqual(["./tests/**"]);
+  });
+
+  it("should remove duplicates", () => {
+    config.setConfigs({ modulePathIgnorePatterns: ["./tests/**", "./tests/**"] }, true);
+    expect(config.modulePathIgnorePatterns).toEqual(["./tests/**"]);
   });
 });

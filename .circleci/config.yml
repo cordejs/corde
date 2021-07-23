@@ -18,7 +18,7 @@ jobs:
   install-dependencies:
     <<: *work-dir
     docker:
-      - image: circleci/node:12
+      - image: circleci/node:14
     environment:
       HUSKY_SKIP_INSTALL: 1
     steps:
@@ -47,27 +47,37 @@ jobs:
   lint:
     <<: *work-dir
     docker:
-      - image: circleci/node:12
+      - image: circleci/node:14
     steps:
       - *attach-step
       - run:
           name: lint
           command: yarn lint
 
-  unitary-test-node-12:
+  unit-test-node-14:
     <<: *work-dir
     docker:
-      - image: circleci/node:12
+      - image: circleci/node:14
     steps:
       - *attach-step
       - run:
           name: Tests
           command: yarn test
 
-  unitary-test-node-14:
+  unit-test-node-15:
     <<: *work-dir
     docker:
-      - image: circleci/node:14
+      - image: circleci/node:15
+    steps:
+      - *attach-step
+      - run:
+          name: Tests
+          command: yarn test
+
+  unit-test-node-16:
+    <<: *work-dir
+    docker:
+      - image: circleci/node:16
     steps:
       - *attach-step
       - run:
@@ -115,14 +125,21 @@ workflows:
             branches:
               ignore: gh-pages
 
-      - unitary-test-node-12:
+      - unit-test-node-14:
           requires:
             - build
           filters:
             branches:
               ignore: gh-pages
 
-      - unitary-test-node-14:
+      - unit-test-node-15:
+          requires:
+            - build
+          filters:
+            branches:
+              ignore: gh-pages
+
+      - unit-test-node-16:
           requires:
             - build
           filters:
@@ -131,8 +148,9 @@ workflows:
 
       - publish_coverage:
           requires:
-            - unitary-test-node-12
-            - unitary-test-node-14
+            - unit-test-node-14
+            - unit-test-node-15
+            - unit-test-node-16
           filters:
             branches:
               ignore: gh-pages

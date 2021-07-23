@@ -1,7 +1,6 @@
 import {
   ConfigError,
   CordeClientError,
-  DiscordError,
   FileError,
   PropertyError,
   TypeError,
@@ -21,12 +20,6 @@ describe("testing errors types", () => {
     const error = new CordeClientError();
     expect(error.name).toBe(Errors.CORDE_CLIENT_ERROR);
     expect(error.message).toBe(Errors.CORDE_CLIENT_ERROR_MESSAGE);
-  });
-
-  it("DiscordError should match expected structure", () => {
-    const error = new DiscordError();
-    expect(error.name).toBe(Errors.DISCORD_ERROR);
-    expect(error.message).toBe(Errors.DISCORD_ERROR_MESSAGE);
   });
 
   it("FileError should match expected structure", () => {

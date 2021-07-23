@@ -103,7 +103,7 @@ export class CordeBot implements ICordeBot {
    */
   async login(token: string) {
     try {
-      return await this._client.login(token);
+      return this._client.login(token);
     } catch (error) {
       throw new CordeClientError(this.buildLoginErrorMessage(token, error.message));
     }

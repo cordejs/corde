@@ -15,22 +15,12 @@ const config: IConfigOptions = {
 };
 
 describe("Testing runtime", () => {
-  it("Should set configs", () => {
-    runtime.setConfigs(config);
-    expect(runtime.configs).toEqual(config);
-  });
-
   it("Should throw an error", () => {
     try {
       runtime.setConfigs(undefined);
     } catch (error) {
       expect(error instanceof Error).toBe(true);
     }
-  });
-
-  it("Should create a new instance of config", () => {
-    runtime.setConfigs(config);
-    expect(runtime.configs).toEqual(config);
   });
 
   it("should call bot.logout", () => {

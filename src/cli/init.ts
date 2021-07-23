@@ -1,34 +1,11 @@
+/* eslint-disable no-console */
 import chalk from "chalk";
 import fs from "fs";
 import path from "path";
-import { DEFAULT_TEST_TIMEOUT } from "../consts";
+import { DEFAULT_CONFIG } from "../consts";
 import { FileError } from "../errors";
-import { IConfigOptions, configFileType, StrictObject } from "../types";
-
-const config: IConfigOptions = {
-  botPrefix: "",
-  botTestId: "",
-  channelId: "",
-  cordeBotToken: "",
-  guildId: "",
-  testMatches: [""],
-  botToken: "",
-  timeout: DEFAULT_TEST_TIMEOUT,
-};
-
-const configString = JSON.stringify(config);
-
-const jsonFile = {
-  $schema: "./node_modules/corde/schema/corde.schema.json",
-  ...config,
-};
-
-const jsFile = `
-    /** @type {import('corde/lib/src/types').IConfigOptions} */
-    module.exports = ${configString}
-`;
-
-const tsFile = jsFile;
+import { ConfigFileType } from "../types";
+import { keysOf, typeOf } from "../utils";
 
 /**
  * Initialize a config file with all available options.
@@ -40,37 +17,32 @@ const tsFile = jsFile;
  *
  * @throws Error if could not create the config file
  */
-export function init(fileType: configFileType = "json") {
-  let fileContent = "";
-
+export function init(fileType: ConfigFileType = "json") {
   // No declaration of fileType is considered 'json'
 
   if (!fileType) {
     fileType = "json";
   }
 
-  if (fileType === "json") {
-    fileContent = JSON.stringify(jsonFile);
-  } else if (fileType === "js") {
-    fileContent = jsFile;
-  } else if (fileType === "ts") {
-    fileContent = tsFile;
-  } else {
+  const fileContent = getFileFromType(fileType);
+
+  if (!fileContent) {
     console.log(
       ` - ${chalk.bold(fileType)} is not a valid type. Use '${chalk.bold(
         "init --help",
       )}' to check valid types`,
     );
+    return;
   }
 
   try {
     const fileName = `corde.config.${fileType}`;
     const filePath = path.resolve(process.cwd(), fileName);
-    fileContent = formatFile(fileContent, fileType);
     fs.writeFileSync(filePath, fileContent);
     console.log(
       `- ${chalk.green("Successfully")} generated corde config in ${chalk.bold(filePath)}`,
     );
+    console.log(fileContent);
   } catch (error) {
     throw new FileError(
       " - Fail in config file creation. Check if you have permission to create files in this directory.",
@@ -78,115 +50,60 @@ export function init(fileType: configFileType = "json") {
   }
 }
 
-function formatFile(file: string, type: configFileType) {
-  let formater: "object" | "json" = "json";
-
-  if (type === "js" || type === "ts") {
-    formater = "object";
+function getFileFromType(type: ConfigFileType) {
+  if (type === "json") {
+    return convertObjectToFileType(true);
+  } else if (type === "js") {
+    const temp = { ...DEFAULT_CONFIG };
+    delete temp.project;
+    return `module.exports = ${convertObjectToFileType(false)}`;
+  } else if (type === "ts") {
+    return `export = ${convertObjectToFileType(false)}`;
   }
-
-  return format(file, {
-    formater,
-    size: 2,
-    type: "space",
-  });
+  return undefined;
 }
 
-/**
- * Code adapted from
- * @see https://github.com/luizstacio/json-format
- */
+function convertObjectToFileType(isJson: boolean) {
+  // eslint-disable-next-line quotes
+  const strType = isJson ? '"' : "";
+  const DOUBLE_SPACE = "  ";
+  let response = isJson
+    ? `{\n${DOUBLE_SPACE}"$schema": "./node_modules/corde/schema/corde.schema.json",\n`
+    : "{\n";
 
-interface Config {
-  type: "space" | "tab";
-  size: number;
-  formater: "json" | "object";
-}
+  const keys = keysOf(DEFAULT_CONFIG);
 
-let p: string[] = [];
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+    let value = (DEFAULT_CONFIG as any)[key];
 
-const indentConfig = {
-  tab: { char: "\t", size: 1 },
-  space: { char: " ", size: 4 },
-};
-
-const configDefault: Config = {
-  type: "tab",
-  size: 2,
-  formater: "json",
-};
-
-function push(m: string) {
-  return "\\" + p.push(m) + "\\";
-}
-
-function pop(_: string, i: number) {
-  return p[i - 1];
-}
-
-function tabs(count: number, indentType: string) {
-  return new Array(count + 1).join(indentType);
-}
-
-function format(json: StrictObject | string, config: Config) {
-  config = config || configDefault;
-  const indent = indentConfig[config.type];
-
-  const indentType = new Array((config.size || indent.size) + 1).join(indent.char);
-
-  let stringObjt = typeof json === "string" ? json : JSON.stringify(json);
-
-  if (config.formater === "object") {
-    // Removes double cotes from generated string in JSON
-    // format
-    stringObjt = stringObjt.replace(/"([^"]+)":/g, "$1:");
-  }
-
-  return formatStringObject(stringObjt, indentType);
-}
-
-function formatStringObject(json: string, indentType: string) {
-  p = [];
-  let out = "";
-  let indent = 0;
-
-  // Extract backslashes and strings
-  json = json
-    .replace(/\\./g, push)
-    .replace(/(".*?"|'.*?')/g, push)
-    .replace(/\s+/, "");
-
-  // Indent and insert newlines
-  for (let i = 0; i < json.length; i++) {
-    const c = json.charAt(i);
-
-    switch (c) {
-      case "{":
-        out += c + "\n" + tabs(++indent, indentType);
-        break;
-      case "}":
-        out += "\n" + tabs(--indent, indentType) + c;
-        break;
-      case ",":
-        out += ",\n" + tabs(indent, indentType);
-        break;
-      case ":":
-        out += ": ";
-        break;
-      default:
-        out += c;
-        break;
+    if (typeOf(value) === "string") {
+      // eslint-disable-next-line quotes
+      value = '""';
     }
+
+    if (Array.isArray(value)) {
+      let newValue = "[";
+      for (let i = 0; i < value.length; i++) {
+        if (typeOf(value[i]) === "string") {
+          newValue += `"${value[i]}"`;
+        } else {
+          newValue += `${value[i]}`;
+        }
+
+        if (i != value.length - 1) {
+          newValue += ", ";
+        }
+      }
+
+      value = newValue + "]";
+    }
+
+    const comma = i === keys.length - 1 ? "" : ",";
+
+    response += DOUBLE_SPACE + `${strType}${key}${strType}: ${value}${comma}\n`;
   }
 
-  // Strip whitespace from numeric arrays and put backslashes
-  // and strings back in
-  out = out
-    .replace(/\[[\d,\s]+?\]/g, (m) => {
-      return m.replace(/\s/g, "");
-    })
-    .replace(/\\(\d+)\\/g, pop) // strings
-    .replace(/\\(\d+)\\/g, pop); // backslashes in strings
-
-  return out;
+  response += "}";
+  return response;
 }

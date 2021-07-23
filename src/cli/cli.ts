@@ -1,8 +1,9 @@
+/* eslint-disable no-console */
 import { Command } from "commander";
 import { exec } from "./exec";
 import { init } from "./init";
 import { validate } from "./validate";
-import { configFileType } from "../types";
+import { ConfigFileType } from "../types";
 import pack from "../package";
 import { Config } from "../types";
 import { reader } from "../core/reader";
@@ -23,14 +24,15 @@ program
 
 program
   .option("-c, --config <type>", "Set config file path")
+  .option("-p, --project <type>", "Set tsconfig path")
   .option(
     "-f, --files <path>",
     "Set the path for all tests. Use this if you wan to specify a single path." +
       " for Array, use only 'corde <path1> <path2>'",
   )
-  .action(async (args: any) => {
+  .action(async () => {
     const options = program.opts() as Config.ICLIOptions;
-    await exec(options, args);
+    await exec(options);
   });
 
 program
@@ -38,7 +40,7 @@ program
   .alias("i")
   .description("Initialize a config file with all possible options")
   .usage("[js ts json] or empty for default type (json)")
-  .action((type: configFileType) => {
+  .action((type: ConfigFileType) => {
     init(type);
   });
 
