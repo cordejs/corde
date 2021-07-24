@@ -1,0 +1,41 @@
+### Changelog
+{{#each releases}}
+  {{#if href}}
+    ## [{{title}}]({{href}}){{#if tag}} - {{isoDate}}{{/if}}
+  {{else}}
+    ##
+    {{title}}{{#if tag}} - {{isoDate}}{{/if}}
+  {{/if}}
+
+  {{#if summary}}
+    {{summary}}
+  {{/if}}
+
+  {{#commit-list commits heading="### 🚀 Features" message="feat:"}}
+    -
+    {{subject}}
+    [`{{shorthash}}`]({{href}})
+  {{/commit-list}}
+
+  {{#if fixes}}
+    ### 🐛 Bug Fixes
+    {{#each fixes}}
+      -
+      {{#if commit.breaking}}**Breaking change:** {{/if}}{{commit.subject}}{{#each fixes}}
+        {{#if href}}[`#{{id}}`]({{href}}){{/if}}{{/each}}
+    {{/each}}
+  {{/if}}
+
+  {{#commit-list commits heading="### 📦 Miscelaneous" message="chore:"}}
+    -
+    {{subject}}
+    [`{{shorthash}}`]({{href}})
+  {{/commit-list}}
+
+  {{#commit-list commits heading="### 📦 Dependencies" message="chore(deps):"}}
+    -
+    {{subject}}
+    [`{{shorthash}}`]({{href}})
+  {{/commit-list}}
+
+{{/each}}
