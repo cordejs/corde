@@ -11,12 +11,12 @@ We use [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/#sum
 
 These are all common types used:
 
-- **fix**: a commit of the type fix patches a bug in your codebase (this correlates with PATCH in semantic versioning).
-- **feat**: a commit of the type fix patches a bug in your codebase (this correlates with PATCH in semantic versioning).
-- **BREAKING CHANGE**: a commit that has a footer BREAKING CHANGE: or appends a ! after the type/scope, introduces a breaking API change (correlating with MAJOR in semantic versioning). A BREAKING CHANGE can be part of commits of any type
+- **fix**: a commit of the type fix patches a bug in the codebase. (creates a MINOR version)
+- **feat**: a commit of the type feat patches a new tool or utility to be used by clients. (creates a PATCH version)
+- **BREAKING CHANGE**: Represents a commit that will make usage of some features of the library broken in next version (MAJOR version)
 - **build**: Something related to how the project builds.
 - **chore**: Some trivial changes that do not impact anything in the project or its docs.
 - **ci**: Specific to continuous integration build.
 - **docs**: a commit that change corde docs.
-- **refactor**: a commit that refactors some code.
+- **refact**: a commit that refactors some code.
 - **test**: a commit that adds, change or remove something in tests.
