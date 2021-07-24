@@ -1,6 +1,6 @@
 ### Changelog
 
-## [v4.3.0](https://github.com/cordejs/corde/compare/v4.2.0...v4.3.0) - 2021-07-24
+## [v4.3.0](https://github.com/cordejs/corde/releases/tag/v4.3.0) - 2021-07-24
 
 ### 💣 Breaking changes
 
@@ -44,7 +44,7 @@
 - chore: remove broken test and add .nvm file [`db4ff38`](https://github.com/cordejs/corde/commit/db4ff38effb90b0dbb086ace9dbe8fd465fb4244)
 - chore: disabled eslint-disable no-console in file (temporary) [`60e8a53`](https://github.com/cordejs/corde/commit/60e8a5359f4fa1531875f5ef9bf1866bdd9f8b2e)
 
-## [v4.2.0](https://github.com/cordejs/corde/compare/v4.1.2...v4.2.0) - 2021-06-27
+## [v4.2.0](https://github.com/cordejs/corde/releases/tag/v4.2.0) - 2021-06-27
 
 ### 💡 Miscelaneous
 
@@ -52,7 +52,7 @@
 - chore: update CHANGELOG [`f2ca0ec`](https://github.com/cordejs/corde/commit/f2ca0ecb0d7ddd0db906908c806e790ca24f6c73)
 - chore: fix typo [`e6dd173`](https://github.com/cordejs/corde/commit/e6dd173c29a350baf64d623b32958da93f1c75a5)
 
-## [v4.1.2](https://github.com/cordejs/corde/compare/v4.1.1...v4.1.2) - 2021-06-13
+## [v4.1.2](https://github.com/cordejs/corde/releases/tag/v4.1.2) - 2021-06-13
 
 ### 🐛 Bug Fixes
 
@@ -62,7 +62,7 @@
 
 - chore: fix typo [`0c6bc8a`](https://github.com/cordejs/corde/commit/0c6bc8a2f10a3d2790b2ea6de228cd84cfb7307e)
 
-## [v4.1.1](https://github.com/cordejs/corde/compare/v4.1.0...v4.1.1) - 2021-06-12
+## [v4.1.1](https://github.com/cordejs/corde/releases/tag/v4.1.1) - 2021-06-12
 
 ### 💡 Miscelaneous
 
@@ -72,7 +72,7 @@
 - chore: update CHANGELOG for version 4.1.1 [`6e1b205`](https://github.com/cordejs/corde/commit/6e1b2059644661627f9e6d440380561fbba80cff)
 - chore: replace magic number to `DEFAULT_TEST_TIMEOUT` [`695172e`](https://github.com/cordejs/corde/commit/695172e22f4fa90b5222a352f1faf44965f3c8b4)
 
-## [v4.1.0](https://github.com/cordejs/corde/compare/v4.1.0-rc.6...v4.1.0) - 2021-06-06
+## [v4.1.0](https://github.com/cordejs/corde/releases/tag/v4.1.0) - 2021-06-06
 
 ### 🐛 Bug Fixes
 
@@ -89,7 +89,7 @@
 - chore: restore file added in tsconfig [`a7cb4c8`](https://github.com/cordejs/corde/commit/a7cb4c801d28f0083701fa962fad302ebcf45fec)
 - chore: remove empty test file [`ec85688`](https://github.com/cordejs/corde/commit/ec85688734d661bd112e89c8ffb90542c7e5c52d)
 
-## [v4.1.0-rc.6](https://github.com/cordejs/corde/compare/v4.1.0-beta.5...v4.1.0-rc.6) - 2021-06-03
+## [v4.1.0-rc.6](https://github.com/cordejs/corde/releases/tag/v4.1.0-rc.6) - 2021-06-03
 
 ### 🚀 Features
 
@@ -118,7 +118,7 @@
 - chore: try to add redirection to website folder [`81a3423`](https://github.com/cordejs/corde/commit/81a34234bf16fab172dad556f847044d10a1ddf8)
 - chore: remove unecessary command [`4248177`](https://github.com/cordejs/corde/commit/4248177fdc516ff4b91f9c728d7fbe0af02795f9)
 
-## [v4.1.0-beta.5](https://github.com/cordejs/corde/compare/v4.1.0-beta.4...v4.1.0-beta.5) - 2021-05-23
+## [v4.1.0-beta.5](https://github.com/cordejs/corde/releases/tag/v4.1.0-beta.5) - 2021-05-23
 
 ### 🐛 Bug Fixes
 
@@ -144,7 +144,7 @@
 - chore: adjust lf normalization [`0cd2416`](https://github.com/cordejs/corde/commit/0cd24164db897c5e84a3248db6eacc2a25c63b8e)
 - chore: fix tests pattern in README [`81ad491`](https://github.com/cordejs/corde/commit/81ad49108c521b945bca1d92dc8362258775aa80)
 
-## [v4.1.0-beta.4](https://github.com/cordejs/corde/compare/v4.1.0-beta.3...v4.1.0-beta.4) - 2021-05-16
+## [v4.1.0-beta.4](https://github.com/cordejs/corde/releases/tag/v4.1.0-beta.4) - 2021-05-16
 
 ### 🚀 Features
 
@@ -177,9 +177,9 @@
 - chore: back dependabot file [`71e6337`](https://github.com/cordejs/corde/commit/71e6337cc61117bf2d8a2507cf328e26053fd96d)
 - chore: add types to jest config [`be03a50`](https://github.com/cordejs/corde/commit/be03a500c6daca3f61c7002e374b6b7c9e5e9b6f)
 
-## [v4.1.0-beta.3](https://github.com/cordejs/corde/compare/v4.1.0-beta.2...v4.1.0-beta.3) - 2021-05-16
+## [v4.1.0-beta.3](https://github.com/cordejs/corde/releases/tag/v4.1.0-beta.3) - 2021-05-16
 
-## [v4.1.0-beta.2](https://github.com/cordejs/corde/compare/v4.1.0-beta.1...v4.1.0-beta.2) - 2021-05-16
+## [v4.1.0-beta.2](https://github.com/cordejs/corde/releases/tag/v4.1.0-beta.2) - 2021-05-16
 
 ### 🚀 Features
 
@@ -211,9 +211,9 @@
 - chore: back dependabot file [`71e6337`](https://github.com/cordejs/corde/commit/71e6337cc61117bf2d8a2507cf328e26053fd96d)
 - chore: add types to jest config [`be03a50`](https://github.com/cordejs/corde/commit/be03a500c6daca3f61c7002e374b6b7c9e5e9b6f)
 
-## [v4.1.0-beta.1](https://github.com/cordejs/corde/compare/v4.0.5...v4.1.0-beta.1) - 2021-05-16
+## [v4.1.0-beta.1](https://github.com/cordejs/corde/releases/tag/v4.1.0-beta.1) - 2021-05-16
 
-## [v4.0.5](https://github.com/cordejs/corde/compare/v4.0.4...v4.0.5) - 2021-05-26
+## [v4.0.5](https://github.com/cordejs/corde/releases/tag/v4.0.5) - 2021-05-26
 
 ### 💡 Miscelaneous
 
@@ -221,7 +221,7 @@
 - chore: fix script [`7e3ef86`](https://github.com/cordejs/corde/commit/7e3ef864bc3ca657ae143410333cbeaf86bb6a9d)
 - chore: fix reference [`c094dd8`](https://github.com/cordejs/corde/commit/c094dd88706cfd8f0c3761f019601e0d8fd0d433)
 
-## [v4.0.4](https://github.com/cordejs/corde/compare/v4.0.3...v4.0.4) - 2021-05-23
+## [v4.0.4](https://github.com/cordejs/corde/releases/tag/v4.0.4) - 2021-05-23
 
 ### 💡 Miscelaneous
 
@@ -229,7 +229,7 @@
 - chore: changelod for 4.0.4 [`d1cd1f7`](https://github.com/cordejs/corde/commit/d1cd1f741d4204d3a258f6124da1a9cface6a058)
 - chore: fix tests pattern in README [`81ad491`](https://github.com/cordejs/corde/commit/81ad49108c521b945bca1d92dc8362258775aa80)
 
-## [v4.0.3](https://github.com/cordejs/corde/compare/v4.0.2...v4.0.3) - 2021-05-23
+## [v4.0.3](https://github.com/cordejs/corde/releases/tag/v4.0.3) - 2021-05-23
 
 ### 🐛 Bug Fixes
 
@@ -241,7 +241,7 @@
 - chore: update changelog [`e74f436`](https://github.com/cordejs/corde/commit/e74f4366054b5272208badd95afe418f8880c7bd)
 - chore: add async statement in README for `loginBot` function [`9c77725`](https://github.com/cordejs/corde/commit/9c777257025f1d9816af13cd666108b3fb817485)
 
-## [v4.0.2](https://github.com/cordejs/corde/compare/v4.0.1...v4.0.2) - 2021-05-20
+## [v4.0.2](https://github.com/cordejs/corde/releases/tag/v4.0.2) - 2021-05-20
 
 ### 💡 Miscelaneous
 
@@ -251,13 +251,13 @@
 - chore: format schema in build prod and convert ./bin/corde to LF formmat [`78c0ea0`](https://github.com/cordejs/corde/commit/78c0ea085bc2b7ced4524b5ac55a5d68f4ce459c)
 - chore: adjust lf normalization [`0cd2416`](https://github.com/cordejs/corde/commit/0cd24164db897c5e84a3248db6eacc2a25c63b8e)
 
-## [v4.0.1](https://github.com/cordejs/corde/compare/v4.0.0...v4.0.1) - 2021-05-18
+## [v4.0.1](https://github.com/cordejs/corde/releases/tag/v4.0.1) - 2021-05-18
 
 ### 💡 Miscelaneous
 
 - chore: update CHANGELOG for version 4.0.1 [`7c9c819`](https://github.com/cordejs/corde/commit/7c9c819c22e63dd0c835bfa664958aa09397b1dd)
 
-## [v4.0.0](https://github.com/cordejs/corde/compare/v4.0.0-beta.1...v4.0.0) - 2021-05-16
+## [v4.0.0](https://github.com/cordejs/corde/releases/tag/v4.0.0) - 2021-05-16
 
 ### 🚀 Features
 
@@ -274,7 +274,7 @@
 - chore: add debug documentation [`de60cd3`](https://github.com/cordejs/corde/commit/de60cd33feffaeef7dd9c6f0245cfeecae6ab044)
 - chore: update snapshot [`a4bf037`](https://github.com/cordejs/corde/commit/a4bf0370633a8101d0e798f75fb55baee70b6fd7)
 
-## [v4.0.0-beta.1](https://github.com/cordejs/corde/compare/v3.1.5...v4.0.0-beta.1) - 2021-05-14
+## [v4.0.0-beta.1](https://github.com/cordejs/corde/releases/tag/v4.0.0-beta.1) - 2021-05-14
 
 ### 🚀 Features
 
@@ -292,14 +292,14 @@
 - chore: disable eslint for example bot [`92e112c`](https://github.com/cordejs/corde/commit/92e112c27f510331516c28ec5f06d5bf520f223f)
 - chore: back package option for jest execution [`2b25046`](https://github.com/cordejs/corde/commit/2b250466d3c82837a2386d46e07062194b210bf5)
 
-## [v3.1.5](https://github.com/cordejs/corde/compare/v3.1.5-beta.1...v3.1.5) - 2021-05-14
+## [v3.1.5](https://github.com/cordejs/corde/releases/tag/v3.1.5) - 2021-05-14
 
 ### 💡 Miscelaneous
 
 - chore: update CHANGELOG [`2de51c1`](https://github.com/cordejs/corde/commit/2de51c1df0d3b738a0b16636263d8c9fd68d038a)
 - chore: back dependencies update [`bb333ba`](https://github.com/cordejs/corde/commit/bb333ba6797d3e17e6ab79cf60792ba7b49b7dda)
 
-## [v3.1.5-beta.1](https://github.com/cordejs/corde/compare/v3.1.4...v3.1.5-beta.1) - 2021-05-13
+## [v3.1.5-beta.1](https://github.com/cordejs/corde/releases/tag/v3.1.5-beta.1) - 2021-05-13
 
 ### 🚀 Features
 
@@ -310,16 +310,16 @@
 - chore: add error handler in cli [`0c08033`](https://github.com/cordejs/corde/commit/0c0803395b40f0f8e9e2bf47843d24b9455fe460)
 - chore: disable eslint for example bot [`92e112c`](https://github.com/cordejs/corde/commit/92e112c27f510331516c28ec5f06d5bf520f223f)
 
-## [v3.1.4](https://github.com/cordejs/corde/compare/v3.1.3...v3.1.4) - 2021-05-09
+## [v3.1.4](https://github.com/cordejs/corde/releases/tag/v3.1.4) - 2021-05-09
 
-## [v3.1.3](https://github.com/cordejs/corde/compare/v3.1.2...v3.1.3) - 2021-04-26
+## [v3.1.3](https://github.com/cordejs/corde/releases/tag/v3.1.3) - 2021-04-26
 
 ### 💡 Miscelaneous
 
 - chore: rename from lucasgmagalhaes to cordejs in paths to repo [`baedc78`](https://github.com/cordejs/corde/commit/baedc7824e0488587e48352d0d06c002ebfb64c1)
 - chore: update licence year reference [`07cc5b1`](https://github.com/cordejs/corde/commit/07cc5b16e42a46cfbf355ae5ea3731290ace7e1a)
 
-## [v3.1.2](https://github.com/cordejs/corde/compare/v3.1.0...v3.1.2) - 2021-04-20
+## [v3.1.2](https://github.com/cordejs/corde/releases/tag/v3.1.2) - 2021-04-20
 
 ### 🐛 Bug Fixes
 
@@ -333,7 +333,7 @@
 - chore: change corde check [`13ce093`](https://github.com/cordejs/corde/commit/13ce0930731c893218ff186d248202d3e671fd1f)
 - chore: add gulp script [`f90a58a`](https://github.com/cordejs/corde/commit/f90a58ad9541fa98cf367ab348843dd7137b1918)
 
-## [v3.1.0](https://github.com/cordejs/corde/compare/v3.1.0-beta.1...v3.1.0) - 2021-04-12
+## [v3.1.0](https://github.com/cordejs/corde/releases/tag/v3.1.0) - 2021-04-12
 
 ### 🚀 Features
 
@@ -352,7 +352,7 @@
 - chore: removed toReturnInChannel [`e466651`](https://github.com/cordejs/corde/commit/e46665111f7a69aebfca8b194327501e1b31b594)
 - chore: update docs in v3 [`9cfb275`](https://github.com/cordejs/corde/commit/9cfb275cddc4b69355ac75072f549ab335c8efa8)
 
-## [v3.1.0-beta.1](https://github.com/cordejs/corde/compare/v3.0.3...v3.1.0-beta.1) - 2021-04-08
+## [v3.1.0-beta.1](https://github.com/cordejs/corde/releases/tag/v3.1.0-beta.1) - 2021-04-08
 
 ### 🚀 Features
 
@@ -381,9 +381,9 @@
 - chore: remove usage of bigint in tests functions [`6f1d643`](https://github.com/cordejs/corde/commit/6f1d6434891b069910d40ccf8fc7dd19c0fb7bd7)
 - chore: disable lint for .bin/corde [`adea1a4`](https://github.com/cordejs/corde/commit/adea1a42d0f0b6761c95c2afa336118bba1da15c)
 
-## [v3.0.3](https://github.com/cordejs/corde/compare/v3.0.2...v3.0.3) - 2021-04-05
+## [v3.0.3](https://github.com/cordejs/corde/releases/tag/v3.0.3) - 2021-04-05
 
-## [v3.0.2](https://github.com/cordejs/corde/compare/v3.0.1...v3.0.2) - 2021-04-01
+## [v3.0.2](https://github.com/cordejs/corde/releases/tag/v3.0.2) - 2021-04-01
 
 ### 🚀 Features
 
@@ -401,9 +401,9 @@
 - chore: fix word spells [`339c25c`](https://github.com/cordejs/corde/commit/339c25cc9999754ca1fb5ab300e34985a0089b40)
 - chore: remove test [`c73698d`](https://github.com/cordejs/corde/commit/c73698de35734e31c7fc37daf7f900eed6d9a2dd)
 
-## [v3.0.1](https://github.com/cordejs/corde/compare/v3.0.0...v3.0.1) - 2021-03-30
+## [v3.0.1](https://github.com/cordejs/corde/releases/tag/v3.0.1) - 2021-03-30
 
-## [v3.0.0](https://github.com/cordejs/corde/compare/v3.0.0-beta.3...v3.0.0) - 2021-03-30
+## [v3.0.0](https://github.com/cordejs/corde/releases/tag/v3.0.0) - 2021-03-30
 
 ### 🚀 Features
 
@@ -510,9 +510,9 @@
 - chore: treat json as json [`8b04ec5`](https://github.com/cordejs/corde/commit/8b04ec5a198ba8a71cec932ca272764d7192dca6)
 - chore: add executePromiseWithTimeout to index [`225ea3f`](https://github.com/cordejs/corde/commit/225ea3f849bc0a09ea64e863459590bd04e9b545)
 
-## [v3.0.0-beta.3](https://github.com/cordejs/corde/compare/v3.0.0-beta.2...v3.0.0-beta.3) - 2021-03-29
+## [v3.0.0-beta.3](https://github.com/cordejs/corde/releases/tag/v3.0.0-beta.3) - 2021-03-29
 
-## [v3.0.0-beta.2](https://github.com/cordejs/corde/compare/v3.0.0-beta.1...v3.0.0-beta.2) - 2021-03-29
+## [v3.0.0-beta.2](https://github.com/cordejs/corde/releases/tag/v3.0.0-beta.2) - 2021-03-29
 
 ### 🚀 Features
 
@@ -611,7 +611,7 @@
 - chore: treat json as json [`8b04ec5`](https://github.com/cordejs/corde/commit/8b04ec5a198ba8a71cec932ca272764d7192dca6)
 - chore: add executePromiseWithTimeout to index [`225ea3f`](https://github.com/cordejs/corde/commit/225ea3f849bc0a09ea64e863459590bd04e9b545)
 
-## [v3.0.0-beta.1](https://github.com/cordejs/corde/compare/v2.0.4...v3.0.0-beta.1) - 2021-03-29
+## [v3.0.0-beta.1](https://github.com/cordejs/corde/releases/tag/v3.0.0-beta.1) - 2021-03-29
 
 ### 🐛 Bug Fixes
 
@@ -621,7 +621,7 @@
 
 - chore: update browser list [`1bbfad5`](https://github.com/cordejs/corde/commit/1bbfad51f7c8c674e371b2a5d9000fa40ba9e4b8)
 
-## [v2.0.4](https://github.com/cordejs/corde/compare/v2.0.3...v2.0.4) - 2021-03-25
+## [v2.0.4](https://github.com/cordejs/corde/releases/tag/v2.0.4) - 2021-03-25
 
 ### 💡 Miscelaneous
 
@@ -629,9 +629,9 @@
 - chore: update homepage on package.json [`f731973`](https://github.com/cordejs/corde/commit/f7319733aac91650556fd61f16677f6803e9df8e)
 - chore: break line [`1e735a4`](https://github.com/cordejs/corde/commit/1e735a47de62599d88ae2363d17b72df05d28a79)
 
-## [v2.0.3](https://github.com/cordejs/corde/compare/v2.0.2...v2.0.3) - 2021-03-22
+## [v2.0.3](https://github.com/cordejs/corde/releases/tag/v2.0.3) - 2021-03-22
 
-## [v2.0.2](https://github.com/cordejs/corde/compare/v2.0.1...v2.0.2) - 2021-03-20
+## [v2.0.2](https://github.com/cordejs/corde/releases/tag/v2.0.2) - 2021-03-20
 
 ### 🚀 Features
 
@@ -692,13 +692,13 @@
 - chore: change pipeline script to future execution [`848875e`](https://github.com/cordejs/corde/commit/848875e75b1e9ce862ffc56eecb89aa9ee46f576)
 - chore: unsubscribe after get reactions [`0f7b7d8`](https://github.com/cordejs/corde/commit/0f7b7d860c09a90e67f2148bd4710cbdf1678604)
 
-## [v2.0.1](https://github.com/cordejs/corde/compare/v2.0.0...v2.0.1) - 2021-02-01
+## [v2.0.1](https://github.com/cordejs/corde/releases/tag/v2.0.1) - 2021-02-01
 
 ### 💡 Miscelaneous
 
 - chore: fix image sizes [`13add8f`](https://github.com/cordejs/corde/commit/13add8fea567d0833d3bd73e1364e247aff55142)
 
-## [v2.0.0](https://github.com/cordejs/corde/compare/v2.0.0-beta-28...v2.0.0) - 2021-01-31
+## [v2.0.0](https://github.com/cordejs/corde/releases/tag/v2.0.0) - 2021-01-31
 
 ### 🚀 Features
 
@@ -724,7 +724,7 @@
 - chore: fix logo [`7370a52`](https://github.com/cordejs/corde/commit/7370a52316ef0f4c39822401e06fa433b496632c)
 - chore: move all docs from md to mdx [`8626760`](https://github.com/cordejs/corde/commit/8626760693fb9c9e6518a23ef98051a4f7440cae)
 
-## [v2.0.0-beta-28](https://github.com/cordejs/corde/compare/v2.0.0-beta-27...v2.0.0-beta-28) - 2021-01-28
+## [v2.0.0-beta-28](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta-28) - 2021-01-28
 
 ### 🚀 Features
 
@@ -735,7 +735,7 @@
 - chore: add tests for toSetRolePosition and add wait in this expect function [`c79927a`](https://github.com/cordejs/corde/commit/c79927acb7c44bcb18a079ca6ee3881a28ff40e1)
 - chore: add script to format transpiled code [`2b30e83`](https://github.com/cordejs/corde/commit/2b30e83872319cb7ee3f706c95db55d9ec883034)
 
-## [v2.0.0-beta-27](https://github.com/cordejs/corde/compare/v2.0.0-beta-26...v2.0.0-beta-27) - 2021-01-24
+## [v2.0.0-beta-27](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta-27) - 2021-01-24
 
 ### 🚀 Features
 
@@ -751,7 +751,7 @@
 - chore: remove collect coverage from unit tests in node 12 [`4ae35b7`](https://github.com/cordejs/corde/commit/4ae35b75256855a8e99f2499eb2c8ff7946a395e)
 - chore: fix word [`352afe5`](https://github.com/cordejs/corde/commit/352afe5b4e3f19b5cfdebda27d321b9039444897)
 
-## [v2.0.0-beta-26](https://github.com/cordejs/corde/compare/v2.0.0-beta-25...v2.0.0-beta-26) - 2021-01-22
+## [v2.0.0-beta-26](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta-26) - 2021-01-22
 
 ### 🚀 Features
 
@@ -775,7 +775,7 @@
 - chore: excluse e2e from root tsconfig [`983dab6`](https://github.com/cordejs/corde/commit/983dab6499e3efb34e9acd1051c99c0409685eb7)
 - chore: fix space [`6d2030d`](https://github.com/cordejs/corde/commit/6d2030ded86c9420036d0ab2a333762933910fb4)
 
-## [v2.0.0-beta-25](https://github.com/cordejs/corde/compare/v2.0.0-beta-22...v2.0.0-beta-25) - 2021-01-19
+## [v2.0.0-beta-25](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta-25) - 2021-01-19
 
 ### 🚀 Features
 
@@ -829,7 +829,7 @@
 - chore: change logo color [`2f9e7aa`](https://github.com/cordejs/corde/commit/2f9e7aafcf05499f6070d2f79dd60fb959ddecf7)
 - chore: change logo [`cc5775b`](https://github.com/cordejs/corde/commit/cc5775b6a11c0f1c4182a16e8df366d30cd7b83c)
 
-## [v2.0.0-beta-22](https://github.com/cordejs/corde/compare/v2.0.0-beta-21...v2.0.0-beta-22) - 2020-11-08
+## [v2.0.0-beta-22](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta-22) - 2020-11-08
 
 ### 🐛 Bug Fixes
 
@@ -841,33 +841,33 @@
 - chore: add tests for pin message [`86aead7`](https://github.com/cordejs/corde/commit/86aead7181dd35b43ac4a5ef43d33c348eb14dff)
 - chore: fix tests [`2778552`](https://github.com/cordejs/corde/commit/2778552cb7dd2fc30718ab2c08f898f230e81aba)
 
-## [v2.0.0-beta-21](https://github.com/cordejs/corde/compare/v2.0.0-beta-20...v2.0.0-beta-21) - 2020-11-07
+## [v2.0.0-beta-21](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta-21) - 2020-11-07
 
 ### 💡 Miscelaneous
 
 - chore: upgrade prettier [`b3f0404`](https://github.com/cordejs/corde/commit/b3f0404d122bd0f928fbf079bcc23ec6f8d5df5e)
 
-## [v2.0.0-beta-20](https://github.com/cordejs/corde/compare/v2.0.0-beta-19...v2.0.0-beta-20) - 2020-11-07
+## [v2.0.0-beta-20](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta-20) - 2020-11-07
 
 ### 💡 Miscelaneous
 
 - chore: update versions [`70eae85`](https://github.com/cordejs/corde/commit/70eae85c9417c22d870621198b59fa4e56667526)
 
-## [v2.0.0-beta-19](https://github.com/cordejs/corde/compare/v2.0.0-beta-18...v2.0.0-beta-19) - 2020-11-07
+## [v2.0.0-beta-19](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta-19) - 2020-11-07
 
-## [v2.0.0-beta-18](https://github.com/cordejs/corde/compare/v2.0.0-beta-17...v2.0.0-beta-18) - 2020-11-07
+## [v2.0.0-beta-18](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta-18) - 2020-11-07
 
 ### 🐛 Bug Fixes
 
 - fix: exports [`20208e2`](https://github.com/cordejs/corde/commit/20208e2d9356d7378a439ae6f3b642d26e6d0ddf)
 
-## [v2.0.0-beta-17](https://github.com/cordejs/corde/compare/v2.0.0-beta-16...v2.0.0-beta-17) - 2020-11-07
+## [v2.0.0-beta-17](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta-17) - 2020-11-07
 
 ### 🐛 Bug Fixes
 
 - fix: change role definition and api export [`8ca59c3`](https://github.com/cordejs/corde/commit/8ca59c3b2a1af98d0ae1616abaa31b0a87e4d4ab)
 
-## [v2.0.0-beta-16](https://github.com/cordejs/corde/compare/v2.0.0-beta-15...v2.0.0-beta-16) - 2020-11-07
+## [v2.0.0-beta-16](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta-16) - 2020-11-07
 
 ### 🐛 Bug Fixes
 
@@ -882,26 +882,26 @@
 - chore: replace directly setTimeout to encapsulated function in Utils [`a1efec9`](https://github.com/cordejs/corde/commit/a1efec99772f6e459a4250e97889f422c2ed628d)
 - chore: add test for test function [`d9b944b`](https://github.com/cordejs/corde/commit/d9b944b9eba21bb1907768c1334567ac5dc21cb1)
 
-## [v2.0.0-beta-15](https://github.com/cordejs/corde/compare/v2.0.0-beta-14...v2.0.0-beta-15) - 2020-11-04
+## [v2.0.0-beta-15](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta-15) - 2020-11-04
 
-## [v2.0.0-beta-14](https://github.com/cordejs/corde/compare/v2.0.0-beta-13...v2.0.0-beta-14) - 2020-11-04
+## [v2.0.0-beta-14](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta-14) - 2020-11-04
 
 ### 🐛 Bug Fixes
 
 - fix: fix build and lib run [`55d503f`](https://github.com/cordejs/corde/commit/55d503f0eb3c2219be40eb0484458d7945b750f2)
 - fix: refresh ignore [`b6d3898`](https://github.com/cordejs/corde/commit/b6d389849ca6fe307b771adfb737dc61e1abf633)
 
-## [v2.0.0-beta-13](https://github.com/cordejs/corde/compare/v2.0.0-beta-12...v2.0.0-beta-13) - 2020-11-03
+## [v2.0.0-beta-13](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta-13) - 2020-11-03
 
-## [v2.0.0-beta-12](https://github.com/cordejs/corde/compare/v2.0.0-beta-11...v2.0.0-beta-12) - 2020-11-03
+## [v2.0.0-beta-12](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta-12) - 2020-11-03
 
 ### 🐛 Bug Fixes
 
 - fix: const of resolvePath [`cd905fd`](https://github.com/cordejs/corde/commit/cd905fdeb88fa6c61d985219e187a85e3704f82f)
 
-## [v2.0.0-beta-11](https://github.com/cordejs/corde/compare/v2.0.0-beta.28...v2.0.0-beta-11) - 2020-11-03
+## [v2.0.0-beta-11](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta-11) - 2020-11-03
 
-## [v2.0.0-beta.28](https://github.com/cordejs/corde/compare/v2.0.0-beta.27...v2.0.0-beta.28) - 2021-01-28
+## [v2.0.0-beta.28](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta.28) - 2021-01-28
 
 ### 🚀 Features
 
@@ -964,9 +964,9 @@
 - chore: change logo color [`2f9e7aa`](https://github.com/cordejs/corde/commit/2f9e7aafcf05499f6070d2f79dd60fb959ddecf7)
 - chore: change logo [`cc5775b`](https://github.com/cordejs/corde/commit/cc5775b6a11c0f1c4182a16e8df366d30cd7b83c)
 
-## [v2.0.0-beta.27](https://github.com/cordejs/corde/compare/v2.0.0-beta.26...v2.0.0-beta.27) - 2021-01-21
+## [v2.0.0-beta.27](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta.27) - 2021-01-21
 
-## [v2.0.0-beta.26](https://github.com/cordejs/corde/compare/v2.0.0-beta.25...v2.0.0-beta.26) - 2021-01-22
+## [v2.0.0-beta.26](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta.26) - 2021-01-22
 
 ### 🚀 Features
 
@@ -990,7 +990,7 @@
 - chore: excluse e2e from root tsconfig [`983dab6`](https://github.com/cordejs/corde/commit/983dab6499e3efb34e9acd1051c99c0409685eb7)
 - chore: fix space [`6d2030d`](https://github.com/cordejs/corde/commit/6d2030ded86c9420036d0ab2a333762933910fb4)
 
-## [v2.0.0-beta.25](https://github.com/cordejs/corde/compare/v2.0.0-beta.24...v2.0.0-beta.25) - 2021-01-19
+## [v2.0.0-beta.25](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta.25) - 2021-01-19
 
 ### 🚀 Features
 
@@ -1029,9 +1029,9 @@
 - chore: change logo color [`2f9e7aa`](https://github.com/cordejs/corde/commit/2f9e7aafcf05499f6070d2f79dd60fb959ddecf7)
 - chore: change logo [`cc5775b`](https://github.com/cordejs/corde/commit/cc5775b6a11c0f1c4182a16e8df366d30cd7b83c)
 
-## [v2.0.0-beta.24](https://github.com/cordejs/corde/compare/v2.0.0-beta.23...v2.0.0-beta.24) - 2021-01-18
+## [v2.0.0-beta.24](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta.24) - 2021-01-18
 
-## [v2.0.0-beta.23](https://github.com/cordejs/corde/compare/v2.0.0-beta.22...v2.0.0-beta.23) - 2021-01-18
+## [v2.0.0-beta.23](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta.23) - 2021-01-18
 
 ### 🚀 Features
 
@@ -1085,7 +1085,7 @@
 - chore: change logo [`cc5775b`](https://github.com/cordejs/corde/commit/cc5775b6a11c0f1c4182a16e8df366d30cd7b83c)
 - chore: update yarn [`42ad7c9`](https://github.com/cordejs/corde/commit/42ad7c97accea021233e1f85b53d3ff2c4132f60)
 
-## [v2.0.0-beta.22](https://github.com/cordejs/corde/compare/v2.0.0-beta.21...v2.0.0-beta.22) - 2020-11-08
+## [v2.0.0-beta.22](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta.22) - 2020-11-08
 
 ### 🐛 Bug Fixes
 
@@ -1097,7 +1097,7 @@
 - chore: add tests for pin message [`86aead7`](https://github.com/cordejs/corde/commit/86aead7181dd35b43ac4a5ef43d33c348eb14dff)
 - chore: fix tests [`2778552`](https://github.com/cordejs/corde/commit/2778552cb7dd2fc30718ab2c08f898f230e81aba)
 
-## [v2.0.0-beta.21](https://github.com/cordejs/corde/compare/v2.0.0-beta.17...v2.0.0-beta.21) - 2020-11-07
+## [v2.0.0-beta.21](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta.21) - 2020-11-07
 
 ### 🐛 Bug Fixes
 
@@ -1108,7 +1108,7 @@
 - chore: upgrade prettier [`b3f0404`](https://github.com/cordejs/corde/commit/b3f0404d122bd0f928fbf079bcc23ec6f8d5df5e)
 - chore: update versions [`70eae85`](https://github.com/cordejs/corde/commit/70eae85c9417c22d870621198b59fa4e56667526)
 
-## [v2.0.0-beta.17](https://github.com/cordejs/corde/compare/v2.0.0-beta.15...v2.0.0-beta.17) - 2020-11-07
+## [v2.0.0-beta.17](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta.17) - 2020-11-07
 
 ### 🐛 Bug Fixes
 
@@ -1124,29 +1124,29 @@
 - chore: replace directly setTimeout to encapsulated function in Utils [`a1efec9`](https://github.com/cordejs/corde/commit/a1efec99772f6e459a4250e97889f422c2ed628d)
 - chore: add test for test function [`d9b944b`](https://github.com/cordejs/corde/commit/d9b944b9eba21bb1907768c1334567ac5dc21cb1)
 
-## [v2.0.0-beta.15](https://github.com/cordejs/corde/compare/v2.0.0-beta.14...v2.0.0-beta.15) - 2020-11-04
+## [v2.0.0-beta.15](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta.15) - 2020-11-04
 
-## [v2.0.0-beta.14](https://github.com/cordejs/corde/compare/v2.0.0-beta.13...v2.0.0-beta.14) - 2020-11-04
+## [v2.0.0-beta.14](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta.14) - 2020-11-04
 
 ### 🐛 Bug Fixes
 
 - fix: refresh ignore [`b6d3898`](https://github.com/cordejs/corde/commit/b6d389849ca6fe307b771adfb737dc61e1abf633)
 
-## [v2.0.0-beta.13](https://github.com/cordejs/corde/compare/v2.0.0-beta.12...v2.0.0-beta.13) - 2020-11-04
+## [v2.0.0-beta.13](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta.13) - 2020-11-04
 
 ### 🐛 Bug Fixes
 
 - fix: fix build and lib run [`55d503f`](https://github.com/cordejs/corde/commit/55d503f0eb3c2219be40eb0484458d7945b750f2)
 
-## [v2.0.0-beta.12](https://github.com/cordejs/corde/compare/v2.0.0-beta.11...v2.0.0-beta.12) - 2020-11-03
+## [v2.0.0-beta.12](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta.12) - 2020-11-03
 
 ### 🐛 Bug Fixes
 
 - fix: const of resolvePath [`cd905fd`](https://github.com/cordejs/corde/commit/cd905fdeb88fa6c61d985219e187a85e3704f82f)
 
-## [v2.0.0-beta.11](https://github.com/cordejs/corde/compare/v2.0.0-beta.10...v2.0.0-beta.11) - 2020-11-03
+## [v2.0.0-beta.11](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta.11) - 2020-11-03
 
-## [v2.0.0-beta.10](https://github.com/cordejs/corde/compare/v2.0.0-beta.9...v2.0.0-beta.10) - 2020-11-02
+## [v2.0.0-beta.10](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta.10) - 2020-11-02
 
 ### 🐛 Bug Fixes
 
@@ -1158,13 +1158,13 @@
 - chore: update e2e version [`cf2aa05`](https://github.com/cordejs/corde/commit/cf2aa05ce48c2e1cb78ffd6ab542aee1c1140144)
 - chore: fix e2e test version [`c33533b`](https://github.com/cordejs/corde/commit/c33533b8ba7f0580c0bdd6343731cdc44a3f6315)
 
-## [v2.0.0-beta.9](https://github.com/cordejs/corde/compare/v2.0.0-beta.8...v2.0.0-beta.9) - 2020-11-02
+## [v2.0.0-beta.9](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta.9) - 2020-11-02
 
 ### 🐛 Bug Fixes
 
 - hotfix: fix types for package [`64c1661`](https://github.com/cordejs/corde/commit/64c1661fa7ee435f1b03cbe67528eb07fdf02559)
 
-## [v2.0.0-beta.8](https://github.com/cordejs/corde/compare/v2.0.0-beta.7...v2.0.0-beta.8) - 2020-11-02
+## [v2.0.0-beta.8](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta.8) - 2020-11-02
 
 ### 🚀 Features
 
@@ -1199,7 +1199,7 @@
 - chore: create discord server for support [`b944c93`](https://github.com/cordejs/corde/commit/b944c931e8aa2919f90189b901b0c3dc7c6ea276)
 - chore: fix word [`7150d7e`](https://github.com/cordejs/corde/commit/7150d7e1c4321016ffe24538245fd02197fe0607)
 
-## [v2.0.0-beta.7](https://github.com/cordejs/corde/compare/v2.0.0-beta.6...v2.0.0-beta.7) - 2020-10-21
+## [v2.0.0-beta.7](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta.7) - 2020-10-21
 
 ### 🐛 Bug Fixes
 
@@ -1209,17 +1209,17 @@
 
 - chore: update .lock [`d5ce56d`](https://github.com/cordejs/corde/commit/d5ce56db091e0089db689630356931e8a7c6ba6f)
 
-## [v2.0.0-beta.6](https://github.com/cordejs/corde/compare/v2.0.0-beta.5...v2.0.0-beta.6) - 2020-10-19
+## [v2.0.0-beta.6](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta.6) - 2020-10-19
 
 ### 🚀 Features
 
 - feat: add afterEach test function [`06e52e2`](https://github.com/cordejs/corde/commit/06e52e2e9709d7f14a481c2876382e5645b6a14a)
 
-## [v2.0.0-beta.5](https://github.com/cordejs/corde/compare/v2.0.0-beta.4...v2.0.0-beta.5) - 2020-10-19
+## [v2.0.0-beta.5](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta.5) - 2020-10-19
 
-## [v2.0.0-beta.4](https://github.com/cordejs/corde/compare/v2.0.0-beta.3...v2.0.0-beta.4) - 2020-09-19
+## [v2.0.0-beta.4](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta.4) - 2020-09-19
 
-## [v2.0.0-beta.3](https://github.com/cordejs/corde/compare/v2.0.0-beta.2...v2.0.0-beta.3) - 2020-09-19
+## [v2.0.0-beta.3](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta.3) - 2020-09-19
 
 ### 🐛 Bug Fixes
 
@@ -1229,14 +1229,14 @@
 
 - chore: remove flat-square badges [`ab4c4cb`](https://github.com/cordejs/corde/commit/ab4c4cb6f6c403b2131d8403f0a022eb3ace5dd2)
 
-## [v2.0.0-beta.2](https://github.com/cordejs/corde/compare/v2.0.0-beta.1...v2.0.0-beta.2) - 2020-09-14
+## [v2.0.0-beta.2](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta.2) - 2020-09-14
 
 ### 💡 Miscelaneous
 
 - chore: tests for delete role [`15060a9`](https://github.com/cordejs/corde/commit/15060a9b1740f7fb3d1b5bbee65685e6f0691284)
 - chore: create workaround for package.json importing in lib [`c92fa80`](https://github.com/cordejs/corde/commit/c92fa800701c08d748b91d4893b114011a51517a)
 
-## [v2.0.0-beta.1](https://github.com/cordejs/corde/compare/v2.0.0-beta.0...v2.0.0-beta.1) - 2020-09-07
+## [v2.0.0-beta.1](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta.1) - 2020-09-07
 
 ### 🚀 Features
 
@@ -1270,7 +1270,7 @@
 - chore: testing deploy script [`e4c85f9`](https://github.com/cordejs/corde/commit/e4c85f921d8e6b6982525dc70118c15f5642bb56)
 - chore: change logo size [`dd508a4`](https://github.com/cordejs/corde/commit/dd508a4c1340248377207de41fc2e1fbbf7142b0)
 
-## [v2.0.0-beta.0](https://github.com/cordejs/corde/compare/v1.0.2...v2.0.0-beta.0) - 2020-08-28
+## [v2.0.0-beta.0](https://github.com/cordejs/corde/releases/tag/v2.0.0-beta.0) - 2020-08-28
 
 ### 🚀 Features
 
@@ -1368,9 +1368,9 @@
 
 - chore(deps): bump figlet from 1.4.0 to 1.5.0 [`fa85c59`](https://github.com/cordejs/corde/commit/fa85c59352d49c62c0f662801935c4465737f455)
 
-## [v1.0.2](https://github.com/cordejs/corde/compare/v1.0.1...v1.0.2) - 2020-07-12
+## [v1.0.2](https://github.com/cordejs/corde/releases/tag/v1.0.2) - 2020-07-12
 
-## [v1.0.1](https://github.com/cordejs/corde/compare/v1.0.0...v1.0.1) - 2020-07-06
+## [v1.0.1](https://github.com/cordejs/corde/releases/tag/v1.0.1) - 2020-07-06
 
 ### 🐛 Bug Fixes
 
@@ -1386,7 +1386,7 @@
 
 - chore(deps): bump rxjs from 6.5.5 to 6.6.0 [`1760503`](https://github.com/cordejs/corde/commit/17605034a934922ce14d3f3f077e5af6db418ec6)
 
-## [v1.0.0](https://github.com/cordejs/corde/compare/v0.2.4...v1.0.0) - 2020-07-05
+## [v1.0.0](https://github.com/cordejs/corde/releases/tag/v1.0.0) - 2020-07-05
 
 ### 🚀 Features
 
@@ -1455,7 +1455,7 @@
 
 - chore(deps): bump rxjs from 6.5.5 to 6.6.0 [`4ee92f3`](https://github.com/cordejs/corde/commit/4ee92f384be838358e36d1007bacd00e42a32dc4)
 
-## [v0.2.4](https://github.com/cordejs/corde/compare/v0.2.3...v0.2.4) - 2020-06-14
+## [v0.2.4](https://github.com/cordejs/corde/releases/tag/v0.2.4) - 2020-06-14
 
 ### 🐛 Bug Fixes
 
@@ -1465,9 +1465,9 @@
 
 - chore(deps): bump chalk from 4.0.0 to 4.1.0 [`3ced732`](https://github.com/cordejs/corde/commit/3ced73280a7ec3fd4225a0beaaf0791d26c31cff)
 
-## [v0.2.3](https://github.com/cordejs/corde/compare/v0.2.2...v0.2.3) - 2020-06-07
+## [v0.2.3](https://github.com/cordejs/corde/releases/tag/v0.2.3) - 2020-06-07
 
-## [v0.2.2](https://github.com/cordejs/corde/compare/v0.2.1...v0.2.2) - 2020-06-07
+## [v0.2.2](https://github.com/cordejs/corde/releases/tag/v0.2.2) - 2020-06-07
 
 ### 🚀 Features
 
@@ -1487,9 +1487,9 @@
 - chore: remove tests mocks from jest tests runner [`94f81ba`](https://github.com/cordejs/corde/commit/94f81ba24201d902e4501d19cd7a85f6ab10a9f0)
 - chore: remove github registry [`64a899e`](https://github.com/cordejs/corde/commit/64a899e7f4d5c3f42f51d828786ee281a2c96fa9)
 
-## [v0.2.1](https://github.com/cordejs/corde/compare/v0.2.0...v0.2.1) - 2020-06-02
+## [v0.2.1](https://github.com/cordejs/corde/releases/tag/v0.2.1) - 2020-06-02
 
-## [v0.2.0](https://github.com/cordejs/corde/compare/v0.1.0...v0.2.0) - 2020-06-02
+## [v0.2.0](https://github.com/cordejs/corde/releases/tag/v0.2.0) - 2020-06-02
 
 ### 🚀 Features
 
@@ -1530,7 +1530,7 @@
 - chore: testing go to [`fe6fa02`](https://github.com/cordejs/corde/commit/fe6fa02f60ef17f27866b80f7c8a8a9e664b95a1)
 - chore: change description [`6f649c8`](https://github.com/cordejs/corde/commit/6f649c8496200f911609f12a6c59dd66048a505c)
 
-## [v0.1.0](https://github.com/cordejs/corde/compare/0.1.0-beta.1...v0.1.0) - 2020-05-16
+## [v0.1.0](https://github.com/cordejs/corde/releases/tag/v0.1.0) - 2020-05-16
 
 ### 🚀 Features
 
@@ -1575,7 +1575,7 @@
 - chore: remove pnpify dependencie [`50c6118`](https://github.com/cordejs/corde/commit/50c6118cefd6246d0c0c1315cb69390413b7d20b)
 - chore: logo [`babf6a4`](https://github.com/cordejs/corde/commit/babf6a4a30301869422298429ecb2c91e470be9e)
 
-## [0.1.0-beta.1](https://github.com/cordejs/corde/compare/v0.1.0-beta.0...0.1.0-beta.1) - 2020-04-20
+## [0.1.0-beta.1](https://github.com/cordejs/corde/releases/tag/0.1.0-beta.1) - 2020-04-20
 
 ### 🚀 Features
 
@@ -1656,10 +1656,10 @@
 - chore(deps): bump @types/shelljs from 0.8.5 to 0.8.6 [`34838f9`](https://github.com/cordejs/corde/commit/34838f98051500532cf249859d98ecffdd30c7fc)
 - chore(deps): bump chalk from 2.4.2 to 3.0.0 [`87db50a`](https://github.com/cordejs/corde/commit/87db50a51bfd78581b714081b9878a91bcff0394)
 
-## [v0.1.0-beta.0](https://github.com/cordejs/corde/compare/v0.1.0-alpha.1...v0.1.0-beta.0) - 2019-09-08
+## [v0.1.0-beta.0](https://github.com/cordejs/corde/releases/tag/v0.1.0-beta.0) - 2019-09-08
 
-## [v0.1.0-alpha.1](https://github.com/cordejs/corde/compare/v0.1.0-alpha.0...v0.1.0-alpha.1) - 2019-08-25
+## [v0.1.0-alpha.1](https://github.com/cordejs/corde/releases/tag/v0.1.0-alpha.1) - 2019-08-25
 
-## [v0.1.0-alpha.0](https://github.com/cordejs/corde/compare/v0.1.0-alpha...v0.1.0-alpha.0) - 2019-08-24
+## [v0.1.0-alpha.0](https://github.com/cordejs/corde/releases/tag/v0.1.0-alpha.0) - 2019-08-24
 
 ## v0.1.0-alpha - 2019-08-24
