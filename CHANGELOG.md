@@ -1,6 +1,10 @@
 ### Changelog
 
-## [Unreleased](https://github.com/cordejs/corde/compare/v4.2.0...HEAD)
+## [v4.3.0](https://github.com/cordejs/corde/compare/v4.2.0...v4.3.0) - 2021-07-24
+
+### 💣 Breaking changes
+
+- feat: upgrade node engine to 14 [`75b0b6d`](https://github.com/cordejs/corde/commit/75b0b6d9b61eb86d64eccc6ade70551dad65228a)
 
 ### 🚀 Features
 
@@ -19,7 +23,7 @@
 - fix: adjust typescript usage [`553d5f2`](https://github.com/cordejs/corde/commit/553d5f2b5a028bd5bf1eacfe25330559b00a0cec)
 - fix: remove and adjust imports [`f040e98`](https://github.com/cordejs/corde/commit/f040e9801e28223e10f83ca84174cf748f9d82a0)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: attempt of using ts-jest compiler [`4fd285f`](https://github.com/cordejs/corde/commit/4fd285fb0655a686f27f9b95758d54ad779e5e26)
 - chore: remove all encapsulation of discord.js structures [`3a5c0e1`](https://github.com/cordejs/corde/commit/3a5c0e1248f22232b6641fb58da82b286c0bc279)
@@ -27,12 +31,14 @@
 - chore: add some structures (without testing them yet) [`f6d6b13`](https://github.com/cordejs/corde/commit/f6d6b138dc552626d934a37430d78656a6e8cca6)
 - chore: splited types of project [`e41f3f5`](https://github.com/cordejs/corde/commit/e41f3f5850325c01db1d63b3e5097378bc35e546)
 - chore: update some structures [`d5ef0b1`](https://github.com/cordejs/corde/commit/d5ef0b12aa12c69bf9a78bf8c0fe3cec42a76132)
+- chore: add commitlint to husky hook and fixed some documentation in CONTRIBUTING [`9b97a28`](https://github.com/cordejs/corde/commit/9b97a28dd93b5102d3f24bc0a93c1416cb85ffef)
 - chore: add `deepFreeze` function to be used in `snapshots` [`b4c4c1b`](https://github.com/cordejs/corde/commit/b4c4c1beba3d60b2c0bf86936819359c92e6f7b8)
 - chore: remove tests files [`56500e4`](https://github.com/cordejs/corde/commit/56500e459cad6d15cbbbd1b4aefbafbdf777c1a0)
 - chore: update dependencies [`b0d5723`](https://github.com/cordejs/corde/commit/b0d5723710c7dafb48bd45fadffa5470562566e2)
 - chore: fixed generator and add releaseTemplate file to prettier ignore [`680a547`](https://github.com/cordejs/corde/commit/680a547bd3f28335ad6095a79440630b28517113)
 - chore: rename nomeclature [`52a93f6`](https://github.com/cordejs/corde/commit/52a93f6cfab11bcf8faa84ca298f537317448d0f)
 - chore: add replaceAll function [`7cbb93b`](https://github.com/cordejs/corde/commit/7cbb93bd6551fe1f3fc32cadd2fe0e82c854e522)
+- chore: fixed manual tests execution [`7060284`](https://github.com/cordejs/corde/commit/7060284aa3dec9ea0c793aa67be374253605754d)
 - chore: remove unused dependencies [`58fa6b2`](https://github.com/cordejs/corde/commit/58fa6b2b90de1ad0127e63227b15b4009f09142c)
 - chore: remove unused configuration definitions [`a234922`](https://github.com/cordejs/corde/commit/a234922ea8a01efc6b333f976e5d4ea5ce29559d)
 - chore: remove broken test and add .nvm file [`db4ff38`](https://github.com/cordejs/corde/commit/db4ff38effb90b0dbb086ace9dbe8fd465fb4244)
@@ -40,7 +46,7 @@
 
 ## [v4.2.0](https://github.com/cordejs/corde/compare/v4.1.2...v4.2.0) - 2021-06-27
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: update changelog for v4.1.2 [`d5b2b40`](https://github.com/cordejs/corde/commit/d5b2b406eaad8dd324ad0a27db00accaab2bf4e7)
 - chore: update CHANGELOG [`f2ca0ec`](https://github.com/cordejs/corde/commit/f2ca0ecb0d7ddd0db906908c806e790ca24f6c73)
@@ -52,13 +58,13 @@
 
 - fix: set `config.testMatches` value as empty array if tries to set invalid value to it (null, object etc) [`844797e`](https://github.com/cordejs/corde/commit/844797eb334c852d7ddacf1de25795a919834506)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: fix typo [`0c6bc8a`](https://github.com/cordejs/corde/commit/0c6bc8a2f10a3d2790b2ea6de228cd84cfb7307e)
 
 ## [v4.1.1](https://github.com/cordejs/corde/compare/v4.1.0...v4.1.1) - 2021-06-12
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: migrate all code that validade configs to `exec` command [`55a18f3`](https://github.com/cordejs/corde/commit/55a18f3d06e56ce8d67d5aee8b127fa2c42dd3c9)
 - chore: enhanced login error message [`57cda99`](https://github.com/cordejs/corde/commit/57cda99a067fda6e9fbd9f929e44632b8d8b199d)
@@ -72,7 +78,7 @@
 
 - fix: correct search in embedMatch tests [`2a06a23`](https://github.com/cordejs/corde/commit/2a06a2386a493a5ba61a33efb1079503258a5deb)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: increase coverage [`f8f39f9`](https://github.com/cordejs/corde/commit/f8f39f9071f5241ed23d8b0a42b552f64fb63764)
 - chore: add tests for utils [`862e2e4`](https://github.com/cordejs/corde/commit/862e2e41fefe5b217824b70b0b8d58bb28c40ce0)
@@ -97,7 +103,7 @@
 - fix: resolve jest-diff import [`92f5ac1`](https://github.com/cordejs/corde/commit/92f5ac1f5c962c980c52ebf965fc326510c5653e)
 - fix: babel transform [`cc8937c`](https://github.com/cordejs/corde/commit/cc8937c242f247d1ddbbc468de7c23ad6d787e49)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: add tests to toMessageContentContains [`b647a29`](https://github.com/cordejs/corde/commit/b647a29b79a457b7e78f9f67fcb7987163151819)
 - chore: rename property with sufix `like` to `simple` [`8dde169`](https://github.com/cordejs/corde/commit/8dde169638c22062250d4e9a5b34aaa4086bbe1f)
@@ -121,7 +127,7 @@
 - fix: add spacement in tags FAIL and PASS to align with EMPTY [`b6df8c0`](https://github.com/cordejs/corde/commit/b6df8c0e141315f24fc04569fe052dceee18128e)
 - fix: logger print [`1bf083b`](https://github.com/cordejs/corde/commit/1bf083b02f1d36036ddd8f9819c495834d8d2b68)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: fix tests [`9c079d4`](https://github.com/cordejs/corde/commit/9c079d40d84438d89f94207516887f424d838845)
 - chore: check LF format [`b5be72e`](https://github.com/cordejs/corde/commit/b5be72ea0c4d50c9a7f7dd1f5822023c1b70af51)
@@ -161,7 +167,7 @@
 - fix: adjuste nomeclature [`62ab166`](https://github.com/cordejs/corde/commit/62ab166636f5c10674bc6ff664311867b538ab4f)
 - fix: fix profile check [`c24e9f6`](https://github.com/cordejs/corde/commit/c24e9f6994d09c46e92109e6678cd442c19b7d23)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: organized examples [`18ad00f`](https://github.com/cordejs/corde/commit/18ad00fe5ced7e0d19787d059aa9fac16cf9347d)
 - chore: fix migrations and backup of database [`cc8e40a`](https://github.com/cordejs/corde/commit/cc8e40aeb581cc46b5f13131066966f3a3618ef1)
@@ -195,7 +201,7 @@
 - fix: adjuste nomeclature [`62ab166`](https://github.com/cordejs/corde/commit/62ab166636f5c10674bc6ff664311867b538ab4f)
 - fix: fix profile check [`c24e9f6`](https://github.com/cordejs/corde/commit/c24e9f6994d09c46e92109e6678cd442c19b7d23)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: organized examples [`18ad00f`](https://github.com/cordejs/corde/commit/18ad00fe5ced7e0d19787d059aa9fac16cf9347d)
 - chore: fix migrations and backup of database [`cc8e40a`](https://github.com/cordejs/corde/commit/cc8e40aeb581cc46b5f13131066966f3a3618ef1)
@@ -209,7 +215,7 @@
 
 ## [v4.0.5](https://github.com/cordejs/corde/compare/v4.0.4...v4.0.5) - 2021-05-26
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: update changelod for v4.0.5 [`46ed7a9`](https://github.com/cordejs/corde/commit/46ed7a9c4dc4aeaad60e80aff164ab198e69654d)
 - chore: fix script [`7e3ef86`](https://github.com/cordejs/corde/commit/7e3ef864bc3ca657ae143410333cbeaf86bb6a9d)
@@ -217,7 +223,7 @@
 
 ## [v4.0.4](https://github.com/cordejs/corde/compare/v4.0.3...v4.0.4) - 2021-05-23
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: fix tests patterns in site [`8ac9042`](https://github.com/cordejs/corde/commit/8ac9042f0a0ca946bd3af71977aee030dc976d45)
 - chore: changelod for 4.0.4 [`d1cd1f7`](https://github.com/cordejs/corde/commit/d1cd1f741d4204d3a258f6124da1a9cface6a058)
@@ -230,14 +236,14 @@
 - fix: adjust tests reading following a pattern [`2ec5566`](https://github.com/cordejs/corde/commit/2ec556630d0b1d57299313be210c96d69ddcdbed)
 - fix: add spacement in tags FAIL and PASS to align with EMPTY [`b6df8c0`](https://github.com/cordejs/corde/commit/b6df8c0e141315f24fc04569fe052dceee18128e)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: update changelog [`e74f436`](https://github.com/cordejs/corde/commit/e74f4366054b5272208badd95afe418f8880c7bd)
 - chore: add async statement in README for `loginBot` function [`9c77725`](https://github.com/cordejs/corde/commit/9c777257025f1d9816af13cd666108b3fb817485)
 
 ## [v4.0.2](https://github.com/cordejs/corde/compare/v4.0.1...v4.0.2) - 2021-05-20
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: check LF format [`b5be72e`](https://github.com/cordejs/corde/commit/b5be72ea0c4d50c9a7f7dd1f5822023c1b70af51)
 - chore: add docs for v4.0.2 [`7bd5d5a`](https://github.com/cordejs/corde/commit/7bd5d5ad72c9c07fb1b49b86e102accec7970f24)
@@ -247,7 +253,7 @@
 
 ## [v4.0.1](https://github.com/cordejs/corde/compare/v4.0.0...v4.0.1) - 2021-05-18
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: update CHANGELOG for version 4.0.1 [`7c9c819`](https://github.com/cordejs/corde/commit/7c9c819c22e63dd0c835bfa664958aa09397b1dd)
 
@@ -257,7 +263,7 @@
 
 - feat: add v4 of corde [`e0aa8cf`](https://github.com/cordejs/corde/commit/e0aa8cf80f3b3dfbec989d2740a2be3b60932879)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: enhance tests for message sending failure in tests [`6cb7b5d`](https://github.com/cordejs/corde/commit/6cb7b5d953e6ebbca5e12a174c73412a12e15838)
 - chore: update CHANGELOG [`2de51c1`](https://github.com/cordejs/corde/commit/2de51c1df0d3b738a0b16636263d8c9fd68d038a)
@@ -277,7 +283,7 @@
 - feat: add jsonSchema for corde configuration [`5ad253d`](https://github.com/cordejs/corde/commit/5ad253d5a6f14815b54bac8b8990207994b6626b)
 - feat: type corde config from init command [`c74b18c`](https://github.com/cordejs/corde/commit/c74b18cdd569dc80d2d95d8d72b875dd5c131bfa)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: fix spell of testMatch to testMatches [`f2262e4`](https://github.com/cordejs/corde/commit/f2262e41a271903e6c352dff60f3b65e86015f51)
 - chore: add documentation for debug with corde [`07707e5`](https://github.com/cordejs/corde/commit/07707e59c1fa7cb92cdc43868e4af859d3ef475a)
@@ -288,7 +294,7 @@
 
 ## [v3.1.5](https://github.com/cordejs/corde/compare/v3.1.5-beta.1...v3.1.5) - 2021-05-14
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: update CHANGELOG [`2de51c1`](https://github.com/cordejs/corde/commit/2de51c1df0d3b738a0b16636263d8c9fd68d038a)
 - chore: back dependencies update [`bb333ba`](https://github.com/cordejs/corde/commit/bb333ba6797d3e17e6ab79cf60792ba7b49b7dda)
@@ -299,7 +305,7 @@
 
 - feat: add debug script for bot example and disable timeout in debug mode [`862692b`](https://github.com/cordejs/corde/commit/862692bdce7e033acaae20f06739aa3005e90b1e)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: add error handler in cli [`0c08033`](https://github.com/cordejs/corde/commit/0c0803395b40f0f8e9e2bf47843d24b9455fe460)
 - chore: disable eslint for example bot [`92e112c`](https://github.com/cordejs/corde/commit/92e112c27f510331516c28ec5f06d5bf520f223f)
@@ -308,7 +314,7 @@
 
 ## [v3.1.3](https://github.com/cordejs/corde/compare/v3.1.2...v3.1.3) - 2021-04-26
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: rename from lucasgmagalhaes to cordejs in paths to repo [`baedc78`](https://github.com/cordejs/corde/commit/baedc7824e0488587e48352d0d06c002ebfb64c1)
 - chore: update licence year reference [`07cc5b1`](https://github.com/cordejs/corde/commit/07cc5b16e42a46cfbf355ae5ea3731290ace7e1a)
@@ -320,7 +326,7 @@
 - fix: add gulp script [`41365d7`](https://github.com/cordejs/corde/commit/41365d77eeb79b9381c061bc8cc4f79cd4405786)
 - fix: adjust new line ending [`2b2f1f6`](https://github.com/cordejs/corde/commit/2b2f1f65411638a64ce15cc566ebf6dfc1647fa7)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: change new line format to lf in some files using wsl [`b3ea14f`](https://github.com/cordejs/corde/commit/b3ea14fb7decf7179afab3a569621e2ea4655ae5)
 - chore: change format of LICENCE to lf [`acd4b57`](https://github.com/cordejs/corde/commit/acd4b57f8f0a54a3deb48a3effaa47e34212ed67)
@@ -340,7 +346,7 @@
 - fix: implementation of toRenameRole [`c831d2c`](https://github.com/cordejs/corde/commit/c831d2ccd59f8a1b7fc8f81d7fee7ecd4cee47ec)
 - fix: make tests check only in channel defined in configs(#619) [`336a963`](https://github.com/cordejs/corde/commit/336a96342e413c167324ba2509f97bccc9c014fb)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: add more tests for inGuild and inChannel [`19f2abd`](https://github.com/cordejs/corde/commit/19f2abd4867c55e14c552a8081e3fbcdbc034020)
 - chore: removed toReturnInChannel [`e466651`](https://github.com/cordejs/corde/commit/e46665111f7a69aebfca8b194327501e1b31b594)
@@ -368,7 +374,7 @@
 - fix: remove usage of ChannelLocation [`309b188`](https://github.com/cordejs/corde/commit/309b188b45ebbf62f80344ca9be831be49376510)
 - fix: change constructor of matchers in tests [`3212aed`](https://github.com/cordejs/corde/commit/3212aed706cfdc385a1dacc1157fcf8054639a79)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: fix clausure word to closure [`2503989`](https://github.com/cordejs/corde/commit/25039894796438a96c8655d6af516598b8ef69fa)
 - chore: add toString functions to match classes [`0c8a8f0`](https://github.com/cordejs/corde/commit/0c8a8f05b6612f721d7a035f82fd572aa85bda7b)
@@ -387,7 +393,7 @@
 
 - fix: remade some tests that were breaking the pipeline [`f2068da`](https://github.com/cordejs/corde/commit/f2068da516a54e6188b021b90286c570daa2827b)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: update docs [`33de8a6`](https://github.com/cordejs/corde/commit/33de8a6660c465a5623169a995385f5f49416d07)
 - chore: fix lint [`1ed2698`](https://github.com/cordejs/corde/commit/1ed26988a38b659bd2123d34100e251a9e55b762)
@@ -438,7 +444,7 @@
 - fix: corde config is initialized as corde.config._ instead of corde._ [`a3c8732`](https://github.com/cordejs/corde/commit/a3c873248945d05363d355975d83eb8189e55952)
 - fix: jest forcing e2e tests to finish [`f4cf36b`](https://github.com/cordejs/corde/commit/f4cf36bec86320486a25b67a0314ea18135c0479)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: remove tash bash file and add utility files [`50e6d01`](https://github.com/cordejs/corde/commit/50e6d01c8cae7dcf09f17a96d2125572aac683d2)
 - chore: moved location of discord types add enhanced discord js structures [`fb94da6`](https://github.com/cordejs/corde/commit/fb94da6efd4e50b20fb2a37ee52a5d9108bb9553)
@@ -545,7 +551,7 @@
 - fix: corde config is initialized as corde.config._ instead of corde._ [`a3c8732`](https://github.com/cordejs/corde/commit/a3c873248945d05363d355975d83eb8189e55952)
 - fix: jest forcing e2e tests to finish [`f4cf36b`](https://github.com/cordejs/corde/commit/f4cf36bec86320486a25b67a0314ea18135c0479)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: remove tash bash file and add utility files [`50e6d01`](https://github.com/cordejs/corde/commit/50e6d01c8cae7dcf09f17a96d2125572aac683d2)
 - chore: moved location of discord types add enhanced discord js structures [`fb94da6`](https://github.com/cordejs/corde/commit/fb94da6efd4e50b20fb2a37ee52a5d9108bb9553)
@@ -611,13 +617,13 @@
 
 - fix: handle of version in list of version of the site [`a9a5a60`](https://github.com/cordejs/corde/commit/a9a5a60710da000dfaabe7a13b83d702aa842cbc)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: update browser list [`1bbfad5`](https://github.com/cordejs/corde/commit/1bbfad51f7c8c674e371b2a5d9000fa40ba9e4b8)
 
 ## [v2.0.4](https://github.com/cordejs/corde/compare/v2.0.3...v2.0.4) - 2021-03-25
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: remove docker reference [`57e1141`](https://github.com/cordejs/corde/commit/57e1141d47029a71856ecbe6b47cc7643bd360c1)
 - chore: update homepage on package.json [`f731973`](https://github.com/cordejs/corde/commit/f7319733aac91650556fd61f16677f6803e9df8e)
@@ -641,7 +647,7 @@
 - fix: do not wait for sending message, but for update in a role [`0cf3bce`](https://github.com/cordejs/corde/commit/0cf3bceb0b976f748487933c98f3de908d576844)
 - fix: change e2e command in pipeline [`2d08fca`](https://github.com/cordejs/corde/commit/2d08fcac48656995161213f66e1bf63a80c1c7ec)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: reestructured project [`2df5f9a`](https://github.com/cordejs/corde/commit/2df5f9a421b87b5a36ef90b65e66b0047191501d)
 - chore: change e2e execution process [`50398b1`](https://github.com/cordejs/corde/commit/50398b1d73984d6293a7abb2d429de21935c087e)
@@ -688,7 +694,7 @@
 
 ## [v2.0.1](https://github.com/cordejs/corde/compare/v2.0.0...v2.0.1) - 2021-02-01
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: fix image sizes [`13add8f`](https://github.com/cordejs/corde/commit/13add8fea567d0833d3bd73e1364e247aff55142)
 
@@ -701,7 +707,7 @@
 - feat: allow toReturn to receive primitive types [`0b39577`](https://github.com/cordejs/corde/commit/0b395772d89659be300bf2e045aa1cf9965abd62)
 - feat: list permission to export of lib [`7520b14`](https://github.com/cordejs/corde/commit/7520b144a30f7a4f57ac292bb733518575f5ad46)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: add versioning [`daa3d75`](https://github.com/cordejs/corde/commit/daa3d75559d38734e705445f1423b648b3fb541f)
 - chore: remove example folder [`f4fb848`](https://github.com/cordejs/corde/commit/f4fb848b4a1a7b2857c841980c0ec73cbd21a1ed)
@@ -724,7 +730,7 @@
 
 - feat: add tests for toSetRolePermission [`e4dafb7`](https://github.com/cordejs/corde/commit/e4dafb7a150884d31edaa667b187ec518cfb926a)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: add tests for toSetRolePosition and add wait in this expect function [`c79927a`](https://github.com/cordejs/corde/commit/c79927acb7c44bcb18a079ca6ee3881a28ff40e1)
 - chore: add script to format transpiled code [`2b30e83`](https://github.com/cordejs/corde/commit/2b30e83872319cb7ee3f706c95db55d9ec883034)
@@ -735,7 +741,7 @@
 
 - feat: add e2e tests for toSetRoleHoist [`9cbf17a`](https://github.com/cordejs/corde/commit/9cbf17a6522fa9e197022bf19c668664a845e1da)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: add tests for toSetRoleColor [`abb9569`](https://github.com/cordejs/corde/commit/abb9569c07a5a3e64b8561510334d13fea5247d0)
 - chore: tentative to improve circle ci config [`5fa91a0`](https://github.com/cordejs/corde/commit/5fa91a0fe430f796394216f4502030842b3167a4)
@@ -755,7 +761,7 @@
 
 - fix: beforeStart tests execution [`3967a38`](https://github.com/cordejs/corde/commit/3967a387173a2ca97f479f2c3f453aa6885ed9e7)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: remove typescript example due to typecheck exceptions [`45b12a2`](https://github.com/cordejs/corde/commit/45b12a2ba8c80e00567d37beefe8fec8155dd2a7)
 - chore: increase e2e tests timeout and add tests for toEditMessage [`f49c50a`](https://github.com/cordejs/corde/commit/f49c50ada7eb8d1495df2b27feeb9dddf1258e88)
@@ -787,7 +793,7 @@
 - fix: corde accepts experimental modules [`24df711`](https://github.com/cordejs/corde/commit/24df711fb5cc30e0e6153af6023597a449919b6e)
 - fix: erro throw [`1d68724`](https://github.com/cordejs/corde/commit/1d68724bf6a26e2268e9b26446f61c795d9f2dac)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: add tests and fix execution of roup and test functions [`bef955b`](https://github.com/cordejs/corde/commit/bef955b0b6c6e772f3d9135fc4a0ccd98a86484c)
 - chore: update yarn.lock [`17b63bc`](https://github.com/cordejs/corde/commit/17b63bc843385c4fb8e4978020bdf78dd46f72cf)
@@ -830,20 +836,20 @@
 - fix: tests [`9b5d9f5`](https://github.com/cordejs/corde/commit/9b5d9f5b8d83d0cfd2e611a331617fb6344f1b4c)
 - fix: color resolvable [`aea6b5f`](https://github.com/cordejs/corde/commit/aea6b5f8f36bb371515bc49653953e9b8f858eeb)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: add tests for pin message [`86aead7`](https://github.com/cordejs/corde/commit/86aead7181dd35b43ac4a5ef43d33c348eb14dff)
 - chore: fix tests [`2778552`](https://github.com/cordejs/corde/commit/2778552cb7dd2fc30718ab2c08f898f230e81aba)
 
 ## [v2.0.0-beta-21](https://github.com/cordejs/corde/compare/v2.0.0-beta-20...v2.0.0-beta-21) - 2020-11-07
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: upgrade prettier [`b3f0404`](https://github.com/cordejs/corde/commit/b3f0404d122bd0f928fbf079bcc23ec6f8d5df5e)
 
 ## [v2.0.0-beta-20](https://github.com/cordejs/corde/compare/v2.0.0-beta-19...v2.0.0-beta-20) - 2020-11-07
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: update versions [`70eae85`](https://github.com/cordejs/corde/commit/70eae85c9417c22d870621198b59fa4e56667526)
 
@@ -871,7 +877,7 @@
 - fix: update for roleName [`e59f55b`](https://github.com/cordejs/corde/commit/e59f55bf3259f78358cc3f8dd1298ef873bc33e3)
 - fix: duplication of tests functions [`08f817c`](https://github.com/cordejs/corde/commit/08f817c67510ec97e600b53670e385901e8d3616)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: replace directly setTimeout to encapsulated function in Utils [`a1efec9`](https://github.com/cordejs/corde/commit/a1efec99772f6e459a4250e97889f422c2ed628d)
 - chore: add test for test function [`d9b944b`](https://github.com/cordejs/corde/commit/d9b944b9eba21bb1907768c1334567ac5dc21cb1)
@@ -914,7 +920,7 @@
 - fix: non execution of bot commands in afterAll function [`7ced18a`](https://github.com/cordejs/corde/commit/7ced18a0c6c6d977cca5a06624ffa21a6390c1d7)
 - fix: corde accepts experimental modules [`24df711`](https://github.com/cordejs/corde/commit/24df711fb5cc30e0e6153af6023597a449919b6e)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: remove typescript example due to typecheck exceptions [`45b12a2`](https://github.com/cordejs/corde/commit/45b12a2ba8c80e00567d37beefe8fec8155dd2a7)
 - chore: add tests and fix execution of roup and test functions [`bef955b`](https://github.com/cordejs/corde/commit/bef955b0b6c6e772f3d9135fc4a0ccd98a86484c)
@@ -970,7 +976,7 @@
 
 - fix: beforeStart tests execution [`3967a38`](https://github.com/cordejs/corde/commit/3967a387173a2ca97f479f2c3f453aa6885ed9e7)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: remove typescript example due to typecheck exceptions [`45b12a2`](https://github.com/cordejs/corde/commit/45b12a2ba8c80e00567d37beefe8fec8155dd2a7)
 - chore: increase e2e tests timeout and add tests for toEditMessage [`f49c50a`](https://github.com/cordejs/corde/commit/f49c50ada7eb8d1495df2b27feeb9dddf1258e88)
@@ -999,7 +1005,7 @@
 - fix: corde accepts experimental modules [`24df711`](https://github.com/cordejs/corde/commit/24df711fb5cc30e0e6153af6023597a449919b6e)
 - fix: non execution of bot commands in afterAll function [`7ced18a`](https://github.com/cordejs/corde/commit/7ced18a0c6c6d977cca5a06624ffa21a6390c1d7)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: add tests and fix execution of roup and test functions [`bef955b`](https://github.com/cordejs/corde/commit/bef955b0b6c6e772f3d9135fc4a0ccd98a86484c)
 - chore: update yarn.lock [`17b63bc`](https://github.com/cordejs/corde/commit/17b63bc843385c4fb8e4978020bdf78dd46f72cf)
@@ -1043,7 +1049,7 @@
 - fix: non execution of bot commands in afterAll function [`7ced18a`](https://github.com/cordejs/corde/commit/7ced18a0c6c6d977cca5a06624ffa21a6390c1d7)
 - fix: erro throw [`1d68724`](https://github.com/cordejs/corde/commit/1d68724bf6a26e2268e9b26446f61c795d9f2dac)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: upgrade jest version to 26.6.3 and restore dependabot [`59373b5`](https://github.com/cordejs/corde/commit/59373b5dd9be9684685d72f76ed90612b6125600)
 - chore: add tests and fix execution of roup and test functions [`bef955b`](https://github.com/cordejs/corde/commit/bef955b0b6c6e772f3d9135fc4a0ccd98a86484c)
@@ -1086,7 +1092,7 @@
 - fix: tests [`9b5d9f5`](https://github.com/cordejs/corde/commit/9b5d9f5b8d83d0cfd2e611a331617fb6344f1b4c)
 - fix: color resolvable [`aea6b5f`](https://github.com/cordejs/corde/commit/aea6b5f8f36bb371515bc49653953e9b8f858eeb)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: add tests for pin message [`86aead7`](https://github.com/cordejs/corde/commit/86aead7181dd35b43ac4a5ef43d33c348eb14dff)
 - chore: fix tests [`2778552`](https://github.com/cordejs/corde/commit/2778552cb7dd2fc30718ab2c08f898f230e81aba)
@@ -1097,7 +1103,7 @@
 
 - fix: exports [`20208e2`](https://github.com/cordejs/corde/commit/20208e2d9356d7378a439ae6f3b642d26e6d0ddf)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: upgrade prettier [`b3f0404`](https://github.com/cordejs/corde/commit/b3f0404d122bd0f928fbf079bcc23ec6f8d5df5e)
 - chore: update versions [`70eae85`](https://github.com/cordejs/corde/commit/70eae85c9417c22d870621198b59fa4e56667526)
@@ -1113,7 +1119,7 @@
 - fix: update for roleName [`e59f55b`](https://github.com/cordejs/corde/commit/e59f55bf3259f78358cc3f8dd1298ef873bc33e3)
 - fix: duplication of tests functions [`08f817c`](https://github.com/cordejs/corde/commit/08f817c67510ec97e600b53670e385901e8d3616)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: replace directly setTimeout to encapsulated function in Utils [`a1efec9`](https://github.com/cordejs/corde/commit/a1efec99772f6e459a4250e97889f422c2ed628d)
 - chore: add test for test function [`d9b944b`](https://github.com/cordejs/corde/commit/d9b944b9eba21bb1907768c1334567ac5dc21cb1)
@@ -1146,7 +1152,7 @@
 
 - hotfix: fix init [`9ce3043`](https://github.com/cordejs/corde/commit/9ce3043b1fe8c2ff41f4d1cdcd134a3b3b7df54a)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: upgrade corde version for example bot [`affd81d`](https://github.com/cordejs/corde/commit/affd81d74ff8557090bb6cf2535e56df17851162)
 - chore: update e2e version [`cf2aa05`](https://github.com/cordejs/corde/commit/cf2aa05ce48c2e1cb78ffd6ab542aee1c1140144)
@@ -1183,7 +1189,7 @@
 - fix: change lengh name [`1169c30`](https://github.com/cordejs/corde/commit/1169c3030a5ff7e29cee49401852cd59e01bc54e)
 - fix: organization [`6d2905d`](https://github.com/cordejs/corde/commit/6d2905d2ec65a0fa72dfde44fdc95732dfdbe672)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: test commit [`79b4373`](https://github.com/cordejs/corde/commit/79b4373b7cdc222cb5d9bac93a5cd67246591c47)
 - chore: replace Array usage of functions to Queue [`5ee13a8`](https://github.com/cordejs/corde/commit/5ee13a86ac714cc5687f992f868577749fa43cc9)
@@ -1199,7 +1205,7 @@
 
 - fix: semantic and update verion in e2e test [`72ae04e`](https://github.com/cordejs/corde/commit/72ae04ef957a62d70e89a07248aa9cfb763e8dc9)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: update .lock [`d5ce56d`](https://github.com/cordejs/corde/commit/d5ce56db091e0089db689630356931e8a7c6ba6f)
 
@@ -1219,13 +1225,13 @@
 
 - fix: tests and add example file for .env [`82abb25`](https://github.com/cordejs/corde/commit/82abb25a3ece691737961ee0513d9a51b9a9431c)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: remove flat-square badges [`ab4c4cb`](https://github.com/cordejs/corde/commit/ab4c4cb6f6c403b2131d8403f0a022eb3ace5dd2)
 
 ## [v2.0.0-beta.2](https://github.com/cordejs/corde/compare/v2.0.0-beta.1...v2.0.0-beta.2) - 2020-09-14
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: tests for delete role [`15060a9`](https://github.com/cordejs/corde/commit/15060a9b1740f7fb3d1b5bbee65685e6f0691284)
 - chore: create workaround for package.json importing in lib [`c92fa80`](https://github.com/cordejs/corde/commit/c92fa800701c08d748b91d4893b114011a51517a)
@@ -1245,7 +1251,7 @@
 - fix: documentation deploy script [`a1a7b6e`](https://github.com/cordejs/corde/commit/a1a7b6ed0127d8bd8815eca9690f35166a438aea)
 - fix: command name setting null after call .not #341 [`af0843e`](https://github.com/cordejs/corde/commit/af0843ed0f4a58f5edbd4da13d001688bb5d29f9)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: force yarn usage by project [`eb56a7b`](https://github.com/cordejs/corde/commit/eb56a7b1f668891a11a501119a3efe7061a35cac)
 - chore: init docusaurus project [`80960f8`](https://github.com/cordejs/corde/commit/80960f8e0078d46f7fd82841607954d7d6a23447)
@@ -1324,7 +1330,7 @@
 - fix: node version verification [`3be7633`](https://github.com/cordejs/corde/commit/3be763364c968603099d740305035eec0e6ec143)
 - fix: tests ? [`35eabb0`](https://github.com/cordejs/corde/commit/35eabb08f8accf6f774b3949ae33aeca9f45af67)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: update dependencies [`8f51eef`](https://github.com/cordejs/corde/commit/8f51eefafab4d86b1d1cd800abb4812196470bcc)
 - chore: add jest tests [`7ebdc3e`](https://github.com/cordejs/corde/commit/7ebdc3e5ee548ede74ed7664926519eaef9728e1)
@@ -1370,7 +1376,7 @@
 
 - fix: remove semicolon [`f148336`](https://github.com/cordejs/corde/commit/f14833667686b17aaa1b8b065f4ab7efbe56fde9)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: fix api docs [`d3a9904`](https://github.com/cordejs/corde/commit/d3a990458192e73da6af29d5e3623353bd9d531b)
 - chore: update keys [`3545fed`](https://github.com/cordejs/corde/commit/3545fed418f1bae0f0886a2976c946f1ff78ae6a)
@@ -1408,7 +1414,7 @@
 - fix: add data tests info [`8fd6b32`](https://github.com/cordejs/corde/commit/8fd6b32a6ac2e34a9bb60bdf56a32fd6ac823d94)
 - fix: adjust ts config file init [`7949796`](https://github.com/cordejs/corde/commit/7949796110a66cab2432ffba2e9d0bd1400bced8)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: merged log into reporter [`dda9a08`](https://github.com/cordejs/corde/commit/dda9a08bbd278532476d657c1e69d4720e310175)
 - chore: remove exitProcessWithError and fixed tests [`ddfdef2`](https://github.com/cordejs/corde/commit/ddfdef2f0b4b751dac62c8d8900ad5fe9f3a32ae)
@@ -1472,7 +1478,7 @@
 - fix: removed unused property "botFilePath" and fixed erro message [`b4ba09b`](https://github.com/cordejs/corde/commit/b4ba09b89a6e86aaf5a8bea25f4a415122beef01)
 - fix: pack [`0143a47`](https://github.com/cordejs/corde/commit/0143a477a27ecbbd540db9573751855c6d7c07bf)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: fix tests and bad code [`f36d4cb`](https://github.com/cordejs/corde/commit/f36d4cb6558f42f3e395f9c86cde256cd1f3c2f8)
 - chore: attemp to fix tests [`41c12fd`](https://github.com/cordejs/corde/commit/41c12fd1dc4a7a1774abca5835346ccf697aeac8)
@@ -1496,7 +1502,7 @@
 - fix: process endin with 0 even if tests has fail [`94e6f72`](https://github.com/cordejs/corde/commit/94e6f72fe35aa538ae2a0c3c0f4376142b846175)
 - fix: readme [`a7226e8`](https://github.com/cordejs/corde/commit/a7226e85e7b328939f745c5b7b201fa79413ccfd)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: add docs for functions and fixed invalid call of matches class [`7daaf49`](https://github.com/cordejs/corde/commit/7daaf497e9c2ef8e8e5826cdd0fa6684ab551a56)
 - chore: add types and interfaces for handle messageEmbed [`344b040`](https://github.com/cordejs/corde/commit/344b040a12ad0d8b131593b0548c60654fb0166e)
@@ -1546,7 +1552,7 @@
 - fix: add Timeout message for tests [`cc73d63`](https://github.com/cordejs/corde/commit/cc73d635858f6f2da79503d5baa46af9f5f8b32d)
 - fix: index type [`19a3298`](https://github.com/cordejs/corde/commit/19a3298017d6ad2bf41f6f07890177ad045041ed)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: set project to use yarn 2.0 [`86b27b4`](https://github.com/cordejs/corde/commit/86b27b40d99203c32f27705cd41eb2e7aa3d0572)
 - chore: remove locally yarn instalation [`e4a04ed`](https://github.com/cordejs/corde/commit/e4a04edc6d4fed03670b0a67183face344f877e1)
@@ -1610,7 +1616,7 @@
 - fix: dependabot config [`336c01a`](https://github.com/cordejs/corde/commit/336c01ac68ab015d762c469c0e01ae7fdf1c8e1c)
 - fix: reduced command timeout [`dda7c8d`](https://github.com/cordejs/corde/commit/dda7c8dbd18111a63a19553c2c01fc912ca7147a)
 
-### 📦 Miscelaneous
+### 💡 Miscelaneous
 
 - chore: removed package.lock.json [`a29300a`](https://github.com/cordejs/corde/commit/a29300a5d5d3a4a4a0cc8a2fe2ae8a80827cc6a2)
 - chore: changed coverage script [`1113cee`](https://github.com/cordejs/corde/commit/1113cee19cb97fb9c9050bff5efdee8104cb6b86)

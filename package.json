@@ -44,7 +44,7 @@
     "fix-lint": "eslint --fix ./src ./tests",
     "np": "np --no-cleanup --no-yarn",
     "format": "prettier --write \"src/**/*.ts\"",
-    "generate:changelog": "auto-changelog --commit-limit false --unreleased --template ./releaseTemplate.hbs",
+    "generate:changelog": "auto-changelog --commit-limit false --template ./templates/releaseTemplate.hbs",
     "lint": "eslint src/**/*.ts",
     "validate-ci": "circleci config validate",
     "jestClear": "jest --clearCache",
