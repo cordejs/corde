@@ -18,6 +18,7 @@
 
 - chore: attempt of using ts-jest compiler [`4fd285f`](https://github.com/cordejs/corde/commit/4fd285fb0655a686f27f9b95758d54ad779e5e26)
 - chore: remove all encapsulation of discord.js structures [`3a5c0e1`](https://github.com/cordejs/corde/commit/3a5c0e1248f22232b6641fb58da82b286c0bc279)
+- chore: add changelog generator [`45c7511`](https://github.com/cordejs/corde/commit/45c751187b0a6c7b5bc55580a9702f7a1022fdef)
 - chore: add some structures (without testing them yet) [`f6d6b13`](https://github.com/cordejs/corde/commit/f6d6b138dc552626d934a37430d78656a6e8cca6)
 - chore: splited types of project [`e41f3f5`](https://github.com/cordejs/corde/commit/e41f3f5850325c01db1d63b3e5097378bc35e546)
 - chore: update some structures [`d5ef0b1`](https://github.com/cordejs/corde/commit/d5ef0b12aa12c69bf9a78bf8c0fe3cec42a76132)
@@ -1070,6 +1071,10 @@
 - chore: remove console.log [`d0b4e9f`](https://github.com/cordejs/corde/commit/d0b4e9fc04619504a582f8848eb287c9ba435386)
 - chore: renamed folder [`45c04dd`](https://github.com/cordejs/corde/commit/45c04dd3f87a9742e4fc81470879ddd3d077baed)
 
+### 📦 Dependencies
+
+- chore(deps): bump figlet from 1.4.0 to 1.5.0 [`fa85c59`](https://github.com/cordejs/corde/commit/fa85c59352d49c62c0f662801935c4465737f455)
+
 ## [v1.0.2](https://github.com/cordejs/corde/compare/v1.0.1...v1.0.2) - 2020-07-12
 
 ## [v1.0.1](https://github.com/cordejs/corde/compare/v1.0.0...v1.0.1) - 2020-07-06
@@ -1079,6 +1084,10 @@
 - chore: fix api docs [`d3a9904`](https://github.com/cordejs/corde/commit/d3a990458192e73da6af29d5e3623353bd9d531b)
 - chore: update keys [`3545fed`](https://github.com/cordejs/corde/commit/3545fed418f1bae0f0886a2976c946f1ff78ae6a)
 - chore: update readme [`b649e4e`](https://github.com/cordejs/corde/commit/b649e4e522ab14f29d01b172094d88d85e4f3a3a)
+
+### 📦 Dependencies
+
+- chore(deps): bump rxjs from 6.5.5 to 6.6.0 [`1760503`](https://github.com/cordejs/corde/commit/17605034a934922ce14d3f3f077e5af6db418ec6)
 
 ## [v1.0.0](https://github.com/cordejs/corde/compare/v0.2.4...v1.0.0) - 2020-07-05
 
@@ -1138,7 +1147,15 @@
 - chore: remove test file [`848074c`](https://github.com/cordejs/corde/commit/848074cf1386e338bea86082aedf5f34796991d6)
 - chore: remove duplicate of stoploading() [`2309d93`](https://github.com/cordejs/corde/commit/2309d936d524e245fc84b096f049499c3478f21b)
 
+### 📦 Dependencies
+
+- chore(deps): bump rxjs from 6.5.5 to 6.6.0 [`4ee92f3`](https://github.com/cordejs/corde/commit/4ee92f384be838358e36d1007bacd00e42a32dc4)
+
 ## [v0.2.4](https://github.com/cordejs/corde/compare/v0.2.3...v0.2.4) - 2020-06-14
+
+### 📦 Dependencies
+
+- chore(deps): bump chalk from 4.0.0 to 4.1.0 [`3ced732`](https://github.com/cordejs/corde/commit/3ced73280a7ec3fd4225a0beaaf0791d26c31cff)
 
 ## [v0.2.3](https://github.com/cordejs/corde/compare/v0.2.2...v0.2.3) - 2020-06-07
 
@@ -1285,6 +1302,13 @@
 - chore: fixed name [`d89ad54`](https://github.com/cordejs/corde/commit/d89ad54b83b7a0e24e521bdc9acb4a9ded060397)
 - chore: update [`d31af8c`](https://github.com/cordejs/corde/commit/d31af8ca928dd506cfbef526715e7dc9a3f363c6)
 - chore: removed 'default' from errors classes [`2c19697`](https://github.com/cordejs/corde/commit/2c19697aa42d932a27178295bf880998a6bc452e)
+
+### 📦 Dependencies
+
+- chore(deps): bump discord.js from 12.1.1 to 12.2.0 [`1f85537`](https://github.com/cordejs/corde/commit/1f855379857b862fa631c3061cce98b47d6260f7)
+- chore(deps): bump figlet from 1.2.4 to 1.3.0 [`2b60f18`](https://github.com/cordejs/corde/commit/2b60f18d23754959c97c42adb2844e9e1b126223)
+- chore(deps): bump @types/shelljs from 0.8.5 to 0.8.6 [`34838f9`](https://github.com/cordejs/corde/commit/34838f98051500532cf249859d98ecffdd30c7fc)
+- chore(deps): bump chalk from 2.4.2 to 3.0.0 [`87db50a`](https://github.com/cordejs/corde/commit/87db50a51bfd78581b714081b9878a91bcff0394)
 
 ## [v0.1.0-beta.0](https://github.com/cordejs/corde/compare/v0.1.0-alpha.1...v0.1.0-beta.0) - 2019-09-08
 
