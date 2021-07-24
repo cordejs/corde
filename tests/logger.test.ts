@@ -40,11 +40,17 @@ if (console.timeStamp) {
   spyTimeStamp = jest.spyOn(console, "timeStamp");
 }
 
+import chalk from "chalk";
 import { Logger, StackContainer } from "../src/common/logger";
 
 const _logger = new Logger(process.stdout);
 
 describe("testing _logger", () => {
+
+  beforeEach(() => {
+    spyTable.mockClear();
+  })
+
   it("should call console.log", () => {
     _logger.log("log");
     expect(spyLog).toBeCalledTimes(1);
@@ -60,7 +66,7 @@ describe("testing _logger", () => {
   it("should call console.error", () => {
     _logger.error("error");
     expect(spyError).toBeCalledTimes(1);
-    expect(spyError).toBeCalledWith("error");
+    expect(spyError).toBeCalledWith(chalk.red("error"));
   });
 
   it("should call console.debug", () => {
@@ -155,6 +161,12 @@ describe("testing _logger", () => {
     _logger.table("table");
     expect(spyTable).toBeCalledTimes(1);
     expect(spyTable).toBeCalledWith("table");
+  });
+
+  it("should call console.table with properties", () => {
+    _logger.table("table", ["a", "b"]);
+    expect(spyTable).toBeCalledTimes(1);
+    expect(spyTable).toBeCalledWith("table", "a", "b");
   });
 
   it("should call console.time", () => {
