@@ -21,6 +21,17 @@ const cordeBotToken = process.env.CORDE_TEST_TOKEN;
 const guildId = process.env.GUILD_ID;
 const testMatches = ["./test/**"];
 const botToken = process.env.BOT_TEST_TOKEN;
-const timeout = +process.env.TIME_OUT;
+const timeout = process.env.TIME_OUT;
+const project = "./tsconfig.json";
 
-export { botPrefix, botTestId, channelId, cordeBotToken, guildId, botToken, testMatches, timeout };
+export {
+  botPrefix,
+  botTestId,
+  channelId,
+  cordeBotToken,
+  guildId,
+  botToken,
+  testMatches,
+  timeout,
+  project,
+};

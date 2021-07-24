@@ -11,6 +11,7 @@ import { validate } from "./validate";
 import { Config, StrictObject } from "../types";
 import registerTsNode from "../core/tsRegister";
 import { debug } from "../common/debug";
+import { DEFAULT_CONFIG } from "../consts";
 
 declare module "ora" {
   interface Ora {
@@ -28,6 +29,11 @@ export async function exec(options: Config.ICLIOptions) {
   if (options.config) {
     runtime.configFilePath = options.config;
   }
+
+  // Register ts-node with default options to prevent errors
+  // when registering from configs.
+  registerTsNode(DEFAULT_CONFIG.project as any);
+  debug("runtime.project: ", runtime.project);
 
   debug("runtime.configFilePath: " + runtime.configFilePath);
 
