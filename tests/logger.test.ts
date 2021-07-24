@@ -40,6 +40,7 @@ if (console.timeStamp) {
   spyTimeStamp = jest.spyOn(console, "timeStamp");
 }
 
+import chalk from "chalk";
 import { Logger, StackContainer } from "../src/common/logger";
 
 const _logger = new Logger(process.stdout);
@@ -60,7 +61,7 @@ describe("testing _logger", () => {
   it("should call console.error", () => {
     _logger.error("error");
     expect(spyError).toBeCalledTimes(1);
-    expect(spyError).toBeCalledWith("error");
+    expect(spyError).toBeCalledWith(chalk.red("error"));
   });
 
   it("should call console.debug", () => {
