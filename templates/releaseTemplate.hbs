@@ -10,6 +10,10 @@
     {{summary}}
   {{/if}}
 
+  {{#commit-list commits heading='### 💣 Breaking changes' message='feat:'}}
+    - {{subject}} [`{{shorthash}}`]({{href}})
+  {{/commit-list}}
+  
   {{#commit-list commits heading='### 🚀 Features' message='feat:'}}
     - {{subject}} [`{{shorthash}}`]({{href}})
   {{/commit-list}}
@@ -18,7 +22,7 @@
     - {{subject}} [`{{shorthash}}`]({{href}})
   {{/commit-list}}  
 
-  {{#commit-list commits heading='### 📦 Miscelaneous' message='chore:'}}
+  {{#commit-list commits heading='### 💡 Miscelaneous' message='chore:'}}
     - {{subject}} [`{{shorthash}}`]({{href}})
   {{/commit-list}}  
 
