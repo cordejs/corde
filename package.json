@@ -32,7 +32,7 @@
     "release": "release-it",
     "test": "jest --silent --detectOpenHandles",
     "build:publish": "bash ./scripts/publish.sh",
-    "generateStructureDocs": "typedoc --plugin typedoc-plugin-markdown src/structures",
+    "generateStructureDocs": "typedoc --plugin typedoc-plugin-markdown src/api",
     "prettier-lib": "prettier --write ./lib ./schema",
     "dependencies": "depcruise --config ./etc/.dependency-cruiser.js src",
     "watch": "bash tasks.sh watch",
