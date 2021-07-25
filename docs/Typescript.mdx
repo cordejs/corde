@@ -1,0 +1,12 @@
+---
+id: typescript
+title: Typescript
+custom_edit_url: https://github.com/cordejs/corde/blob/master/docs/Typescript.mdx
+---
+
+Corde uses [ts-node](https://www.npmjs.com/package/ts-node) to register typescript imports.
+By default it, configure `tsconfig.json` json path to be `<rootDir>/tsconfig.json`.
+
+To avoid any problems in `corde.config.ts` import (if you are using it), corde register
+ts-node looking for a tsconfig file in root dir of the project, Then it is registered again, based
+on `project` config.

@@ -27,6 +27,10 @@
         {
           "type": "doc",
           "id": "version-4.x/creatingdiscordbot"
+        },
+        {
+          "type": "doc",
+          "id": "typescript"
         }
       ]
     },
@@ -62,27 +66,6 @@
         {
           "type": "doc",
           "id": "version-4.x/permissions"
-        }
-      ]
-    }
-  ],
-  "version-4.x/structures": [
-    {
-      "collapsed": false,
-      "type": "category",
-      "label": "Structures",
-      "items": [
-        {
-          "type": "doc",
-          "id": "version-4.x/structures/home"
-        },
-        {
-          "type": "doc",
-          "id": "version-4.x/structures/corde_role"
-        },
-        {
-          "type": "doc",
-          "id": "version-4.x/structures/corde_guild"
         }
       ]
     }

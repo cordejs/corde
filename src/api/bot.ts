@@ -8,7 +8,7 @@ export class Bot {
   private _bot: ICordeBot;
 
   /**
-   * Gets the voice channel state that corde's bot is connected in, IF it's connected.
+   * Gets the voice channel state that corde's bot is connected in, If it's connected.
    * This property is filled when `joinVoiceChannel()` connects to a channel
    * and is cleared when `leaveVoiceChannal()` is called.
    */
@@ -80,7 +80,7 @@ export class Bot {
   /**
    * Gets the channel defined in `configs`
    */
-  async getChannel() {
+  getChannel() {
     return this._bot.channel;
   }
 
@@ -116,7 +116,7 @@ export class Bot {
    * });
    *
    * // Do not Works
-   * test("test 1", () => {
+   * group("test 1", () => {
    *    const message = await sendMessage("msg");
    * });
    *

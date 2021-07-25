@@ -1,0 +1,115 @@
+---
+id: cordebot
+title: Corde Bot
+custom_edit_url: https://github.com/cordejs/corde/blob/master/docs/CordeBot.mdx
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Corde exports a object `bot`. Which provides functionalities in Discord through Discord.js Client.
+This object can be acessed by:
+
+<Tabs
+  defaultValue="single"
+  values={[
+    { label: "Directly import", value: "single" },
+    { label: "By corde default", value: "multiple" },
+   ]
+  }>
+  <TabItem value="single">
+
+```javascript
+import { bot } from "corde";
+```
+
+  </TabItem>
+  <TabItem value="multiple">
+
+```javascript
+import corde from "corde";
+corde.bot;
+```
+
+  </TabItem>
+</Tabs>
+
+#### Gets
+
+- [`voiceState`](/docs/cordebot#voicestate)
+- [`isLoggedIn`](/docs/cordebot#isloggedin)
+
+#### Methods
+
+- [`isMessageAuthor`](/docs/cordebot#ismessageauthormessage)
+- [`joinVoiceChannel`](/docs/cordebot#joinvoicechannelstring)
+- [`leaveVoiceChannel`](/docs/cordebot#leavevoicechannel)
+- [`isInVoiceChannel`](/docs/cordebot#isinvoicechannel)
+- [`fetchChannel`](/docs/cordebot#fetchchannel)
+- [`fetchGuild`](/docs/cordebot#fetchguild)
+- [`getChannel`](/docs/cordebot#getchannel)
+- [`findGuild`](/docs/cordebot#findguild)
+- [`send`](/docs/cordebot#send)
+- [`createRole`](/docs/cordebot#createrole)
+- [`findRole`](/docs/cordebot#findrole)
+
+## Reference
+
+---
+
+### `voiceState`
+
+Gets the voice channel state that corde's bot is connected in, If it's connected.
+This property is filled when `joinVoiceChannel()` connects to a channel.
+
+### `isLoggedIn`
+
+Checks if corde's bot is connected and ready.
+
+### `isMessageAuthor(Message)`
+
+Checks if a given message was sent by corde's bot.
+
+### `joinVoiceChannel(string)`
+
+Joins corde's bot to a voice channel.
+
+### `leaveVoiceChannel`
+
+Leaves a voice channel.
+
+### `isInVoiceChannel`
+
+Checks if corde's bot is in a voice channel.
+
+### `fetchChannel`
+
+Makes a fetch of a channel based on it's `id`.
+
+### `fetchGuild`
+
+Makes a fetch of a guild based on it's `id`.
+
+### `getChannel`
+
+Gets the channel defined in `configs`.
+
+### `getGuild`
+
+Gets the guild defined in `configs`.
+
+### `findGuild`
+
+Search for a guild in guild's cache, based on it's id.
+
+### `send`
+
+Sends a message to the connected textChannel.
+
+### `createRole`
+
+Creates a new role to the guild provided in configs.
+
+### `findRole`
+
+Finds a role in config guild's cache, basing on it's **id** or **name**.

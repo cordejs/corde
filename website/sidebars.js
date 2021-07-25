@@ -28,6 +28,10 @@ module.exports = {
           type: "doc",
           id: "creatingdiscordbot",
         },
+        {
+          type: "doc",
+          id: "typescript",
+        },
       ],
     },
     {
@@ -35,6 +39,10 @@ module.exports = {
       type: "category",
       label: "API Reference",
       items: [
+        {
+          type: "doc",
+          id: "cordebot",
+        },
         {
           type: "doc",
           id: "expect",
@@ -62,27 +70,6 @@ module.exports = {
         {
           type: "doc",
           id: "permissions",
-        },
-      ],
-    },
-  ],
-  structures: [
-    {
-      collapsed: false,
-      type: "category",
-      label: "Structures",
-      items: [
-        {
-          type: "doc",
-          id: "structures/home",
-        },
-        {
-          type: "doc",
-          id: "structures/corde_role",
-        },
-        {
-          type: "doc",
-          id: "structures/corde_guild",
         },
       ],
     },
