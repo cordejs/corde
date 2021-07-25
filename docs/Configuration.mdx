@@ -7,7 +7,7 @@ custom_edit_url: https://github.com/cordejs/corde/blob/master/docs/Configuration
 Corde's configuration can be defined through a `corde.config.js|json|ts` file. This file must be at the root of your application,
 or you can declare a custom path for it with the cli option [--config](CLI.mdx#--config).
 
-This is the full config file for Corde:
+This is the default config file for Corde:
 
 ```javascript
 {
@@ -30,87 +30,129 @@ both `cordeBotToken` and `botToken` can be found in [Discord Developers portal](
 
 ### `cordeBotToken`
 
+The bot token that Corde will use to simulate a user.
+
 **Required: `true`**  
 **Type: `string`**  
 **Example: `YaA4MDMiOTY2O4I2MjAwODMy.X2iRwg.Rf3-TqLExWuPQjxnVaDCGv9V7cB`**
-
-The bot token that Corde will use to simulate a user.
 
 ---
 
 ### `botTestId`
 
-**Required: `true`**  
+Your bot's id.
+
+**Required: `true`**
 **Type: `string`**  
 **Example: `514212632960122287894`**
-
-Your bot's id.
 
 ---
 
 ### `botToken`
 
+Your bot's Token.
+
 **Required: `true`**  
 **Type: `string`**  
 **Example: `YaA4MDMiOTY2O4I2MjAwODMy.X2iRwg.Rf3-TqLExWuPQjxnVaDCGv9V7cB`**
-
-Your bot's Token.
 
 ---
 
 ### `guildId`
 
+The id of the `guild` where both bots are.
+
 **Required: `true`**  
 **Type: `string`**  
 **Example: `514212632960122287894`**
-
-The id of the `guild` where both bots are.
 
 ---
 
 ### `channelId`
 
+The id of the `channel` where both bots are.
+
 **Required: `true`**  
 **Type: `string`**  
 **Example: `514212632960122287894`**
-
-The id of the `channel` where both bots are.
 
 ---
 
 ### `botPrefix`
 
+Prefix for call your bot.
+
 **Required: `true`**  
 **Type: `string`**  
 **Example: `!`**
-
-Prefix for call your bot.
 
 ---
 
 ### `testMatches`
 
+Array with the path of test folders | files.
+
 **Required: `true`**  
 **Type: `string`**  
 **Example: `['./tests']`**
 
-Array with the path of test folders | files.
-
 ---
 
 ### `timeout`
+
+Timeout for each test. The value in milliseconds.
 
 **Required: `false`**  
 **Type: `number`**  
 **Example: `1000`**  
 **Default: `5000`**
 
-Timeout for each test. The value in milliseconds.
+---
 
 ### `modulePathIgnorePatterns`
+
+Define the file pattern that corde should ignore.
 
 **Required: `false`**  
 **Type: `string[]`**  
 **Example: `['**/tests/\*.fixture.js']`\*\*
 
-Define the file pattern that corde should ignore.
+---
+
+### `rootDir`
+
+Defines root dir of the project.
+
+**Required: `false`**  
+**Type: `string[]`**  
+**Default: `process.cwd()`**
+
+---
+
+### `extensions`
+
+**Define file extensions to be loaded**
+
+**Required: `false`**  
+**Type: `string[]`**  
+**Default: `[".js",".ts"]`**
+
+---
+
+### `exitOnFileReadingError`
+
+Define if corde should stop if any problem occour when importing a test file.
+
+**Required: `false`**  
+**Type: `boolean`**  
+**Default: `true`**
+
+---
+
+### `project`
+
+Definition of tsconfig path.
+
+**Required: `false`**  
+**Type: `string`**  
+**Default: `<rootDir>/tsconfig.json`**

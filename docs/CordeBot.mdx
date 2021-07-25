@@ -1,0 +1,34 @@
+---
+id: cordebot
+title: Corde Bot
+custom_edit_url: https://github.com/cordejs/corde/blob/master/docs/CordeBot.mdx
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Corde exports a object `bot`. Which can be acessed by:
+
+<Tabs
+  defaultValue="single"
+  values={[
+    { label: "Directly import", value: "single" },
+    { label: "By corde default", value: "multiple" },
+   ]
+  }>
+  <TabItem value="single">
+
+```javascript
+import { bot } from "corde";
+```
+
+  </TabItem>
+  <TabItem value="multiple">
+
+```javascript
+import corde from "corde";
+corde.bot;
+```
+
+  </TabItem>
+</Tabs>

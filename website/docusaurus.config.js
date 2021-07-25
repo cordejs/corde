@@ -29,12 +29,6 @@ module.exports = {
           label: "Documentation",
           position: "left",
         },
-        {
-          to: "docs/structures/",
-          activeBasePath: "docs/structures",
-          label: "Structures",
-          position: "left",
-        },
         { to: "blog", label: "Blog", position: "left" },
         {
           type: "docsVersionDropdown",
