@@ -2015,10 +2015,10 @@ agent-base@6:
   dependencies:
     debug "4"
 
-ajv@8.6.1, ajv@^8.0.1:
-  version "8.6.1"
-  resolved "https://registry.yarnpkg.com/ajv/-/ajv-8.6.1.tgz#ae65764bf1edde8cd861281cda5057852364a295"
-  integrity sha512-42VLtQUOLefAvKFAQIxIZDaThq6om/PrfP0CYk3/vn+y4BMNkKnbli8ON2QCiHov4KkzOSJ/xSoBJdayiiYvVQ==
+ajv@8.6.2, ajv@^8.0.1:
+  version "8.6.2"
+  resolved "https://registry.yarnpkg.com/ajv/-/ajv-8.6.2.tgz#2fb45e0e5fcbc0813326c1c3da535d1881bb0571"
+  integrity sha512-9807RlWAgT564wT+DjeyU5OFMPjmzxVobvDFmNAhY+5zD6A2ly3jDp6sgnfyDtlIQ+7H97oc/DGCzzfu9rjw9w==
   dependencies:
     fast-deep-equal "^3.1.1"
     json-schema-traverse "^1.0.0"
@@ -3406,16 +3406,16 @@ delayed-stream@~1.0.0:
   integrity sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
 
 dependency-cruiser@^10.0.1:
-  version "10.0.5"
-  resolved "https://registry.yarnpkg.com/dependency-cruiser/-/dependency-cruiser-10.0.5.tgz#327e6e0a17393fd5c38ec9fdfc082da04b6164df"
-  integrity sha512-nMc4Yr3karxJeB4prn7PHIeQzKiCjCnaL5hCqKNHfToB+GaRx0A99JEV78Q7sTRQFG0T+rDCDJK7iEZkcpMaqA==
+  version "10.0.6"
+  resolved "https://registry.yarnpkg.com/dependency-cruiser/-/dependency-cruiser-10.0.6.tgz#11aed2117d7e3acd4de22d9ea9a13cb697f2a32d"
+  integrity sha512-OSSCGViA4b/AeiX8BkElPKTL5loemlZWN2gDBM3clvM4Sy7Ax/5J6kklPFJAq7KKipb79HoDPz2Jy047fF+pbQ==
   dependencies:
     acorn "8.4.1"
     acorn-jsx "5.3.2"
     acorn-jsx-walk "2.0.0"
     acorn-loose "8.1.0"
     acorn-walk "8.1.1"
-    ajv "8.6.1"
+    ajv "8.6.2"
     chalk "4.1.1"
     commander "8.0.0"
     enhanced-resolve "5.8.2"
@@ -3424,7 +3424,7 @@ dependency-cruiser@^10.0.1:
     glob "7.1.7"
     handlebars "4.7.7"
     indent-string "4.0.0"
-    inquirer "8.1.1"
+    inquirer "8.1.2"
     json5 "2.2.0"
     lodash "4.17.21"
     safe-regex "2.1.1"
