@@ -1,9 +1,8 @@
+/* eslint-disable no-console */
 import { runCLI } from "../cliRunner";
-import Utils from "../testUtils";
+import testUtils from "../testUtils";
 
-it("tests should be sucessfull", async () => {
-  const command = Utils.buildCommandWithConfigPath("toReturn", "bot_case1.spec.ts");
-  const [mockProcess, stdout] = await runCLI(command);
-  expect(mockProcess).toBeCalledWith(0);
-  expect(stdout).toMatchSnapshot();
+const command = testUtils.buildCommandWithConfigPath("toReturn", "bot_case1.spec.ts");
+runCLI(command).then((response) => {
+  testUtils.saveOutput;
 });

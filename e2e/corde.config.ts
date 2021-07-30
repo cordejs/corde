@@ -6,7 +6,7 @@
 
 import env from "dotenv";
 
-var result = env.config();
+const result = env.config();
 
 // Do not throw any error if the project in running inside CI.
 if (!process.env.CI && result.error) {
@@ -18,6 +18,6 @@ export const botTestId = process.env.BOT_TEST_ID;
 export const channelId = process.env.CHANNEL_ID;
 export const cordeBotToken = process.env.CORDE_TEST_TOKEN;
 export const guildId = process.env.GUILD_ID;
-export const testMatches = [process.env.TEST_FILES_DIR];
 export const botToken = process.env.BOT_TEST_TOKEN;
 export const timeout = process.env.TIME_OUT;
+export const project = "./tsconfig.json";

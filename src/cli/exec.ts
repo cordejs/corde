@@ -33,8 +33,8 @@ export async function exec(options: Config.ICLIOptions) {
   // Register ts-node with default options to prevent errors
   // when registering from configs.
   registerTsNode(DEFAULT_CONFIG.project as any);
-  debug("runtime.project: ", runtime.project);
 
+  debug("runtime.project: ", runtime.project);
   debug("runtime.configFilePath: " + runtime.configFilePath);
 
   await loadConfigs();
@@ -50,13 +50,13 @@ export async function exec(options: Config.ICLIOptions) {
 
   debug("loaded configs: ", runtime.configs);
 
+  await validate(runtime.configs);
   await runTests();
 }
 
 async function loadConfigs() {
   const configs = reader.loadConfig();
   runtime.setConfigs(configs, true);
-  await validate(runtime.configs);
 }
 
 export async function runTests() {
