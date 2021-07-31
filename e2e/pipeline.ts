@@ -68,7 +68,7 @@ async function main() {
     logoutBot();
   } catch (error) {
     logoutBot();
-    console.log(`${chalk.bgRed.black(" FAIL ")} ${error.message}`);
+    console.log(`${chalk.bgRed.black(" FAIL ")} ${error}`);
     exitCode = 1;
   } finally {
     console.time(testsMeasureName);

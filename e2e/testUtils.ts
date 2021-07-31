@@ -52,7 +52,7 @@ namespace testUtils {
 
       const child = childProcess.exec(con, (error, stdout, stderr) => {
         if (error) {
-          reject(error);
+          resolve({ stdout: removeANSIColorStyle(stderr), exitCode: child.exitCode });
         }
 
         if (stdout) {
@@ -60,7 +60,7 @@ namespace testUtils {
         }
 
         if (stderr) {
-          reject(stderr);
+          resolve({ stdout: removeANSIColorStyle(stderr), exitCode: child.exitCode });
         }
       });
     });

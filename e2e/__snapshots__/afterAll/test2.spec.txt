@@ -4,5 +4,5 @@ exit code: 0
 
 Test Files: 1 empty. 1 total
 Tests:      0 total
-Time:       3ms
+Time:       2ms
 test

@@ -14,6 +14,7 @@ const testFiles: ITestFile[] = [
     testFile: "test1.spec.ts",
     exitCodeExpectation: 0,
   },
+  // Don't know why this test is broken
   {
     folder: "toReturn",
     testFile: "test2.spec.ts",

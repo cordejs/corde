@@ -1,16 +1,14 @@
-
-    File: toReturn/test1.spec.ts
-    
-    exit code: 0
+File: toReturn/test1.spec.ts
+exit code: 0
  RUNS   e2e/toReturn/test1.spec.ts
  RUNS   e2e/toReturn/test1.spec.ts
    ● Hello command should return... hello!!
  RUNS   e2e/toReturn/test1.spec.ts
-   ✔  Hello command should return... hello!!   440ms
+   ✔  Hello command should return... hello!!   384ms
 
- PASS    e2e/toReturn/test1.spec.ts   445ms
-   ✔  Hello command should return... hello!!   440ms
+ PASS    e2e/toReturn/test1.spec.ts   388ms
+   ✔  Hello command should return... hello!!   384ms
 
 Test Files: 1 passed. 1 total
 Tests:      1 passed. 1 total
-Time:       448ms
+Time:       390ms
