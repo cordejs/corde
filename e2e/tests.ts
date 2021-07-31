@@ -1,26 +1,52 @@
 /* eslint-disable no-console */
 import testUtils from "./testUtils";
+import { CliOutput } from "./types";
 
-interface TestFile {
+interface ITestFile {
   folder: string;
-  fileName: string;
+  testFile: string;
+  exitCodeExpectation: number;
 }
 
-const testFiles: TestFile[] = [
+const testFiles: ITestFile[] = [
   {
-    fileName: "bot_case1.spec.ts",
     folder: "toReturn",
+    testFile: "test1.spec.ts",
+    exitCodeExpectation: 0,
+  },
+  {
+    folder: "toReturn",
+    testFile: "test2.spec.ts",
+    exitCodeExpectation: 1,
+  },
+  {
+    folder: "afterAll",
+    testFile: "test1.spec.ts",
+    exitCodeExpectation: 0,
+  },
+  {
+    folder: "afterAll",
+    testFile: "test2.spec.ts",
+    exitCodeExpectation: 1,
   },
 ];
 
-type VoidPromise = () => Promise<void>;
-
-function* createTestFunctionsGenerator(): Generator<VoidPromise, void, VoidPromise> {
+function* createTestFunctionsGenerator(): Generator<
+  [Pick<ITestFile, "exitCodeExpectation" | "testFile">, () => Promise<CliOutput>],
+  void,
+  unknown
+> {
   for (const testFile of testFiles) {
-    yield async () => {
-      const command = testUtils.buildCommandWithConfigPath(testFile.folder, testFile.fileName);
-      await testUtils.runCLIAndSaveOutput(testFile.fileName, command);
-    };
+    yield [
+      {
+        exitCodeExpectation: testFile.exitCodeExpectation,
+        testFile: `${testFile.folder}/${testFile.testFile}`,
+      },
+      () => {
+        const command = testUtils.buildCommandWithConfigPath(testFile.folder, testFile.testFile);
+        return testUtils.runCLI(testFile.testFile, command);
+      },
+    ];
   }
 }
 

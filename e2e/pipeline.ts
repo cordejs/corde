@@ -19,11 +19,18 @@
 // todo: process.env should be using NODE_ENV
 // process.env.ENV = "E2E";
 
+import chalk from "chalk";
 import { login, bot } from "./bot";
 import { generator } from "./tests";
+import testUtils from "./testUtils";
 
 function print(stdout: any) {
   process.stdout.write(stdout);
+}
+
+function logoutBot() {
+  console.log(chalk.cyanBright("logout bot"));
+  bot.destroy();
 }
 
 async function main() {
@@ -32,28 +39,27 @@ async function main() {
   try {
     console.time(testsMeasureName);
 
-    print("loading test files...");
-
-    print("loging example bot...");
+    print(chalk.cyanBright("loging example bot..."));
     await login();
-    print(" Done\n");
+    print(chalk.green(" Done\n"));
 
-    let actual = null;
+    for (const [fileObj, testFn] of generator) {
+      const output = await testFn();
+      console.log(chalk.cyanBright(`Output of: ${fileObj.testFile}\n`));
+      console.log(output.stdout);
+      testUtils.saveOutput(fileObj.testFile, output);
 
-    do {
-      actual = generator.next();
-      console.log(actual);
-      await actual.value;
-    } while (actual === null || actual.done);
+      if (output.exitCode !== fileObj.exitCodeExpectation) {
+        console.log(`${chalk.bgRed.black(" FAIL ")} Exit code: ${output.exitCode}`);
+      }
+    }
 
-    bot.destroy();
     console.time(testsMeasureName);
     print("\n");
-    //print(`Results: ${success} tests pass`);
+    logoutBot();
   } catch (error) {
-    bot.destroy();
-    console.log(error.message);
-    //console.log(`${chalk.bgRed.black(" FAIL ")} ${actualTestingFile}`);
+    logoutBot();
+    console.log(`${chalk.bgRed.black(" FAIL ")} ${error.message}`);
     exitCode = 1;
   } finally {
     process.exit(exitCode);

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * File used for manual tests
  */

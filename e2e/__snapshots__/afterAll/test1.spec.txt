@@ -1,0 +1,10 @@
+
+    File: afterAll/test1.spec.ts
+    
+    exit code: 0
+ EMPTY   e2e/afterAll/test1.spec.ts
+
+Test Files: 1 empty. 1 total
+Tests:      0 total
+Time:       2ms
+test afterAll

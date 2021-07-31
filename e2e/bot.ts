@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // TODO: In some tests, when a function from another module is called,
 // Corde reader fail in import the test file because Node.js can not
 // import the submodule. To avoid the problem, this file is here is root of the project,
