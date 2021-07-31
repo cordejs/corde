@@ -27,7 +27,7 @@ const testFiles: ITestFile[] = [
   {
     folder: "afterAll",
     testFile: "test2.spec.ts",
-    exitCodeExpectation: 1,
+    exitCodeExpectation: 0,
   },
 ];
 
@@ -44,7 +44,7 @@ function* createTestFunctionsGenerator(): Generator<
       },
       () => {
         const command = testUtils.buildCommandWithConfigPath(testFile.folder, testFile.testFile);
-        return testUtils.runCLI(testFile.testFile, command);
+        return testUtils.runCLI(command);
       },
     ];
   }

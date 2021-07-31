@@ -1,7 +1,5 @@
-
-    File: afterAll/test2.spec.ts
-    
-    exit code: 0
+File: afterAll/test2.spec.ts
+exit code: 0
  EMPTY   e2e/afterAll/test2.spec.ts
 
 Test Files: 1 empty. 1 total

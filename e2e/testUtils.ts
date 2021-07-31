@@ -18,10 +18,8 @@ namespace testUtils {
   }
 
   export function saveOutput(filename: string, output: CliOutput) {
-    let data = `
-    File: ${filename}
-    
-    exit code: ${output.exitCode}\n`;
+    let data = `File: ${filename}\n`;
+    data += `exit code: ${output.exitCode}\n`;
 
     data += output.stdout;
 
@@ -44,7 +42,7 @@ namespace testUtils {
   /**
    * @internal
    */
-  export function runCLI(fileName: string, command: string, setConfig = true) {
+  export function runCLI(command: string, setConfig = true) {
     return new Promise<CliOutput>((resolve, reject) => {
       const con = `node ./bin/corde ${
         setConfig ? "--config ./e2e/corde.config.ts" : ""

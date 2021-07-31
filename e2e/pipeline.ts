@@ -50,18 +50,25 @@ async function main() {
       testUtils.saveOutput(fileObj.testFile, output);
 
       if (output.exitCode !== fileObj.exitCodeExpectation) {
-        console.log(`${chalk.bgRed.black(" FAIL ")} Exit code: ${output.exitCode}`);
+        console.log(
+          `${chalk.bgRed.black(" FAIL ")} Exit code: ${output.exitCode}. Expected: ${
+            fileObj.exitCodeExpectation
+          }`,
+        );
       }
     }
 
-    console.time(testsMeasureName);
-    print("\n");
     logoutBot();
   } catch (error) {
     logoutBot();
     console.log(`${chalk.bgRed.black(" FAIL ")} ${error.message}`);
     exitCode = 1;
   } finally {
+    console.time(testsMeasureName);
+    print("\n");
+    if (exitCode === 0) {
+      console.log(`${chalk.bgGreen(" SUCCESS ")}: All tests passed`);
+    }
     process.exit(exitCode);
   }
 }
