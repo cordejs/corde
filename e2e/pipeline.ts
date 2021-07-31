@@ -40,7 +40,14 @@ async function main() {
     console.time(testsMeasureName);
 
     print(chalk.cyanBright("loging example bot..."));
-    await login();
+
+    try {
+      await login();
+    } catch (error) {
+      console.error(error);
+      process.exit(1);
+    }
+
     print(chalk.green(" Done\n"));
 
     for (const [fileObj, testFn] of generator) {
