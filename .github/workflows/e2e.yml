@@ -8,7 +8,14 @@ jobs:
     strategy:
       matrix:
         node-version: [16.x]
-
+    env:
+      BOT_PREFIX: ${{ secrets.BOT_PREFIX }}
+      CORDE_TEST_TOKEN: ${{ secrets.CORDE_TEST_TOKEN }}
+      BOT_TEST_ID: ${{ secrets.BOT_TEST_ID }}
+      CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
+      GUILD_ID: ${{ secrets.GUILD_ID }}
+      BOT_TEST_TOKEN: ${{ secrets.BOT_TEST_TOKEN }}
+      TIME_OUT: ${{ secrets.TIME_OUT }}
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
