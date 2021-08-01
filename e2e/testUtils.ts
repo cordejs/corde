@@ -114,9 +114,6 @@ namespace testUtils {
           resolve({ stdout: removeANSIColorStyle(stderr), exitCode: child.exitCode });
         }
       });
-
-      child.on("error", (error) => console.log(error));
-      child.on("message", (error) => console.log(error));
     });
   }
 
