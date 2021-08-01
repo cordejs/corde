@@ -38,7 +38,7 @@
     "watch": "bash tasks.sh watch",
     "corde": "node ./bin/corde",
     "killProcess": "cd ./etc && bash ./build_and_kill.sh",
-    "e2e": "ts-node -v",
+    "e2e": "ts-node ./e2e/pipeline.ts",
     "test-with-coverage": "jest --silent --ci --detectOpenHandles --collect-coverage --collectCoverageFrom=src/**/*.ts",
     "refresh": "rm -rf ./node_modules ./package-lock.json && yarn install",
     "fix-lint": "eslint --fix ./src ./tests",
