@@ -3,9 +3,58 @@ import { Message } from "discord.js";
 import fs from "fs";
 import { removeANSIColorStyle } from "../tests/testHelper";
 import * as childProcess from "child_process";
-import { CliOutput } from "./types";
+import { CliOutput, OSEnv } from "./types";
 import path from "path";
 import chalk from "chalk";
+import { IConfigOptions } from "../src/types";
+
+function getWindowsConfigs(): Partial<IConfigOptions> {
+  return {
+    botPrefix: process.env.BOT_PREFIX,
+    timeout: Number(process.env.TIME_OUT),
+    botTestId: process.env.BOT_TEST_ID_WINDOWS,
+    botToken: process.env.BOT_TEST_TOKEN_WINDOWS,
+    channelId: process.env.CHANNEL_ID_WINDOWS,
+    cordeBotToken: process.env.CORDE_TEST_TOKEN_WINDOWS,
+    guildId: process.env.GUILD_ID_WINDOWS,
+  };
+}
+
+function getMacConfigs(): Partial<IConfigOptions> {
+  return {
+    botPrefix: process.env.BOT_PREFIX,
+    timeout: Number(process.env.TIME_OUT),
+    botTestId: process.env.BOT_TEST_ID_MAC,
+    botToken: process.env.BOT_TEST_TOKEN_MAC,
+    channelId: process.env.CHANNEL_ID_MAC,
+    cordeBotToken: process.env.CORDE_TEST_TOKEN_MAC,
+    guildId: process.env.GUILD_ID_MAC,
+  };
+}
+
+function getDevConfigs(): Partial<IConfigOptions> {
+  return {
+    botPrefix: process.env.BOT_PREFIX,
+    timeout: Number(process.env.TIME_OUT),
+    botTestId: process.env.BOT_TEST_ID,
+    botToken: process.env.BOT_TEST_TOKEN,
+    channelId: process.env.CHANNEL_ID,
+    cordeBotToken: process.env.CORDE_TEST_TOKEN,
+    guildId: process.env.GUILD_ID,
+  };
+}
+
+function getLinuxConfigs(): Partial<IConfigOptions> {
+  return {
+    botPrefix: process.env.BOT_PREFIX,
+    timeout: Number(process.env.TIME_OUT),
+    botTestId: process.env.BOT_TEST_ID_LINUX,
+    botToken: process.env.BOT_TEST_TOKEN_LINUX,
+    channelId: process.env.CHANNEL_ID_LINUX,
+    cordeBotToken: process.env.CORDE_TEST_TOKEN_LINUX,
+    guildId: process.env.GUILD_ID_LINUX,
+  };
+}
 
 namespace testUtils {
   export function parseCommand(message: Message, prefix: string) {
@@ -45,11 +94,12 @@ namespace testUtils {
    */
   export function runCLI(command: string, setConfig = true) {
     return new Promise<CliOutput>((resolve) => {
-      const con = `node ./bin/corde ${
-        setConfig ? "--config ./e2e/corde.config.ts" : ""
-      } ${command}`;
+      let con = `node ./bin/corde ${setConfig ? "--config ./e2e/corde.config.ts" : ""} ${command}`;
 
-      console.log(`${chalk.bgYellow.grey(" RUNNING ")}: ${con}`);
+      con += " ";
+      con += testUtils.env();
+
+      console.log(`${chalk.bgYellow.grey(" RUNNING ")}: ${chalk.magenta(con)}`);
 
       const child = childProcess.exec(con, (error, stdout, stderr) => {
         if (error) {
@@ -64,7 +114,45 @@ namespace testUtils {
           resolve({ stdout: removeANSIColorStyle(stderr), exitCode: child.exitCode });
         }
       });
+
+      child.on("error", (error) => console.log(error));
+      child.on("message", (error) => console.log(error));
     });
+  }
+
+  export function isDebug() {
+    const args = process.argv.slice(2);
+    return args.includes("debug");
+  }
+
+  export function env() {
+    // This value will be defined in CI
+    if (process.env.CI_OS_ENV) {
+      return process.env.CI_OS_ENV as OSEnv;
+    }
+
+    const args = process.argv.slice(2);
+    if (args.includes("linux")) return "linux";
+    if (args.includes("windows")) return "windows";
+    if (args.includes("mac")) return "mac";
+    if (args.includes("dev")) return "dev";
+    return "dev";
+  }
+
+  export function getEnvConfig(): Partial<IConfigOptions> {
+    const env = testUtils.env();
+    switch (env) {
+      case "dev":
+        return getDevConfigs();
+      case "linux":
+        return getLinuxConfigs();
+      case "mac":
+        return getMacConfigs();
+      case "windows":
+        return getWindowsConfigs();
+      default:
+        return getDevConfigs();
+    }
   }
 }
 

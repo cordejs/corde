@@ -63,9 +63,10 @@ export async function runTests() {
   startLoading("login to corde bot");
 
   try {
-    // No need to await this function
-    runtime.loginBot(runtime.cordeBotToken);
-    await runtime.events.onceReady();
+    const loginPromise = runtime.loginBot(runtime.cordeBotToken);
+    const readyPromise = runtime.events.onceReady();
+    await Promise.allSettled([loginPromise, readyPromise]);
+
     spinner.stop();
 
     const testMatches = await reader.getTestsFromFiles({

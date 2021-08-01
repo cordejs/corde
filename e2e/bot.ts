@@ -61,8 +61,8 @@ export async function login(isDebugMode?: boolean) {
       resolve();
     });
   });
-  await bot.login(config.botToken);
-  await readyPromise;
+  const loginPromise = bot.login(config.botToken);
+  await Promise.allSettled([loginPromise, readyPromise]);
 }
 
 bot.on("message", async (message) => {

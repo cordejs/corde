@@ -34,6 +34,8 @@ function logoutBot() {
 }
 
 async function main() {
+  console.log(`Environment: ${chalk.cyan(testUtils.env())}`);
+
   const testsMeasureName = "tests end";
   let exitCode = 0;
   try {
@@ -50,20 +52,24 @@ async function main() {
 
     print(chalk.green(" Done\n"));
 
-    for (const [fileObj, testFn] of generator) {
-      const output = await testFn();
-      console.log(chalk.cyanBright(`Output of: ${fileObj.testFile}\n`));
-      console.log(output.stdout);
-      testUtils.saveOutput(fileObj.testFile, output);
+    const selectedTests = process.argv.slice(2);
 
-      if (output.exitCode !== fileObj.exitCodeExpectation) {
-        console.log(
-          `${chalk.bgRed.black(" FAIL ")} Exit code: ${output.exitCode}. Expected: ${
-            fileObj.exitCodeExpectation
-          }`,
-        );
-        logoutBot();
-        process.exit(1);
+    for (const [fileObj, testFn] of generator) {
+      if (selectedTests === [] || selectedTests.includes(fileObj.id.toString())) {
+        const output = await testFn();
+        console.log(chalk.cyanBright(`Output of: ${fileObj.testFile}\n`));
+        console.log(output.stdout);
+        testUtils.saveOutput(fileObj.testFile, output);
+
+        if (output.exitCode !== fileObj.exitCodeExpectation) {
+          console.log(
+            `${chalk.bgRed.black(" FAIL ")} Exit code: ${output.exitCode}. Expected: ${
+              fileObj.exitCodeExpectation
+            }`,
+          );
+          logoutBot();
+          process.exit(1);
+        }
       }
     }
 
