@@ -5,6 +5,7 @@ import { removeANSIColorStyle } from "../tests/testHelper";
 import * as childProcess from "child_process";
 import { CliOutput } from "./types";
 import path from "path";
+import chalk from "chalk";
 
 namespace testUtils {
   export function parseCommand(message: Message, prefix: string) {
@@ -43,12 +44,12 @@ namespace testUtils {
    * @internal
    */
   export function runCLI(command: string, setConfig = true) {
-    return new Promise<CliOutput>((resolve, reject) => {
+    return new Promise<CliOutput>((resolve) => {
       const con = `node ./bin/corde ${
         setConfig ? "--config ./e2e/corde.config.ts" : ""
       } ${command}`;
 
-      console.log(`running: ${con}`);
+      console.log(`${chalk.bgYellow.grey(" RUNNING ")}: ${con}`);
 
       const child = childProcess.exec(con, (error, stdout, stderr) => {
         if (error) {

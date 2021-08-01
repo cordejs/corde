@@ -1,8 +1,15 @@
 File: afterAll/test2.spec.ts
 exit code: 0
- EMPTY   e2e/afterAll/test2.spec.ts
+ RUNS   e2e/afterAll/test2.spec.ts
+ RUNS   e2e/afterAll/test2.spec.ts
+   ● <empty test name>
+ RUNS   e2e/afterAll/test2.spec.ts
+   ✔  <empty test name>   3ms
 
-Test Files: 1 empty. 1 total
-Tests:      0 total
-Time:       2ms
+ PASS    e2e/afterAll/test2.spec.ts   7ms
+   ✔  <empty test name>   3ms
+
+Test Files: 1 passed. 1 total
+Tests:      1 passed. 1 total
+Time:       9ms
 test

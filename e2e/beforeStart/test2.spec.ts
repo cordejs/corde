@@ -1,5 +1,6 @@
-import corde from "../../../lib";
-import { testCollector } from "../../../lib/src/common/testCollector";
+/* eslint-disable no-console */
+import corde from "../../lib";
+import { testCollector } from "../../lib/src/common/testCollector";
 
 async function asyncFunction() {
   return new Promise((resolve) => {
@@ -15,5 +16,5 @@ corde.beforeStart(async () => {
 });
 
 corde.it("", () => {
-  testCollector.addTestFunction(() => Promise.resolve({ pass: true }));
+  testCollector.addTestFunction(() => Promise.resolve({ pass: true } as any));
 });

@@ -62,6 +62,8 @@ async function main() {
             fileObj.exitCodeExpectation
           }`,
         );
+        logoutBot();
+        process.exit(1);
       }
     }
 

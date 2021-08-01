@@ -1,11 +1,11 @@
 /* eslint-disable no-console */
 import corde from "../../lib";
-import { wait } from "../../lib/src/utils";
 import { testCollector } from "../../lib/src/common/testCollector";
+import { wait } from "../../src/utils";
 
-corde.afterAll(async () => {
+corde.beforeEach(async () => {
   await wait(100);
-  console.log("test");
+  console.log("test beforeEach");
 });
 
 corde.it("", () => {

@@ -1,0 +1,3 @@
+File: checkVersion/test1.spec.ts
+exit code: 0
+v4.3.1
