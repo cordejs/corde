@@ -10,11 +10,11 @@ jobs:
         node-version: [16.x]
     env:
       BOT_PREFIX: ${{ secrets.BOT_PREFIX }}
-      CORDE_TEST_TOKEN: ${{ secrets.CORDE_TEST_TOKEN }}
-      BOT_TEST_ID: ${{ secrets.BOT_TEST_ID }}
-      CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
-      GUILD_ID: ${{ secrets.GUILD_ID }}
-      BOT_TEST_TOKEN: ${{ secrets.BOT_TEST_TOKEN }}
+      CORDE_TEST_TOKEN: ${{ secrets.CORDE_TEST_TOKEN_LINUX }}
+      BOT_TEST_ID: ${{ secrets.BOT_TEST_ID_LINUX }}
+      CHANNEL_ID: ${{ secrets.CHANNEL_ID_LINUX }}
+      GUILD_ID: ${{ secrets.GUILD_ID_LINUX }}
+      BOT_TEST_TOKEN: ${{ secrets.BOT_TEST_TOKEN_LINUX }}
       TIME_OUT: ${{ secrets.TIME_OUT }}
     steps:
       - uses: actions/checkout@v2

@@ -171,6 +171,8 @@ export class Bot {
     }
   }
 
+  // TODO: Rename "findRole" to "getRole"
+
   /**
    * Finds a role in config guild's cache, basing on it's **id**
    *
