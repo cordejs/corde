@@ -1,9 +1,9 @@
-name: Node CI
+name: e2e CI
 
 on: [push]
 
 jobs:
-  e2e:
+  linux:
     runs-on: ubuntu-latest
     strategy:
       matrix:
