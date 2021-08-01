@@ -16,6 +16,7 @@ jobs:
       GUILD_ID: ${{ secrets.GUILD_ID_LINUX }}
       BOT_TEST_TOKEN: ${{ secrets.BOT_TEST_TOKEN_LINUX }}
       TIME_OUT: ${{ secrets.TIME_OUT }}
+      CI_OS_ENV: linux
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}

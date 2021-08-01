@@ -15,6 +15,11 @@ interface TestModule {
   testFn: () => Promise<CliOutput>;
 }
 
+/**
+ * Tests id are used to specify tests in a local running
+ * I.E: yarn e2e 1 will execute only tests of id 1
+ */
+
 const testFiles: ITestFile[] = [
   {
     id: 1,
