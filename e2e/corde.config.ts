@@ -14,10 +14,39 @@ if (!process.env.CI && result.error) {
 }
 
 export const botPrefix = process.env.BOT_PREFIX;
-export const botTestId = process.env.BOT_TEST_ID;
-export const channelId = process.env.CHANNEL_ID;
-export const cordeBotToken = process.env.CORDE_TEST_TOKEN;
-export const guildId = process.env.GUILD_ID;
-export const botToken = process.env.BOT_TEST_TOKEN;
+
+// Different types of env variables are used
+// to test CI environments for each OS system.
+
+export const botTestId =
+  process.env.BOT_TEST_ID ||
+  process.env.BOT_TEST_ID_LINUX ||
+  process.env.BOT_TEST_ID_WINDOWS ||
+  process.env.BOT_TEST_ID_MAC;
+
+export const channelId =
+  process.env.CHANNEL_ID ||
+  process.env.CHANNEL_ID_LINUX ||
+  process.env.CHANNEL_ID_WINDOWS ||
+  process.env.CHANNEL_ID_MAC;
+
+export const cordeBotToken =
+  process.env.CORDE_TEST_TOKEN ||
+  process.env.CORDE_TEST_TOKEN_LINUX ||
+  process.env.CORDE_TEST_TOKEN_WINDOWS ||
+  process.env.CORDE_TEST_TOKEN_MAC;
+
+export const guildId =
+  process.env.GUILD_ID ||
+  process.env.GUILD_ID_LINUX ||
+  process.env.GUILD_ID_WINDOWS ||
+  process.env.GUILD_ID_MAC;
+
+export const botToken =
+  process.env.BOT_TEST_TOKEN ||
+  process.env.BOT_TEST_TOKEN_LINUX ||
+  process.env.BOT_TEST_TOKEN_WINDOWS ||
+  process.env.BOT_TEST_TOKEN_MAC;
+
 export const timeout = process.env.TIME_OUT;
 export const project = "./tsconfig.json";
