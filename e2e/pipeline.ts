@@ -91,3 +91,4 @@ async function main() {
 // main();
 
 console.log("ue");
+process.exit(0);
