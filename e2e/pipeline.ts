@@ -88,7 +88,6 @@ async function main() {
   }
 }
 
-// main();
-
-console.log("ue");
-process.exit(0);
+main()
+  .then(() => process.exit(0))
+  .catch(() => process.exit(1));
