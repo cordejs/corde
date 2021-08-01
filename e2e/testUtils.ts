@@ -68,6 +68,11 @@ namespace testUtils {
   }
 
   export function saveOutput(filename: string, output: CliOutput) {
+    // No need of preserve output in a CI environment
+    if (process.env.CI_OS_ENV) {
+      return;
+    }
+
     let data = `File: ${filename}\n`;
     data += `exit code: ${output.exitCode}\n`;
 

@@ -33,19 +33,18 @@ function logoutBot() {
 
 async function main() {
   console.log(`Environment: ${chalk.cyan(testUtils.env())}`);
-
   const testsMeasureName = "tests end";
   let exitCode = 0;
+
   try {
     console.time(testsMeasureName);
-
     console.log(chalk.cyanBright("loging example bot..."));
 
     try {
       await login();
     } catch (error) {
       console.error(error);
-      process.exit(1);
+      return 1;
     }
 
     console.log(chalk.green(" Done\n"));
@@ -68,7 +67,7 @@ async function main() {
             }`,
           );
           logoutBot();
-          process.exit(1);
+          return 1;
         }
       }
     }
@@ -84,10 +83,10 @@ async function main() {
     if (exitCode === 0) {
       console.log(`${chalk.bgGreen(" SUCCESS ")}: All tests passed`);
     }
-    process.exit(exitCode);
   }
+  return exitCode;
 }
 
 main()
-  .then(() => process.exit(0))
+  .then((exitCode) => process.exit(exitCode))
   .catch(() => process.exit(1));
