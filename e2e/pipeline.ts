@@ -1,4 +1,6 @@
 #!/usr/bin/env ts-node-script
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
 
 /**
@@ -24,10 +26,6 @@ import { login, bot } from "./bot";
 import { generator } from "./tests";
 import testUtils from "./testUtils";
 
-function print(stdout: any) {
-  process.stdout.write(stdout);
-}
-
 function logoutBot() {
   console.log(chalk.cyanBright("logout bot"));
   bot.destroy();
@@ -41,7 +39,7 @@ async function main() {
   try {
     console.time(testsMeasureName);
 
-    print(chalk.cyanBright("loging example bot..."));
+    console.log(chalk.cyanBright("loging example bot..."));
 
     try {
       await login();
@@ -50,7 +48,7 @@ async function main() {
       process.exit(1);
     }
 
-    print(chalk.green(" Done\n"));
+    console.log(chalk.green(" Done\n"));
 
     const selectedTests = process.argv
       .slice(process.argv.indexOf("--tests"))
@@ -82,7 +80,7 @@ async function main() {
     exitCode = 1;
   } finally {
     console.time(testsMeasureName);
-    print("\n");
+    console.log("\n");
     if (exitCode === 0) {
       console.log(`${chalk.bgGreen(" SUCCESS ")}: All tests passed`);
     }
@@ -90,6 +88,6 @@ async function main() {
   }
 }
 
-//main();
+// main();
 
-console.log("ok ");
+console.log("ue");
