@@ -90,4 +90,6 @@ async function main() {
   }
 }
 
-main();
+//main();
+
+console.log("ok ");
