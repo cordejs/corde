@@ -52,10 +52,12 @@ async function main() {
 
     print(chalk.green(" Done\n"));
 
-    const selectedTests = process.argv.slice(2);
+    const selectedTests = process.argv
+      .slice(process.argv.indexOf("--tests"))
+      .filter((el) => Number.isInteger(el));
 
     for (const [fileObj, testFn] of generator) {
-      if (selectedTests === [] || selectedTests.includes(fileObj.id.toString())) {
+      if (selectedTests.length === 0 || selectedTests.includes(fileObj.id.toString())) {
         const output = await testFn();
         console.log(chalk.cyanBright(`Output of: ${fileObj.testFile}\n`));
         console.log(output.stdout);
