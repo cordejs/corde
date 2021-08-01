@@ -27,3 +27,28 @@ jobs:
       - run: yarn
       - run: yarn build
       - run: yarn e2e
+
+  windows:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+    env:
+      BOT_PREFIX: ${{ secrets.BOT_PREFIX }}
+      CORDE_TEST_TOKEN: ${{ secrets.CORDE_TEST_TOKEN_WINDOWS }}
+      BOT_TEST_ID: ${{ secrets.BOT_TEST_ID_WINDOWS }}
+      CHANNEL_ID: ${{ secrets.CHANNEL_ID_WINDOWS }}
+      GUILD_ID: ${{ secrets.GUILD_ID_WINDOWS }}
+      BOT_TEST_TOKEN: ${{ secrets.BOT_TEST_TOKEN_WINDOWS }}
+      TIME_OUT: ${{ secrets.TIME_OUT }}
+      CI_OS_ENV: windows
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "yarn"
+      - run: yarn
+      - run: yarn build
+      - run: yarn e2e
