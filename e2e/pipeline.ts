@@ -81,6 +81,4 @@ async function main() {
   return exitCode;
 }
 
-main()
-  .then((exitCode) => process.exit(exitCode))
-  .catch(() => process.exit(1));
+main();
