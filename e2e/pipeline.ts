@@ -85,6 +85,7 @@ async function main() {
   //   }
   // }
   // return exitCode;
+  return 1;
 }
 
 main()
