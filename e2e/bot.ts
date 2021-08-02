@@ -61,6 +61,8 @@ export async function login(isDebugMode?: boolean) {
       resolve();
     });
   });
+
+  console.log(config.botToken);
   const loginPromise = bot.login(config.botToken);
   await Promise.allSettled([loginPromise, readyPromise]);
 }
