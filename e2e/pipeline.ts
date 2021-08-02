@@ -39,12 +39,7 @@ async function main() {
   console.time(testsMeasureName);
   console.log(chalk.cyanBright("loging example bot..."));
 
-  try {
-    await login();
-  } catch (error) {
-    console.error(error);
-    return 1;
-  }
+  await login();
 
   // try {
   //   console.log(chalk.green(" Done\n"));
