@@ -23,7 +23,7 @@ jobs:
           cache: "yarn"
       - run: yarn
       - run: yarn build
-      - run: yarn e2e
+      - run: yarn e2e linux
 #   windows:
 #     runs-on: windows-latest
 #     env:
