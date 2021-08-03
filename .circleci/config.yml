@@ -154,6 +154,19 @@ workflows:
             branches:
               ignore: gh-pages
 
+      - test-coverage:
+          requires:
+            - build
+          branches:
+            ignore: gh-pages
+
+      - publish-coverage:
+          requires:
+            - test-coverage
+          filters:
+            branches:
+              ignore: gh-pages
+
       - test-node:
           matrix:
             parameters:
@@ -165,10 +178,3 @@ workflows:
       #     filters:
       #       branches:
       #         ignore: gh-pages
-
-      - publish-coverage:
-          requires:
-            - test-coverage
-          filters:
-            branches:
-              ignore: gh-pages
