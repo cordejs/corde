@@ -7,11 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BOT_PREFIX: ${{ secrets.BOT_PREFIX }}
-      CORDE_TEST_TOKEN: ${{ secrets.CORDE_TEST_TOKEN_LINUX }}
-      BOT_TEST_ID: ${{ secrets.BOT_TEST_ID_LINUX }}
-      CHANNEL_ID: ${{ secrets.CHANNEL_ID_LINUX }}
-      GUILD_ID: ${{ secrets.GUILD_ID_LINUX }}
-      BOT_TEST_TOKEN: ${{ secrets.BOT_TEST_TOKEN_LINUX }}
+      CORDE_TEST_TOKEN: ${{ secrets.CORDE_TEST_TOKEN }}
+      BOT_TEST_ID: ${{ secrets.BOT_TEST_ID }}
+      CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
+      GUILD_ID: ${{ secrets.GUILD_ID }}
+      BOT_TEST_TOKEN: ${{ secrets.BOT_TEST_TOKEN }}
       TIME_OUT: ${{ secrets.TIME_OUT }}
       CI_OS_ENV: linux
     steps:
