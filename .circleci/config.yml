@@ -19,18 +19,8 @@ executors:
     docker:
       - image: cimg/base:2020.01
 
-  macos:
-    macos:
-      xcode: 11.3.0
-
-  windows:
-    machine:
-      image: windows-default # Windows machine image
-    resource_class: small
-
 orbs:
   node: circleci/node@2.0.0
-  win: circleci/windows@2.2.0
 
 jobs:
   install-dependencies:
@@ -105,7 +95,7 @@ jobs:
           paths:
             - .
 
-  publish_coverage:
+  publish-coverage:
     <<: *work-dir
     docker:
       - image: circleci/node:latest
