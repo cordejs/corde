@@ -101,6 +101,21 @@ jobs:
           name: Publish coverage
           command: yarn codecov -f coverage/*.json
 
+  e2e-linux:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - name: Create .env
+      - command: |
+          touch .env
+          echo "CORDE_TEST_TOKEN_LINUX=$CORDE_TEST_TOKEN_LINUX" > .env
+          echo "BOT_TEST_ID_LINUX=$BOT_TEST_ID_LINUX" >> .env
+          echo "CHANNEL_ID_LINUX=$CHANNEL_ID_LINUX" >> .env
+          echo "GUILD_ID_LINUX=$GUILD_ID_LINUX" >> .env
+          echo "BOT_TEST_TOKEN_LINUX=$BOT_TEST_TOKEN_LINUX" >> .env
+          echo "CI_OS_ENV=linux" >> .env
+      - run: yarn e2e
+
 workflows:
   version: 2
 
