@@ -56,8 +56,12 @@ export async function login(isDebugMode?: boolean) {
     });
   }
 
-  const readyPromise = new Promise<void>((resolve) => {
+  const readyPromise = new Promise<void>((resolve, reject) => {
+    const timeout = setTimeout(() => {
+      reject();
+    }, 5000);
     bot.once("ready", () => {
+      clearTimeout(timeout);
       resolve();
     });
   });
