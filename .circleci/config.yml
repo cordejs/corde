@@ -105,6 +105,7 @@ jobs:
     docker:
       - image: circleci/node:latest
     steps:
+      - *attach-step
       - run:
           name: Create .env
           command: |
