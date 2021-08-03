@@ -9,7 +9,6 @@ aliases:
     override-ci-command: yarn install --immutable
     cache-path: ~/.yarn/berry/cache
     include-branch-in-cache-key: false
-    app-dir: ~/corde
 
 references:
   x-workdir: &work-dir
