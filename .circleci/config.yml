@@ -118,7 +118,7 @@ jobs:
             echo "CI_OS_ENV=linux" >> .env
       - run:
           name: Execute e2e tests
-          command: yarn e2e
+          command: yarn e2e linux
 
 workflows:
   version: 2
