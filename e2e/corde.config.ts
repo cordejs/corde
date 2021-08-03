@@ -31,6 +31,8 @@ export const botPrefix = configs.botPrefix;
 export const timeout = configs.timeout;
 export const project = "./tsconfig.json";
 
+console.log(configs);
+
 if (testUtils.isDebug()) {
   console.log("Loaded configs: ");
   console.log(configs);
