@@ -1,10 +1,5 @@
 version: 2.1
 
-aliases:
-  - &filter-ignore-gh-pages
-    branches:
-      ignore: gh-pages
-
 references:
   x-workdir: &work-dir
     working_directory: ~/corde
@@ -19,9 +14,6 @@ references:
     attach_workspace:
       at: .
 
-orbs:
-  node: circleci/node@4.0.0
-
 jobs:
   install-dependencies:
     <<: *work-dir
@@ -35,7 +27,7 @@ jobs:
           key: v1-deps-{{ checksum "yarn.lock" }}
       - run:
           name: Install dependencies
-          command: yarn install --immutable
+          command: yarn install
       - save_cache:
           key: v1-deps-{{ checksum "yarn.lock" }}
           paths:
@@ -62,22 +54,27 @@ jobs:
           name: lint
           command: yarn lint
 
-  test-node:
-    parameters:
-      node-version:
-        type: string
+  test-node-14:
     <<: *work-dir
-    executor: node/default
+    docker:
+      - image: circleci/node:14
     steps:
-      - checkout
-      - node/install:
-          node-version: << parameters.node-version >>
-          install-npm: false
+      - *attach-step
       - run:
           name: Tests
           command: yarn test
 
-  test-coverage:
+  test-node-15:
+    <<: *work-dir
+    docker:
+      - image: circleci/node:15
+    steps:
+      - *attach-step
+      - run:
+          name: Tests
+          command: yarn test
+
+  test-node-16:
     <<: *work-dir
     docker:
       - image: circleci/node:16
@@ -147,24 +144,26 @@ workflows:
             branches:
               ignore: gh-pages
 
-      - test-coverage:
+      - test-node-14:
           requires:
             - build
           filters:
             branches:
               ignore: gh-pages
 
-      - publish-coverage:
+      - test-node-15:
           requires:
-            - test-coverage
+            - build
           filters:
             branches:
               ignore: gh-pages
 
-      - test-node:
-          matrix:
-            parameters:
-              node-version: ["14", "15"]
+      - test-node-16:
+          requires:
+            - build
+          filters:
+            branches:
+              ignore: gh-pages
 
       # - e2e-linux:
       #     requires:
@@ -172,3 +171,12 @@ workflows:
       #     filters:
       #       branches:
       #         ignore: gh-pages
+
+      - publish-coverage:
+          requires:
+            - test-node-14
+            - test-node-15
+            - test-node-16
+          filters:
+            branches:
+              ignore: gh-pages
