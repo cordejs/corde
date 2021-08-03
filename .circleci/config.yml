@@ -14,14 +14,6 @@ references:
     attach_workspace:
       at: .
 
-executors:
-  linux:
-    docker:
-      - image: cimg/base:2020.01
-
-orbs:
-  node: circleci/node@2.0.0
-
 jobs:
   install-dependencies:
     <<: *work-dir
@@ -62,23 +54,27 @@ jobs:
           name: lint
           command: yarn lint
 
-  test:
+  test-14:
     <<: *work-dir
-    parameters:
-      os:
-        type: executor
-      node-version:
-        type: string
-    executor: << parameters.os >>
+    docker:
+      - image: circleci/node:14
     steps:
       - *attach-step
-      - node/install:
-          node-version: << parameters.node-version >>
       - run:
-          name: Unit Tests
+          name: Tests
           command: yarn test
 
-  test-coverage:
+  test-15:
+    <<: *work-dir
+    docker:
+      - image: circleci/node:15
+    steps:
+      - *attach-step
+      - run:
+          name: Tests
+          command: yarn test
+
+  test-16:
     <<: *work-dir
     docker:
       - image: circleci/node:16
@@ -95,7 +91,7 @@ jobs:
           paths:
             - .
 
-  publish-coverage:
+  publish_coverage:
     <<: *work-dir
     docker:
       - image: circleci/node:latest
@@ -105,7 +101,7 @@ jobs:
           name: Publish coverage
           command: yarn codecov -f coverage/*.json
 
-  # e2e:
+  # e2e-linux:
   #   docker:
   #     - image: circleci/node:latest
   #   steps:
@@ -148,32 +144,39 @@ workflows:
             branches:
               ignore: gh-pages
 
-      - test:
-          requires:
-            - build
-          matrix:
-            parameters:
-              os: [linux]
-              # https://nodejs.org/en/download/releases
-              node-version: ["14.9.0", "14.17.4", "15.14.0", "16.6.0"]
-
-      - test-coverage:
+      - test-14:
           requires:
             - build
           filters:
             branches:
               ignore: gh-pages
 
-      # - e2e:
-      #     requires:
-      #       - build
-      #     filters:
-      #       branches:
-      #         ignore: gh-pages
-
-      - publish-coverage:
+      - test-15:
           requires:
-            - test-coverage
+            - build
+          filters:
+            branches:
+              ignore: gh-pages
+
+      - test-16:
+          requires:
+            - build
+          filters:
+            branches:
+              ignore: gh-pages
+
+      - e2e-linux:
+          requires:
+            - build
+          filters:
+            branches:
+              ignore: gh-pages
+
+      - publish_coverage:
+          requires:
+            - test-14
+            - test-15
+            - test-16
           filters:
             branches:
               ignore: gh-pages
