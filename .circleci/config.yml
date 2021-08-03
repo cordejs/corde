@@ -101,7 +101,7 @@ jobs:
           paths:
             - .
 
-  publish_coverage:
+  publish-coverage:
     <<: *work-dir
     docker:
       - image: circleci/node:latest
@@ -168,7 +168,7 @@ workflows:
 
       - publish-coverage:
           requires:
-            - publish_coverage
+            - test-coverage
           filters:
             branches:
               ignore: gh-pages
