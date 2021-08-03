@@ -4,11 +4,6 @@ aliases:
   - &filter-ignore-gh-pages
     branches:
       ignore: gh-pages
-  - &install
-    pkg-manager: yarn
-    override-ci-command: yarn install --immutable
-    cache-path: ~/.yarn/berry/cache
-    include-branch-in-cache-key: false
 
 references:
   x-workdir: &work-dir
@@ -74,11 +69,9 @@ jobs:
     <<: *work-dir
     executor: node/default
     steps:
-      - *attach-step
       - node/install:
           node-version: << parameters.node-version >>
           install-npm: false
-      - node/install-packages: *install
       - run:
           name: Tests
           command: yarn test
