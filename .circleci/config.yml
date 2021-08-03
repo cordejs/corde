@@ -159,9 +159,11 @@ workflows:
               ignore: gh-pages
 
       - test:
+          requires:
+            - build
           matrix:
             parameters:
-              os: [linux, macos, windows]
+              os: [linux]
               # https://nodejs.org/en/download/releases
               node-version: ["14.9.0", "14.17.4", "15.14.0", "16.6.0"]
 
@@ -179,7 +181,7 @@ workflows:
       #       branches:
       #         ignore: gh-pages
 
-      - publish_coverage:
+      - publish-coverage:
           requires:
             - test-coverage
           filters:
