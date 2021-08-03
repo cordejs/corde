@@ -1,73 +1,73 @@
-name: e2e CI
+# name: e2e CI
 
-on: [push]
+# on: [push]
 
-jobs:
-  linux:
-    runs-on: ubuntu-latest
-    env:
-      BOT_PREFIX: ${{ secrets.BOT_PREFIX }}
-      CORDE_TEST_TOKEN: ${{ secrets.CORDE_TEST_TOKEN_LINUX }}
-      BOT_TEST_ID: ${{ secrets.BOT_TEST_ID_LINUX }}
-      CHANNEL_ID: ${{ secrets.CHANNEL_ID_LINUX }}
-      GUILD_ID: ${{ secrets.GUILD_ID_LINUX }}
-      BOT_TEST_TOKEN: ${{ secrets.BOT_TEST_TOKEN_LINUX }}
-      TIME_OUT: ${{ secrets.TIME_OUT }}
-      CI_OS_ENV: linux
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16.x
-          cache: "yarn"
-      - run: yarn
-      - run: yarn build
-      - run: yarn e2e
+# jobs:
+#   linux:
+#     runs-on: ubuntu-latest
+#     env:
+#       BOT_PREFIX: ${{ secrets.BOT_PREFIX }}
+#       CORDE_TEST_TOKEN: ${{ secrets.CORDE_TEST_TOKEN_LINUX }}
+#       BOT_TEST_ID: ${{ secrets.BOT_TEST_ID_LINUX }}
+#       CHANNEL_ID: ${{ secrets.CHANNEL_ID_LINUX }}
+#       GUILD_ID: ${{ secrets.GUILD_ID_LINUX }}
+#       BOT_TEST_TOKEN: ${{ secrets.BOT_TEST_TOKEN_LINUX }}
+#       TIME_OUT: ${{ secrets.TIME_OUT }}
+#       CI_OS_ENV: linux
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Use Node.js ${{ matrix.node-version }}
+#         uses: actions/setup-node@v2
+#         with:
+#           node-version: 16.x
+#           cache: "yarn"
+#       - run: yarn
+#       - run: yarn build
+#       - run: yarn e2e
 
-  windows:
-    runs-on: windows-latest
-    env:
-      BOT_PREFIX: ${{ secrets.BOT_PREFIX }}
-      CORDE_TEST_TOKEN: ${{ secrets.CORDE_TEST_TOKEN_WINDOWS }}
-      BOT_TEST_ID: ${{ secrets.BOT_TEST_ID_WINDOWS }}
-      CHANNEL_ID: ${{ secrets.CHANNEL_ID_WINDOWS }}
-      GUILD_ID: ${{ secrets.GUILD_ID_WINDOWS }}
-      BOT_TEST_TOKEN: ${{ secrets.BOT_TEST_TOKEN_WINDOWS }}
-      TIME_OUT: ${{ secrets.TIME_OUT }}
-      CI_OS_ENV: windows
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16.x
-          cache: "yarn"
-      - run: yarn
-      - run: yarn build
-      - run: yarn e2e
+#   windows:
+#     runs-on: windows-latest
+#     env:
+#       BOT_PREFIX: ${{ secrets.BOT_PREFIX }}
+#       CORDE_TEST_TOKEN: ${{ secrets.CORDE_TEST_TOKEN_WINDOWS }}
+#       BOT_TEST_ID: ${{ secrets.BOT_TEST_ID_WINDOWS }}
+#       CHANNEL_ID: ${{ secrets.CHANNEL_ID_WINDOWS }}
+#       GUILD_ID: ${{ secrets.GUILD_ID_WINDOWS }}
+#       BOT_TEST_TOKEN: ${{ secrets.BOT_TEST_TOKEN_WINDOWS }}
+#       TIME_OUT: ${{ secrets.TIME_OUT }}
+#       CI_OS_ENV: windows
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Use Node.js ${{ matrix.node-version }}
+#         uses: actions/setup-node@v2
+#         with:
+#           node-version: 16.x
+#           cache: "yarn"
+#       - run: yarn
+#       - run: yarn build
+#       - run: yarn e2e
 
-  # mac:
-  #   runs-on: macos-11.0
-  #   strategy:
-  #     matrix:
-  #       node-version: [16.x]
-  #   env:
-  #     BOT_PREFIX: ${{ secrets.BOT_PREFIX }}
-  #     CORDE_TEST_TOKEN: ${{ secrets.CORDE_TEST_TOKEN_MAC }}
-  #     BOT_TEST_ID: ${{ secrets.BOT_TEST_ID_MAC }}
-  #     CHANNEL_ID: ${{ secrets.CHANNEL_ID_MAC }}
-  #     GUILD_ID: ${{ secrets.GUILD_ID_MAC }}
-  #     BOT_TEST_TOKEN: ${{ secrets.BOT_TEST_TOKEN_MAC }}
-  #     TIME_OUT: ${{ secrets.TIME_OUT }}
-  #     CI_OS_ENV: windows
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Use Node.js ${{ matrix.node-version }}
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         node-version: ${{ matrix.node-version }}
-  #         cache: "yarn"
-  #     - run: yarn
-  #     - run: yarn build
-  #     - run: yarn e2e
+#   # mac:
+#   #   runs-on: macos-11.0
+#   #   strategy:
+#   #     matrix:
+#   #       node-version: [16.x]
+#   #   env:
+#   #     BOT_PREFIX: ${{ secrets.BOT_PREFIX }}
+#   #     CORDE_TEST_TOKEN: ${{ secrets.CORDE_TEST_TOKEN_MAC }}
+#   #     BOT_TEST_ID: ${{ secrets.BOT_TEST_ID_MAC }}
+#   #     CHANNEL_ID: ${{ secrets.CHANNEL_ID_MAC }}
+#   #     GUILD_ID: ${{ secrets.GUILD_ID_MAC }}
+#   #     BOT_TEST_TOKEN: ${{ secrets.BOT_TEST_TOKEN_MAC }}
+#   #     TIME_OUT: ${{ secrets.TIME_OUT }}
+#   #     CI_OS_ENV: windows
+#   #   steps:
+#   #     - uses: actions/checkout@v2
+#   #     - name: Use Node.js ${{ matrix.node-version }}
+#   #       uses: actions/setup-node@v2
+#   #       with:
+#   #         node-version: ${{ matrix.node-version }}
+#   #         cache: "yarn"
+#   #     - run: yarn
+#   #     - run: yarn build
+#   #     - run: yarn e2e
