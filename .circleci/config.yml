@@ -157,8 +157,9 @@ workflows:
       - test-coverage:
           requires:
             - build
-          branches:
-            ignore: gh-pages
+          filters:
+            branches:
+              ignore: gh-pages
 
       - publish-coverage:
           requires:
