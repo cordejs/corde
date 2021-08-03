@@ -34,7 +34,7 @@ async function main() {
   const testsMeasureName = "tests end";
   let exitCode = 0;
 
-  console.time(testsMeasureName);
+  // console.time(testsMeasureName);
   console.log(chalk.cyanBright("loging example bot..."));
 
   await login();
@@ -71,7 +71,7 @@ async function main() {
     console.log(`${chalk.bgRed.black(" FAIL ")} ${error}`);
     exitCode = 1;
   } finally {
-    console.time(testsMeasureName);
+    //console.time(testsMeasureName);
     console.log("\n");
     if (exitCode === 0) {
       console.log(`${chalk.bgGreen(" SUCCESS ")}: All tests passed`);
