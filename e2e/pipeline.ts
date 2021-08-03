@@ -32,52 +32,51 @@ function logoutBot() {
 async function main() {
   console.log(`Environment: ${chalk.cyan(testUtils.env())}`);
   const testsMeasureName = "tests end";
-  const exitCode = 0;
+  let exitCode = 0;
 
   console.time(testsMeasureName);
   console.log(chalk.cyanBright("loging example bot..."));
 
   await login();
 
-  // try {
-  //   console.log(chalk.green(" Done\n"));
+  try {
+    console.log(chalk.green(" Done\n"));
 
-  //   const selectedTests = process.argv
-  //     .slice(process.argv.indexOf("--tests"))
-  //     .filter((el) => Number.isInteger(el));
+    const selectedTests = process.argv
+      .slice(process.argv.indexOf("--tests"))
+      .filter((el) => Number.isInteger(el));
 
-  //   for (const [fileObj, testFn] of generator) {
-  //     if (selectedTests.length === 0 || selectedTests.includes(fileObj.id.toString())) {
-  //       const output = await testFn();
-  //       console.log(chalk.cyanBright(`Output of: ${fileObj.testFile}\n`));
-  //       console.log(output.stdout);
-  //       testUtils.saveOutput(fileObj.testFile, output);
+    for (const [fileObj, testFn] of generator) {
+      if (selectedTests.length === 0 || selectedTests.includes(fileObj.id.toString())) {
+        const output = await testFn();
+        console.log(chalk.cyanBright(`Output of: ${fileObj.testFile}\n`));
+        console.log(output.stdout);
+        testUtils.saveOutput(fileObj.testFile, output);
 
-  //       if (output.exitCode !== fileObj.exitCodeExpectation) {
-  //         console.log(
-  //           `${chalk.bgRed.black(" FAIL ")} Exit code: ${output.exitCode}. Expected: ${
-  //             fileObj.exitCodeExpectation
-  //           }`,
-  //         );
-  //         logoutBot();
-  //         return 1;
-  //       }
-  //     }
-  //   }
+        if (output.exitCode !== fileObj.exitCodeExpectation) {
+          console.log(
+            `${chalk.bgRed.black(" FAIL ")} Exit code: ${output.exitCode}. Expected: ${
+              fileObj.exitCodeExpectation
+            }`,
+          );
+          logoutBot();
+          return 1;
+        }
+      }
+    }
 
-  //   logoutBot();
-  // } catch (error) {
-  //   logoutBot();
-  //   console.log(`${chalk.bgRed.black(" FAIL ")} ${error}`);
-  //   exitCode = 1;
-  // } finally {
-  //   console.time(testsMeasureName);
-  //   console.log("\n");
-  //   if (exitCode === 0) {
-  //     console.log(`${chalk.bgGreen(" SUCCESS ")}: All tests passed`);
-  //   }
-  // }
-  logoutBot();
+    logoutBot();
+  } catch (error) {
+    logoutBot();
+    console.log(`${chalk.bgRed.black(" FAIL ")} ${error}`);
+    exitCode = 1;
+  } finally {
+    console.time(testsMeasureName);
+    console.log("\n");
+    if (exitCode === 0) {
+      console.log(`${chalk.bgGreen(" SUCCESS ")}: All tests passed`);
+    }
+  }
   return exitCode;
 }
 
