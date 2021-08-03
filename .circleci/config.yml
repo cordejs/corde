@@ -165,12 +165,12 @@ workflows:
             branches:
               ignore: gh-pages
 
-      - e2e-linux:
-          requires:
-            - build
-          filters:
-            branches:
-              ignore: gh-pages
+      # - e2e-linux:
+      #     requires:
+      #       - build
+      #     filters:
+      #       branches:
+      #         ignore: gh-pages
 
       - publish_coverage:
           requires:
