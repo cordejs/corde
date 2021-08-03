@@ -66,8 +66,10 @@ jobs:
     parameters:
       node-version:
         type: string
+    <<: *work-dir
     executor: node/default
     steps:
+      - checkout
       - node/install:
           node-version: << parameters.node-version >>
           install-npm: false
