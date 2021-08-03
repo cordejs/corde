@@ -14,6 +14,24 @@ references:
     attach_workspace:
       at: .
 
+executors:
+  linux:
+    docker:
+      - image: cimg/base:2020.01
+
+  macos:
+    macos:
+      xcode: 11.3.0
+
+  windows:
+    machine:
+      image: windows-default # Windows machine image
+    resource_class: small
+
+orbs:
+  node: circleci/node@2.0.0
+  win: circleci/windows@2.2.0
+
 jobs:
   install-dependencies:
     <<: *work-dir
@@ -54,27 +72,23 @@ jobs:
           name: lint
           command: yarn lint
 
-  unit-test-node-14:
+  test:
     <<: *work-dir
-    docker:
-      - image: circleci/node:14
+    parameters:
+      os:
+        type: executor
+      node-version:
+        type: string
+    executor: << parameters.os >>
     steps:
       - *attach-step
+      - node/install:
+          node-version: << parameters.node-version >>
       - run:
-          name: Tests
+          name: Unit Tests
           command: yarn test
 
-  unit-test-node-15:
-    <<: *work-dir
-    docker:
-      - image: circleci/node:15
-    steps:
-      - *attach-step
-      - run:
-          name: Tests
-          command: yarn test
-
-  unit-test-node-16:
+  test-coverage:
     <<: *work-dir
     docker:
       - image: circleci/node:16
@@ -101,24 +115,24 @@ jobs:
           name: Publish coverage
           command: yarn codecov -f coverage/*.json
 
-  e2e-linux:
-    docker:
-      - image: circleci/node:latest
-    steps:
-      - *attach-step
-      - run:
-          name: Create .env
-          command: |
-            touch .env
-            echo "CORDE_TEST_TOKEN_LINUX=$CORDE_TEST_TOKEN_LINUX" > .env
-            echo "BOT_TEST_ID_LINUX=$BOT_TEST_ID_LINUX" >> .env
-            echo "CHANNEL_ID_LINUX=$CHANNEL_ID_LINUX" >> .env
-            echo "GUILD_ID_LINUX=$GUILD_ID_LINUX" >> .env
-            echo "BOT_TEST_TOKEN_LINUX=$BOT_TEST_TOKEN_LINUX" >> .env
-            echo "CI_OS_ENV=linux" >> .env
-      - run:
-          name: Execute e2e tests
-          command: yarn e2e linux
+  # e2e:
+  #   docker:
+  #     - image: circleci/node:latest
+  #   steps:
+  #     - *attach-step
+  #     - run:
+  #         name: Create .env
+  #         command: |
+  #           touch .env
+  #           echo "CORDE_TEST_TOKEN_LINUX=$CORDE_TEST_TOKEN_LINUX" > .env
+  #           echo "BOT_TEST_ID_LINUX=$BOT_TEST_ID_LINUX" >> .env
+  #           echo "CHANNEL_ID_LINUX=$CHANNEL_ID_LINUX" >> .env
+  #           echo "GUILD_ID_LINUX=$GUILD_ID_LINUX" >> .env
+  #           echo "BOT_TEST_TOKEN_LINUX=$BOT_TEST_TOKEN_LINUX" >> .env
+  #           echo "CI_OS_ENV=linux" >> .env
+  #     - run:
+  #         name: Execute e2e tests
+  #         command: yarn e2e linux
 
 workflows:
   version: 2
@@ -144,39 +158,30 @@ workflows:
             branches:
               ignore: gh-pages
 
-      - unit-test-node-14:
+      - test:
+          matrix:
+            parameters:
+              os: [linux, macos, windows]
+              # https://nodejs.org/en/download/releases
+              node-version: ["14.9.0", "14.17.4", "15.14.0", "16.6.0"]
+
+      - test-coverage:
           requires:
             - build
           filters:
             branches:
               ignore: gh-pages
 
-      - unit-test-node-15:
-          requires:
-            - build
-          filters:
-            branches:
-              ignore: gh-pages
-
-      - unit-test-node-16:
-          requires:
-            - build
-          filters:
-            branches:
-              ignore: gh-pages
-
-      - e2e-linux:
-          requires:
-            - build
-          filters:
-            branches:
-              ignore: gh-pages
+      # - e2e:
+      #     requires:
+      #       - build
+      #     filters:
+      #       branches:
+      #         ignore: gh-pages
 
       - publish_coverage:
           requires:
-            - unit-test-node-14
-            - unit-test-node-15
-            - unit-test-node-16
+            - test-coverage
           filters:
             branches:
               ignore: gh-pages
