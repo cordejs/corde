@@ -124,7 +124,7 @@ namespace testUtils {
 
   export function isDebug() {
     const args = process.argv.slice(2);
-    return args.includes("debug") && !process.env.CI_OS_ENV;
+    return args.includes("debug");
   }
 
   export function env() {
