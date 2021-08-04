@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // TODO: In some tests, when a function from another module is called,
 // Corde reader fail in import the test file because Node.js can not
 // import the submodule. To avoid the problem, this file is here is root of the project,
@@ -55,13 +56,19 @@ export async function login(isDebugMode?: boolean) {
     });
   }
 
-  const readyPromise = new Promise<void>((resolve) => {
+  const readyPromise = new Promise<void>((resolve, reject) => {
+    const timeout = setTimeout(() => {
+      reject();
+    }, 5000);
     bot.once("ready", () => {
+      clearTimeout(timeout);
       resolve();
     });
   });
-  await bot.login(config.botToken);
-  await readyPromise;
+
+  console.log(config.botToken);
+  const loginPromise = bot.login(config.botToken);
+  await Promise.allSettled([loginPromise, readyPromise]);
 }
 
 bot.on("message", async (message) => {

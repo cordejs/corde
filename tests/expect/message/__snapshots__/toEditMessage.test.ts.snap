@@ -48,7 +48,7 @@ exports[`testing toEditMessage should get fail test due to bot returned differen
 Object {
   "message": "    
     [32m- Expected  - 13[39m
-    [31m+ Received  +  1[39m
+    [31m+ Received  +  0[39m
     
     [2m  Object {[22m
     [32m-   \\"author\\": Object {[39m
@@ -58,7 +58,6 @@ Object {
     [32m-   },[39m
     [32m-   \\"color\\": 2123412,[39m
     [32m-   \\"description\\": \\"Some description here\\",[39m
-    [31m+   \\"author\\": \\"ITest\\",[39m
     [2m    \\"fields\\": Array [[22m
     [2m      Object {[22m
     [2m        \\"inline\\": false,[22m

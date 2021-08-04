@@ -54,7 +54,7 @@ jobs:
           name: lint
           command: yarn lint
 
-  unit-test-node-14:
+  test-node-14:
     <<: *work-dir
     docker:
       - image: circleci/node:14
@@ -64,7 +64,7 @@ jobs:
           name: Tests
           command: yarn test
 
-  unit-test-node-15:
+  test-node-15:
     <<: *work-dir
     docker:
       - image: circleci/node:15
@@ -74,7 +74,17 @@ jobs:
           name: Tests
           command: yarn test
 
-  unit-test-node-16:
+  test-node-LTS:
+    <<: *work-dir
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - *attach-step
+      - run:
+          name: Tests
+          command: yarn test
+
+  test-node-16:
     <<: *work-dir
     docker:
       - image: circleci/node:16
@@ -91,7 +101,7 @@ jobs:
           paths:
             - .
 
-  publish_coverage:
+  publish-coverage:
     <<: *work-dir
     docker:
       - image: circleci/node:latest
@@ -125,32 +135,41 @@ workflows:
             branches:
               ignore: gh-pages
 
-      - unit-test-node-14:
+      - test-node-14:
           requires:
             - build
           filters:
             branches:
               ignore: gh-pages
 
-      - unit-test-node-15:
+      - test-node-15:
           requires:
             - build
           filters:
             branches:
               ignore: gh-pages
 
-      - unit-test-node-16:
+      - test-node-16:
           requires:
             - build
           filters:
             branches:
               ignore: gh-pages
 
-      - publish_coverage:
+      - test-node-LTS:
           requires:
-            - unit-test-node-14
-            - unit-test-node-15
-            - unit-test-node-16
+            - build
+          filters:
+            branches:
+              ignore: gh-pages
+
+      - publish-coverage:
+          requires:
+            - test-node-14
+            - test-node-15
+            - test-node-16
+            - test-node-LTS
+
           filters:
             branches:
               ignore: gh-pages

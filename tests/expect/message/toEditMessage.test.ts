@@ -308,7 +308,6 @@ describe("testing toEditMessage", () => {
     );
 
     const embedInternal: IMessageEmbed = {
-      author: "ITest",
       fields: mockDiscord.messageEmbedSimple.fields,
     };
 

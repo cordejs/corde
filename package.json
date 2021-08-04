@@ -38,7 +38,7 @@
     "watch": "bash tasks.sh watch",
     "corde": "node ./bin/corde",
     "killProcess": "cd ./etc && bash ./build_and_kill.sh",
-    "e2e": "jest --config ./e2e/jest.config.ts --runInBand",
+    "e2e": "ts-node ./e2e/pipeline.ts",
     "test-with-coverage": "jest --silent --ci --detectOpenHandles --collect-coverage --collectCoverageFrom=src/**/*.ts",
     "refresh": "rm -rf ./node_modules ./package-lock.json && yarn install",
     "fix-lint": "eslint --fix ./src ./tests",
@@ -85,14 +85,13 @@
     "babel-jest": "^27.0.1",
     "cli-spinners": "^2.4.0",
     "codecov": "^3.6.5",
-    "dependency-cruiser": "^10.0.1",
     "dotenv": "^10.0.0",
     "eslint": "^7.23.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-import-resolver-typescript": "^2.4.0",
     "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsdoc": "^36.0.2",
+    "eslint-plugin-jsdoc": "^35.0.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-promise": "^5.1.0",
@@ -120,6 +119,9 @@
     "typedoc-plugin-markdown": "^3.6.0",
     "typescript": "^4.1.3",
     "yarn": "^1.22.10"
+  },
+  "optionalDependencies": {
+    "dependency-cruiser": "^10.0.1"
   },
   "dependencies": {
     "chalk": "^4.1.1",
