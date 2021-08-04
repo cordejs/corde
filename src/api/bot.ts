@@ -180,7 +180,7 @@ export class Bot {
    * @throws CordeClientError if corde's bot is not connected.
    * @returns Role that matches the provided **id** or **name**
    */
-  findRole(id: string): Role | undefined;
+  getRole(id: string): Role | undefined;
   /**
    * Finds a role in config guild's cache, basing on it's **id** or **name**.
    *
@@ -193,16 +193,16 @@ export class Bot {
    * @throws CordeClientError if corde's bot is not connected.
    * @returns Role that matches the provided **id** or **name**
    */
-  findRole(data: IRoleIdentifier): Role | undefined;
-  findRole(data: string | IRoleIdentifier) {
+  getRole(data: IRoleIdentifier): Role | undefined;
+  getRole(data: string | IRoleIdentifier) {
     if (!this._bot.isLoggedIn()) {
       throw new CordeClientError("Bot is not connected yet. No role can be searched");
     }
 
-    return this._findRole(data);
+    return this._getRole(data);
   }
 
-  private _findRole(data: string | IRoleIdentifier) {
+  private _getRole(data: string | IRoleIdentifier) {
     if (typeof data === "string") {
       return this._bot.getRoles().find((r) => r.id === data);
     }
