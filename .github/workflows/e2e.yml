@@ -54,38 +54,46 @@ jobs:
       - name: Create .env file
         run: |
           cd ./e2e
-          echo CORDE_TEST_TOKEN_LINUX=${{ secrets.CORDE_TEST_TOKEN_WINDOWS }} > .env
+          echo CORDE_TEST_TOKEN_WINDOWS=${{ secrets.CORDE_TEST_TOKEN_WINDOWS }} > .env
           echo BOT_PREFIX=${{ secrets.BOT_PREFIX }} >> .env
           echo TIME_OUT=${{ secrets.TIME_OUT }} >> .env
-          echo BOT_TEST_ID_LINUX=${{ secrets.BOT_TEST_ID_WINDOWS }} >> .env
-          echo CHANNEL_ID_LINUX=${{ secrets.CHANNEL_ID_WINDOWS }} >> .env
-          echo GUILD_ID_LINUX=${{ secrets.GUILD_ID_WINDOWS }} >> .env
-          echo BOT_TEST_TOKEN_LINUX=${{ secrets.BOT_TEST_TOKEN_WINDOWS }} >> .env
+          echo BOT_TEST_ID_WINDOWS=${{ secrets.BOT_TEST_ID_WINDOWS }} >> .env
+          echo CHANNEL_ID_WINDOWS=${{ secrets.CHANNEL_ID_WINDOWS }} >> .env
+          echo GUILD_ID_WINDOWS=${{ secrets.GUILD_ID_WINDOWS }} >> .env
+          echo BOT_TEST_TOKEN_WINDOWS=${{ secrets.BOT_TEST_TOKEN_WINDOWS }} >> .env
           cd ..
 
       - name: Run e2e
-        run: yarn e2e linux
-#   # mac:
-#   #   runs-on: macos-11.0
-#   #   strategy:
-#   #     matrix:
-#   #       node-version: [16.x]
-#   #   env:
-#   #     BOT_PREFIX: ${{ secrets.BOT_PREFIX }}
-#   #     CORDE_TEST_TOKEN: ${{ secrets.CORDE_TEST_TOKEN_MAC }}
-#   #     BOT_TEST_ID: ${{ secrets.BOT_TEST_ID_MAC }}
-#   #     CHANNEL_ID: ${{ secrets.CHANNEL_ID_MAC }}
-#   #     GUILD_ID: ${{ secrets.GUILD_ID_MAC }}
-#   #     BOT_TEST_TOKEN: ${{ secrets.BOT_TEST_TOKEN_MAC }}
-#   #     TIME_OUT: ${{ secrets.TIME_OUT }}
-#   #     CI_OS_ENV: windows
-#   #   steps:
-#   #     - uses: actions/checkout@v2
-#   #     - name: Use Node.js ${{ matrix.node-version }}
-#   #       uses: actions/setup-node@v2
-#   #       with:
-#   #         node-version: ${{ matrix.node-version }}
-#   #         cache: "yarn"
-#   #     - run: yarn
-#   #     - run: yarn build
-#   #     - run: yarn e2e
+        run: yarn e2e windows
+
+  mac:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+          cache: "yarn"
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Build project
+        run: yarn build
+
+      - name: Create .env file
+        run: |
+          cd ./e2e
+          touch .env
+          echo CORDE_TEST_TOKEN_MAC=${{ secrets.CORDE_TEST_TOKEN_MAC }} > .env
+          echo BOT_PREFIX=${{ secrets.BOT_PREFIX }} >> .env
+          echo TIME_OUT=${{ secrets.TIME_OUT }} >> .env
+          echo BOT_TEST_ID_MAC=${{ secrets.BOT_TEST_ID_MAC }} >> .env
+          echo CHANNEL_ID_MAC=${{ secrets.CHANNEL_ID_MAC }} >> .env
+          echo GUILD_ID_MAC=${{ secrets.GUILD_ID_MAC }} >> .env
+          echo BOT_TEST_TOKEN_MAC=${{ secrets.BOT_TEST_TOKEN_MAC }} >> .env
+          cd ..
+
+      - name: Run e2e
+        run: yarn e2e mac
