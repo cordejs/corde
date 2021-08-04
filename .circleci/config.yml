@@ -74,6 +74,16 @@ jobs:
           name: Tests
           command: yarn test
 
+  test-node-LTS:
+    <<: *work-dir
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - *attach-step
+      - run:
+          name: Tests
+          command: yarn test
+
   test-node-16:
     <<: *work-dir
     docker:
@@ -100,25 +110,6 @@ jobs:
       - run:
           name: Publish coverage
           command: yarn codecov -f coverage/*.json
-
-  # e2e-linux:
-  #   docker:
-  #     - image: circleci/node:latest
-  #   steps:
-  #     - *attach-step
-  #     - run:
-  #         name: Create .env
-  #         command: |
-  #           touch .env
-  #           echo "CORDE_TEST_TOKEN_LINUX=$CORDE_TEST_TOKEN_LINUX" > .env
-  #           echo "BOT_TEST_ID_LINUX=$BOT_TEST_ID_LINUX" >> .env
-  #           echo "CHANNEL_ID_LINUX=$CHANNEL_ID_LINUX" >> .env
-  #           echo "GUILD_ID_LINUX=$GUILD_ID_LINUX" >> .env
-  #           echo "BOT_TEST_TOKEN_LINUX=$BOT_TEST_TOKEN_LINUX" >> .env
-  #           echo "CI_OS_ENV=linux" >> .env
-  #     - run:
-  #         name: Execute e2e tests
-  #         command: yarn e2e linux
 
 workflows:
   version: 2
@@ -165,18 +156,20 @@ workflows:
             branches:
               ignore: gh-pages
 
-      # - e2e-linux:
-      #     requires:
-      #       - build
-      #     filters:
-      #       branches:
-      #         ignore: gh-pages
+      - test-node-LTS:
+          requires:
+            - build
+          filters:
+            branches:
+              ignore: gh-pages
 
       - publish-coverage:
           requires:
             - test-node-14
             - test-node-15
             - test-node-16
+            - test-node-LTS
+
           filters:
             branches:
               ignore: gh-pages
