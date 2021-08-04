@@ -122,11 +122,6 @@ namespace testUtils {
     });
   }
 
-  export function isDebug() {
-    const args = process.argv.slice(2);
-    return args.includes("debug");
-  }
-
   export function env() {
     // This value will be defined in CI
     if (process.env.CI_OS_ENV) {
