@@ -24,6 +24,8 @@ jobs:
           cd ./e2e
           touch .env
           echo CORDE_TEST_TOKEN_LINUX=${{ secrets.CORDE_TEST_TOKEN_LINUX }} > .env
+          echo BOT_PREFIX=${{ secrets.BOT_PREFIX }} >> .env
+          echo TIME_OUT=${{ secrets.TIME_OUT }} >> .env
           echo BOT_TEST_ID_LINUX=${{ secrets.BOT_TEST_ID_LINUX }} >> .env
           echo CHANNEL_ID_LINUX=${{ secrets.CHANNEL_ID_LINUX }} >> .env
           echo GUILD_ID_LINUX=${{ secrets.GUILD_ID_LINUX }} >> .env
