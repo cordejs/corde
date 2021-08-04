@@ -80,4 +80,4 @@ async function main() {
   return exitCode;
 }
 
-main();
+main().then((exitCode) => process.exit(exitCode));
