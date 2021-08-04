@@ -8,7 +8,7 @@
 import env from "dotenv";
 import testUtils from "./testUtils";
 
-if (process.env.CI_OS_ENV) {
+if (!process.env.CI_OS_ENV) {
   const result = env.config({ debug: testUtils.isDebug(), path: "./e2e/.env" });
 
   // Do not throw any error if the project in running inside CI.
