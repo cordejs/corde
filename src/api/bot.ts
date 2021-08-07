@@ -45,13 +45,15 @@ export class Bot {
 
   /**
    * Same of `this.getChannel()`
+   * @throws Error if corde bot is not connected.
    */
   get channel() {
     return this.getChannel();
   }
 
   /**
-   * Get all channels in **cache** of the bot
+   * Get all channels in **cache** of the bot.
+   * @throws Error if corde bot is not connected.
    */
   get channels() {
     this._throwDefaultErrorIfNotLogged();
@@ -60,6 +62,7 @@ export class Bot {
 
   /**
    * Same of `this.getGuild()`
+   * @throws Error if corde bot is not connected.
    */
   get guild() {
     return this.getGuild();
@@ -67,6 +70,7 @@ export class Bot {
 
   /**
    * Members of the guild defined in configs
+   * @throws Error if corde bot is not connected.
    */
   get guildMembers() {
     this._throwDefaultErrorIfNotLogged();
@@ -74,7 +78,8 @@ export class Bot {
   }
 
   /**
-   * Get all guilds in **cache** of the bot
+   * Get all guilds in **cache** of the bot.
+   * @throws Error if corde bot is not connected.
    */
   get guilds() {
     this._throwDefaultErrorIfNotLogged();
@@ -90,6 +95,7 @@ export class Bot {
    * ```typescript
    * this.getGuild().roles.cache.array()
    * ```
+   * @throws Error if corde bot is not connected.
    */
   get roles() {
     this._throwDefaultErrorIfNotLogged();
@@ -119,26 +125,22 @@ export class Bot {
   /**
    * Joins corde's bot to a voice channel.
    * @param channelId Voice channel to corde's bot connect
+   * @throws Error if corde bot is not connected.
    * @returns Voice connection state. This property can be get from `bot.voiceState`
    */
   joinVoiceChannel(channelId: string) {
-    if (!this.isLoggedIn) {
-      throw new CordeClientError(
-        "Can not join a voice channel while corde bot is not connected yet",
-      );
-    }
-
+    this._throwErrorIfNotLogged(
+      "Can not join a voice channel while corde bot is not connected yet",
+    );
     return this._bot.joinVoiceChannel(channelId);
   }
 
   /**
    * Leaves a voice channel.
+   * @throws Error if corde bot is not connected.
    */
   leaveVoiceChannel() {
-    if (!this.isLoggedIn) {
-      throw new CordeClientError("Can not leave a voice channel as corde bot is not connected yet");
-    }
-
+    this._throwErrorIfNotLogged("Can not leave a voice channel as corde bot is not connected yet");
     this._bot.leaveVoiceChannel();
   }
 
@@ -158,7 +160,8 @@ export class Bot {
 
   /**
    * Makes a fetch of a channel based on it's `id`.
-   * @param id Id of the channel
+   * @param id Id of the channel.
+   * @throws Error if corde bot is not connected.
    * @returns Channel if it's found
    */
   fetchChannel(id: string) {
@@ -169,6 +172,7 @@ export class Bot {
   /**
    * Makes a fetch of a guild based on it's `id`.
    * @param id Id of the guild
+   * @throws Error if corde bot is not connected.
    * @returns Guild if it's found
    */
   fetchGuild(id: string) {
@@ -196,9 +200,7 @@ export class Bot {
    */
   async fetchRole(roleId: string, guildId: string, fetchGuild?: boolean): Promise<Role | undefined>;
   async fetchRole(roleId: string, guildId?: string, fetchGuild = false): Promise<Role | undefined> {
-    if (!this._bot.isLoggedIn()) {
-      throw new CordeClientError("Could not create the guild while corde bot isn't connected yet");
-    }
+    this._throwErrorIfNotLogged("Could not create the guild while corde bot isn't connected yet");
 
     if (guildId) {
       const guild = await this._getOrFetchGuild(guildId, fetchGuild);
@@ -222,24 +224,27 @@ export class Bot {
 
   /**
    * Gets the channel defined in `configs`
+   * @throws Error if corde bot is not connected.
    */
   getChannel(): TextChannel;
   /**
    * Gets a channel from `client.channels.cache` based on the channel's id
+   *
    * @param id Channel Id
+   * @throws Error if corde bot is not connected.
    * @return Channel searched by it's id or undefined.
    */
   getChannel(id: string): TextChannel | undefined;
   /**
    * Gets a channel from `client.channels.cache` based on the channel's id or name
+   *
    * @param identifier Channel's identifier
+   * @throws Error if corde bot is not connected.
    * @return Channel searched or undefined.
    */
   getChannel(identifier: IChannelIdentifier): TextChannel | undefined;
   getChannel(identifier?: string | IChannelIdentifier) {
-    if (!this._bot.isLoggedIn()) {
-      throw new CordeClientError("Corde is not connected yet to fetch any data");
-    }
+    this._throwErrorIfNotLogged("Corde is not connected yet to fetch any data");
 
     if (!identifier) {
       return this._bot.channel;
@@ -264,24 +269,26 @@ export class Bot {
 
   /**
    * Gets the guild defined in `configs`
+   * @throws Error if corde bot is not connected.
    */
   getGuild(): Guild;
   /**
    * Gets a guild from `client.channels.guild` based on the guild's id
    * @param id Guild Id
+   * @throws Error if corde bot is not connected.
    * @return Guild searched by it's id or undefined.
    */
   getGuild(id: string): Guild | undefined;
   /**
    * Gets a guild from `client.guild.cache` based on the guild's id or name
+   *
    * @param identifier Guild's identifier
+   * @throws Error if corde bot is not connected.
    * @return Guild searched or undefined.
    */
   getGuild(identifier: IGuildIdentifier): Guild | undefined;
   getGuild(identifier?: string | IGuildIdentifier) {
-    if (!this._bot.isLoggedIn()) {
-      throw new CordeClientError("Can not get any guild while corde bot is not connected yet");
-    }
+    this._throwErrorIfNotLogged("Can not get any guild while corde bot is not connected yet");
 
     if (!identifier) {
       return this._bot.guild;
@@ -330,11 +337,9 @@ export class Bot {
       throw new Error("Can not send a empty message");
     }
 
-    if (!this.isLoggedIn) {
-      throw new CordeClientError(
-        "Can not send a directly message to channel because the client is not connected yet",
-      );
-    }
+    this._throwErrorIfNotLogged(
+      "Can not send a directly message to channel because the client is not connected yet",
+    );
 
     if (isPrimitiveValue(message)) {
       return this._bot.sendMessage(message);
@@ -356,9 +361,7 @@ export class Bot {
    * @since 2.1
    */
   async createRole(data: IRoleData) {
-    if (!this.isLoggedIn) {
-      throw new CordeClientError("Bot is not connected yet. Can not create a role");
-    }
+    this._throwErrorIfNotLogged("Bot is not connected yet. Can not create a role");
 
     try {
       return await this._bot.roleManager.create({ data });
@@ -396,9 +399,7 @@ export class Bot {
    */
   createGuild(options: IGuildCreateOptions): Promise<Guild>;
   createGuild(options: string | IGuildCreateOptions) {
-    if (!this.isLoggedIn) {
-      throw new CordeClientError("Could not create the guild while corde bot isn't connected yet");
-    }
+    this._throwErrorIfNotLogged("Could not create the guild while corde bot isn't connected yet");
 
     if (typeof options === "string") {
       return this._bot.client.guilds.create(options);
@@ -437,11 +438,7 @@ export class Bot {
     channelOptions: ICreateChannelOptions,
   ): Promise<TextChannel | VoiceChannel | CategoryChannel>;
   createChannel(options: string | ICreateChannelOptions) {
-    if (!this.isLoggedIn) {
-      throw new CordeClientError(
-        "Could not create the channel while corde bot isn't connected yet",
-      );
-    }
+    this._throwErrorIfNotLogged("Could not create the channel while corde bot isn't connected yet");
 
     if (typeof options === "string") {
       return this.guild.channels.create(options);
@@ -567,10 +564,7 @@ export class Bot {
    */
   getRole(data: IRoleIdentifier): Role | undefined;
   getRole(data: string | IRoleIdentifier) {
-    if (!this._bot.isLoggedIn()) {
-      throw new CordeClientError("Bot is not connected yet. No role can be searched");
-    }
-
+    this._throwErrorIfNotLogged("Bot is not connected yet. No role can be searched");
     return this._getRole(data);
   }
 
@@ -593,11 +587,7 @@ export class Bot {
     options: string | ICreateChannelOptionsSimple,
     type?: ICreateChannelOptions["type"],
   ) {
-    if (!this.isLoggedIn) {
-      throw new CordeClientError(
-        "Could not create the channel while corde bot isn't connected yet",
-      );
-    }
+    this._throwErrorIfNotLogged("Could not create the channel while corde bot isn't connected yet");
 
     if (typeof options === "string") {
       return this.guild.channels.create(options, { type });
@@ -608,6 +598,12 @@ export class Bot {
   private _throwDefaultErrorIfNotLogged() {
     if (!this.isLoggedIn) {
       throw new CordeClientError("Corde is not connected yet to fetch any data");
+    }
+  }
+
+  private _throwErrorIfNotLogged(message: string) {
+    if (!this.isLoggedIn) {
+      throw new CordeClientError(message);
     }
   }
 }

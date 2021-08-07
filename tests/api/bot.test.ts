@@ -157,4 +157,8 @@ describe("testing corde bot API", () => {
       expect(spyGuildFetch).toBeCalled();
     });
   });
+
+  it("should get voiceState", () => {
+    expect(bot.voiceState).toEqual(cordeBot.voiceConnection);
+  });
 });
