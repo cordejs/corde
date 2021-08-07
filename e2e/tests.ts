@@ -107,36 +107,36 @@ const testFiles: ITestFile[] = [
     testFile: "test2.spec.ts",
     exitCodeExpectation: 1,
   },
-  {
-    id: 15,
-    folder: "toDeleteRole",
-    testFile: "test1.spec.ts",
-    exitCodeExpectation: 0,
-  },
-  {
-    id: 16,
-    folder: "toDeleteRole",
-    testFile: "test2.spec.ts",
-    exitCodeExpectation: 1,
-  },
-  {
-    id: 17,
-    folder: "toEditMessage",
-    testFile: "test1.spec.ts",
-    exitCodeExpectation: 0,
-  },
-  {
-    id: 18,
-    folder: "toEditMessage",
-    testFile: "test2.spec.ts",
-    exitCodeExpectation: 1,
-  },
-  {
-    id: 19,
-    folder: "toHaveResult",
-    testFile: "test1.spec.ts",
-    exitCodeExpectation: 0,
-  },
+  // {
+  //   id: 15,
+  //   folder: "toDeleteRole",
+  //   testFile: "test1.spec.ts",
+  //   exitCodeExpectation: 0,
+  // },
+  // {
+  //   id: 16,
+  //   folder: "toDeleteRole",
+  //   testFile: "test2.spec.ts",
+  //   exitCodeExpectation: 1,
+  // },
+  // {
+  //   id: 17,
+  //   folder: "toEditMessage",
+  //   testFile: "test1.spec.ts",
+  //   exitCodeExpectation: 0,
+  // },
+  // {
+  //   id: 18,
+  //   folder: "toEditMessage",
+  //   testFile: "test2.spec.ts",
+  //   exitCodeExpectation: 1,
+  // },
+  // {
+  //   id: 19,
+  //   folder: "toHaveResult",
+  //   testFile: "test1.spec.ts",
+  //   exitCodeExpectation: 0,
+  // },
 ];
 
 function* createTestFunctionsGenerator(): Generator<
