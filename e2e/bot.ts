@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-// TODO: In some tests, when a function from another module is called,
 // Corde reader fail in import the test file because Node.js can not
 // import the submodule. To avoid the problem, this file is here is root of the project,
 // but it should be in ./e2e
@@ -12,6 +11,8 @@ import { Client, Message } from "discord.js";
 import * as config from "./corde.config";
 
 export const bot = new Client();
+
+// TODO: Corde do not recognize optional chaning
 
 export async function sendMessage(message: string) {
   if (!config.channelId) {
@@ -34,14 +35,20 @@ export async function sendMessage(message: string) {
  */
 export function getRole(name: string) {
   if (config.guildId) {
-    return bot.guilds.cache.get(config.guildId)?.roles.cache.find((r) => r.name === name);
+    const guild = bot.guilds.cache.get(config.guildId);
+    if (guild) {
+      return guild.roles.cache.find((r) => r.name === name);
+    }
   }
   return null;
 }
 
 export function getRoleManager() {
   if (config.guildId) {
-    return bot.guilds.cache.get(config.guildId)?.roles;
+    const guild = bot.guilds.cache.get(config.guildId);
+    if (guild) {
+      return guild.roles;
+    }
   }
   return null;
 }
@@ -66,7 +73,6 @@ export async function login(isDebugMode?: boolean) {
     });
   });
 
-  console.log(config.botToken);
   const loginPromise = bot.login(config.botToken);
   await Promise.allSettled([loginPromise, readyPromise]);
 }
@@ -245,17 +251,20 @@ async function deleteRole(msg: Message, roleId: string) {
 
 async function sendMultiple(msg: Message, channelId: string) {
   await msg.channel.send("hello");
-  const channel = msg.guild?.channels.cache.get(channelId);
-  if (channel && channel.isText()) {
-    await channel.send("hello2");
+
+  if (msg.guild) {
+    const channel = msg.guild.channels.cache.get(channelId);
+    if (channel && channel.isText()) {
+      await channel.send("hello2");
+    }
   }
 }
 
 /** --------------------- Utility functions  --------------------- */
 
 function getRoleById(msg: Message, roleId: string | undefined) {
-  if (msg && roleId) {
-    return msg.guild?.roles.cache.get(roleId);
+  if (msg && roleId && msg.guild) {
+    return msg.guild.roles.cache.get(roleId);
   }
   return null;
 }

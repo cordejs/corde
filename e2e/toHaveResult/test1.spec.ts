@@ -2,6 +2,7 @@ import corde from "../../lib";
 
 corde.describe("testing todoInCascade", () => {
   corde.it("test should pass", () => {
+    corde.bot.channels.find((c) => c.isText());
     corde
       .expect("sendMultiple 829873348309155851")
       .toHaveResult(
