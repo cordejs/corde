@@ -10,7 +10,7 @@ jobs:
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
-          node-version: latest
+          node-version: 16.x
           cache: "yarn"
 
       - name: Install dependencies
@@ -42,7 +42,7 @@ jobs:
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
-          node-version: latest
+          node-version: 16.x
           cache: "yarn"
 
       - name: Install dependencies
@@ -73,7 +73,7 @@ jobs:
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
-          node-version: latest
+          node-version: 16.x
           cache: "yarn"
 
       - name: Install dependencies
