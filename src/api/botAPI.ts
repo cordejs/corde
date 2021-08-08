@@ -24,7 +24,7 @@ import {
 } from "../types";
 import { isPrimitiveValue } from "../utils";
 
-export class Bot {
+export class BotAPI {
   private _bot: ICordeBot;
 
   /**

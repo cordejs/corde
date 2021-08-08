@@ -1,6 +1,6 @@
 import { Channel, Client, Collection } from "discord.js";
 import corde from "../../src";
-import { Bot } from "../../src/api";
+import { BotAPI } from "../../src/api";
 import { runtime } from "../../src/common/runtime";
 import { ICordeBot } from "../../src/types";
 import MockDiscord from "../mocks/mockDiscord";
@@ -8,7 +8,7 @@ import { initCordeClientWithChannel } from "../testHelper";
 
 const mockDiscord = new MockDiscord();
 
-let bot: Bot;
+let bot: BotAPI;
 let cordeBot: ICordeBot;
 
 beforeEach(() => {
@@ -16,7 +16,7 @@ beforeEach(() => {
   client.readyAt = new Date();
   cordeBot = initCordeClientWithChannel(mockDiscord, client);
   client.emit("ready");
-  bot = new Bot(cordeBot);
+  bot = new BotAPI(cordeBot);
 });
 
 describe("testing corde bot API", () => {

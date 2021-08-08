@@ -1,2 +1,2 @@
-export * from "./bot";
-export * from "./configs";
+export * from "./botAPI";
+export * from "./configAPI";

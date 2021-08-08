@@ -7,16 +7,16 @@ import {
 
 import { expect as _expect } from "./expect";
 import { group as _group, test as _test } from "./closures";
-import { Bot, ConfigsAPI } from "./api";
+import { BotAPI, ConfigAPI } from "./api";
 import { runtime } from "./common/runtime";
 import { IConfigOptions } from "./types";
 
-function getConfigs(): Readonly<IConfigOptions> {
-  return new ConfigsAPI(runtime.configs);
+function getConfigs(): Readonly<Required<IConfigOptions>> {
+  return new ConfigAPI(runtime.configs);
 }
 
 function getBot() {
-  return new Bot(runtime.bot);
+  return new BotAPI(runtime.bot);
 }
 
 /**
