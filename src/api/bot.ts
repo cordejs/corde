@@ -352,21 +352,34 @@ export class Bot {
   /**
    * Creates a new role to the guild provided in configs.
    *
-   * @param roleIdentifier Basic informations about the role.
-   * @see https://cordejs.org/docs/configurations#guildid
-   *
+   * @param name Name of the role.
    * @throws CordeClientError if corde has not yet connect it's bot.
    * @returns A promise that return the created role.
    *
    * @since 2.1
    */
-  async createRole(data: IRoleData) {
+  createRole(name?: string): Promise<Role>;
+  /**
+   * Creates a new role to the guild provided in configs.
+   *
+   * @param data Basic informations about the role.
+   * @throws CordeClientError if corde has not yet connect it's bot.
+   * @returns A promise that return the created role.
+   *
+   * @since 2.1
+   */
+  createRole(data: IRoleData): Promise<Role>;
+  createRole(data?: string | IRoleData) {
     this._throwErrorIfNotLogged("Bot is not connected yet. Can not create a role");
+    if (typeof data === "string") {
+      return this._bot.roleManager.create({ data: { name: data } });
+    }
+    return this._bot.roleManager.create({ data });
+  }
 
-    try {
-      return await this._bot.roleManager.create({ data });
-    } catch (error) {
-      throw Error("Could not create the role. " + error);
+  private _throwErrorIfInvalidName(name: string, errorMessage: string) {
+    if (!name || typeof name !== "string" || !name.trim()) {
+      throw new Error(errorMessage);
     }
   }
 
@@ -401,9 +414,13 @@ export class Bot {
   createGuild(options: string | IGuildCreateOptions) {
     this._throwErrorIfNotLogged("Could not create the guild while corde bot isn't connected yet");
 
+    const errorMessage = "Could not create a guild with an invalid name";
     if (typeof options === "string") {
+      this._throwErrorIfInvalidName(options, errorMessage);
       return this._bot.client.guilds.create(options);
     }
+
+    this._throwErrorIfInvalidName(options.name, errorMessage);
     return this._bot.client.guilds.create(options.name, options);
   }
 
@@ -592,7 +609,7 @@ export class Bot {
     if (typeof options === "string") {
       return this.guild.channels.create(options, { type });
     }
-    return this.guild.channels.create(options.name, options);
+    return this.guild.channels.create(options.name, { ...options, type });
   }
 
   private _throwDefaultErrorIfNotLogged() {

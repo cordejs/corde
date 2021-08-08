@@ -296,6 +296,9 @@ export default class MockDiscord {
     return this._role;
   }
 
+  /**
+   * Role manager with some roles added to cache.
+   */
   get roleManager() {
     return this._roleManager;
   }
