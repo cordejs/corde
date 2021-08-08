@@ -42,7 +42,7 @@ corde.bot;
 - [`channel`](/docs/cordebot#channel)
 - [`channels`](/docs/cordebot#channels)
 - [`guild`](/docs/cordebot#guild)
-- [`guildMembers`](/docs/cordebot#guildMembers)
+- [`guildMembers`](/docs/cordebot#guildmembers)
 - [`guilds`](/docs/cordebot#guilds)
 - [`roles`](/docs/cordebot#roles)
 
@@ -51,21 +51,21 @@ corde.bot;
 - [`isMessageAuthor`](/docs/cordebot#ismessageauthormessage)
 - [`joinVoiceChannel`](/docs/cordebot#joinvoicechannelstring)
 - [`leaveVoiceChannel`](/docs/cordebot#leavevoicechannel)
-- [`getOnlyTextChannels`](/docs/cordebot#leavevoicechannel)
-- [`isInVoiceChannel`](/docs/cordebot#leavevoicechannel)
-- [`fetchChannel`](/docs/cordebot#leavevoicechannel)
-- [`fetchGuild`](/docs/cordebot#leavevoicechannel)
-- [`fetchRole`](/docs/cordebot#leavevoicechannel)
-- [`getChannel`](/docs/cordebot#leavevoicechannel)
-- [`getGuild`](/docs/cordebot#leavevoicechannel)
-- [`send`](/docs/cordebot#leavevoicechannel)
-- [`createRole`](/docs/cordebot#leavevoicechannel)
-- [`createGuild`](/docs/cordebot#leavevoicechannel)
-- [`createChannel`](/docs/cordebot#leavevoicechannel)
-- [`createVoiceChannel`](/docs/cordebot#leavevoicechannel)
-- [`createTextChannel`](/docs/cordebot#leavevoicechannel)
-- [`createCategoryChannel`](/docs/cordebot#leavevoicechannel)
-- [`getRole`](/docs/cordebot#leavevoicechannel)
+- [`getOnlyTextChannels`](/docs/cordebot#getonlytextchannels)
+- [`isInVoiceChannel`](/docs/cordebot#isinvoicechannel)
+- [`fetchChannel`](/docs/cordebot#fetchchannelid)
+- [`fetchGuild`](/docs/cordebot#fetchguildid)
+- [`fetchRole`](/docs/cordebot#fetchroleid)
+- [`getChannel`](/docs/cordebot#getchannelid--object)
+- [`getGuild`](/docs/cordebot#getguildid--object)
+- [`send`](/docs/cordebot#sendstring--number--boolean--object)
+- [`createRole`](/docs/cordebot#createrolestring--object)
+- [`createGuild`](/docs/cordebot#createguildstring--object)
+- [`createChannel`](/docs/cordebot#createchannelstring--object)
+- [`createVoiceChannel`](/docs/cordebot#createvoicechannelstring--object)
+- [`createTextChannel`](/docs/cordebot#createtextchannelstring--object)
+- [`createCategoryChannel`](/docs/cordebot#createcategorychannelstring--object)
+- [`getRole`](/docs/cordebot#getrolestring--object)
 
 ## Reference
 
@@ -74,8 +74,8 @@ corde.bot;
 ### `voiceState`
 
 Gets the voice channel state that corde's bot is connected in, If it's connected.
-This property is filled when `joinVoiceChannel()` connects to a channel and
-is cleared when `leaveVoiceChannal()` is called.
+This property is filled when [joinVoiceChannel()](CordeBot.mdx#joinvoicechannelstring) connects to a channel and
+is cleared when [leaveVoiceChannal()](CordeBot.mdx#leavevoicechannel) is called.
 
 ---
 
@@ -87,7 +87,7 @@ Checks if corde's bot is connected and ready.
 
 ### `client`
 
-Client of Discord.js
+Client of Discord.js.
 
 ---
 
@@ -95,7 +95,7 @@ Client of Discord.js
 
 - **throws** Error if corde bot is not connected.
 
-Same of `getChannel()`.
+Same of [getChannel()](CordeBot.mdx#getchannelid--object).
 
 ---
 
@@ -111,7 +111,7 @@ Get all channels in **cache** of the bot.
 
 - **throws** Error if corde bot is not connected.
 
-Same of `getGuild()`
+Same of [getGuild()](CordeBot.mdx#getguildid--object).
 
 ---
 
@@ -119,7 +119,7 @@ Same of `getGuild()`
 
 - **throws** Error if corde bot is not connected.
 
-Members of the guild defined in configs.
+Members of the guild defined in [configs](configurations).
 
 ---
 
@@ -135,7 +135,7 @@ Get all guilds in **cache** of the bot.
 
 - **throws** Error if corde bot is not connected.
 
-Get all roles in **cache** of the guild defined in configs.
+Get all roles in **cache** of the guild defined in [configs](configurations).
 
 ---
 
@@ -222,7 +222,7 @@ Gets the guild defined in `configs`.
 - **throws** Error if corde bot is not connected.
 - **throws** Error If message is invalid.
 
-Sends a message to the connected textChannel.
+Sends a message to the connected [TextChannel](https://discord.js.org/#/docs/main/stable/class/TextChannel).
 
 ---
 
@@ -230,7 +230,7 @@ Sends a message to the connected textChannel.
 
 - **throws** Error if corde bot is not connected.
 
-Creates a new role to the guild provided in configs.
+Creates a new role to the guild provided in [configs](configurations).
 
 ---
 
@@ -238,7 +238,7 @@ Creates a new role to the guild provided in configs.
 
 - **throws** Error if corde bot is not connected.
 
-Creates a new `guild` in defined in configs.
+Creates a new `guild` in defined in [configs](configurations).
 
 ---
 
@@ -246,7 +246,7 @@ Creates a new `guild` in defined in configs.
 
 - **throws** Error if corde bot is not connected.
 
-Creates a new channel in guild defined in configs.
+Creates a new channel in guild defined in [configs](configurations).
 
 If the parameter provided be a string or a object without the property [**type**](https://discord.js.org/#/docs/main/stable/typedef/GuildChannelCreateOptions) provided,
 then a textChannel will be created.
@@ -257,7 +257,7 @@ then a textChannel will be created.
 
 - **throws** Error if corde bot is not connected.
 
-Creates a new **voice** channel in guild defined in configs.
+Creates a new [VoiceChannel](https://discord.js.org/#/docs/main/stable/class/VoiceChannel) in guild defined in [configs](configurations).
 
 ```typescript
 client.channels.create("exampleName", { type: "voice" });
@@ -269,7 +269,7 @@ client.channels.create("exampleName", { type: "voice" });
 
 - **throws** Error if corde bot is not connected.
 
-Creates a new **text** channel in guild defined in configs.
+Creates a new [TextChannel](https://discord.js.org/#/docs/main/stable/class/TextChannel) in guild defined in [configs](configurations).
 
 Shortcut for:
 
@@ -283,7 +283,7 @@ client.channels.create("exampleName", { type: "text" });
 
 - **throws** Error if corde bot is not connected.
 
-Creates a new **category** channel in guild defined in configs.
+Creates a new [CategoryChannel](https://discord.js.org/#/docs/main/stable/class/CategoryChannel) in guild defined in [configs](configurations).
 
 Shortcut for:
 
