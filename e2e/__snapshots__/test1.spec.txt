@@ -1,15 +1,14 @@
 File: test1.spec.ts
 exit code: 0
- RUNS   e2e/afterEach/test1.spec.ts
- RUNS   e2e/afterEach/test1.spec.ts
-   ● <empty test name>
- RUNS   e2e/afterEach/test1.spec.ts
-   ✔  <empty test name>   2ms
+ RUNS   e2e/toReturn/test1.spec.ts
+ RUNS   e2e/toReturn/test1.spec.ts
+   ● Hello command should return... hello!!
+ RUNS   e2e/toReturn/test1.spec.ts
+   ✔  Hello command should return... hello!!   456ms
 
- PASS    e2e/afterEach/test1.spec.ts   5ms
-   ✔  <empty test name>   2ms
+ PASS    e2e/toReturn/test1.spec.ts   458ms
+   ✔  Hello command should return... hello!!   456ms
 
 Test Files: 1 passed. 1 total
 Tests:      1 passed. 1 total
-Time:       7ms
-test afterAll
+Time:       459ms

@@ -1,7 +1,7 @@
+/* eslint-disable no-control-regex */
 /* eslint-disable no-console */
 import { Message } from "discord.js";
 import fs from "fs";
-import { removeANSIColorStyle } from "../tests/testHelper";
 import * as childProcess from "child_process";
 import { CliOutput, OSEnv } from "./types";
 import path from "path";
@@ -120,6 +120,16 @@ namespace testUtils {
         }
       });
     });
+  }
+
+  // Duplicated code from ../tests/testHelper
+  // Due to jest types not being found in e2e folder (and can not to avoid types conflict)
+
+  export function removeANSIColorStyle(value: string) {
+    return value.replace(
+      /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g,
+      "",
+    );
   }
 
   export function isDebug() {
