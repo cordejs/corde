@@ -56,7 +56,7 @@ export class BotAPI {
    * @throws Error if corde bot is not connected.
    */
   get channels() {
-    this._throwDefaultErrorIfNotLogged();
+    this._throwErrorIfNotLogged();
     return this._bot.client.channels.cache.array();
   }
 
@@ -73,7 +73,7 @@ export class BotAPI {
    * @throws Error if corde bot is not connected.
    */
   get guildMembers() {
-    this._throwDefaultErrorIfNotLogged();
+    this._throwErrorIfNotLogged();
     return this.guild.members.cache.array();
   }
 
@@ -82,7 +82,7 @@ export class BotAPI {
    * @throws Error if corde bot is not connected.
    */
   get guilds() {
-    this._throwDefaultErrorIfNotLogged();
+    this._throwErrorIfNotLogged();
     return this._bot.client.guilds.cache.array();
   }
 
@@ -98,7 +98,7 @@ export class BotAPI {
    * @throws Error if corde bot is not connected.
    */
   get roles() {
-    this._throwDefaultErrorIfNotLogged();
+    this._throwErrorIfNotLogged();
     return this.getGuild().roles.cache.array();
   }
 
@@ -146,8 +146,10 @@ export class BotAPI {
 
   /**
    * From all channels in **cache**, get all that are of type text
+   * @throws Error if corde bot is not connected.
    */
   getOnlyTextChannels() {
+    this._throwErrorIfNotLogged();
     return this.channels.filter((c) => c.isText()) as (TextChannel | DMChannel | NewsChannel)[];
   }
 
@@ -165,7 +167,7 @@ export class BotAPI {
    * @returns Channel if it's found
    */
   fetchChannel(id: string) {
-    this._throwDefaultErrorIfNotLogged();
+    this._throwErrorIfNotLogged();
     return this._bot.fetchChannel(id);
   }
 
@@ -176,7 +178,7 @@ export class BotAPI {
    * @returns Guild if it's found
    */
   fetchGuild(id: string) {
-    this._throwDefaultErrorIfNotLogged();
+    this._throwErrorIfNotLogged();
     return this._bot.fetchGuild(id);
   }
 
@@ -350,7 +352,7 @@ export class BotAPI {
   }
 
   /**
-   * Creates a new role to the guild provided in configs.
+   * Creates a new role inside the guild provided in configs.
    *
    * @param name Name of the role.
    * @throws CordeClientError if corde has not yet connect it's bot.
@@ -360,7 +362,7 @@ export class BotAPI {
    */
   createRole(name?: string): Promise<Role>;
   /**
-   * Creates a new role to the guild provided in configs.
+   * Creates a new role inside the guild provided in configs.
    *
    * @param data Basic informations about the role.
    * @throws CordeClientError if corde has not yet connect it's bot.
@@ -612,13 +614,7 @@ export class BotAPI {
     return this.guild.channels.create(options.name, { ...options, type });
   }
 
-  private _throwDefaultErrorIfNotLogged() {
-    if (!this.isLoggedIn) {
-      throw new CordeClientError("Corde is not connected yet to fetch any data");
-    }
-  }
-
-  private _throwErrorIfNotLogged(message: string) {
+  private _throwErrorIfNotLogged(message = "Corde is not connected yet to fetch any data") {
     if (!this.isLoggedIn) {
       throw new CordeClientError(message);
     }
