@@ -50,7 +50,7 @@ The bellow documentation is a resume of what you can find in [Corde's site](http
 
 ## 🚀 Getting started
 
-**Node.js 14.0.0 or newer is required**
+**Node.js 16.6.0 or newer is required**
 
 Starting to create tests with Corde is simple. First, install it locally with npm `npm i -D corde` or yarn `yarn add -D corde`. You can also install it globally: `npm i -g corde` or `yarn global add corde`.
 
@@ -58,12 +58,12 @@ After installed, add the file `corde.config.json` in the root of your applicatio
 
 ```javascript
 {
-   "cordeBotToken":  "YOUR_TESTING_BOT_TOKEN_HERE",
-   "botTestId":  "YOUR_TESTING_BOT_ID_HERE",
-   "botToken":  "YOUR_BOT_TOKEN_HERE",
-   "guildId":  "THE_GUID_OF_BOT_HERE",
-   "channelId":  "CHANNELS_ID_HERE",
-   "botPrefix":  "+",
+   "cordeBotToken":  "<tokenForCordeBot>",
+   "botTestId":  "<yourBotId>",
+   "botToken":  "<yourBotToken>",
+   "guildId":  "<guildId>",
+   "channelId":  "<channelId>",
+   "botPrefix":  "!",
    "testMatches":  ["./test/**"]
 }
 ```
