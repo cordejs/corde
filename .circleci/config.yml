@@ -54,36 +54,6 @@ jobs:
           name: lint
           command: yarn lint
 
-  test-node-14:
-    <<: *work-dir
-    docker:
-      - image: circleci/node:14
-    steps:
-      - *attach-step
-      - run:
-          name: Tests
-          command: yarn test
-
-  test-node-15:
-    <<: *work-dir
-    docker:
-      - image: circleci/node:15
-    steps:
-      - *attach-step
-      - run:
-          name: Tests
-          command: yarn test
-
-  test-node-LTS:
-    <<: *work-dir
-    docker:
-      - image: circleci/node:latest
-    steps:
-      - *attach-step
-      - run:
-          name: Tests
-          command: yarn test
-
   test-node-16:
     <<: *work-dir
     docker:
@@ -135,28 +105,7 @@ workflows:
             branches:
               ignore: gh-pages
 
-      - test-node-14:
-          requires:
-            - build
-          filters:
-            branches:
-              ignore: gh-pages
-
-      - test-node-15:
-          requires:
-            - build
-          filters:
-            branches:
-              ignore: gh-pages
-
       - test-node-16:
-          requires:
-            - build
-          filters:
-            branches:
-              ignore: gh-pages
-
-      - test-node-LTS:
           requires:
             - build
           filters:
@@ -165,10 +114,7 @@ workflows:
 
       - publish-coverage:
           requires:
-            - test-node-14
-            - test-node-15
             - test-node-16
-            - test-node-LTS
 
           filters:
             branches:

@@ -1,4 +1,4 @@
-import { BitField } from "discord.js";
+import { BitField, GuildCreateChannelOptions, GuildCreateOptions } from "discord.js";
 import { Stream } from "stream";
 
 export interface IAuthor {
@@ -62,6 +62,26 @@ export interface IIdentifier {
 }
 
 export interface IRoleIdentifier extends IIdentifier {
+  name?: string;
+}
+
+export interface IChannelIdentifier extends IIdentifier {
+  name?: string;
+}
+
+export type ChannelType = "voice" | "text" | "category";
+
+export interface IGuildCreateOptions extends GuildCreateOptions {
+  name: string;
+}
+
+export interface ICreateChannelOptions extends GuildCreateChannelOptions {
+  name: string;
+}
+
+export interface ICreateChannelOptionsSimple extends Omit<ICreateChannelOptions, "type"> {}
+
+export interface IGuildIdentifier extends IIdentifier {
   name?: string;
 }
 

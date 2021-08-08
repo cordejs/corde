@@ -71,6 +71,10 @@ module.exports = {
           type: "doc",
           id: "permissions",
         },
+        {
+          type: "doc",
+          id: "roadmap",
+        },
       ],
     },
   ],

@@ -54,8 +54,6 @@ function getFileFromType(type: ConfigFileType) {
   if (type === "json") {
     return convertObjectToFileType(true);
   } else if (type === "js") {
-    const temp = { ...DEFAULT_CONFIG };
-    delete temp.project;
     return `module.exports = ${convertObjectToFileType(false)}`;
   } else if (type === "ts") {
     return `export = ${convertObjectToFileType(false)}`;
