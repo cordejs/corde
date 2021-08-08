@@ -58,6 +58,11 @@ describe("testing public configs api", () => {
     expect(configAPI.modulePathIgnorePatterns).toEqual(config.modulePathIgnorePatterns);
   });
 
+  it("should get modulePathIgnorePatterns from default configs if no value is provided", () => {
+    configAPI = new ConfigAPI({} as any);
+    expect(configAPI.modulePathIgnorePatterns).toEqual(DEFAULT_CONFIG.modulePathIgnorePatterns);
+  });
+
   it("should get value from project", () => {
     expect(configAPI.project).toEqual(config.project);
   });
@@ -69,6 +74,11 @@ describe("testing public configs api", () => {
   it("changes in extensions value should not alter original values", () => {
     configAPI.extensions.push("aaaa");
     expect(configAPI.extensions).toEqual(config.extensions);
+  });
+
+  it("should get extensions from default configs if no value is provided", () => {
+    configAPI = new ConfigAPI({} as any);
+    expect(configAPI.extensions).toEqual(DEFAULT_CONFIG.extensions);
   });
 
   it("should get value from extensions", () => {
