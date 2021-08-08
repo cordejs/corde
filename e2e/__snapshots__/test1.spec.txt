@@ -1,28 +1,15 @@
 File: test1.spec.ts
 exit code: 0
-[dotenv][DEBUG] did not match key and value when parsing line 3: 
-[dotenv][DEBUG] did not match key and value when parsing line 9: 
-[dotenv][DEBUG] "TIME_OUT" is already defined in `process.env` and will not be overwritten
-[dotenv][DEBUG] "BOT_PREFIX" is already defined in `process.env` and will not be overwritten
-[dotenv][DEBUG] "CORDE_TEST_TOKEN" is already defined in `process.env` and will not be overwritten
-[dotenv][DEBUG] "BOT_TEST_ID" is already defined in `process.env` and will not be overwritten
-[dotenv][DEBUG] "CHANNEL_ID" is already defined in `process.env` and will not be overwritten
-[dotenv][DEBUG] "GUILD_ID" is already defined in `process.env` and will not be overwritten
-[dotenv][DEBUG] "BOT_TEST_TOKEN" is already defined in `process.env` and will not be overwritten
-[dotenv][DEBUG] "CORDE_TEST_TOKEN_LINUX" is already defined in `process.env` and will not be overwritten
-[dotenv][DEBUG] "BOT_TEST_ID_LINUX" is already defined in `process.env` and will not be overwritten
-[dotenv][DEBUG] "CHANNEL_ID_LINUX" is already defined in `process.env` and will not be overwritten
-[dotenv][DEBUG] "GUILD_ID_LINUX" is already defined in `process.env` and will not be overwritten
-[dotenv][DEBUG] "BOT_TEST_TOKEN_LINUX" is already defined in `process.env` and will not be overwritten
- RUNS   e2e/toReturn/test1.spec.ts
- RUNS   e2e/toReturn/test1.spec.ts
-   ● Hello command should return... hello!!
- RUNS   e2e/toReturn/test1.spec.ts
-   ✔  Hello command should return... hello!!   415ms
+ RUNS   e2e/afterEach/test1.spec.ts
+ RUNS   e2e/afterEach/test1.spec.ts
+   ● <empty test name>
+ RUNS   e2e/afterEach/test1.spec.ts
+   ✔  <empty test name>   2ms
 
- PASS    e2e/toReturn/test1.spec.ts   420ms
-   ✔  Hello command should return... hello!!   415ms
+ PASS    e2e/afterEach/test1.spec.ts   5ms
+   ✔  <empty test name>   2ms
 
 Test Files: 1 passed. 1 total
 Tests:      1 passed. 1 total
-Time:       423ms
+Time:       7ms
+test afterAll
