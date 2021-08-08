@@ -1,8 +1,7 @@
-import { Channel, Client, Collection } from "discord.js";
-import corde from "../../src";
+import { Client } from "discord.js";
 import { BotAPI } from "../../src/api";
-import { runtime } from "../../src/common/runtime";
-import { ICordeBot } from "../../src/types";
+import { mapper } from "../../src/mapper/messageMapper";
+import { ICordeBot, IMessageEmbed } from "../../src/types";
 import MockDiscord from "../mocks/mockDiscord";
 import { initCordeClientWithChannel } from "../testHelper";
 
@@ -33,6 +32,28 @@ describe("testing corde bot API", () => {
 
     await bot.send("test");
     expect(spy).toBeCalledWith("test");
+  });
+
+  it("should throw error due to invalid message", async () => {
+    try {
+      await bot.send(undefined);
+      fail();
+    } catch (error) {
+      expect(error).toBeTruthy();
+    }
+  });
+
+  it("should send a embed message", async () => {
+    const spy = jest
+      .spyOn(cordeBot, "sendMessage")
+      .mockImplementation(() => Promise.resolve(mockDiscord.message));
+
+    const embed: IMessageEmbed = {
+      author: "me",
+    };
+
+    await bot.send(embed);
+    expect(spy).toBeCalledWith(mapper.embedInterfaceToMessageEmbed(embed));
   });
 
   it("should return true for message author be corde's bot", () => {
@@ -74,28 +95,69 @@ describe("testing corde bot API", () => {
     expect(bot.client).toEqual(cordeBot.client);
   });
 
-  it("should get discord.js client channels cache", () => {
-    expect(bot.channels).toEqual(cordeBot.client.channels.cache.array());
+  describe("testing bot.channels", () => {
+    it("should get discord.js client channels cache", () => {
+      expect(bot.channels).toEqual(cordeBot.client.channels.cache.array());
+    });
+
+    it("should throw error due to not logged bot", () => {
+      jest.spyOn(cordeBot, "isLoggedIn").mockReturnValueOnce(false);
+      expect(() => bot.channels).toThrowError();
+    });
   });
 
-  it("should get discord.js client channel", () => {
-    expect(bot.channel).toEqual(cordeBot.channel);
+  describe("testing bot.channel", () => {
+    it("should throw error due to not logged bot", () => {
+      jest.spyOn(cordeBot, "isLoggedIn").mockReturnValueOnce(false);
+      expect(() => bot.channel).toThrowError();
+    });
+
+    it("should get discord.js client channel", () => {
+      expect(bot.channel).toEqual(cordeBot.channel);
+    });
   });
 
-  it("should get discord.js client guild", () => {
-    expect(bot.guild).toEqual(cordeBot.guild);
+  describe("testing bot.guild", () => {
+    it("should throw error due to not logged bot", () => {
+      jest.spyOn(cordeBot, "isLoggedIn").mockReturnValueOnce(false);
+      expect(() => bot.guild).toThrowError();
+    });
+
+    it("should get discord.js client guild", () => {
+      expect(bot.guild).toEqual(cordeBot.guild);
+    });
   });
 
-  it("should get discord.js client guilds", () => {
-    expect(bot.guilds).toEqual(cordeBot.client.guilds.cache.array());
+  describe("testing bot.guilds", () => {
+    it("should throw error due to not logged bot", () => {
+      jest.spyOn(cordeBot, "isLoggedIn").mockReturnValueOnce(false);
+      expect(() => bot.guilds).toThrowError();
+    });
+
+    it("should get discord.js client guilds", () => {
+      expect(bot.guilds).toEqual(cordeBot.client.guilds.cache.array());
+    });
   });
 
-  it("should get discord.js client members", () => {
-    expect(bot.guildMembers).toEqual(cordeBot.guild.members.cache.array());
+  describe("testing bot.guildMembers", () => {
+    it("should throw error due to not logged bot", () => {
+      jest.spyOn(cordeBot, "isLoggedIn").mockReturnValueOnce(false);
+      expect(() => bot.guildMembers).toThrowError();
+    });
+    it("should get discord.js client members", () => {
+      expect(bot.guildMembers).toEqual(cordeBot.guild.members.cache.array());
+    });
   });
 
-  it("should get discord.js client roles", () => {
-    expect(bot.roles).toEqual(cordeBot.guild.roles.cache.array());
+  describe("testing bot.roles", () => {
+    it("should throw error due to not logged bot", () => {
+      jest.spyOn(cordeBot, "isLoggedIn").mockReturnValueOnce(false);
+      expect(() => bot.roles).toThrowError();
+    });
+
+    it("should get discord.js client roles", () => {
+      expect(bot.roles).toEqual(cordeBot.guild.roles.cache.array());
+    });
   });
 
   it("should get only textChannels", () => {
@@ -145,12 +207,15 @@ describe("testing corde bot API", () => {
 
     it("should get by invalid guildId with fetch", async () => {
       cordeBot.client.guilds.cache = mockDiscord.guildCollection;
+
       const spy = jest
         .spyOn(cordeBot.guild.roles, "fetch")
         .mockResolvedValue(mockDiscord.role as any);
+
       const spyGuildFetch = jest
         .spyOn(cordeBot.client.guilds, "fetch")
         .mockResolvedValue(mockDiscord.guild as any);
+
       const response = await bot.fetchRole("1", mockDiscord.guildCollection.first().id, true);
       expect(response).toEqual(mockDiscord.role);
       expect(spy).toBeCalled();
@@ -177,6 +242,11 @@ describe("testing corde bot API", () => {
     it("should get channel defined in configs", () => {
       cordeBot.client.channels.cache = mockDiscord.textChannelCollection;
       expect(bot.getChannel()).toEqual(cordeBot.channel);
+    });
+
+    it("should return undefined due to no channel found in cache", () => {
+      cordeBot.client.channels.cache = mockDiscord.textChannelCollection;
+      expect(bot.getChannel({ id: "321foo" })).toEqual(undefined);
     });
 
     it("should get channel by id", () => {
@@ -246,10 +316,62 @@ describe("testing corde bot API", () => {
       expect(spy).toBeCalled();
     });
 
+    it("should throw exception due to invalid name", async () => {
+      try {
+        await bot.createRole(undefined);
+        fail();
+      } catch (error) {
+        expect(error).toBeTruthy();
+      }
+    });
+
     it("should throw exception due to bot not logged in", async () => {
       jest.spyOn(cordeBot, "isLoggedIn").mockReturnValueOnce(false);
       try {
         await bot.createRole({});
+        fail();
+      } catch (error) {
+        expect(error).toBeTruthy();
+      }
+    });
+
+    it("should call guildManager to create a new guild", async () => {
+      const spy = jest.spyOn(cordeBot.roleManager, "create").mockImplementation(null);
+      await bot.createRole({ name: "aaa" });
+      expect(spy).toBeCalled();
+    });
+  });
+
+  describe("testing createGuild", () => {
+    it("should call guildManager to create a new role passing object", async () => {
+      const spy = jest.spyOn(cordeBot.client.guilds, "create").mockImplementation(null);
+      await bot.createGuild({
+        name: "test",
+      });
+      expect(spy).toBeCalled();
+    });
+
+    it("should call guildManager to create a new role passing string", async () => {
+      const spy = jest.spyOn(cordeBot.client.guilds, "create").mockImplementation(null);
+      await bot.createGuild("aa");
+      expect(spy).toBeCalled();
+    });
+
+    it("should throw exception due to invalid name", async () => {
+      try {
+        await bot.createGuild(undefined);
+        fail();
+      } catch (error) {
+        expect(error).toBeTruthy();
+      }
+    });
+
+    it("should throw exception due to bot not logged in", async () => {
+      jest.spyOn(cordeBot, "isLoggedIn").mockReturnValueOnce(false);
+      try {
+        await bot.createGuild({
+          name: "test",
+        });
         fail();
       } catch (error) {
         expect(error).toBeTruthy();
