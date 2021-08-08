@@ -325,7 +325,8 @@ export class BotAPI {
    *    const message = await corde.bot.send("msg");
    * });
    *
-   * @throws CordeClienteError - If bot is not connected yet.
+   * @throws Error if corde bot is not connected.
+   * @throws Error If message is invalid.
    *
    * @returns null if message is empty, null or undefined.
    * Message if **message** is not empty and it was send to Discord.

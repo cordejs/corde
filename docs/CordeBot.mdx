@@ -38,20 +38,34 @@ corde.bot;
 
 - [`voiceState`](/docs/cordebot#voicestate)
 - [`isLoggedIn`](/docs/cordebot#isloggedin)
+- [`client`](/docs/cordebot#client)
+- [`channel`](/docs/cordebot#channel)
+- [`channels`](/docs/cordebot#channels)
+- [`guild`](/docs/cordebot#guild)
+- [`guildMembers`](/docs/cordebot#guildMembers)
+- [`guilds`](/docs/cordebot#guilds)
+- [`roles`](/docs/cordebot#roles)
 
 #### Methods
 
 - [`isMessageAuthor`](/docs/cordebot#ismessageauthormessage)
 - [`joinVoiceChannel`](/docs/cordebot#joinvoicechannelstring)
 - [`leaveVoiceChannel`](/docs/cordebot#leavevoicechannel)
-- [`isInVoiceChannel`](/docs/cordebot#isinvoicechannel)
-- [`fetchChannel`](/docs/cordebot#fetchchannel)
-- [`fetchGuild`](/docs/cordebot#fetchguild)
-- [`getChannel`](/docs/cordebot#getchannel)
-- [`findGuild`](/docs/cordebot#findguild)
-- [`send`](/docs/cordebot#send)
-- [`createRole`](/docs/cordebot#createrole)
-- [`findRole`](/docs/cordebot#findrole)
+- [`getOnlyTextChannels`](/docs/cordebot#leavevoicechannel)
+- [`isInVoiceChannel`](/docs/cordebot#leavevoicechannel)
+- [`fetchChannel`](/docs/cordebot#leavevoicechannel)
+- [`fetchGuild`](/docs/cordebot#leavevoicechannel)
+- [`fetchRole`](/docs/cordebot#leavevoicechannel)
+- [`getChannel`](/docs/cordebot#leavevoicechannel)
+- [`getGuild`](/docs/cordebot#leavevoicechannel)
+- [`send`](/docs/cordebot#leavevoicechannel)
+- [`createRole`](/docs/cordebot#leavevoicechannel)
+- [`createGuild`](/docs/cordebot#leavevoicechannel)
+- [`createChannel`](/docs/cordebot#leavevoicechannel)
+- [`createVoiceChannel`](/docs/cordebot#leavevoicechannel)
+- [`createTextChannel`](/docs/cordebot#leavevoicechannel)
+- [`createCategoryChannel`](/docs/cordebot#leavevoicechannel)
+- [`getRole`](/docs/cordebot#leavevoicechannel)
 
 ## Reference
 
@@ -60,56 +74,227 @@ corde.bot;
 ### `voiceState`
 
 Gets the voice channel state that corde's bot is connected in, If it's connected.
-This property is filled when `joinVoiceChannel()` connects to a channel.
+This property is filled when `joinVoiceChannel()` connects to a channel and
+is cleared when `leaveVoiceChannal()` is called.
+
+---
 
 ### `isLoggedIn`
 
 Checks if corde's bot is connected and ready.
 
+---
+
+### `client`
+
+Client of Discord.js
+
+---
+
+### `channel`
+
+- **throws** Error if corde bot is not connected.
+
+Same of `getChannel()`.
+
+---
+
+### `channels`
+
+- **throws** Error if corde bot is not connected.
+
+Get all channels in **cache** of the bot.
+
+---
+
+### `guild`
+
+- **throws** Error if corde bot is not connected.
+
+Same of `getGuild()`
+
+---
+
+### `guildMembers`
+
+- **throws** Error if corde bot is not connected.
+
+Members of the guild defined in configs.
+
+---
+
+### `guilds`
+
+- **throws** Error if corde bot is not connected.
+
+Get all guilds in **cache** of the bot.
+
+---
+
+### `roles`
+
+- **throws** Error if corde bot is not connected.
+
+Get all roles in **cache** of the guild defined in configs.
+
+---
+
 ### `isMessageAuthor(Message)`
 
 Checks if a given message was sent by corde's bot.
 
+---
+
 ### `joinVoiceChannel(string)`
+
+- **throws** Error if corde bot is not connected.
 
 Joins corde's bot to a voice channel.
 
+---
+
 ### `leaveVoiceChannel`
+
+- **throws** Error if corde bot is not connected.
 
 Leaves a voice channel.
 
+---
+
+### `getOnlyTextChannels`
+
+- **throws** Error if corde bot is not connected.
+
+From all channels in **cache**, get all that are of type text
+
+---
+
 ### `isInVoiceChannel`
+
+- **throws** Error if corde bot is not connected.
 
 Checks if corde's bot is in a voice channel.
 
-### `fetchChannel`
+---
+
+### `fetchChannel(id)`
+
+- **throws** Error if corde bot is not connected.
 
 Makes a fetch of a channel based on it's `id`.
 
-### `fetchGuild`
+---
+
+### `fetchGuild(id)`
+
+- **throws** Error if corde bot is not connected.
 
 Makes a fetch of a guild based on it's `id`.
 
-### `getChannel`
+---
+
+### `fetchRole(id)`
+
+- **throws** Error if corde bot is not connected.
+
+Fetch for a role based on it's id, caching it after that.
+
+---
+
+### `getChannel(id | object)`
+
+- **throws** Error if corde bot is not connected.
 
 Gets the channel defined in `configs`.
 
-### `getGuild`
+---
+
+### `getGuild(id | object)`
+
+- **throws** Error if corde bot is not connected.
 
 Gets the guild defined in `configs`.
 
-### `findGuild`
+---
 
-Search for a guild in guild's cache, based on it's id.
+### `send(string | number | boolean | object)`
 
-### `send`
+- **throws** Error if corde bot is not connected.
+- **throws** Error If message is invalid.
 
 Sends a message to the connected textChannel.
 
-### `createRole`
+---
+
+### `createRole(string? | object)`
+
+- **throws** Error if corde bot is not connected.
 
 Creates a new role to the guild provided in configs.
 
-### `findRole`
+---
 
-Finds a role in config guild's cache, basing on it's **id** or **name**.
+### `createGuild(string? | object)`
+
+- **throws** Error if corde bot is not connected.
+
+Creates a new `guild` in defined in configs.
+
+---
+
+### `createChannel(string | object)`
+
+- **throws** Error if corde bot is not connected.
+
+Creates a new channel in guild defined in configs.
+
+If the parameter provided be a string or a object without the property [**type**](https://discord.js.org/#/docs/main/stable/typedef/GuildChannelCreateOptions) provided,
+then a textChannel will be created.
+
+---
+
+### `createVoiceChannel(string | object)`
+
+- **throws** Error if corde bot is not connected.
+
+Creates a new **voice** channel in guild defined in configs.
+
+```typescript
+client.channels.create("exampleName", { type: "voice" });
+```
+
+---
+
+### `createTextChannel(string | object)`
+
+- **throws** Error if corde bot is not connected.
+
+Creates a new **text** channel in guild defined in configs.
+
+Shortcut for:
+
+```typescript
+client.channels.create("exampleName", { type: "text" });
+```
+
+---
+
+### `createCategoryChannel(string | object)`
+
+- **throws** Error if corde bot is not connected.
+
+Creates a new **category** channel in guild defined in configs.
+
+Shortcut for:
+
+```typescript
+client.channels.create("exampleName", { type: "category" });
+```
+
+---
+
+### `getRole(string | object)`
+
+- **throws** Error if corde bot is not connected.
+
+Finds a role in config guild's cache, basing on it's **id**
