@@ -1,5 +1,32 @@
 ### Changelog
 
+## [v4.4.0](https://github.com/cordejs/corde/releases/tag/v4.4.0) - 2021-08-08
+
+### 🚀 Features
+
+- feat: add new functions for bot [`5f66554`](https://github.com/cordejs/corde/commit/5f66554fe276eb54eae5891b4eb6be9b28a6da8f)
+- feat: add new features and tests for bot [`ce0af01`](https://github.com/cordejs/corde/commit/ce0af018e5e428f0bd625bc63384922842075e0b)
+- feat: add configs in corde API, allowing users to get some config props from corde api [`d3dc866`](https://github.com/cordejs/corde/commit/d3dc86605ed64659c03b514a872421d411df3ae0)
+- feat: upgrade node version to 16.6.0 to be compatible with discord.js v13 [`77a31b6`](https://github.com/cordejs/corde/commit/77a31b667545d50a762f02ae8a57a45915f46f04)
+- feat: rollback corde's node version (back to 14 [`e3d500c`](https://github.com/cordejs/corde/commit/e3d500c2b967da99b5c08a4b33ef1b6ba3e6b575)
+
+### 🐛 Bug Fixes
+
+- fix: resolve build break [`2cdb9ea`](https://github.com/cordejs/corde/commit/2cdb9ea3d6242b7fd4c983cf1ac8c4496e1d55f3)
+
+### 💡 Miscellaneous
+
+- chore: fix typo releaseTemplate [`8ddeb1f`](https://github.com/cordejs/corde/commit/8ddeb1fc0376ddcdf62d06d7878505a28820e649)
+- chore: add some e2e tests [`a95c8c3`](https://github.com/cordejs/corde/commit/a95c8c34098259f01f0b89ecab0e4c6de24bae09)
+- chore: temporarily remove some tests of e2e to avoid pipeline break [`3b7b88c`](https://github.com/cordejs/corde/commit/3b7b88c70dba002bff972719013221c7c30bb5f9)
+- chore: update snapshots of e2e tests [`105b28e`](https://github.com/cordejs/corde/commit/105b28ee8298d9dda6269135232c10db664cf178)
+- chore: fix e2e run [`1c3889f`](https://github.com/cordejs/corde/commit/1c3889f201cc592cfed6e530db2306c2565c1385)
+- chore: update node version of README [`5b23482`](https://github.com/cordejs/corde/commit/5b23482cae11b7739b02a167a292f793cc6befd5)
+- chore: remove comments [`949acd2`](https://github.com/cordejs/corde/commit/949acd2df1cc74497b89f6f6cf531a3c35290abb)
+- chore: rollback node version in readme [`6bcbab1`](https://github.com/cordejs/corde/commit/6bcbab170fd27729010a019a0a1670aef6d05820)
+- chore: add `eslint-plugin-jsdoc` to optional dependencies to avoid CI failure [`c040979`](https://github.com/cordejs/corde/commit/c0409791214d87481617e05a87c32311b9981418)
+- chore: limit types for node only in src [`d273aa7`](https://github.com/cordejs/corde/commit/d273aa74eaa675bdefe922cd87cd061034ff0b4f)
+
 ## [v4.3.1](https://github.com/cordejs/corde/releases/tag/v4.3.1) - 2021-07-30
 
 ### 💡 Miscellaneous

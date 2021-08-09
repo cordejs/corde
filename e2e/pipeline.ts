@@ -2,22 +2,21 @@
 /* eslint-disable no-console */
 
 /**
- * @deprecated
  * package.json script: "e2e": "ts-node ./e2e/pipeline"
  */
 
 /**
  * Corde script for end-to-end tests. In comparation with Jest, this script,
  * runs tests with avarage of ~5 seconds faster.
- * usage: ts-node pipeline.ts
+ * usage: yarn e2e
  *
  * This script must be executed outside ./e2e folder witch means, in the root
  * of corde folder.
  *
+ * This script also suport specifics execution,
+ * just add --tests followed by the test id
+ *
  */
-
-// todo: process.env should be using NODE_ENV
-// process.env.ENV = "E2E";
 
 import chalk from "chalk";
 import { login, bot } from "./bot";
@@ -31,20 +30,18 @@ function logoutBot() {
 
 async function main() {
   console.log(`Environment: ${chalk.cyan(testUtils.env())}`);
-  const testsMeasureName = "tests end";
   let exitCode = 0;
 
-  // console.time(testsMeasureName);
-  console.log(chalk.cyanBright("loging example bot..."));
+  process.stdout.write(chalk.cyanBright("loging example bot..."));
 
   await login();
 
   try {
-    console.log(chalk.green(" Done\n"));
+    process.stdout.write(chalk.green(" Done\n"));
 
     const selectedTests = process.argv
       .slice(process.argv.indexOf("--tests"))
-      .filter((el) => Number.isInteger(el));
+      .filter((el: any) => !isNaN(el));
 
     for (const [fileObj, testFn] of generator) {
       if (selectedTests.length === 0 || selectedTests.includes(fileObj.id.toString())) {
@@ -71,7 +68,6 @@ async function main() {
     console.log(`${chalk.bgRed.black(" FAIL ")} ${error}`);
     exitCode = 1;
   } finally {
-    //console.time(testsMeasureName);
     console.log("\n");
     if (exitCode === 0) {
       console.log(`${chalk.bgGreen(" SUCCESS ")}: All tests passed`);

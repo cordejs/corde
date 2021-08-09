@@ -22,6 +22,7 @@ import {
   ActivityType,
   Activity,
   VoiceState,
+  VoiceChannel,
 } from "discord.js";
 import { ToReturn } from "../../src/command/matches";
 import { IMessageEmbed } from "../../src/types";
@@ -109,6 +110,9 @@ export default class MockDiscord {
   private _messageWithEmbed: Message;
   private _pinnedMessage: Message;
   private _unPinnedMessage: Message;
+  private _textChannelCollection!: Collection<string, TextChannel>;
+  private _guildCollection!: Collection<string, Guild>;
+  private _channelCollection!: Collection<string, Channel>;
 
   /**
    * Initialize all mocks
@@ -292,6 +296,9 @@ export default class MockDiscord {
     return this._role;
   }
 
+  /**
+   * Role manager with some roles added to cache.
+   */
   get roleManager() {
     return this._roleManager;
   }
@@ -326,6 +333,18 @@ export default class MockDiscord {
 
   get unPinnedMessage() {
     return this._unPinnedMessage;
+  }
+
+  get textChannelCollection() {
+    return this._textChannelCollection;
+  }
+
+  get guildCollection() {
+    return this._guildCollection;
+  }
+
+  get channelCollection() {
+    return this._channelCollection;
   }
 
   get<T extends Collection<K, V>, K, V>(collection: T, index: number) {
@@ -369,6 +388,10 @@ export default class MockDiscord {
     this._guildMemberCollection = this.createGuildMemberCollection();
 
     this._presence = this.createPresence();
+
+    this._textChannelCollection = this.createMockTextChannelCollection();
+    this._channelCollection = this.createMockChannelCollection();
+    this._guildCollection = this.createMockGuildCollection();
   }
 
   createMockClient() {
@@ -688,6 +711,36 @@ export default class MockDiscord {
     };
 
     return new VoiceState(this.guild, voiceData);
+  }
+
+  createMockTextChannelCollection() {
+    const channels: [string, TextChannel][] = [];
+    for (let index = 0; index < 5; index++) {
+      const channel = this.createMockTextChannel();
+      channel.name = "randomName" + index;
+      channel.id = "123221" + index;
+      channels.push([channel.id, channel]);
+    }
+
+    const freezed: Readonly<[string, TextChannel][]> = Object.freeze(channels);
+    return new Collection<string, TextChannel>(freezed);
+  }
+
+  createMockGuildCollection() {
+    const guilds: [string, Guild][] = [];
+    for (let index = 0; index < 5; index++) {
+      const guild = this.createMockGuild();
+      guild.name = "randomName" + index;
+      guild.id = "123221" + index;
+      guilds.push([guild.id, guild]);
+    }
+
+    const freezed: Readonly<[string, Guild][]> = Object.freeze(guilds);
+    return new Collection<string, Guild>(freezed);
+  }
+
+  createMockChannelCollection() {
+    return this.createMockTextChannelCollection() as Collection<string, Channel>;
   }
 
   createMockRoleManager() {

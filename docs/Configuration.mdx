@@ -1,26 +1,13 @@
 ---
 id: configurations
-title: Configuring Corde
+title: Configurations
 custom_edit_url: https://github.com/cordejs/corde/blob/master/docs/Configuration.mdx
 ---
 
 Corde's configuration can be defined through a `corde.config.js|json|ts` file. This file must be at the root of your application,
 or you can declare a custom path for it with the cli option [--config](CLI.mdx#--config).
 
-This is the default config file for Corde:
-
-```javascript
-{
-    "cordeBotToken":  "YOUR_TESTING_BOT_TOKEN_HERE",
-    "botTestId":  "YOUR_TESTING_BOT_ID_HERE",
-    "botToken":  "YOUR_BOT_TOKEN_HERE",
-    "guildId":  "THE_GUID_OF_BOT_HERE",
-    "channelId":  "CHANNELS_ID_HERE",
-    "botPrefix":  "+",
-    "testMatches":  ["./test/**"],
-    "timeout": 1000
-}
-```
+Configs can also be accessed (in readonly mode) trough `corde.configs`.
 
 :::note
 both `cordeBotToken` and `botToken` can be found in [Discord Developers portal](https://discord.com/developers/applications)
@@ -30,129 +17,197 @@ both `cordeBotToken` and `botToken` can be found in [Discord Developers portal](
 
 ### `cordeBotToken`
 
+- Required: `true`
+- Type: `string`
+
 The bot token that Corde will use to simulate a user.
 
-**Required: `true`**  
-**Type: `string`**  
-**Example: `YaA4MDMiOTY2O4I2MjAwODMy.X2iRwg.Rf3-TqLExWuPQjxnVaDCGv9V7cB`**
+```js title="corde.config.js"
+module.exports = {
+  cordeBotToken: "YaA4MDMiOTY2O4I2MjAwODMy.X2iRwg.Rf3-TqLExWuPQjxnVaDCGv9V7cB", // Example value
+};
+```
 
 ---
 
 ### `botTestId`
 
+- Required: `true`
+- Type: `string`
+
 Your bot's id.
 
-**Required: `true`**
-**Type: `string`**  
-**Example: `514212632960122287894`**
+```js title="corde.config.js"
+module.exports = {
+  botTestId: "514212632960122287894", // Example value
+};
+```
 
 ---
 
 ### `botToken`
 
+- Required: `true`
+- Type: `string`
+
 Your bot's Token.
 
-**Required: `true`**  
-**Type: `string`**  
-**Example: `YaA4MDMiOTY2O4I2MjAwODMy.X2iRwg.Rf3-TqLExWuPQjxnVaDCGv9V7cB`**
+```js title="corde.config.js"
+module.exports = {
+  botToken: "YaA4MDMiOTY2O4I2MjAwODMy.X2iRwg.Rf3-TqLExWuPQjxnVaDCGv9V7cB", // Example value
+};
+```
 
 ---
 
 ### `guildId`
 
+- Required: `true`
+- Type: `string`
+
 The id of the `guild` where both bots are.
 
-**Required: `true`**  
-**Type: `string`**  
-**Example: `514212632960122287894`**
+```js title="corde.config.js"
+module.exports = {
+  guildId: "514212632960122287894", // Example value
+};
+```
 
 ---
 
 ### `channelId`
 
+- Required: `true`
+- Type: `string`
+
 The id of the `channel` where both bots are.
 
-**Required: `true`**  
-**Type: `string`**  
-**Example: `514212632960122287894`**
+```js title="corde.config.js"
+module.exports = {
+  channelId: "514212632960122287894", // Example value
+};
+```
 
 ---
 
 ### `botPrefix`
 
-Prefix for call your bot.
+- Required: `true`
+- Type: `string`
 
-**Required: `true`**  
-**Type: `string`**  
-**Example: `!`**
+Prefix for call your bot. This value is attached to each command sent by corde.
+
+```js title="corde.config.js"
+module.exports = {
+  botPrefix: "!", // Example value
+};
+```
 
 ---
 
 ### `testMatches`
 
+- Required: `true`
+- Type: `Array<string>`
+
 Array with the path of test folders | files.
 
-**Required: `true`**  
-**Type: `string`**  
-**Example: `['./tests']`**
+```js title="corde.config.js"
+module.exports = {
+  testMatches: ["./tests"], // Example value
+};
+```
 
 ---
 
 ### `timeout`
 
+- Required: `false`
+- Type: `number`
+
 Timeout for each test. The value in milliseconds.
 
-**Required: `false`**  
-**Type: `number`**  
-**Example: `1000`**  
-**Default: `5000`**
+```js title="corde.config.js"
+module.exports = {
+  timeout: 5000, // Default value
+};
+```
 
 ---
 
 ### `modulePathIgnorePatterns`
 
+- Required: `false`
+- Type: `string[]`
+
 Define the file pattern that corde should ignore.
 
-**Required: `false`**  
-**Type: `string[]`**  
-**Example: `['**/tests/\*.fixture.js']`\*\*
+```js title="corde.config.js"
+module.exports = {
+  modulePathIgnorePatterns: ["**/tests/*.fixture.js"], // Example value
+};
+```
 
 ---
 
 ### `rootDir`
 
+- Required: `false`
+- Type: `string[]`
+
 Defines root dir of the project.
 
-**Required: `false`**  
-**Type: `string[]`**  
-**Default: `process.cwd()`**
+:::note
+Default value uses **process.cwd()** to pick the `rootDir`
+:::
+
+```js title="corde.config.js"
+module.exports = {
+  rootDir: ".", // Example value. It will be resolved by process.cwd()
+};
+```
 
 ---
 
 ### `extensions`
 
-**Define file extensions to be loaded**
+- Required: `false`
+- Type: `Array<string>`
 
-**Required: `false`**  
-**Type: `string[]`**  
-**Default: `[".js",".ts"]`**
+Define file extensions to be loaded
+
+```js title="corde.config.js"
+module.exports = {
+  extensions: [".js", ".ts"], // Default value
+};
+```
 
 ---
 
 ### `exitOnFileReadingError`
 
+- Required: `false`
+- Type: `boolean`
+
 Define if corde should stop if any problem occour when importing a test file.
 
-**Required: `false`**  
-**Type: `boolean`**  
-**Default: `true`**
+```js title="corde.config.js"
+module.exports = {
+  exitOnFileReadingError: true, // Default value
+};
+```
 
 ---
 
 ### `project`
 
+- Required: `false`
+- Type: `string`
+
 Definition of tsconfig path.
 
-**Required: `false`**  
-**Type: `string`**  
-**Default: `<rootDir>/tsconfig.json`**
+```js title="corde.config.js"
+module.exports = {
+  project: "<rootDir>/tsconfig.json", // Default value
+};
+```

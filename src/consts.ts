@@ -13,7 +13,7 @@ export const TEXT_PENDING = chalk.yellow;
 export const TEXT_EMPTY = chalk.yellowBright;
 export const ROOT_DIR = "<rootDir>";
 
-export const DEFAULT_CONFIG: IConfigOptions = {
+export const DEFAULT_CONFIG: Required<IConfigOptions> = {
   botPrefix: "",
   botTestId: "",
   channelId: "",

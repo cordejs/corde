@@ -1,1 +1,2 @@
-export * from "./bot";
+export * from "./botAPI";
+export * from "./configAPI";

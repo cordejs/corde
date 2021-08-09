@@ -1,6 +1,6 @@
 {
   "name": "corde",
-  "version": "4.3.1",
+  "version": "4.4.0",
   "description": "A simple library for Discord bot tests",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -32,7 +32,7 @@
     "release": "release-it",
     "test": "jest --silent --detectOpenHandles",
     "build:publish": "bash ./scripts/publish.sh",
-    "generateStructureDocs": "typedoc --plugin typedoc-plugin-markdown src/api",
+    "generateDocs": "typedoc --plugin typedoc-plugin-markdown src/api",
     "prettier-lib": "prettier --write ./lib ./schema",
     "dependencies": "depcruise --config ./etc/.dependency-cruiser.js src",
     "watch": "bash tasks.sh watch",
@@ -91,7 +91,6 @@
     "eslint-config-standard": "^16.0.2",
     "eslint-import-resolver-typescript": "^2.4.0",
     "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsdoc": "^36.0.6",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-promise": "^5.1.0",
@@ -121,7 +120,8 @@
     "yarn": "^1.22.10"
   },
   "optionalDependencies": {
-    "dependency-cruiser": "^10.0.1"
+    "dependency-cruiser": "^10.0.1",
+    "eslint-plugin-jsdoc": "^36.0.6"
   },
   "dependencies": {
     "chalk": "^4.1.1",
