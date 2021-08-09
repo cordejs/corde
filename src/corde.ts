@@ -5,7 +5,7 @@ import {
   beforeEach as _beforeEach,
 } from "./hooks";
 
-import { expect as _expect } from "./expect";
+import { expect as _expect } from "./command";
 import { group as _group, test as _test } from "./closures";
 import { Bot } from "./api";
 import { runtime } from "./common/runtime";

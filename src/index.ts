@@ -1,5 +1,5 @@
 export { group, test, group as describe, test as it } from "./closures";
-export { expect } from "./expect";
+export { expect } from "./command";
 export { afterAll, beforeStart, afterEach, beforeEach } from "./hooks";
 export * from "./types/general";
 

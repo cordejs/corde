@@ -23,7 +23,7 @@ import {
   Activity,
   VoiceState,
 } from "discord.js";
-import { ToReturn } from "../../src/expect/matches";
+import { ToReturn } from "../../src/command/matches";
 import { IMessageEmbed } from "../../src/types";
 import { ColorsHex } from "../../src/types";
 

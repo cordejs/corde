@@ -4,7 +4,7 @@ import MockDiscord from "./mocks/mockDiscord";
 import { Client } from "discord.js";
 import { CordeBot } from "../src/core/cordeBot";
 import { ICordeBot, ITest, ITestFile, TestFunctionType, ITestReport } from "../src/types";
-import { ExpectTest } from "../src/expect/matches/expectTest";
+import { ExpectTest } from "../src/command/matches/expectTest";
 import { IExpectTestBaseParams } from "../src/types";
 import { runtime } from "../src/common/runtime";
 import { buildReportMessage } from "../src/utils";
