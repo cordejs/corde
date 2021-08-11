@@ -3486,9 +3486,9 @@ delayed-stream@~1.0.0:
   integrity sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
 
 dependency-cruiser@^10.0.1:
-  version "10.0.7"
-  resolved "https://registry.yarnpkg.com/dependency-cruiser/-/dependency-cruiser-10.0.7.tgz#596a1f382ba3c797f06a2fdeb23827e383a3b765"
-  integrity sha512-QecuEFKw9EX/hFt8ILf/YdRlzVqOaTPAQU1XnzF6Iw9Oh/pfqqJqhWcsuEIisboXAqeIzVlnQuB0rk5gR//jow==
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/dependency-cruiser/-/dependency-cruiser-10.1.0.tgz#d4dc69b9e4d14bb2c9cbbed56b6fc76ff55c5a3d"
+  integrity sha512-HFYm+i4YMRL25PumCCtAPIse7shiFoWnHX58oDeDVGo5X/zwfhna6CrxxL2uUIJ3/Yn7hQeKuSWDN+p+fgZMZA==
   dependencies:
     acorn "8.4.1"
     acorn-jsx "5.3.2"
