@@ -75,6 +75,10 @@ module.exports = {
           type: "doc",
           id: "roadmap",
         },
+        {
+          type: "doc",
+          id: "changelog",
+        },
       ],
     },
   ],
