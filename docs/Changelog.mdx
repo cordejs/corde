@@ -4,13 +4,11 @@ title: Changelog
 custom_edit_url: https://github.com/cordejs/corde/blob/master/docs/changelog.mdx
 ---
 
-# 4.4.0
+## 4.4.0
 
 _Released 08-08-2021_
 
-### 🚀 Features
-
-#### API
+**🚀 Features**
 
 - Add `configs` in API to access configurations in read-only mode.
 - Added functions to corde's bot API:
@@ -38,7 +36,7 @@ _Released 08-08-2021_
 
 ---
 
-# 4.3.1
+## 4.3.1
 
 _Released 31-07-2021_
 
@@ -49,15 +47,15 @@ _Released 31-07-2021_
 
 ---
 
-# 4.3.0
+## 4.3.0
 
 _Released 24-07-2021_
 
-### 💣 Breaking changes
+**💣 Breaking changes**
 
 - Update node engine to version 14.
 
-### 🚀 Features
+**🚀 Features**
 
 - Add typescript support for Corde through the usage of the ts-node register
 - Add `extensions` property in configs. Define file extensions to be loaded. Default [".js",".ts"]
@@ -67,97 +65,97 @@ _Released 24-07-2021_
 
 ---
 
-# 4.2.0
+## 4.2.0
 
 _Released 27-06-2021_
 
-### 💣 Breaking changes
+**💣 Breaking changes**
 
 - Renamed config prop `timeOut` to `timeout`. [#814](https://github.com/cordejs/corde/pull/814)
 
 ---
 
-# 4.1.2
+## 4.1.2
 
 _Released 27-06-2021_
 
-### 🐛 Bug Fixes
+**🐛 Bug Fixes**
 
 - Fix corde attempt to set value `{}` to `config.testMatches`, causing an error in initialization due to the expectation
   of this property to be an array. [#774](https://github.com/cordejs/corde/pull/774)
 
 ---
 
-# 4.1.1
+## 4.1.1
 
 _Released 13-06-2021_
 
-### 🐛 Bug Fixes
+**🐛 Bug Fixes**
 
 - Fix bug that prevents corde to override `timeout` setting [#771](https://github.com/cordejs/corde/pull/773)
 
 ---
 
-# 4.1.0
+## 4.1.0
 
 _Released 06-06-2021_
 
-### 🚀 Features
+**🚀 Features**
 
 - Addition of `toMessageContentContains` and `toEmbedMatch` test functions [#757](https://github.com/cordejs/corde/pull/757)
 
-### 💡 Miscellaneous
+**💡 Miscellaneous**
 
 - Change references to new website URL
 
 ---
 
-# 4.0.5
+## 4.0.5
 
 _Released 26-05-2021_
 
-### 💡 Miscellaneous
+**💡 Miscellaneous**
 
 - upgrade jest-diff from 26.6.2 to 27.0.1
 - upgrade pretty-format from 26.6.2 to 27.0.1
 
 ---
 
-# 4.0.4
+## 4.0.4
 
 _Released 23-05-2021_
 
-### 💡 Miscellaneous
+**💡 Miscellaneous**
 
 - Fix tests pattern in README
 
 ---
 
-# 4.0.3
+## 4.0.3
 
 _Released 23-05-2021_
 
-### 🐛 Bug Fixes
+**🐛 Bug Fixes**
 
 - Fix tests read following a pattern [#714](https://github.com/cordejs/corde/pull/714)
 
 ---
 
-# 4.0.2
+## 4.0.2
 
 _Released 21-05-2021_
 
-### 🐛 Bug Fixes
+**🐛 Bug Fixes**
 
 - fix corde execution due to CRLF format files
 
 ---
 
-# 4.0.1
+## 4.0.1
 
 _Released 18-05-2021_
 
-### 💡 Miscellaneous
+**💡 Miscellaneous**
 
 - upgrade chalk from 4.1.0 to 4.1.1
 - upgrade commander from 7.0.0 to 7.2.0
@@ -168,29 +166,29 @@ _Released 18-05-2021_
 
 ---
 
-# 4.0.0
+## 4.0.0
 
 _Released 16-05-2021_
 
-### 💣 Breaking changes
+**💣 Breaking changes**
 
 - Define test files and ignore files using regex patterns. ([#695](https://github.com/cordejs/corde/issues/695))([#677](https://github.com/cordejs/corde/pull/677))
 
-### 🐛 Bug Fixes
+**🐛 Bug Fixes**
 
 - Corde validation error is being silent ([#676](https://github.com/cordejs/corde/issues/676))([#677](https://github.com/cordejs/corde/pull/677))
 
-### 🚀 Features
+**🚀 Features**
 
 - Disable timeout when running corde in debugging ([#675](https://github.com/cordejs/corde/issues/675))([#677](https://github.com/cordejs/corde/pull/677))
 
 ---
 
-# 3.1.5
+## 3.1.5
 
 _Released 14-05-2021_
 
-### 💡 Miscellaneous
+**💡 Miscellaneous**
 
 - bump devDependency dotenv from 8.5.1 to 9.0.2
 - bump devDependency @types/node from 15.0.2 to 15.0.3
@@ -202,11 +200,11 @@ _Released 14-05-2021_
 
 ---
 
-# 3.1.4
+## 3.1.4
 
 _Released 09-05-2021_
 
-### 💡 Miscellaneous
+**💡 Miscellaneous**
 
 - Bump dependencies version
 
@@ -220,58 +218,58 @@ Change repo location in package.json
 
 ---
 
-# 3.1.2
+## 3.1.2
 
 _Released 20-04-2020_
 
-### 🐛 Bug Fixes
+**🐛 Bug Fixes**
 
 - Fix new line ending conflicting in unix operation systems ([#641](https://github.com/cordejs/corde/issues/641))
 
 ---
 
-# 3.1.0
+## 3.1.0
 
 _Released 12-04-2021_
 
-### 🚀 Features
+**🚀 Features**
 
 - Addition of inChannel, inGuild and toHaveResult operators ([#620](https://github.com/cordejs/corde/issues/620), [#604](https://github.com/cordejs/corde/issues/604), [#605](https://github.com/cordejs/corde/issues/605))
 - Allow `expect` command to send the message in another channel([#618](https://github.com/cordejs/corde/issues/618))
 
-### 🐛 Bug Fixes
+**🐛 Bug Fixes**
 
 - Fix fix a bug that prevents corde to assert tests only in the defined channel and guild ([#619](https://github.com/cordejs/corde/issues/619))
 - Fix error no treated in console ([#598](https://github.com/cordejs/corde/issues/598))
 
-### 💡 Miscellaneous
+**💡 Miscellaneous**
 
 - Several typos fixes.
 
 ---
 
-# 3.0.2
+## 3.0.2
 
 _Released 01-04-2021_
 
-### 💡 Miscellaneous
+**💡 Miscellaneous**
 
 - Bump some dependencies
 - Fix word spells in code documentation
 
 ---
 
-# 3.0.1
+## 3.0.1
 
 _Released 30-03-2021_
 
-### 💣 Breaking changes
+**💣 Breaking changes**
 
 - `toEditMessage` and `toReturn` no longer accepts a MessageEmbed object. Instead, it accepts an object that matches with the MessageEmbedLike interface.
 - `toAddReaction` now receives two parameters: The reactions and the identifier of the message where the reactions must be added.
   But it's optional.
 
-### 🚀 Features
+**🚀 Features**
 
 - Full rework of UI of the CLI ([#362](https://github.com/cordejs/corde/issues/362))
 - Added timeout for `group` and `test` clausures ([#505](https://github.com/cordejs/corde/issues/505))
@@ -284,7 +282,7 @@ _Released 30-03-2021_
 - Added `getRole` utility function for the api ([#516](https://github.com/cordejs/corde/issues/516))
 - Added `createRole` utility function for the api ([#517](https://github.com/cordejs/corde/issues/517))
 
-### 🐛 Bug Fixes
+**🐛 Bug Fixes**
 
 - Allow corde to accept tests with extensions different that \*.test ([#595](https://github.com/cordejs/corde/issues/595))
 - Removed duplication of error display ([#424](https://github.com/cordejs/corde/issues/424))
@@ -292,62 +290,62 @@ _Released 30-03-2021_
 - Fix default value for tests timeout ([#518](https://github.com/cordejs/corde/issues/518))
 - Fix bug in Queue that prevents async code to be waited ([#529](https://github.com/cordejs/corde/issues/529))
 
-### 💡 Miscellaneous
+**💡 Miscellaneous**
 
 - Renamed RoleData and MessageData to RoleIdentifier and MessageIdentifier ([#583](https://github.com/cordejs/corde/issues/583))
 - Remove prettier for code indentation provenience from init command, replaced it by a corde's self-placed code ([#574](https://github.com/cordejs/corde/issues/574))
 
 ---
 
-# 2.0.4
+## 2.0.4
 
 _Released 25-03-2021_
 
-### 💡 Miscellaneous
+**💡 Miscellaneous**
 
 - update package.json to contain corde's site
 
 ---
 
-# 2.0.3
+## 2.0.3
 
 _Released 22-03-2021_
 
-### 💡 Miscellaneous
+**💡 Miscellaneous**
 
 Bump dependencies version
 
 ---
 
-# 2.0.2
+## 2.0.2
 
 _Released 20-03-2021_
 
-### 💡 Miscellaneous
+**💡 Miscellaneous**
 
 Fix corde execution
 
 ---
 
-# 2.0.1
+## 2.0.1
 
 _Released 01-02-2021_
 
-### 💡 Miscellaneous
+**💡 Miscellaneous**
 
 - Change the README logo. (it has a logo with 2MB, and was replace for a logo with 10kb)
 
 ---
 
-# 2.0.0
+## 2.0.0
 
 _Released 31-01-2021_
 
-### 💣 Breaking changes
+**💣 Breaking changes**
 
 - Renamed `command` to `expect` and test functions witch has prefix `must`(mustReturn) now is `to` (toReturn) [#266](https://github.com/lucasgmagalhaes/corde/issues/266)
 
-### 🚀 Feature
+**🚀 Feature**
 
 - Now is possible to add `group` or `test` without adding a name for then [#291](https://github.com/lucasgmagalhaes/corde/issues/291).
 - Allowed users to define test files in CLI [#317](https://github.com/lucasgmagalhaes/corde/issues/317)
@@ -368,7 +366,7 @@ _Released 31-01-2021_
 - Allow sending message of corde bot from API [#483](https://github.com/lucasgmagalhaes/corde/issues/483)
 - Created toEditMessage command [#242](https://github.com/lucasgmagalhaes/corde/issues/242)
 
-### Bug fix: 🐛
+**Bug fix: 🐛**
 
 - Fix snipper bar [#324](https://github.com/lucasgmagalhaes/corde/issues/324)
 - Expect.not setting command name as null [#341](https://github.com/lucasgmagalhaes/corde/issues/341)
@@ -376,7 +374,7 @@ _Released 31-01-2021_
 - Rename config file from corde.** to corde.config.** [#429](https://github.com/lucasgmagalhaes/corde/issues/429)
 - Add test directly to corde.group returns empty test file #497
 
-### 💡 Miscellaneous
+**💡 Miscellaneous**
 
 - Add lin in CI [#277](https://github.com/lucasgmagalhaes/corde/issues/277)
 - Rewrite tests structures [#274](https://github.com/lucasgmagalhaes/corde/issues/274)
@@ -385,122 +383,122 @@ _Released 31-01-2021_
 
 ---
 
-# 2.0.0-beta.27
+## 2.0.0-beta.27
 
 _Released 24-01-2021_
 
-### 💡 Miscellaneous
+**💡 Miscellaneous**
 
 - Add wait time to toSetRoleMentionable function to avoid inconsistency
 
 ---
 
-# 2.0.0-beta.21
+## 2.0.0-beta.21
 
 _Released 07-11-2020_
 
-### 💡 Miscellaneous
+**💡 Miscellaneous**
 
 Fix prettier import
 
 ---
 
-# 2.0.0-beta.10
+## 2.0.0-beta.10
 
 _Released 02-11-2020_
 
-### 💡 Miscellaneous
+**💡 Miscellaneous**
 
 Hotfix tests executions
 
 ---
 
-# 2.0.0-beta.9
+## 2.0.0-beta.9
 
 _Released 02-11-2020_
 
-### 💡 Miscellaneous
+**💡 Miscellaneous**
 
 Hotfix for corde types
 
 ---
 
-# 2.0.0-beta.8
+## 2.0.0-beta.8
 
 _Released 02-11-2020_
 
-### 💡 Miscellaneous
+**💡 Miscellaneous**
 
 Hotfix for package usage
 
 ---
 
-# 2.0.0-beta.7
+## 2.0.0-beta.7
 
 _Released 21-10-2020_
 
-### 💡 Miscellaneous
+**💡 Miscellaneous**
 
 add beforeEach function
 
 ---
 
-# 2.0.0-beta.6
+## 2.0.0-beta.6
 
 _Released 19-10-2020_
 
-### 💡 Miscellaneous
+**💡 Miscellaneous**
 
 add afterEach function
 
 ---
 
-# 2.0.0-beta.5
+## 2.0.0-beta.5
 
 _Released 19-10-2020_
 
-### 💡 Miscellaneous
+**💡 Miscellaneous**
 
 add toSetRolePermission function
 
 ---
 
-# 2.0.0-beta.4
+## 2.0.0-beta.4
 
 _Released 19-09-2020_
 
-### 💡 Miscellaneous
+**💡 Miscellaneous**
 
 Add: toSetRolePosition command test [#363](https://github.com/cordejs/corde/pull/363)
 
 ---
 
-# 1.0.2
+## 1.0.2
 
 _Released 12-07-2020_
 
-### 💡 Miscellaneous
+**💡 Miscellaneous**
 
 Update dependencies
 
 ---
 
-# 1.0.1
+## 1.0.1
 
 _Released 06-07-2020_
 
-### 🐛 Bug Fixes
+**🐛 Bug Fixes**
 
 - Fix API and README docs
 - Pump dependencies version
 
 ---
 
-# 1.0.0
+## 1.0.0
 
 _Released 05-07-2020_
 
-### 🚀 Features
+**🚀 Features**
 
 - Allow user to set config file in CLI [#194](https://github.com/lucasgmagalhaes/corde/issues/194)
 - Create validate command to check data of configs [#187](https://github.com/lucasgmagalhaes/corde/issues/187)
@@ -513,7 +511,7 @@ _Released 05-07-2020_
 
 ---
 
-### 😨 Breaking changes
+**😨 Breaking changes**
 
 - Restrict corde to use node v12 or newer [#185](https://github.com/lucasgmagalhaes/corde/issues/185)
 - Rename functions "should" to "must" [#178](https://github.com/lucasgmagalhaes/corde/issues/178)
@@ -522,13 +520,13 @@ _Released 05-07-2020_
 - Create addsReaction command [#129](https://github.com/lucasgmagalhaes/corde/issues/129)
 - Create a deep search for tests files [#129](https://github.com/lucasgmagalhaes/corde/issues/129)
 
-### 🐛 Bug Fixes
+**🐛 Bug Fixes**
 
 - Not full report is showing [#176](https://github.com/lucasgmagalhaes/corde/issues/176)
 
 ---
 
-# 0.2.4
+## 0.2.4
 
 _Released 14-06-2020_
 
@@ -536,7 +534,7 @@ _Released 14-06-2020_
 
 ---
 
-# 0.2.3
+## 0.2.3
 
 _Released 07-06-2020_
 
@@ -544,22 +542,22 @@ _Released 07-06-2020_
 
 ---
 
-# 0.2.2
+## 0.2.2
 
 _Released 07-06-2020_
 
-### Bug fix: 🐛
+**Bug fix: 🐛**
 
 - Removes the property `botFilePath` from configs due to not using. Fixed not file folder error message when reading configs.
 - Pumped libraries version.
 
 ---
 
-# 0.1.0-beta.1
+## 0.1.0-beta.1
 
 _Released 20-04-2020_
 
-### 🚀 Feature
+**🚀 Feature**
 
 - group
 - test
@@ -569,10 +567,10 @@ _Released 20-04-2020_
 
 ---
 
-# 0.1.0-beta.0
+## 0.1.0-beta.0
 
 _Released 08-09-2019_
 
-### 💡 Miscellaneous
+**💡 Miscellaneous**
 
 - Output colors
