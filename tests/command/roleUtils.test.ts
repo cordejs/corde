@@ -1,5 +1,5 @@
-import { roleUtils } from "../../src/expect/roleUtils";
-import { buildReportMessage, formatObject } from "../../src/utils";
+import { roleUtils } from "../../src/command/roleUtils";
+import { formatObject } from "../../src/utils";
 import MockDiscord from "../mocks/mockDiscord";
 
 describe("testing createExpectedMessageForRoleData", () => {

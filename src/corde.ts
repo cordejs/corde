@@ -23,7 +23,7 @@ function getBot() {
  * Corde's utility namespace to call it's API functions.
  * You can also import each function desconstructing in corde lib import
  */
-export namespace corde {
+export namespace $corde {
   export const afterAll = _afterAll;
   export const beforeStart = _beforeStart;
   export const afterEach = _afterEach;

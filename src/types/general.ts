@@ -26,6 +26,10 @@ export interface IEmoji {
   name?: string;
 }
 
+export interface ITestProps {
+  isNot: boolean;
+}
+
 export interface IMinifiedEmbedMessage {
   author: IAuthor;
   color: number;

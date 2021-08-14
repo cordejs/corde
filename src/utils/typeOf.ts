@@ -1,6 +1,8 @@
+import { AsymmetricMatcher } from "../expect/asymmetricMatcher";
+
 /**
- * Like `typeof` but returns **null** if the value is **null**.
- * And **array** if the object is an array.
+ * Like `typeof` but returns **null** if the value is **null**,
+ * **array** if the object is an array, and **any** for AsymmetricMatcher
  *
  * @example
  *
@@ -20,6 +22,10 @@ export function typeOf(value: any) {
 
   if (Array.isArray(value)) {
     return "array";
+  }
+
+  if (value instanceof AsymmetricMatcher) {
+    return value.toString();
   }
 
   return typeof value;

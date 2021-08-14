@@ -1,5 +1,35 @@
+declare const expect: corde.IExpect;
+
+/**
+ * Declare a bunch of code that will be executed **after** tests begin
+ *
+ * More than one declaration of this code results in a list
+ * of functions to run.
+ *
+ * They will be executed following a sequence of files
+ * reads and the positions of each `afterAll` call.
+ *
+ * @example
+ * // The main function of this is to start a bot if you haven't started it yet
+ *
+ * const bot = new Discord.Client();
+ * afterAll(() => {
+ *   bot.destroy();
+ * });
+ *
+ * @param fn Code that will be executed **after** tests start
+ * @param timeout Time that Corde should wait for the execution of this function.
+ * **it overrides the timeout defined in configs**.
+ *
+ * @since 1.0
+ */
+declare const afterAll: corde.IHook;
+declare const beforeAll: corde.IHook;
+declare const beforeEach: corde.IHook;
+declare const afterEach: corde.IHook;
+
 declare namespace corde {
-  interface IMatchers<T extends any> {
+  export interface IMatchers<T extends any> {
     toBe(expected: T): void;
     toEqual(expected: T): void;
     toBeCloseTo(expected: T, precisionopt: number): void;
@@ -104,18 +134,42 @@ declare namespace corde {
     toBeNonEmptyString(): void;
     toBeSameLengthAs(otherString: string): void;
     toBeShorterThan(otherString: string): void;
-    toBeString(): void;
-    toBeNumber(): void;
-    toBeArray(): void;
-    toBeObject(): void;
     toLength(length: number): void;
+    toBeString(): void;
+    /**
+     * Checks if the *expected* value of type `number`.
+     */
+    toBeNumber(): void;
+    /**
+     * Checks if the *expected* value of type `bigint`.
+     */
+    toBeBigInt(): void;
+    /**
+     * Checks if the *expected* value of type `array`.
+     */
+    toBeArray(): void;
+    /**
+     * Checks if the *expected* value of type `object`.
+     */
+    toBeObject(): void;
+    /**
+     * Checks if the *expected* value of type `symbol`.
+     */
+    toBeSymbol(): void;
+    /**
+     * Checks if the *expected* value of type `boolean`.
+     */
     toBeBoolean(): void;
     toBeWhitespace(): void;
     toEndWith(substring: string): void;
     toStartWith(substring: string): void;
   }
 
-  interface Expect {
-    expect<T extends any>(expect: T): corde.IMatchers<T>;
+  interface IExpect {
+    expect<T extends any>(expected: T): IMatchers<T>;
+  }
+
+  interface IHook {
+    (fn: () => void | Promise<void>, timeout?: number): void;
   }
 }

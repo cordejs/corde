@@ -3,8 +3,8 @@ import MockDiscord from "../../mocks/mockDiscord";
 import { createReport, initCordeClientWithChannel, testUtils } from "../../testHelper";
 import { MockEvents } from "../../mocks/mockEvents";
 import { ICordeBot, ITestReport } from "../../../src/types";
-import { ToDeleteRole } from "../../../src/expect/matches";
-import { roleUtils } from "../../../src/expect/roleUtils";
+import { ToDeleteRole } from "../../../src/command/matches";
+import { roleUtils } from "../../../src/command/roleUtils";
 import { buildReportMessage } from "../../../src/utils";
 import { runtime } from "../../../src/common/runtime";
 

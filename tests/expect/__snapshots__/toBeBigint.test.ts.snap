@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing toBeBigint should return false for {} 1`] = `
+Object {
+  "message": "    
+    expected type to be bigint.
+    received: 'object'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeBigint should return false for 1 1`] = `
+Object {
+  "message": "    
+    expected type to be bigint.
+    received: 'number'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeBigint should return false for Symbol() 1`] = `
+Object {
+  "message": "    
+    expected type to be bigint.
+    received: 'symbol'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeBigint should return false for aa 1`] = `
+Object {
+  "message": "    
+    expected type to be bigint.
+    received: 'string'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeBigint should return false for null 1`] = `
+Object {
+  "message": "    
+    expected type to be bigint.
+    received: 'null'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeBigint should return false for undefined 1`] = `
+Object {
+  "message": "    
+    expected type to be bigint.
+    received: 'undefined'
+",
+  "pass": false,
+}
+`;

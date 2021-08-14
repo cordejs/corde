@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing toBeArray should return false for {} 1`] = `
+Object {
+  "message": "    
+    expected type to be an array.
+    received: 'object'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeArray should return false for 1 1`] = `
+Object {
+  "message": "    
+    expected type to be an array.
+    received: 'number'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeArray should return false for Symbol() 1`] = `
+Object {
+  "message": "    
+    expected type to be an array.
+    received: 'symbol'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeArray should return false for aa 1`] = `
+Object {
+  "message": "    
+    expected type to be an array.
+    received: 'string'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeArray should return false for array with isNot true 1`] = `
+Object {
+  "message": "    
+    expected type not to be an array.
+    received: 'array'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeArray should return false for null 1`] = `
+Object {
+  "message": "    
+    expected type to be an array.
+    received: 'null'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeArray should return false for undefined 1`] = `
+Object {
+  "message": "    
+    expected type to be an array.
+    received: 'undefined'
+",
+  "pass": false,
+}
+`;

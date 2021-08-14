@@ -3,6 +3,7 @@
     "experimentalDecorators": true,
     "outDir": "lib",
     "rootDir": ".",
+    "baseUrl": ".",
     "strict": true,
     "resolveJsonModule": true,
     "importHelpers": true,
