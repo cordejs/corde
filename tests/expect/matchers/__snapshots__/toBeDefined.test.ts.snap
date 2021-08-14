@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing toBeDefined should return false for boolean with isNot true 1`] = `
+Object {
+  "message": "    
+    expected to not have a defined value. (equal to undefined or null).
+    received: 'object'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeDefined should return false for null 1`] = `
+Object {
+  "message": "    
+    expected to have a defined value. (different than undefined or null).
+    received: 'null'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeDefined should return false for undefined 1`] = `
+Object {
+  "message": "    
+    expected to have a defined value. (different than undefined or null).
+    received: 'null'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeDefined should return true for {} 1`] = `
+Object {
+  "message": "",
+  "pass": true,
+}
+`;
+
+exports[`testing toBeDefined should return true for 1 1`] = `
+Object {
+  "message": "",
+  "pass": true,
+}
+`;
+
+exports[`testing toBeDefined should return true for Symbol() 1`] = `
+Object {
+  "message": "",
+  "pass": true,
+}
+`;
+
+exports[`testing toBeDefined should return true for aa 1`] = `
+Object {
+  "message": "",
+  "pass": true,
+}
+`;

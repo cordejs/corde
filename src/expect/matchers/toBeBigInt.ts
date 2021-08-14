@@ -20,7 +20,7 @@ export function toBeBigint<T>(props: ITestProps, expected: T) {
     message: pass
       ? ""
       : buildReportMessage(
-          `expected type${isNotText} to be ${chalk.green("bigint")}.\n`,
+          `expected type${isNotText} to be ${chalk.green("Bigint")}.\n`,
           `received: '${chalk.red(typeOf(expected))}'`,
         ),
   };

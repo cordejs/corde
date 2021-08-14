@@ -20,7 +20,7 @@ export function toBeArray<T>(props: ITestProps, expected: T) {
     message: pass
       ? ""
       : buildReportMessage(
-          `expected type${isNotText} to be an ${chalk.green("array")}.\n`,
+          `expected type${isNotText} to be an ${chalk.green("Array")}.\n`,
           `received: '${chalk.red(typeOf(expected))}'`,
         ),
   };

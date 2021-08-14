@@ -1,14 +1,27 @@
-import { typeOf } from "../../utils";
+import chalk from "chalk";
+import { ITestProps } from "../../types";
+import { buildReportMessage, typeOf } from "../../utils";
+import { matcherUtils } from "../matcherUtils";
 
 /**
  * @internal
  */
-export function toBeDate<T>(expected: T) {
-  const pass = expected instanceof Date;
+export function toBeDate<T>(props: ITestProps, expected: T) {
+  let pass = matcherUtils.match(() => expected instanceof Date, expected, Date);
+  let isNotText = "";
+
+  if (props.isNot) {
+    pass = !pass;
+    isNotText = " not";
+  }
+
   return {
     pass,
     message: pass
       ? ""
-      : `expected: ${expected} to be a Date object.\nreceived: '${typeOf(expected)}'`,
+      : buildReportMessage(
+          `expected type${isNotText} to be ${chalk.green("Date")}.\n`,
+          `received: '${chalk.red(typeOf(expected))}'`,
+        ),
   };
 }

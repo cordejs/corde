@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing toBeBoolean should return false for {} 1`] = `
+Object {
+  "message": "    
+    expected type to be Boolean.
+    received: 'object'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeBoolean should return false for 1 1`] = `
+Object {
+  "message": "    
+    expected type to be Boolean.
+    received: 'number'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeBoolean should return false for Symbol() 1`] = `
+Object {
+  "message": "    
+    expected type to be Boolean.
+    received: 'symbol'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeBoolean should return false for aa 1`] = `
+Object {
+  "message": "    
+    expected type to be Boolean.
+    received: 'string'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeBoolean should return false for boolean with isNot true 1`] = `
+Object {
+  "message": "    
+    expected type not to be Boolean.
+    received: 'boolean'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeBoolean should return false for null 1`] = `
+Object {
+  "message": "    
+    expected type to be Boolean.
+    received: 'null'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeBoolean should return false for undefined 1`] = `
+Object {
+  "message": "    
+    expected type to be Boolean.
+    received: 'undefined'
+",
+  "pass": false,
+}
+`;

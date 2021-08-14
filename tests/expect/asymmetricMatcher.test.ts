@@ -32,7 +32,18 @@ describe("testing any matcher", () => {
   });
 
   it.each([
+    [undefined, undefined],
+    [null, null],
+  ])("should assert false type %s, with value %s", (classType, value) => {
+    expect(any(classType).matchValue(value)).toBeFalsy();
+  });
+
+  it.each([
     [Number, 1],
+    [Number, new Number()],
+    [String, new String()],
+    [Boolean, new Boolean()],
+    [Function, new Function()],
     [BigInt, 9007199254740991n],
     [Boolean, false],
     [Function, () => {}],

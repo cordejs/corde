@@ -3,7 +3,7 @@
 exports[`testing toBeArray should return false for {} 1`] = `
 Object {
   "message": "    
-    expected type to be an array.
+    expected type to be an Array.
     received: 'object'
 ",
   "pass": false,
@@ -13,7 +13,7 @@ Object {
 exports[`testing toBeArray should return false for 1 1`] = `
 Object {
   "message": "    
-    expected type to be an array.
+    expected type to be an Array.
     received: 'number'
 ",
   "pass": false,
@@ -23,7 +23,7 @@ Object {
 exports[`testing toBeArray should return false for Symbol() 1`] = `
 Object {
   "message": "    
-    expected type to be an array.
+    expected type to be an Array.
     received: 'symbol'
 ",
   "pass": false,
@@ -33,7 +33,7 @@ Object {
 exports[`testing toBeArray should return false for aa 1`] = `
 Object {
   "message": "    
-    expected type to be an array.
+    expected type to be an Array.
     received: 'string'
 ",
   "pass": false,
@@ -43,7 +43,7 @@ Object {
 exports[`testing toBeArray should return false for array with isNot true 1`] = `
 Object {
   "message": "    
-    expected type not to be an array.
+    expected type not to be an Array.
     received: 'array'
 ",
   "pass": false,
@@ -53,7 +53,7 @@ Object {
 exports[`testing toBeArray should return false for null 1`] = `
 Object {
   "message": "    
-    expected type to be an array.
+    expected type to be an Array.
     received: 'null'
 ",
   "pass": false,
@@ -63,7 +63,7 @@ Object {
 exports[`testing toBeArray should return false for undefined 1`] = `
 Object {
   "message": "    
-    expected type to be an array.
+    expected type to be an Array.
     received: 'undefined'
 ",
   "pass": false,

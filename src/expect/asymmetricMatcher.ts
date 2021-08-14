@@ -24,6 +24,10 @@ export class AsymmetricMatcher {
       return "Number";
     }
 
+    if (classType === Date) {
+      return "Date";
+    }
+
     if (classType === BigInt) {
       return "Bigint";
     }
@@ -74,19 +78,23 @@ export class AsymmetricMatcher {
 
   private _isValueOfType(classType: any, value: any) {
     if (classType === Number) {
-      return typeOf(value) === "number";
+      return typeOf(value) === "number" || value instanceof Number;
     }
 
     if (classType === BigInt) {
-      return typeOf(value) === "bigint";
+      return typeOf(value) === "bigint" || value instanceof BigInt;
     }
 
     if (classType === String) {
-      return typeOf(value) === "string";
+      return typeOf(value) === "string" || value instanceof String;
     }
 
     if (classType === Boolean) {
-      return typeOf(value) === "boolean";
+      return typeOf(value) === "boolean" || value instanceof Boolean;
+    }
+
+    if (classType === Array) {
+      return typeOf(value) === "array";
     }
 
     if (classType === Array) {
@@ -98,7 +106,7 @@ export class AsymmetricMatcher {
     }
 
     if (classType === Function) {
-      return typeOf(value) === "function";
+      return typeOf(value) === "function" || value instanceof Function;
     }
 
     if (classType === Symbol) {

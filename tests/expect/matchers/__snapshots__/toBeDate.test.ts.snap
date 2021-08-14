@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing toBeBoolean should return false for {} 1`] = `
+Object {
+  "message": "    
+    expected type to be Date.
+    received: 'object'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeBoolean should return false for 1 1`] = `
+Object {
+  "message": "    
+    expected type to be Date.
+    received: 'number'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeBoolean should return false for Symbol() 1`] = `
+Object {
+  "message": "    
+    expected type to be Date.
+    received: 'symbol'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeBoolean should return false for aa 1`] = `
+Object {
+  "message": "    
+    expected type to be Date.
+    received: 'string'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeBoolean should return false for boolean with isNot true 1`] = `
+Object {
+  "message": "    
+    expected type not to be Date.
+    received: 'object'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeBoolean should return false for null 1`] = `
+Object {
+  "message": "    
+    expected type to be Date.
+    received: 'null'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeBoolean should return false for undefined 1`] = `
+Object {
+  "message": "    
+    expected type to be Date.
+    received: 'undefined'
+",
+  "pass": false,
+}
+`;
