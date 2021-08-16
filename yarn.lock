@@ -8917,9 +8917,9 @@ tslint@^6.1.3:
     tsutils "^2.29.0"
 
 tslog@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/tslog/-/tslog-3.2.0.tgz#4982c289a8948670d6a1c49c29977ae9f861adfa"
-  integrity sha512-xOCghepl5w+wcI4qXI7vJy6c53loF8OoC/EuKz1ktAPMtltEDz00yo1poKuyBYIQaq4ZDYKYFPD9PfqVrFXh0A==
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/tslog/-/tslog-3.2.1.tgz#37df1301211901eb65fd61b9ad7c8554264a7699"
+  integrity sha512-m8wAtox9wt+h6UDcN1WAQnYwRDOGhMIOp+GAuuufo8T8qKuu726i2W3r47BrA69goVOwgUkp5YwDTvAxTktvPg==
   dependencies:
     source-map-support "^0.5.19"
 
