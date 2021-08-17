@@ -29,3 +29,4 @@ export * from "./keysOf";
 export * from "./deepFreeze";
 export * from "./isNumber";
 export * from "./replaceAll";
+export * from "./isString";

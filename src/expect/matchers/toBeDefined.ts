@@ -7,7 +7,7 @@ import { matcherUtils } from "../matcherUtils";
  * @internal
  */
 export function toBeDefined<T>(props: ITestProps, expected: T) {
-  let pass = matcherUtils.match(() => expected !== undefined && expected !== null, expected);
+  let pass = matcherUtils.match(() => expected !== undefined && expected !== null, { expected });
   let isNotText = "";
 
   if (props.isNot) {
@@ -20,7 +20,7 @@ export function toBeDefined<T>(props: ITestProps, expected: T) {
     message: pass
       ? ""
       : buildReportMessage(
-          `expected to${isNotText} have a defined value. (${
+          `expect ${chalk.bold("value")} to${isNotText} have a defined value. (${
             props.isNot ? "equal to" : "different than"
           } ${chalk.bold("undefined")} or ${chalk.bold("null")}).\n`,
           `received: '${chalk.red(typeOf(expected))}'`,

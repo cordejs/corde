@@ -1,12 +1,27 @@
-import { typeOf } from "../../utils";
+import chalk from "chalk";
+import { ITestProps } from "../../types";
+import { buildReportMessage, isFunction, typeOf } from "../../utils";
+import { matcherUtils } from "../matcherUtils";
 
 /**
  * @internal
  */
-export function toBeFunction<T>(expected: T) {
-  const pass = typeof expected === "function";
+export function toBeFunction(props: ITestProps, expected: any) {
+  let pass = matcherUtils.match(() => isFunction(expected), { expected }, Function);
+  let isNotText = "";
+
+  if (props.isNot) {
+    pass = !pass;
+    isNotText = " not";
+  }
+
   return {
     pass,
-    message: pass ? "" : `expected: ${expected} to be a function.\nreceived: '${typeOf(expected)}'`,
+    message: pass
+      ? ""
+      : buildReportMessage(
+          `expect value to${isNotText} be a function.\n`,
+          `received: '${chalk.red(typeOf(expected))}'`,
+        ),
   };
 }

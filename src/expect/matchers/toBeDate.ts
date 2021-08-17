@@ -7,7 +7,7 @@ import { matcherUtils } from "../matcherUtils";
  * @internal
  */
 export function toBeDate<T>(props: ITestProps, expected: T) {
-  let pass = matcherUtils.match(() => expected instanceof Date, expected, Date);
+  let pass = matcherUtils.match(() => expected instanceof Date, { expected }, Date);
   let isNotText = "";
 
   if (props.isNot) {
@@ -20,7 +20,7 @@ export function toBeDate<T>(props: ITestProps, expected: T) {
     message: pass
       ? ""
       : buildReportMessage(
-          `expected type${isNotText} to be ${chalk.green("Date")}.\n`,
+          `expect ${chalk.bold("value's")} type${isNotText} to be ${chalk.green("Date")}.\n`,
           `received: '${chalk.red(typeOf(expected))}'`,
         ),
   };

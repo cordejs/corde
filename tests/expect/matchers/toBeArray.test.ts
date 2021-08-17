@@ -1,17 +1,7 @@
-import chalk from "chalk";
 import { toBeArray } from "../../../src/expect/matchers";
 import { any } from "../../../src/expect/asymmetricMatcher";
 import { ITestProps } from "../../../src/types";
-import { buildReportMessage, typeOf } from "../../../src/utils";
 import { removeANSIColorStyle } from "../../testHelper";
-
-function getMessage(expected: any, isNot: boolean) {
-  const isNotText = isNot ? " not" : "";
-  return buildReportMessage(
-    `expected type${isNotText} to be an ${chalk.green("Array")}.\n`,
-    `received: '${chalk.red(typeOf(expected))}'`,
-  );
-}
 
 const TEST_CASES = [[null], [1], [undefined], ["aa"], [{}], [Symbol.for("")]];
 
@@ -26,19 +16,14 @@ describe("testing toBeArray", () => {
   });
 
   it("should return false for asymmetricMatcher of any value that is not array", () => {
-    expect(toBeArray({ isNot: false }, any(Number))).toEqual({
-      pass: false,
-      message: getMessage(any(Number), false),
-    });
+    const response = toBeArray({ isNot: false }, any(Number));
+    response.message = removeANSIColorStyle(response.message);
+    expect(response).toMatchSnapshot();
   });
 
   it("should return false for array with isNot true", () => {
     const props: ITestProps = { isNot: true };
     const response = toBeArray(props, []);
-    expect(response).toEqual({
-      pass: false,
-      message: getMessage([], props.isNot),
-    });
     response.message = removeANSIColorStyle(response.message);
     expect(response).toMatchSnapshot();
   });
@@ -47,10 +32,6 @@ describe("testing toBeArray", () => {
   it.each(TEST_CASES)("should return false for %s", (expected) => {
     const props: ITestProps = { isNot: false };
     const response = toBeArray(props, expected);
-    expect(response).toEqual({
-      pass: false,
-      message: getMessage(expected, props.isNot),
-    });
     response.message = removeANSIColorStyle(response.message);
     expect(response).toMatchSnapshot();
   });

@@ -3,7 +3,6 @@
     "experimentalDecorators": true,
     "outDir": "lib",
     "rootDir": ".",
-    "baseUrl": ".",
     "strict": true,
     "resolveJsonModule": true,
     "importHelpers": true,
@@ -27,12 +26,6 @@
     "esModuleInterop": true,
     "types": ["node"]
   },
-  "include": [
-    "src/**/*",
-    "index.ts",
-    "tests/core/tsJestCompiler/utils/memoize.test.ts",
-    "tests/core/tsJestCompiler/utils/backports.test.ts",
-    "tests/core/tsJestCompiler/utils/__mocks__"
-  ],
+  "include": ["src/**/*", "index.ts"],
   "exclude": ["node_modules", "lib", "tests", "e2e"]
 }

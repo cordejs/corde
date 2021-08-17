@@ -8,7 +8,7 @@ import { removeANSIColorStyle } from "../../testHelper";
 function getMessage(expected: any, isNot: boolean) {
   const isNotText = isNot ? " not" : "";
   return buildReportMessage(
-    `expected type${isNotText} to be ${chalk.green("Date")}.\n`,
+    `expect ${chalk.bold("value's")} type${isNotText} to be ${chalk.green("Date")}.\n`,
     `received: '${chalk.red(typeOf(expected))}'`,
   );
 }
@@ -26,19 +26,14 @@ describe("testing toBeDefined", () => {
   });
 
   it("should return false for asymmetricMatcher of any value that is not Date", () => {
-    expect(toBeDate({ isNot: false }, any(Number))).toEqual({
-      pass: false,
-      message: getMessage(any(Number), false),
-    });
+    const response = toBeDate({ isNot: false }, any(Number));
+    response.message = removeANSIColorStyle(response.message);
+    expect(response).toMatchSnapshot();
   });
 
   it("should return false for Date with isNot true", () => {
     const props: ITestProps = { isNot: true };
     const response = toBeDate(props, new Date());
-    expect(response).toEqual({
-      pass: false,
-      message: getMessage(new Date(), props.isNot),
-    });
     response.message = removeANSIColorStyle(response.message);
     expect(response).toMatchSnapshot();
   });
@@ -47,10 +42,6 @@ describe("testing toBeDefined", () => {
   it.each(TEST_CASES)("should return false for %s", (expected) => {
     const props: ITestProps = { isNot: false };
     const response = toBeDate(props, expected);
-    expect(response).toEqual({
-      pass: false,
-      message: getMessage(expected, props.isNot),
-    });
     response.message = removeANSIColorStyle(response.message);
     expect(response).toMatchSnapshot();
   });

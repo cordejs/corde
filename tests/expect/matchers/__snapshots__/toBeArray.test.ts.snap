@@ -3,7 +3,7 @@
 exports[`testing toBeArray should return false for {} 1`] = `
 Object {
   "message": "    
-    expected type to be an Array.
+    expect value's type to be an Array.
     received: 'object'
 ",
   "pass": false,
@@ -13,7 +13,7 @@ Object {
 exports[`testing toBeArray should return false for 1 1`] = `
 Object {
   "message": "    
-    expected type to be an Array.
+    expect value's type to be an Array.
     received: 'number'
 ",
   "pass": false,
@@ -23,7 +23,7 @@ Object {
 exports[`testing toBeArray should return false for Symbol() 1`] = `
 Object {
   "message": "    
-    expected type to be an Array.
+    expect value's type to be an Array.
     received: 'symbol'
 ",
   "pass": false,
@@ -33,7 +33,7 @@ Object {
 exports[`testing toBeArray should return false for aa 1`] = `
 Object {
   "message": "    
-    expected type to be an Array.
+    expect value's type to be an Array.
     received: 'string'
 ",
   "pass": false,
@@ -43,8 +43,18 @@ Object {
 exports[`testing toBeArray should return false for array with isNot true 1`] = `
 Object {
   "message": "    
-    expected type not to be an Array.
+    expect value's type not to be an Array.
     received: 'array'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeArray should return false for asymmetricMatcher of any value that is not array 1`] = `
+Object {
+  "message": "    
+    expect value's type to be an Array.
+    received: 'any(Number)'
 ",
   "pass": false,
 }
@@ -53,7 +63,7 @@ Object {
 exports[`testing toBeArray should return false for null 1`] = `
 Object {
   "message": "    
-    expected type to be an Array.
+    expect value's type to be an Array.
     received: 'null'
 ",
   "pass": false,
@@ -63,7 +73,7 @@ Object {
 exports[`testing toBeArray should return false for undefined 1`] = `
 Object {
   "message": "    
-    expected type to be an Array.
+    expect value's type to be an Array.
     received: 'undefined'
 ",
   "pass": false,

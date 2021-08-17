@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing toBeFunction should return false for [ '' ] 1`] = `
+"    
+    expect value to be a function.
+    received: 'array'
+"
+`;
+
+exports[`testing toBeFunction should return false for 1 1`] = `
+"    
+    expect value to be a function.
+    received: 'number'
+"
+`;
+
+exports[`testing toBeFunction should return false for 4141 1`] = `
+"    
+    expect value to be a function.
+    received: 'string'
+"
+`;
+
+exports[`testing toBeFunction should return false for a function when isNot true 1`] = `
+"    
+    expect value to not be a function.
+    received: 'function'
+"
+`;

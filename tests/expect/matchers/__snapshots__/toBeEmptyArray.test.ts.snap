@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing toBeEmptyArray should return false for  1`] = `
+"    
+    expect value to be a empty array.
+    received: 'string'
+"
+`;
+
+exports[`testing toBeEmptyArray should return false for [ '' ] 1`] = `
+"    
+    expect value to be a empty array.
+    received: 'array'
+"
+`;
+
+exports[`testing toBeEmptyArray should return false for 1 1`] = `
+"    
+    expect value to be a empty array.
+    received: 'number'
+"
+`;
+
+exports[`testing toBeEmptyArray should return false for empty array when isNot true 1`] = `
+"    
+    expect value to not be a empty array.
+    received: 'array'
+"
+`;

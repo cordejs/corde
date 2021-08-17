@@ -1,27 +1,51 @@
-import { isNumber } from "lodash";
+import chalk from "chalk";
+import { ITestProps } from "../../types";
+import { buildReportMessage, isNumber, typeOf } from "../../utils";
+import { matcherUtils } from "../matcherUtils";
 
 /**
  * @internal
  */
-export function toBeGreaterOrEqualThan<T extends any>(expected: T, received: number | bigint) {
-  if (isNumber(expected)) {
+export function toBeGreaterOrEqualThan(
+  props: ITestProps,
+  expected: any,
+  received: number | bigint,
+) {
+  if (!matcherUtils.isAsymetric(expected) && !isNumber(expected)) {
     return {
       pass: false,
-      message: "toBeLessThan: expected value is not a number",
+      message: buildReportMessage(
+        "expected value is not a number.\n",
+        `received: '${chalk.red(typeOf(expected))}'`,
+      ),
     };
   }
 
-  if (isNumber(received)) {
+  if (!matcherUtils.isAsymetric(received) && !isNumber(received)) {
     return {
       pass: false,
-      message: "toBeLessThan: received value is not a number",
+      message: buildReportMessage(
+        "received value is not a number.\n",
+        `received: '${chalk.red(typeOf(received))}'`,
+      ),
     };
   }
 
-  const pass = expected <= received;
+  let pass = matcherUtils.match(() => expected >= received, { expected, received }, Number);
+  let comparator = ">=";
+
+  if (props.isNot) {
+    pass = !pass;
+    comparator = "<";
+  }
 
   return {
     pass,
-    message: pass ? "" : `expected: ${expected} be less than ${received}.`,
+    message: pass
+      ? ""
+      : buildReportMessage(
+          `expect(${chalk.green("expect")}).toBeGraterOrEqualThan(${chalk.red("received")})\n`,
+          `expect: ${expected} ${comparator} ${received}.\n`,
+        ),
   };
 }

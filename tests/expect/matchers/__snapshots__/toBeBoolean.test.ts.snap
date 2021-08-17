@@ -3,7 +3,7 @@
 exports[`testing toBeBoolean should return false for {} 1`] = `
 Object {
   "message": "    
-    expected type to be Boolean.
+    expect value's type to be Boolean.
     received: 'object'
 ",
   "pass": false,
@@ -13,7 +13,7 @@ Object {
 exports[`testing toBeBoolean should return false for 1 1`] = `
 Object {
   "message": "    
-    expected type to be Boolean.
+    expect value's type to be Boolean.
     received: 'number'
 ",
   "pass": false,
@@ -23,7 +23,7 @@ Object {
 exports[`testing toBeBoolean should return false for Symbol() 1`] = `
 Object {
   "message": "    
-    expected type to be Boolean.
+    expect value's type to be Boolean.
     received: 'symbol'
 ",
   "pass": false,
@@ -33,8 +33,18 @@ Object {
 exports[`testing toBeBoolean should return false for aa 1`] = `
 Object {
   "message": "    
-    expected type to be Boolean.
+    expect value's type to be Boolean.
     received: 'string'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeBoolean should return false for asymmetricMatcher of any value that is not boolean 1`] = `
+Object {
+  "message": "    
+    expect value's type to be Boolean.
+    received: 'any(Number)'
 ",
   "pass": false,
 }
@@ -43,7 +53,7 @@ Object {
 exports[`testing toBeBoolean should return false for boolean with isNot true 1`] = `
 Object {
   "message": "    
-    expected type not to be Boolean.
+    expect value's type not to be Boolean.
     received: 'boolean'
 ",
   "pass": false,
@@ -53,7 +63,7 @@ Object {
 exports[`testing toBeBoolean should return false for null 1`] = `
 Object {
   "message": "    
-    expected type to be Boolean.
+    expect value's type to be Boolean.
     received: 'null'
 ",
   "pass": false,
@@ -63,7 +73,7 @@ Object {
 exports[`testing toBeBoolean should return false for undefined 1`] = `
 Object {
   "message": "    
-    expected type to be Boolean.
+    expect value's type to be Boolean.
     received: 'undefined'
 ",
   "pass": false,

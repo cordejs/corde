@@ -31,6 +31,14 @@ describe("testing any matcher", () => {
     ).toMatchSnapshot();
   });
 
+  it("should return false for asymetric declared with no type", () => {
+    expect(any().isSpecified()).toBeFalsy();
+  });
+
+  it("should return true for asymetric declared with no type", () => {
+    expect(any(Number).isSpecified()).toBeTruthy();
+  });
+
   it.each([
     [undefined, undefined],
     [null, null],

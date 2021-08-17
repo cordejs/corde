@@ -3,7 +3,7 @@
 exports[`testing toBeBigint should return false for {} 1`] = `
 Object {
   "message": "    
-    expected type to be Bigint.
+    expect value's type to be Bigint.
     received: 'object'
 ",
   "pass": false,
@@ -13,7 +13,7 @@ Object {
 exports[`testing toBeBigint should return false for 1 1`] = `
 Object {
   "message": "    
-    expected type to be Bigint.
+    expect value's type to be Bigint.
     received: 'number'
 ",
   "pass": false,
@@ -23,7 +23,7 @@ Object {
 exports[`testing toBeBigint should return false for Symbol() 1`] = `
 Object {
   "message": "    
-    expected type to be Bigint.
+    expect value's type to be Bigint.
     received: 'symbol'
 ",
   "pass": false,
@@ -33,8 +33,18 @@ Object {
 exports[`testing toBeBigint should return false for aa 1`] = `
 Object {
   "message": "    
-    expected type to be Bigint.
+    expect value's type to be Bigint.
     received: 'string'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeBigint should return false for asymmetricMatcher of any value that is not bigint 1`] = `
+Object {
+  "message": "    
+    expect value's type to be Bigint.
+    received: 'any(Number)'
 ",
   "pass": false,
 }
@@ -43,7 +53,7 @@ Object {
 exports[`testing toBeBigint should return false for bigint with isNot true 1`] = `
 Object {
   "message": "    
-    expected type not to be Bigint.
+    expect value's type not to be Bigint.
     received: 'bigint'
 ",
   "pass": false,
@@ -53,7 +63,7 @@ Object {
 exports[`testing toBeBigint should return false for null 1`] = `
 Object {
   "message": "    
-    expected type to be Bigint.
+    expect value's type to be Bigint.
     received: 'null'
 ",
   "pass": false,
@@ -63,7 +73,7 @@ Object {
 exports[`testing toBeBigint should return false for undefined 1`] = `
 Object {
   "message": "    
-    expected type to be Bigint.
+    expect value's type to be Bigint.
     received: 'undefined'
 ",
   "pass": false,
