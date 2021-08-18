@@ -15,12 +15,14 @@ describe("testing toBeEmptyString", () => {
   it("should return false for empty string when isNot true", () => {
     const report = toBeEmptyString({ isNot: true }, "");
     report.message = removeANSIColorStyle(report.message);
+    expect(report.pass).toBeFalsy();
     expect(report.message).toMatchSnapshot();
   });
 
   it.each([[[""]], ["4141"], [1]])("should return false for %s", (value) => {
     const report = toBeEmptyString({ isNot: false }, value);
     report.message = removeANSIColorStyle(report.message);
+    expect(report.pass).toBeFalsy();
     expect(report.message).toMatchSnapshot();
   });
 });

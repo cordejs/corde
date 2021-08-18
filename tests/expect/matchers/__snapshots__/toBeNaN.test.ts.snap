@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing toBeNaN should return false for  (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect value to not be NaN
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeNaN should return false for [] (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect value to not be NaN
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeNaN should return false for 1 (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect value to not be NaN
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeNaN should return false for NaN (isNot true) 1`] = `
+Object {
+  "message": "    
+    expect value to be NaN
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeNaN should return false for Symbol() (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect value to not be NaN
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeNaN should return false for false (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect value to not be NaN
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeNaN should return false for true (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect value to not be NaN
+",
+  "pass": false,
+}
+`;

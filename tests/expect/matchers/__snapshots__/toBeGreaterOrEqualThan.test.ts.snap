@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`testing toBeFunction should fail due to expected be bigger than received (isNot true) 1`] = `
+exports[`testing toBeGreaterOrEqualThan should fail due to expected be bigger than received (isNot true) 1`] = `
 Object {
   "message": "    
-    expect(expect).toBeGraterOrEqualThan(received)
+    expect(value).toBeGraterOrEqualThan(received)
     expect: 4 < 2.
     
 ",
@@ -11,10 +11,10 @@ Object {
 }
 `;
 
-exports[`testing toBeFunction should fail due to expected be less than received 1`] = `
+exports[`testing toBeGreaterOrEqualThan should fail due to expected be less than received 1`] = `
 Object {
   "message": "    
-    expect(expect).toBeGraterOrEqualThan(received)
+    expect(value).toBeGraterOrEqualThan(received)
     expect: 1 >= 2.
     
 ",
@@ -22,57 +22,57 @@ Object {
 }
 `;
 
-exports[`testing toBeFunction should return false for 'expected' not to be a number 1`] = `
+exports[`testing toBeGreaterOrEqualThan should return false for 'expected' not to be a number 1`] = `
 Object {
   "message": "    
-    expected value is not a number.
+    value value is not a number.
     received: 'string'
 ",
   "pass": false,
 }
 `;
 
-exports[`testing toBeFunction should return false for 'expected' not to be a number 2`] = `
+exports[`testing toBeGreaterOrEqualThan should return false for 'expected' not to be a number 2`] = `
 Object {
   "message": "    
-    expected value is not a number.
+    value value is not a number.
     received: 'string'
 ",
   "pass": false,
 }
 `;
 
-exports[`testing toBeFunction should return false for 'expected' not to be a number 3`] = `
+exports[`testing toBeGreaterOrEqualThan should return false for 'expected' not to be a number 3`] = `
 Object {
   "message": "    
-    expected value is not a number.
+    value value is not a number.
     received: 'boolean'
 ",
   "pass": false,
 }
 `;
 
-exports[`testing toBeFunction should return false for 'expected' not to be a number 4`] = `
+exports[`testing toBeGreaterOrEqualThan should return false for 'expected' not to be a number 4`] = `
 Object {
   "message": "    
-    expected value is not a number.
+    value value is not a number.
     received: 'boolean'
 ",
   "pass": false,
 }
 `;
 
-exports[`testing toBeFunction should return false for 'expected' not to be a number 5`] = `
+exports[`testing toBeGreaterOrEqualThan should return false for 'expected' not to be a number 5`] = `
 Object {
   "message": "    
-    expected value is not a number.
+    value value is not a number.
     received: 'array'
 ",
   "pass": false,
 }
 `;
 
-exports[`testing toBeFunction should return false for 'received' not to be a number 1`] = `
+exports[`testing toBeGreaterOrEqualThan should return false for 'received' not to be a number 1`] = `
 Object {
   "message": "    
     received value is not a number.
@@ -82,7 +82,7 @@ Object {
 }
 `;
 
-exports[`testing toBeFunction should return false for 'received' not to be a number 2`] = `
+exports[`testing toBeGreaterOrEqualThan should return false for 'received' not to be a number 2`] = `
 Object {
   "message": "    
     received value is not a number.
@@ -92,7 +92,7 @@ Object {
 }
 `;
 
-exports[`testing toBeFunction should return false for 'received' not to be a number 3`] = `
+exports[`testing toBeGreaterOrEqualThan should return false for 'received' not to be a number 3`] = `
 Object {
   "message": "    
     received value is not a number.
@@ -102,7 +102,7 @@ Object {
 }
 `;
 
-exports[`testing toBeFunction should return false for 'received' not to be a number 4`] = `
+exports[`testing toBeGreaterOrEqualThan should return false for 'received' not to be a number 4`] = `
 Object {
   "message": "    
     received value is not a number.
@@ -112,7 +112,7 @@ Object {
 }
 `;
 
-exports[`testing toBeFunction should return false for 'received' not to be a number 5`] = `
+exports[`testing toBeGreaterOrEqualThan should return false for 'received' not to be a number 5`] = `
 Object {
   "message": "    
     received value is not a number.

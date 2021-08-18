@@ -6,8 +6,8 @@ import { matcherUtils } from "../matcherUtils";
 /**
  * @internal
  */
-export function toBeArray<T>(props: ITestProps, expected: T) {
-  let pass = matcherUtils.match(() => Array.isArray(expected), { expected }, Array);
+export function toBeArray<T>(props: ITestProps, value: T) {
+  let pass = matcherUtils.match(() => Array.isArray(value), { value }, Array);
   let isNotText = "";
 
   if (props.isNot) {
@@ -21,7 +21,7 @@ export function toBeArray<T>(props: ITestProps, expected: T) {
       ? ""
       : buildReportMessage(
           `expect ${chalk.bold("value's")} type${isNotText} to be an ${chalk.green("Array")}.\n`,
-          `received: '${chalk.red(typeOf(expected))}'`,
+          `received: '${chalk.red(typeOf(value))}'`,
         ),
   };
 }

@@ -1,14 +1,27 @@
-import { typeOf } from "../../utils";
+import chalk from "chalk";
+import { ITestProps } from "../../types";
+import { buildReportMessage, typeOf } from "../../utils";
+import { matcherUtils } from "../matcherUtils";
 
 /**
  * @internal
  */
-export function toBeNothing<T>(expected: T) {
-  const pass = expected === null || expected === undefined;
+export function toBeNothing(props: ITestProps, value: any) {
+  let pass = !matcherUtils.isAsymetric(value) && (value === null || value === undefined);
+  let isNotText = " not";
+
+  if (props.isNot) {
+    pass = !pass;
+    isNotText = "";
+  }
+
   return {
     pass,
     message: pass
       ? ""
-      : `expected: ${expected} to be null or undefined.\nreceived: '${typeOf(expected)}'`,
+      : buildReportMessage(
+          `expect value to${isNotText} be ${chalk.bold("null")} or ${chalk.bold(undefined)}.\n`,
+          `received: '${typeOf(value)}'`,
+        ),
   };
 }

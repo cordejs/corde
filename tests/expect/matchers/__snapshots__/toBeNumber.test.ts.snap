@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing toBeNumber should return false for {} 1`] = `
+Object {
+  "message": "    
+    expect value's type to be Number.
+    received: 'object'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeNumber should return false for 9007199254740991n 1`] = `
+Object {
+  "message": "    
+    expect value's type to be Number.
+    received: 'bigint'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeNumber should return false for Symbol() 1`] = `
+Object {
+  "message": "    
+    expect value's type to be Number.
+    received: 'symbol'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeNumber should return false for aa 1`] = `
+Object {
+  "message": "    
+    expect value's type to be Number.
+    received: 'string'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeNumber should return false for asymmetricMatcher of any value that is not number 1`] = `
+Object {
+  "message": "    
+    expect value's type to be Number.
+    received: 'any(Bigint)'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeNumber should return false for null 1`] = `
+Object {
+  "message": "    
+    expect value's type to be Number.
+    received: 'null'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeNumber should return false for number with isNot true 1`] = `
+Object {
+  "message": "    
+    expect value's type not to be Number.
+    received: 'number'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeNumber should return false for undefined 1`] = `
+Object {
+  "message": "    
+    expect value's type to be Number.
+    received: 'undefined'
+",
+  "pass": false,
+}
+`;

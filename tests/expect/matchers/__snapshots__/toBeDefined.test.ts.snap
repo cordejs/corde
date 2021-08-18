@@ -29,31 +29,3 @@ Object {
   "pass": false,
 }
 `;
-
-exports[`testing toBeDefined should return true for {} 1`] = `
-Object {
-  "message": "",
-  "pass": true,
-}
-`;
-
-exports[`testing toBeDefined should return true for 1 1`] = `
-Object {
-  "message": "",
-  "pass": true,
-}
-`;
-
-exports[`testing toBeDefined should return true for Symbol() 1`] = `
-Object {
-  "message": "",
-  "pass": true,
-}
-`;
-
-exports[`testing toBeDefined should return true for aa 1`] = `
-Object {
-  "message": "",
-  "pass": true,
-}
-`;

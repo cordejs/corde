@@ -1,17 +1,7 @@
-import chalk from "chalk";
 import { any } from "../../../src/expect/asymmetricMatcher";
 import { toBeDate } from "../../../src/expect/matchers";
 import { ITestProps } from "../../../src/types";
-import { buildReportMessage, typeOf } from "../../../src/utils";
 import { removeANSIColorStyle } from "../../testHelper";
-
-function getMessage(expected: any, isNot: boolean) {
-  const isNotText = isNot ? " not" : "";
-  return buildReportMessage(
-    `expect ${chalk.bold("value's")} type${isNotText} to be ${chalk.green("Date")}.\n`,
-    `received: '${chalk.red(typeOf(expected))}'`,
-  );
-}
 
 const TEST_CASES = [[null], [1], [undefined], ["aa"], [{}], [Symbol.for("")]];
 
@@ -26,24 +16,27 @@ describe("testing toBeDefined", () => {
   });
 
   it("should return false for asymmetricMatcher of any value that is not Date", () => {
-    const response = toBeDate({ isNot: false }, any(Number));
-    response.message = removeANSIColorStyle(response.message);
-    expect(response).toMatchSnapshot();
+    const report = toBeDate({ isNot: false }, any(Number));
+    report.message = removeANSIColorStyle(report.message);
+    expect(report.pass).toBeFalsy();
+    expect(report).toMatchSnapshot();
   });
 
   it("should return false for Date with isNot true", () => {
     const props: ITestProps = { isNot: true };
-    const response = toBeDate(props, new Date());
-    response.message = removeANSIColorStyle(response.message);
-    expect(response).toMatchSnapshot();
+    const report = toBeDate(props, new Date());
+    report.message = removeANSIColorStyle(report.message);
+    expect(report.pass).toBeFalsy();
+    expect(report).toMatchSnapshot();
   });
 
   // @ts-ignore
   it.each(TEST_CASES)("should return false for %s", (expected) => {
     const props: ITestProps = { isNot: false };
-    const response = toBeDate(props, expected);
-    response.message = removeANSIColorStyle(response.message);
-    expect(response).toMatchSnapshot();
+    const report = toBeDate(props, expected);
+    report.message = removeANSIColorStyle(report.message);
+    expect(report.pass).toBeFalsy();
+    expect(report).toMatchSnapshot();
   });
 
   it.each(TEST_CASES)(

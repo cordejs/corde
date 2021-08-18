@@ -63,12 +63,12 @@ export class AsymmetricMatcher {
     return classType;
   }
 
-  matchType(classType: any) {
+  matchType(...classType: any[]) {
     return (
       this._classType === undefined ||
       this._classType === null ||
       this._classType.length === 0 ||
-      this._classType.some((type) => classType === type)
+      this._classType.some((type) => classType.includes(type))
     );
   }
 

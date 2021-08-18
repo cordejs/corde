@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing toBeNull should return false for  (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect value to not be null.
+    received: 'string'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeNull should return false for 1 (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect value to not be null.
+    received: 'number'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeNull should return false for Symbol() (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect value to not be null.
+    received: 'symbol'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeNull should return false for any (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect value to not be null.
+    received: 'any'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeNull should return false for false (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect value to not be null.
+    received: 'boolean'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeNull should return false for null (isNot true) 1`] = `
+Object {
+  "message": "    
+    expect value to be null.
+    received: 'null'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeNull should return false for true (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect value to not be null.
+    received: 'boolean'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeNull should return false for undefined (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect value to not be null.
+    received: 'undefined'
+",
+  "pass": false,
+}
+`;

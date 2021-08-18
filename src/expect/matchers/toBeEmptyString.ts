@@ -6,12 +6,8 @@ import { matcherUtils } from "../matcherUtils";
 /**
  * @internal
  */
-export function toBeEmptyString(props: ITestProps, expected: any) {
-  let pass = matcherUtils.match(
-    () => isString(expected) && expected.length === 0,
-    { expected },
-    String,
-  );
+export function toBeEmptyString(props: ITestProps, value: any) {
+  let pass = matcherUtils.match(() => isString(value) && value.length === 0, { value }, String);
   let isNotText = "";
 
   if (props.isNot) {
@@ -25,7 +21,7 @@ export function toBeEmptyString(props: ITestProps, expected: any) {
       ? ""
       : buildReportMessage(
           `expect value to${isNotText} be a empty string.\n`,
-          `received: '${chalk.red(typeOf(expected))}'`,
+          `received: '${chalk.red(typeOf(value))}'`,
         ),
   };
 }

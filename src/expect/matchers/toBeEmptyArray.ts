@@ -6,12 +6,8 @@ import { matcherUtils } from "../matcherUtils";
 /**
  * @internal
  */
-export function toBeEmptyArray(props: ITestProps, expected: any) {
-  let pass = matcherUtils.match(
-    () => Array.isArray(expected) && expected.length === 0,
-    { expected },
-    Array,
-  );
+export function toBeEmptyArray(props: ITestProps, value: any) {
+  let pass = matcherUtils.match(() => Array.isArray(value) && value.length === 0, { value }, Array);
   let isNotText = "";
 
   if (props.isNot) {
@@ -25,7 +21,7 @@ export function toBeEmptyArray(props: ITestProps, expected: any) {
       ? ""
       : buildReportMessage(
           `expect value to${isNotText} be a empty array.\n`,
-          `received: '${chalk.red(typeOf(expected))}'`,
+          `received: '${chalk.red(typeOf(value))}'`,
         ),
   };
 }

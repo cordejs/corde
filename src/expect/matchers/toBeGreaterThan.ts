@@ -1,27 +1,32 @@
-import { isNumber } from "lodash";
+import chalk from "chalk";
+import { ITestProps } from "../../types";
+import { buildReportMessage } from "../../utils";
+import { matcherUtils } from "../matcherUtils";
 
 /**
  * @internal
  */
-export function toBeGreaterThan<T extends any>(expected: T, received: number | bigint) {
-  if (isNumber(expected)) {
-    return {
-      pass: false,
-      message: "toBeGreaterThan: expected value is not a number",
-    };
+export function toBeGreaterThan(props: ITestProps, value: any, received: number | bigint) {
+  const failedTest = matcherUtils.validateParameterAsNumber(value, received);
+  if (failedTest) {
+    return failedTest;
   }
 
-  if (isNumber(received)) {
-    return {
-      pass: false,
-      message: "toBeGreaterThan: received value is not a number",
-    };
-  }
+  let pass = matcherUtils.match(() => value > received, { value, received }, Number);
+  let comparator = ">";
 
-  const pass = expected > received;
+  if (props.isNot) {
+    pass = !pass;
+    comparator = "<=";
+  }
 
   return {
     pass,
-    message: pass ? "" : `expected: ${expected} be greater than ${received}.`,
+    message: pass
+      ? ""
+      : buildReportMessage(
+          `expect(${chalk.green("value")}).toBeGreaterThan(${chalk.red("received")})\n`,
+          `expect: ${value} ${comparator} ${received}.\n`,
+        ),
   };
 }

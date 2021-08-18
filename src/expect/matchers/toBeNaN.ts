@@ -1,12 +1,30 @@
-import { typeOf } from "../../utils";
+import { ITestProps } from "../../types";
+import { buildReportMessage } from "../../utils";
+import { matcherUtils } from "../matcherUtils";
 
 /**
  * @internal
  */
-export function toBeBoolean<T>(expected: T) {
-  const pass = isNaN(expected as any);
+export function toBeNaN(props: ITestProps, value: any) {
+  let pass = matcherUtils.match(
+    () => {
+      try {
+        return isNaN(value);
+      } catch {
+        return false;
+      }
+    },
+    { value },
+  );
+  let isNotText = " not";
+
+  if (props.isNot) {
+    pass = !pass;
+    isNotText = "";
+  }
+
   return {
     pass,
-    message: pass ? "" : `expected: ${expected} to be NaN value.\nreceived: '${typeOf(expected)}'`,
+    message: pass ? "" : buildReportMessage(`expect value to${isNotText} be NaN`),
   };
 }

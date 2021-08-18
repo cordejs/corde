@@ -1,0 +1,191 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing toBePrimitive should return false for () => {} (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect value's type to be primitive(Number | String | Boolean | BigInt).
+    received: 'function'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBePrimitive should return false for [] (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect value's type to be primitive(Number | String | Boolean | BigInt).
+    received: 'array'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBePrimitive should return false for {} (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect value's type to be primitive(Number | String | Boolean | BigInt).
+    received: 'object'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBePrimitive should return false for 1 (isNot true) 1`] = `
+Object {
+  "message": "    
+    expect value's type not to be primitive(Number | String | Boolean | BigInt).
+    received: 'string'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBePrimitive should return false for 1 (isNot true) 2`] = `
+Object {
+  "message": "    
+    expect value's type not to be primitive(Number | String | Boolean | BigInt).
+    received: 'number'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBePrimitive should return false for 9007199254740991n (isNot true) 1`] = `
+Object {
+  "message": "    
+    expect value's type not to be primitive(Number | String | Boolean | BigInt).
+    received: 'bigint'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBePrimitive should return false for Symbol() (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect value's type to be primitive(Number | String | Boolean | BigInt).
+    received: 'symbol'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBePrimitive should return false for any(Array) (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect value's type to be primitive(Number | String | Boolean | BigInt).
+    received: 'any(Array)'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBePrimitive should return false for any(Bigint) (isNot true) 1`] = `
+Object {
+  "message": "    
+    expect value's type not to be primitive(Number | String | Boolean | BigInt).
+    received: 'any(Bigint)'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBePrimitive should return false for any(Boolean) (isNot true) 1`] = `
+Object {
+  "message": "    
+    expect value's type not to be primitive(Number | String | Boolean | BigInt).
+    received: 'any(Boolean)'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBePrimitive should return false for any(Function) (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect value's type to be primitive(Number | String | Boolean | BigInt).
+    received: 'any(Function)'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBePrimitive should return false for any(Number) (isNot true) 1`] = `
+Object {
+  "message": "    
+    expect value's type not to be primitive(Number | String | Boolean | BigInt).
+    received: 'any(Number)'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBePrimitive should return false for any(Object) (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect value's type to be primitive(Number | String | Boolean | BigInt).
+    received: 'any(Object)'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBePrimitive should return false for any(String) (isNot true) 1`] = `
+Object {
+  "message": "    
+    expect value's type not to be primitive(Number | String | Boolean | BigInt).
+    received: 'any(String)'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBePrimitive should return false for any(Symbol) (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect value's type to be primitive(Number | String | Boolean | BigInt).
+    received: 'any(Symbol)'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBePrimitive should return false for false (isNot true) 1`] = `
+Object {
+  "message": "    
+    expect value's type not to be primitive(Number | String | Boolean | BigInt).
+    received: 'boolean'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBePrimitive should return false for null (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect value's type to be primitive(Number | String | Boolean | BigInt).
+    received: 'null'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBePrimitive should return false for true (isNot true) 1`] = `
+Object {
+  "message": "    
+    expect value's type not to be primitive(Number | String | Boolean | BigInt).
+    received: 'boolean'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBePrimitive should return false for undefined (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect value's type to be primitive(Number | String | Boolean | BigInt).
+    received: 'undefined'
+",
+  "pass": false,
+}
+`;

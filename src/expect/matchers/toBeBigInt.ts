@@ -6,8 +6,8 @@ import { matcherUtils } from "../matcherUtils";
 /**
  * @internal
  */
-export function toBeBigint<T>(props: ITestProps, expected: T) {
-  let pass = matcherUtils.match(() => typeof expected === "bigint", { expected }, BigInt);
+export function toBeBigint<T>(props: ITestProps, value: T) {
+  let pass = matcherUtils.match(() => typeof value === "bigint", { value }, BigInt);
   let isNotText = "";
 
   if (props.isNot) {
@@ -21,7 +21,7 @@ export function toBeBigint<T>(props: ITestProps, expected: T) {
       ? ""
       : buildReportMessage(
           `expect ${chalk.bold("value's")} type${isNotText} to be ${chalk.green("Bigint")}.\n`,
-          `received: '${chalk.red(typeOf(expected))}'`,
+          `received: '${chalk.red(typeOf(value))}'`,
         ),
   };
 }

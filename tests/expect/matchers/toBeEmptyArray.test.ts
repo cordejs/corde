@@ -15,12 +15,14 @@ describe("testing toBeEmptyArray", () => {
   it("should return false for empty array when isNot true", () => {
     const report = toBeEmptyArray({ isNot: true }, []);
     report.message = removeANSIColorStyle(report.message);
+    expect(report.pass).toBeFalsy();
     expect(report.message).toMatchSnapshot();
   });
 
   it.each([[[""]], [""], [1]])("should return false for %s", (value) => {
     const report = toBeEmptyArray({ isNot: false }, value);
     report.message = removeANSIColorStyle(report.message);
+    expect(report.pass).toBeFalsy();
     expect(report.message).toMatchSnapshot();
   });
 });

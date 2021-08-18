@@ -16,24 +16,27 @@ describe("testing toBeArray", () => {
   });
 
   it("should return false for asymmetricMatcher of any value that is not array", () => {
-    const response = toBeArray({ isNot: false }, any(Number));
-    response.message = removeANSIColorStyle(response.message);
-    expect(response).toMatchSnapshot();
+    const report = toBeArray({ isNot: false }, any(Number));
+    report.message = removeANSIColorStyle(report.message);
+    expect(report.pass).toBeFalsy();
+    expect(report).toMatchSnapshot();
   });
 
   it("should return false for array with isNot true", () => {
     const props: ITestProps = { isNot: true };
-    const response = toBeArray(props, []);
-    response.message = removeANSIColorStyle(response.message);
-    expect(response).toMatchSnapshot();
+    const report = toBeArray(props, []);
+    report.message = removeANSIColorStyle(report.message);
+    expect(report.pass).toBeFalsy();
+    expect(report).toMatchSnapshot();
   });
 
   // @ts-ignore
   it.each(TEST_CASES)("should return false for %s", (expected) => {
     const props: ITestProps = { isNot: false };
-    const response = toBeArray(props, expected);
-    response.message = removeANSIColorStyle(response.message);
-    expect(response).toMatchSnapshot();
+    const report = toBeArray(props, expected);
+    report.message = removeANSIColorStyle(report.message);
+    expect(report.pass).toBeFalsy();
+    expect(report).toMatchSnapshot();
   });
 
   it.each(TEST_CASES)(

@@ -16,24 +16,27 @@ describe("testing toBeBigint", () => {
   });
 
   it("should return false for asymmetricMatcher of any value that is not bigint", () => {
-    const response = toBeBigint({ isNot: false }, any(Number));
-    response.message = removeANSIColorStyle(response.message);
-    expect(response).toMatchSnapshot();
+    const report = toBeBigint({ isNot: false }, any(Number));
+    report.message = removeANSIColorStyle(report.message);
+    expect(report.pass).toBeFalsy();
+    expect(report).toMatchSnapshot();
   });
 
   it("should return false for bigint with isNot true", () => {
     const props: ITestProps = { isNot: true };
-    const response = toBeBigint(props, 9007199254740991n);
-    response.message = removeANSIColorStyle(response.message);
-    expect(response).toMatchSnapshot();
+    const report = toBeBigint(props, 9007199254740991n);
+    report.message = removeANSIColorStyle(report.message);
+    expect(report.pass).toBeFalsy();
+    expect(report).toMatchSnapshot();
   });
 
   // @ts-ignore
   it.each(TEST_CASES)("should return false for %s", (expected) => {
     const props: ITestProps = { isNot: false };
-    const response = toBeBigint(props, expected);
-    response.message = removeANSIColorStyle(response.message);
-    expect(response).toMatchSnapshot();
+    const report = toBeBigint(props, expected);
+    report.message = removeANSIColorStyle(report.message);
+    expect(report.pass).toBeFalsy();
+    expect(report).toMatchSnapshot();
   });
 
   it.each(TEST_CASES)(

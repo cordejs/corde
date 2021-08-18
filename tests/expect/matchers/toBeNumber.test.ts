@@ -1,30 +1,30 @@
 import { any } from "../../../src/expect/asymmetricMatcher";
-import { toBeBoolean } from "../../../src/expect/matchers";
+import { toBeNumber } from "../../../src/expect/matchers";
 import { ITestProps } from "../../../src/types";
 import { removeANSIColorStyle } from "../../testHelper";
 
-const TEST_CASES = [[null], [1], [undefined], ["aa"], [{}], [Symbol.for("")]];
+const TEST_CASES = [[null], [9007199254740991n], [undefined], ["aa"], [{}], [Symbol.for("")]];
 
-describe("testing toBeBoolean", () => {
-  it("should return true for boolean value", () => {
-    expect(toBeBoolean({ isNot: false }, false)).toEqual({ pass: true, message: "" });
+describe("testing toBeNumber", () => {
+  it("should return true for number value", () => {
+    expect(toBeNumber({ isNot: false }, 8888)).toEqual({ pass: true, message: "" });
   });
 
   it("should return true for asymmetricMatcher", () => {
-    expect(toBeBoolean({ isNot: false }, any())).toEqual({ pass: true, message: "" });
-    expect(toBeBoolean({ isNot: false }, any(Boolean))).toEqual({ pass: true, message: "" });
+    expect(toBeNumber({ isNot: false }, any())).toEqual({ pass: true, message: "" });
+    expect(toBeNumber({ isNot: false }, any(Number))).toEqual({ pass: true, message: "" });
   });
 
-  it("should return false for asymmetricMatcher of any value that is not boolean", () => {
-    const report = toBeBoolean({ isNot: false }, any(Number));
+  it("should return false for asymmetricMatcher of any value that is not number", () => {
+    const report = toBeNumber({ isNot: false }, any(BigInt));
     report.message = removeANSIColorStyle(report.message);
     expect(report.pass).toBeFalsy();
     expect(report).toMatchSnapshot();
   });
 
-  it("should return false for boolean with isNot true", () => {
+  it("should return false for number with isNot true", () => {
     const props: ITestProps = { isNot: true };
-    const report = toBeBoolean(props, false);
+    const report = toBeNumber(props, 8888);
     report.message = removeANSIColorStyle(report.message);
     expect(report.pass).toBeFalsy();
     expect(report).toMatchSnapshot();
@@ -33,7 +33,7 @@ describe("testing toBeBoolean", () => {
   // @ts-ignore
   it.each(TEST_CASES)("should return false for %s", (expected) => {
     const props: ITestProps = { isNot: false };
-    const report = toBeBoolean(props, expected);
+    const report = toBeNumber(props, expected);
     report.message = removeANSIColorStyle(report.message);
     expect(report.pass).toBeFalsy();
     expect(report).toMatchSnapshot();
@@ -44,7 +44,7 @@ describe("testing toBeBoolean", () => {
     // @ts-ignore
     (expected) => {
       const props: ITestProps = { isNot: true };
-      expect(toBeBoolean(props, expected)).toEqual({
+      expect(toBeNumber(props, expected)).toEqual({
         pass: true,
         message: "",
       });

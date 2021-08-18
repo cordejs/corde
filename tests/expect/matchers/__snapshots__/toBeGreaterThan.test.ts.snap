@@ -1,0 +1,134 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing toBeGreaterThan should fail due to expected be bigger than received (isNot true) 1`] = `
+Object {
+  "message": "    
+    expect(value).toBeGreaterThan(received)
+    expect: 4 <= 2.
+    
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeGreaterThan should fail due to expected be equal than received 1`] = `
+Object {
+  "message": "    
+    expect(value).toBeGreaterThan(received)
+    expect: 1 > 1.
+    
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeGreaterThan should fail due to expected be less than received 1`] = `
+Object {
+  "message": "    
+    expect(value).toBeGreaterThan(received)
+    expect: 1 > 2.
+    
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeGreaterThan should return false for 'expected' not to be a number 1`] = `
+Object {
+  "message": "    
+    value value is not a number.
+    received: 'string'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeGreaterThan should return false for 'expected' not to be a number 2`] = `
+Object {
+  "message": "    
+    value value is not a number.
+    received: 'string'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeGreaterThan should return false for 'expected' not to be a number 3`] = `
+Object {
+  "message": "    
+    value value is not a number.
+    received: 'boolean'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeGreaterThan should return false for 'expected' not to be a number 4`] = `
+Object {
+  "message": "    
+    value value is not a number.
+    received: 'boolean'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeGreaterThan should return false for 'expected' not to be a number 5`] = `
+Object {
+  "message": "    
+    value value is not a number.
+    received: 'array'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeGreaterThan should return false for 'received' not to be a number 1`] = `
+Object {
+  "message": "    
+    received value is not a number.
+    received: 'string'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeGreaterThan should return false for 'received' not to be a number 2`] = `
+Object {
+  "message": "    
+    received value is not a number.
+    received: 'string'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeGreaterThan should return false for 'received' not to be a number 3`] = `
+Object {
+  "message": "    
+    received value is not a number.
+    received: 'boolean'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeGreaterThan should return false for 'received' not to be a number 4`] = `
+Object {
+  "message": "    
+    received value is not a number.
+    received: 'boolean'
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeGreaterThan should return false for 'received' not to be a number 5`] = `
+Object {
+  "message": "    
+    received value is not a number.
+    received: 'array'
+",
+  "pass": false,
+}
+`;

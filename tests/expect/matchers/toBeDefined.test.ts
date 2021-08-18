@@ -18,29 +18,31 @@ describe("testing toBeDefined", () => {
   });
 
   it("should return false for undefined", () => {
-    const response = toBeDefined({ isNot: false }, null);
-    response.message = removeANSIColorStyle(response.message);
-    expect(response).toMatchSnapshot();
+    const report = toBeDefined({ isNot: false }, null);
+    report.message = removeANSIColorStyle(report.message);
+    expect(report.pass).toBeFalsy();
+    expect(report).toMatchSnapshot();
   });
 
   it("should return false for null", () => {
-    const response = toBeDefined({ isNot: false }, null);
-    response.message = removeANSIColorStyle(response.message);
-    expect(response).toMatchSnapshot();
+    const report = toBeDefined({ isNot: false }, null);
+    report.message = removeANSIColorStyle(report.message);
+    expect(report.pass).toBeFalsy();
+    expect(report).toMatchSnapshot();
   });
 
   it("should return false for boolean with isNot true", () => {
     const props: ITestProps = { isNot: true };
-    const response = toBeDefined(props, new Date());
-    response.message = removeANSIColorStyle(response.message);
-    expect(response).toMatchSnapshot();
+    const report = toBeDefined(props, new Date());
+    report.message = removeANSIColorStyle(report.message);
+    expect(report.pass).toBeFalsy();
+    expect(report).toMatchSnapshot();
   });
 
   // @ts-ignore
   it.each(TEST_CASES)("should return true for %s", (expected) => {
     const props: ITestProps = { isNot: false };
-    const response = toBeDefined(props, expected);
-    response.message = removeANSIColorStyle(response.message);
-    expect(response).toMatchSnapshot();
+    const report = toBeDefined(props, expected);
+    expect(report.pass).toBeTruthy();
   });
 });
