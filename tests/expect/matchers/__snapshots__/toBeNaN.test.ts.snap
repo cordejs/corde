@@ -3,7 +3,8 @@
 exports[`testing toBeNaN should return false for  (isNot false) 1`] = `
 Object {
   "message": "    
-    expect value to not be NaN
+    expected should not be NaN.
+    got: string
 ",
   "pass": false,
 }
@@ -12,7 +13,8 @@ Object {
 exports[`testing toBeNaN should return false for [] (isNot false) 1`] = `
 Object {
   "message": "    
-    expect value to not be NaN
+    expected should not be NaN.
+    got: array
 ",
   "pass": false,
 }
@@ -21,7 +23,8 @@ Object {
 exports[`testing toBeNaN should return false for 1 (isNot false) 1`] = `
 Object {
   "message": "    
-    expect value to not be NaN
+    expected should not be NaN.
+    got: number
 ",
   "pass": false,
 }
@@ -30,7 +33,8 @@ Object {
 exports[`testing toBeNaN should return false for NaN (isNot true) 1`] = `
 Object {
   "message": "    
-    expect value to be NaN
+    expected should be NaN.
+    got: number
 ",
   "pass": false,
 }
@@ -39,7 +43,8 @@ Object {
 exports[`testing toBeNaN should return false for Symbol() (isNot false) 1`] = `
 Object {
   "message": "    
-    expect value to not be NaN
+    expected should not be NaN.
+    got: symbol
 ",
   "pass": false,
 }
@@ -48,7 +53,8 @@ Object {
 exports[`testing toBeNaN should return false for false (isNot false) 1`] = `
 Object {
   "message": "    
-    expect value to not be NaN
+    expected should not be NaN.
+    got: boolean
 ",
   "pass": false,
 }
@@ -57,7 +63,8 @@ Object {
 exports[`testing toBeNaN should return false for true (isNot false) 1`] = `
 Object {
   "message": "    
-    expect value to not be NaN
+    expected should not be NaN.
+    got: boolean
 ",
   "pass": false,
 }

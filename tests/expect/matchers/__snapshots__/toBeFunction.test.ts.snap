@@ -2,22 +2,22 @@
 
 exports[`testing toBeFunction should return false for [ '' ] 1`] = `
 "    
-    expect value to be a function.
-    received: 'array'
+    expected should be an function.
+    got: array
 "
 `;
 
 exports[`testing toBeFunction should return false for 1 1`] = `
 "    
-    expect value to be a function.
-    received: 'number'
+    expected should be an function.
+    got: number
 "
 `;
 
 exports[`testing toBeFunction should return false for 4141 1`] = `
 "    
-    expect value to be a function.
-    received: 'string'
+    expected should be an function.
+    got: string
 "
 `;
 

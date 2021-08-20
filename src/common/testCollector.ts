@@ -23,7 +23,10 @@ class TestCollector {
     this.assertions = [];
     this.isolatedFunctions = [];
     this.testsFunctions = [];
+    this.testsPass = 0;
+    this.testsFailed = 0;
   }
+
   private static _instance: TestCollector;
   isInsideGroupClausure: boolean;
   isInsideTestClausure: boolean;
@@ -39,6 +42,9 @@ class TestCollector {
   afterEachFunctions: Queue<VoidLikeFunction>;
   testsFunctions: TestFunctionType[];
   isolatedFunctions: TestFunctionType[];
+
+  testsPass: number;
+  testsFailed: number;
 
   private testClousureFunction: Queue<VoidLikeFunction>;
   private groupClousureFunction: Queue<VoidLikeFunction>;

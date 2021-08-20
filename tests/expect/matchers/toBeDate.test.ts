@@ -1,30 +1,27 @@
-import { any } from "../../../src/expect/asymmetricMatcher";
-import { toBeDate } from "../../../src/expect/matchers";
-import { ITestProps } from "../../../src/types";
+import { cordeExpect } from "../../../src/expect";
 import { removeANSIColorStyle } from "../../testHelper";
 
 const TEST_CASES = [[null], [1], [undefined], ["aa"], [{}], [Symbol.for("")]];
 
 describe("testing toBeDefined", () => {
   it("should return true for a Date value", () => {
-    expect(toBeDate({ isNot: false }, new Date())).toEqual({ pass: true, message: "" });
+    expect(cordeExpect(new Date()).toBeDate()).toEqual({ pass: true, message: "" });
   });
 
   it("should return true for asymmetricMatcher", () => {
-    expect(toBeDate({ isNot: false }, any())).toEqual({ pass: true, message: "" });
-    expect(toBeDate({ isNot: false }, any(Date))).toEqual({ pass: true, message: "" });
+    expect(cordeExpect(cordeExpect.any()).toBeDate()).toEqual({ pass: true, message: "" });
+    expect(cordeExpect(cordeExpect(Date)).toBeDate()).toEqual({ pass: true, message: "" });
   });
 
   it("should return false for asymmetricMatcher of any value that is not Date", () => {
-    const report = toBeDate({ isNot: false }, any(Number));
+    const report = cordeExpect(cordeExpect.any(Number)).toBeDate();
     report.message = removeANSIColorStyle(report.message);
     expect(report.pass).toBeFalsy();
     expect(report).toMatchSnapshot();
   });
 
   it("should return false for Date with isNot true", () => {
-    const props: ITestProps = { isNot: true };
-    const report = toBeDate(props, new Date());
+    const report = cordeExpect(new Date()).toBeDate();
     report.message = removeANSIColorStyle(report.message);
     expect(report.pass).toBeFalsy();
     expect(report).toMatchSnapshot();
@@ -32,8 +29,7 @@ describe("testing toBeDefined", () => {
 
   // @ts-ignore
   it.each(TEST_CASES)("should return false for %s", (expected) => {
-    const props: ITestProps = { isNot: false };
-    const report = toBeDate(props, expected);
+    const report = cordeExpect(expected).toBeDate();
     report.message = removeANSIColorStyle(report.message);
     expect(report.pass).toBeFalsy();
     expect(report).toMatchSnapshot();
@@ -43,8 +39,7 @@ describe("testing toBeDefined", () => {
     "should return true for %s, when isNot is true",
     // @ts-ignore
     (expected) => {
-      const props: ITestProps = { isNot: true };
-      expect(toBeDate(props, expected)).toEqual({
+      expect(cordeExpect(expected).not.toBeDate()).toEqual({
         pass: true,
         message: "",
       });

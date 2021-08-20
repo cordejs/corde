@@ -6,10 +6,10 @@ import { matcherUtils } from "../matcherUtils";
 /**
  * @internal
  */
-export function toBePrimitive<T>(props: ITestProps, value: T) {
+export function toBePrimitive<T>(this: ITestProps, expected: T) {
   let pass = matcherUtils.match(
-    () => isPrimitiveValue(value),
-    { value },
+    () => isPrimitiveValue(expected),
+    { expected },
     Number,
     String,
     BigInt,
@@ -17,7 +17,7 @@ export function toBePrimitive<T>(props: ITestProps, value: T) {
   );
   let isNotText = "";
 
-  if (props.isNot) {
+  if (this.isNot) {
     pass = !pass;
     isNotText = " not";
   }
@@ -27,10 +27,12 @@ export function toBePrimitive<T>(props: ITestProps, value: T) {
     message: pass
       ? ""
       : buildReportMessage(
-          `expect ${chalk.bold(
-            "value's",
-          )} type${isNotText} to be primitive(Number | String | Boolean | BigInt).\n`,
-          `received: '${chalk.red(typeOf(value))}'`,
+          `${this.expectedColorFn(
+            "expected",
+          )} should${isNotText} be primitive expected (${chalk.green(
+            "string | bigint | number | boolean",
+          )}).\n`,
+          `got: ${chalk.red(typeOf(expected))}`,
         ),
   };
 }

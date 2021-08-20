@@ -28,6 +28,8 @@ export interface IEmoji {
 
 export interface ITestProps {
   isNot: boolean;
+  expectedColorFn(text: string): string;
+  receivedColorFn(text: string): string;
 }
 
 export interface IMinifiedEmbedMessage {

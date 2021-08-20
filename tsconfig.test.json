@@ -2,6 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "strict": false,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "types": ["./src/global"]
   }
 }

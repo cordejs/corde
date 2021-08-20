@@ -3,7 +3,7 @@
 exports[`testing toBeLessThan should fail due to expected be equal than received 1`] = `
 Object {
   "message": "    
-    expect(value).toBeLessThan(received)
+    expect(expected).toBeLessThan(received)
     expect: 1 < 1.
     
 ",
@@ -36,7 +36,7 @@ Object {
 exports[`testing toBeLessThan should return false for 'expected' not to be a number 1`] = `
 Object {
   "message": "    
-    value value is not a number.
+    received is not a number.
     received: 'string'
 ",
   "pass": false,
@@ -46,7 +46,7 @@ Object {
 exports[`testing toBeLessThan should return false for 'expected' not to be a number 2`] = `
 Object {
   "message": "    
-    value value is not a number.
+    received is not a number.
     received: 'string'
 ",
   "pass": false,
@@ -56,7 +56,7 @@ Object {
 exports[`testing toBeLessThan should return false for 'expected' not to be a number 3`] = `
 Object {
   "message": "    
-    value value is not a number.
+    received is not a number.
     received: 'boolean'
 ",
   "pass": false,
@@ -66,7 +66,7 @@ Object {
 exports[`testing toBeLessThan should return false for 'expected' not to be a number 4`] = `
 Object {
   "message": "    
-    value value is not a number.
+    received is not a number.
     received: 'boolean'
 ",
   "pass": false,
@@ -76,7 +76,7 @@ Object {
 exports[`testing toBeLessThan should return false for 'expected' not to be a number 5`] = `
 Object {
   "message": "    
-    value value is not a number.
+    received is not a number.
     received: 'array'
 ",
   "pass": false,
@@ -86,7 +86,7 @@ Object {
 exports[`testing toBeLessThan should return false for 'received' not to be a number 1`] = `
 Object {
   "message": "    
-    received value is not a number.
+    value is not a number.
     received: 'string'
 ",
   "pass": false,
@@ -96,7 +96,7 @@ Object {
 exports[`testing toBeLessThan should return false for 'received' not to be a number 2`] = `
 Object {
   "message": "    
-    received value is not a number.
+    value is not a number.
     received: 'string'
 ",
   "pass": false,
@@ -106,7 +106,7 @@ Object {
 exports[`testing toBeLessThan should return false for 'received' not to be a number 3`] = `
 Object {
   "message": "    
-    received value is not a number.
+    value is not a number.
     received: 'boolean'
 ",
   "pass": false,
@@ -116,7 +116,7 @@ Object {
 exports[`testing toBeLessThan should return false for 'received' not to be a number 4`] = `
 Object {
   "message": "    
-    received value is not a number.
+    value is not a number.
     received: 'boolean'
 ",
   "pass": false,
@@ -126,7 +126,7 @@ Object {
 exports[`testing toBeLessThan should return false for 'received' not to be a number 5`] = `
 Object {
   "message": "    
-    received value is not a number.
+    value is not a number.
     received: 'array'
 ",
   "pass": false,

@@ -13,8 +13,8 @@ Object {
 exports[`testing toBeDefined should return false for null 1`] = `
 Object {
   "message": "    
-    expect value to have a defined value. (different than undefined or null).
-    received: 'null'
+    expected should have a defined value. (different than undefined or null).
+    got: 'null'
 ",
   "pass": false,
 }
@@ -23,8 +23,8 @@ Object {
 exports[`testing toBeDefined should return false for undefined 1`] = `
 Object {
   "message": "    
-    expect value to have a defined value. (different than undefined or null).
-    received: 'null'
+    expected should have a defined value. (different than undefined or null).
+    got: 'undefined'
 ",
   "pass": false,
 }

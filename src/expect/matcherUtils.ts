@@ -3,7 +3,7 @@ import { buildReportMessage, isNumber, typeOf } from "../utils";
 import { AsymmetricMatcher } from "./asymmetricMatcher";
 
 interface IMatcherValues {
-  value: any;
+  expected: any;
   received?: any;
 }
 
@@ -13,12 +13,12 @@ export namespace matcherUtils {
   }
 
   export function match(assertFn: () => boolean, values: IMatcherValues, ...anyType: any[]) {
-    if (isAsymetric(values.value) && isAsymetric(values.received)) {
-      return values.value.matchType(...anyType) && values.received.matchType(...anyType);
+    if (isAsymetric(values.expected) && isAsymetric(values.received)) {
+      return values.expected.matchType(...anyType) && values.received.matchType(...anyType);
     }
 
-    if (isAsymetric(values.value)) {
-      return values.value.matchType(...anyType);
+    if (isAsymetric(values.expected)) {
+      return values.expected.matchType(...anyType);
     }
 
     if (isAsymetric(values.received)) {
@@ -41,7 +41,7 @@ export namespace matcherUtils {
       return {
         pass: false,
         message: buildReportMessage(
-          "value value is not a number.\n",
+          "value is not a number.\n",
           `received: '${chalk.red(typeOf(value))}'`,
         ),
       };
@@ -51,7 +51,7 @@ export namespace matcherUtils {
       return {
         pass: false,
         message: buildReportMessage(
-          "received value is not a number.\n",
+          "received is not a number.\n",
           `received: '${chalk.red(typeOf(received))}'`,
         ),
       };

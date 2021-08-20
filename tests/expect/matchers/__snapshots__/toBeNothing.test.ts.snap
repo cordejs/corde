@@ -2,80 +2,74 @@
 
 exports[`testing toBeNothing should return false for  (isNot false) 1`] = `
 Object {
+  "expected": false,
   "message": "    
-    expect value to not be null or undefined.
-    received: 'string'
+    expected should not be null or undefined.
+    got: boolean
 ",
-  "pass": false,
 }
 `;
 
 exports[`testing toBeNothing should return false for 1 (isNot false) 1`] = `
 Object {
+  "expected": false,
   "message": "    
-    expect value to not be null or undefined.
-    received: 'number'
+    expected should not be null or undefined.
+    got: boolean
 ",
-  "pass": false,
 }
 `;
 
 exports[`testing toBeNothing should return false for Symbol() (isNot false) 1`] = `
 Object {
+  "expected": false,
   "message": "    
-    expect value to not be null or undefined.
-    received: 'symbol'
+    expected should not be null or undefined.
+    got: boolean
 ",
-  "pass": false,
 }
 `;
 
 exports[`testing toBeNothing should return false for any (isNot false) 1`] = `
 Object {
+  "expected": false,
   "message": "    
-    expect value to not be null or undefined.
-    received: 'any'
+    expected should not be null or undefined.
+    got: boolean
 ",
-  "pass": false,
 }
 `;
 
 exports[`testing toBeNothing should return false for false (isNot false) 1`] = `
 Object {
+  "expected": false,
   "message": "    
-    expect value to not be null or undefined.
-    received: 'boolean'
+    expected should not be null or undefined.
+    got: boolean
 ",
-  "pass": false,
 }
 `;
 
 exports[`testing toBeNothing should return false for null (isNot true) 1`] = `
 Object {
-  "message": "    
-    expect value to be null or undefined.
-    received: 'null'
-",
-  "pass": false,
+  "expected": true,
+  "message": "",
 }
 `;
 
 exports[`testing toBeNothing should return false for true (isNot false) 1`] = `
 Object {
+  "expected": false,
   "message": "    
-    expect value to not be null or undefined.
-    received: 'boolean'
+    expected should not be null or undefined.
+    got: boolean
 ",
-  "pass": false,
 }
 `;
 
 exports[`testing toBeNothing should return false for undefined (isNot true) 1`] = `
 Object {
-  "message": "    
-    expect value to be null or undefined.
-    received: 'undefined'
-",
-  "pass": false,
+  "expected": true,
+  "message": "",
 }
 `;

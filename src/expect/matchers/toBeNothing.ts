@@ -6,22 +6,24 @@ import { matcherUtils } from "../matcherUtils";
 /**
  * @internal
  */
-export function toBeNothing(props: ITestProps, value: any) {
-  let pass = !matcherUtils.isAsymetric(value) && (value === null || value === undefined);
+export function toBeNothing(this: ITestProps, value: any) {
+  let expected = !matcherUtils.isAsymetric(value) && (value === null || value === undefined);
   let isNotText = " not";
 
-  if (props.isNot) {
-    pass = !pass;
+  if (this.isNot) {
+    expected = !expected;
     isNotText = "";
   }
 
   return {
-    pass,
-    message: pass
+    expected,
+    message: expected
       ? ""
       : buildReportMessage(
-          `expect value to${isNotText} be ${chalk.bold("null")} or ${chalk.bold(undefined)}.\n`,
-          `received: '${typeOf(value)}'`,
+          `${this.expectedColorFn("expected")} should${isNotText} be ${chalk.green(
+            "null",
+          )} or ${chalk.green("undefined")}.\n`,
+          `got: ${chalk.red(typeOf(expected))}`,
         ),
   };
 }

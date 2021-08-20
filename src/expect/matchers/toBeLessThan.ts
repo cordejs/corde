@@ -6,16 +6,16 @@ import { matcherUtils } from "../matcherUtils";
 /**
  * @internal
  */
-export function toBeLessThan(props: ITestProps, value: any, received: number | bigint) {
-  const failedTest = matcherUtils.validateParameterAsNumber(value, received);
+export function toBeLessThan(this: ITestProps, expected: any, received: number | bigint) {
+  const failedTest = matcherUtils.validateParameterAsNumber(expected, received);
   if (failedTest) {
     return failedTest;
   }
 
-  let pass = matcherUtils.match(() => value < received, { value, received }, Number);
+  let pass = matcherUtils.match(() => expected < received, { expected, received }, Number);
   let comparator = "<";
 
-  if (props.isNot) {
+  if (this.isNot) {
     pass = !pass;
     comparator = ">=";
   }
@@ -25,8 +25,8 @@ export function toBeLessThan(props: ITestProps, value: any, received: number | b
     message: pass
       ? ""
       : buildReportMessage(
-          `expect(${chalk.green("value")}).toBeLessThan(${chalk.red("received")})\n`,
-          `expect: ${value} ${comparator} ${received}.\n`,
+          `expect(${chalk.green("expected")}).toBeLessThan(${chalk.red("received")})\n`,
+          `expect: ${expected} ${comparator} ${received}.\n`,
         ),
   };
 }

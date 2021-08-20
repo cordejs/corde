@@ -1,30 +1,36 @@
+import chalk from "chalk";
 import { ITestProps } from "../../types";
-import { buildReportMessage } from "../../utils";
+import { buildReportMessage, typeOf } from "../../utils";
 import { matcherUtils } from "../matcherUtils";
 
 /**
  * @internal
  */
-export function toBeNaN(props: ITestProps, value: any) {
+export function toBeNaN(this: ITestProps, expected: any) {
   let pass = matcherUtils.match(
     () => {
       try {
-        return isNaN(value);
+        return isNaN(expected);
       } catch {
         return false;
       }
     },
-    { value },
+    { expected },
   );
   let isNotText = " not";
 
-  if (props.isNot) {
+  if (this.isNot) {
     pass = !pass;
     isNotText = "";
   }
 
   return {
     pass,
-    message: pass ? "" : buildReportMessage(`expect value to${isNotText} be NaN`),
+    message: pass
+      ? ""
+      : buildReportMessage(
+          `${this.expectedColorFn("expected")} should${isNotText} be ${chalk.green("NaN")}.\n`,
+          `got: ${chalk.red(typeOf(expected))}`,
+        ),
   };
 }

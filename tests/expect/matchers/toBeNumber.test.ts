@@ -1,5 +1,4 @@
-import { any } from "../../../src/expect/asymmetricMatcher";
-import { toBeNumber } from "../../../src/expect/matchers";
+import { cordeExpect } from "../../../src/expect";
 import { ITestProps } from "../../../src/types";
 import { removeANSIColorStyle } from "../../testHelper";
 
@@ -7,24 +6,23 @@ const TEST_CASES = [[null], [9007199254740991n], [undefined], ["aa"], [{}], [Sym
 
 describe("testing toBeNumber", () => {
   it("should return true for number value", () => {
-    expect(toBeNumber({ isNot: false }, 8888)).toEqual({ pass: true, message: "" });
+    expect(cordeExpect(8888).toBeNumber()).toEqual({ pass: true, message: "" });
   });
 
   it("should return true for asymmetricMatcher", () => {
-    expect(toBeNumber({ isNot: false }, any())).toEqual({ pass: true, message: "" });
-    expect(toBeNumber({ isNot: false }, any(Number))).toEqual({ pass: true, message: "" });
+    expect(cordeExpect(cordeExpect.any()).toBeNumber()).toEqual({ pass: true, message: "" });
+    expect(cordeExpect(cordeExpect.any(Number)).toBeNumber()).toEqual({ pass: true, message: "" });
   });
 
   it("should return false for asymmetricMatcher of any value that is not number", () => {
-    const report = toBeNumber({ isNot: false }, any(BigInt));
+    const report = cordeExpect(cordeExpect.any(BigInt)).toBeNumber();
     report.message = removeANSIColorStyle(report.message);
     expect(report.pass).toBeFalsy();
     expect(report).toMatchSnapshot();
   });
 
   it("should return false for number with isNot true", () => {
-    const props: ITestProps = { isNot: true };
-    const report = toBeNumber(props, 8888);
+    const report = cordeExpect(8888).not.toBeNumber();
     report.message = removeANSIColorStyle(report.message);
     expect(report.pass).toBeFalsy();
     expect(report).toMatchSnapshot();
@@ -32,8 +30,7 @@ describe("testing toBeNumber", () => {
 
   // @ts-ignore
   it.each(TEST_CASES)("should return false for %s", (expected) => {
-    const props: ITestProps = { isNot: false };
-    const report = toBeNumber(props, expected);
+    const report = cordeExpect(expected).toBeNumber();
     report.message = removeANSIColorStyle(report.message);
     expect(report.pass).toBeFalsy();
     expect(report).toMatchSnapshot();
@@ -43,8 +40,7 @@ describe("testing toBeNumber", () => {
     "should return true for %s, when isNot is true",
     // @ts-ignore
     (expected) => {
-      const props: ITestProps = { isNot: true };
-      expect(toBeNumber(props, expected)).toEqual({
+      expect(cordeExpect(expected).not.toBeNumber()).toEqual({
         pass: true,
         message: "",
       });

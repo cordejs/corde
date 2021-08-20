@@ -6,11 +6,11 @@ import { matcherUtils } from "../matcherUtils";
 /**
  * @internal
  */
-export function toBeBoolean<T>(props: ITestProps, value: T) {
-  let pass = matcherUtils.match(() => typeof value === "boolean", { value }, Boolean);
+export function toBeBoolean<T>(this: ITestProps, expected: T) {
+  let pass = matcherUtils.match(() => typeof expected === "boolean", { expected }, Boolean);
   let isNotText = "";
 
-  if (props.isNot) {
+  if (this.isNot) {
     pass = !pass;
     isNotText = " not";
   }
@@ -20,8 +20,10 @@ export function toBeBoolean<T>(props: ITestProps, value: T) {
     message: pass
       ? ""
       : buildReportMessage(
-          `expect ${chalk.bold("value's")} type${isNotText} to be ${chalk.green("Boolean")}.\n`,
-          `received: '${chalk.red(typeOf(value))}'`,
+          `${this.expectedColorFn("expected")} should${isNotText} be an ${chalk.green(
+            "boolean",
+          )}.\n`,
+          `got: ${chalk.red(typeOf(expected))}`,
         ),
   };
 }

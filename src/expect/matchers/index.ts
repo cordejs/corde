@@ -1,5 +1,5 @@
 export * from "./toBeArray";
-export * from "./toBeBigint";
+export * from "./toBeBigInt";
 export * from "./toBeBoolean";
 export * from "./toBeDate";
 export * from "./toBeDefined";

@@ -1,16 +1,15 @@
-import { any } from "../../../src/expect/asymmetricMatcher";
-import { toBeNaN } from "../../../src/expect/matchers";
+import { cordeExpect } from "../../../src/expect";
 import { removeANSIColorStyle } from "../../testHelper";
 
 describe("testing toBeNaN", () => {
   it("should return true for NaN (isNot false)", () => {
-    expect(toBeNaN({ isNot: false }, NaN)).toEqual({ pass: true, message: "" });
+    expect(cordeExpect(NaN).toBeNaN()).toEqual({ pass: true, message: "" });
   });
 
   it.each([[""], [false], [true], [[]], [Symbol.for("")], [1]])(
     "should return false for %s (isNot false)",
     (value) => {
-      const report = toBeNaN({ isNot: false }, value);
+      const report = cordeExpect(value).toBeNaN();
       report.message = removeANSIColorStyle(report.message);
       expect(report.pass).toBeFalsy();
       expect(report).toMatchSnapshot();
@@ -18,7 +17,7 @@ describe("testing toBeNaN", () => {
   );
 
   it("should return false for NaN (isNot true)", () => {
-    const report = toBeNaN({ isNot: true }, NaN);
+    const report = cordeExpect(NaN).not.toBeNaN();
     report.message = removeANSIColorStyle(report.message);
     expect(report.pass).toBeFalsy();
     expect(report).toMatchSnapshot();
@@ -27,7 +26,7 @@ describe("testing toBeNaN", () => {
   it.each([[""], [false], [true], [[]], [Symbol.for("")], [1]])(
     "should return true for %s (isNot true)",
     (value) => {
-      expect(toBeNaN({ isNot: true }, value)).toEqual({ pass: true, message: "" });
+      expect(cordeExpect(value).not.toBeNaN()).toEqual({ pass: true, message: "" });
     },
   );
 });

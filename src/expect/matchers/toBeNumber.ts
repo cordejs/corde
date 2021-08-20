@@ -6,11 +6,11 @@ import { matcherUtils } from "../matcherUtils";
 /**
  * @internal
  */
-export function toBeNumber<T>(props: ITestProps, value: T) {
-  let pass = matcherUtils.match(() => typeof value === "number", { value }, Number);
+export function toBeNumber<T>(this: ITestProps, expected: T) {
+  let pass = matcherUtils.match(() => typeof expected === "number", { expected }, Number);
   let isNotText = "";
 
-  if (props.isNot) {
+  if (this.isNot) {
     pass = !pass;
     isNotText = " not";
   }
@@ -20,8 +20,10 @@ export function toBeNumber<T>(props: ITestProps, value: T) {
     message: pass
       ? ""
       : buildReportMessage(
-          `expect ${chalk.bold("value's")} type${isNotText} to be ${chalk.green("Number")}.\n`,
-          `received: '${chalk.red(typeOf(value))}'`,
+          `${this.expectedColorFn("expected")} should${isNotText} be an ${chalk.green(
+            "number",
+          )}.\n`,
+          `got: ${chalk.red(typeOf(expected))}`,
         ),
   };
 }

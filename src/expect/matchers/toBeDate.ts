@@ -6,11 +6,11 @@ import { matcherUtils } from "../matcherUtils";
 /**
  * @internal
  */
-export function toBeDate<T>(props: ITestProps, value: T) {
-  let pass = matcherUtils.match(() => value instanceof Date, { value }, Date);
+export function toBeDate<T>(this: ITestProps, expected: T) {
+  let pass = matcherUtils.match(() => expected instanceof Date, { expected }, Date);
   let isNotText = "";
 
-  if (props.isNot) {
+  if (this.isNot) {
     pass = !pass;
     isNotText = " not";
   }
@@ -20,8 +20,8 @@ export function toBeDate<T>(props: ITestProps, value: T) {
     message: pass
       ? ""
       : buildReportMessage(
-          `expect ${chalk.bold("value's")} type${isNotText} to be ${chalk.green("Date")}.\n`,
-          `received: '${chalk.red(typeOf(value))}'`,
+          `${this.expectedColorFn("expected")} should${isNotText} be an ${chalk.green("date")}.\n`,
+          `got: ${chalk.red(typeOf(expected))}`,
         ),
   };
 }

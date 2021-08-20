@@ -6,11 +6,11 @@ import { matcherUtils } from "../matcherUtils";
 /**
  * @internal
  */
-export function toBeFunction(props: ITestProps, value: any) {
-  let pass = matcherUtils.match(() => isFunction(value), { value }, Function);
+export function toBeFunction(this: ITestProps, expected: any) {
+  let pass = matcherUtils.match(() => isFunction(expected), { expected }, Function);
   let isNotText = "";
 
-  if (props.isNot) {
+  if (this.isNot) {
     pass = !pass;
     isNotText = " not";
   }
@@ -20,8 +20,10 @@ export function toBeFunction(props: ITestProps, value: any) {
     message: pass
       ? ""
       : buildReportMessage(
-          `expect value to${isNotText} be a function.\n`,
-          `received: '${chalk.red(typeOf(value))}'`,
+          `${this.expectedColorFn("expected")} should${isNotText} be an ${chalk.green(
+            "function",
+          )}.\n`,
+          `got: ${chalk.red(typeOf(expected))}`,
         ),
   };
 }

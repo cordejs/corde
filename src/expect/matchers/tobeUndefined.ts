@@ -6,11 +6,11 @@ import { matcherUtils } from "../matcherUtils";
 /**
  * @internal
  */
-export function toBeUndefined(props: ITestProps, value: any) {
-  let pass = !matcherUtils.isAsymetric(value) && value === undefined;
+export function toBeUndefined(this: ITestProps, expected: any) {
+  let pass = !matcherUtils.isAsymetric(expected) && expected === undefined;
   let isNotText = " not";
 
-  if (props.isNot) {
+  if (this.isNot) {
     pass = !pass;
     isNotText = "";
   }
@@ -20,8 +20,10 @@ export function toBeUndefined(props: ITestProps, value: any) {
     message: pass
       ? ""
       : buildReportMessage(
-          `expect value to${isNotText} be ${chalk.bold("undefined")}.\n`,
-          `received: '${typeOf(value)}'`,
+          `${this.expectedColorFn("expected")} should${isNotText} be an ${chalk.green(
+            "undefined",
+          )}.\n`,
+          `got: ${chalk.red(typeOf(expected))}`,
         ),
   };
 }

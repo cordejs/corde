@@ -6,13 +6,23 @@ import { matcherUtils } from "../matcherUtils";
 /**
  * @internal
  */
-export function toBeEmptyString(props: ITestProps, value: any) {
-  let pass = matcherUtils.match(() => isString(value) && value.length === 0, { value }, String);
+export function toBeEmptyString(this: ITestProps, expected: any) {
+  let pass = matcherUtils.match(
+    () => isString(expected) && expected.length === 0,
+    { expected },
+    String,
+  );
   let isNotText = "";
 
-  if (props.isNot) {
+  if (this.isNot) {
     pass = !pass;
     isNotText = " not";
+  }
+
+  let gotText = chalk.red(typeOf(expected));
+
+  if (typeof expected === "string") {
+    gotText = chalk.red(`expected.length == ${expected.length}`);
   }
 
   return {
@@ -20,8 +30,10 @@ export function toBeEmptyString(props: ITestProps, value: any) {
     message: pass
       ? ""
       : buildReportMessage(
-          `expect value to${isNotText} be a empty string.\n`,
-          `received: '${chalk.red(typeOf(value))}'`,
+          `${this.expectedColorFn("expected")} should${isNotText} be an ${chalk.green(
+            "empty string",
+          )}.\n`,
+          `got: ${gotText}`,
         ),
   };
 }
