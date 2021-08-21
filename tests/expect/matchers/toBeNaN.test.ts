@@ -1,5 +1,4 @@
 import { cordeExpect } from "../../../src/expect";
-import { removeANSIColorStyle } from "../../testHelper";
 
 describe("testing toBeNaN", () => {
   it("should return true for NaN (isNot false)", () => {
@@ -10,7 +9,6 @@ describe("testing toBeNaN", () => {
     "should return false for %s (isNot false)",
     (value) => {
       const report = cordeExpect(value).toBeNaN();
-      report.message = removeANSIColorStyle(report.message);
       expect(report.pass).toBeFalsy();
       expect(report).toMatchSnapshot();
     },
@@ -18,7 +16,6 @@ describe("testing toBeNaN", () => {
 
   it("should return false for NaN (isNot true)", () => {
     const report = cordeExpect(NaN).not.toBeNaN();
-    report.message = removeANSIColorStyle(report.message);
     expect(report.pass).toBeFalsy();
     expect(report).toMatchSnapshot();
   });

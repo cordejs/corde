@@ -1,5 +1,4 @@
 import { cordeExpect } from "../../../src/expect";
-import { removeANSIColorStyle } from "../../testHelper";
 
 const TEST_CASES = [[null], [1], [undefined], ["aa"], [{}], [Symbol.for("")]];
 
@@ -16,14 +15,12 @@ describe("testing toBeArray", () => {
 
   it("should return false for asymmetricMatcher of any value that is not array", () => {
     const report = cordeExpect(cordeExpect.any(Number)).toBeArray();
-
     expect(report.pass).toBeFalsy();
     expect(report).toMatchSnapshot();
   });
 
   it("should return false for array with isNot true", () => {
     const report = cordeExpect([]).not.toBeArray();
-
     expect(report.pass).toBeFalsy();
     expect(report).toMatchSnapshot();
   });
@@ -31,7 +28,6 @@ describe("testing toBeArray", () => {
   // @ts-ignore
   it.each(TEST_CASES)("should return false for %s", (expected) => {
     const report = cordeExpect(expected).toBeArray();
-
     expect(report.pass).toBeFalsy();
     expect(report).toMatchSnapshot();
   });

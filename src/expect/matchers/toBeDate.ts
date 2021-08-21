@@ -20,7 +20,7 @@ export function toBeDate<T>(this: ITestProps, expected: T) {
     message: pass
       ? ""
       : buildReportMessage(
-          `${this.expectedColorFn("expected")} should${isNotText} be an ${chalk.green("date")}.\n`,
+          `${this.expectedColorFn("expected")} should${isNotText} be a ${chalk.green("date")}.\n`,
           `got: ${chalk.red(typeOf(expected))}`,
         ),
   };

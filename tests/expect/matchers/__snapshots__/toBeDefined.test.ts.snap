@@ -3,8 +3,8 @@
 exports[`testing toBeDefined should return false for boolean with isNot true 1`] = `
 Object {
   "message": "    
-    expect value to not have a defined value. (equal to undefined or null).
-    received: 'object'
+    [1mexpected[22m should not have a defined value. (equal to [1mundefined[22m or [1mnull[22m).
+    got: '[31mobject[39m'
 ",
   "pass": false,
 }
@@ -13,8 +13,8 @@ Object {
 exports[`testing toBeDefined should return false for null 1`] = `
 Object {
   "message": "    
-    expected should have a defined value. (different than undefined or null).
-    got: 'null'
+    [1mexpected[22m should have a defined value. (different than [1mundefined[22m or [1mnull[22m).
+    got: '[31mnull[39m'
 ",
   "pass": false,
 }
@@ -23,8 +23,8 @@ Object {
 exports[`testing toBeDefined should return false for undefined 1`] = `
 Object {
   "message": "    
-    expected should have a defined value. (different than undefined or null).
-    got: 'undefined'
+    [1mexpected[22m should have a defined value. (different than [1mundefined[22m or [1mnull[22m).
+    got: '[31mundefined[39m'
 ",
   "pass": false,
 }

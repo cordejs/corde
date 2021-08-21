@@ -8,11 +8,11 @@ import { matcherUtils } from "../matcherUtils";
  */
 export function toBeUndefined(this: ITestProps, expected: any) {
   let pass = !matcherUtils.isAsymetric(expected) && expected === undefined;
-  let isNotText = " not";
+  let isNotText = "";
 
   if (this.isNot) {
     pass = !pass;
-    isNotText = "";
+    isNotText = " not";
   }
 
   return {

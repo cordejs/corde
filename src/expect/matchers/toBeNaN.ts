@@ -17,11 +17,11 @@ export function toBeNaN(this: ITestProps, expected: any) {
     },
     { expected },
   );
-  let isNotText = " not";
+  let isNotText = "";
 
   if (this.isNot) {
     pass = !pass;
-    isNotText = "";
+    isNotText = " not";
   }
 
   return {

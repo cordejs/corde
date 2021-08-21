@@ -2,28 +2,28 @@
 
 exports[`testing toBeEmptyArray should return false for  1`] = `
 "    
-    expected should be an empty array.
-    got: string
+    [1mexpected[22m should be an [32mempty array[39m.
+    got: [31mstring[39m
 "
 `;
 
 exports[`testing toBeEmptyArray should return false for [ '' ] 1`] = `
 "    
-    expected should be an empty array.
-    got: expected.length == 1
+    [1mexpected[22m should be an [32mempty array[39m.
+    got: [31mexpected.length == 1[39m
 "
 `;
 
 exports[`testing toBeEmptyArray should return false for 1 1`] = `
 "    
-    expected should be an empty array.
-    got: number
+    [1mexpected[22m should be an [32mempty array[39m.
+    got: [31mnumber[39m
 "
 `;
 
 exports[`testing toBeEmptyArray should return false for empty array when isNot true 1`] = `
 "    
-    expected should not be an empty array.
-    got: expected.length == 0
+    [1mexpected[22m should not be an [32mempty array[39m.
+    got: [31mexpected.length == 0[39m
 "
 `;

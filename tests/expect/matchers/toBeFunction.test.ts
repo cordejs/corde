@@ -1,5 +1,4 @@
 import { cordeExpect } from "../../../src/expect";
-import { removeANSIColorStyle } from "../../testHelper";
 
 describe("testing toBeFunction", () => {
   it("should return true for asymmetricMatcher", () => {
@@ -15,15 +14,13 @@ describe("testing toBeFunction", () => {
   });
 
   it("should return false for a function when isNot true", () => {
-    const report = cordeExpect(() => null).toBeFunction();
-    report.message = removeANSIColorStyle(report.message);
+    const report = cordeExpect(() => null).not.toBeFunction();
     expect(report.pass).toBeFalsy();
     expect(report.message).toMatchSnapshot();
   });
 
   it.each([[[""]], ["4141"], [1]])("should return false for %s", (value) => {
     const report = cordeExpect(value).toBeFunction();
-    report.message = removeANSIColorStyle(report.message);
     expect(report.pass).toBeFalsy();
     expect(report.message).toMatchSnapshot();
   });

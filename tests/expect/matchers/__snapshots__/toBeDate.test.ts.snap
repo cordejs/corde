@@ -3,8 +3,8 @@
 exports[`testing toBeDefined should return false for {} 1`] = `
 Object {
   "message": "    
-    expected should be an date.
-    got: object
+    [1mexpected[22m should be a [32mdate[39m.
+    got: [31mobject[39m
 ",
   "pass": false,
 }
@@ -13,8 +13,8 @@ Object {
 exports[`testing toBeDefined should return false for 1 1`] = `
 Object {
   "message": "    
-    expected should be an date.
-    got: number
+    [1mexpected[22m should be a [32mdate[39m.
+    got: [31mnumber[39m
 ",
   "pass": false,
 }
@@ -23,8 +23,8 @@ Object {
 exports[`testing toBeDefined should return false for Date with isNot true 1`] = `
 Object {
   "message": "    
-    expect value's type not to be Date.
-    received: 'object'
+    [1mexpected[22m should not be a [32mdate[39m.
+    got: [31mobject[39m
 ",
   "pass": false,
 }
@@ -33,8 +33,8 @@ Object {
 exports[`testing toBeDefined should return false for Symbol() 1`] = `
 Object {
   "message": "    
-    expected should be an date.
-    got: symbol
+    [1mexpected[22m should be a [32mdate[39m.
+    got: [31msymbol[39m
 ",
   "pass": false,
 }
@@ -43,8 +43,8 @@ Object {
 exports[`testing toBeDefined should return false for aa 1`] = `
 Object {
   "message": "    
-    expected should be an date.
-    got: string
+    [1mexpected[22m should be a [32mdate[39m.
+    got: [31mstring[39m
 ",
   "pass": false,
 }
@@ -53,8 +53,8 @@ Object {
 exports[`testing toBeDefined should return false for asymmetricMatcher of any value that is not Date 1`] = `
 Object {
   "message": "    
-    expected should be an date.
-    got: any(Number)
+    [1mexpected[22m should be a [32mdate[39m.
+    got: [31many(Number)[39m
 ",
   "pass": false,
 }
@@ -63,8 +63,8 @@ Object {
 exports[`testing toBeDefined should return false for null 1`] = `
 Object {
   "message": "    
-    expected should be an date.
-    got: null
+    [1mexpected[22m should be a [32mdate[39m.
+    got: [31mnull[39m
 ",
   "pass": false,
 }
@@ -73,8 +73,8 @@ Object {
 exports[`testing toBeDefined should return false for undefined 1`] = `
 Object {
   "message": "    
-    expected should be an date.
-    got: undefined
+    [1mexpected[22m should be a [32mdate[39m.
+    got: [31mundefined[39m
 ",
   "pass": false,
 }

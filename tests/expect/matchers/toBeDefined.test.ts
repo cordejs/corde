@@ -1,5 +1,4 @@
 import { cordeExpect } from "../../../src/expect";
-import { removeANSIColorStyle } from "../../testHelper";
 
 const TEST_CASES = [[1], ["aa"], [{}], [Symbol.for("")]];
 
@@ -17,21 +16,18 @@ describe("testing toBeDefined", () => {
 
   it("should return false for undefined", () => {
     const report = cordeExpect(undefined).toBeDefined();
-    report.message = removeANSIColorStyle(report.message);
     expect(report.pass).toBeFalsy();
     expect(report).toMatchSnapshot();
   });
 
   it("should return false for null", () => {
     const report = cordeExpect(null).toBeDefined();
-    report.message = removeANSIColorStyle(report.message);
     expect(report.pass).toBeFalsy();
     expect(report).toMatchSnapshot();
   });
 
   it("should return false for boolean with isNot true", () => {
     const report = cordeExpect(new Date()).not.toBeDefined();
-    report.message = removeANSIColorStyle(report.message);
     expect(report.pass).toBeFalsy();
     expect(report).toMatchSnapshot();
   });

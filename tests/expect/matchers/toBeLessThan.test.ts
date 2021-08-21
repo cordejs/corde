@@ -1,5 +1,4 @@
 import { cordeExpect } from "../../../src/expect";
-import { removeANSIColorStyle } from "../../testHelper";
 
 describe("testing toBeLessThan", () => {
   it("should return true for a number be less than other", () => {
@@ -37,7 +36,6 @@ describe("testing toBeLessThan", () => {
     "should return false for 'expected' not to be a number",
     (expected) => {
       const report = cordeExpect(expected).toBeLessThan(1);
-      report.message = removeANSIColorStyle(report.message);
       expect(report.pass).toBeFalsy();
       expect(report).toMatchSnapshot();
     },
@@ -47,7 +45,6 @@ describe("testing toBeLessThan", () => {
     "should return false for 'received' not to be a number",
     (received) => {
       const report = cordeExpect(1).toBeLessThan(received as any);
-      report.message = removeANSIColorStyle(report.message);
       expect(report.pass).toBeFalsy();
       expect(report).toMatchSnapshot();
     },
@@ -55,21 +52,18 @@ describe("testing toBeLessThan", () => {
 
   it("should fail due to expected be greater than received", () => {
     const report = cordeExpect(2).toBeLessThan(1);
-    report.message = removeANSIColorStyle(report.message);
     expect(report.pass).toBeFalsy();
     expect(report).toMatchSnapshot();
   });
 
   it("should fail due to expected be equal than received", () => {
     const report = cordeExpect(1).toBeLessThan(1);
-    report.message = removeANSIColorStyle(report.message);
     expect(report.pass).toBeFalsy();
     expect(report).toMatchSnapshot();
   });
 
   it("should fail due to expected be less than received (isNot true)", () => {
     const report = cordeExpect(2).not.toBeLessThan(4);
-    report.message = removeANSIColorStyle(report.message);
     expect(report.pass).toBeFalsy();
     expect(report).toMatchSnapshot();
   });

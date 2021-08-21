@@ -1,5 +1,4 @@
 import { cordeExpect } from "../../../src/expect";
-import { removeANSIColorStyle } from "../../testHelper";
 
 describe("testing toBeEmptyString", () => {
   it("should return true for asymmetricMatcher", () => {
@@ -16,14 +15,12 @@ describe("testing toBeEmptyString", () => {
 
   it("should return false for empty string when isNot true", () => {
     const report = cordeExpect("").not.toBeEmptyString();
-    report.message = removeANSIColorStyle(report.message);
     expect(report.pass).toBeFalsy();
     expect(report.message).toMatchSnapshot();
   });
 
   it.each([[[""]], ["4141"], [1]])("should return false for %s", (value) => {
     const report = cordeExpect(value).toBeEmptyString();
-    report.message = removeANSIColorStyle(report.message);
     expect(report.pass).toBeFalsy();
     expect(report.message).toMatchSnapshot();
   });

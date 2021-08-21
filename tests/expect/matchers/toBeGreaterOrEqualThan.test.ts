@@ -1,5 +1,4 @@
 import { cordeExpect } from "../../../src/expect";
-import { removeANSIColorStyle } from "../../testHelper";
 
 describe("testing toBeGreaterOrEqualThan", () => {
   it("should return true for a number be bigger than other", () => {
@@ -36,7 +35,6 @@ describe("testing toBeGreaterOrEqualThan", () => {
     "should return false for 'expected' not to be a number",
     (expected) => {
       const report = cordeExpect(expected).toBeGreaterOrEqualThan(1);
-      report.message = removeANSIColorStyle(report.message);
       expect(report.pass).toBeFalsy();
       expect(report).toMatchSnapshot();
     },
@@ -46,7 +44,6 @@ describe("testing toBeGreaterOrEqualThan", () => {
     "should return false for 'received' not to be a number",
     (received) => {
       const report = cordeExpect(1).toBeGreaterOrEqualThan(received as any);
-      report.message = removeANSIColorStyle(report.message);
       expect(report.pass).toBeFalsy();
       expect(report).toMatchSnapshot();
     },
@@ -54,14 +51,12 @@ describe("testing toBeGreaterOrEqualThan", () => {
 
   it("should fail due to expected be less than received", () => {
     const report = cordeExpect(1).toBeGreaterOrEqualThan(2);
-    report.message = removeANSIColorStyle(report.message);
     expect(report.pass).toBeFalsy();
     expect(report).toMatchSnapshot();
   });
 
   it("should fail due to expected be bigger than received (isNot true)", () => {
     const report = cordeExpect(4).not.toBeGreaterOrEqualThan(2);
-    report.message = removeANSIColorStyle(report.message);
     expect(report.pass).toBeFalsy();
     expect(report).toMatchSnapshot();
   });

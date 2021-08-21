@@ -2,74 +2,80 @@
 
 exports[`testing toBeNothing should return false for  (isNot false) 1`] = `
 Object {
-  "expected": false,
   "message": "    
-    expected should not be null or undefined.
-    got: boolean
+    [1mexpected[22m should be [32mnull[39m or [32mundefined[39m.
+    got: [31mstring[39m
 ",
+  "pass": false,
 }
 `;
 
 exports[`testing toBeNothing should return false for 1 (isNot false) 1`] = `
 Object {
-  "expected": false,
   "message": "    
-    expected should not be null or undefined.
-    got: boolean
+    [1mexpected[22m should be [32mnull[39m or [32mundefined[39m.
+    got: [31mnumber[39m
 ",
+  "pass": false,
 }
 `;
 
 exports[`testing toBeNothing should return false for Symbol() (isNot false) 1`] = `
 Object {
-  "expected": false,
   "message": "    
-    expected should not be null or undefined.
-    got: boolean
+    [1mexpected[22m should be [32mnull[39m or [32mundefined[39m.
+    got: [31msymbol[39m
 ",
+  "pass": false,
 }
 `;
 
 exports[`testing toBeNothing should return false for any (isNot false) 1`] = `
 Object {
-  "expected": false,
   "message": "    
-    expected should not be null or undefined.
-    got: boolean
+    [1mexpected[22m should be [32mnull[39m or [32mundefined[39m.
+    got: [31many[39m
 ",
+  "pass": false,
 }
 `;
 
 exports[`testing toBeNothing should return false for false (isNot false) 1`] = `
 Object {
-  "expected": false,
   "message": "    
-    expected should not be null or undefined.
-    got: boolean
+    [1mexpected[22m should be [32mnull[39m or [32mundefined[39m.
+    got: [31mboolean[39m
 ",
+  "pass": false,
 }
 `;
 
 exports[`testing toBeNothing should return false for null (isNot true) 1`] = `
 Object {
-  "expected": true,
-  "message": "",
+  "message": "    
+    [1mexpected[22m should not be [32mnull[39m or [32mundefined[39m.
+    got: [31mnull[39m
+",
+  "pass": false,
 }
 `;
 
 exports[`testing toBeNothing should return false for true (isNot false) 1`] = `
 Object {
-  "expected": false,
   "message": "    
-    expected should not be null or undefined.
-    got: boolean
+    [1mexpected[22m should be [32mnull[39m or [32mundefined[39m.
+    got: [31mboolean[39m
 ",
+  "pass": false,
 }
 `;
 
 exports[`testing toBeNothing should return false for undefined (isNot true) 1`] = `
 Object {
-  "expected": true,
-  "message": "",
+  "message": "    
+    [1mexpected[22m should not be [32mnull[39m or [32mundefined[39m.
+    got: [31mundefined[39m
+",
+  "pass": false,
 }
 `;

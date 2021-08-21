@@ -1,5 +1,4 @@
 import { cordeExpect } from "../../../src/expect";
-import { removeANSIColorStyle } from "../../testHelper";
 
 describe("testing toBePrimitive", () => {
   it.each([
@@ -29,7 +28,6 @@ describe("testing toBePrimitive", () => {
     [cordeExpect.any(BigInt)],
   ])("should return false for %s (isNot true)", (value) => {
     const report = cordeExpect(value).not.toBePrimitive();
-    report.message = removeANSIColorStyle(report.message);
     expect(report.pass).toBeFalsy();
     expect(report).toMatchSnapshot();
   });
@@ -47,7 +45,6 @@ describe("testing toBePrimitive", () => {
     [cordeExpect.any(Function)],
   ])("should return false for %s (isNot false)", (value) => {
     const report = cordeExpect(value).toBePrimitive();
-    report.message = removeANSIColorStyle(report.message);
     expect(report.pass).toBeFalsy();
     expect(report).toMatchSnapshot();
   });

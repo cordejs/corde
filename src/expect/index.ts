@@ -21,19 +21,19 @@ function pickFn(name: KeyOfMatcher) {
   return matchers[name] as any as IMatcher;
 }
 
-function createMatcherFn(matcher: string, isNot: boolean, value: any, isDebug: boolean) {
+function createMatcherFn(matcher: string, isNot: boolean, expected: any, isDebug: boolean) {
   return (...args: any[]) => {
     // If someone pass expect.any, we must invoke it to return
     // the Any matcher.
 
-    if (value === any) {
-      args.push(value());
+    if (expected === any) {
+      args = [expected(), ...args];
     } else {
-      args.push(value);
+      args = [expected, ...args];
     }
 
     args = args.map((arg) => {
-      if (value === any) {
+      if (expected === any) {
         return arg();
       }
       return arg;
@@ -77,12 +77,12 @@ function createMatcherFn(matcher: string, isNot: boolean, value: any, isDebug: b
 function createLocalExpect(isDebug: boolean) {
   let localExpect: any = {};
 
-  localExpect = (value: any) => {
+  localExpect = (expected: any) => {
     const _expect: any = {};
     _expect.not = {};
     Object.getOwnPropertyNames(matchers).forEach((matcher) => {
-      _expect[matcher] = createMatcherFn(matcher, false, value, isDebug);
-      _expect.not[matcher] = createMatcherFn(matcher, true, value, isDebug);
+      _expect[matcher] = createMatcherFn(matcher, false, expected, isDebug);
+      _expect.not[matcher] = createMatcherFn(matcher, true, expected, isDebug);
     });
     return _expect;
   };

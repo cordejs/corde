@@ -1,6 +1,4 @@
 import { cordeExpect } from "../../../src/expect";
-import { ITestProps } from "../../../src/types";
-import { removeANSIColorStyle } from "../../testHelper";
 
 const TEST_CASES = [[null], [9007199254740991n], [undefined], ["aa"], [{}], [Symbol.for("")]];
 
@@ -16,14 +14,12 @@ describe("testing toBeNumber", () => {
 
   it("should return false for asymmetricMatcher of any value that is not number", () => {
     const report = cordeExpect(cordeExpect.any(BigInt)).toBeNumber();
-    report.message = removeANSIColorStyle(report.message);
     expect(report.pass).toBeFalsy();
     expect(report).toMatchSnapshot();
   });
 
   it("should return false for number with isNot true", () => {
     const report = cordeExpect(8888).not.toBeNumber();
-    report.message = removeANSIColorStyle(report.message);
     expect(report.pass).toBeFalsy();
     expect(report).toMatchSnapshot();
   });
@@ -31,7 +27,6 @@ describe("testing toBeNumber", () => {
   // @ts-ignore
   it.each(TEST_CASES)("should return false for %s", (expected) => {
     const report = cordeExpect(expected).toBeNumber();
-    report.message = removeANSIColorStyle(report.message);
     expect(report.pass).toBeFalsy();
     expect(report).toMatchSnapshot();
   });

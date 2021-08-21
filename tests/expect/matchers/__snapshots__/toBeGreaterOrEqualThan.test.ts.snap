@@ -3,7 +3,8 @@
 exports[`testing toBeGreaterOrEqualThan should fail due to expected be bigger than received (isNot true) 1`] = `
 Object {
   "message": "    
-    expect(value).toBeGraterOrEqualThan(received)
+    expect([32mexpected[39m).toBeGraterOrEqualThan([31mreceived[39m)
+    
     expect: 4 < 2.
     
 ",
@@ -14,7 +15,8 @@ Object {
 exports[`testing toBeGreaterOrEqualThan should fail due to expected be less than received 1`] = `
 Object {
   "message": "    
-    expect(value).toBeGraterOrEqualThan(received)
+    expect([32mexpected[39m).toBeGraterOrEqualThan([31mreceived[39m)
+    
     expect: 1 >= 2.
     
 ",
@@ -25,8 +27,8 @@ Object {
 exports[`testing toBeGreaterOrEqualThan should return false for 'expected' not to be a number 1`] = `
 Object {
   "message": "    
-    received is not a number.
-    received: 'string'
+    value is not a number.
+    received: '[31mstring[39m'
 ",
   "pass": false,
 }
@@ -35,8 +37,8 @@ Object {
 exports[`testing toBeGreaterOrEqualThan should return false for 'expected' not to be a number 2`] = `
 Object {
   "message": "    
-    received is not a number.
-    received: 'string'
+    value is not a number.
+    received: '[31mstring[39m'
 ",
   "pass": false,
 }
@@ -45,8 +47,8 @@ Object {
 exports[`testing toBeGreaterOrEqualThan should return false for 'expected' not to be a number 3`] = `
 Object {
   "message": "    
-    received is not a number.
-    received: 'boolean'
+    value is not a number.
+    received: '[31mboolean[39m'
 ",
   "pass": false,
 }
@@ -55,8 +57,8 @@ Object {
 exports[`testing toBeGreaterOrEqualThan should return false for 'expected' not to be a number 4`] = `
 Object {
   "message": "    
-    received is not a number.
-    received: 'boolean'
+    value is not a number.
+    received: '[31mboolean[39m'
 ",
   "pass": false,
 }
@@ -65,8 +67,8 @@ Object {
 exports[`testing toBeGreaterOrEqualThan should return false for 'expected' not to be a number 5`] = `
 Object {
   "message": "    
-    received is not a number.
-    received: 'array'
+    value is not a number.
+    received: '[31marray[39m'
 ",
   "pass": false,
 }
@@ -75,8 +77,8 @@ Object {
 exports[`testing toBeGreaterOrEqualThan should return false for 'received' not to be a number 1`] = `
 Object {
   "message": "    
-    value is not a number.
-    received: 'string'
+    received is not a number.
+    received: '[31mstring[39m'
 ",
   "pass": false,
 }
@@ -85,8 +87,8 @@ Object {
 exports[`testing toBeGreaterOrEqualThan should return false for 'received' not to be a number 2`] = `
 Object {
   "message": "    
-    value is not a number.
-    received: 'string'
+    received is not a number.
+    received: '[31mstring[39m'
 ",
   "pass": false,
 }
@@ -95,8 +97,8 @@ Object {
 exports[`testing toBeGreaterOrEqualThan should return false for 'received' not to be a number 3`] = `
 Object {
   "message": "    
-    value is not a number.
-    received: 'boolean'
+    received is not a number.
+    received: '[31mboolean[39m'
 ",
   "pass": false,
 }
@@ -105,8 +107,8 @@ Object {
 exports[`testing toBeGreaterOrEqualThan should return false for 'received' not to be a number 4`] = `
 Object {
   "message": "    
-    value is not a number.
-    received: 'boolean'
+    received is not a number.
+    received: '[31mboolean[39m'
 ",
   "pass": false,
 }
@@ -115,8 +117,8 @@ Object {
 exports[`testing toBeGreaterOrEqualThan should return false for 'received' not to be a number 5`] = `
 Object {
   "message": "    
-    value is not a number.
-    received: 'array'
+    received is not a number.
+    received: '[31marray[39m'
 ",
   "pass": false,
 }
