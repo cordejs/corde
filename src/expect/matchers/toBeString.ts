@@ -23,6 +23,8 @@ export function toBeString<T>(this: ITestProps, expected: T) {
     message: pass
       ? ""
       : buildReportMessage(
+          this.createHint(),
+          "\n\n",
           `${this.expectedColorFn("expected")} should${isNotText} be a ${chalk.green("string")}.\n`,
           `got: ${chalk.red(typeOf(expected))}`,
         ),

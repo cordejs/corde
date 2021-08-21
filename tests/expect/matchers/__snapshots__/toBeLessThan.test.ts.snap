@@ -4,6 +4,8 @@ exports[`testing toBeLessThan should fail due to expected be equal than received
 Object {
   "message": "    
     expect([32mexpected[39m).toBeLessThan([31mreceived[39m)
+    
+    expect([32mexpected[39m).toBeLessThan([31mreceived[39m)
     expect: 1 < 1.
     
 ",
@@ -15,6 +17,8 @@ exports[`testing toBeLessThan should fail due to expected be greater than receiv
 Object {
   "message": "    
     expect([32mexpected[39m).toBeLessThan([31mreceived[39m)
+    
+    expect([32mexpected[39m).toBeLessThan([31mreceived[39m)
     expect: 2 < 1.
     
 ",
@@ -25,6 +29,8 @@ Object {
 exports[`testing toBeLessThan should fail due to expected be less than received (isNot true) 1`] = `
 Object {
   "message": "    
+    expect([32mexpected[39m).toBeLessThan([31mreceived[39m)
+    
     expect([32mexpected[39m).toBeLessThan([31mreceived[39m)
     expect: 2 >= 4.
     

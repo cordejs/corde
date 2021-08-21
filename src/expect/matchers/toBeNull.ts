@@ -20,6 +20,8 @@ export function toBeNull(this: ITestProps, expected: any) {
     message: pass
       ? ""
       : buildReportMessage(
+          this.createHint(),
+          "\n\n",
           `${this.expectedColorFn("expected")} should${isNotText} be ${chalk.green("null")}.\n`,
           `got: ${chalk.red(typeOf(expected))}`,
         ),

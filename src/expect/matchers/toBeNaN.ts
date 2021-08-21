@@ -29,6 +29,8 @@ export function toBeNaN(this: ITestProps, expected: any) {
     message: pass
       ? ""
       : buildReportMessage(
+          this.createHint(),
+          "\n\n",
           `${this.expectedColorFn("expected")} should${isNotText} be ${chalk.green("NaN")}.\n`,
           `got: ${chalk.red(typeOf(expected))}`,
         ),

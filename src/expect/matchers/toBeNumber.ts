@@ -23,6 +23,8 @@ export function toBeNumber<T>(this: ITestProps, expected: T) {
     message: pass
       ? ""
       : buildReportMessage(
+          this.createHint(),
+          "\n\n",
           `${this.expectedColorFn("expected")} should${isNotText} be an ${chalk.green(
             "number",
           )}.\n`,

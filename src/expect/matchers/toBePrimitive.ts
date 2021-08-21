@@ -23,6 +23,8 @@ export function toBePrimitive<T>(this: ITestProps, expected: T) {
     message: pass
       ? ""
       : buildReportMessage(
+          this.createHint(),
+          "\n\n",
           `${this.expectedColorFn(
             "expected",
           )} should${isNotText} be primitive expected (${chalk.green(

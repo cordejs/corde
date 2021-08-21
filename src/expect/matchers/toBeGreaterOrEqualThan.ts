@@ -29,6 +29,8 @@ export function toBeGreaterOrEqualThan(this: ITestProps, expected: any, received
     message: pass
       ? ""
       : buildReportMessage(
+          this.createHint("received"),
+          "\n\n",
           `expect(${chalk.green("expected")}).toBeGraterOrEqualThan(${chalk.red("received")})\n\n`,
           `expect: ${expected} ${comparator} ${received}.\n`,
         ),

@@ -22,6 +22,8 @@ export function toBeDefined<T>(this: ITestProps, expected: T) {
     message: pass
       ? ""
       : buildReportMessage(
+          this.createHint(),
+          "\n\n",
           `${this.expectedColorFn("expected")} should${isNotText} have a defined value. (${
             this.isNot ? "equal to" : "different than"
           } ${chalk.bold("undefined")} or ${chalk.bold("null")}).\n`,

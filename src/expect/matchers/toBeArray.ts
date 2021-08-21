@@ -23,6 +23,8 @@ export function toBeArray(this: ITestProps, expected: any) {
     message: pass
       ? ""
       : buildReportMessage(
+          this.createHint(),
+          "\n\n",
           `${this.expectedColorFn("expected")} should${isNotText} be an ${chalk.green("array")}.\n`,
           `got: ${chalk.red(typeOf(expected))}`,
         ),

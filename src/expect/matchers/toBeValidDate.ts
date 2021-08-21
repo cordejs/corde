@@ -34,6 +34,7 @@ export function toBeValidDate(this: ITestProps, expected: any) {
       ? ""
       : buildReportMessage(
           this.createHint(),
+          "\n\n",
           `${this.expectedColorFn("expected")} should${isNotText} be a valid ${chalk.green(
             "date",
           )}.\n`,

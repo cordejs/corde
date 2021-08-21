@@ -29,6 +29,8 @@ export function toBeLessThan(this: ITestProps, expected: any, received: number |
     message: pass
       ? ""
       : buildReportMessage(
+          this.createHint("received"),
+          "\n\n",
           `expect(${chalk.green("expected")}).toBeLessThan(${chalk.red("received")})\n`,
           `expect: ${expected} ${comparator} ${received}.\n`,
         ),

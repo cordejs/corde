@@ -2,6 +2,8 @@
 
 exports[`testing toBeEmptyString should return false for [ '' ] 1`] = `
 "    
+    expect([32mexpected[39m).toBeEmptyString()
+    
     [1mexpected[22m should be an [32mempty string[39m.
     got: [31marray[39m
 "
@@ -9,6 +11,8 @@ exports[`testing toBeEmptyString should return false for [ '' ] 1`] = `
 
 exports[`testing toBeEmptyString should return false for 1 1`] = `
 "    
+    expect([32mexpected[39m).toBeEmptyString()
+    
     [1mexpected[22m should be an [32mempty string[39m.
     got: [31mnumber[39m
 "
@@ -16,6 +20,8 @@ exports[`testing toBeEmptyString should return false for 1 1`] = `
 
 exports[`testing toBeEmptyString should return false for 4141 1`] = `
 "    
+    expect([32mexpected[39m).toBeEmptyString()
+    
     [1mexpected[22m should be an [32mempty string[39m.
     got: [31mexpected.length == 4[39m
 "
@@ -23,6 +29,8 @@ exports[`testing toBeEmptyString should return false for 4141 1`] = `
 
 exports[`testing toBeEmptyString should return false for empty string when isNot true 1`] = `
 "    
+    expect([32mexpected[39m).toBeEmptyString()
+    
     [1mexpected[22m should not be an [32mempty string[39m.
     got: [31mexpected.length == 0[39m
 "
