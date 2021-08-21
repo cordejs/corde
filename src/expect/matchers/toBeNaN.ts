@@ -15,7 +15,7 @@ export function toBeNaN(this: ITestProps, expected: any) {
         return false;
       }
     },
-    { expected },
+    { value: expected },
   );
   let isNotText = "";
 

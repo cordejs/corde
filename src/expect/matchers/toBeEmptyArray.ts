@@ -7,11 +7,10 @@ import { matcherUtils } from "../matcherUtils";
  * @internal
  */
 export function toBeEmptyArray(this: ITestProps, expected: any) {
-  let pass = matcherUtils.match(
-    () => Array.isArray(expected) && expected.length === 0,
-    { expected },
-    Array,
-  );
+  let pass = matcherUtils.match(() => Array.isArray(expected) && expected.length === 0, {
+    value: expected,
+    validParameters: [Array],
+  });
   let isNotText = "";
 
   if (this.isNot) {

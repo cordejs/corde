@@ -16,3 +16,7 @@ export * from "./toBeNull";
 export * from "./toBeUndefined";
 export * from "./toBeNumber";
 export * from "./toBePrimitive";
+export * from "./toBeString";
+export * from "./toBeSymbol";
+export * from "./toBeValidDate";
+export * from "./toLength";

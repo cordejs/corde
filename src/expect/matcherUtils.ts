@@ -2,9 +2,9 @@ import chalk from "chalk";
 import { buildReportMessage, isNumber, typeOf } from "../utils";
 import { AsymmetricMatcher } from "./asymmetricMatcher";
 
-interface IMatcherValues {
-  expected: any;
-  received?: any;
+interface IParamWithValidAsymetrics {
+  value: any;
+  validParameters?: any[];
 }
 
 export namespace matcherUtils {
@@ -12,19 +12,16 @@ export namespace matcherUtils {
     return value instanceof AsymmetricMatcher;
   }
 
-  export function match(assertFn: () => boolean, values: IMatcherValues, ...anyType: any[]) {
-    if (isAsymetric(values.expected) && isAsymetric(values.received)) {
-      return values.expected.matchType(...anyType) && values.received.matchType(...anyType);
+  export function match(
+    assertFn: () => boolean,
+    ...valuesWithParameters: IParamWithValidAsymetrics[]
+  ) {
+    const asymetricParams = valuesWithParameters.filter((param) => isAsymetric(param.value));
+    if (asymetricParams.length > 0) {
+      return asymetricParams.every((param) =>
+        (param.value as AsymmetricMatcher).matchType(...(param.validParameters ?? [])),
+      );
     }
-
-    if (isAsymetric(values.expected)) {
-      return values.expected.matchType(...anyType);
-    }
-
-    if (isAsymetric(values.received)) {
-      return values.received.matchType(...anyType);
-    }
-
     return assertFn();
   }
 

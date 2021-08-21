@@ -12,7 +12,11 @@ export function toBeLessOrEqualThan(this: ITestProps, expected: any, received: n
     return failedTest;
   }
 
-  let pass = matcherUtils.match(() => expected <= received, { expected, received }, Number);
+  let pass = matcherUtils.match(
+    () => expected <= received,
+    { value: expected, validParameters: [Number] },
+    { value: received, validParameters: [Number] },
+  );
   let comparator = "<=";
 
   if (this.isNot) {

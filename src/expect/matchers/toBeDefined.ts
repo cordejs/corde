@@ -7,7 +7,9 @@ import { matcherUtils } from "../matcherUtils";
  * @internal
  */
 export function toBeDefined<T>(this: ITestProps, expected: T) {
-  let pass = matcherUtils.match(() => expected !== undefined && expected !== null, { expected });
+  let pass = matcherUtils.match(() => expected !== undefined && expected !== null, {
+    value: expected,
+  });
   let isNotText = "";
 
   if (this.isNot) {

@@ -7,7 +7,10 @@ import { matcherUtils } from "../matcherUtils";
  * @internal
  */
 export function toBeDate<T>(this: ITestProps, expected: T) {
-  let pass = matcherUtils.match(() => expected instanceof Date, { expected }, Date);
+  let pass = matcherUtils.match(() => expected instanceof Date, {
+    value: expected,
+    validParameters: [Date],
+  });
   let isNotText = "";
 
   if (this.isNot) {

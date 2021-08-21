@@ -7,7 +7,10 @@ import { matcherUtils } from "../matcherUtils";
  * @internal
  */
 export function toBeFunction(this: ITestProps, expected: any) {
-  let pass = matcherUtils.match(() => isFunction(expected), { expected }, Function);
+  let pass = matcherUtils.match(() => isFunction(expected), {
+    value: expected,
+    validParameters: [Function],
+  });
   let isNotText = "";
 
   if (this.isNot) {

@@ -1,0 +1,195 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing toLength should return false for 's length (isNot true) 1`] = `
+"    
+    expect([32mexpected[39m).toLength([31mlength[39m)
+    
+    [1mexpected[22m should not length: 0.
+    got: [31m0[39m
+"
+`;
+
+exports[`testing toLength should return false for 's length (isNot true) 2`] = `
+"    
+    expect([32mexpected[39m).toLength([31mlength[39m)
+    
+    [1mexpected[22m should not length: any.
+    got: [31m0[39m
+"
+`;
+
+exports[`testing toLength should return false for 's length (isNot true) 3`] = `
+"    
+    expect([32mexpected[39m).toLength([31mlength[39m)
+    
+    [1mexpected[22m should not length: any(Number).
+    got: [31m0[39m
+"
+`;
+
+exports[`testing toLength should return false for [ 1, 2, 3 ]'s length (isNot true) 1`] = `
+"    
+    expect([32mexpected[39m).toLength([31mlength[39m)
+    
+    [1mexpected[22m should not length: 3.
+    got: [31m3[39m
+"
+`;
+
+exports[`testing toLength should return false for [ 1, 2, 3 ]'s length (isNot true) 2`] = `
+"    
+    expect([32mexpected[39m).toLength([31mlength[39m)
+    
+    [1mexpected[22m should not length: any.
+    got: [31m3[39m
+"
+`;
+
+exports[`testing toLength should return false for [ 1, 2, 3 ]'s length (isNot true) 3`] = `
+"    
+    expect([32mexpected[39m).toLength([31mlength[39m)
+    
+    [1mexpected[22m should not length: any(Number).
+    got: [31m3[39m
+"
+`;
+
+exports[`testing toLength should return false for []'s length (isNot true) 1`] = `
+"    
+    expect([32mexpected[39m).toLength([31mlength[39m)
+    
+    [1mexpected[22m should not length: 0.
+    got: [31m0[39m
+"
+`;
+
+exports[`testing toLength should return false for []'s length (isNot true) 2`] = `
+"    
+    expect([32mexpected[39m).toLength([31mlength[39m)
+    
+    [1mexpected[22m should not length: any.
+    got: [31m0[39m
+"
+`;
+
+exports[`testing toLength should return false for []'s length (isNot true) 3`] = `
+"    
+    expect([32mexpected[39m).toLength([31mlength[39m)
+    
+    [1mexpected[22m should not length: any(Number).
+    got: [31m0[39m
+"
+`;
+
+exports[`testing toLength should return false for abc's length (isNot true) 1`] = `
+"    
+    expect([32mexpected[39m).toLength([31mlength[39m)
+    
+    [1mexpected[22m should not length: 3.
+    got: [31m3[39m
+"
+`;
+
+exports[`testing toLength should return false for abc's length (isNot true) 2`] = `
+"    
+    expect([32mexpected[39m).toLength([31mlength[39m)
+    
+    [1mexpected[22m should not length: any.
+    got: [31m3[39m
+"
+`;
+
+exports[`testing toLength should return false for abc's length (isNot true) 3`] = `
+"    
+    expect([32mexpected[39m).toLength([31mlength[39m)
+    
+    [1mexpected[22m should not length: any(Number).
+    got: [31m3[39m
+"
+`;
+
+exports[`testing toLength should return false for any's length (isNot true) 1`] = `
+"    
+    expect([32mexpected[39m).toLength([31mlength[39m)
+    
+    [1mexpected[22m should not length: 3.
+    got: [31mundefined[39m
+"
+`;
+
+exports[`testing toLength should return false for invalid expected parameter ({}) 1`] = `
+"    
+    [1mexpected[22m should be a [32mstring[39m or [32marray[39m to measure it's length.
+    got: [31mobject[39m
+"
+`;
+
+exports[`testing toLength should return false for invalid expected parameter (1) 1`] = `
+"    
+    [1mexpected[22m should be a [32mstring[39m or [32marray[39m to measure it's length.
+    got: [31mnumber[39m
+"
+`;
+
+exports[`testing toLength should return false for invalid expected parameter (Symbol()) 1`] = `
+"    
+    [1mexpected[22m should be a [32mstring[39m or [32marray[39m to measure it's length.
+    got: [31msymbol[39m
+"
+`;
+
+exports[`testing toLength should return false for invalid expected parameter (null) 1`] = `
+"    
+    [1mexpected[22m should be a [32mstring[39m or [32marray[39m to measure it's length.
+    got: [31mnull[39m
+"
+`;
+
+exports[`testing toLength should return false for invalid expected parameter (undefined) 1`] = `
+"    
+    [1mexpected[22m should be a [32mstring[39m or [32marray[39m to measure it's length.
+    got: [31mundefined[39m
+"
+`;
+
+exports[`testing toLength should return false for invalid length parameter () 1`] = `
+"    
+    [1mlength[22m should be a [32mnumber[39m.
+    got: [31mstring[39m
+"
+`;
+
+exports[`testing toLength should return false for invalid length parameter ([]) 1`] = `
+"    
+    [1mlength[22m should be a [32mnumber[39m.
+    got: [31marray[39m
+"
+`;
+
+exports[`testing toLength should return false for invalid length parameter ({}) 1`] = `
+"    
+    [1mlength[22m should be a [32mnumber[39m.
+    got: [31mobject[39m
+"
+`;
+
+exports[`testing toLength should return false for invalid length parameter (Symbol()) 1`] = `
+"    
+    [1mlength[22m should be a [32mnumber[39m.
+    got: [31msymbol[39m
+"
+`;
+
+exports[`testing toLength should return false for invalid length parameter (null) 1`] = `
+"    
+    [1mlength[22m should be a [32mnumber[39m.
+    got: [31mnull[39m
+"
+`;
+
+exports[`testing toLength should return false for invalid length parameter (undefined) 1`] = `
+"    
+    [1mlength[22m should be a [32mnumber[39m.
+    got: [31mundefined[39m
+"
+`;

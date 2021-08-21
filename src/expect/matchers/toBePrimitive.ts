@@ -7,14 +7,10 @@ import { matcherUtils } from "../matcherUtils";
  * @internal
  */
 export function toBePrimitive<T>(this: ITestProps, expected: T) {
-  let pass = matcherUtils.match(
-    () => isPrimitiveValue(expected),
-    { expected },
-    Number,
-    String,
-    BigInt,
-    Boolean,
-  );
+  let pass = matcherUtils.match(() => isPrimitiveValue(expected), {
+    value: expected,
+    validParameters: [Number, String, BigInt, Boolean],
+  });
   let isNotText = "";
 
   if (this.isNot) {

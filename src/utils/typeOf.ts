@@ -15,7 +15,19 @@ import { AsymmetricMatcher } from "../expect/asymmetricMatcher";
  * @returns the type in string.
  * @internal
  */
-export function typeOf(value: any) {
+export function typeOf(
+  value: any,
+):
+  | "string"
+  | "boolean"
+  | "null"
+  | "array"
+  | "bigint"
+  | "number"
+  | "symbol"
+  | "undefined"
+  | "object"
+  | string {
   if (value === null) {
     return "null";
   }

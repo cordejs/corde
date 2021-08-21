@@ -6,8 +6,11 @@ import { matcherUtils } from "../matcherUtils";
 /**
  * @internal
  */
-export function toBeArray<T>(this: ITestProps, expected: T) {
-  let pass = matcherUtils.match(() => Array.isArray(expected), { expected }, Array);
+export function toBeArray(this: ITestProps, expected: any) {
+  let pass = matcherUtils.match(() => Array.isArray(expected), {
+    value: expected,
+    validParameters: [Array],
+  });
   let isNotText = "";
 
   if (this.isNot) {

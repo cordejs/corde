@@ -30,6 +30,8 @@ export interface ITestProps {
   isNot: boolean;
   expectedColorFn(text: string): string;
   receivedColorFn(text: string): string;
+  formatValue(value: any): string;
+  createHint(...paramsName: string[]): string;
 }
 
 export interface IMinifiedEmbedMessage {

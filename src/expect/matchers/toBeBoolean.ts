@@ -7,7 +7,10 @@ import { matcherUtils } from "../matcherUtils";
  * @internal
  */
 export function toBeBoolean<T>(this: ITestProps, expected: T) {
-  let pass = matcherUtils.match(() => typeof expected === "boolean", { expected }, Boolean);
+  let pass = matcherUtils.match(() => typeof expected === "boolean", {
+    value: expected,
+    validParameters: [Boolean],
+  });
   let isNotText = "";
 
   if (this.isNot) {

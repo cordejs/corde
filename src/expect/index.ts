@@ -3,9 +3,10 @@ import chalk from "chalk";
 import { testCollector } from "../common/testCollector";
 import { ITestProps } from "../types";
 import { corde } from "../types/globals";
-import { buildReportMessage, getStackTrace } from "../utils";
+import { buildReportMessage, formatObject, getStackTrace, typeOf } from "../utils";
 import { any } from "./asymmetricMatcher";
 import * as matchers from "./matchers";
+import { matcherUtils } from "./matcherUtils";
 interface IReportMatcher {
   pass: boolean;
   message: string;
@@ -33,7 +34,7 @@ function createMatcherFn(matcher: string, isNot: boolean, expected: any, isDebug
     }
 
     args = args.map((arg) => {
-      if (expected === any) {
+      if (arg === any) {
         return arg();
       }
       return arg;
@@ -47,6 +48,22 @@ function createMatcherFn(matcher: string, isNot: boolean, expected: any, isDebug
         isNot,
         expectedColorFn: chalk.bold,
         receivedColorFn: chalk.bold,
+        createHint: (...paramsName: string[]) => {
+          return `expect(${chalk.green("expected")}).${matcher}(${paramsName
+            .map((param) => chalk.red(param))
+            .join(",")})`;
+        },
+        formatValue: (value: any) => {
+          if (typeOf(value) === "object") {
+            return formatObject(value);
+          }
+
+          if (matcherUtils.isAsymetric(value)) {
+            return typeOf(value);
+          }
+
+          return value;
+        },
       };
 
       const report = matcherFn.bind(props, ...args)();
@@ -87,9 +104,7 @@ function createLocalExpect(isDebug: boolean) {
     return _expect;
   };
 
-  localExpect.any = (...args: any[]) => {
-    return any(...args);
-  };
+  localExpect.any = any;
 
   return localExpect;
 }
