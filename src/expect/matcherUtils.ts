@@ -18,11 +18,28 @@ export namespace matcherUtils {
   ) {
     const asymetricParams = valuesWithParameters.filter((param) => isAsymetric(param.value));
     if (asymetricParams.length > 0) {
-      return asymetricParams.every((param) =>
-        (param.value as AsymmetricMatcher).matchType(...(param.validParameters ?? [])),
-      );
+      return asymetricParams.every((param) => {
+        const paramValue = param.value as AsymmetricMatcher;
+        return paramValue.matchType(...(param.validParameters ?? []));
+      });
     }
     return assertFn();
+  }
+
+  export function matchValues(testFn: () => boolean, expected: any, received: any) {
+    if (isAsymetric(expected) && matcherUtils.isAsymetric(received)) {
+      return expected.matchType(...received.getTypes());
+    }
+
+    if (isAsymetric(expected)) {
+      return expected.matchValue(received);
+    }
+
+    if (isAsymetric(received)) {
+      return received.matchValue(expected);
+    }
+
+    return testFn();
   }
 
   export function isAsymetricSpecified(value: any) {

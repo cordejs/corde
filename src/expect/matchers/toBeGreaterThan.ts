@@ -1,4 +1,3 @@
-import chalk from "chalk";
 import { ITestProps } from "../../types";
 import { buildReportMessage } from "../../utils";
 import { matcherUtils } from "../matcherUtils";
@@ -31,7 +30,6 @@ export function toBeGreaterThan(this: ITestProps, expected: any, received: numbe
       : buildReportMessage(
           this.createHint("received"),
           "\n\n",
-          `expect(${chalk.green("expected")}).toBeGreaterThan(${chalk.red("received")})\n`,
           `expect: ${expected} ${comparator} ${received}.\n`,
         ),
   };

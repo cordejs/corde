@@ -63,7 +63,7 @@ Object {
 exports[`testing toBeNull should return false for null (isNot true) 1`] = `
 Object {
   "message": "    
-    expect([32mexpected[39m).toBeNull()
+    expect([32mexpected[39m).not.toBeNull()
     
     [1mexpected[22m should not be [32mnull[39m.
     got: [31mnull[39m

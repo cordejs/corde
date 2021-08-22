@@ -41,7 +41,7 @@ exports[`testing toBeValidDate should return false for invalid date (foo) (isNot
     expect([32mexpected[39m).toBeValidDate()
     
     [1mexpected[22m should be a valid [32mdate[39m.
-    got: [31mfoo[39m
+    got: [31m'foo'[39m
 "
 `;
 
@@ -65,34 +65,34 @@ exports[`testing toBeValidDate should return false for invalid date (undefined) 
 
 exports[`testing toBeValidDate should return false for valid date (1) (isNot true) 1`] = `
 "    
-    expect([32mexpected[39m).toBeValidDate()
+    expect([32mexpected[39m).not.toBeValidDate()
     
     [1mexpected[22m should not be a valid [32mdate[39m.
-    got: [31m1[39m
+    got: [31m'1'[39m
 "
 `;
 
 exports[`testing toBeValidDate should return false for valid date (1) (isNot true) 2`] = `
 "    
-    expect([32mexpected[39m).toBeValidDate()
+    expect([32mexpected[39m).not.toBeValidDate()
     
     [1mexpected[22m should not be a valid [32mdate[39m.
     got: [31m1[39m
 "
 `;
 
-exports[`testing toBeValidDate should return false for valid date (2021-08-21T22:35:49.875Z) (isNot true) 1`] = `
+exports[`testing toBeValidDate should return false for valid date (2021-08-22T20:41:41.337Z) (isNot true) 1`] = `
 "    
-    expect([32mexpected[39m).toBeValidDate()
+    expect([32mexpected[39m).not.toBeValidDate()
     
     [1mexpected[22m should not be a valid [32mdate[39m.
-    got: [31m2021-08-21T22:35:49.875Z[39m
+    got: [31m{}[39m
 "
 `;
 
 exports[`testing toBeValidDate should return false for valid date (any(Date)) (isNot true) 1`] = `
 "    
-    expect([32mexpected[39m).toBeValidDate()
+    expect([32mexpected[39m).not.toBeValidDate()
     
     [1mexpected[22m should not be a valid [32mdate[39m.
     got: [31many(Date)[39m
@@ -101,7 +101,7 @@ exports[`testing toBeValidDate should return false for valid date (any(Date)) (i
 
 exports[`testing toBeValidDate should return false for valid date (any(Number)) (isNot true) 1`] = `
 "    
-    expect([32mexpected[39m).toBeValidDate()
+    expect([32mexpected[39m).not.toBeValidDate()
     
     [1mexpected[22m should not be a valid [32mdate[39m.
     got: [31many(Number)[39m
@@ -110,7 +110,7 @@ exports[`testing toBeValidDate should return false for valid date (any(Number)) 
 
 exports[`testing toBeValidDate should return false for valid date (any) (isNot true) 1`] = `
 "    
-    expect([32mexpected[39m).toBeValidDate()
+    expect([32mexpected[39m).not.toBeValidDate()
     
     [1mexpected[22m should not be a valid [32mdate[39m.
     got: [31many[39m
@@ -121,7 +121,7 @@ exports[`testing toBeValidDate should return false for valid date (function any(
   return new AsymmetricMatcher(...classType);
 }) (isNot true) 1`] = `
 "    
-    expect([32mexpected[39m).toBeValidDate()
+    expect([32mexpected[39m).not.toBeValidDate()
     
     [1mexpected[22m should not be a valid [32mdate[39m.
     got: [31many[39m

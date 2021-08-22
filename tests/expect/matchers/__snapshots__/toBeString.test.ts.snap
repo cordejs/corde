@@ -75,7 +75,7 @@ Object {
 exports[`testing toBeString should return false for number with isNot true 1`] = `
 Object {
   "message": "    
-    expect([32mexpected[39m).toBeString()
+    expect([32mexpected[39m).not.toBeString()
     
     [1mexpected[22m should not be a [32mstring[39m.
     got: [31mstring[39m

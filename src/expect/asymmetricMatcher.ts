@@ -78,7 +78,10 @@ export class AsymmetricMatcher {
   }
 
   matchValue(value: any) {
-    return this._classType.every((classType) => this._isValueOfType(classType, value));
+    return (
+      this.isSpecified() ||
+      this._classType.every((classType) => this._isValueOfType(classType, value))
+    );
   }
 
   private _isValueOfType(classType: any, value: any) {

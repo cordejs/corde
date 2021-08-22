@@ -39,7 +39,7 @@ Object {
 exports[`testing toBeNaN should return false for NaN (isNot true) 1`] = `
 Object {
   "message": "    
-    expect([32mexpected[39m).toBeNaN()
+    expect([32mexpected[39m).not.toBeNaN()
     
     [1mexpected[22m should not be [32mNaN[39m.
     got: [31mnumber[39m

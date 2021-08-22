@@ -63,7 +63,7 @@ Object {
 exports[`testing toBeBoolean should return false for boolean with isNot true 1`] = `
 Object {
   "message": "    
-    expect([32mexpected[39m).toBeBoolean()
+    expect([32mexpected[39m).not.toBeBoolean()
     
     [1mexpected[22m should not be an [32mboolean[39m.
     got: [31mboolean[39m

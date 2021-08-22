@@ -87,7 +87,7 @@ Object {
 exports[`testing toBeUndefined should return false for undefined (isNot true) 1`] = `
 Object {
   "message": "    
-    expect([32mexpected[39m).toBeUndefined()
+    expect([32mexpected[39m).not.toBeUndefined()
     
     [1mexpected[22m should not be an [32mundefined[39m.
     got: [31mundefined[39m

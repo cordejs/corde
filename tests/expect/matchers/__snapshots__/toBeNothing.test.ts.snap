@@ -63,7 +63,7 @@ Object {
 exports[`testing toBeNothing should return false for null (isNot true) 1`] = `
 Object {
   "message": "    
-    expect([32mexpected[39m).toBeNothing()
+    expect([32mexpected[39m).not.toBeNothing()
     
     [1mexpected[22m should not be [32mnull[39m or [32mundefined[39m.
     got: [31mnull[39m
@@ -87,7 +87,7 @@ Object {
 exports[`testing toBeNothing should return false for undefined (isNot true) 1`] = `
 Object {
   "message": "    
-    expect([32mexpected[39m).toBeNothing()
+    expect([32mexpected[39m).not.toBeNothing()
     
     [1mexpected[22m should not be [32mnull[39m or [32mundefined[39m.
     got: [31mundefined[39m

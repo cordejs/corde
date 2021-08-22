@@ -23,3 +23,4 @@ export * from "./toLength";
 export * from "./toBeInstanceOf";
 export * from "./toBeNegativeInfinity";
 export * from "./toBePositiveInfinity";
+export * from "./toBe";

@@ -27,7 +27,7 @@ Object {
 exports[`testing toBeDefined should return false for Date with isNot true 1`] = `
 Object {
   "message": "    
-    expect([32mexpected[39m).toBeDate()
+    expect([32mexpected[39m).not.toBeDate()
     
     [1mexpected[22m should not be a [32mdate[39m.
     got: [31mobject[39m

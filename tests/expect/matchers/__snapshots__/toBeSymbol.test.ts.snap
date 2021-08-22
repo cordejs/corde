@@ -87,7 +87,7 @@ Object {
 exports[`testing toBeSymbol should return false for number with isNot true 1`] = `
 Object {
   "message": "    
-    expect([32mexpected[39m).toBeSymbol()
+    expect([32mexpected[39m).not.toBeSymbol()
     
     [1mexpected[22m should not be a [32msymbol[39m.
     got: [31msymbol[39m

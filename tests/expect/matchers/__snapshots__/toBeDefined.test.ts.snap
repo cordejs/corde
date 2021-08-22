@@ -3,7 +3,7 @@
 exports[`testing toBeDefined should return false for boolean with isNot true 1`] = `
 Object {
   "message": "    
-    expect([32mexpected[39m).toBeDefined()
+    expect([32mexpected[39m).not.toBeDefined()
     
     [1mexpected[22m should not have a defined value. (equal to [1mundefined[22m or [1mnull[22m).
     got: '[31mobject[39m'

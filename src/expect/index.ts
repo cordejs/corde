@@ -3,10 +3,9 @@ import chalk from "chalk";
 import { testCollector } from "../common/testCollector";
 import { ITestProps } from "../types";
 import { corde } from "../types/globals";
-import { buildReportMessage, formatObject, getStackTrace, typeOf } from "../utils";
+import { buildReportMessage, getStackTrace, typeOf } from "../utils";
 import { any } from "./asymmetricMatcher";
 import * as matchers from "./matchers";
-import { matcherUtils } from "./matcherUtils";
 interface IReportMatcher {
   pass: boolean;
   message: string;
@@ -54,12 +53,30 @@ function createMatcherFn(matcher: string, isNot: boolean, expected: any, isDebug
             .join(",")})`;
         },
         formatValue: (value: any) => {
-          if (typeOf(value) === "object") {
-            return formatObject(value);
+          if (typeof value === "symbol") {
+            return value.toString();
           }
 
-          if (matcherUtils.isAsymetric(value)) {
-            return typeOf(value);
+          if (typeOf(value) === "object") {
+            if (Object.keys(value).length === 0) {
+              return "{}";
+            }
+
+            return "{ ... }";
+          }
+
+          if (
+            typeof value === "string" &&
+            (value.length === 0 || (!value.startsWith("'") && !value.endsWith("'")))
+          ) {
+            return `'${value}'`;
+          }
+
+          if (Array.isArray(value)) {
+            if (value.length > 0) {
+              return "[...]";
+            }
+            return "[]";
           }
 
           return value;

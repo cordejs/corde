@@ -51,7 +51,7 @@ Object {
 exports[`testing toBeArray should return false for array with isNot true 1`] = `
 Object {
   "message": "    
-    expect([32mexpected[39m).toBeArray()
+    expect([32mexpected[39m).not.toBeArray()
     
     [1mexpected[22m should not be an [32marray[39m.
     got: [31marray[39m

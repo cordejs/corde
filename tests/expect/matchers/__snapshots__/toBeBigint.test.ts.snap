@@ -63,7 +63,7 @@ Object {
 exports[`testing toBeBigint should return false for bigint with isNot true 1`] = `
 Object {
   "message": "    
-    expect([32mexpected[39m).toBeBigInt()
+    expect([32mexpected[39m).not.toBeBigInt()
     
     [1mexpected[22m should not be an [32mbigInt[39m.
     got: [31mbigint[39m

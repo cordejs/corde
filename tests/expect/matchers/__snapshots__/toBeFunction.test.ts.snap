@@ -29,7 +29,7 @@ exports[`testing toBeFunction should return false for 4141 1`] = `
 
 exports[`testing toBeFunction should return false for a function when isNot true 1`] = `
 "    
-    expect([32mexpected[39m).toBeFunction()
+    expect([32mexpected[39m).not.toBeFunction()
     
     [1mexpected[22m should not be an [32mfunction[39m.
     got: [31mfunction[39m
