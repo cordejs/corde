@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import { ITestProps } from "../../types";
-import { buildReportMessage, typeOf } from "../../utils";
+import { asymetricTypeOf, buildReportMessage } from "../../utils";
 import { matcherUtils } from "../matcherUtils";
 
 /**
@@ -26,7 +26,7 @@ export function toBeArray(this: ITestProps, expected: any) {
           this.createHint(),
           "\n\n",
           `${this.expectedColorFn("expected")} should${isNotText} be an ${chalk.green("array")}.\n`,
-          `got: ${chalk.red(typeOf(expected))}`,
+          `got: ${chalk.red(asymetricTypeOf(expected))}`,
         ),
   };
 }

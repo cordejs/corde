@@ -10,6 +10,31 @@ describe("testing deepEqual", () => {
       expect(deepEqual(null, null)).toBeTruthy();
     });
 
+    it.each([
+      [{ a: 1 }, { a: 1 }],
+      [null, null],
+      [undefined, undefined],
+    ])(
+      "should return false for equal values but with comparable returning false (%s, %s)",
+      (value1, value2) => {
+        expect(deepEqual(value1, value2, () => false)).toBeFalsy();
+      },
+    );
+
+    it.each([
+      [
+        { a: 2, b: 3 },
+        { a: 1, b: 2 },
+      ],
+      [null, undefined],
+      [1, 2],
+    ])(
+      "should return true for different values but with comparable returning false (%s, %s)",
+      (value1, value2) => {
+        expect(deepEqual(value1, value2, () => true)).toBeTruthy();
+      },
+    );
+
     it("should return true for undefined", () => {
       expect(deepEqual(undefined, undefined)).toBeTruthy();
     });

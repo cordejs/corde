@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import { ITestProps } from "../../types";
-import { buildReportMessage, isFunction, typeOf } from "../../utils";
+import { buildReportMessage, isFunction, asymetricTypeOf } from "../../utils";
 import { matcherUtils } from "../matcherUtils";
 
 /**
@@ -28,7 +28,7 @@ export function toBeFunction(this: ITestProps, expected: any) {
           `${this.expectedColorFn("expected")} should${isNotText} be an ${chalk.green(
             "function",
           )}.\n`,
-          `got: ${chalk.red(typeOf(expected))}`,
+          `got: ${chalk.red(asymetricTypeOf(expected))}`,
         ),
   };
 }

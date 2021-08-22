@@ -24,3 +24,4 @@ export * from "./toBeInstanceOf";
 export * from "./toBeNegativeInfinity";
 export * from "./toBePositiveInfinity";
 export * from "./toBe";
+export * from "./toEqual";

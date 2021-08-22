@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import { ITestProps } from "../../types";
-import { buildReportMessage, typeOf } from "../../utils";
+import { buildReportMessage, asymetricTypeOf } from "../../utils";
 import { matcherUtils } from "../matcherUtils";
 
 /**
@@ -25,7 +25,7 @@ export function toBeNothing(this: ITestProps, expected: any) {
           `${this.expectedColorFn("expected")} should${isNotText} be ${chalk.green(
             "null",
           )} or ${chalk.green("undefined")}.\n`,
-          `got: ${chalk.red(typeOf(expected))}`,
+          `got: ${chalk.red(asymetricTypeOf(expected))}`,
         ),
   };
 }

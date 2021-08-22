@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import { ITestProps } from "../../types";
-import { buildReportMessage, typeOf } from "../../utils";
+import { buildReportMessage, asymetricTypeOf } from "../../utils";
 import { matcherUtils } from "../matcherUtils";
 
 /**
@@ -18,7 +18,7 @@ export function toBeEmptyArray(this: ITestProps, expected: any) {
     isNotText = " not";
   }
 
-  let gotText = chalk.red(typeOf(expected));
+  let gotText = chalk.red(asymetricTypeOf(expected));
 
   if (Array.isArray(expected)) {
     gotText = chalk.red(`expected.length == ${expected.length}`);

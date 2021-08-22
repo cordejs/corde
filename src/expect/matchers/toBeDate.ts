@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import { ITestProps } from "../../types";
-import { buildReportMessage, typeOf } from "../../utils";
+import { buildReportMessage, asymetricTypeOf } from "../../utils";
 import { matcherUtils } from "../matcherUtils";
 
 /**
@@ -26,7 +26,7 @@ export function toBeDate<T>(this: ITestProps, expected: T) {
           this.createHint(),
           "\n\n",
           `${this.expectedColorFn("expected")} should${isNotText} be a ${chalk.green("date")}.\n`,
-          `got: ${chalk.red(typeOf(expected))}`,
+          `got: ${chalk.red(asymetricTypeOf(expected))}`,
         ),
   };
 }

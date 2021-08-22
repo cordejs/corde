@@ -182,7 +182,15 @@ exports[`testing toBe should return false for any(String) and any(Number) 1`] = 
     
     expect([32mexpected[39m).toBe([31mreceived[39m)
     
-    expect: [32many(String)[39m === [31many(Number)[39m
+    [32m- Expected  - 1[39m
+    [31m+ Received  + 1[39m
+    
+    [2m  AsymmetricMatcher {[22m
+    [2m    \\"_classType\\": Array [[22m
+    [32m-     [Function String],[39m
+    [31m+     [Function Number],[39m
+    [2m    ],[22m
+    [2m  }[22m
 "
 `;
 
@@ -193,5 +201,155 @@ exports[`testing toBe should return false for null and undefined 1`] = `
     expect([32mexpected[39m).toBe([31mreceived[39m)
     
     expect: [32mnull[39m === [31mundefined[39m
+"
+`;
+
+exports[`testing toBe should return true to () => null and () => null (isNot true) 1`] = `
+"    
+    Tip: toBe asserts identity of values. To compare only values use [1mtoEqual[22m
+    
+    expect([32mexpected[39m).not.toBe([31mreceived[39m)
+    
+    expect: [32m() => null[39m !== [31m() => null[39m
+"
+`;
+
+exports[`testing toBe should return true to [] and [] (isNot true) 1`] = `
+"    
+    Tip: toBe asserts identity of values. To compare only values use [1mtoEqual[22m
+    
+    expect([32mexpected[39m).not.toBe([31mreceived[39m)
+    
+    expect: [32m[][39m !== [31m[][39m
+"
+`;
+
+exports[`testing toBe should return true to {} and {} (isNot true) 1`] = `
+"    
+    Tip: toBe asserts identity of values. To compare only values use [1mtoEqual[22m
+    
+    expect([32mexpected[39m).not.toBe([31mreceived[39m)
+    
+    [2mCompared values have no visual difference.[22m
+"
+`;
+
+exports[`testing toBe should return true to 1 and 1 (isNot true) 1`] = `
+"    
+    Tip: toBe asserts identity of values. To compare only values use [1mtoEqual[22m
+    
+    expect([32mexpected[39m).not.toBe([31mreceived[39m)
+    
+    expect: [32m1[39m !== [31m1[39m
+"
+`;
+
+exports[`testing toBe should return true to 1 and any (isNot true) 1`] = `
+"    
+    Tip: toBe asserts identity of values. To compare only values use [1mtoEqual[22m
+    
+    expect([32mexpected[39m).not.toBe([31mreceived[39m)
+    
+    expect: [32m1[39m !== [31m{ ... }[39m
+"
+`;
+
+exports[`testing toBe should return true to Map(1) { 1 => 123123 } and Map(1) { 1 => 123123 } (isNot true) 1`] = `
+"    
+    Tip: toBe asserts identity of values. To compare only values use [1mtoEqual[22m
+    
+    expect([32mexpected[39m).not.toBe([31mreceived[39m)
+    
+    [2mCompared values have no visual difference.[22m
+"
+`;
+
+exports[`testing toBe should return true to any and 1 (isNot true) 1`] = `
+"    
+    Tip: toBe asserts identity of values. To compare only values use [1mtoEqual[22m
+    
+    expect([32mexpected[39m).not.toBe([31mreceived[39m)
+    
+    expect: [32m{ ... }[39m !== [31m1[39m
+"
+`;
+
+exports[`testing toBe should return true to any and any (isNot true) 1`] = `
+"    
+    Tip: toBe asserts identity of values. To compare only values use [1mtoEqual[22m
+    
+    expect([32mexpected[39m).not.toBe([31mreceived[39m)
+    
+    [2mCompared values have no visual difference.[22m
+"
+`;
+
+exports[`testing toBe should return true to any(Number) and 1 (isNot true) 1`] = `
+"    
+    Tip: toBe asserts identity of values. To compare only values use [1mtoEqual[22m
+    
+    expect([32mexpected[39m).not.toBe([31mreceived[39m)
+    
+    expect: [32m{ ... }[39m !== [31m1[39m
+"
+`;
+
+exports[`testing toBe should return true to any(String) and any(String) (isNot true) 1`] = `
+"    
+    Tip: toBe asserts identity of values. To compare only values use [1mtoEqual[22m
+    
+    expect([32mexpected[39m).not.toBe([31mreceived[39m)
+    
+    [2mCompared values have no visual difference.[22m
+"
+`;
+
+exports[`testing toBe should return true to false and false (isNot true) 1`] = `
+"    
+    Tip: toBe asserts identity of values. To compare only values use [1mtoEqual[22m
+    
+    expect([32mexpected[39m).not.toBe([31mreceived[39m)
+    
+    expect: [32mfalse[39m !== [31mfalse[39m
+"
+`;
+
+exports[`testing toBe should return true to foo and foo (isNot true) 1`] = `
+"    
+    Tip: toBe asserts identity of values. To compare only values use [1mtoEqual[22m
+    
+    expect([32mexpected[39m).not.toBe([31mreceived[39m)
+    
+    expect: [32m'foo'[39m !== [31m'foo'[39m
+"
+`;
+
+exports[`testing toBe should return true to null and null (isNot true) 1`] = `
+"    
+    Tip: toBe asserts identity of values. To compare only values use [1mtoEqual[22m
+    
+    expect([32mexpected[39m).not.toBe([31mreceived[39m)
+    
+    expect: [32mnull[39m !== [31mnull[39m
+"
+`;
+
+exports[`testing toBe should return true to true and true (isNot true) 1`] = `
+"    
+    Tip: toBe asserts identity of values. To compare only values use [1mtoEqual[22m
+    
+    expect([32mexpected[39m).not.toBe([31mreceived[39m)
+    
+    expect: [32mtrue[39m !== [31mtrue[39m
+"
+`;
+
+exports[`testing toBe should return true to undefined and undefined (isNot true) 1`] = `
+"    
+    Tip: toBe asserts identity of values. To compare only values use [1mtoEqual[22m
+    
+    expect([32mexpected[39m).not.toBe([31mreceived[39m)
+    
+    expect: [32mundefined[39m !== [31mundefined[39m
 "
 `;

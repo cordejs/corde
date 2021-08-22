@@ -36,6 +36,28 @@ describe("testing toBe", () => {
   });
 
   it.each([
+    [1, 1],
+    [fn1, fn2],
+    [array1, array2],
+    [obj1, obj2],
+    [map1, map2],
+    ["foo", "foo"],
+    [false, false],
+    [true, true],
+    [null, null],
+    [undefined, undefined],
+    [1, cordeExpect.any()],
+    [cordeExpect.any(), 1],
+    [cordeExpect.any(Number), 1],
+    [cordeExpect.any(), cordeExpect.any()],
+    [cordeExpect.any(String), cordeExpect.any(String)],
+  ])("should return true to %s and %s (isNot true)", (value, value2) => {
+    const report = cordeExpect(value).not.toBe(value2 as any);
+    expect(report.pass).toBeFalsy();
+    expect(report.message).toMatchSnapshot();
+  });
+
+  it.each([
     ["", 1],
     [{}, {}],
     [{ k: 1 }, {}],
