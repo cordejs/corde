@@ -49,7 +49,7 @@ function createMatcherFn(matcher: string, isNot: boolean, expected: any, isDebug
         expectedColorFn: chalk.bold,
         receivedColorFn: chalk.bold,
         createHint: (...paramsName: string[]) => {
-          return `expect(${chalk.green("expected")}).${matcher}(${paramsName
+          return `expect(${chalk.green("expected")}).${isNot ? "not." : ""}${matcher}(${paramsName
             .map((param) => chalk.red(param))
             .join(",")})`;
         },

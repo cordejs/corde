@@ -20,3 +20,6 @@ export * from "./toBeString";
 export * from "./toBeSymbol";
 export * from "./toBeValidDate";
 export * from "./toLength";
+export * from "./toBeInstanceOf";
+export * from "./toBeNegativeInfinity";
+export * from "./toBePositiveInfinity";

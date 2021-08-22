@@ -23,7 +23,7 @@ export namespace corde {
     toBePrimitive(): void;
     toBeGreaterThan(expected: number | bigint): void;
     toBeGreaterOrEqualThan(expected: number | bigint): void;
-    toBeInstanceOf<U extends any>(expected: T | U): void;
+    toBeInstanceOf<U>(expected: U): void;
     toBeLessThan(expected: number | bigint): void;
     toBeLessOrEqualThan(expected: number | bigint): void;
     toBeNaN(): void;
@@ -40,20 +40,14 @@ export namespace corde {
     toHaveBeenCalledOnceWith(): void;
     toHaveBeenCalledTimes(amount: number): void;
     toHaveBeenCalledWith(): void;
-    toHaveClass(expected: any): void;
-    toHaveSize(size: number): void;
     toMatch(expected: any): void;
     toThrow<U extends any>(expectedThrow: U): void;
     toThrowError<U extends Error>(expectedopt: U): void;
-    toThrowMatching(predicate: any): void;
-    arrayContaining(mixed: any): void;
-    objectContaining(mixed: any): void;
-    stringMatching(pattern: any): void;
     toBeArrayOfBooleans(): void;
     toBeArrayOfNumbers(): void;
     toBeArrayOfObjects(): void;
-    toBeArrayOfSize(number: any): void;
     toBeArrayOfStrings(): void;
+    toBeArrayOfSize(number: any): void;
     toBeEmptyArray(): void;
     toBeNonEmptyArray(): void;
     toBeAfter(otherDate: Date): void;
@@ -69,7 +63,6 @@ export namespace corde {
     toBeLessThanOrEqualTo(otherNumber: number | bigint): void;
     toBeNear(otherNumber: number | bigint, epsilon: any): void;
     toBeOddNumber(): void;
-    toBeWholeNumber(): void;
     toBeWithinRange(floor: any, ceiling: any): void;
     toBeEmptyObject(): void;
     toBeNonEmptyObject(): void;
@@ -87,10 +80,8 @@ export namespace corde {
     toHaveEmptyArray(memberName: any): void;
     toHaveEmptyObject(memberName: any): void;
     toHaveEmptyString(memberName: any): void;
-    toHaveEvenNumber(memberName: any): void;
     toHaveFalse(memberName: any): void;
     toHaveHtmlString(memberName: any): void;
-    toHaveIso8601(memberName: any): void;
     toHaveJsonString(memberName: any): void;
     toHaveMember(memberName: any): void;
     toHaveMethod(memberName: FunctionOnly<T>): void;
@@ -112,7 +103,6 @@ export namespace corde {
     toBeRegExp(): void;
     toBeEmptyString(): void;
     toBeHtmlString(): void;
-    toBeIso8601(): void;
     toBeJsonString(): void;
     toBeLongerThan(otherString: string): void;
     toBeNonEmptyString(): void;
