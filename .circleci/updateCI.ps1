@@ -1,2 +1,0 @@
-circleci update install
-pause
