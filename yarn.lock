@@ -3447,9 +3447,9 @@ delayed-stream@~1.0.0:
   integrity sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
 
 dependency-cruiser@^10.0.1:
-  version "10.1.0"
-  resolved "https://registry.yarnpkg.com/dependency-cruiser/-/dependency-cruiser-10.1.0.tgz#d4dc69b9e4d14bb2c9cbbed56b6fc76ff55c5a3d"
-  integrity sha512-HFYm+i4YMRL25PumCCtAPIse7shiFoWnHX58oDeDVGo5X/zwfhna6CrxxL2uUIJ3/Yn7hQeKuSWDN+p+fgZMZA==
+  version "10.1.1"
+  resolved "https://registry.yarnpkg.com/dependency-cruiser/-/dependency-cruiser-10.1.1.tgz#8b756f20f494c8b06eb1344fd3e7a4c15513b7e5"
+  integrity sha512-PQA3pRdim8MbvXOf/JzdPGhgxAp+oAaUvId1fINV2vMnc+VN/DwxEjgB+JoMWOcZV1CEPUm5wi0BA9LVa9j7pA==
   dependencies:
     acorn "8.4.1"
     acorn-jsx "5.3.2"
@@ -3470,7 +3470,7 @@ dependency-cruiser@^10.0.1:
     lodash "4.17.21"
     safe-regex "2.1.1"
     semver "7.3.5"
-    semver-try-require "5.0.0"
+    semver-try-require "5.0.1"
     teamcity-service-messages "0.1.11"
     tsconfig-paths-webpack-plugin "3.5.1"
     wrap-ansi "7.0.0"
@@ -8141,12 +8141,12 @@ semver-greatest-satisfied-range@^1.1.0:
   dependencies:
     sver-compat "^1.5.0"
 
-semver-try-require@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/semver-try-require/-/semver-try-require-5.0.0.tgz#634d9b22376b90ccbbfaf48f0d364ca179d77dc6"
-  integrity sha512-7CBjNH5C49PLcDkuzQk02jj+jvZ+I1fSFC/eMsX7niuuPo2E2mJRzF6QbqD5K8cuXJO7AfmNlAYehfTPZdvTrw==
+semver-try-require@5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/semver-try-require/-/semver-try-require-5.0.1.tgz#b06767b15629d42b5c3454b8c99d4c7190d30d50"
+  integrity sha512-4xGZiIpr4I0/aek6K/Et9AhgRsIm1UG5hbyrOXrnmpGStdDavQbVzQTbJd9OBqPS2gryZvk7UY4W11AF08rZtg==
   dependencies:
-    semver "7.3.5"
+    semver "^7.3.5"
 
 "semver@2 || 3 || 4 || 5", semver@^5.3.0, semver@^5.5.0:
   version "5.7.1"
