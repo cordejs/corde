@@ -32,3 +32,4 @@ export * from "./replaceAll";
 export * from "./isString";
 export * from "./isValidNumber";
 export * from "./asymetricTypeOf";
+export * from "./isAsymetricMatcher";

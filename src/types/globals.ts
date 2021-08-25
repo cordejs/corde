@@ -1,11 +1,11 @@
 export namespace corde {
   type KeyOf<T> = keyof T;
 
-  type FunctionOnly<T> = {
+  export type FunctionOnly<T> = {
     [K in KeyOf<T>]: T[K] extends (...args: any[]) => any ? K : never;
   }[KeyOf<T>];
 
-  type PropOnly<T> = {
+  export type PropOnly<T> = {
     [K in KeyOf<T>]: T[K] extends (...args: any[]) => any ? never : K;
   }[KeyOf<T>];
 
