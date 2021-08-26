@@ -1494,7 +1494,7 @@
     webpack-merge "^5.8.0"
     webpackbar "^5.0.0-3"
 
-"@docusaurus/core@^2.0.0-beta.5":
+"@docusaurus/core@2.0.0-beta.5", "@docusaurus/core@^2.0.0-beta.5":
   version "2.0.0-beta.5"
   resolved "https://registry.yarnpkg.com/@docusaurus/core/-/core-2.0.0-beta.5.tgz#a8ccb489d75f777de59fdb698f93de9263928594"
   integrity sha512-LERPgERVmui0Fb/aIEsd0/1O8VMWW2+vokoPJFHsCswNkk+63C+Ko6luu2z1QoXhbUGAVEJKTb4Z2NAZ5eSF5Q==
@@ -1792,13 +1792,13 @@
     fs-extra "^10.0.0"
     tslib "^2.1.0"
 
-"@docusaurus/theme-live-codeblock@^2.0.0-beta.4":
-  version "2.0.0-beta.4"
-  resolved "https://registry.yarnpkg.com/@docusaurus/theme-live-codeblock/-/theme-live-codeblock-2.0.0-beta.4.tgz#b86e3dd3855808b832616cac1f5633ed1e408797"
-  integrity sha512-E2GumHRLEspoKOEnumkRkD4n25e6hpbbPbRTYssM49TyW8sVFlvYsLjDXClU53X9Nh1opbNtlpmTJ2qkla6pkQ==
+"@docusaurus/theme-live-codeblock@^2.0.0-beta.5":
+  version "2.0.0-beta.5"
+  resolved "https://registry.yarnpkg.com/@docusaurus/theme-live-codeblock/-/theme-live-codeblock-2.0.0-beta.5.tgz#a8686d3a672a51e6c72e035345a3abba0b731c4e"
+  integrity sha512-hTkZDeBafCQY6E8xcajgoJ5APwcJDD0+3XzmWdnqqjzMXQhCgQjefNhhduXM1a87+YK3N1fN0j3hF33K7DWoMg==
   dependencies:
-    "@docusaurus/core" "2.0.0-beta.4"
-    "@docusaurus/utils-validation" "2.0.0-beta.4"
+    "@docusaurus/core" "2.0.0-beta.5"
+    "@docusaurus/utils-validation" "2.0.0-beta.5"
     "@philpl/buble" "^0.19.7"
     clsx "^1.1.1"
     parse-numeric-range "^1.2.0"
