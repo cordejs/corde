@@ -18,7 +18,6 @@ export namespace corde {
     toEqual(expected: T): void;
     toBeCloseTo(expected: T, precisionopt: number): void;
     toBeDefined(): void;
-    toBeFalse(): void;
     toBeFalsy(): void;
     toBePrimitive(): void;
     toBeGreaterThan(expected: number | bigint): void;

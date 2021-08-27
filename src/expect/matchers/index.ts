@@ -25,3 +25,5 @@ export * from "./toBeNegativeInfinity";
 export * from "./toBePositiveInfinity";
 export * from "./toBe";
 export * from "./toEqual";
+export * from "./toBeFalsy";
+export * from "./toBeTruthy";
