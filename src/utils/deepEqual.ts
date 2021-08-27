@@ -2,6 +2,15 @@ import { isAsymetricMatcher } from "./isAsymetricMatcher";
 import { isNullOrUndefined } from "./isNullOrUndefined";
 import { typeOf } from "./typeOf";
 
+class AssertionResult extends Error {
+  result: boolean;
+
+  constructor(result: boolean) {
+    super();
+    this.result = result;
+  }
+}
+
 /**
  * Checks if two objects are equals by no strict way.
  * Wich means, do not validate if both objects are equals by reference, only by values.
@@ -28,48 +37,31 @@ import { typeOf } from "./typeOf";
  *
  */
 export function deepEqual(obj1: any, obj2: any) {
-  if (isNullOrUndefined(obj1) && isNullOrUndefined(obj2)) {
+  try {
+    asserMatchersForObjects(obj1, obj2);
     return true;
-  }
-
-  if (
-    (isNullOrUndefined(obj1) && !isNullOrUndefined(obj2)) ||
-    (isNullOrUndefined(obj2) && !isNullOrUndefined(obj1))
-  ) {
-    return false;
-  }
-
-  if (isAsymetricMatcher(obj1) && isAsymetricMatcher(obj2)) {
-    return obj1.matchType(...obj2.getTypes());
-  }
-
-  if (isAsymetricMatcher(obj1)) {
-    return obj1.matchValue(obj2);
-  }
-
-  if (isAsymetricMatcher(obj2)) {
-    return obj2.matchValue(obj1);
-  }
-
-  if (typeof obj1 !== "object" && typeof obj2 !== "object") {
-    return obj1 === obj2;
-  }
-
-  if (Array.isArray(obj1) && Array.isArray(obj2)) {
-    for (let i = 0; i < obj1.length; i++) {
-      const areEqual = deepEqual(obj1[i], obj2[i]);
-      if (!areEqual) {
-        return false;
-      }
+  } catch (error) {
+    if (error instanceof AssertionResult) {
+      return error.result;
     }
-    return true;
+    throw error;
   }
+}
 
-  const obj1Properties = Object.getOwnPropertyNames(obj1);
-  const obj2Properties = Object.getOwnPropertyNames(obj2);
+function asserMatchersForObjects(obj1: any, obj2: any) {
+  assertNullAndUndefined(obj1, obj2);
+  assertAssymetrics(obj1, obj2);
+  assertNonObject(obj1, obj2);
+  assertArray(obj1, obj2);
+  assertDeepObjProperties(obj1, obj2);
+}
+
+function assertDeepObjProperties(obj1: any, obj2: any) {
+  const obj1Properties = getPropsOf(obj1);
+  const obj2Properties = getPropsOf(obj2);
 
   if (obj1Properties.length !== obj2Properties.length) {
-    return false;
+    throw new AssertionResult(false);
   }
 
   for (const keyName of obj1Properties) {
@@ -80,12 +72,63 @@ export function deepEqual(obj1: any, obj2: any) {
       const areEqual = deepEqual(newSubObj1, newSubObj2);
 
       if (!areEqual) {
-        return false;
+        throw new AssertionResult(false);
       }
     } else if (obj1[keyName] !== obj2[keyName]) {
-      return false;
+      throw new AssertionResult(false);
     }
   }
+}
 
-  return true;
+function getPropsOf(obj: any) {
+  return Object.getOwnPropertyNames(obj);
+}
+
+function assertArray(obj1: any, obj2: any) {
+  if (Array.isArray(obj1) && Array.isArray(obj2)) {
+    if (obj1.length !== obj2.length) {
+      throw new AssertionResult(false);
+    }
+
+    for (let i = 0; i < obj1.length; i++) {
+      const areEqual = deepEqual(obj1[i], obj2[i]);
+      if (!areEqual) {
+        throw new AssertionResult(false);
+      }
+    }
+    throw new AssertionResult(true);
+  }
+}
+
+function assertNonObject(obj1: any, obj2: any) {
+  if (typeof obj1 !== "object" && typeof obj2 !== "object") {
+    throw new AssertionResult(obj1 === obj2);
+  }
+}
+
+function assertNullAndUndefined(obj1: any, obj2: any) {
+  if (isNullOrUndefined(obj1) && isNullOrUndefined(obj2)) {
+    throw new AssertionResult(true);
+  }
+
+  if (
+    (isNullOrUndefined(obj1) && !isNullOrUndefined(obj2)) ||
+    (isNullOrUndefined(obj2) && !isNullOrUndefined(obj1))
+  ) {
+    throw new AssertionResult(false);
+  }
+}
+
+function assertAssymetrics(obj1: any, obj2: any) {
+  if (isAsymetricMatcher(obj1) && isAsymetricMatcher(obj2)) {
+    throw new AssertionResult(obj1.matchType(...obj2.getTypes()));
+  }
+
+  if (isAsymetricMatcher(obj1)) {
+    throw new AssertionResult(obj1.matchValue(obj2));
+  }
+
+  if (isAsymetricMatcher(obj2)) {
+    throw new AssertionResult(obj2.matchValue(obj1));
+  }
 }

@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing toEqual should return false for [ 1 ] and [] 1`] = `
+"    
+    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
+    
+    expect([32mexpected[39m).toEqual([31mreceived[39m)
+    
+    expect: [32m[...][39m === [31m[][39m
+"
+`;
+
+exports[`testing toEqual should return false for [] and [ 1 ] 1`] = `
+"    
+    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
+    
+    expect([32mexpected[39m).toEqual([31mreceived[39m)
+    
+    expect: [32m[][39m === [31m[...][39m
+"
+`;
+
+exports[`testing toEqual should return false for [] and [ 1, [AsymmetricMatcher] ] 1`] = `
+"    
+    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
+    
+    expect([32mexpected[39m).toEqual([31mreceived[39m)
+    
+    expect: [32m[][39m === [31m[...][39m
+"
+`;
+
+exports[`testing toEqual should return false for { a: 1 } and {} 1`] = `
+"    
+    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
+    
+    expect([32mexpected[39m).toEqual([31mreceived[39m)
+    
+    [32m- Expected  - 3[39m
+    [31m+ Received  + 1[39m
+    
+    [32m- Object {[39m
+    [32m-   \\"a\\": 1,[39m
+    [32m- }[39m
+    [31m+ Object {}[39m
+"
+`;
+
+exports[`testing toEqual should return false for {} and { a: [AsymmetricMatcher] } 1`] = `
+"    
+    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
+    
+    expect([32mexpected[39m).toEqual([31mreceived[39m)
+    
+    [32m- Expected  - 1[39m
+    [31m+ Received  + 5[39m
+    
+    [32m- Object {}[39m
+    [31m+ Object {[39m
+    [31m+   \\"a\\": AsymmetricMatcher {[39m
+    [31m+     \\"_classType\\": Array [],[39m
+    [31m+   },[39m
+    [31m+ }[39m
+"
+`;
+
+exports[`testing toEqual should return false for {} and { a: 1 } 1`] = `
+"    
+    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
+    
+    expect([32mexpected[39m).toEqual([31mreceived[39m)
+    
+    [32m- Expected  - 1[39m
+    [31m+ Received  + 3[39m
+    
+    [32m- Object {}[39m
+    [31m+ Object {[39m
+    [31m+   \\"a\\": 1,[39m
+    [31m+ }[39m
+"
+`;
+
+exports[`testing toEqual should return false for 1 and 2 1`] = `
+"    
+    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
+    
+    expect([32mexpected[39m).toEqual([31mreceived[39m)
+    
+    expect: [32m1[39m === [31m2[39m
+"
+`;
+
+exports[`testing toEqual should return false for false and true 1`] = `
+"    
+    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
+    
+    expect([32mexpected[39m).toEqual([31mreceived[39m)
+    
+    expect: [32mfalse[39m === [31mtrue[39m
+"
+`;
