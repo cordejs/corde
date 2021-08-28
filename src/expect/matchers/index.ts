@@ -27,3 +27,5 @@ export * from "./toBe";
 export * from "./toEqual";
 export * from "./toBeFalsy";
 export * from "./toBeTruthy";
+export * from "./toBeTrue";
+export * from "./toBeFalse";
