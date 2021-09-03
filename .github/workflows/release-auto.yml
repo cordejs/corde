@@ -5,17 +5,7 @@ on:
     types: [created]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 16.x
-      - run: npm install
-      - run: npm run build:prod
-
-  publish-gpr:
+  build-publish:
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -24,6 +14,8 @@ jobs:
         with:
           node-version: 16.x
           registry-url: https://npm.pkg.github.com/
+      - run: npm install
+      - run: npm run build:prod
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
