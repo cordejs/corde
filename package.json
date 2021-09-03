@@ -1,6 +1,6 @@
 {
   "name": "corde",
-  "version": "4.4.0",
+  "version": "4.4.1",
   "description": "A simple library for Discord bot tests",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -48,7 +48,7 @@
     "lint": "eslint src/**/*.ts",
     "validate-ci": "circleci config validate",
     "jestClear": "jest --clearCache",
-    "postinstall": "husky install",
+    "_postinstall": "husky install",
     "prepublishOnly": "pinst --disable",
     "postpublish": "pinst --enable"
   },
@@ -92,7 +92,7 @@
     "eslint-import-resolver-typescript": "^2.4.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-promise": "^5.1.0",
     "fs-extra": "^10.0.0",
     "gulp": "^4.0.2",
@@ -131,14 +131,16 @@
     "fast-glob": "^3.2.5",
     "fast-json-stable-stringify": "^2.1.0",
     "jest-diff": "^27.0.2",
-    "lodash": "^4.17.21",
     "log-update": "^4.0.0",
-    "ora": "^6.0.0",
+    "ora": "^5.4.1",
     "pretty-format": "^27.0.1",
     "tslib": "^2.2.0"
   },
   "engines": {
     "node": ">=14.0.0"
+  },
+  "publishConfig": {
+    "@lucasgmagalhaes:registry": "https://npm.pkg.github.com"
   },
   "repository": {
     "type": "git",

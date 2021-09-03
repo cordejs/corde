@@ -9,6 +9,7 @@
     "allowJs": true,
     "checkJs": true,
     "pretty": true,
+    "useUnknownInCatchVariables": false,
     "skipLibCheck": true,
     "declaration": true,
     "module": "CommonJS",

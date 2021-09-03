@@ -106,18 +106,8 @@ namespace testUtils {
 
       console.log(`${chalk.bgYellow.grey(" RUNNING ")}: ${chalk.magenta(con)}`);
 
-      const child = childProcess.exec(con, (error, stdout, stderr) => {
-        if (error) {
-          resolve({ stdout: removeANSIColorStyle(stderr), exitCode: child.exitCode });
-        }
-
-        if (stdout) {
-          resolve({ stdout: removeANSIColorStyle(stdout), exitCode: child.exitCode });
-        }
-
-        if (stderr) {
-          resolve({ stdout: removeANSIColorStyle(stderr), exitCode: child.exitCode });
-        }
+      const child = childProcess.exec(con, (_error, stdout, _stderr) => {
+        resolve({ stdout: removeANSIColorStyle(stdout), exitCode: child.exitCode });
       });
     });
   }

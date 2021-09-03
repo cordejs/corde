@@ -21,5 +21,14 @@ if (majorVer < MINIMAL_NODE_VERSION) {
   process.exit(1);
 }
 
-require = require("esm")(module);
-require("../lib/src/cli/cli");
+try {
+  require = require("esm")(module);
+  require("../lib/src/cli/cli");
+} catch (error) {
+  if (error instanceof Error) {
+    console.error(error.message);
+    console.error(error.stack);
+  } else {
+    console.error(error.message);
+  }
+}
