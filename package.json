@@ -132,7 +132,7 @@
     "fast-json-stable-stringify": "^2.1.0",
     "jest-diff": "^27.0.2",
     "log-update": "^4.0.0",
-    "ora": "^5.4.1",
+    "ora": "^6.0.0",
     "pretty-format": "^27.0.1",
     "tslib": "^2.2.0"
   },
