@@ -35,5 +35,5 @@ export * from "./toBeLongerThan";
 export * from "./toBeShorterThan";
 export * from "./toBeRegExp";
 export * from "./toBeSameLengthAs";
-export * from "./toBeWhiteSpace";
+export * from "./toBeWhitespace";
 export * from "./toBeNonEmptyString";

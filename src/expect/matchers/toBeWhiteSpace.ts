@@ -5,7 +5,7 @@ import { buildReportMessage, asymetricTypeOf } from "../../utils";
 /**
  * @internal
  */
-export function toBeWhiteSpace(this: ITestProps, expected: any) {
+export function toBeWhitespace(this: ITestProps, expected: any) {
   let pass = typeof expected === "string" && expected.match(/^\s+$/) !== null;
   let isNotText = "";
 
