@@ -7,7 +7,18 @@ import { matcherUtils } from "../matcherUtils";
  * @internal
  */
 export function toStartWith(this: ITestProps, expected: any, value: string) {
-  let pass = typeof expected === "string" && expected.startsWith(value);
+  let pass = matcherUtils.match(
+    () => typeof expected === "string" && expected.startsWith(value),
+    {
+      value: expected,
+      validParameters: [String],
+    },
+    {
+      value: value,
+      validParameters: [String],
+    },
+  );
+
   let isNotText = "";
 
   if (this.isNot) {
@@ -15,17 +26,16 @@ export function toStartWith(this: ITestProps, expected: any, value: string) {
     isNotText = " not";
   }
 
-  let message = "";
-  if (typeof expected === "string" && typeof value === "string") {
-    message = `string '${this.expectedColorFn(
-      expected,
-    )}' should${isNotText} start with '${chalk.red(value)}''.\n`;
-  } else {
-    message = matcherUtils.getMessageForParamatersExpectedToBeStrings(this, expected, value);
-  }
+  let message = matcherUtils.getFailMessageForStringsLengthTest({
+    expectationText: "start with",
+    expected,
+    props: this,
+    isNotText,
+    value,
+  });
 
   return {
     pass,
-    message: pass ? "" : buildReportMessage(this.createHint(), "\n\n", message),
+    message: pass ? "" : buildReportMessage(this.createHint("value"), "\n\n", message),
   };
 }

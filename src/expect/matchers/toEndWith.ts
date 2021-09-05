@@ -1,13 +1,23 @@
-import chalk from "chalk";
 import { ITestProps } from "../../types";
-import { buildReportMessage, asymetricTypeOf } from "../../utils";
+import { buildReportMessage } from "../../utils";
 import { matcherUtils } from "../matcherUtils";
 
 /**
  * @internal
  */
 export function toEndWith(this: ITestProps, expected: any, value: string) {
-  let pass = typeof expected === "string" && expected.endsWith(value);
+  let pass = matcherUtils.match(
+    () => typeof expected === "string" && expected.endsWith(value),
+    {
+      value: expected,
+      validParameters: [String],
+    },
+    {
+      value: value,
+      validParameters: [String],
+    },
+  );
+
   let isNotText = "";
 
   if (this.isNot) {
@@ -15,17 +25,16 @@ export function toEndWith(this: ITestProps, expected: any, value: string) {
     isNotText = " not";
   }
 
-  let message = "";
-  if (typeof expected === "string" && typeof value === "string") {
-    message = `string '${this.expectedColorFn(expected)}' should${isNotText} end with '${chalk.red(
-      value,
-    )}''.\n`;
-  } else {
-    message = matcherUtils.getMessageForParamatersExpectedToBeStrings(this, expected, value);
-  }
+  let message = matcherUtils.getFailMessageForStringsLengthTest({
+    expectationText: "end with",
+    expected,
+    props: this,
+    isNotText,
+    value,
+  });
 
   return {
     pass,
-    message: pass ? "" : buildReportMessage(this.createHint(), "\n\n", message),
+    message: pass ? "" : buildReportMessage(this.createHint("value"), "\n\n", message),
   };
 }
