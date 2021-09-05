@@ -1,12 +1,12 @@
 import chalk from "chalk";
 import { ITestProps } from "../../types";
-import { buildReportMessage, asymetricTypeOf } from "../../utils";
+import { buildReportMessage, asymetricTypeOf, isString } from "../../utils";
 
 /**
  * @internal
  */
 export function toBeWhitespace(this: ITestProps, expected: any) {
-  let pass = typeof expected === "string" && expected.match(/^\s+$/) !== null;
+  let pass = isString(expected) && expected.match(/^\s+$/) !== null;
   let isNotText = "";
 
   if (this.isNot) {

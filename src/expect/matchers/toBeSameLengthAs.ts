@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import { ITestProps } from "../../types";
-import { buildReportMessage } from "../../utils";
+import { buildReportMessage, isString } from "../../utils";
 import { matcherUtils } from "../matcherUtils";
 
 /**
@@ -9,7 +9,7 @@ import { matcherUtils } from "../matcherUtils";
 export function toBeSameLengthAs(this: ITestProps, expected: any, value: string) {
   let pass = matcherUtils.match(
     () => {
-      if (typeof expected === "string" && typeof value === "string") {
+      if (isString(expected) && isString(value)) {
         return expected.length === value.length;
       }
       return false;

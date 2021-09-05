@@ -1,5 +1,5 @@
 import { ITestProps } from "../../types";
-import { buildReportMessage } from "../../utils";
+import { buildReportMessage, isString } from "../../utils";
 import { matcherUtils } from "../matcherUtils";
 
 /**
@@ -7,7 +7,7 @@ import { matcherUtils } from "../matcherUtils";
  */
 export function toEndWith(this: ITestProps, expected: any, value: string) {
   let pass = matcherUtils.match(
-    () => typeof expected === "string" && expected.endsWith(value),
+    () => isString(expected) && expected.endsWith(value),
     {
       value: expected,
       validParameters: [String],

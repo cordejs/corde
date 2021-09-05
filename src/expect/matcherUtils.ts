@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import { ITestProps } from "..";
-import { asymetricTypeOf, buildReportMessage, isNumber, typeOf } from "../utils";
+import { asymetricTypeOf, buildReportMessage, isNumber, isString, typeOf } from "../utils";
 import { AsymmetricMatcher } from "./asymmetricMatcher";
 
 interface IParamWithValidAsymetrics {
@@ -105,7 +105,7 @@ export namespace matcherUtils {
     isNotText,
     expectationText,
   }: IStringTestParameters) {
-    if (typeof expected === "string" && typeof value === "string") {
+    if (isString(expected) && typeof isString(value)) {
       return `expected '${chalk.green(expected)}' to${isNotText} ${expectationText} '${chalk.red(
         value,
       )}'`;
