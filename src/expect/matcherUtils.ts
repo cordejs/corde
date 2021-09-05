@@ -8,6 +8,14 @@ interface IParamWithValidAsymetrics {
   validParameters?: any[];
 }
 
+interface IStringTestParameters {
+  props: ITestProps;
+  expected: any;
+  value: any;
+  isNotText: string;
+  expectationText: string;
+}
+
 export namespace matcherUtils {
   export function isAsymetric(value: any): value is AsymmetricMatcher {
     return value instanceof AsymmetricMatcher;
@@ -88,5 +96,21 @@ export namespace matcherUtils {
       asymetricTypeOf(value),
     )} respectively`;
     return message;
+  }
+
+  export function getFailMessageForStringsLengthTest({
+    props,
+    expected,
+    value,
+    isNotText,
+    expectationText,
+  }: IStringTestParameters) {
+    if (typeof expected === "string" && typeof value === "string") {
+      return `expected '${chalk.green(expected)}' to${isNotText} ${expectationText} '${chalk.red(
+        value,
+      )}'`;
+    } else {
+      return matcherUtils.getMessageForParamatersExpectedToBeStrings(props, expected, value);
+    }
   }
 }

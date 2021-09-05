@@ -30,19 +30,13 @@ export function toBeLongerThan(this: ITestProps, expected: any, value: string) {
     isNotText = " not";
   }
 
-  let message = "";
-
-  if (typeof expected === "string" && typeof value === "string") {
-    message = `expected '${chalk.green(expected)}' to${isNotText} be shorter than '${chalk.red(
-      value,
-    )}'`;
-  } else {
-    message = message = matcherUtils.getMessageForParamatersExpectedToBeStrings(
-      this,
-      expected,
-      value,
-    );
-  }
+  let message = matcherUtils.getFailMessageForStringsLengthTest({
+    expectationText: "be longer than",
+    expected,
+    props: this,
+    isNotText,
+    value,
+  });
 
   return {
     pass,

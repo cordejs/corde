@@ -30,22 +30,16 @@ export function toBeSameLengthAs(this: ITestProps, expected: any, value: string)
     isNotText = " not";
   }
 
-  let message = "";
-
-  if (typeof expected === "string" && typeof value === "string") {
-    message = `expected '${this.expectedColorFn(
-      expected,
-    )}' to${isNotText} be have same length of ${chalk.red(value)}`;
-  } else {
-    message = message = matcherUtils.getMessageForParamatersExpectedToBeStrings(
-      this,
-      expected,
-      value,
-    );
-  }
+  let message = matcherUtils.getFailMessageForStringsLengthTest({
+    expectationText: "have same length of",
+    expected,
+    props: this,
+    isNotText,
+    value,
+  });
 
   return {
     pass,
-    message: pass ? "" : buildReportMessage(this.createHint(), "\n\n", message),
+    message: pass ? "" : buildReportMessage(this.createHint("value"), "\n\n", message),
   };
 }

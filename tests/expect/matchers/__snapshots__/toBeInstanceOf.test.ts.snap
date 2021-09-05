@@ -54,7 +54,7 @@ exports[`testing toBeInstanceOf should return false for {} (isNot true) 1`] = `
 "
 `;
 
-exports[`testing toBeInstanceOf should return false for 2021-08-22T20:52:47.968Z (isNot true) 1`] = `
+exports[`testing toBeInstanceOf should return false for 2021-09-05T18:12:51.816Z (isNot true) 1`] = `
 "    
     expect([32mexpected[39m).not.toBeInstanceOf([31minstanceType[39m)
     

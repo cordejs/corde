@@ -13,7 +13,7 @@ exports[`testing toBeLongerThan  should return true for  and 11 (isNot false) 1`
 "    
     expect([32mexpected[39m).toBeLongerThan([31mvalue[39m)
     
-    expected '' to be shorter than '[31m11[39m'
+    expected '' to be longer than '[31m11[39m'
 "
 `;
 
@@ -57,7 +57,7 @@ exports[`testing toBeLongerThan  should return true for 11 and 1 (isNot true) 1`
 "    
     expect([32mexpected[39m).not.toBeLongerThan([31mvalue[39m)
     
-    expected '[1m11[22m' to not be shorter than '[31m1[39m'
+    expected '[32m11[39m' to not be longer than '[31m1[39m'
 "
 `;
 
@@ -65,7 +65,7 @@ exports[`testing toBeLongerThan  should return true for 1111 and 111 (isNot true
 "    
     expect([32mexpected[39m).not.toBeLongerThan([31mvalue[39m)
     
-    expected '[1m1111[22m' to not be shorter than '[31m111[39m'
+    expected '[32m1111[39m' to not be longer than '[31m111[39m'
 "
 `;
 
