@@ -35,7 +35,7 @@ export function toBeLongerThan(this: ITestProps, expected: any, value: string) {
   if (typeof expected === "string" && typeof value === "string") {
     message = `expected '${this.expectedColorFn(
       expected,
-    )}' to${isNotText} be shorter than ${chalk.red(value)}`;
+    )}' to${isNotText} be shorter than '${chalk.red(value)}'`;
   } else {
     message = message = matcherUtils.getMessageForParamatersExpectedToBeStrings(
       this,
@@ -46,6 +46,6 @@ export function toBeLongerThan(this: ITestProps, expected: any, value: string) {
 
   return {
     pass,
-    message: pass ? "" : buildReportMessage(this.createHint(), "\n\n", message),
+    message: pass ? "" : buildReportMessage(this.createHint("value"), "\n\n", message),
   };
 }

@@ -83,8 +83,10 @@ export namespace matcherUtils {
     let message = "";
     message = `${props.expectedColorFn("expected")} and ${props.expectedColorFn(
       "value",
-    )} should both be a string`;
-    message += `got: ${asymetricTypeOf(expected)} and ${asymetricTypeOf(value)} respectively`;
+    )} should both be a string.\n`;
+    message += `got: ${chalk.green(asymetricTypeOf(expected))} and ${chalk.red(
+      asymetricTypeOf(value),
+    )} respectively`;
     return message;
   }
 }
