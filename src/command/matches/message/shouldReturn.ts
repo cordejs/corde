@@ -1,7 +1,7 @@
 import { Message } from "discord.js";
 import { IMessageEmbed, Primitive } from "../../../types";
 import { ICommandMatcherProps } from "../../types";
-import { messageCommandUtils } from "./messageCommandUtils";
+import { messageUtils } from "./messageUtils";
 
 /**
  * @internal
@@ -10,7 +10,7 @@ export async function shouldReturn(
   this: ICommandMatcherProps,
   expected: Primitive | IMessageEmbed,
 ) {
-  const errorReport = messageCommandUtils.validateExpect(this, expected);
+  const errorReport = messageUtils.validateExpect(this, expected);
 
   if (errorReport) {
     return errorReport;
@@ -40,7 +40,7 @@ export async function shouldReturn(
     );
   }
 
-  this.hasPassed = messageCommandUtils.isMessagesEquals(returnedMessage, expected);
+  this.hasPassed = messageUtils.isMessagesEquals(returnedMessage, expected);
   this.invertHasPassedIfIsNot();
 
   if (this.hasPassed) {
@@ -54,5 +54,5 @@ export async function shouldReturn(
     );
   }
 
-  return messageCommandUtils.createReportForExpectAndResponse(this, expected, returnedMessage);
+  return messageUtils.createReportForExpectAndResponse(this, expected, returnedMessage);
 }

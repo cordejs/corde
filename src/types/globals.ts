@@ -612,7 +612,7 @@ export namespace corde {
      *
      * @since 1.0
      */
-    toAddReaction(
+    shouldAddReaction(
       emojis: string[] | IEmoji[] | (string | IEmoji)[],
       messageIdentifier?: string | IMessageIdentifier,
     ): TReturn;
@@ -626,7 +626,7 @@ export namespace corde {
      *
      * @since 2.0
      */
-    toRemoveReaction(
+    shouldRemoveReaction(
       emojis: string[] | IEmoji[] | (string | IEmoji)[],
       messageIdentifier?: string | IMessageIdentifier,
     ): TReturn;
@@ -638,7 +638,7 @@ export namespace corde {
      *
      * @since 2.0
      */
-    toPin(messageId: string): TReturn;
+    shouldPin(messageId: string): TReturn;
     /**
      * Verify if a command pinned a message.
      *
@@ -646,7 +646,7 @@ export namespace corde {
      *
      * @since 2.0
      */
-    toPin(messageIdentifier: IMessageIdentifier): TReturn;
+    shouldPin(messageIdentifier: IMessageIdentifier): TReturn;
 
     /**
      * Verify if a command unpinned a message.
@@ -656,7 +656,7 @@ export namespace corde {
      *
      * @since 2.0
      */
-    toUnPin(messageId: string): TReturn;
+    shouldUnPin(messageId: string): TReturn;
     /**
      * Verify if a command unpinned a message.
      *
@@ -664,7 +664,7 @@ export namespace corde {
      *
      * @since 2.0
      */
-    toUnPin(messageIdentifier: IMessageIdentifier): TReturn;
+    shouldUnPin(messageIdentifier: IMessageIdentifier): TReturn;
 
     /**
      * Verify if a command edited a message.
@@ -674,7 +674,7 @@ export namespace corde {
      *
      * @since 1.0
      */
-    toEditMessage(
+    shouldEditMessage(
       newValue: string | number | boolean | IMessageEmbed,
       messageIdentifier?: string | IMessageEditedIdentifier,
     ): TReturn;
@@ -701,7 +701,7 @@ export namespace corde {
      * @param embed Embed message to check with returned embed of an command.
      * @since 4.0
      */
-    toEmbedMatch(embed: IMessageEmbed): TReturn;
+    shouldEmbedMatch(embed: IMessageEmbed): TReturn;
 
     /**
      * Verify if a sent message **contains** the value informed in `expectedContent`.
@@ -716,7 +716,7 @@ export namespace corde {
      * @param expectedContent expected content to match the content of the returned message.
      * @since 4.0
      */
-    toMessageContentContains(expectedContent: string): TReturn;
+    shouldMessageContentContains(expectedContent: string): TReturn;
   }
 
   /**
@@ -731,7 +731,7 @@ export namespace corde {
      *
      * @since 2.0
      */
-    toSetRoleColor(color: ColorResolvable, roleId: string): TReturn;
+    shouldSetRoleColor(color: ColorResolvable, roleId: string): TReturn;
     /**
      * Check if a command changed a role color.
      *
@@ -740,7 +740,7 @@ export namespace corde {
      *
      * @since 2.0
      */
-    toSetRoleColor(color: ColorResolvable, roleIdentifier: IRoleIdentifier): TReturn;
+    shouldSetRoleColor(color: ColorResolvable, roleIdentifier: IRoleIdentifier): TReturn;
     /**
      * Check if a command changed a role color.
      *
@@ -749,7 +749,7 @@ export namespace corde {
      *
      * @since 2.0
      */
-    toSetRoleColor(color: Colors, roleId: string): TReturn;
+    shouldSetRoleColor(color: Colors, roleId: string): TReturn;
     /**
      * Check if a command changed a role color.
      *
@@ -758,21 +758,21 @@ export namespace corde {
      *
      * @since 2.0
      */
-    toSetRoleColor(color: Colors, roleIdentifier: IRoleIdentifier): TReturn;
+    shouldSetRoleColor(color: Colors, roleIdentifier: IRoleIdentifier): TReturn;
 
     /**
      * Check if a command deletes a role.
      * @param roleId Id of the role.
      * @since 2.0
      */
-    toDeleteRole(roleId: string): TReturn;
+    shouldDeleteRole(roleId: string): TReturn;
 
     /**
      * Check if a command deletes a role.
      * @param roleIdentifier Object with **id** or **name** of the role
      * @since 2.0
      */
-    toDeleteRole(roleIdentifier: IRoleIdentifier): TReturn;
+    shouldDeleteRole(roleIdentifier: IRoleIdentifier): TReturn;
 
     /**
      * Check if a command defines a role as mentionable.
@@ -782,7 +782,7 @@ export namespace corde {
      *
      * @since 2.0
      */
-    toSetRoleMentionable(mentionable: boolean, roleId: string): TReturn;
+    shouldSetRoleMentionable(mentionable: boolean, roleId: string): TReturn;
     /**
      * Check if a command defines a role as mentionable.
      *
@@ -791,7 +791,7 @@ export namespace corde {
      *
      * @since 2.0
      */
-    toSetRoleMentionable(mentionable: boolean, roleIdentifier: IRoleIdentifier): TReturn;
+    shouldSetRoleMentionable(mentionable: boolean, roleIdentifier: IRoleIdentifier): TReturn;
 
     /**
      * Check if a commend defines a role as a hoist.
@@ -810,7 +810,7 @@ export namespace corde {
      * @see https://discord.com/developers/docs/topics/permissions
      * @since 2.0
      */
-    toSetRoleHoist(hoist: boolean, roleId: string): TReturn;
+    shouldSetRoleHoist(hoist: boolean, roleId: string): TReturn;
     /**
      * Check if a commend defines a role as a hoist.
      *
@@ -828,7 +828,7 @@ export namespace corde {
      * @see https://discord.com/developers/docs/topics/permissions
      * @since 2.0
      */
-    toSetRoleHoist(hoist: boolean, roleIdentifier: IRoleIdentifier): TReturn;
+    shouldSetRoleHoist(hoist: boolean, roleIdentifier: IRoleIdentifier): TReturn;
 
     /**
      * Check if a command renames a role.
@@ -838,7 +838,7 @@ export namespace corde {
      *
      * @since 2.0
      */
-    toRenameRole(newName: string, roleId: string): TReturn;
+    shouldRenameRole(newName: string, roleId: string): TReturn;
     /**
      * Check if a command renames a role.
      *
@@ -847,7 +847,7 @@ export namespace corde {
      *
      * @since 2.0
      */
-    toRenameRole(newName: string, roleIdentifier: IRoleIdentifier): TReturn;
+    shouldRenameRole(newName: string, roleIdentifier: IRoleIdentifier): TReturn;
 
     /**
      * Check if a command changes a role's position.
@@ -862,7 +862,7 @@ export namespace corde {
      * @see https://discord.com/developers/docs/topics/permissions
      * @since 2.0
      */
-    toSetRolePosition(newPosition: number, roleId: string): TReturn;
+    shouldSetRolePosition(newPosition: number, roleId: string): TReturn;
     /**
      * Check if a command changes a role's position.
      *
@@ -877,7 +877,7 @@ export namespace corde {
      * @see https://discord.com/developers/docs/topics/permissions
      * @since 2.0
      */
-    toSetRolePosition(newPosition: number, roleIdentifier: IRoleIdentifier): TReturn;
+    shouldSetRolePosition(newPosition: number, roleIdentifier: IRoleIdentifier): TReturn;
 
     /**
      * Check if a command change the
@@ -890,7 +890,7 @@ export namespace corde {
      * @see https://discord.com/developers/docs/topics/permissions#permissions
      * @since 2.0
      */
-    toSetRolePermission(roleId: string, ...permissions: RolePermission[]): TReturn;
+    shouldSetRolePermission(roleId: string, ...permissions: RolePermission[]): TReturn;
     /**
      * Check if a command change the
      * [permissions](https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags)
@@ -902,7 +902,10 @@ export namespace corde {
      * @see https://discord.com/developers/docs/topics/permissions#permissions
      * @since 2.0
      */
-    toSetRolePermission(roleIdentifier: IRoleIdentifier, ...permissions: RolePermission[]): TReturn;
+    shouldSetRolePermission(
+      roleIdentifier: IRoleIdentifier,
+      ...permissions: RolePermission[]
+    ): TReturn;
   }
 
   export interface ISetChannelMatchers<TReturn extends MayReturnMatch> {

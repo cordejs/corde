@@ -9,7 +9,7 @@ import {
 import { deepEqual, diff, formatObject, isPrimitiveValue, typeOf } from "../../../utils";
 import { ICommandMatcherProps } from "../../types";
 
-export namespace messageCommandUtils {
+export namespace messageUtils {
   export function validateExpect(matcher: ICommandMatcherProps, expect: Primitive | IMessageEmbed) {
     if (!isPrimitiveValue(expect) && typeOf(expect) !== "object") {
       return matcher.createReport(

@@ -2,7 +2,7 @@ import { Message } from "discord.js";
 import { IMessageEmbed } from "../../../types";
 import { diff, isPartialOf, keysOf, pick, typeOf } from "../../../utils";
 import { ICommandMatcherProps } from "../../types";
-import { messageCommandUtils } from "./messageCommandUtils";
+import { messageUtils } from "./messageUtils";
 
 /**
  * @internal
@@ -43,7 +43,7 @@ export async function shouldEmbedMatch(this: ICommandMatcherProps, embed: IMessa
     return this.createFailedTest("returned message has no embed message");
   }
 
-  const formatedReturnedEmbed = messageCommandUtils.messageEmbedToMessageEmbedInterface(
+  const formatedReturnedEmbed = messageUtils.messageEmbedToMessageEmbedInterface(
     returnedMessage.embeds[0],
   );
 

@@ -34,7 +34,8 @@ function pickFn(name: KeyOfMatcher) {
   return matchers[name] as any as IMatcher;
 }
 
-function createMatcherObject({
+// Export this function to be used in tests
+export function createMatcherObject({
   isNot,
   commandName,
   matcher,

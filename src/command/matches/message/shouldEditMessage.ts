@@ -1,7 +1,7 @@
 import { Message } from "discord.js";
 import { IMessageEditedIdentifier, IMessageEmbed, Primitive } from "../../../types";
 import { isPrimitiveValue, typeOf } from "../../../utils";
-import { messageCommandUtils } from "./messageCommandUtils";
+import { messageUtils } from "./messageUtils";
 import { ICommandMatcherProps } from "../../types";
 
 /**
@@ -54,14 +54,14 @@ export async function shouldEditMessage(
     }
 
     return this.createReport(
-      `expected: testing bot to edit the ${messageCommandUtils.humanizeMessageIdentifierObject(
+      `expected: testing bot to edit the ${messageUtils.humanizeMessageIdentifierObject(
         _messageData,
       )}\n`,
       "received: message was not edited",
     );
   }
 
-  this.hasPassed = messageCommandUtils.isMessagesEquals(returnedMessage, newValue);
+  this.hasPassed = messageUtils.isMessagesEquals(returnedMessage, newValue);
   this.invertHasPassedIfIsNot();
 
   if (this.hasPassed) {
@@ -75,5 +75,5 @@ export async function shouldEditMessage(
     );
   }
 
-  return messageCommandUtils.createReportForExpectAndResponse(this, newValue, returnedMessage);
+  return messageUtils.createReportForExpectAndResponse(this, newValue, returnedMessage);
 }

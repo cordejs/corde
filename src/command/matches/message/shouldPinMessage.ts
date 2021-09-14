@@ -1,7 +1,7 @@
 import { IMessageIdentifier } from "../../../types";
 import { typeOf } from "../../../utils";
 import { ICommandMatcherProps } from "../../types";
-import { messageCommandUtils } from "./messageCommandUtils";
+import { messageUtils } from "./messageUtils";
 
 /**
  * @internal
@@ -34,7 +34,7 @@ export async function shouldPinMessage(
     return this.createFailedTest(error.message);
   }
 
-  const msgString = messageCommandUtils.humanizeMessageIdentifierObject(_msgIdentifier);
+  const msgString = messageUtils.humanizeMessageIdentifierObject(_msgIdentifier);
   try {
     await this.cordeBot.events.onceMessagePinned(_msgIdentifier, this.timeout, this.channelId);
   } catch {
