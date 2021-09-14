@@ -1,7 +1,7 @@
-export { ToSetRoleColor } from "./toSetRoleColor";
-export { ToDeleteRole } from "./toDeleteRole";
-export { ToSetRolePosition } from "./toSetRolePosition";
-export { ToSetRoleMentionable } from "./toSetRoleMentionable";
-export { ToSetRoleHoist } from "./toSetRoleHoist";
-export { ToRenameRole } from "./toRenameRole";
-export { ToSetRolePermission } from "./toSetRolePermission";
+export * from "./shouldDeleteRole";
+export * from "./shouldRenameRole";
+export * from "./shouldSetRoleColor";
+export * from "./shouldSetRoleHoist";
+export * from "./shouldSetRoleMentionable";
+export * from "./shouldSetRolePermission";
+export * from "./shouldSetRolePosition";
