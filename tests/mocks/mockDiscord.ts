@@ -24,7 +24,7 @@ import {
   VoiceState,
   VoiceChannel,
 } from "discord.js";
-import { ToReturn } from "../../src/command/matches";
+import { messageCommandUtils } from "../../src/command/matches/message/messageExpectTest";
 import { IMessageEmbed } from "../../src/types";
 import { ColorsHex } from "../../src/types";
 
@@ -640,7 +640,7 @@ export default class MockDiscord {
   }
 
   createMockMessageEmbed(customColor = ColorsHex.DARK_BLUE, customTitle = "Some title") {
-    let embed = new ToReturn(null).embedMessageInterfaceToMessageEmbed(this._messageEmbedSimple);
+    let embed = messageCommandUtils.embedMessageInterfaceToMessageEmbed(this._messageEmbedSimple);
 
     if (!embed) {
       embed = new MessageEmbed();

@@ -1,6 +1,6 @@
+import { isObject } from ".";
 import { isAsymetricMatcher } from "./isAsymetricMatcher";
 import { isNullOrUndefined } from "./isNullOrUndefined";
-import { typeOf } from "./typeOf";
 
 class AssertionResult extends Error {
   result: boolean;
@@ -65,7 +65,7 @@ function assertDeepObjProperties(obj1: any, obj2: any) {
   }
 
   for (const keyName of obj1Properties) {
-    if (typeOf(obj1[keyName]) === "object" || typeOf(obj2[keyName]) === "object") {
+    if (isObject(obj1[keyName]) || isObject(obj2[keyName])) {
       const newSubObj1 = obj1[keyName];
       const newSubObj2 = obj2[keyName];
 
@@ -101,7 +101,7 @@ function assertArray(obj1: any, obj2: any) {
 }
 
 function assertNonObject(obj1: any, obj2: any) {
-  if (typeof obj1 !== "object" && typeof obj2 !== "object") {
+  if (!isObject(obj1) && !isObject(obj2)) {
     throw new AssertionResult(obj1 === obj2);
   }
 }

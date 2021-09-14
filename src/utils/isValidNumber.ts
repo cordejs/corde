@@ -1,10 +1,11 @@
-import { isNumber } from "lodash";
+import { isNumeric } from ".";
 
 /**
- * Checks if a value is a number and is different than **NaN**
+ * Checks if a value is a number and is different than **NaN**.
+ *
  * @param value Value to check if is a valid number
  * @internal
  */
 export function isValidNumber(value: any) {
-  return isNumber(value) && !isNaN(value);
+  return isNumeric(value) && !isNaN(Number(value));
 }

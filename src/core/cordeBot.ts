@@ -274,12 +274,12 @@ export class CordeBot implements ICordeBot {
   }
 
   private validateMessageAndChannel(message: Primitive) {
-    if (!message) {
-      throw new CordeClientError("No tests were declared");
+    if (!message || message.toString().trim() === "") {
+      throw new CordeClientError("command to be sent can not be empty");
     }
 
     if (!this.textChannel) {
-      throw new CordeClientError("Channel not found");
+      throw new CordeClientError("text channel not defined");
     }
   }
 

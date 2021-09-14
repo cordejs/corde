@@ -1,9 +1,9 @@
 import { testCollector } from "../common/testCollector";
-import { getStackTrace } from "../utils";
+import { getStackTrace, isFunction } from "../utils";
 import { hookBuilder } from "./hookBuilder";
 
 export function beforeStart(fn: () => void | Promise<void>, timeout?: number) {
-  if (typeof fn === "function") {
+  if (isFunction(fn)) {
     const trace = getStackTrace();
     hookBuilder({
       queueToAdd: testCollector.beforeStartFunctions,

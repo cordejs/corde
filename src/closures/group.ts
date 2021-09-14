@@ -50,3 +50,8 @@ export const group = <T extends any>(
 
   testCollector.addToGroupClousure(async () => await _internalGroup());
 };
+
+/**
+ * Alias for `describe`
+ */
+export const describe = group;

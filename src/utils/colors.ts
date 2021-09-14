@@ -1,4 +1,5 @@
 import { ColorResolvable } from "discord.js";
+import { isString } from ".";
 import { ColorsHex } from "../types";
 
 export function resolveColor(color: ColorResolvable) {
@@ -6,7 +7,7 @@ export function resolveColor(color: ColorResolvable) {
     return +color;
   }
 
-  if (typeof color === "string" && color.includes("#")) {
+  if (isString(color) && color.includes("#")) {
     return parseInt(color.toString().replace("#", ""), 16);
   }
 

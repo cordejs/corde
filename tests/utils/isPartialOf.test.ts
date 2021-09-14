@@ -27,7 +27,7 @@ describe("testing isPartialOf", () => {
   });
 
   it("should match having null properties", () => {
-    expect(isPartialOf({ abc: [1, 2, 3], a: null }, { abc: [1, 2, 3] })).toBeTruthy();
+    expect(isPartialOf({ abc: [1, 2, 3] }, { abc: [1, 2, 3], a: null })).toBeTruthy();
   });
 
   it("null values should match", () => {

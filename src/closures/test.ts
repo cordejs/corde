@@ -48,3 +48,8 @@ export const test = <T extends any>(
     testCollector.addToTestClousure(async () => await _internalTest());
   }
 };
+
+/**
+ * Alias for `test`
+ */
+export const it = test;

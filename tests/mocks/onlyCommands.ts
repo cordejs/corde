@@ -1,4 +1,4 @@
-import corde from "../../src";
+import { command } from "../../src";
 import consts from "./constsNames";
 
-corde.expect(consts.COMMAND_1).toReturn(consts.COMMAND_RESPONSE_1);
+command(consts.COMMAND_1).shouldReturn(consts.COMMAND_RESPONSE_1);

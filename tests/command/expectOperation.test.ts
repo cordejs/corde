@@ -1,4 +1,4 @@
-import { ExpectTest } from "../../src/expect/matches/expectTest";
+import { ExpectTest } from "../../src/command/matches/expectTest";
 import { IExpectTestBaseParams } from "../../src/types";
 import { ITestReport } from "../../src/types";
 import { testUtils } from "../testHelper";

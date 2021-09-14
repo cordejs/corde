@@ -1,3 +1,5 @@
+import { isObject } from ".";
+
 type KeyValue = {
   [key: string]: any;
 };
@@ -53,7 +55,7 @@ export function isPartialOf<T extends unknown>(
     const sampleProp = (sample as any)[propName];
     const holderProp = (holder as any)[propName];
 
-    if (typeof sampleProp === "object") {
+    if (isObject(sampleProp)) {
       const result = isPartialOf(holderProp, sampleProp);
       if (!result) {
         return false;

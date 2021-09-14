@@ -12,7 +12,7 @@ describe("deepEqual", () => {
       [{ a: 1 }, { a: cordeExpect.any() }],
       [{ a: 1 }, { a: cordeExpect.any(Number) }],
       [
-        [1, cordeExpect.any(Number)],
+        [1, cordeExpect.any(Number), 3],
         [1, 2, 3],
       ],
       [null, null],

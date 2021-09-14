@@ -713,13 +713,13 @@ export type AllMatches<TReturn extends MayReturnMatch> = IIsNot<IMatches<any>> &
   ISetChannelMatchers<TReturn> &
   ISetGuildMatchers<TReturn>;
 
-export type AllExpectMatches = IMatches<void> &
+export type AllCommandMatches = IMatches<void> &
   IToHaveResult &
   IsNotWithHaveResults &
   ISetChannelMatchers<void> &
   ISetGuildMatchers<void>;
 
-export interface IExpect extends AllMatches<any> {
+export interface ICommand extends AllMatches<any> {
   /**
    * Receives which command will be tested.
    *
@@ -737,7 +737,7 @@ export interface IExpect extends AllMatches<any> {
   <T extends (() => number | string) | number | string>(
     commandNameResolvable: T,
     channelId?: string,
-  ): AllExpectMatches;
+  ): AllCommandMatches;
 }
 
 export interface ITestFilePattern {

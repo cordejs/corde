@@ -1,4 +1,4 @@
-import corde from "../../src";
+import * as corde from "../../src";
 import consts from "./constsNames";
 
 corde.it(consts.TEST_1, () => {});

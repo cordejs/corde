@@ -1,6 +1,6 @@
 import { EmbedFieldData, MessageAttachment, MessageEmbed } from "discord.js";
 import { IMessageEmbed } from "../types";
-import { typeOf } from "../utils";
+import { isString, typeOf } from "../utils";
 
 export namespace mapper {
   export function embedInterfaceToMessageEmbed(embedLike: IMessageEmbed) {
@@ -40,7 +40,7 @@ export namespace mapper {
     if (embedLike.files) {
       embed.attachFiles(
         embedLike.files.map((file) => {
-          if (typeof file === "string") {
+          if (isString(file)) {
             return file;
           }
 
@@ -56,7 +56,7 @@ export namespace mapper {
     }
 
     if (embedLike.footer) {
-      if (typeof embedLike.footer === "string") {
+      if (isString(embedLike.footer)) {
         embed.setFooter(embedLike.footer);
       } else {
         embed.setFooter(embedLike.footer.text, embedLike.footer.iconURL);
@@ -64,7 +64,7 @@ export namespace mapper {
     }
 
     if (embedLike.image) {
-      if (typeof embedLike.image === "string") {
+      if (isString(embedLike.image)) {
         embed.setImage(embedLike.image);
       } else {
         embed.setImage(embedLike.image.url);

@@ -1,3 +1,4 @@
+import { isFunction } from ".";
 import { typeOf } from "./typeOf";
 
 /**
@@ -14,7 +15,7 @@ export async function resolveName(name: any): Promise<string | number | boolean>
     let resolvedName = name;
 
     // In case of trying to put functions inside functions
-    while (typeof resolvedName === "function") {
+    while (isFunction(resolvedName)) {
       resolvedName = await resolvedName();
     }
 

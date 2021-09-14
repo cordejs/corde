@@ -7,7 +7,7 @@ Object {
     received: no message was sent
 ",
   "pass": false,
-  "testName": "toReturn",
+  "testName": "shouldReturn",
 }
 `;
 
@@ -54,7 +54,7 @@ Object {
     received: 'this is the message content'
 ",
   "pass": false,
-  "testName": "toReturn",
+  "testName": "shouldReturn",
 }
 `;
 
@@ -101,7 +101,7 @@ Object {
     }
 ",
   "pass": false,
-  "testName": "toReturn",
+  "testName": "shouldReturn",
 }
 `;
 
@@ -112,7 +112,7 @@ Object {
     received: 'this is the message content'
 ",
   "pass": false,
-  "testName": "toReturn",
+  "testName": "shouldReturn",
 }
 `;
 
@@ -123,59 +123,18 @@ Object {
     received: both returned and expectation are equal
 ",
   "pass": false,
-  "testName": "toReturn",
-}
-`;
-
-exports[`testing toReturn should get success test due to bot returned different messages (isNot true) 1`] = `
-Object {
-  "pass": true,
-  "testName": "toReturn",
-}
-`;
-
-exports[`testing toReturn should get success test due to bot returned equal message 1`] = `
-Object {
-  "pass": true,
-  "testName": "toReturn",
-}
-`;
-
-exports[`testing toReturn should get success test due to bot returned equal messages (string number) 1`] = `
-Object {
-  "pass": true,
-  "testName": "toReturn",
-}
-`;
-
-exports[`testing toReturn should get success test due to bot returned equal messages (string type) 1`] = `
-Object {
-  "pass": true,
-  "testName": "toReturn",
-}
-`;
-
-exports[`testing toReturn should get success test due to bot returned equal messages (type embed) 1`] = `
-Object {
-  "pass": true,
-  "testName": "toReturn",
-}
-`;
-
-exports[`testing toReturn should get success test due to timeout but isNot = true 1`] = `
-Object {
-  "pass": true,
-  "testName": "toReturn",
+  "testName": "shouldReturn",
 }
 `;
 
 exports[`testing toReturn should return a failed test due to failure in message sending 1`] = `
 Object {
   "message": "    
-    can not send message to channel x
+    expected: testing bot to send a message
+    received: no message was sent
 ",
   "pass": false,
-  "testName": "toReturn",
+  "testName": "shouldReturn",
 }
 `;
 
@@ -186,17 +145,17 @@ Object {
     received: null
 ",
   "pass": false,
-  "testName": "toReturn",
+  "testName": "shouldReturn",
 }
 `;
 
-exports[`testing toReturn should return a failed test due to invalid parameter (undefined) 1`] = `
+exports[`testing toReturn should return a failed test due to invalid parameter (null) 2`] = `
 Object {
   "message": "    
     expected: expect value to be a primitive value (string, boolean, number) or an IMessageEmbed
     received: undefined
 ",
   "pass": false,
-  "testName": "toReturn",
+  "testName": "shouldReturn",
 }
 `;

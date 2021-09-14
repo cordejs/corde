@@ -7,12 +7,12 @@ import {
   Primitive,
 } from "../../../types";
 import { deepEqual, diff, formatObject, isPrimitiveValue, typeOf } from "../../../utils";
-import { ExpectTest } from "../expectTest";
+import { ICommandMatcherProps } from "../../types";
 
-export abstract class MessageExpectTest extends ExpectTest {
-  validateExpect(expect: Primitive | IMessageEmbed) {
+export namespace messageCommandUtils {
+  export function validateExpect(matcher: ICommandMatcherProps, expect: Primitive | IMessageEmbed) {
     if (!isPrimitiveValue(expect) && typeOf(expect) !== "object") {
-      return this.createReport(
+      return matcher.createReport(
         "expected: expect value to be a primitive value (string, boolean, number) or an IMessageEmbed\n",
         `received: ${typeOf(expect)}`,
       );
@@ -20,48 +20,58 @@ export abstract class MessageExpectTest extends ExpectTest {
     return null;
   }
 
-  createReportForExpectAndResponse(expect: Primitive | IMessageEmbed, returnedMessage: Message) {
-    this.hasPassed = this.isMessagesEquals(returnedMessage, expect);
-    this.invertHasPassedIfIsNot();
+  export function createReportForExpectAndResponse(
+    matcher: ICommandMatcherProps,
+    expect: Primitive | IMessageEmbed,
+    returnedMessage: Message,
+  ) {
+    matcher.hasPassed = isMessagesEquals(returnedMessage, expect);
+    matcher.invertHasPassedIfIsNot();
 
-    if (this.hasPassed) {
-      return this.createPassTest();
+    if (matcher.hasPassed) {
+      return matcher.createPassTest();
     }
 
     let embedReturned: IMessageEmbed | undefined;
     if (returnedMessage.embeds[0]) {
-      embedReturned = this.getMessageByType(returnedMessage, "embed") as IMessageEmbed;
+      embedReturned = getMessageByType(returnedMessage, "embed") as IMessageEmbed;
     }
 
     if (typeOf(expect) === "object" && embedReturned) {
-      return this.createReport(diff(embedReturned, expect));
+      return matcher.createReport(diff(embedReturned, expect));
     }
 
     if (typeOf(expect) === "object" && !embedReturned) {
-      return this.createReport(
+      return matcher.createReport(
         `expected: ${formatObject(expect)}\n`,
         `received: '${returnedMessage.content}'`,
       );
     }
 
     if (typeOf(expect) === "string" && embedReturned) {
-      return this.createReport(
+      return matcher.createReport(
         `expected: '${expect}'\n`,
         `received: ${formatObject(embedReturned)}`,
       );
     }
 
-    return this.createReport(`expected: '${expect}'\n`, `received: '${returnedMessage.content}'`);
+    return matcher.createReport(
+      `expected: '${expect}'\n`,
+      `received: '${returnedMessage.content}'`,
+    );
   }
 
-  isMessagesEquals(returnedMessage: Message, expectation: Primitive | IMessageEmbed) {
+  export function isMessagesEquals(
+    returnedMessage: Message,
+    expectation: Primitive | IMessageEmbed,
+  ) {
     const embed = returnedMessage.embeds[0];
     if (isPrimitiveValue(expectation) && !embed) {
       return expectation == returnedMessage.content;
     }
 
     if (embed && typeOf(expectation) === "object") {
-      const embedInternal = this.messageEmbedToMessageEmbedInterface(embed);
+      const embedInternal = messageEmbedToMessageEmbedInterface(embed);
       return deepEqual(expectation, embedInternal);
     }
 
@@ -105,14 +115,14 @@ export abstract class MessageExpectTest extends ExpectTest {
    *  }
    *  ```
    */
-  getMessageByType(answer: Message | MessageEmbed, type: MessageType) {
+  export function getMessageByType(answer: Message | MessageEmbed, type: MessageType) {
     if (type === "embed") {
       const embed = answer instanceof Message ? answer.embeds[0] : answer;
       if (!embed) {
         return null;
       }
 
-      return this.messageEmbedToMessageEmbedInterface(embed as MessageEmbed);
+      return messageEmbedToMessageEmbedInterface(embed as MessageEmbed);
     }
 
     if (answer instanceof Message) {
@@ -121,7 +131,9 @@ export abstract class MessageExpectTest extends ExpectTest {
     return answer;
   }
 
-  humanizeMessageIdentifierObject(msgIdentifier: IMessageIdentifier | IMessageEditedIdentifier) {
+  export function humanizeMessageIdentifierObject(
+    msgIdentifier: IMessageIdentifier | IMessageEditedIdentifier,
+  ) {
     if (!msgIdentifier) {
       return "";
     }
@@ -137,7 +149,7 @@ export abstract class MessageExpectTest extends ExpectTest {
     return "";
   }
 
-  messageEmbedToMessageEmbedInterface(message: MessageEmbed) {
+  export function messageEmbedToMessageEmbedInterface(message: MessageEmbed) {
     if (!message) {
       return {};
     }
@@ -230,7 +242,7 @@ export abstract class MessageExpectTest extends ExpectTest {
     return embedLike;
   }
 
-  embedMessageInterfaceToMessageEmbed(embedLike: IMessageEmbed) {
+  export function embedMessageInterfaceToMessageEmbed(embedLike: IMessageEmbed) {
     const embed = new MessageEmbed();
     if (!embedLike || typeOf(embedLike) !== "object") {
       return embed;
