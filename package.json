@@ -82,6 +82,7 @@
     "@typescript-eslint/parser": "^4.20.0",
     "auto-changelog": "^2.3.0",
     "babel-jest": "^27.0.1",
+    "barrelsby": "^2.2.0",
     "cli-spinners": "^2.4.0",
     "codecov": "^3.6.5",
     "dotenv": "^10.0.0",
