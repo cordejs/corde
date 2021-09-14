@@ -1,9 +1,8 @@
-// export { ToAddReaction } from "./toAddReaction";
-// export { ToRemoveReaction } from "./toRemoveReaction";
-// export { ToUnPinMessage } from "./toUnpinMessage";
-// export { ToPinMessage } from "./toPinMessage";
-// export { ToEditMessage } from "./toEditMessage";
-// export { ToMessageContentContains } from "./toMessageContentContains";
-// export { ToEmbedMatch } from "./toEmbedMatch";
-
+export * from "./shouldAddReaction";
+export * from "./shouldRemoveReaction";
+export * from "./shouldUnpinMessage";
+export * from "./shouldPinMessage";
+export * from "./shouldEditMessage";
+export * from "./shouldMessageContentContains";
+export * from "./shouldEmbedMatch";
 export * from "./shouldReturn";

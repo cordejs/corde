@@ -24,7 +24,7 @@ import {
   VoiceState,
   VoiceChannel,
 } from "discord.js";
-import { messageCommandUtils } from "../../src/command/matches/message/messageExpectTest";
+import { messageCommandUtils } from "../../src/command/matches/message/messageCommandUtils";
 import { IMessageEmbed } from "../../src/types";
 import { ColorsHex } from "../../src/types";
 

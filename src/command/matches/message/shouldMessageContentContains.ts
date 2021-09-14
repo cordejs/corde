@@ -1,19 +1,12 @@
 import { Message } from "discord.js";
-import { IMessageEmbed, Primitive } from "../../../types";
 import { ICommandMatcherProps } from "../../types";
-import { messageCommandUtils } from "./messageCommandUtils";
 
 /**
  * @internal
  */
-export async function shouldReturn(
-  this: ICommandMatcherProps,
-  expected: Primitive | IMessageEmbed,
-) {
-  const errorReport = messageCommandUtils.validateExpect(this, expected);
-
-  if (errorReport) {
-    return errorReport;
+export async function shouldMessageContentContains(this: ICommandMatcherProps, expect: string) {
+  if (!expect || expect.trim() === "") {
+    return this.createFailedTest("expected content can not be null or empty");
   }
 
   try {
@@ -40,7 +33,8 @@ export async function shouldReturn(
     );
   }
 
-  this.hasPassed = messageCommandUtils.isMessagesEquals(returnedMessage, expected);
+  this.hasPassed = returnedMessage.content.includes(expect);
+
   this.invertHasPassedIfIsNot();
 
   if (this.hasPassed) {
@@ -49,10 +43,9 @@ export async function shouldReturn(
 
   if (this.isNot) {
     return this.createReport(
-      "expected: message from bot be different from expectation\n",
-      "received: both returned and expectation are equal",
+      `expected: message '${returnedMessage.content}' from bot to not inclues '${expect}'`,
     );
   }
 
-  return messageCommandUtils.createReportForExpectAndResponse(this, expected, returnedMessage);
+  return this.createFailedTest(`expected '${returnedMessage.content}' to contains '${expect}'`);
 }
