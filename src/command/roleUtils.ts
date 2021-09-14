@@ -2,8 +2,8 @@ import { Role } from "discord.js";
 import { IRoleIdentifier } from "../types";
 import { formatObject } from "../utils";
 
-class RoleUtils {
-  createExpectedMessageForRoleData(roleIdentifier: IRoleIdentifier) {
+export namespace roleUtils {
+  export function createExpectedMessageForRoleData(roleIdentifier: IRoleIdentifier) {
     if (!roleIdentifier) {
       return null;
     }
@@ -23,7 +23,7 @@ class RoleUtils {
     return null;
   }
 
-  getErrorForUndefinedRoleData(roleIdentifier: IRoleIdentifier) {
+  export function getErrorForUndefinedRoleData(roleIdentifier: IRoleIdentifier) {
     if (!roleIdentifier) {
       return "expected: data to identifier the role (id or name)\n" + "received: null";
     }
@@ -31,7 +31,10 @@ class RoleUtils {
     return null;
   }
 
-  validateRole(role: Role | undefined, roleIdentifier: IRoleIdentifier): string | undefined {
+  export function validateRole(
+    role: Role | undefined,
+    roleIdentifier: IRoleIdentifier,
+  ): string | undefined {
     if (!role) {
       const message = roleUtils.createExpectedMessageForRoleData(roleIdentifier);
 
@@ -48,7 +51,7 @@ class RoleUtils {
     return undefined;
   }
 
-  getRoleData(roleIdentifier: string | IRoleIdentifier) {
+  export function getRoleData(roleIdentifier: string | IRoleIdentifier) {
     let data: IRoleIdentifier;
     if (typeof roleIdentifier === "string") {
       data = { id: roleIdentifier };
@@ -58,6 +61,3 @@ class RoleUtils {
     return data;
   }
 }
-
-const roleUtils = new RoleUtils();
-export { roleUtils };
