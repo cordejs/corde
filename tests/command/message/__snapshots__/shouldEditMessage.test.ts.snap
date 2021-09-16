@@ -7,7 +7,7 @@ Object {
     received: message was not edited
 ",
   "pass": false,
-  "testName": "toEditMessage",
+  "testName": "shouldEditMessage",
 }
 `;
 
@@ -18,7 +18,7 @@ Object {
     received: message was not edited
 ",
   "pass": false,
-  "testName": "toEditMessage",
+  "testName": "shouldEditMessage",
 }
 `;
 
@@ -29,7 +29,7 @@ Object {
     received: message was not edited
 ",
   "pass": false,
-  "testName": "toEditMessage",
+  "testName": "shouldEditMessage",
 }
 `;
 
@@ -40,7 +40,7 @@ Object {
     received: message was not edited
 ",
   "pass": false,
-  "testName": "toEditMessage",
+  "testName": "shouldEditMessage",
 }
 `;
 
@@ -89,7 +89,7 @@ Object {
     [2m  }[22m
 ",
   "pass": false,
-  "testName": "toEditMessage",
+  "testName": "shouldEditMessage",
 }
 `;
 
@@ -136,7 +136,7 @@ Object {
     received: 'this is the message content'
 ",
   "pass": false,
-  "testName": "toEditMessage",
+  "testName": "shouldEditMessage",
 }
 `;
 
@@ -183,7 +183,7 @@ Object {
     }
 ",
   "pass": false,
-  "testName": "toEditMessage",
+  "testName": "shouldEditMessage",
 }
 `;
 
@@ -194,7 +194,7 @@ Object {
     received: 'this is the message content'
 ",
   "pass": false,
-  "testName": "toEditMessage",
+  "testName": "shouldEditMessage",
 }
 `;
 
@@ -205,49 +205,49 @@ Object {
     received: both returned and expectation are equal
 ",
   "pass": false,
-  "testName": "toEditMessage",
+  "testName": "shouldEditMessage",
 }
 `;
 
 exports[`testing toEditMessage should get success test due to bot returned different messages (isNot true) 1`] = `
 Object {
   "pass": true,
-  "testName": "toEditMessage",
+  "testName": "shouldEditMessage",
 }
 `;
 
 exports[`testing toEditMessage should get success test due to bot returned equal message 1`] = `
 Object {
   "pass": true,
-  "testName": "toEditMessage",
+  "testName": "shouldEditMessage",
 }
 `;
 
 exports[`testing toEditMessage should get success test due to bot returned equal messages (string number) 1`] = `
 Object {
   "pass": true,
-  "testName": "toEditMessage",
+  "testName": "shouldEditMessage",
 }
 `;
 
 exports[`testing toEditMessage should get success test due to bot returned equal messages (string type) 1`] = `
 Object {
   "pass": true,
-  "testName": "toEditMessage",
+  "testName": "shouldEditMessage",
 }
 `;
 
 exports[`testing toEditMessage should get success test due to bot returned equal messages (type embed) 1`] = `
 Object {
   "pass": true,
-  "testName": "toEditMessage",
+  "testName": "shouldEditMessage",
 }
 `;
 
 exports[`testing toEditMessage should get success test due to timeout but isNot = true 1`] = `
 Object {
   "pass": true,
-  "testName": "toEditMessage",
+  "testName": "shouldEditMessage",
 }
 `;
 
@@ -257,7 +257,7 @@ Object {
     can not send message to channel x
 ",
   "pass": false,
-  "testName": "toEditMessage",
+  "testName": "shouldEditMessage",
 }
 `;
 
@@ -268,7 +268,7 @@ Object {
     received: null
 ",
   "pass": false,
-  "testName": "toEditMessage",
+  "testName": "shouldEditMessage",
 }
 `;
 
@@ -279,6 +279,6 @@ Object {
     received: undefined
 ",
   "pass": false,
-  "testName": "toEditMessage",
+  "testName": "shouldEditMessage",
 }
 `;

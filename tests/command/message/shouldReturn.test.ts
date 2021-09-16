@@ -7,16 +7,26 @@ import { runtime } from "../../../src/common/runtime";
 
 import { debugCommand } from "../../../src/command";
 
+const testName = "shouldReturn";
+
+const failReport: ITestReport = {
+  pass: false,
+  testName,
+};
+
+const passReport: ITestReport = {
+  pass: true,
+  testName,
+};
+
 let mockDiscord = new MockDiscord();
 let cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
-
-const testName = "shouldReturn";
 
 function debugCon(customCommand?: string, customChannelId?: string, customClient?: ICordeBot) {
   return debugCommand(customCommand ?? "con", customChannelId, customClient ?? cordeClient);
 }
 
-describe("testing toReturn", () => {
+describe("testing shouldReturn", () => {
   beforeEach(() => {
     runtime.setConfigs({ timeout: 100 }, true);
     cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
@@ -29,65 +39,39 @@ describe("testing toReturn", () => {
   it.each([[null], [undefined]])(
     "should return a failed test due to invalid parameter (null)",
     async (value) => {
-      const reportModel: ITestReport = {
-        pass: false,
-        testName,
-      };
-
       const report = await debugCon().shouldReturn(value);
-
-      expect(report).toMatchObject(reportModel);
+      expect(report).toMatchObject(failReport);
       expect(report).toMatchSnapshot();
     },
   );
 
   it("should fail due to no message was sent by the bot", async () => {
-    const reportModel: ITestReport = {
-      pass: false,
-      testName,
-    };
-
     const report = await debugCon().shouldReturn("pong");
-    expect(report).toMatchObject(reportModel);
+    expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
 
   it("should get success test due to timeout but isNot = true", async () => {
-    const reportModel: ITestReport = {
-      pass: true,
-      testName,
-    };
-
     const report = await debugCon("").not.shouldReturn("pong");
-    expect(report).toMatchObject(reportModel);
+    expect(report).toMatchObject(passReport);
   });
 
   it("should get success test due to bot returned equal message", async () => {
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessage();
 
-    const reportModel: ITestReport = {
-      pass: true,
-      testName,
-    };
-
     const report = await debugCon().shouldReturn(mockDiscord.message.content);
 
-    expect(report).toMatchObject(reportModel);
+    expect(report).toMatchObject(passReport);
   });
 
   it("should get success test due to bot returned equal messages (string type)", async () => {
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessage();
 
-    const reportModel: ITestReport = {
-      pass: true,
-      testName,
-    };
-
     const report = await debugCon().shouldReturn(mockDiscord.message.content);
 
-    expect(report).toEqual(reportModel);
+    expect(report).toEqual(passReport);
   });
 
   it("should get success test due to bot returned equal messages (string number)", async () => {
@@ -96,14 +80,9 @@ describe("testing toReturn", () => {
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessage();
 
-    const reportModel: ITestReport = {
-      pass: true,
-      testName,
-    };
-
     const report = await debugCon().shouldReturn(2);
 
-    expect(report).toEqual(reportModel);
+    expect(report).toEqual(passReport);
   });
 
   it("should get success test due to bot returned equal messages (type embed)", async () => {
@@ -111,14 +90,9 @@ describe("testing toReturn", () => {
     mockDiscord.message.embeds.push(mockDiscord.messageEmbed);
     events.mockOnceMessage(mockDiscord.message);
 
-    const reportModel: ITestReport = {
-      pass: true,
-      testName,
-    };
-
     const report = await debugCon().shouldReturn(mockDiscord.messageEmbedSimple);
 
-    expect(report).toEqual(reportModel);
+    expect(report).toEqual(passReport);
   });
 
   it("should get failed test due to bot returned equal messages (isNot true)", async () => {
@@ -127,14 +101,9 @@ describe("testing toReturn", () => {
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessage();
 
-    const reportModel: ITestReport = {
-      pass: false,
-      testName,
-    };
-
     const report = await debugCon().not.shouldReturn(mockDiscord.messageEmbedSimple);
 
-    expect(report).toMatchObject(reportModel);
+    expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
 
@@ -142,14 +111,9 @@ describe("testing toReturn", () => {
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessage();
 
-    const reportModel: ITestReport = {
-      pass: true,
-      testName,
-    };
-
     const report = await debugCon().not.shouldReturn(mockDiscord.messageEmbedSimple);
 
-    expect(report).toEqual(reportModel);
+    expect(report).toEqual(passReport);
   });
 
   it("should get fail test due to bot returned different messages (expect primitive and returned embed)", async () => {
@@ -160,14 +124,9 @@ describe("testing toReturn", () => {
 
     const expectValue = "expect value";
 
-    const reportModel: ITestReport = {
-      pass: false,
-      testName,
-    };
-
     const report = await debugCon().shouldReturn(expectValue);
 
-    expect(report).toMatchObject(reportModel);
+    expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
 
@@ -175,14 +134,9 @@ describe("testing toReturn", () => {
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessage();
 
-    const reportModel: ITestReport = {
-      pass: false,
-      testName,
-    };
-
     const report = await debugCon().shouldReturn(mockDiscord.messageEmbedSimple);
 
-    expect(report).toMatchObject(reportModel);
+    expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
 
@@ -192,14 +146,9 @@ describe("testing toReturn", () => {
 
     const expectValue = "expect value";
 
-    const reportModel: ITestReport = {
-      pass: false,
-      testName,
-    };
-
     const report = await debugCon().shouldReturn(expectValue);
 
-    expect(report).toMatchObject(reportModel);
+    expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
 
@@ -216,12 +165,7 @@ describe("testing toReturn", () => {
 
     const report = await debugCon().shouldReturn("");
 
-    const reportModel: ITestReport = {
-      pass: false,
-      testName,
-    };
-
-    expect(report).toMatchObject(reportModel);
+    expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
 });

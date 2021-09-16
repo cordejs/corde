@@ -7,7 +7,7 @@ Object {
     received: null
 ",
   "pass": false,
-  "testName": "toAddReaction",
+  "testName": "shouldAddReaction",
 }
 `;
 
@@ -18,7 +18,7 @@ Object {
     received: object
 ",
   "pass": false,
-  "testName": "toAddReaction",
+  "testName": "shouldAddReaction",
 }
 `;
 
@@ -29,7 +29,7 @@ Object {
     received: undefined
 ",
   "pass": false,
-  "testName": "toAddReaction",
+  "testName": "shouldAddReaction",
 }
 `;
 
@@ -40,7 +40,7 @@ Object {
     received: number
 ",
   "pass": false,
-  "testName": "toAddReaction",
+  "testName": "shouldAddReaction",
 }
 `;
 
@@ -50,7 +50,7 @@ Object {
     can not send message to channel x
 ",
   "pass": false,
-  "testName": "toAddReaction",
+  "testName": "shouldAddReaction",
 }
 `;
 
@@ -61,7 +61,7 @@ Object {
     received: no reaction was added to message
 ",
   "pass": false,
-  "testName": "toAddReaction",
+  "testName": "shouldAddReaction",
 }
 `;
 
@@ -72,7 +72,7 @@ Object {
     received: no reaction was added to message
 ",
   "pass": false,
-  "testName": "toAddReaction",
+  "testName": "shouldAddReaction",
 }
 `;
 
@@ -83,7 +83,7 @@ Object {
     received: 😀
 ",
   "pass": false,
-  "testName": "toAddReaction",
+  "testName": "shouldAddReaction",
 }
 `;
 
@@ -94,27 +94,27 @@ Object {
     received: 😀
 ",
   "pass": false,
-  "testName": "toAddReaction",
+  "testName": "shouldAddReaction",
 }
 `;
 
 exports[`testing toAddReaction function should return a passed test with isNot = false 1`] = `
 Object {
   "pass": true,
-  "testName": "toAddReaction",
+  "testName": "shouldAddReaction",
 }
 `;
 
 exports[`testing toAddReaction function should return a passed test with isNot = false 2`] = `
 Object {
   "pass": true,
-  "testName": "toAddReaction",
+  "testName": "shouldAddReaction",
 }
 `;
 
 exports[`testing toAddReaction function should return a passed test with isNot = true 1`] = `
 Object {
   "pass": true,
-  "testName": "toAddReaction",
+  "testName": "shouldAddReaction",
 }
 `;
