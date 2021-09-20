@@ -32,7 +32,7 @@ function mockEmbedMessage() {
   events.mockOnceMessage(mockDiscord.message);
 }
 
-describe("testing shouldEmbedMatch", () => {
+describe(`testing ${testName} function`, () => {
   afterEach(() => {
     mockDiscord = new MockDiscord();
     runtime.setConfigs({ timeout: 100 }, true);
@@ -80,11 +80,7 @@ describe("testing shouldEmbedMatch", () => {
 
       itFn(testName, async () => {
         mockEmbedMessage();
-        let report: {
-          pass: boolean;
-          message: string;
-          testName: string;
-        } = {} as any;
+        let report: ITestReport = {} as any;
 
         if (options.isNot) {
           report = await debugCon().not.shouldEmbedMatch(messageEmbed);

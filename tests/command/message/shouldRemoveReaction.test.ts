@@ -41,7 +41,7 @@ describe(`testing ${testName} function`, () => {
     expect(report).toMatchSnapshot();
   });
 
-  it.only("should fail due to invalid emoji (undefined)", async () => {
+  it("should fail due to invalid emoji (undefined)", async () => {
     const report = await debugCon().shouldRemoveReaction(undefined);
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();

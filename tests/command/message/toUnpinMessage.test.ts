@@ -1,27 +1,38 @@
 import { Client } from "discord.js";
 import { runtime } from "../../../src/common/runtime";
-import { ToUnPinMessage } from "../../../src/expect/matches";
 import { ICordeBot, ITestReport } from "../../../src/types";
 import { buildReportMessage, typeOf } from "../../../src/utils";
 import MockDiscord from "../../mocks/mockDiscord";
 import { MockEvents } from "../../mocks/mockEvents";
 import { createCordeBotWithMockedFunctions, testUtils } from "../../testHelper";
 
-let mockDiscord = new MockDiscord();
+import { debugCommand } from "../../../src/command";
 
-describe("testing unpin message test", () => {
+const testName = "shouldReturn";
+
+const failReport: ITestReport = {
+  pass: false,
+  testName,
+};
+
+const passReport: ITestReport = {
+  pass: true,
+  testName,
+};
+
+let mockDiscord = new MockDiscord();
+let cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+
+function debugCon(customCommand?: string, customChannelId?: string, customClient?: ICordeBot) {
+  return debugCommand(customCommand ?? "con", customChannelId, customClient ?? cordeClient);
+}
+
+describe(`testing ${testName} function`, () => {
   afterEach(() => {
     mockDiscord = new MockDiscord();
+    runtime.setConfigs({ timeout: 100 }, true);
+    cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
   });
-
-  function initTestClass(cordeBot: ICordeBot, isNot: boolean) {
-    return testUtils.initTestClass(ToUnPinMessage, {
-      isCascade: false,
-      command: "toPin",
-      cordeBot: cordeBot,
-      isNot: isNot,
-    });
-  }
 
   it("should return error message due to no mesageIdentifier (null)", async () => {
     const corde = createCordeBotWithMockedFunctions(mockDiscord, new Client());

@@ -25,7 +25,7 @@ function debugCon(customCommand?: string, customChannelId?: string, customClient
   return debugCommand(customCommand ?? "con", customChannelId, customClient ?? cordeClient);
 }
 
-describe("testing toEditMessage", () => {
+describe(`testing ${testName} function`, () => {
   afterEach(() => {
     mockDiscord = new MockDiscord();
     runtime.setConfigs({ timeout: 100 }, true);

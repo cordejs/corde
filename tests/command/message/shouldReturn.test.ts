@@ -26,8 +26,9 @@ function debugCon(customCommand?: string, customChannelId?: string, customClient
   return debugCommand(customCommand ?? "con", customChannelId, customClient ?? cordeClient);
 }
 
-describe("testing shouldReturn", () => {
+describe(`testing ${testName} function`, () => {
   beforeEach(() => {
+    mockDiscord = new MockDiscord();
     runtime.setConfigs({ timeout: 100 }, true);
     cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
   });
