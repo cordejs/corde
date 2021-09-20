@@ -6,7 +6,7 @@ import { messageUtils } from "./messageUtils";
 /**
  * @internal
  */
-export async function shouldUnPinMessage(
+export async function shouldPin(
   this: ICommandMatcherProps,
   messageIdentifier: IMessageIdentifier | string,
 ) {
@@ -36,15 +36,15 @@ export async function shouldUnPinMessage(
 
   const msgString = messageUtils.humanizeMessageIdentifierObject(_msgIdentifier);
   try {
-    await this.cordeBot.events.onceMessageUnPinned(_msgIdentifier, this.timeout, this.channelId);
+    await this.cordeBot.events.onceMessagePinned(_msgIdentifier, this.timeout, this.channelId);
   } catch {
     if (this.isNot) {
       return this.createPassTest();
     }
 
     return this.createReport(
-      `expected: unpin ${msgString}\n`,
-      "received: informed message was not unpinned",
+      `expected: pin ${msgString}\n`,
+      "received: informed message was not pinned",
     );
   }
 
@@ -58,7 +58,7 @@ export async function shouldUnPinMessage(
   }
 
   return this.createReport(
-    `expected: to ${this.isNot ? "not " : ""}unpin ${msgString}\n`,
-    "received: message pin = true",
+    `expected: to ${this.isNot ? "not " : ""}pin ${msgString}\n`,
+    "received: message pin = false",
   );
 }

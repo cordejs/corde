@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { testCollector } from "../common/testCollector";
 import { corde } from "../types/globals";
-import { buildReportMessage, getStackTrace, typeOf } from "../utils";
+import { buildReportMessage, getStackTrace } from "../utils";
 import { any } from "../expect/asymmetricMatcher";
 import * as matchers from "./matches";
 import { ICommandMatcherProps } from "./types";
@@ -212,16 +212,18 @@ function createLocalCommand(isDebug: boolean) {
 
 export const command = createLocalCommand(false) as corde.ICommand;
 
+type Matchers = {
+  not: typeof matchers;
+} & typeof matchers;
+
 type DebugExpectType<T> = {
   [P in keyof T]: T[P] extends (...args: any[]) => any
-    ? (...params: Parameters<T[P]>) => Promise<{ pass: boolean; message: string; testName: string }>
+    ? (...params: Parameters<T[P]>) => ReturnType<T[P]>
     : DebugExpectType<T[P]>;
 };
 
 export interface IDebugExpect {
-  <T extends any>(value: T, channelId?: string, cordeBot?: ICordeBot): DebugExpectType<
-    corde.AllMatches<void>
-  >;
+  <T extends any>(value: T, channelId?: string, cordeBot?: ICordeBot): DebugExpectType<Matchers>;
   any(...classType: any[]): any;
 }
 

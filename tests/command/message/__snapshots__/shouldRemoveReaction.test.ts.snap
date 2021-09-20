@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing toRemoveReaction function should fail due to invalid emoji (undefined) 1`] = `
+Object {
+  "message": "    
+    expected: emojis parameter to be an array with string or objects
+    received: undefined
+",
+  "pass": false,
+  "testName": "shouldRemoveReaction",
+}
+`;

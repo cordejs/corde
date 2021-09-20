@@ -4,27 +4,6 @@ import { IEmoji, EmojisType, IMessageIdentifier } from "../../../types";
 import { typeOf } from "../../../utils";
 import { ICommandMatcherProps } from "../../types";
 
-function reactionsFromResponse(
-  reactionsWithAuthors: [MessageReaction, User | PartialUser | void][],
-) {
-  const emojis = reactionsWithAuthors.map((r) => r[0].emoji);
-  return emojis.map((e) => e.name).join(", ");
-}
-
-function stringifyReactionToPrint(emojis: EmojisType) {
-  return emojis
-    .map((e: string | IEmoji) => {
-      if (typeof e !== "string") {
-        if (e.id) {
-          return e.id;
-        }
-        return e.name;
-      }
-      return e;
-    })
-    .join(", ");
-}
-
 // TODO: refact it due to it's equal to ToAddReaction
 
 /**
@@ -114,4 +93,25 @@ export async function shouldRemoveReaction(
     )}\n`,
     `received: ${emojisReturned}`,
   );
+}
+
+function reactionsFromResponse(
+  reactionsWithAuthors: [MessageReaction, User | PartialUser | void][],
+) {
+  const emojis = reactionsWithAuthors.map((r) => r[0].emoji);
+  return emojis.map((e) => e.name).join(", ");
+}
+
+function stringifyReactionToPrint(emojis: EmojisType) {
+  return emojis
+    .map((e: string | IEmoji) => {
+      if (typeof e !== "string") {
+        if (e.id) {
+          return e.id;
+        }
+        return e.name;
+      }
+      return e;
+    })
+    .join(", ");
 }
