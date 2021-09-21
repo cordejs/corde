@@ -1,6 +1,7 @@
-import * as corde from "../../src";
+/// <reference types="../../src/global" />
+
 import consts from "./constsNames";
 
-corde.it(consts.TEST_1, () => {
-  corde.command(consts.COMMAND_1).shouldReturn(consts.COMMAND_RESPONSE_1);
+it(consts.TEST_1, () => {
+  command(consts.COMMAND_1).shouldReturn(consts.COMMAND_RESPONSE_1);
 });

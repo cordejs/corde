@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`testing toSetRoleColor should fail due to no role hoist was not updated 1`] = `
+exports[`testing shouldSetRoleHoist function should fail due to no role hoist was not updated 1`] = `
 Object {
   "message": "    
     expected: hoist to be false
@@ -11,7 +11,7 @@ Object {
 }
 `;
 
-exports[`testing toSetRoleColor should fail due to undefined roleIdentifier 1`] = `
+exports[`testing shouldSetRoleHoist function should fail due to undefined roleIdentifier 1`] = `
 Object {
   "message": "    
     expected: data to identifier the role (id or name)
@@ -22,7 +22,7 @@ Object {
 }
 `;
 
-exports[`testing toSetRoleColor should return a failed test due to failure in message sending 1`] = `
+exports[`testing shouldSetRoleHoist function should return a failed test due to failure in message sending 1`] = `
 Object {
   "message": "    
     can not send message to channel x
@@ -32,7 +32,7 @@ Object {
 }
 `;
 
-exports[`testing toSetRoleColor should return a failed test due to hoist should not change (isNot true) 1`] = `
+exports[`testing shouldSetRoleHoist function should return a failed test due to hoist should not change (isNot true) 1`] = `
 Object {
   "message": "    
     expected: hoist to not be true
@@ -43,7 +43,7 @@ Object {
 }
 `;
 
-exports[`testing toSetRoleColor should return a not passed test due expected name did not match to received 1`] = `
+exports[`testing shouldSetRoleHoist function should return a not passed test due expected name did not match to received 1`] = `
 Object {
   "message": "    
     expected: hoist to be false
@@ -54,7 +54,7 @@ Object {
 }
 `;
 
-exports[`testing toSetRoleColor should return false due to invalid hoist parameter (object) 1`] = `
+exports[`testing shouldSetRoleHoist function should return false due to invalid hoist parameter (object) 1`] = `
 Object {
   "message": "    
     expect: hoist parameter to be of boolean type
@@ -65,7 +65,7 @@ Object {
 }
 `;
 
-exports[`testing toSetRoleColor should return false due to invalid hoist parameter (undefined) 1`] = `
+exports[`testing shouldSetRoleHoist function should return false due to invalid hoist parameter (undefined) 1`] = `
 Object {
   "message": "    
     expected: hoist option to be true or false
@@ -76,7 +76,7 @@ Object {
 }
 `;
 
-exports[`testing toSetRoleColor should return false due to not found role 1`] = `
+exports[`testing shouldSetRoleHoist function should return false due to not found role 1`] = `
 Object {
   "message": "    
     expected: role with id 123
@@ -87,14 +87,14 @@ Object {
 }
 `;
 
-exports[`testing toSetRoleColor should return true due to isNot true and no role change 1`] = `
+exports[`testing shouldSetRoleHoist function should return true due to isNot true and no role change 1`] = `
 Object {
   "pass": true,
   "testName": "shouldSetRoleHoist",
 }
 `;
 
-exports[`testing toSetRoleColor should return true due to role changed the hoist (isNot false) 1`] = `
+exports[`testing shouldSetRoleHoist function should return true due to role changed the hoist (isNot false) 1`] = `
 Object {
   "pass": true,
   "testName": "shouldSetRoleHoist",

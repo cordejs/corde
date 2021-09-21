@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`testing toSetRoleColor should fail due to invalid color 1`] = `
+exports[`testing shouldSetRoleColor function should fail due to invalid color 1`] = `
 Object {
   "message": "    
     toSetRoleColor: invalid color informed - 'null'
@@ -10,7 +10,7 @@ Object {
 }
 `;
 
-exports[`testing toSetRoleColor should fail due to role hadn't color changed 1`] = `
+exports[`testing shouldSetRoleColor function should fail due to role hadn't color changed 1`] = `
 Object {
   "message": "    
     expected: change role color from [38;2;255;255;255m-1[39m to [38;2;52;73;94m3426654[39m
@@ -21,7 +21,7 @@ Object {
 }
 `;
 
-exports[`testing toSetRoleColor should fail due to undefined roleIdentifier 1`] = `
+exports[`testing shouldSetRoleColor function should fail due to undefined roleIdentifier 1`] = `
 Object {
   "message": "    
     expected: data to identifier the role (id or name)
@@ -32,7 +32,7 @@ Object {
 }
 `;
 
-exports[`testing toSetRoleColor should return a failed test due to failure in message sending 1`] = `
+exports[`testing shouldSetRoleColor function should return a failed test due to failure in message sending 1`] = `
 Object {
   "message": "    
     can not send message to channel x
@@ -42,7 +42,7 @@ Object {
 }
 `;
 
-exports[`testing toSetRoleColor should return a not passed test due expected name did not match to received 1`] = `
+exports[`testing shouldSetRoleColor function should return a not passed test due expected name did not match to received 1`] = `
 Object {
   "message": "    
     expected: change role color from [38;2;0;0;0mundefined[39m to [38;2;26;188;156m1752220[39m
@@ -53,7 +53,7 @@ Object {
 }
 `;
 
-exports[`testing toSetRoleColor should return a not passed test due to color should not change (isNot true) 1`] = `
+exports[`testing shouldSetRoleColor function should return a not passed test due to color should not change (isNot true) 1`] = `
 Object {
   "message": "    
     expected: change role color from [38;2;0;0;0mundefined[39m to [38;2;194;124;14m12745742[39m
@@ -64,7 +64,7 @@ Object {
 }
 `;
 
-exports[`testing toSetRoleColor should return false due to not found role 1`] = `
+exports[`testing shouldSetRoleColor function should return false due to not found role 1`] = `
 Object {
   "message": "    
     expected: role with id 123
@@ -75,14 +75,14 @@ Object {
 }
 `;
 
-exports[`testing toSetRoleColor should return true due to isNot true and no role change 1`] = `
+exports[`testing shouldSetRoleColor function should return true due to isNot true and no role change 1`] = `
 Object {
   "pass": true,
   "testName": "shouldSetRoleColor",
 }
 `;
 
-exports[`testing toSetRoleColor should return true due to role has changed the color (isNot false) 1`] = `
+exports[`testing shouldSetRoleColor function should return true due to role has changed the color (isNot false) 1`] = `
 Object {
   "pass": true,
   "testName": "shouldSetRoleColor",

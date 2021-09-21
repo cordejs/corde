@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing shouldSetRolePermission function should fail due to role permissions was not updated 1`] = `
+Object {
+  "message": "    
+    expected: role permissions change to: ATTACH_FILES
+    received: permissions were not changed
+",
+  "pass": false,
+  "testName": "shouldSetRolePermission",
+}
+`;
+
+exports[`testing shouldSetRolePermission function should fail due to undefined roleIdentifier 1`] = `
+Object {
+  "message": "    
+    expected: data to identifier the role (id or name)
+    received: null
+",
+  "pass": false,
+  "testName": "shouldSetRolePermission",
+}
+`;
+
+exports[`testing shouldSetRolePermission function should return a failed test due to failure in message sending 1`] = `
+Object {
+  "message": "    
+    can not send message to channel x
+",
+  "pass": false,
+  "testName": "shouldSetRolePermission",
+}
+`;
+
+exports[`testing shouldSetRolePermission function should return a failed test due to permissions should not change (isNot true) 1`] = `
+Object {
+  "message": "    
+    expected: role permissions not change to: ADMINISTRATOR
+    received: ADMINISTRATOR (and 30 others)
+",
+  "pass": false,
+  "testName": "shouldSetRolePermission",
+}
+`;
+
+exports[`testing shouldSetRolePermission function should return a not passed test due expected name did not match to received 1`] = `
+Object {
+  "message": "    
+    expected: role permissions change to: ATTACH_FILES
+    received: ADMINISTRATOR (and 30 others)
+",
+  "pass": false,
+  "testName": "shouldSetRolePermission",
+}
+`;
+
+exports[`testing shouldSetRolePermission function should return a not passed test due expected name did not match to received 2`] = `
+Object {
+  "message": "    
+    expected: role permissions change to: null
+    received: ADMINISTRATOR (and 30 others)
+",
+  "pass": false,
+  "testName": "shouldSetRolePermission",
+}
+`;
+
+exports[`testing shouldSetRolePermission function should return a not passed test due to permissions should not change (isNot true) 1`] = `
+Object {
+  "message": "    
+    expected: role permissions not change to: ADMINISTRATOR and BAN_MEMBERS
+    received: ADMINISTRATOR (and 30 others)
+",
+  "pass": false,
+  "testName": "shouldSetRolePermission",
+}
+`;
+
+exports[`testing shouldSetRolePermission function should return a not passed test due to permissions should not change (isNot true) 2`] = `
+Object {
+  "message": "    
+    expected: role permissions not change to: ADMINISTRATOR (and 2 others)
+    received: ADMINISTRATOR (and 30 others)
+",
+  "pass": false,
+  "testName": "shouldSetRolePermission",
+}
+`;
+
+exports[`testing shouldSetRolePermission function should return false due to invalid permission parameter (object) 1`] = `
+Object {
+  "message": "    
+    expected: permissions to be null, undefined or an array
+    received: object
+",
+  "pass": false,
+  "testName": "shouldSetRolePermission",
+}
+`;
+
+exports[`testing shouldSetRolePermission function should return false due to invalid permission parameter (undefined) 1`] = `
+Object {
+  "message": "    
+    expected: permissions to be null, undefined or an array
+    received: object
+",
+  "pass": false,
+  "testName": "shouldSetRolePermission",
+}
+`;
+
+exports[`testing shouldSetRolePermission function should return false due to not found role 1`] = `
+Object {
+  "message": "    
+    expected: role with id 123
+    received: null
+",
+  "pass": false,
+  "testName": "shouldSetRolePermission",
+}
+`;
+
+exports[`testing shouldSetRolePermission function should return true due to isNot true and no role change 1`] = `
+Object {
+  "pass": true,
+  "testName": "shouldSetRolePermission",
+}
+`;
+
+exports[`testing shouldSetRolePermission function should return true due to role changed permissions (isNot false) 1`] = `
+Object {
+  "pass": true,
+  "testName": "shouldSetRolePermission",
+}
+`;

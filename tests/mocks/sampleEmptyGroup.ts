@@ -1,4 +1,5 @@
-import * as corde from "../../src";
+/// <reference types="../../src/global" />
+
 import consts from "./constsNames";
 
-corde.describe(consts.GROUP_1, () => {});
+describe(consts.GROUP_1, () => {});

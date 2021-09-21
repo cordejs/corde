@@ -7,7 +7,7 @@ Object {
     received: string
 ",
   "pass": false,
-  "testName": "toSetRolePosition",
+  "testName": "shouldSetRolePosition",
 }
 `;
 
@@ -18,36 +18,36 @@ Object {
     received: null
 ",
   "pass": false,
-  "testName": "toSetRolePosition",
+  "testName": "shouldSetRolePosition",
 }
 `;
 
 exports[`testing ToSetRolePosition operation should find and must return passed report due to 'changed position' (isNot true) 1`] = `
 Object {
   "pass": true,
-  "testName": "toSetRolePosition",
+  "testName": "shouldSetRolePosition",
 }
 `;
 
-exports[`testing ToSetRolePosition operation should not find a role and must return not passed (isNot false) 1`] = `
+exports[`testing ToSetRolePosition operation should not find a role and must return a failed test (isNot false) 1`] = `
 Object {
   "message": "    
-    expected: role with id 123
-    received: null
+    expected: position to be >= 0 and <= 1 (max value possible)
+    received: 2
 ",
   "pass": false,
-  "testName": "toSetRolePosition",
+  "testName": "shouldSetRolePosition",
 }
 `;
 
-exports[`testing ToSetRolePosition operation should not find a role and must return not passed (isNot true) 1`] = `
+exports[`testing ToSetRolePosition operation should not find a role and must return a failed test (isNot true) 1`] = `
 Object {
   "message": "    
-    expected: role with id 123
-    received: null
+    expected: position to be >= 0 and <= 1 (max value possible)
+    received: 1
 ",
   "pass": false,
-  "testName": "toSetRolePosition",
+  "testName": "shouldSetRolePosition",
 }
 `;
 
@@ -58,7 +58,7 @@ Object {
     received: null
 ",
   "pass": false,
-  "testName": "toSetRolePosition",
+  "testName": "shouldSetRolePosition",
 }
 `;
 
@@ -69,7 +69,7 @@ Object {
     received: position didn't change
 ",
   "pass": false,
-  "testName": "toSetRolePosition",
+  "testName": "shouldSetRolePosition",
 }
 `;
 
@@ -80,17 +80,18 @@ Object {
     received: 1
 ",
   "pass": false,
-  "testName": "toSetRolePosition",
+  "testName": "shouldSetRolePosition",
 }
 `;
 
 exports[`testing ToSetRolePosition operation should return a failed test due to failure in message sending 1`] = `
 Object {
   "message": "    
-    can not send message to channel x
+    expected: role position to change to -1
+    received: position didn't change
 ",
   "pass": false,
-  "testName": "toSetRolePosition",
+  "testName": "shouldSetRolePosition",
 }
 `;
 
@@ -101,13 +102,13 @@ Object {
     received: 2
 ",
   "pass": false,
-  "testName": "toSetRolePosition",
+  "testName": "shouldSetRolePosition",
 }
 `;
 
 exports[`testing ToSetRolePosition operation should return a passed report due to timeout and isNot true 1`] = `
 Object {
   "pass": true,
-  "testName": "toSetRolePosition",
+  "testName": "shouldSetRolePosition",
 }
 `;
