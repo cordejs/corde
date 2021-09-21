@@ -25,7 +25,7 @@ interface IReportMatcher {
 }
 
 interface IMatcher {
-  (props: ICommandMatcherProps, ...args: any[]): IReportMatcher;
+  (props: ICommandMatcherProps, ...args: any[]): Promise<IReportMatcher>;
 }
 
 type KeyOfMatcher = keyof typeof matchers;
@@ -114,7 +114,7 @@ function createMatcherFn({
   isCascade,
   cordeBot,
 }: ICreateMatcherParam) {
-  return (...args: any[]) => {
+  return async (...args: any[]) => {
     // If someone pass expect.any, we must invoke it to return
     // the Any matcher.
 
@@ -144,7 +144,7 @@ function createMatcherFn({
         return fn;
       }
 
-      const report = matcherFn.bind(props, ...args)();
+      const report = await matcherFn.bind(props, ...args)();
       if (report.pass) {
         testCollector.testsPass++;
       } else {
