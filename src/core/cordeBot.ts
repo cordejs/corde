@@ -202,12 +202,12 @@ export class CordeBot implements ICordeBot {
     return undefined;
   }
 
-  async fetchRole(id: string): Promise<Role | null> {
-    return await this.guild.roles.fetch(id, false, true);
+  fetchRole(id: string): Promise<Role | null> {
+    return this.guild.roles.fetch(id, false, true);
   }
 
-  async fetchRoles() {
-    return await this.guild.roles.fetch();
+  fetchRoles() {
+    return this.guild.roles.fetch();
   }
 
   async hasRole(roleIdentifier: IRoleIdentifier) {
@@ -215,11 +215,11 @@ export class CordeBot implements ICordeBot {
   }
 
   async findRole(roleIdentifier: IRoleIdentifier) {
-    const data = await this.guild.roles.fetch();
+    const cache = (await this.guild.roles.fetch())?.cache;
     if (roleIdentifier.id) {
-      return data.cache.find((r) => r.id === roleIdentifier.id);
+      return cache.find((r) => r.id === roleIdentifier.id);
     } else if (roleIdentifier.name) {
-      return data.cache.find((r) => r.name === roleIdentifier.name);
+      return cache.find((r) => r.name === roleIdentifier.name);
     }
     return undefined;
   }
