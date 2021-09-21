@@ -7,6 +7,7 @@ import * as matchers from "./matches";
 import { ICommandMatcherProps } from "./types";
 import { runtime } from "../common/runtime";
 import { ICordeBot, ITestReport } from "../types";
+import { InternalError } from "../errors";
 
 interface ICreateMatcherParam {
   matcher: string;
@@ -144,7 +145,12 @@ function createMatcherFn({
         return fn;
       }
 
-      const report = await matcherFn.bind(props, ...args)();
+      const report = await fn();
+
+      if (isDebug) {
+        return report;
+      }
+
       if (report.pass) {
         testCollector.testsPass++;
       } else {
@@ -153,20 +159,27 @@ function createMatcherFn({
         console.log(trace);
       }
 
-      if (isDebug) {
-        return report;
-      }
+      return undefined;
     } catch (error) {
       testCollector.testsFailed++;
-      if (error instanceof Error) {
-        console.log(buildReportMessage(error.message));
-      } else {
-        console.log(buildReportMessage(error.message));
-      }
-      console.log(trace);
-      return error;
+      handleError(error, trace);
+      return {
+        pass: false,
+        message: error,
+      };
     }
   };
+}
+function handleError(error: any, trace: string) {
+  if (error instanceof InternalError) {
+    console.log(buildReportMessage(error.message));
+    console.log(trace);
+  } else if (error instanceof Error) {
+    console.log(buildReportMessage(error.message));
+    console.log(buildReportMessage(error.stack));
+  } else {
+    console.log(buildReportMessage(error));
+  }
 }
 
 function createLocalCommand(isDebug: boolean) {
