@@ -1,9 +1,12 @@
 import {
+  Client,
   EmbedFieldData,
+  Message,
   MessageAttachment,
   MessageEmbed,
   MessageEmbedImage,
   MessageEmbedThumbnail,
+  TextChannel,
 } from "discord.js";
 import { Stream } from "stream";
 import {
@@ -335,15 +338,16 @@ describe("testing messageUtils", () => {
 
   describe("testing createReportForExpectAndResponse", () => {
     it("should return a passed test for hasPassed true", () => {
-      jest.spyOn(messageUtils, "isMessagesEquals").mockReturnValue(true);
+      const mock = new MockDiscord();
+
       const report = messageUtils.createReportForExpectAndResponse(
         createMatcherObject({
           isDebug: false,
           isNot: false,
           matcher: "",
         }) as any,
-        null,
-        null,
+        mock.message.content,
+        mock.message,
       );
       expect(report.pass).toBeTruthy();
     });

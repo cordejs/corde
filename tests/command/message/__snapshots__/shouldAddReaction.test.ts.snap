@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`testing toAddReaction function should fail due to invalid emoji (null) 1`] = `
+exports[`testing shouldAddReaction function should fail due to invalid emoji (null) 1`] = `
 Object {
   "message": "    
     expected: emojis parameter to be an array with string or objects
@@ -11,7 +11,7 @@ Object {
 }
 `;
 
-exports[`testing toAddReaction function should fail due to invalid emoji (object) 1`] = `
+exports[`testing shouldAddReaction function should fail due to invalid emoji (object) 1`] = `
 Object {
   "message": "    
     expected: emojis parameter to be an array with string or objects
@@ -22,7 +22,7 @@ Object {
 }
 `;
 
-exports[`testing toAddReaction function should fail due to invalid emoji (undefined) 1`] = `
+exports[`testing shouldAddReaction function should fail due to invalid emoji (undefined) 1`] = `
 Object {
   "message": "    
     expected: emojis parameter to be an array with string or objects
@@ -33,7 +33,7 @@ Object {
 }
 `;
 
-exports[`testing toAddReaction function should fail due to invalid messageIdentifier (number) 1`] = `
+exports[`testing shouldAddReaction function should fail due to invalid messageIdentifier (number) 1`] = `
 Object {
   "message": "    
     expect: message data to be null, undefined, string or an object with id or text properties
@@ -44,7 +44,7 @@ Object {
 }
 `;
 
-exports[`testing toAddReaction function should return a failed test due to failure in message sending 1`] = `
+exports[`testing shouldAddReaction function should return a failed test due to failure in message sending 1`] = `
 Object {
   "message": "    
     can not send message to channel x
@@ -54,7 +54,7 @@ Object {
 }
 `;
 
-exports[`testing toAddReaction function should return a failed test with isNot = false 1`] = `
+exports[`testing shouldAddReaction function should return a failed test with isNot = false 1`] = `
 Object {
   "message": "    
     expected: to add reactions 😀
@@ -65,7 +65,7 @@ Object {
 }
 `;
 
-exports[`testing toAddReaction function should return a failed test with isNot = false and emoji object with id and other with name 1`] = `
+exports[`testing shouldAddReaction function should return a failed test with isNot = false and emoji object with id and other with name 1`] = `
 Object {
   "message": "    
     expected: to add reactions 312322220410652501, 😀
@@ -76,7 +76,7 @@ Object {
 }
 `;
 
-exports[`testing toAddReaction function should return a failed test with isNot = false and timeout 1`] = `
+exports[`testing shouldAddReaction function should return a failed test with isNot = false and timeout 1`] = `
 Object {
   "message": "    
     expected: to add reactions 😀
@@ -87,7 +87,7 @@ Object {
 }
 `;
 
-exports[`testing toAddReaction function should return a failed test with isNot = true 1`] = `
+exports[`testing shouldAddReaction function should return a failed test with isNot = true 1`] = `
 Object {
   "message": "    
     expected: not to add reactions 😀
@@ -98,21 +98,21 @@ Object {
 }
 `;
 
-exports[`testing toAddReaction function should return a passed test with isNot = false 1`] = `
+exports[`testing shouldAddReaction function should return a passed test with isNot = false 1`] = `
 Object {
   "pass": true,
   "testName": "shouldAddReaction",
 }
 `;
 
-exports[`testing toAddReaction function should return a passed test with isNot = false 2`] = `
+exports[`testing shouldAddReaction function should return a passed test with isNot = false 2`] = `
 Object {
   "pass": true,
   "testName": "shouldAddReaction",
 }
 `;
 
-exports[`testing toAddReaction function should return a passed test with isNot = true 1`] = `
+exports[`testing shouldAddReaction function should return a passed test with isNot = true 1`] = `
 Object {
   "pass": true,
   "testName": "shouldAddReaction",

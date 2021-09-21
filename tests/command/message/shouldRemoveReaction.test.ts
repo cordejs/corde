@@ -37,7 +37,7 @@ describe(`testing ${testName} function`, () => {
       // @ts-ignore
       .shouldRemoveReaction(["1"], 1);
 
-    expect(report).toEqual(failReport);
+    expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
 
@@ -60,17 +60,6 @@ describe(`testing ${testName} function`, () => {
     expect(report).toMatchSnapshot();
   });
 
-  it("should return a passed test with isNot = false", async () => {
-    const events = new MockEvents(cordeClient, mockDiscord);
-    events.mockOnceMessageReactionsRemove();
-
-    cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
-
-    const report = await debugCon().shouldRemoveReaction([mockDiscord.messageReaction.emoji.name]);
-    expect(report).toMatchObject(failReport);
-    expect(report).toMatchSnapshot();
-  });
-
   it("should return a passed test with isNot = true", async () => {
     cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
     const report = await debugCon().not.shouldRemoveReaction([
@@ -82,7 +71,7 @@ describe(`testing ${testName} function`, () => {
   it("should return a failed test with isNot = false", async () => {
     cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
     const report = await debugCon().shouldRemoveReaction([mockDiscord.messageReaction.emoji.name]);
-    expect(report).toEqual(failReport);
+    expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
 
@@ -91,20 +80,8 @@ describe(`testing ${testName} function`, () => {
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessageReactionsRemoveToReject();
 
-    const report = await debugCon().not.shouldRemoveReaction([
-      mockDiscord.messageReaction.emoji.name,
-    ]);
-    expect(report).toMatchObject(failReport);
-    expect(report).toMatchSnapshot();
-  });
-
-  it("should return a passed test with isNot = false", async () => {
-    cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
-    const events = new MockEvents(cordeClient, mockDiscord);
-    events.mockOnceMessageReactionsRemove();
-
     const report = await debugCon().shouldRemoveReaction([mockDiscord.messageReaction.emoji.name]);
-    expect(report).toEqual(passReport);
+    expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
 
@@ -113,12 +90,12 @@ describe(`testing ${testName} function`, () => {
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessageReactionsRemove();
 
-    const report = await debugCon().shouldRemoveReaction([
+    const report = await debugCon().not.shouldRemoveReaction([
       { id: mockDiscord.messageReaction.emoji.id },
       { name: mockDiscord.messageReaction.emoji.name },
     ]);
 
-    expect(report).toEqual(failReport);
+    expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
 
@@ -133,7 +110,7 @@ describe(`testing ${testName} function`, () => {
 
     const report = await debugCon().shouldRemoveReaction(["😀"], { id: "123" });
 
-    expect(report).toEqual(failReport);
+    expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
 });

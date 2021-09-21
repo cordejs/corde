@@ -1,10 +1,86 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`testing toRemoveReaction function should fail due to invalid emoji (undefined) 1`] = `
+exports[`testing shouldRemoveReaction function should fail due to invalid emoji (null) 1`] = `
+Object {
+  "message": "    
+    expected: emojis parameter to be an array with string or objects
+    received: null
+",
+  "pass": false,
+  "testName": "shouldRemoveReaction",
+}
+`;
+
+exports[`testing shouldRemoveReaction function should fail due to invalid emoji (object) 1`] = `
+Object {
+  "message": "    
+    expected: emojis parameter to be an array with string or objects
+    received: object
+",
+  "pass": false,
+  "testName": "shouldRemoveReaction",
+}
+`;
+
+exports[`testing shouldRemoveReaction function should fail due to invalid emoji (undefined) 1`] = `
 Object {
   "message": "    
     expected: emojis parameter to be an array with string or objects
     received: undefined
+",
+  "pass": false,
+  "testName": "shouldRemoveReaction",
+}
+`;
+
+exports[`testing shouldRemoveReaction function should fail due to invalid messageIdentifier (number) 1`] = `
+Object {
+  "message": "    
+    expect: message data to be null, undefined, string or an object with id or text properties
+    received: number
+",
+  "pass": false,
+  "testName": "shouldRemoveReaction",
+}
+`;
+
+exports[`testing shouldRemoveReaction function should return a failed test due to failure in message sending 1`] = `
+Object {
+  "message": "    
+    can not send message to channel x
+",
+  "pass": false,
+  "testName": "shouldRemoveReaction",
+}
+`;
+
+exports[`testing shouldRemoveReaction function should return a failed test with isNot = false 1`] = `
+Object {
+  "message": "    
+    expected: to remove reactions 😀
+    received: no reaction was removed to message
+",
+  "pass": false,
+  "testName": "shouldRemoveReaction",
+}
+`;
+
+exports[`testing shouldRemoveReaction function should return a failed test with isNot = false and timeout 1`] = `
+Object {
+  "message": "    
+    expected: to remove reactions 😀
+    received: 😀
+",
+  "pass": false,
+  "testName": "shouldRemoveReaction",
+}
+`;
+
+exports[`testing shouldRemoveReaction function should return a failed test with isNot = true and emoji object with id and other with name 1`] = `
+Object {
+  "message": "    
+    expected: not to remove reactions 312322220410652501, 😀
+    received: 😀
 ",
   "pass": false,
   "testName": "shouldRemoveReaction",

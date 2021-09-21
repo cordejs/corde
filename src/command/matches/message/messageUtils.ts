@@ -33,7 +33,7 @@ export namespace messageUtils {
     }
 
     let embedReturned: IMessageEmbed | undefined;
-    if (returnedMessage.embeds[0]) {
+    if (returnedMessage?.embeds[0]) {
       embedReturned = getMessageByType(returnedMessage, "embed") as IMessageEmbed;
     }
 
@@ -44,7 +44,7 @@ export namespace messageUtils {
     if (typeOf(expect) === "object" && !embedReturned) {
       return matcher.createReport(
         `expected: ${formatObject(expect)}\n`,
-        `received: '${returnedMessage.content}'`,
+        `received: '${returnedMessage?.content}'`,
       );
     }
 
@@ -57,7 +57,7 @@ export namespace messageUtils {
 
     return matcher.createReport(
       `expected: '${expect}'\n`,
-      `received: '${returnedMessage.content}'`,
+      `received: '${returnedMessage?.content}'`,
     );
   }
 
@@ -65,6 +65,10 @@ export namespace messageUtils {
     returnedMessage: Message,
     expectation: Primitive | IMessageEmbed,
   ) {
+    if (!returnedMessage || !expectation) {
+      return false;
+    }
+
     const embed = returnedMessage.embeds[0];
     if (isPrimitiveValue(expectation) && !embed) {
       return expectation == returnedMessage.content;

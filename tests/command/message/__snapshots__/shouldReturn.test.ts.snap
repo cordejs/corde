@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`testing toReturn should fail due to no message was sent by the bot 1`] = `
+exports[`testing shouldReturn function should fail due to no message was sent by the bot 1`] = `
 Object {
   "message": "    
     expected: testing bot to send a message
@@ -11,7 +11,7 @@ Object {
 }
 `;
 
-exports[`testing toReturn should get fail test due to bot returned different messages (expect embed and returned primitive) 1`] = `
+exports[`testing shouldReturn function should get fail test due to bot returned different messages (expect embed and returned primitive) 1`] = `
 Object {
   "message": "    
     expected: Object {
@@ -58,7 +58,7 @@ Object {
 }
 `;
 
-exports[`testing toReturn should get fail test due to bot returned different messages (expect primitive and returned embed) 1`] = `
+exports[`testing shouldReturn function should get fail test due to bot returned different messages (expect primitive and returned embed) 1`] = `
 Object {
   "message": "    
     expected: 'expect value'
@@ -105,7 +105,7 @@ Object {
 }
 `;
 
-exports[`testing toReturn should get fail test due to bot returned different messages both primitive values 1`] = `
+exports[`testing shouldReturn function should get fail test due to bot returned different messages both primitive values 1`] = `
 Object {
   "message": "    
     expected: 'expect value'
@@ -116,7 +116,7 @@ Object {
 }
 `;
 
-exports[`testing toReturn should get failed test due to bot returned equal messages (isNot true) 1`] = `
+exports[`testing shouldReturn function should get failed test due to bot returned equal messages (isNot true) 1`] = `
 Object {
   "message": "    
     expected: message from bot be different from expectation
@@ -127,7 +127,7 @@ Object {
 }
 `;
 
-exports[`testing toReturn should return a failed test due to failure in message sending 1`] = `
+exports[`testing shouldReturn function should return a failed test due to failure in message sending 1`] = `
 Object {
   "message": "    
     expected: testing bot to send a message
@@ -138,7 +138,7 @@ Object {
 }
 `;
 
-exports[`testing toReturn should return a failed test due to invalid parameter (null) 1`] = `
+exports[`testing shouldReturn function should return a failed test due to invalid parameter (null) 1`] = `
 Object {
   "message": "    
     expected: expect value to be a primitive value (string, boolean, number) or an IMessageEmbed
@@ -149,7 +149,7 @@ Object {
 }
 `;
 
-exports[`testing toReturn should return a failed test due to invalid parameter (null) 2`] = `
+exports[`testing shouldReturn function should return a failed test due to invalid parameter (null) 2`] = `
 Object {
   "message": "    
     expected: expect value to be a primitive value (string, boolean, number) or an IMessageEmbed

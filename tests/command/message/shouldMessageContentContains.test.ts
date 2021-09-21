@@ -26,7 +26,7 @@ function debugCon(customCommand?: string, customChannelId?: string, customClient
 }
 
 describe(`testing ${testName} function`, () => {
-  afterEach(() => {
+  beforeEach(() => {
     mockDiscord = new MockDiscord();
     runtime.setConfigs({ timeout: 100 }, true);
     cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
@@ -41,7 +41,7 @@ describe(`testing ${testName} function`, () => {
   it("should return a failed test due to invalid parameter (undefined)", async () => {
     const report = await debugCon().shouldMessageContentContains(undefined);
     expect(report).toMatchObject(failReport);
-    expect(report).toMatchInlineSnapshot();
+    expect(report).toMatchSnapshot();
   });
 
   it("should fail due to no message was sent by the bot", async () => {
