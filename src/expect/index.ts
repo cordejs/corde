@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import chalk from "chalk";
 import { testCollector } from "../common/testCollector";
+import { InternalError } from "../errors";
 import { ITestProps } from "../types";
 import { corde } from "../types/globals";
 import { buildReportMessage, getStackTrace, typeOf } from "../utils";
@@ -98,15 +99,22 @@ function createMatcherFn(matcher: string, isNot: boolean, expected: any, isDebug
       }
     } catch (error) {
       testCollector.testsFailed++;
-      if (error instanceof Error) {
-        console.log(buildReportMessage(error.message));
-      } else {
-        console.log(buildReportMessage(error.message));
-      }
-      console.log(trace);
+      handleError(error, trace);
       return error;
     }
   };
+}
+
+function handleError(error: any, trace: string) {
+  if (error instanceof InternalError) {
+    console.log(buildReportMessage(error.message));
+    console.log(trace);
+  } else if (error instanceof Error) {
+    console.log(buildReportMessage(error.message));
+    console.log(buildReportMessage(error.stack));
+  } else {
+    console.log(buildReportMessage(error));
+  }
 }
 
 function createLocalExpect(isDebug: boolean) {

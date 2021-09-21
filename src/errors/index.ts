@@ -1,8 +1,9 @@
-export { CordeClientError } from "./cordeClientError";
-export { DiscordJSError } from "./discordJSError";
-export { FileError } from "./fileError";
-export { ConfigError } from "./configError";
-export { PropertyError } from "./propertyError";
-export { TypeError } from "./typeError";
-export { TimeoutError } from "./timeoutError";
-export { QueueFunctionError } from "./queueFunctionError";
+export * from "./internalError";
+export * from "./cordeClientError";
+export * from "./discordJSError";
+export * from "./fileError";
+export * from "./configError";
+export * from "./propertyError";
+export * from "./typeError";
+export * from "./timeoutError";
+export * from "./queueFunctionError";

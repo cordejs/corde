@@ -1,9 +1,10 @@
+import { InternalError } from ".";
 import { Errors } from "./defaults";
 
 /**
  * Related timeout error.
  */
-export class TimeoutError extends Error {
+export class TimeoutError extends InternalError {
   readonly data: any;
   /**
    * Throws when a connection or test do not executed in the specified time.

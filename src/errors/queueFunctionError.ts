@@ -1,9 +1,10 @@
+import { InternalError } from ".";
 import { Errors } from "./defaults";
 
 /**
  * Related timeout error.
  */
-export class QueueFunctionError extends Error {
+export class QueueFunctionError extends InternalError {
   /**
    * Throws when a function in **Queue** is executed with an error.
    *
