@@ -937,11 +937,11 @@ export namespace corde {
     ISetChannelMatchers<TReturn> &
     ISetGuildMatchers<TReturn>;
 
-  export type AllCommandMatches = IMatches<void> &
+  export type AllCommandMatches = IMatches<Promise<void>> &
     IToHaveResult &
     IsNotWithHaveResults &
-    ISetChannelMatchers<void> &
-    ISetGuildMatchers<void>;
+    ISetChannelMatchers<Promise<void>> &
+    ISetGuildMatchers<Promise<void>>;
 
   export interface ICommand extends AllMatches<any> {
     /**
