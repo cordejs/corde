@@ -4,6 +4,7 @@ import { createCordeBotWithMockedFunctions } from "../../testHelper";
 import { MockEvents } from "../../mocks/mockEvents";
 import { ICordeBot, ITestReport } from "../../../src/types";
 import { debugCommand } from "../../../src/command";
+import { runtime } from "../../../src/common/runtime";
 
 const testName = "shouldDeleteRole";
 
@@ -27,6 +28,8 @@ function debugCon(customCommand?: string, customChannelId?: string, customClient
 describe(`testing ${testName} function`, () => {
   afterEach(() => {
     mockDiscord = new MockDiscord();
+    runtime.setConfigs({ timeout: 100 }, true);
+    cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
   });
 
   describe("isnot true", () => {

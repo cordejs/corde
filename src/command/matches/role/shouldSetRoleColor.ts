@@ -5,15 +5,10 @@ import { resolveColor, rgba, typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
 import { ICommandMatcherProps } from "../../types";
 
-function createChalkLabelFromColor(color: number) {
-  const [r, g, b] = rgba(color);
-  return chalk.rgb(r, g, b);
-}
-
 /**
  * @internal
  */
-export async function ToSetRoleColor(
+export async function shouldSetRoleColor(
   this: ICommandMatcherProps,
   color: ColorResolvable,
   roleIdentifier: string | IRoleIdentifier,
@@ -81,4 +76,9 @@ export async function ToSetRoleColor(
     )} to ${toLabel(numberColor)}\n`,
     `received: ${role.color}`,
   );
+}
+
+function createChalkLabelFromColor(color: number) {
+  const [r, g, b] = rgba(color);
+  return chalk.rgb(r, g, b);
 }

@@ -6,17 +6,18 @@ Object {
     toSetRoleColor: invalid color informed - 'null'
 ",
   "pass": false,
-  "testName": "toSetRoleColor",
+  "testName": "shouldSetRoleColor",
 }
 `;
 
 exports[`testing toSetRoleColor should fail due to role hadn't color changed 1`] = `
 Object {
   "message": "    
-    expected: change role color from 3447003 to 3426654
+    expected: change role color from [38;2;255;255;255m-1[39m to [38;2;52;73;94m3426654[39m
     received: the color was not changed
 ",
   "pass": false,
+  "testName": "shouldSetRoleColor",
 }
 `;
 
@@ -27,7 +28,7 @@ Object {
     received: null
 ",
   "pass": false,
-  "testName": "toSetRoleColor",
+  "testName": "shouldSetRoleColor",
 }
 `;
 
@@ -37,27 +38,29 @@ Object {
     can not send message to channel x
 ",
   "pass": false,
-  "testName": "toSetRoleColor",
+  "testName": "shouldSetRoleColor",
 }
 `;
 
 exports[`testing toSetRoleColor should return a not passed test due expected name did not match to received 1`] = `
 Object {
   "message": "    
-    expected: change role color from 3447003 to 1752220
+    expected: change role color from [38;2;0;0;0mundefined[39m to [38;2;26;188;156m1752220[39m
     received: 3447003
 ",
   "pass": false,
+  "testName": "shouldSetRoleColor",
 }
 `;
 
 exports[`testing toSetRoleColor should return a not passed test due to color should not change (isNot true) 1`] = `
 Object {
   "message": "    
-    expected: change role color from 3447003 to 12745742
+    expected: change role color from [38;2;0;0;0mundefined[39m to [38;2;194;124;14m12745742[39m
     received: 3447003
 ",
   "pass": false,
+  "testName": "shouldSetRoleColor",
 }
 `;
 
@@ -68,20 +71,20 @@ Object {
     received: null
 ",
   "pass": false,
-  "testName": "toSetRoleColor",
+  "testName": "shouldSetRoleColor",
 }
 `;
 
 exports[`testing toSetRoleColor should return true due to isNot true and no role change 1`] = `
 Object {
   "pass": true,
-  "testName": "toSetRoleColor",
+  "testName": "shouldSetRoleColor",
 }
 `;
 
 exports[`testing toSetRoleColor should return true due to role has changed the color (isNot false) 1`] = `
 Object {
   "pass": true,
-  "testName": "toSetRoleColor",
+  "testName": "shouldSetRoleColor",
 }
 `;
