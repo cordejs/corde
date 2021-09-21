@@ -585,7 +585,7 @@ export namespace corde {
     inGuild(id: string): InGuildMatches<TReturn>;
   }
 
-  export type MayReturnMatch = IMatches<any> | void;
+  export type MayReturnMatch = IMatches<any> | Promise<void>;
 
   /**
    * Defines all functions that can be used
@@ -930,7 +930,7 @@ export namespace corde {
     inChannel(id: string): InChannelMatches<TReturn>;
   }
 
-  type IsNotWithHaveResults = IIsNot<IMatches<void>, IToHaveResult>;
+  type IsNotWithHaveResults = IIsNot<IMatches<Promise<void>>, IToHaveResult>;
 
   export type AllMatches<TReturn extends MayReturnMatch> = IIsNot<IMatches<any>> &
     IMatches<TReturn> &
