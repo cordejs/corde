@@ -24,10 +24,11 @@ import {
   RolePermission,
 } from ".";
 import { Events } from "../core/events";
+import { Queue } from "../data-structures";
 
 export interface ITestReport {
   pass: boolean;
-  testName: string;
+  testName?: string;
   message?: string;
   trace?: string;
 }
@@ -109,10 +110,17 @@ export type Primitive = number | string | boolean | bigint;
 export type ResolveFunction<TResult> = (value: TResult) => void;
 export type RejectFunction = (reason?: any) => void;
 export type EmojisType = string[] | IEmoji[] | (string | IEmoji)[];
-export type Nullable<T> = T | undefined;
+export type Nullable<T> = T | undefined | null;
 
 export type FullPrimitives = (Primitive & undefined) | null;
 export type DeepReadonly<T> = T extends FullPrimitives ? T : DeepReadonlyObject<T>;
+
+export interface IEntityHook {
+  readonly beforeEachHooks: Queue<VoidLikeFunction>;
+  readonly beforeStartHooks: Queue<VoidLikeFunction>;
+  readonly afterAllHooks: Queue<VoidLikeFunction>;
+  readonly afterEachHooks: Queue<VoidLikeFunction>;
+}
 
 type DeepReadonlyObject<T> = {
   readonly [P in keyof T]: DeepReadonly<T[P]>;
@@ -161,10 +169,8 @@ export interface IAssertionProps {
  * Represents **test** structure
  */
 export interface ITest {
-  name?: string | number | boolean;
-  subTests?: ITest[];
-  testsFunctions: TestFunctionType[];
-  testsReports?: ITestReport[];
+  toResolveName: () => Promise<string | number | boolean>;
+  action: VoidLikeFunction;
 }
 
 /**
@@ -174,6 +180,10 @@ export interface IGroup {
   name?: string | number | boolean;
   subGroups?: IGroup[];
   tests: ITest[];
+  beforeEachHooks: Queue<VoidLikeFunction>;
+  afterEachHooks: Queue<VoidLikeFunction>;
+  afterAllHooks: Queue<VoidLikeFunction>;
+  beforeAllHooks: Queue<VoidLikeFunction>;
 }
 
 /**

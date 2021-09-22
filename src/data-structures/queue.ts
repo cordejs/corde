@@ -18,6 +18,10 @@ export class Queue<T extends GenericFunction> {
   private readonly _funcs: Map<string, T>;
   private _defaultParameters: Parameters<T>[];
 
+  [Symbol.iterator]() {
+    return this._funcs.values();
+  }
+
   /**
    * Gets default parameters added.
    */
@@ -27,10 +31,6 @@ export class Queue<T extends GenericFunction> {
 
   get size() {
     return this._funcs.size;
-  }
-
-  get hasFunctions() {
-    return this._funcs.size > 0;
   }
 
   get hasDefaultParameters() {
@@ -89,7 +89,7 @@ export class Queue<T extends GenericFunction> {
   async executeAsync<K extends ParametersAsOptional<T>, U extends ReturnType<T>>(
     ...params: K
   ): Promise<U[]> {
-    if (!this.hasFunctions) {
+    if (this.isEmpty()) {
       return [];
     }
 
@@ -112,7 +112,7 @@ export class Queue<T extends GenericFunction> {
    * @param params Parameters to be injected on function in queue.
    */
   executeSync<K extends ParametersAsOptional<T>, U extends ReturnType<T>>(...params: K): U[] {
-    if (!this.hasFunctions) {
+    if (this.isEmpty()) {
       return [];
     }
 
@@ -141,7 +141,7 @@ export class Queue<T extends GenericFunction> {
     catchAction?: (error: any) => void,
     ...params: K
   ): U[] {
-    if (!this.hasFunctions) {
+    if (this.isEmpty()) {
       return [];
     }
     const parameters = [...params, ...this._defaultParameters];
@@ -175,7 +175,7 @@ export class Queue<T extends GenericFunction> {
     catchAction?: GenericFunction,
     ...params: K
   ) {
-    if (!this.hasFunctions) {
+    if (this.isEmpty()) {
       return [];
     }
 
@@ -205,7 +205,7 @@ export class Queue<T extends GenericFunction> {
    * @param params Parameters to the functions.
    */
   executeWithCatchCollectSync<K extends ParametersAsOptional<T>>(...params: K) {
-    if (!this.hasFunctions) {
+    if (this.isEmpty()) {
       return [];
     }
 
@@ -230,7 +230,7 @@ export class Queue<T extends GenericFunction> {
    * @param params Parameters to the functions.
    */
   async executeWithCatchCollectAsync<K extends ParametersAsOptional<T>>(...params: K) {
-    if (!this.hasFunctions) {
+    if (this.isEmpty()) {
       return [];
     }
 
@@ -314,7 +314,7 @@ export class Queue<T extends GenericFunction> {
    * queue3.isDefaultArgumentsValid(1); // true - expect 1 arg, received 1
    */
   isDefaultArgumentsValid() {
-    if (!this.hasFunctions) {
+    if (this.isEmpty()) {
       return true;
     }
 
@@ -327,10 +327,18 @@ export class Queue<T extends GenericFunction> {
   }
 
   /**
+   * Check if any function is added to this queue.
+   * @returns True if no function is enqueued, False if does.
+   */
+  isEmpty() {
+    return this.size === 0;
+  }
+
+  /**
    * Gets the first functions queued or null if there no functions queued.
    */
   first() {
-    if (!this.hasFunctions) {
+    if (this.isEmpty()) {
       return null;
     }
 

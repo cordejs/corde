@@ -1,4 +1,4 @@
-import { IConfigOptions, ICordeBot, TestFunctionType } from "../types";
+import { IConfigOptions, ICordeBot } from "../types";
 import { Config } from "./config";
 import { Client } from "discord.js";
 import { CordeBot } from "../core/cordeBot";
@@ -6,6 +6,8 @@ import { ConfigError } from "../errors";
 import path from "path";
 import { replaceAll } from "../utils";
 import { ROOT_DIR } from "../consts";
+import { IInternalEvents } from "../core/internalEvents";
+import { EventEmitter } from "stream";
 
 const Environment = {
   isUnityTest: process.env.ENV === "UNITY_TEST",
@@ -16,6 +18,14 @@ const Environment = {
  * @internal
  */
 class Runtime {
+  private _internalEvents: IInternalEvents;
+  private static _instance: Runtime;
+  configFilePath!: string;
+  files!: string[];
+
+  private readonly _configs: Config;
+  private _bot!: ICordeBot;
+
   get bot() {
     if (!this._bot) {
       this._bot = this.initBot();
@@ -89,16 +99,14 @@ class Runtime {
     return this._configs.modulePathIgnorePatterns;
   }
 
-  private constructor() {
-    this._configs = new Config();
+  get internalEvents() {
+    return this._internalEvents;
   }
 
-  private static _instance: Runtime;
-  configFilePath!: string;
-  files!: string[];
-
-  private readonly _configs: Config;
-  private _bot!: ICordeBot;
+  private constructor() {
+    this._configs = new Config();
+    this._internalEvents = new EventEmitter();
+  }
 
   static getInstance() {
     if (!Runtime._instance) {
@@ -147,10 +155,6 @@ class Runtime {
 
   loginBot(token: string) {
     return this.bot.login(token);
-  }
-
-  injectBot(fn: TestFunctionType) {
-    return fn(this.bot);
   }
 
   initBot() {

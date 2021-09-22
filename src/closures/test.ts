@@ -1,3 +1,4 @@
+import { runtime } from "../common/runtime";
 import { testCollector } from "../common/testCollector";
 import { VoidLikeFunction } from "../types";
 import { executePromiseWithTimeout, resolveName } from "../utils";
@@ -19,34 +20,24 @@ export const test = <T extends any>(
   timeout?: number | undefined,
 ) => {
   const _internalTest = async () => {
-    testCollector.isInsideTestClausure = true;
+    testCollector.currentTestFile.isInsideTestClausure = true;
 
     if (assertion) {
       await assertion();
-
-      const testName = await resolveName(expectationDescription);
-      if (testCollector.testsFunctions && testCollector.testsFunctions.length) {
-        testCollector.tests.push({
-          name: testName,
-          testsFunctions: testCollector.cloneTestFunctions(),
-        });
-      }
     }
 
-    testCollector.testsFunctions = [];
-    testCollector.isInsideTestClausure = false;
+    testCollector.currentTestFile.isInsideTestClausure = false;
   };
 
-  if (timeout) {
-    testCollector.addToGroupClousure(async () => {
-      await executePromiseWithTimeout<void>(async (resolve) => {
+  testCollector.currentTestFile.addTest({
+    action: () => {
+      return executePromiseWithTimeout<void>(async (resolve) => {
         await _internalTest();
         resolve();
-      }, timeout);
-    });
-  } else {
-    testCollector.addToTestClousure(async () => await _internalTest());
-  }
+      }, timeout ?? runtime.timeout);
+    },
+    toResolveName: () => resolveName(expectationDescription),
+  });
 };
 
 /**

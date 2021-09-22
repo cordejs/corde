@@ -17,10 +17,6 @@ describe("testing queue structure", () => {
       expect(queue.defaultParameters.length).toEqual(0);
     });
 
-    it("hasFunctions should be false after initialization", () => {
-      expect(queue.hasFunctions).toBeFalsy();
-    });
-
     it("validateDefaultArguments should be false after initialization", () => {
       expect(queue.isDefaultArgumentsValid()).toBeTruthy();
     });
@@ -571,6 +567,17 @@ describe("testing queue structure", () => {
     it("first should return something", () => {
       numberQueue.enqueue(() => 1);
       expect(numberQueue.first()).toBeTruthy();
+    });
+  });
+
+  describe("testing isEmpty", () => {
+    it("should return true", () => {
+      expect(numberQueue.isEmpty()).toBeTruthy();
+    });
+
+    it("should return false", () => {
+      numberQueue.enqueue(() => 1);
+      expect(numberQueue.isEmpty()).toBeFalsy();
     });
   });
 });

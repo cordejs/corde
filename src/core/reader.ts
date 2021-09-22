@@ -1,12 +1,12 @@
 /* eslint-disable no-console */
 import fs from "fs";
 import path from "path";
-import { runtime } from "../common/runtime";
 import { printHookErrors } from "../common/printHookError";
+import { runtime } from "../common/runtime";
 import { testCollector } from "../common/testCollector";
 import { FileError } from "../errors";
-import { IConfigOptions, ITestFilePattern, ITestFile } from "../types";
-import { utils } from "../utils";
+import { IConfigOptions, ITestFilePattern } from "../types";
+import { importFile, safeImportFile, utils } from "../utils";
 
 export class Reader {
   /**
@@ -42,8 +42,7 @@ export class Reader {
     }
   }
 
-  async getTestsFromFiles(filesPattern: ITestFilePattern): Promise<ITestFile[]> {
-    const testMatches: ITestFile[] = [];
+  async getTestsFromFiles(filesPattern: ITestFilePattern) {
     if (!filesPattern || !filesPattern.filesPattern.length) {
       throw new FileError("No file was informed.");
     }
@@ -60,59 +59,24 @@ export class Reader {
     for (const file of filesPath) {
       const extension = path.extname(file);
       if (runtime.extensions?.includes(extension)) {
+        const resolvedCwd = process.cwd().replace(/\\/g, "/");
+        testCollector.createTestFile(file.replace(resolvedCwd + "/", ""));
+
         if (runtime.exitOnFileReadingError) {
-          await import(file);
+          await importFile(file);
         } else {
-          try {
-            await import(file);
-          } catch (error) {
-            console.error(error);
-            continue;
-          }
+          await safeImportFile(file, console.error);
+        }
+
+        const groupErros = await testCollector.executeGroupClojure();
+
+        if (groupErros && groupErros.length) {
+          printHookErrors(groupErros);
         }
       }
-
-      /**
-       * This hooks is located here because after load the file,
-       * We have to load the tests, and sometimes the user may,
-       * expect to have something loaded in the hook above,
-       * for instance, in beforeStart hook he inits the boot login,
-       * and in a test, he get some data from the bot.
-       */
-
-      const _errors = await testCollector.beforeStartFunctions.executeWithCatchCollectAsync();
-
-      if (_errors && _errors.length) {
-        printHookErrors(_errors);
-      }
-
-      const groupErros = await testCollector.executeGroupClojure();
-
-      if (groupErros && groupErros.length) {
-        printHookErrors(groupErros);
-      }
-
-      const testErrors = await testCollector.executeTestClojure();
-
-      if (testErrors && testErrors.length) {
-        printHookErrors(testErrors);
-      }
-
-      this.addTestsGroupmentToGroupIfExist();
-      this.addIsolatedTestFunctionsToGroupIfExists();
-
-      const resolvedCwd = process.cwd().replace(/\\/g, "/");
-
-      testMatches.push({
-        path: file.replace(resolvedCwd + "/", ""),
-        groups: testCollector.groups.slice(),
-        isEmpty: testCollector.groups.length === 0,
-      });
-
-      testCollector.groups = [];
     }
 
-    return testMatches;
+    return testCollector.testFiles;
   }
 
   private loadConfigFromConfigFilePath(): IConfigOptions {
@@ -130,22 +94,6 @@ export class Reader {
       return require(filePath);
     } else {
       throw new FileError(`Extension '${fileExt}' is not supported`);
-    }
-  }
-
-  private addTestsGroupmentToGroupIfExist() {
-    if (testCollector.tests && testCollector.tests.length > 0) {
-      const testsCloned = testCollector.tests.slice();
-      testCollector.groups.push({ tests: testsCloned });
-      testCollector.tests = [];
-    }
-  }
-
-  private addIsolatedTestFunctionsToGroupIfExists() {
-    if (testCollector.hasIsolatedTestFunctions()) {
-      const testsCloned = testCollector.cloneIsolatedTestFunctions();
-      testCollector.groups.push({ tests: [{ testsFunctions: testsCloned }] });
-      testCollector.clearIsolatedTestFunctions();
     }
   }
 }

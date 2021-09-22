@@ -1,3 +1,4 @@
+import { Group } from "../common/Group";
 import { testCollector } from "../common/testCollector";
 import { VoidLikeFunction } from "../types";
 import { resolveName } from "../utils";
@@ -18,37 +19,21 @@ export const group = <T extends any>(
   testDefinitions: VoidLikeFunction,
 ) => {
   const _internalGroup = async () => {
-    testCollector.isInsideGroupClausure = true;
+    if (testCollector.isInsideTestClausure) {
+      throw new Error("Cannot nest a group inside a test");
+    }
+    testCollector.currentTestFile.isInsideGroupClausure = true;
 
     if (testDefinitions) {
-      await testDefinitions();
-      await testCollector.executeTestClojure();
       const resolvedName = await resolveName(definitionResolvable);
-      // In case of expect() be added in test closure
-      // that is contained in testDefinitions()
-      if (testCollector.tests && testCollector.tests.length > 0) {
-        testCollector.groups.push({
-          name: resolvedName,
-          tests: testCollector.tests.map((test) => test),
-        });
-      }
-
-      // Case expect() be added inside the group closure
-      if (testCollector.isInsideTestClausureFunctions()) {
-        const testsCloned = testCollector.cloneTestFunctions();
-        testCollector.groups.push({
-          name: resolvedName,
-          tests: [{ testsFunctions: testsCloned }],
-        });
-        testCollector.clearTestFunctions();
-      }
+      testCollector.currentTestFile.groups.push(new Group({ name: resolvedName }));
+      await testDefinitions();
     }
 
-    testCollector.tests = [];
-    testCollector.isInsideGroupClausure = false;
+    testCollector.currentTestFile.isInsideGroupClausure = false;
   };
 
-  testCollector.addToGroupClousure(async () => await _internalGroup());
+  testCollector.addToGroupClousure(() => _internalGroup());
 };
 
 /**

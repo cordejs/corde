@@ -7,7 +7,6 @@ import * as matchers from "./matches";
 import { ICommandMatcherProps } from "./types";
 import { runtime } from "../common/runtime";
 import { ICordeBot, ITestReport } from "../types";
-import { InternalError } from "../errors";
 
 interface ICreateMatcherParam {
   matcher: string;
@@ -20,13 +19,8 @@ interface ICreateMatcherParam {
   cordeBot?: ICordeBot;
 }
 
-interface IReportMatcher {
-  pass: boolean;
-  message: string;
-}
-
 interface IMatcher {
-  (props: ICommandMatcherProps, ...args: any[]): Promise<IReportMatcher>;
+  (props: ICommandMatcherProps, ...args: any[]): Promise<ITestReport>;
 }
 
 type KeyOfMatcher = keyof typeof matchers;
@@ -115,7 +109,9 @@ function createMatcherFn({
   isCascade,
   cordeBot,
 }: ICreateMatcherParam) {
-  return async (...args: any[]) => {
+  return async (
+    ...args: any[]
+  ): Promise<ITestReport | void | ((...args: any[]) => Promise<ITestReport>)> => {
     // If someone pass expect.any, we must invoke it to return
     // the Any matcher.
 
@@ -151,41 +147,39 @@ function createMatcherFn({
         return report;
       }
 
-      if (report.pass) {
-        testCollector.testsPass++;
-      } else {
-        testCollector.testsFailed++;
-        console.log(report.message);
-        console.log(trace);
+      if (!report.pass) {
+        report.trace = trace;
       }
 
-      return undefined;
+      runtime.internalEvents.emit("test_end", report);
     } catch (error) {
-      testCollector.testsFailed++;
-      handleError(error, trace);
-      return {
+      const failedReport: ITestReport = {
         pass: false,
-        message: error,
+        message: handleError(error),
+        trace: trace,
       };
+      runtime.internalEvents.emit("test_end", failedReport);
+      if (isDebug) {
+        return failedReport;
+      }
     }
   };
 }
-function handleError(error: any, trace: string) {
-  if (error instanceof InternalError) {
-    console.log(buildReportMessage(error.message));
-    console.log(trace);
-  } else if (error instanceof Error) {
-    console.log(buildReportMessage(error.message));
-    console.log(buildReportMessage(error.stack));
-  } else {
-    console.log(buildReportMessage(error));
+function handleError(error: any) {
+  if (error instanceof Error) {
+    return error.message;
   }
+  return error;
 }
 
 function createLocalCommand(isDebug: boolean) {
   let localExpect: any = {};
 
   localExpect = (commandName: any, channelId?: string, cordeBot?: ICordeBot) => {
+    if (!testCollector.currentTestFile.isInsideTestClausure) {
+      throw new Error("command can only be used inside a test(it) clausure");
+    }
+
     const _expect: any = {};
     _expect.not = {};
     Object.getOwnPropertyNames(matchers).forEach((matcher) => {

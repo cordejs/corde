@@ -6,7 +6,7 @@ export function beforeStart(fn: () => void | Promise<void>, timeout?: number) {
   if (isFunction(fn)) {
     const trace = getStackTrace();
     hookBuilder({
-      queueToAdd: testCollector.beforeStartFunctions,
+      hookHandler: testCollector.currentTestFile.addBeforeStartHook,
       fn,
       trace,
       errorTitle: "BeforeStartError",

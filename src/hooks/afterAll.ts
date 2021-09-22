@@ -6,7 +6,7 @@ export function afterAll(fn: () => void | Promise<void>, timeout?: number) {
   if (typeof fn === "function") {
     const trace = getStackTrace();
     hookBuilder({
-      queueToAdd: testCollector.afterAllFunctions,
+      hookHandler: testCollector.currentTestFile.addAfterAllHook,
       fn,
       trace,
       errorTitle: "AfterAllError",

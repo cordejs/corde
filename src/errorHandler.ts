@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import { runtime } from "./common/runtime";
-import { testCollector } from "./common/testCollector";
 import { exit } from "./exit";
 
 export function initErrorHandlers() {
@@ -26,10 +25,6 @@ async function printErrorAndExit(error: unknown) {
 
   if (runtime.isBotLoggedIn()) {
     runtime.logoffBot();
-  }
-
-  if (testCollector.afterAllFunctions) {
-    await testCollector.afterAllFunctions.executeAsync();
   }
 
   if (process.env.ENV !== "TEST") {

@@ -9,9 +9,18 @@ import { Config } from "../types";
 import { reader } from "../core/reader";
 import { initEnvVariables } from "../envVariables";
 import { initErrorHandlers } from "../errorHandler";
+import injectGlobals from "../global/init";
+import { runtime } from "../common/runtime";
 
 initErrorHandlers();
 initEnvVariables();
+
+// global variables can not be injected when running unity tests
+// to not conflit with jest
+
+if (!runtime.environment.isUnityTest) {
+  injectGlobals();
+}
 
 export const program = new Command();
 

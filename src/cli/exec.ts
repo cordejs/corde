@@ -2,7 +2,6 @@
 import chalk from "chalk";
 import ora, { Color, Ora } from "ora";
 import { runtime } from "../common/runtime";
-import { testCollector } from "../common/testCollector";
 import { reader } from "../core/reader";
 import { summary } from "../core/summary";
 import { TestExecutor } from "../core/testExecutor";
@@ -105,14 +104,6 @@ async function finishProcess(code: number, error?: any): Promise<never> {
   try {
     if (error) {
       console.log(error);
-    }
-
-    if (testCollector.afterAllFunctions.hasFunctions) {
-      const exceptions = await testCollector.afterAllFunctions.executeWithCatchCollectAsync();
-      if (exceptions.length) {
-        console.log(...exceptions);
-        code = 1;
-      }
     }
 
     runtime.logoffBot();
