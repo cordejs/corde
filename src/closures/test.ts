@@ -31,9 +31,13 @@ export const test = <T extends any>(
 
   testCollector.currentTestFile.addTest({
     action: () => {
-      return executePromiseWithTimeout<void>(async (resolve) => {
-        await _internalTest();
-        resolve();
+      return executePromiseWithTimeout<void>(async (resolve, reject) => {
+        try {
+          await _internalTest();
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
       }, timeout ?? runtime.timeout);
     },
     toResolveName: () => resolveName(expectationDescription),

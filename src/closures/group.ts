@@ -19,19 +19,23 @@ export const group = <T extends any>(
   testDefinitions: VoidLikeFunction,
 ) => {
   const _internalGroup = async () => {
-    if (testCollector.isInsideTestClausure) {
-      throw new Error("Cannot nest a group inside a test");
-    }
     testCollector.currentTestFile.isInsideGroupClausure = true;
 
     if (testDefinitions) {
       const resolvedName = await resolveName(definitionResolvable);
-      testCollector.currentTestFile.groups.push(new Group({ name: resolvedName }));
+      const groupEntity = new Group({ name: resolvedName });
+      testCollector.currentTestFile.currentGroup = groupEntity;
+      testCollector.currentTestFile.groups.push(groupEntity);
       await testDefinitions();
+      testCollector.currentTestFile.currentGroup = undefined;
     }
 
     testCollector.currentTestFile.isInsideGroupClausure = false;
   };
+
+  if (testCollector.currentTestFile.isInsideTestClausure) {
+    throw new Error("Cannot nest a group inside a test");
+  }
 
   testCollector.addToGroupClousure(() => _internalGroup());
 };

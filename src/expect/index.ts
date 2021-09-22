@@ -1,20 +1,14 @@
 /* eslint-disable no-console */
 import chalk from "chalk";
-import { testCollector } from "../common/testCollector";
-import { InternalError } from "../errors";
-import { ITestProps } from "../types";
+import { runtime } from "../common/runtime";
+import { ITestProps, ITestReport } from "../types";
 import { corde } from "../types/globals";
-import { buildReportMessage, getStackTrace, typeOf } from "../utils";
+import { getStackTrace, typeOf } from "../utils";
 import { any } from "./asymmetricMatcher";
 import * as matchers from "./matchers";
 
-interface IReportMatcher {
-  pass: boolean;
-  message: string;
-}
-
 interface IMatcher {
-  (props: ITestProps, ...args: any[]): IReportMatcher;
+  (props: ITestProps, ...args: any[]): ITestReport;
 }
 
 type KeyOfMatcher = keyof typeof matchers;
@@ -24,7 +18,7 @@ function pickFn(name: KeyOfMatcher) {
 }
 
 function createMatcherFn(matcher: string, isNot: boolean, expected: any, isDebug: boolean) {
-  return (...args: any[]) => {
+  return (...args: any[]): ITestReport | void => {
     // If someone pass expect.any, we must invoke it to return
     // the Any matcher.
 
@@ -86,35 +80,34 @@ function createMatcherFn(matcher: string, isNot: boolean, expected: any, isDebug
       };
 
       const report = matcherFn.bind(props, ...args)();
-      if (report.pass) {
-        testCollector.testsPass++;
-      } else {
-        testCollector.testsFailed++;
-        console.log(report.message);
-        console.log(trace);
+      if (!report.pass) {
+        report.trace = trace;
       }
+
+      runtime.internalEvents.emit("test_end", report);
 
       if (isDebug) {
         return report;
       }
     } catch (error) {
-      testCollector.testsFailed++;
-      handleError(error, trace);
-      return error;
+      const failedReport: ITestReport = {
+        pass: false,
+        message: handleError(error),
+        trace: trace,
+      };
+      runtime.internalEvents.emit("test_end", failedReport);
+      if (isDebug) {
+        return failedReport;
+      }
     }
   };
 }
 
-function handleError(error: any, trace: string) {
-  if (error instanceof InternalError) {
-    console.log(buildReportMessage(error.message));
-    console.log(trace);
-  } else if (error instanceof Error) {
-    console.log(buildReportMessage(error.message));
-    console.log(buildReportMessage(error.stack));
-  } else {
-    console.log(buildReportMessage(error));
+function handleError(error: any) {
+  if (error instanceof Error) {
+    return error.message;
   }
+  return error;
 }
 
 function createLocalExpect(isDebug: boolean) {

@@ -14,7 +14,7 @@ export class TestFile implements IEntityHook {
 
   isInsideGroupClausure: boolean;
   isInsideTestClausure: boolean;
-  currentGroup!: Group;
+  currentGroup?: Group;
 
   constructor(path: string) {
     this.path = path;

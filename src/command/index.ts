@@ -143,15 +143,15 @@ function createMatcherFn({
 
       const report = await fn();
 
-      if (isDebug) {
-        return report;
-      }
-
       if (!report.pass) {
         report.trace = trace;
       }
 
       runtime.internalEvents.emit("test_end", report);
+
+      if (isDebug) {
+        return report;
+      }
     } catch (error) {
       const failedReport: ITestReport = {
         pass: false,
@@ -165,6 +165,7 @@ function createMatcherFn({
     }
   };
 }
+
 function handleError(error: any) {
   if (error instanceof Error) {
     return error.message;
