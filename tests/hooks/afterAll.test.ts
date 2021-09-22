@@ -1,38 +1,53 @@
 import { testCollector } from "../../src/common/testCollector";
-import { afterAll as _afterAll } from "../../src/hooks";
 import { Queue } from "../../src/data-structures";
+import { afterAll as hook } from "../../src/hooks";
+import { VoidLikeFunction } from "../../src/types";
 import { wait } from "../../src/utils";
 
-describe("Testing afterAll function", () => {
-  afterEach(() => {
-    testCollector.afterAllFunctions = new Queue<() => void>();
+let queue: Queue<VoidLikeFunction>;
+
+describe("testing beforeEach function", () => {
+  beforeEach(() => {
+    testCollector.clearTestFiles();
+    testCollector.createTestFile("test");
+    queue = testCollector.currentTestFile.afterAllHooks;
   });
 
-  it("Should add a function", () => {
+  it("should add a function", () => {
     let a = 1;
-    _afterAll(() => {
+
+    hook(() => {
       a = 2;
     });
 
-    testCollector.afterAllFunctions.executeSync();
+    queue.executeSync();
     expect(a).toBe(2);
+  });
+
+  it("should throw error and get this error", async () => {
+    hook(() => {
+      throw new Error();
+    });
+
+    const errors = await queue.executeWithCatchCollectAsync();
+    expect(errors.length).toBeGreaterThan(0);
+    expect(errors).toMatchSnapshot();
   });
 
   it("should execute a async function", async () => {
     let a = 0;
-    _afterAll(async () => {
+    hook(async () => {
       await wait(100);
       a = 1;
     });
 
-    await testCollector.afterAllFunctions.executeWithCatchCollectAsync();
+    await queue.executeWithCatchCollectAsync();
     expect(a).toEqual(1);
   });
 
   it("Should do nothing", () => {
-    _afterAll(undefined);
-
-    const length = testCollector.afterAllFunctions.size;
+    hook(undefined);
+    const length = queue.size;
     expect(length).toBe(0);
   });
 });

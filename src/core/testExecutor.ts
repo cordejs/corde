@@ -82,7 +82,7 @@ export class TestExecutor {
     testFileTimer.start();
     const logIndex = this._logUpdate.append(`${TAG_PENDING()}  ${testFile.path}`);
 
-    await this.executeHookFunction(testFile.beforeStartHooks);
+    await this.executeHookFunction(testFile.beforeAllHooks);
 
     for (const group of testFile.groups) {
       const allTestsPassed = await this.executeGroup(group, semiReport, testFile);
@@ -115,7 +115,7 @@ export class TestExecutor {
 
   private async executeGroup(group: Group, semiReport: ISemiRunnerReport, testFile: TestFile) {
     let fileHasPassed = true;
-    await this.executeHookFunction(group.beforeStartHooks);
+    await this.executeHookFunction(group.beforeAllHooks);
     for (const test of group.tests) {
       const hasPassed = await this.executeTest(test, semiReport, testFile, group);
       if (!hasPassed) {

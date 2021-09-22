@@ -5,7 +5,7 @@ import corde from "../../lib";
 let role = null;
 const roleName = "role-to-delete";
 
-corde.beforeStart(async () => {
+corde.beforeAll(async () => {
   role = corde.bot.getRole({ name: roleName });
   if (!role) {
     role = await corde.bot.createRole({

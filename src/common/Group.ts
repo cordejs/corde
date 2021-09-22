@@ -13,13 +13,13 @@ export class Group implements IEntityHook {
   readonly beforeEachHooks: Queue<VoidLikeFunction>;
   readonly afterEachHooks: Queue<VoidLikeFunction>;
   readonly afterAllHooks: Queue<VoidLikeFunction>;
-  readonly beforeStartHooks: Queue<VoidLikeFunction>;
+  readonly beforeAllHooks: Queue<VoidLikeFunction>;
 
   constructor({ name, tests }: IBaseGroup) {
     this.name = name;
     this.tests = tests ?? [];
     this.beforeEachHooks = new Queue();
-    this.beforeStartHooks = new Queue();
+    this.beforeAllHooks = new Queue();
     this.afterEachHooks = new Queue();
     this.afterAllHooks = new Queue();
   }

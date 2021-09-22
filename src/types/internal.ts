@@ -117,7 +117,7 @@ export type DeepReadonly<T> = T extends FullPrimitives ? T : DeepReadonlyObject<
 
 export interface IEntityHook {
   readonly beforeEachHooks: Queue<VoidLikeFunction>;
-  readonly beforeStartHooks: Queue<VoidLikeFunction>;
+  readonly beforeAllHooks: Queue<VoidLikeFunction>;
   readonly afterAllHooks: Queue<VoidLikeFunction>;
   readonly afterEachHooks: Queue<VoidLikeFunction>;
 }

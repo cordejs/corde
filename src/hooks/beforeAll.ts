@@ -2,14 +2,14 @@ import { testCollector } from "../common/testCollector";
 import { getStackTrace, isFunction } from "../utils";
 import { hookBuilder } from "./hookBuilder";
 
-export function beforeStart(fn: () => void | Promise<void>, timeout?: number) {
+export function beforeAll(fn: () => void | Promise<void>, timeout?: number) {
   if (isFunction(fn)) {
     const trace = getStackTrace();
     hookBuilder({
-      hookHandler: testCollector.currentTestFile.addBeforeStartHook,
+      hookHandler: (fn) => testCollector.currentTestFile.addBeforeAllHook(fn),
       fn,
       trace,
-      errorTitle: "BeforeStartError",
+      errorTitle: "BeforeAllError",
       timeout,
     });
   }

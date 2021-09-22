@@ -72,13 +72,13 @@ const testFiles: ITestFile[] = [
   },
   {
     id: 9,
-    folder: "beforeStart",
+    folder: "beforeAll",
     testFile: "test1.spec.ts",
     exitCodeExpectation: 0,
   },
   {
     id: 10,
-    folder: "beforeStart",
+    folder: "beforeAll",
     testFile: "test2.spec.ts",
     exitCodeExpectation: 0,
   },

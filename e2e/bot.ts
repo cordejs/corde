@@ -54,7 +54,7 @@ export function getRoleManager() {
 }
 
 /**
- * Use this functions before use sendMessage (add it to **corde.beforeStart**)
+ * Use this functions before use sendMessage (add it to **corde.beforeAll**)
  */
 export async function login(isDebugMode?: boolean) {
   if (isDebugMode) {

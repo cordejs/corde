@@ -4,7 +4,7 @@ import { runtime } from "../../src/common/runtime";
 import { testCollector } from "../../src/common/testCollector";
 import { reader } from "../../src/core/reader";
 import { FileError } from "../../src/errors";
-import { beforeStart as _beforeStart } from "../../src/hooks";
+import { beforeAll as _beforeAll } from "../../src/hooks";
 import { ITestFile } from "../../src/types";
 import consts from "../mocks/constsNames";
 
@@ -79,7 +79,7 @@ describe("reader class", () => {
       });
 
       it("should get files with fail in execution of hook, but without stop execution", async () => {
-        _beforeStart(() => {
+        _beforeAll(() => {
           throw new Error();
         });
 

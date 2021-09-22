@@ -5,7 +5,7 @@ import { Group } from "./Group";
 export class TestFile implements IEntityHook {
   readonly path: string;
   readonly beforeEachHooks: Queue<VoidLikeFunction>;
-  readonly beforeStartHooks: Queue<VoidLikeFunction>;
+  readonly beforeAllHooks: Queue<VoidLikeFunction>;
   readonly afterAllHooks: Queue<VoidLikeFunction>;
   readonly afterEachHooks: Queue<VoidLikeFunction>;
 
@@ -23,7 +23,7 @@ export class TestFile implements IEntityHook {
     this.groups = [];
     this.tests = [];
     this.afterAllHooks = new Queue();
-    this.beforeStartHooks = new Queue();
+    this.beforeAllHooks = new Queue();
     this.beforeEachHooks = new Queue();
     this.afterEachHooks = new Queue();
   }
@@ -57,8 +57,8 @@ export class TestFile implements IEntityHook {
     this.addToHook(fn, "beforeEachHooks");
   }
 
-  addBeforeStartHook(fn: VoidLikeFunction) {
-    this.addToHook(fn, "beforeStartHooks");
+  addBeforeAllHook(fn: VoidLikeFunction) {
+    this.addToHook(fn, "beforeAllHooks");
   }
 
   addAfterAllHook(fn: VoidLikeFunction) {
@@ -75,7 +75,7 @@ export class TestFile implements IEntityHook {
     }
 
     let hook: Nullable<Queue<VoidLikeFunction>> = null;
-    if (this.groups.length > 1) {
+    if (this.groups.length > 1 && this.isInsideGroupClausure) {
       hook = this.groups[this.groups.length - 1][hookFunctionName];
     }
 

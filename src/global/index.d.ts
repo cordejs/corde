@@ -39,7 +39,7 @@ declare const afterAll: corde.IHook;
  * // The main function of this is to start a bot if you haven't started it yet
  *
  * const bot = new Discord.Client();
- * beforeStart(async () => {
+ * beforeAll(async () => {
  *   await bot.login(config.botToken);
  * });
  *

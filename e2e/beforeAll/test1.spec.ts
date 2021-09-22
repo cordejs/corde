@@ -2,19 +2,10 @@
 import corde from "../../lib";
 import { testCollector } from "../../lib/src/common/testCollector";
 
-async function asyncFunction() {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(null);
-    }, 50);
-  });
-}
-
-corde.beforeStart(async () => {
-  await asyncFunction();
+beforeAll(() => {
   console.log("test beforeStart");
 });
 
-corde.it("", () => {
+it("", () => {
   testCollector.addTestFunction(() => Promise.resolve({ pass: true } as any));
 });

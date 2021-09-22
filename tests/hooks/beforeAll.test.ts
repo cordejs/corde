@@ -1,16 +1,16 @@
 import { testCollector } from "../../src/common/testCollector";
 import { Queue } from "../../src/data-structures";
-import { beforeEach as hook } from "../../src/hooks";
+import { beforeAll as hook } from "../../src/hooks";
 import { VoidLikeFunction } from "../../src/types";
 import { wait } from "../../src/utils";
 
 let queue: Queue<VoidLikeFunction>;
 
-describe("testing beforeEach function", () => {
+describe("testing beforeAll function", () => {
   beforeEach(() => {
     testCollector.clearTestFiles();
     testCollector.createTestFile("test");
-    queue = testCollector.currentTestFile.beforeEachHooks;
+    queue = testCollector.currentTestFile.beforeAllHooks;
   });
 
   it("should add a function", () => {

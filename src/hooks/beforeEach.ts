@@ -6,7 +6,7 @@ export function beforeEach(fn: () => void | Promise<void>, timeout?: number) {
   if (typeof fn === "function") {
     const trace = getStackTrace();
     hookBuilder({
-      hookHandler: testCollector.currentTestFile.addBeforeEachHook,
+      hookHandler: (fn) => testCollector.currentTestFile.addBeforeEachHook(fn),
       fn,
       trace,
       errorTitle: "BeforeEachError",

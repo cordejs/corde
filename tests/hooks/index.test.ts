@@ -13,6 +13,6 @@ describe("testing data hooks index", () => {
   });
 
   it("should export beforeStart", () => {
-    expect(hooks.beforeStart).toBeTruthy();
+    expect(hooks.beforeAll).toBeTruthy();
   });
 });

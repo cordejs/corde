@@ -5,7 +5,7 @@ import * as config from "../corde.config";
 export const bot = new Client();
 
 /**
- * Use this functions before use sendMessage (add it to **corde.beforeStart**)
+ * Use this functions before use sendMessage (add it to **corde.beforeAll**)
  */
 export async function login() {
   const readyPromise = new Promise<void>((resolve) => {

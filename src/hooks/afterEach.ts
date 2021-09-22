@@ -6,7 +6,7 @@ export function afterEach(fn: () => void | Promise<void>, timeout?: number) {
   if (isFunction(fn)) {
     const trace = getStackTrace();
     hookBuilder({
-      hookHandler: testCollector.currentTestFile.addAfterEachHook,
+      hookHandler: (fn) => testCollector.currentTestFile.addAfterEachHook(fn),
       fn,
       trace,
       errorTitle: "AfterEachError",

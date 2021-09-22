@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-const { test, expect, beforeStart } = require("corde");
+const { test, expect, beforeAll } = require("corde");
 const { login } = require("../src/bot");
 
-beforeStart(async () => {
+beforeAll(async () => {
   await login();
 });
 
