@@ -8,7 +8,6 @@ Object {
 ",
   "pass": false,
   "testName": "shouldMessageContentContains",
-  "trace": "    at shouldMessageContentContains Object.<anonymous> (tests\\\\command\\\\message\\\\shouldMessageContentContains.test.ts:48:37)",
 }
 `;
 
@@ -20,7 +19,6 @@ Object {
 ",
   "pass": false,
   "testName": "shouldMessageContentContains",
-  "trace": "    at shouldMessageContentContains Object.<anonymous> (tests\\\\command\\\\message\\\\shouldMessageContentContains.test.ts:80:37)",
 }
 `;
 
@@ -52,7 +50,6 @@ Object {
 ",
   "pass": false,
   "testName": "shouldMessageContentContains",
-  "trace": "    at shouldMessageContentContains Object.<anonymous> (tests\\\\command\\\\message\\\\shouldMessageContentContains.test.ts:89:37)",
 }
 `;
 
@@ -63,7 +60,6 @@ Object {
 ",
   "pass": false,
   "testName": "shouldMessageContentContains",
-  "trace": "    at shouldMessageContentContains Object.<anonymous> (tests\\\\command\\\\message\\\\shouldMessageContentContains.test.ts:38:37)",
 }
 `;
 
@@ -74,6 +70,5 @@ Object {
 ",
   "pass": false,
   "testName": "shouldMessageContentContains",
-  "trace": "    at shouldMessageContentContains Object.<anonymous> (tests\\\\command\\\\message\\\\shouldMessageContentContains.test.ts:43:37)",
 }
 `;

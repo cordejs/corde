@@ -8,7 +8,6 @@ Object {
 ",
   "pass": false,
   "testName": "shouldSetRoleMentionable",
-  "trace": "    at shouldSetRoleMentionable Object.<anonymous> (tests\\\\command\\\\role\\\\shouldSetRoleMentionable.test.ts:64:37)",
 }
 `;
 
@@ -30,7 +29,6 @@ Object {
 ",
   "pass": false,
   "testName": "shouldSetRoleMentionable",
-  "trace": "    at shouldSetRoleMentionable Object.<anonymous> (tests\\\\command\\\\role\\\\shouldSetRoleMentionable.test.ts:108:37)",
 }
 `;
 
@@ -42,7 +40,6 @@ Object {
 ",
   "pass": false,
   "testName": "shouldSetRoleMentionable",
-  "trace": "    at shouldSetRoleMentionable Object.<anonymous> (tests\\\\command\\\\role\\\\shouldSetRoleMentionable.test.ts:89:41)",
 }
 `;
 
@@ -54,7 +51,6 @@ Object {
 ",
   "pass": false,
   "testName": "shouldSetRoleMentionable",
-  "trace": "    at shouldSetRoleMentionable Object.<anonymous> (tests\\\\command\\\\role\\\\shouldSetRoleMentionable.test.ts:42:6)",
 }
 `;
 
@@ -66,7 +62,6 @@ Object {
 ",
   "pass": false,
   "testName": "shouldSetRoleMentionable",
-  "trace": "    at shouldSetRoleMentionable Object.<anonymous> (tests\\\\command\\\\role\\\\shouldSetRoleMentionable.test.ts:49:37)",
 }
 `;
 
@@ -78,7 +73,6 @@ Object {
 ",
   "pass": false,
   "testName": "shouldSetRoleMentionable",
-  "trace": "    at shouldSetRoleMentionable Object.<anonymous> (tests\\\\command\\\\role\\\\shouldSetRoleMentionable.test.ts:57:37)",
 }
 `;
 

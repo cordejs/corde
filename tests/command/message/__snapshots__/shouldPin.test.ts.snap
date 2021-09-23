@@ -7,7 +7,6 @@ Object {
 ",
   "pass": false,
   "testName": "shouldPin",
-  "trace": "    at shouldPin Object.<anonymous> (tests\\\\command\\\\message\\\\shouldPin.test.ts:85:37)",
 }
 `;
 
@@ -19,7 +18,6 @@ Object {
 ",
   "pass": false,
   "testName": "shouldPin",
-  "trace": "    at shouldPin Object.<anonymous> (tests\\\\command\\\\message\\\\shouldPin.test.ts:56:37)",
 }
 `;
 
@@ -31,7 +29,6 @@ Object {
 ",
   "pass": false,
   "testName": "shouldPin",
-  "trace": "    at shouldPin Object.<anonymous> (tests\\\\command\\\\message\\\\shouldPin.test.ts:51:37)",
 }
 `;
 
@@ -43,7 +40,6 @@ Object {
 ",
   "pass": false,
   "testName": "shouldPin",
-  "trace": "    at shouldPin Object.<anonymous> (tests\\\\command\\\\message\\\\shouldPin.test.ts:74:41)",
 }
 `;
 
@@ -80,6 +76,5 @@ Object {
 ",
   "pass": false,
   "testName": "shouldPin",
-  "trace": "    at shouldPin Object.<anonymous> (tests\\\\command\\\\message\\\\shouldPin.test.ts:41:37)",
 }
 `;

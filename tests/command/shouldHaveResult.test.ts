@@ -1,12 +1,12 @@
 import { Client } from "discord.js";
 import { ICordeBot, ITestReport } from "../../src/types";
 import MockDiscord from "../mocks/mockDiscord";
-import { createCordeBotWithMockedFunctions } from "../testHelper";
+import { createCordeBotWithMockedFunctions, testHelper } from "../testHelper";
 import { expect as _expect } from "../../src/expect";
 import { debugCommand } from "../../src/command";
 import { testCollector } from "../../src/common/testCollector";
 
-const testName = "shouldDeleteRole";
+const testName = "shouldHaveResult";
 
 const failReport: ITestReport = {
   pass: false,
@@ -25,10 +25,9 @@ function debugCon(customCommand?: string, customChannelId?: string, customClient
   return debugCommand(customCommand ?? "con", customChannelId, customClient ?? cordeClient);
 }
 
-describe("testing todoInCascade function", () => {
+describe(`testing ${testName} function`, () => {
   beforeEach(() => {
-    mockDiscord = new MockDiscord();
-    testCollector.createTestFile("");
+    [mockDiscord, cordeClient] = testHelper.initCommandTestsFixtures();
   });
 
   it("should fail due to no test was passed", async () => {
@@ -39,7 +38,7 @@ describe("testing todoInCascade function", () => {
   });
 
   it("should return true due to timeout and isNot true", async () => {
-    const report = await debugCon().shouldHaveResult(debugCommand.shouldReturn("11"));
+    const report = await debugCon().not.shouldHaveResult(debugCommand.shouldReturn("11"));
     expect(report.pass).toEqual(true);
   });
 

@@ -36,7 +36,7 @@ function debugCon(customCommand?: string, customChannelId?: string, customClient
  * They come as -1 '-'. So I in tests I'm gonna test with -2.
  */
 describe("testing ToSetRolePosition operation", () => {
-  afterEach(() => {
+  beforeEach(() => {
     [mockDiscord, cordeClient] = testHelper.initCommandTestsFixtures();
   });
 

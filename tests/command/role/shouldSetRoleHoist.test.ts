@@ -33,7 +33,7 @@ function debugCon(customCommand?: string, customChannelId?: string, customClient
 }
 
 describe(`testing ${testName} function`, () => {
-  afterEach(() => {
+  beforeEach(() => {
     [mockDiscord, cordeClient] = testHelper.initCommandTestsFixtures();
   });
 

@@ -33,7 +33,7 @@ function mockEmbedMessage() {
 }
 
 describe(`testing ${testName} function`, () => {
-  afterEach(() => {
+  beforeEach(() => {
     [mockDiscord, cordeClient] = testHelper.initCommandTestsFixtures();
   });
 

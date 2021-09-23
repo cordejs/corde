@@ -39,6 +39,10 @@ function createMatcherFn({
   cordeBot,
   guildId,
 }: ICreateMatcherParam) {
+  if (!testCollector.currentTestFile?.isInsideTestClausure && !isCascade) {
+    throw new Error("command can only be used inside a test(it) clausure");
+  }
+
   return async (
     ...args: any[]
   ): Promise<ITestReport | void | ((...args: any[]) => Promise<ITestReport>)> => {
@@ -75,7 +79,7 @@ function createMatcherFn({
 
       const report = await fn();
 
-      if (!report.pass) {
+      if (!report.pass && !isDebug) {
         report.trace = trace;
       }
 
@@ -89,8 +93,12 @@ function createMatcherFn({
         pass: false,
         testName: matcher,
         message: handleError(error),
-        trace: trace,
       };
+
+      if (!isDebug) {
+        failedReport.trace = trace;
+      }
+
       runtime.internalEvents.emit("test_end", failedReport);
       if (isDebug) {
         return failedReport;
@@ -110,10 +118,6 @@ function createLocalCommand(isDebug: boolean) {
   let localExpect: any = {};
 
   localExpect = (commandName: any, channelId?: string, cordeBot?: ICordeBot) => {
-    if (!testCollector.currentTestFile.isInsideTestClausure) {
-      throw new Error("command can only be used inside a test(it) clausure");
-    }
-
     const _expect: any = {};
     _expect.not = {};
     Object.getOwnPropertyNames(matchers).forEach((matcher) => {

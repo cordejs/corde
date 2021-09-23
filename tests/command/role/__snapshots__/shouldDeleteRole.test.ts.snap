@@ -57,7 +57,6 @@ Object {
   "message": "Cannot read property 'guild' of undefined",
   "pass": false,
   "testName": "shouldDeleteRole",
-  "trace": "    at shouldDeleteRole Object.<anonymous> (tests\\\\command\\\\role\\\\shouldDeleteRole.test.ts:85:39)",
 }
 `;
 

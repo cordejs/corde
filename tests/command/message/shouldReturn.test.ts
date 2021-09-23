@@ -47,7 +47,7 @@ describe(`testing ${testName} function`, () => {
   });
 
   it("should get success test due to timeout but isNot = true", async () => {
-    const report = await debugCon("").not.shouldReturn("pong");
+    const report = await debugCon().not.shouldReturn("pong");
     expect(report).toMatchObject(passReport);
   });
 

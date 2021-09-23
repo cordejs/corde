@@ -8,7 +8,6 @@ Object {
 ",
   "pass": false,
   "testName": "shouldSetRoleHoist",
-  "trace": "    at shouldSetRoleHoist Object.<anonymous> (tests\\\\command\\\\role\\\\shouldSetRoleHoist.test.ts:65:37)",
 }
 `;
 
@@ -30,7 +29,6 @@ Object {
 ",
   "pass": false,
   "testName": "shouldSetRoleHoist",
-  "trace": "    at shouldSetRoleHoist Object.<anonymous> (tests\\\\command\\\\role\\\\shouldSetRoleHoist.test.ts:110:37)",
 }
 `;
 
@@ -42,7 +40,6 @@ Object {
 ",
   "pass": false,
   "testName": "shouldSetRoleHoist",
-  "trace": "    at shouldSetRoleHoist Object.<anonymous> (tests\\\\command\\\\role\\\\shouldSetRoleHoist.test.ts:90:41)",
 }
 `;
 
@@ -54,7 +51,6 @@ Object {
 ",
   "pass": false,
   "testName": "shouldSetRoleHoist",
-  "trace": "    at shouldSetRoleHoist Object.<anonymous> (tests\\\\command\\\\role\\\\shouldSetRoleHoist.test.ts:99:37)",
 }
 `;
 
@@ -66,7 +62,6 @@ Object {
 ",
   "pass": false,
   "testName": "shouldSetRoleHoist",
-  "trace": "    at shouldSetRoleHoist Object.<anonymous> (tests\\\\command\\\\role\\\\shouldSetRoleHoist.test.ts:42:6)",
 }
 `;
 
@@ -78,7 +73,6 @@ Object {
 ",
   "pass": false,
   "testName": "shouldSetRoleHoist",
-  "trace": "    at shouldSetRoleHoist Object.<anonymous> (tests\\\\command\\\\role\\\\shouldSetRoleHoist.test.ts:50:6)",
 }
 `;
 
@@ -90,7 +84,6 @@ Object {
 ",
   "pass": false,
   "testName": "shouldSetRoleHoist",
-  "trace": "    at shouldSetRoleHoist Object.<anonymous> (tests\\\\command\\\\role\\\\shouldSetRoleHoist.test.ts:58:37)",
 }
 `;
 

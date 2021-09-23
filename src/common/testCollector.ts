@@ -22,11 +22,7 @@ class TestCollector {
   private groupClousureFunction: Queue<VoidLikeFunction>;
 
   get currentTestFile() {
-    const file = this.testFiles[this.testFiles.length - 1];
-    if (file) {
-      return file;
-    }
-    throw new Error("No test file was provided");
+    return this.testFiles[this.testFiles.length - 1];
   }
 
   private constructor() {

@@ -44,6 +44,20 @@ describe("testing group function", () => {
     expect(testCollector.currentTestFile.groups[0].tests).toHaveLength(1);
   });
 
+  it("should add two groups", async () => {
+    group("groupName", () => {
+      test("testName", () => {});
+    });
+
+    group("groupName", () => {
+      test("testName", () => {});
+    });
+
+    await testCollector.executeGroupClojure();
+    expect(testCollector.currentTestFile.groups).toHaveLength(2);
+    testCollector.currentTestFile.groups.forEach((g) => expect(g.tests).toHaveLength(1));
+  });
+
   it("should throw error due to group inside test closure", async () => {
     test("", () => {
       group("", () => {});
