@@ -9,6 +9,7 @@ Object {
     got: [31mstring[39m
 ",
   "pass": false,
+  "trace": "    at toBeNull tests\\\\expect\\\\matchers\\\\toBeNull.test.ts:18:52",
 }
 `;
 
@@ -21,6 +22,7 @@ Object {
     got: [31mnumber[39m
 ",
   "pass": false,
+  "trace": "    at toBeNull tests\\\\expect\\\\matchers\\\\toBeNull.test.ts:18:52",
 }
 `;
 
@@ -33,6 +35,7 @@ Object {
     got: [31msymbol[39m
 ",
   "pass": false,
+  "trace": "    at toBeNull tests\\\\expect\\\\matchers\\\\toBeNull.test.ts:18:52",
 }
 `;
 
@@ -45,6 +48,7 @@ Object {
     got: [31many[39m
 ",
   "pass": false,
+  "trace": "    at toBeNull tests\\\\expect\\\\matchers\\\\toBeNull.test.ts:18:52",
 }
 `;
 
@@ -57,6 +61,7 @@ Object {
     got: [31mboolean[39m
 ",
   "pass": false,
+  "trace": "    at toBeNull tests\\\\expect\\\\matchers\\\\toBeNull.test.ts:18:52",
 }
 `;
 
@@ -69,6 +74,7 @@ Object {
     got: [31mnull[39m
 ",
   "pass": false,
+  "trace": "    at toBeNull tests\\\\expect\\\\matchers\\\\toBeNull.test.ts:13:56",
 }
 `;
 
@@ -81,6 +87,7 @@ Object {
     got: [31mboolean[39m
 ",
   "pass": false,
+  "trace": "    at toBeNull tests\\\\expect\\\\matchers\\\\toBeNull.test.ts:18:52",
 }
 `;
 
@@ -93,5 +100,6 @@ Object {
     got: [31mundefined[39m
 ",
   "pass": false,
+  "trace": "    at toBeNull tests\\\\expect\\\\matchers\\\\toBeNull.test.ts:18:52",
 }
 `;

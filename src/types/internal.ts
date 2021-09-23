@@ -286,7 +286,7 @@ export interface IRunnerReport extends ISemiRunnerReport {
 
 export interface IExpectTestBaseParams {
   cordeBot: ICordeBot;
-  command: string | number | boolean;
+  command?: string | number | boolean;
   isNot: boolean;
   timeout: number;
   isCascade: boolean;

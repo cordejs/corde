@@ -4,8 +4,7 @@ exports[`testing toBeSameLengthAs  should return true for  and 1 (isNot false) 1
 "    
     expect([32mexpected[39m).toBeSameLengthAs([31mvalue[39m)
     
-    [1mexpected[22m and [1mvalue[22m should both be a string.
-    got: [32mstring[39m and [31mnumber[39m respectively
+    expected '' to have same length of '[31m1[39m'
 "
 `;
 
@@ -13,8 +12,7 @@ exports[`testing toBeSameLengthAs  should return true for  and any (isNot true) 
 "    
     expect([32mexpected[39m).not.toBeSameLengthAs([31mvalue[39m)
     
-    [1mexpected[22m and [1mvalue[22m should both be a string.
-    got: [32mstring[39m and [31many[39m respectively
+    expected '' to not have same length of '[31many[39m'
 "
 `;
 
@@ -22,8 +20,7 @@ exports[`testing toBeSameLengthAs  should return true for  and any(Number) (isNo
 "    
     expect([32mexpected[39m).toBeSameLengthAs([31mvalue[39m)
     
-    [1mexpected[22m and [1mvalue[22m should both be a string.
-    got: [32mstring[39m and [31many(Number)[39m respectively
+    expected '' to have same length of '[31many(Number)[39m'
 "
 `;
 
@@ -31,8 +28,7 @@ exports[`testing toBeSameLengthAs  should return true for  and any(String) (isNo
 "    
     expect([32mexpected[39m).not.toBeSameLengthAs([31mvalue[39m)
     
-    [1mexpected[22m and [1mvalue[22m should both be a string.
-    got: [32mstring[39m and [31many(String)[39m respectively
+    expected '' to not have same length of '[31many(String)[39m'
 "
 `;
 

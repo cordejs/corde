@@ -1,13 +1,13 @@
 import { Message } from "discord.js";
 import { IMessageEmbed } from "../../../types";
 import { diff, isPartialOf, keysOf, pick, typeOf } from "../../../utils";
-import { ICommandMatcherProps } from "../../types";
+import { CommandState } from "../commandstate";
 import { messageUtils } from "./messageUtils";
 
 /**
  * @internal
  */
-export async function shouldEmbedMatch(this: ICommandMatcherProps, embed: IMessageEmbed) {
+export async function shouldEmbedMatch(this: CommandState, embed: IMessageEmbed) {
   if (typeOf(embed) !== "object") {
     return this.createFailedTest(
       "expected: parameter to be an object of type IMesageEmbed \n",

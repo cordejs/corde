@@ -2,13 +2,13 @@ import { Role } from "discord.js";
 import { IRoleIdentifier } from "../../../types";
 import { typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
-import { ICommandMatcherProps } from "../../types";
+import { CommandState } from "../commandstate";
 
 /**
  * @internal
  */
 export async function shouldSetRoleMentionable(
-  this: ICommandMatcherProps,
+  this: CommandState,
   mentionable: boolean,
   roleIdentifier: string | IRoleIdentifier,
 ) {

@@ -1,14 +1,14 @@
 import { Message } from "discord.js";
 import { IMessageEditedIdentifier, IMessageEmbed, Primitive } from "../../../types";
 import { isPrimitiveValue, typeOf } from "../../../utils";
+import { CommandState } from "../commandstate";
 import { messageUtils } from "./messageUtils";
-import { ICommandMatcherProps } from "../../types";
 
 /**
  * @internal
  */
 export async function shouldEditMessage(
-  this: ICommandMatcherProps,
+  this: CommandState,
   newValue: Primitive | IMessageEmbed,
   messageIdentifier?: IMessageEditedIdentifier | string,
 ) {

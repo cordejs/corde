@@ -1,17 +1,17 @@
 /* eslint-disable no-console */
 import { testCollector } from "../common/testCollector";
 import { corde } from "../types/globals";
-import { buildReportMessage, getStackTrace } from "../utils";
+import { getStackTrace } from "../utils";
 import { any } from "../expect/asymmetricMatcher";
 import * as matchers from "./matches";
-import { ICommandMatcherProps } from "./types";
 import { runtime } from "../common/runtime";
 import { ICordeBot, ITestReport } from "../types";
+import { CommandState } from "./matches/commandstate";
 
 interface ICreateMatcherParam {
   matcher: string;
   isNot: boolean;
-  commandName?: string;
+  commandName?: string | boolean | number;
   channelId?: string;
   guildId?: string;
   isDebug: boolean;
@@ -20,84 +20,13 @@ interface ICreateMatcherParam {
 }
 
 interface IMatcher {
-  (props: ICommandMatcherProps, ...args: any[]): Promise<ITestReport>;
+  (props: CommandState, ...args: any[]): Promise<ITestReport>;
 }
 
 type KeyOfMatcher = keyof typeof matchers;
 
 function pickFn(name: KeyOfMatcher) {
   return matchers[name] as any as IMatcher;
-}
-
-// Export this function to be used in tests
-export function createMatcherObject({
-  isNot,
-  commandName,
-  matcher,
-  channelId,
-  guildId,
-  cordeBot,
-  isDebug,
-}: ICreateMatcherParam): Partial<ICommandMatcherProps> {
-  const propTemp: Partial<ICommandMatcherProps> = {
-    isNot,
-    cordeBot: isDebug ? cordeBot ?? runtime.bot : runtime.bot,
-    command: commandName,
-    timeout: runtime.timeout,
-    guildId: guildId ?? runtime.guildId,
-    channelId: channelId ?? runtime.channelId,
-    hasPassed: false,
-    testName: matcher,
-  };
-
-  // "Gambiarra" to use only properties.
-  const prop: ICommandMatcherProps = propTemp as any;
-
-  prop.createReport = function (...messages: (string | null | undefined)[]): ITestReport {
-    let message = "";
-    if (messages.length) {
-      message = buildReportMessage(...messages);
-    }
-
-    return {
-      testName: prop.testName,
-      pass: prop.hasPassed,
-      message,
-    };
-  };
-
-  prop.createPassTest = function (): ITestReport {
-    return {
-      pass: true,
-      testName: this.testName,
-    };
-  };
-
-  prop.createFailedTest = function (...messages: (string | null | undefined)[]): ITestReport {
-    const report = prop.createReport(...messages);
-    report.pass = false;
-    return report;
-  };
-
-  prop.invertHasPassedIfIsNot = function () {
-    if (prop.isNot) {
-      prop.hasPassed = !prop.hasPassed;
-    }
-  };
-
-  prop.sendCommandMessage = function (forceSend?: boolean) {
-    // Tests in cascade controus when the message should be sent.
-    if (!prop.isCascade || forceSend) {
-      return prop.cordeBot.sendTextMessage(prop.command, prop.channelIdToSendCommand);
-    }
-    return Promise.resolve();
-  };
-
-  prop.toString = function () {
-    return this.testName ?? "ExpectTest";
-  };
-
-  return prop;
 }
 
 function createMatcherFn({
@@ -108,6 +37,7 @@ function createMatcherFn({
   isDebug,
   isCascade,
   cordeBot,
+  guildId,
 }: ICreateMatcherParam) {
   return async (
     ...args: any[]
@@ -126,13 +56,15 @@ function createMatcherFn({
     try {
       const matcherFn = pickFn(matcher as KeyOfMatcher);
 
-      const props = createMatcherObject({
-        isDebug,
-        commandName,
+      const props = new CommandState({
         isNot,
-        matcher,
-        channelId,
-        cordeBot,
+        cordeBot: isDebug ? cordeBot ?? runtime.bot : runtime.bot,
+        command: commandName,
+        timeout: runtime.timeout,
+        guildId: guildId ?? runtime.guildId,
+        channelId: channelId ?? runtime.channelId,
+        testName: matcher,
+        isCascade: isCascade ?? false,
       });
 
       const fn = matcherFn.bind(props, ...args);
@@ -155,6 +87,7 @@ function createMatcherFn({
     } catch (error) {
       const failedReport: ITestReport = {
         pass: false,
+        testName: matcher,
         message: handleError(error),
         trace: trace,
       };
@@ -224,14 +157,19 @@ type Matchers = {
   not: typeof matchers;
 } & typeof matchers;
 
-type DebugExpectType<T> = {
+type DebugExpectType<T, TResponse extends "cascade" | "unique"> = {
   [P in keyof T]: T[P] extends (...args: any[]) => any
-    ? (...params: Parameters<T[P]>) => ReturnType<T[P]>
-    : DebugExpectType<T[P]>;
+    ? (
+        ...params: Parameters<T[P]>
+      ) => TResponse extends "cascade" ? () => ReturnType<T[P]> : ReturnType<T[P]>
+    : DebugExpectType<T[P], TResponse>;
 };
 
-export interface IDebugExpect {
-  <T extends any>(value: T, channelId?: string, cordeBot?: ICordeBot): DebugExpectType<Matchers>;
+export interface IDebugExpect extends DebugExpectType<Matchers, "cascade"> {
+  <T extends any>(value: T, channelId?: string, cordeBot?: ICordeBot): DebugExpectType<
+    Matchers,
+    "unique"
+  >;
   any(...classType: any[]): any;
 }
 

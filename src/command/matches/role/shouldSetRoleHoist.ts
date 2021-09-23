@@ -2,13 +2,13 @@ import { Role } from "discord.js";
 import { IRoleIdentifier } from "../../../types";
 import { roleUtils } from "../../roleUtils";
 import { typeOf } from "../../../utils";
-import { ICommandMatcherProps } from "../../types";
+import { CommandState } from "../commandstate";
 
 /**
  * @internal
  */
 export async function shouldSetRoleHoist(
-  this: ICommandMatcherProps,
+  this: CommandState,
   hoist: boolean,
   roleIdentifier: string | IRoleIdentifier,
 ) {

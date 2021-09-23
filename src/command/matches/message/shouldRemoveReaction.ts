@@ -2,7 +2,7 @@ import { MessageReaction, PartialUser, User } from "discord.js";
 import { TimeoutError } from "../../../errors";
 import { IEmoji, EmojisType, IMessageIdentifier } from "../../../types";
 import { typeOf } from "../../../utils";
-import { ICommandMatcherProps } from "../../types";
+import { CommandState } from "../commandstate";
 
 // TODO: refact it due to it's equal to ToAddReaction
 
@@ -10,7 +10,7 @@ import { ICommandMatcherProps } from "../../types";
  * @internal
  */
 export async function shouldRemoveReaction(
-  this: ICommandMatcherProps,
+  this: CommandState,
   emojis: EmojisType,
   messageIdentifier?: IMessageIdentifier | string,
 ) {

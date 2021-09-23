@@ -1,10 +1,10 @@
 import { Message } from "discord.js";
-import { ICommandMatcherProps } from "../../types";
+import { CommandState } from "../commandstate";
 
 /**
  * @internal
  */
-export async function shouldMessageContentContains(this: ICommandMatcherProps, expect: string) {
+export async function shouldMessageContentContains(this: CommandState, expect: string) {
   if (!expect || expect.trim() === "") {
     return this.createFailedTest("expected content can not be null or empty");
   }

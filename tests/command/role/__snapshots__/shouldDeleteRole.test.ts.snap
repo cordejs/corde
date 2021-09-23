@@ -54,11 +54,12 @@ Object {
 
 exports[`testing shouldDeleteRole function isNot false should return a passed report for a deleted role 1`] = `
 Object {
-  "message": "    
-    expected: role undefined to be deleted
-",
+  "message": "Cannot read property 'guild' of undefined",
   "pass": false,
   "testName": "shouldDeleteRole",
+  "trace": "    at shouldDeleteRole Object.<anonymous> (tests\\\\command\\\\role\\\\shouldDeleteRole.test.ts:85:39)
+    at runNextTicks (node:internal/process/task_queues:61:5)
+    at listOnTimeout (node:internal/timers:526:9)",
 }
 `;
 

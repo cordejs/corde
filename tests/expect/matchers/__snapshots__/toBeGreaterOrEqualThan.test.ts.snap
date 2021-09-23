@@ -9,6 +9,7 @@ Object {
     
 ",
   "pass": false,
+  "trace": "    at toBeGreaterOrEqualThan Object.<anonymous> (tests\\\\expect\\\\matchers\\\\toBeGreaterOrEqualThan.test.ts:54:52)",
 }
 `;
 
@@ -21,6 +22,7 @@ Object {
     
 ",
   "pass": false,
+  "trace": "    at toBeGreaterOrEqualThan Object.<anonymous> (tests\\\\expect\\\\matchers\\\\toBeGreaterOrEqualThan.test.ts:49:48)",
 }
 `;
 
@@ -31,6 +33,7 @@ Object {
     received: '[31mstring[39m'
 ",
   "pass": false,
+  "trace": "    at toBeGreaterOrEqualThan tests\\\\expect\\\\matchers\\\\toBeGreaterOrEqualThan.test.ts:39:55",
 }
 `;
 
@@ -41,6 +44,7 @@ Object {
     received: '[31mstring[39m'
 ",
   "pass": false,
+  "trace": "    at toBeGreaterOrEqualThan tests\\\\expect\\\\matchers\\\\toBeGreaterOrEqualThan.test.ts:39:55",
 }
 `;
 
@@ -51,6 +55,7 @@ Object {
     received: '[31mboolean[39m'
 ",
   "pass": false,
+  "trace": "    at toBeGreaterOrEqualThan tests\\\\expect\\\\matchers\\\\toBeGreaterOrEqualThan.test.ts:39:55",
 }
 `;
 
@@ -61,6 +66,7 @@ Object {
     received: '[31mboolean[39m'
 ",
   "pass": false,
+  "trace": "    at toBeGreaterOrEqualThan tests\\\\expect\\\\matchers\\\\toBeGreaterOrEqualThan.test.ts:39:55",
 }
 `;
 
@@ -71,6 +77,7 @@ Object {
     received: '[31marray[39m'
 ",
   "pass": false,
+  "trace": "    at toBeGreaterOrEqualThan tests\\\\expect\\\\matchers\\\\toBeGreaterOrEqualThan.test.ts:39:55",
 }
 `;
 
@@ -81,6 +88,7 @@ Object {
     received: '[31mstring[39m'
 ",
   "pass": false,
+  "trace": "    at toBeGreaterOrEqualThan tests\\\\expect\\\\matchers\\\\toBeGreaterOrEqualThan.test.ts:44:48",
 }
 `;
 
@@ -91,6 +99,7 @@ Object {
     received: '[31mstring[39m'
 ",
   "pass": false,
+  "trace": "    at toBeGreaterOrEqualThan tests\\\\expect\\\\matchers\\\\toBeGreaterOrEqualThan.test.ts:44:48",
 }
 `;
 
@@ -101,6 +110,7 @@ Object {
     received: '[31mboolean[39m'
 ",
   "pass": false,
+  "trace": "    at toBeGreaterOrEqualThan tests\\\\expect\\\\matchers\\\\toBeGreaterOrEqualThan.test.ts:44:48",
 }
 `;
 
@@ -111,6 +121,7 @@ Object {
     received: '[31mboolean[39m'
 ",
   "pass": false,
+  "trace": "    at toBeGreaterOrEqualThan tests\\\\expect\\\\matchers\\\\toBeGreaterOrEqualThan.test.ts:44:48",
 }
 `;
 
@@ -121,5 +132,6 @@ Object {
     received: '[31marray[39m'
 ",
   "pass": false,
+  "trace": "    at toBeGreaterOrEqualThan tests\\\\expect\\\\matchers\\\\toBeGreaterOrEqualThan.test.ts:44:48",
 }
 `;

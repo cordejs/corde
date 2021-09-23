@@ -1,39 +1,13 @@
 import { Role } from "discord.js";
 import { IRoleIdentifier, ITestReport } from "../../../types";
 import { roleUtils } from "../../roleUtils";
-import { ICommandMatcherProps } from "../../types";
-
-async function getRoleOrInvalidMessage(
-  prop: ICommandMatcherProps,
-  roleIdentifier: IRoleIdentifier,
-) {
-  const error = roleUtils.getErrorForUndefinedRoleData(roleIdentifier);
-
-  if (error) {
-    return prop.createFailedTest(error);
-  }
-
-  const role = await prop.cordeBot.findRole(roleIdentifier);
-
-  if (!role) {
-    return prop.createFailedTest(roleUtils.validateRole(role, roleIdentifier));
-  }
-
-  if (role.deleted) {
-    return prop.createFailedTest(
-      `expected: role ${role.id} not deleted\n`,
-      `received: role was deleted before call the command '${prop.command}'`,
-    );
-  }
-
-  return role;
-}
+import { CommandState } from "../commandstate";
 
 /**
  * @internal
  */
 export async function shouldDeleteRole(
-  this: ICommandMatcherProps,
+  this: CommandState,
   roleIdentifier: string | IRoleIdentifier,
 ) {
   const identifier = roleUtils.getRoleData(roleIdentifier);
@@ -75,4 +49,27 @@ export async function shouldDeleteRole(
   }
 
   return this.createReport(`expected: role ${role.id} to ${this.isNot ? "not " : ""}be deleted`);
+}
+
+async function getRoleOrInvalidMessage(prop: CommandState, roleIdentifier: IRoleIdentifier) {
+  const error = roleUtils.getErrorForUndefinedRoleData(roleIdentifier);
+
+  if (error) {
+    return prop.createFailedTest(error);
+  }
+
+  const role = await prop.cordeBot.findRole(roleIdentifier);
+
+  if (!role) {
+    return prop.createFailedTest(roleUtils.validateRole(role, roleIdentifier));
+  }
+
+  if (role.deleted) {
+    return prop.createFailedTest(
+      `expected: role ${role.id} not deleted\n`,
+      `received: role was deleted before call the command '${prop.command}'`,
+    );
+  }
+
+  return role;
 }

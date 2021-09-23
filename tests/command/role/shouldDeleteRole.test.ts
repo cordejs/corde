@@ -1,10 +1,11 @@
 import { Client } from "discord.js";
 import MockDiscord from "../../mocks/mockDiscord";
-import { createCordeBotWithMockedFunctions } from "../../testHelper";
+import { createCordeBotWithMockedFunctions, getFullConsoleLog, testHelper } from "../../testHelper";
 import { MockEvents } from "../../mocks/mockEvents";
 import { ICordeBot, ITestReport } from "../../../src/types";
 import { debugCommand } from "../../../src/command";
 import { runtime } from "../../../src/common/runtime";
+import { testCollector } from "../../../src/common/testCollector";
 
 const testName = "shouldDeleteRole";
 
@@ -26,10 +27,8 @@ function debugCon(customCommand?: string, customChannelId?: string, customClient
 }
 
 describe(`testing ${testName} function`, () => {
-  afterEach(() => {
-    mockDiscord = new MockDiscord();
-    runtime.setConfigs({ timeout: 100 }, true);
-    cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+  beforeEach(() => {
+    [mockDiscord, cordeClient] = testHelper.initCommandTestsFixtures();
   });
 
   describe("isnot true", () => {
@@ -42,6 +41,7 @@ describe(`testing ${testName} function`, () => {
       cordeClient.fetchRole = jest.fn().mockReturnValue(role);
 
       const report = await debugCon().not.shouldDeleteRole({ id: "123" });
+      delete report.trace;
 
       expect(report).toMatchObject(failReport);
       expect(report).toMatchSnapshot();
@@ -66,6 +66,7 @@ describe(`testing ${testName} function`, () => {
 
       cordeClient.fetchRole = jest.fn().mockReturnValue(mockDiscord.role);
       const report = await debugCon().not.shouldDeleteRole({ id: "123" });
+      delete report.trace;
 
       expect(report).toMatchObject(failReport);
       expect(report).toMatchSnapshot();
@@ -75,6 +76,7 @@ describe(`testing ${testName} function`, () => {
       cordeClient.fetchRole = jest.fn().mockReturnValue(mockDiscord.role);
       const roleIdentifier = { id: mockDiscord.role.id };
       const report = await debugCon().not.shouldDeleteRole(roleIdentifier);
+      delete report.trace;
 
       expect(report).toMatchObject(passReport);
       expect(report).toMatchSnapshot();
@@ -87,7 +89,6 @@ describe(`testing ${testName} function`, () => {
       events.mockOnceRoleDelete();
 
       const report = await debugCon().shouldDeleteRole({ id: "123" });
-
       expect(report).toMatchObject(failReport);
       expect(report).toMatchSnapshot();
     });
@@ -97,6 +98,7 @@ describe(`testing ${testName} function`, () => {
 
       const roleIdentifier = { id: mockDiscord.role.id };
       const report = await debugCon().shouldDeleteRole(roleIdentifier);
+      delete report.trace;
 
       expect(report).toMatchObject(failReport);
       expect(report).toMatchSnapshot();
@@ -107,6 +109,7 @@ describe(`testing ${testName} function`, () => {
       events.mockOnceRoleDelete();
 
       const report = await debugCon().shouldDeleteRole(null);
+      delete report.trace;
 
       expect(report).toMatchObject(failReport);
       expect(report).toMatchSnapshot();
@@ -119,6 +122,7 @@ describe(`testing ${testName} function`, () => {
 
       const roleIdentifier = { id: "123" };
       const report = await debugCon().shouldDeleteRole(roleIdentifier);
+      delete report.trace;
 
       expect(report).toMatchObject(failReport);
       expect(report).toMatchSnapshot();
@@ -133,6 +137,7 @@ describe(`testing ${testName} function`, () => {
 
       const roleIdentifier = { id: "123" };
       const report = await debugCon().shouldDeleteRole(roleIdentifier);
+      delete report.trace;
 
       expect(report).toMatchObject(passReport);
       expect(report).toMatchSnapshot();
@@ -146,6 +151,7 @@ describe(`testing ${testName} function`, () => {
 
       const roleIdentifier = { id: "123" };
       const report = await debugCon().not.shouldDeleteRole(roleIdentifier);
+      delete report.trace;
 
       expect(report).toMatchObject(failReport);
       expect(report).toMatchSnapshot();
@@ -169,6 +175,7 @@ describe(`testing ${testName} function`, () => {
 
       const roleIdentifier = { id: "123" };
       const report = await debugCon().shouldDeleteRole(roleIdentifier);
+      delete report.trace;
 
       expect(report).toMatchObject(failReport);
       expect(report).toMatchSnapshot();

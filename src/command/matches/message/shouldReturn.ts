@@ -1,15 +1,12 @@
 import { Message } from "discord.js";
 import { IMessageEmbed, Primitive } from "../../../types";
-import { ICommandMatcherProps } from "../../types";
+import { CommandState } from "../commandstate";
 import { messageUtils } from "./messageUtils";
 
 /**
  * @internal
  */
-export async function shouldReturn(
-  this: ICommandMatcherProps,
-  expected: Primitive | IMessageEmbed,
-) {
+export async function shouldReturn(this: CommandState, expected: Primitive | IMessageEmbed) {
   const errorReport = messageUtils.validateExpect(this, expected);
 
   if (errorReport) {

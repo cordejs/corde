@@ -3,13 +3,13 @@ import { ColorResolvable, Role } from "discord.js";
 import { IRoleIdentifier } from "../../../types";
 import { resolveColor, rgba, typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
-import { ICommandMatcherProps } from "../../types";
+import { CommandState } from "../commandstate";
 
 /**
  * @internal
  */
 export async function shouldSetRoleColor(
-  this: ICommandMatcherProps,
+  this: CommandState,
   color: ColorResolvable,
   roleIdentifier: string | IRoleIdentifier,
 ) {

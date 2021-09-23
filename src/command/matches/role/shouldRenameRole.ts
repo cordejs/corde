@@ -2,13 +2,13 @@ import { Role } from "discord.js";
 import { IRoleIdentifier } from "../../../types";
 import { typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
-import { ICommandMatcherProps } from "../../types";
+import { CommandState } from "../commandstate";
 
 /**
  * @internal
  */
 export async function shouldRenameRole(
-  this: ICommandMatcherProps,
+  this: CommandState,
   newName: string,
   roleIdentifier: IRoleIdentifier | string,
 ) {

@@ -1,7 +1,8 @@
-/// <reference types="../../src/global" />
+import { group } from "../../src/closures";
+import { command } from "../../src/command";
 
 import consts from "./constsNames";
 
-describe(consts.GROUP_1, () => {
+group(consts.GROUP_1, () => {
   command(consts.COMMAND_1).shouldReturn(consts.COMMAND_RESPONSE_1);
 });

@@ -1,5 +1,5 @@
-/// <reference types="../../src/global" />
+import { group } from "../../src/closures";
 
 import consts from "./constsNames";
 
-describe(consts.GROUP_1, () => {});
+group(consts.GROUP_1, () => {});

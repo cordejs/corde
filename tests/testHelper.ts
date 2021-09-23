@@ -4,10 +4,10 @@ import MockDiscord from "./mocks/mockDiscord";
 import { Client } from "discord.js";
 import { CordeBot } from "../src/core/cordeBot";
 import { ICordeBot, ITest, ITestFile, TestFunctionType, ITestReport } from "../src/types";
-import { ExpectTest } from "../src/command/matches/expectTest";
 import { IExpectTestBaseParams } from "../src/types";
 import { runtime } from "../src/common/runtime";
 import { buildReportMessage } from "../src/utils";
+import { testCollector } from "../src/common/testCollector";
 
 export const normalTsPath = path.resolve(process.cwd(), "corde.ts");
 export const tempTsPath = path.resolve(process.cwd(), "__corde.ts");
@@ -254,4 +254,15 @@ export function createReport(entity: Object, pass: boolean, message?: string): I
     obj.message = message;
   }
   return obj;
+}
+
+export namespace testHelper {
+  export function initCommandTestsFixtures(): [MockDiscord, ICordeBot] {
+    const file = testCollector.createTestFile("");
+    file.isInsideTestClausure = true;
+    const mockDiscord = new MockDiscord();
+    runtime.setConfigs({ timeout: 100 }, true);
+    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    return [mockDiscord, cordeClient];
+  }
 }

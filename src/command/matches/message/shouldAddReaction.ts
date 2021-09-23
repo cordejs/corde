@@ -2,34 +2,13 @@ import { MessageReaction, PartialUser, User } from "discord.js";
 import { TimeoutError } from "../../../errors";
 import { IEmoji, EmojisType, IMessageIdentifier } from "../../../types";
 import { typeOf } from "../../../utils";
-import { ICommandMatcherProps } from "../../types";
-
-function reactionsFromResponse(
-  reactionsWithAuthors: [MessageReaction, User | PartialUser | void][],
-) {
-  const emojis = reactionsWithAuthors.map((r) => r[0].emoji);
-  return emojis.map((e) => e.name).join(", ");
-}
-
-function stringifyReactionToPrint(emojis: EmojisType) {
-  return emojis
-    .map((e: string | IEmoji) => {
-      if (typeof e !== "string") {
-        if (e.id) {
-          return e.id;
-        }
-        return e.name;
-      }
-      return e;
-    })
-    .join(", ");
-}
+import { CommandState } from "../commandstate";
 
 /**
  * @internal
  */
 export async function shouldAddReaction(
-  this: ICommandMatcherProps,
+  this: CommandState,
   emojis: EmojisType,
   messageIdentifier?: IMessageIdentifier | string,
 ) {
@@ -111,4 +90,25 @@ export async function shouldAddReaction(
     `expected: ${this.isNot ? "not " : ""}to add reactions ${stringifyReactionToPrint(emojis)}\n`,
     `received: ${emojisReturned}`,
   );
+}
+
+function reactionsFromResponse(
+  reactionsWithAuthors: [MessageReaction, User | PartialUser | void][],
+) {
+  const emojis = reactionsWithAuthors.map((r) => r[0].emoji);
+  return emojis.map((e) => e.name).join(", ");
+}
+
+function stringifyReactionToPrint(emojis: EmojisType) {
+  return emojis
+    .map((e: string | IEmoji) => {
+      if (typeof e !== "string") {
+        if (e.id) {
+          return e.id;
+        }
+        return e.name;
+      }
+      return e;
+    })
+    .join(", ");
 }

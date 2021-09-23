@@ -9,6 +9,7 @@ Object {
     got: [31mfunction[39m
 ",
   "pass": false,
+  "trace": "    at toBePrimitive tests\\\\expect\\\\matchers\\\\toBePrimitive.test.ts:18:52",
 }
 `;
 
@@ -21,6 +22,7 @@ Object {
     got: [31marray[39m
 ",
   "pass": false,
+  "trace": "    at toBePrimitive tests\\\\expect\\\\matchers\\\\toBePrimitive.test.ts:18:52",
 }
 `;
 
@@ -33,6 +35,7 @@ Object {
     got: [31mobject[39m
 ",
   "pass": false,
+  "trace": "    at toBePrimitive tests\\\\expect\\\\matchers\\\\toBePrimitive.test.ts:18:52",
 }
 `;
 
@@ -45,6 +48,7 @@ Object {
     got: [31mstring[39m
 ",
   "pass": false,
+  "trace": "    at toBePrimitive tests\\\\expect\\\\matchers\\\\toBePrimitive.test.ts:13:56",
 }
 `;
 
@@ -57,6 +61,7 @@ Object {
     got: [31mnumber[39m
 ",
   "pass": false,
+  "trace": "    at toBePrimitive tests\\\\expect\\\\matchers\\\\toBePrimitive.test.ts:13:56",
 }
 `;
 
@@ -69,6 +74,7 @@ Object {
     got: [31mbigint[39m
 ",
   "pass": false,
+  "trace": "    at toBePrimitive tests\\\\expect\\\\matchers\\\\toBePrimitive.test.ts:13:56",
 }
 `;
 
@@ -81,6 +87,7 @@ Object {
     got: [31msymbol[39m
 ",
   "pass": false,
+  "trace": "    at toBePrimitive tests\\\\expect\\\\matchers\\\\toBePrimitive.test.ts:18:52",
 }
 `;
 
@@ -93,6 +100,7 @@ Object {
     got: [31many(Array)[39m
 ",
   "pass": false,
+  "trace": "    at toBePrimitive tests\\\\expect\\\\matchers\\\\toBePrimitive.test.ts:18:52",
 }
 `;
 
@@ -105,6 +113,7 @@ Object {
     got: [31many(Bigint)[39m
 ",
   "pass": false,
+  "trace": "    at toBePrimitive tests\\\\expect\\\\matchers\\\\toBePrimitive.test.ts:13:56",
 }
 `;
 
@@ -117,6 +126,7 @@ Object {
     got: [31many(Boolean)[39m
 ",
   "pass": false,
+  "trace": "    at toBePrimitive tests\\\\expect\\\\matchers\\\\toBePrimitive.test.ts:13:56",
 }
 `;
 
@@ -129,6 +139,7 @@ Object {
     got: [31many(Function)[39m
 ",
   "pass": false,
+  "trace": "    at toBePrimitive tests\\\\expect\\\\matchers\\\\toBePrimitive.test.ts:18:52",
 }
 `;
 
@@ -141,6 +152,7 @@ Object {
     got: [31many(Number)[39m
 ",
   "pass": false,
+  "trace": "    at toBePrimitive tests\\\\expect\\\\matchers\\\\toBePrimitive.test.ts:13:56",
 }
 `;
 
@@ -153,6 +165,7 @@ Object {
     got: [31many(Object)[39m
 ",
   "pass": false,
+  "trace": "    at toBePrimitive tests\\\\expect\\\\matchers\\\\toBePrimitive.test.ts:18:52",
 }
 `;
 
@@ -165,6 +178,7 @@ Object {
     got: [31many(String)[39m
 ",
   "pass": false,
+  "trace": "    at toBePrimitive tests\\\\expect\\\\matchers\\\\toBePrimitive.test.ts:13:56",
 }
 `;
 
@@ -177,6 +191,7 @@ Object {
     got: [31many(Symbol)[39m
 ",
   "pass": false,
+  "trace": "    at toBePrimitive tests\\\\expect\\\\matchers\\\\toBePrimitive.test.ts:18:52",
 }
 `;
 
@@ -189,6 +204,7 @@ Object {
     got: [31mboolean[39m
 ",
   "pass": false,
+  "trace": "    at toBePrimitive tests\\\\expect\\\\matchers\\\\toBePrimitive.test.ts:13:56",
 }
 `;
 
@@ -201,6 +217,7 @@ Object {
     got: [31mnull[39m
 ",
   "pass": false,
+  "trace": "    at toBePrimitive tests\\\\expect\\\\matchers\\\\toBePrimitive.test.ts:18:52",
 }
 `;
 
@@ -213,6 +230,7 @@ Object {
     got: [31mboolean[39m
 ",
   "pass": false,
+  "trace": "    at toBePrimitive tests\\\\expect\\\\matchers\\\\toBePrimitive.test.ts:13:56",
 }
 `;
 
@@ -225,5 +243,6 @@ Object {
     got: [31mundefined[39m
 ",
   "pass": false,
+  "trace": "    at toBePrimitive tests\\\\expect\\\\matchers\\\\toBePrimitive.test.ts:18:52",
 }
 `;

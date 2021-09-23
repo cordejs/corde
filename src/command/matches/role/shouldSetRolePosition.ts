@@ -1,13 +1,13 @@
 import { IRoleIdentifier } from "../../../types";
 import { typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
-import { ICommandMatcherProps } from "../../types";
+import { CommandState } from "../commandstate";
 
 /**
  * @internal
  */
 export async function shouldSetRolePosition(
-  this: ICommandMatcherProps,
+  this: CommandState,
   newPosition: number,
   roleIdentifier: string | IRoleIdentifier,
 ) {

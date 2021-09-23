@@ -1,5 +1,4 @@
-/// <reference types="../../src/global" />
-
+import { test } from "../../src/closures";
 import consts from "./constsNames";
 
-it(consts.TEST_1, () => {});
+test(consts.TEST_1, () => {});

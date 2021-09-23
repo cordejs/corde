@@ -2,13 +2,13 @@ import { Role } from "discord.js";
 import { IRoleIdentifier, permissionsArray, RolePermission } from "../../../types";
 import { diff, typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
-import { ICommandMatcherProps } from "../../types";
+import { CommandState } from "../commandstate";
 
 /**
  * @internal
  */
 export async function shouldSetRolePermission(
-  this: ICommandMatcherProps,
+  this: CommandState,
   roleIdentifier: string | IRoleIdentifier,
   permissions: RolePermission[],
 ) {

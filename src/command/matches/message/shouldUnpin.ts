@@ -1,13 +1,13 @@
 import { IMessageIdentifier } from "../../../types";
 import { typeOf } from "../../../utils";
-import { ICommandMatcherProps } from "../../types";
+import { CommandState } from "../commandstate";
 import { messageUtils } from "./messageUtils";
 
 /**
  * @internal
  */
 export async function shouldUnPin(
-  this: ICommandMatcherProps,
+  this: CommandState,
   messageIdentifier: IMessageIdentifier | string,
 ) {
   if (

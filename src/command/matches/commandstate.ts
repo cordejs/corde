@@ -11,19 +11,19 @@ import { buildReportMessage } from "../../utils";
  * by the inherited class.
  *
  */
-export abstract class ExpectTest {
+export class CommandState {
   protected expectation: any;
   protected hasPassed: boolean;
 
-  protected readonly isNot: boolean;
-  protected readonly command: string | number | boolean;
-  protected readonly cordeBot: ICordeBot;
-  protected readonly timeout: number;
-  protected readonly testName: string;
-  protected readonly isCascade: boolean;
-  protected readonly guildId: string | undefined;
-  protected readonly channelIdToSendCommand?: string;
-  protected readonly channelId: string;
+  readonly isNot: boolean;
+  readonly command?: string | number | boolean;
+  readonly cordeBot: ICordeBot;
+  readonly timeout: number;
+  readonly testName: string;
+  readonly isCascade: boolean;
+  readonly guildId: string | undefined;
+  readonly channelIdToSendCommand?: string;
+  readonly channelId: string;
 
   /**
    * Initialize the match class with its default values.
@@ -55,14 +55,7 @@ export abstract class ExpectTest {
     this.channelId = channelId;
   }
 
-  /**
-   * Execute the test, checking if a command did what was proposed to do.
-   *
-   * @returns A report of the executed command.
-   */
-  abstract action(...args: any[]): Promise<ITestReport>;
-
-  protected invertHasPassedIfIsNot() {
+  invertHasPassedIfIsNot() {
     if (this.isNot) {
       this.hasPassed = !this.hasPassed;
     }
@@ -77,27 +70,31 @@ export abstract class ExpectTest {
    *
    * @returns Message sent
    */
-  protected sendCommandMessage(forceSend?: boolean) {
+  sendCommandMessage(forceSend?: boolean) {
     // Tests in cascade controus when the message should be sent.
     if (!this.isCascade || forceSend) {
+      if (!this.command) {
+        throw new Error("can not send a empty message");
+      }
       return this.cordeBot.sendTextMessage(this.command, this.channelIdToSendCommand);
     }
     return Promise.resolve();
   }
 
-  protected createFailedTest(...messages: (string | null | undefined)[]): ITestReport {
+  createFailedTest(...messages: (string | null | undefined)[]): ITestReport {
     const report = this.createReport(...messages);
     report.pass = false;
     return report;
   }
 
-  protected createPassTest(): ITestReport {
+  createPassTest(): ITestReport {
     return {
       pass: true,
       testName: this.testName,
     };
   }
-  protected createReport(...messages: (string | null | undefined)[]): ITestReport {
+
+  createReport(...messages: (string | null | undefined)[]): ITestReport {
     let message = "";
     if (messages.length) {
       message = buildReportMessage(...messages);
@@ -108,9 +105,5 @@ export abstract class ExpectTest {
       pass: this.hasPassed,
       message,
     };
-  }
-
-  toString() {
-    return this.testName ?? "ExpectTest";
   }
 }
