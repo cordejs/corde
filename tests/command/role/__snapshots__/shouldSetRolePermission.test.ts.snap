@@ -8,6 +8,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldSetRolePermission",
+  "trace": "    at shouldSetRolePermission Object.<anonymous> (tests\\\\command\\\\role\\\\shouldSetRolePermission.test.ts:76:37)",
 }
 `;
 
@@ -29,6 +30,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldSetRolePermission",
+  "trace": "    at shouldSetRolePermission Object.<anonymous> (tests\\\\command\\\\role\\\\shouldSetRolePermission.test.ts:152:37)",
 }
 `;
 
@@ -40,6 +42,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldSetRolePermission",
+  "trace": "    at shouldSetRolePermission Object.<anonymous> (tests\\\\command\\\\role\\\\shouldSetRolePermission.test.ts:103:41)",
 }
 `;
 
@@ -51,6 +54,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldSetRolePermission",
+  "trace": "    at shouldSetRolePermission Object.<anonymous> (tests\\\\command\\\\role\\\\shouldSetRolePermission.test.ts:132:37)",
 }
 `;
 
@@ -62,6 +66,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldSetRolePermission",
+  "trace": "    at shouldSetRolePermission Object.<anonymous> (tests\\\\command\\\\role\\\\shouldSetRolePermission.test.ts:141:37)",
 }
 `;
 
@@ -73,6 +78,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldSetRolePermission",
+  "trace": "    at shouldSetRolePermission Object.<anonymous> (tests\\\\command\\\\role\\\\shouldSetRolePermission.test.ts:113:41)",
 }
 `;
 
@@ -84,6 +90,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldSetRolePermission",
+  "trace": "    at shouldSetRolePermission Object.<anonymous> (tests\\\\command\\\\role\\\\shouldSetRolePermission.test.ts:123:41)",
 }
 `;
 
@@ -95,6 +102,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldSetRolePermission",
+  "trace": "    at shouldSetRolePermission Object.<anonymous> (tests\\\\command\\\\role\\\\shouldSetRolePermission.test.ts:46:6)",
 }
 `;
 
@@ -106,6 +114,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldSetRolePermission",
+  "trace": "    at shouldSetRolePermission Object.<anonymous> (tests\\\\command\\\\role\\\\shouldSetRolePermission.test.ts:61:6)",
 }
 `;
 
@@ -117,6 +126,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldSetRolePermission",
+  "trace": "    at shouldSetRolePermission Object.<anonymous> (tests\\\\command\\\\role\\\\shouldSetRolePermission.test.ts:69:37)",
 }
 `;
 

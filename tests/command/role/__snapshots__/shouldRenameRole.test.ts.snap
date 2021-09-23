@@ -8,6 +8,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldRenameRole",
+  "trace": "    at shouldRenameRole Object.<anonymous> (tests\\\\command\\\\role\\\\shouldRenameRole.test.ts:64:37)",
 }
 `;
 
@@ -30,6 +31,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldRenameRole",
+  "trace": "    at shouldRenameRole Object.<anonymous> (tests\\\\command\\\\role\\\\shouldRenameRole.test.ts:98:37)",
 }
 `;
 
@@ -40,6 +42,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldRenameRole",
+  "trace": "    at shouldRenameRole Object.<anonymous> (tests\\\\command\\\\role\\\\shouldRenameRole.test.ts:109:37)",
 }
 `;
 
@@ -51,6 +54,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldRenameRole",
+  "trace": "    at shouldRenameRole Object.<anonymous> (tests\\\\command\\\\role\\\\shouldRenameRole.test.ts:89:41)",
 }
 `;
 
@@ -62,6 +66,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldRenameRole",
+  "trace": "    at shouldRenameRole Object.<anonymous> (tests\\\\command\\\\role\\\\shouldRenameRole.test.ts:42:37)",
 }
 `;
 
@@ -73,6 +78,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldRenameRole",
+  "trace": "    at shouldRenameRole Object.<anonymous> (tests\\\\command\\\\role\\\\shouldRenameRole.test.ts:49:37)",
 }
 `;
 
@@ -84,6 +90,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldRenameRole",
+  "trace": "    at shouldRenameRole Object.<anonymous> (tests\\\\command\\\\role\\\\shouldRenameRole.test.ts:57:37)",
 }
 `;
 

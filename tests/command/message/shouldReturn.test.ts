@@ -1,7 +1,7 @@
 import { Client } from "discord.js";
 import MockDiscord from "../../mocks/mockDiscord";
 import { MockEvents } from "../../mocks";
-import { createCordeBotWithMockedFunctions } from "../../testHelper";
+import { createCordeBotWithMockedFunctions, testHelper } from "../../testHelper";
 import { ICordeBot, ITestReport } from "../../../src/types";
 import { runtime } from "../../../src/common/runtime";
 
@@ -28,13 +28,7 @@ function debugCon(customCommand?: string, customChannelId?: string, customClient
 
 describe(`testing ${testName} function`, () => {
   beforeEach(() => {
-    mockDiscord = new MockDiscord();
-    runtime.setConfigs({ timeout: 100 }, true);
-    cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
-  });
-
-  afterEach(() => {
-    mockDiscord = new MockDiscord();
+    [mockDiscord, cordeClient] = testHelper.initCommandTestsFixtures();
   });
 
   it.each([[null], [undefined]])(

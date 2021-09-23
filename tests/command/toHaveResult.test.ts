@@ -1,15 +1,7 @@
 import { Client } from "discord.js";
-import { runtime } from "../../src/common/runtime";
-import { ICordeBot, TestFunctionType, ITestReport } from "../../src/types";
+import { ICordeBot, ITestReport } from "../../src/types";
 import MockDiscord from "../mocks/mockDiscord";
-import { MockEvents } from "../mocks/mockEvents";
-import {
-  createCordeBotWithMockedFunctions,
-  createReport,
-  initCordeClientWithChannel,
-  removeANSIColorStyle,
-  testUtils,
-} from "../testHelper";
+import { createCordeBotWithMockedFunctions } from "../testHelper";
 import { expect as _expect } from "../../src/expect";
 import { debugCommand } from "../../src/command";
 import { testCollector } from "../../src/common/testCollector";

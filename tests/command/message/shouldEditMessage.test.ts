@@ -1,6 +1,6 @@
 import { Client } from "discord.js";
 import MockDiscord from "../../mocks/mockDiscord";
-import { createCordeBotWithMockedFunctions, testUtils } from "../../testHelper";
+import { createCordeBotWithMockedFunctions, testHelper, testUtils } from "../../testHelper";
 import { ICordeBot, IMessageEmbed, ITestReport } from "../../../src/types";
 import { runtime } from "../../../src/common/runtime";
 import { MockEvents } from "../../mocks/mockEvents";
@@ -27,9 +27,7 @@ function debugCon(customCommand?: string, customChannelId?: string, customClient
 
 describe(`testing ${testName} function`, () => {
   afterEach(() => {
-    mockDiscord = new MockDiscord();
-    runtime.setConfigs({ timeout: 100 }, true);
-    cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    [mockDiscord, cordeClient] = testHelper.initCommandTestsFixtures();
   });
 
   it("should return a failed test due to invalid parameter (null)", async () => {

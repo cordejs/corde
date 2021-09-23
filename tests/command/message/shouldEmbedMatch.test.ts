@@ -1,6 +1,6 @@
 import { Client } from "discord.js";
 import MockDiscord from "../../mocks/mockDiscord";
-import { createCordeBotWithMockedFunctions } from "../../testHelper";
+import { createCordeBotWithMockedFunctions, testHelper } from "../../testHelper";
 import { ICordeBot, IMessageEmbed, ITestReport } from "../../../src/types";
 import { runtime } from "../../../src/common/runtime";
 import { debugCommand } from "../../../src/command";
@@ -34,9 +34,7 @@ function mockEmbedMessage() {
 
 describe(`testing ${testName} function`, () => {
   afterEach(() => {
-    mockDiscord = new MockDiscord();
-    runtime.setConfigs({ timeout: 100 }, true);
-    cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    [mockDiscord, cordeClient] = testHelper.initCommandTestsFixtures();
   });
 
   it("should return a failed test due to invalid parameter (null)", async () => {

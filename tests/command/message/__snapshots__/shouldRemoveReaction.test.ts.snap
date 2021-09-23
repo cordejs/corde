@@ -8,6 +8,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldRemoveReaction",
+  "trace": "    at shouldRemoveReaction Object.<anonymous> (tests\\\\command\\\\message\\\\shouldRemoveReaction.test.ts:47:37)",
 }
 `;
 
@@ -19,6 +20,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldRemoveReaction",
+  "trace": "    at shouldRemoveReaction Object.<anonymous> (tests\\\\command\\\\message\\\\shouldRemoveReaction.test.ts:53:37)",
 }
 `;
 
@@ -30,6 +32,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldRemoveReaction",
+  "trace": "    at shouldRemoveReaction Object.<anonymous> (tests\\\\command\\\\message\\\\shouldRemoveReaction.test.ts:42:37)",
 }
 `;
 
@@ -41,6 +44,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldRemoveReaction",
+  "trace": "    at shouldRemoveReaction Object.<anonymous> (tests\\\\command\\\\message\\\\shouldRemoveReaction.test.ts:37:6)",
 }
 `;
 
@@ -51,6 +55,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldRemoveReaction",
+  "trace": "    at shouldRemoveReaction Object.<anonymous> (tests\\\\command\\\\message\\\\shouldRemoveReaction.test.ts:93:37)",
 }
 `;
 
@@ -62,6 +67,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldRemoveReaction",
+  "trace": "    at shouldRemoveReaction Object.<anonymous> (tests\\\\command\\\\message\\\\shouldRemoveReaction.test.ts:64:37)",
 }
 `;
 
@@ -73,6 +79,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldRemoveReaction",
+  "trace": "    at shouldRemoveReaction Object.<anonymous> (tests\\\\command\\\\message\\\\shouldRemoveReaction.test.ts:72:37)",
 }
 `;
 
@@ -84,5 +91,6 @@ Object {
 ",
   "pass": false,
   "testName": "shouldRemoveReaction",
+  "trace": "    at shouldRemoveReaction Object.<anonymous> (tests\\\\command\\\\message\\\\shouldRemoveReaction.test.ts:80:41)",
 }
 `;

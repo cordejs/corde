@@ -9,6 +9,7 @@ import {
   createCordeBotWithMockedFunctions,
   createReport,
   initCordeClientWithChannel,
+  testHelper,
 } from "../../testHelper";
 
 const testName = "shouldSetRolePosition";
@@ -36,9 +37,7 @@ function debugCon(customCommand?: string, customChannelId?: string, customClient
  */
 describe("testing ToSetRolePosition operation", () => {
   afterEach(() => {
-    mockDiscord = new MockDiscord();
-    runtime.setConfigs({ timeout: 100 }, true);
-    cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    [mockDiscord, cordeClient] = testHelper.initCommandTestsFixtures();
   });
 
   it("should fail due to undefined roleIdentifier", async () => {

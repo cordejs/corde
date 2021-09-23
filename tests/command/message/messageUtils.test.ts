@@ -22,7 +22,6 @@ import {
 
 import MockDiscord from "../../mocks/mockDiscord";
 import { messageUtils } from "../../../src/command/matches/message/messageUtils";
-import { createMatcherObject } from "../../../src/command";
 
 describe("testing messageUtils", () => {
   describe("testing createNotFoundMessageForMessageData", () => {
@@ -333,23 +332,6 @@ describe("testing messageUtils", () => {
           width: 600,
         },
       });
-    });
-  });
-
-  describe("testing createReportForExpectAndResponse", () => {
-    it("should return a passed test for hasPassed true", () => {
-      const mock = new MockDiscord();
-
-      const report = messageUtils.createReportForExpectAndResponse(
-        createMatcherObject({
-          isDebug: false,
-          isNot: false,
-          matcher: "",
-        }) as any,
-        mock.message.content,
-        mock.message,
-      );
-      expect(report.pass).toBeTruthy();
     });
   });
 

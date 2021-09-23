@@ -4,6 +4,7 @@ import {
   createCordeBotWithMockedFunctions,
   createReport,
   initCordeClientWithChannel,
+  testHelper,
   testUtils,
 } from "../../testHelper";
 import { ICordeBot, ITestReport } from "../../../src/types";
@@ -33,9 +34,7 @@ function debugCon(customCommand?: string, customChannelId?: string, customClient
 
 describe(`testing ${testName} function`, () => {
   afterEach(() => {
-    mockDiscord = new MockDiscord();
-    runtime.setConfigs({ timeout: 100 }, true);
-    cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    [mockDiscord, cordeClient] = testHelper.initCommandTestsFixtures();
   });
 
   it("should fail due to undefined roleIdentifier", async () => {

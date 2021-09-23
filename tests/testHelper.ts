@@ -8,6 +8,7 @@ import { IExpectTestBaseParams } from "../src/types";
 import { runtime } from "../src/common/runtime";
 import { buildReportMessage } from "../src/utils";
 import { testCollector } from "../src/common/testCollector";
+import { CommandState } from "../src/command/matches/commandstate";
 
 export const normalTsPath = path.resolve(process.cwd(), "corde.ts");
 export const tempTsPath = path.resolve(process.cwd(), "__corde.ts");
@@ -140,55 +141,7 @@ export const testFileNames = [
 
 export const testNames = ["test case1", "test case2", "test case3", "test case4"];
 
-export function generateTestFile(generatorData: TestFileGeneratorInfo) {
-  const testMatches: ITestFile[] = [];
-  const testFunctions: TestFunctionType[] = [];
-  const tests: ITest[] = [];
-
-  if (generatorData.testFunctionsReport) {
-    for (const report of generatorData.testFunctionsReport) {
-      testFunctions.push(() => Promise.resolve(report));
-    }
-  }
-
-  if (generatorData.amountOfTestFunctions) {
-    for (let i = 0; i < generatorData.amountOfTestFunctions; i++) {
-      testFunctions.push(() =>
-        Promise.resolve<ITestReport>({
-          testName: "",
-          pass: true,
-        }),
-      );
-    }
-  }
-
-  // Updates the value if pass testFunctions.
-  generatorData.amountOfTestFunctions = testFunctions.length;
-
-  for (let i = 0; i < generatorData.amountOfTests; i++) {
-    tests.push({
-      name: testNames[i],
-      testsFunctions: testFunctions,
-    });
-  }
-
-  for (let i = 0; i < generatorData.amountOfTestFiles; i++) {
-    testMatches.push({
-      path: testFileNames[i],
-      isEmpty: false,
-      groups: [
-        {
-          name: "group",
-          tests,
-        },
-      ],
-    });
-  }
-
-  return testMatches;
-}
-
-export function _initTestSimpleInstance<T extends ExpectTest>(
+export function _initTestSimpleInstance<T extends CommandState>(
   type: new (params: IExpectTestBaseParams) => T,
   params: IExpectTestBaseParams,
 ) {
@@ -204,7 +157,7 @@ export function _initTestSimpleInstance<T extends ExpectTest>(
 }
 
 export namespace testUtils {
-  export function initTestClass<T extends ExpectTest>(
+  export function initTestClass<T extends CommandState>(
     type: new (params: IExpectTestBaseParams) => T,
     params: Partial<IExpectTestBaseParams>,
   ) {

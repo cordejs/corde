@@ -8,6 +8,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldEditMessage",
+  "trace": "    at shouldEditMessage Object.<anonymous> (tests\\\\command\\\\message\\\\shouldEditMessage.test.ts:63:37)",
 }
 `;
 
@@ -19,6 +20,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldEditMessage",
+  "trace": "    at shouldEditMessage Object.<anonymous> (tests\\\\command\\\\message\\\\shouldEditMessage.test.ts:56:37)",
 }
 `;
 
@@ -30,6 +32,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldEditMessage",
+  "trace": "    at shouldEditMessage Object.<anonymous> (tests\\\\command\\\\message\\\\shouldEditMessage.test.ts:51:37)",
 }
 `;
 
@@ -41,6 +44,8 @@ Object {
 ",
   "pass": false,
   "testName": "shouldEditMessage",
+  "trace": "    at shouldEditMessage Object.<anonymous> (tests\\\\command\\\\message\\\\shouldEditMessage.test.ts:46:37)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
 }
 `;
 
@@ -90,6 +95,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldEditMessage",
+  "trace": "    at shouldEditMessage Object.<anonymous> (tests\\\\command\\\\message\\\\shouldEditMessage.test.ts:123:37)",
 }
 `;
 
@@ -137,6 +143,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldEditMessage",
+  "trace": "    at shouldEditMessage Object.<anonymous> (tests\\\\command\\\\message\\\\shouldEditMessage.test.ts:148:37)",
 }
 `;
 
@@ -184,6 +191,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldEditMessage",
+  "trace": "    at shouldEditMessage Object.<anonymous> (tests\\\\command\\\\message\\\\shouldEditMessage.test.ts:131:37)",
 }
 `;
 
@@ -195,6 +203,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldEditMessage",
+  "trace": "    at shouldEditMessage Object.<anonymous> (tests\\\\command\\\\message\\\\shouldEditMessage.test.ts:139:37)",
 }
 `;
 
@@ -206,6 +215,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldEditMessage",
+  "trace": "    at shouldEditMessage Object.<anonymous> (tests\\\\command\\\\message\\\\shouldEditMessage.test.ts:106:41)",
 }
 `;
 
@@ -258,6 +268,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldEditMessage",
+  "trace": "    at shouldEditMessage Object.<anonymous> (tests\\\\command\\\\message\\\\shouldEditMessage.test.ts:157:37)",
 }
 `;
 
@@ -280,5 +291,7 @@ Object {
 ",
   "pass": false,
   "testName": "shouldEditMessage",
+  "trace": "    at shouldEditMessage Object.<anonymous> (tests\\\\command\\\\message\\\\shouldEditMessage.test.ts:41:37)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)",
 }
 `;
