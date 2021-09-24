@@ -1,6 +1,7 @@
 declare const expect: corde.IExpect;
 
 declare const command: any;
+declare const con: any;
 
 /**
  * Declare a bunch of code that will be executed **after** tests begin

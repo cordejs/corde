@@ -33,6 +33,7 @@ export default function injectGlobals() {
 
   addToGlobalScope("expect", expect);
   addToGlobalScope("command", command);
+  addToGlobalScope("con", command);
 
   addToGlobalScope("bot", getBot());
   addToGlobalScope("configs", getConfigs());
