@@ -1,12 +1,9 @@
 import fs from "fs";
 import path from "path";
 import { runtime } from "../../src/common/runtime";
-import { testCollector } from "../../src/common/testCollector";
 import { reader } from "../../src/core/reader";
 import { FileError } from "../../src/errors";
 import { beforeAll as _beforeAll } from "../../src/hooks";
-import { ITestFile } from "../../src/types";
-import consts from "../mocks/constsNames";
 
 // TODO: This class must have more tests
 
@@ -16,7 +13,6 @@ const cwd = process.cwd();
 afterEach(() => {
   runtime.configFilePath = null;
   process.chdir(cwd);
-  testCollector.cleanAll();
 });
 
 describe("reader class", () => {
@@ -95,143 +91,6 @@ describe("reader class", () => {
         });
         expect(tests.length).toEqual(0);
       });
-
-      it("should return group with only command", async () => {
-        const pathFile = "tests/mocks/onlyCommands.ts";
-        const tests = await reader.getTestsFromFiles({
-          filesPattern: [pathFile],
-        });
-        const expectedTests: ITestFile[] = [
-          {
-            path: pathFile,
-            isEmpty: false,
-            groups: [
-              {
-                tests: [
-                  {
-                    testsFunctions: [expect.any(Function)],
-                  },
-                ],
-              },
-            ],
-          },
-        ];
-        expect(tests).toEqual(expectedTests);
-      });
-
-      it("should return group with double groups", async () => {
-        const pathFile = "tests/mocks/sampleDoubleGroup.ts";
-        const tests = await reader.getTestsFromFiles({
-          filesPattern: [pathFile],
-        });
-        const expectedTests: ITestFile[] = [
-          {
-            path: pathFile,
-            isEmpty: false,
-            groups: [
-              {
-                name: consts.GROUP_1,
-                tests: [
-                  {
-                    name: consts.TEST_1,
-                    testsFunctions: [expect.any(Function)],
-                  },
-                ],
-              },
-              {
-                name: consts.GROUP_2,
-                tests: [
-                  {
-                    name: consts.TEST_2,
-                    testsFunctions: [expect.any(Function)],
-                  },
-                ],
-              },
-            ],
-          },
-        ];
-        expect(tests).toEqual(expectedTests);
-      });
-
-      it("should return group with only group and expect", async () => {
-        const pathFile = "tests/mocks/sampleOnlyWithGroup.ts";
-        const tests = await reader.getTestsFromFiles({
-          filesPattern: [pathFile],
-        });
-        const expectedTests: ITestFile[] = [
-          {
-            path: pathFile,
-            isEmpty: false,
-            groups: [
-              {
-                name: consts.GROUP_1,
-                tests: [
-                  {
-                    testsFunctions: [expect.any(Function)],
-                  },
-                ],
-              },
-            ],
-          },
-        ];
-        expect(tests).toEqual(expectedTests);
-      });
-    });
-
-    it("should return group with single group and test", async () => {
-      const pathFile = "tests/mocks/sampleWithSingleGroup.ts";
-
-      const tests = await reader.getTestsFromFiles({
-        filesPattern: [pathFile],
-      });
-      const expectedTests: ITestFile[] = [
-        {
-          path: pathFile,
-          isEmpty: false,
-          groups: [
-            {
-              name: consts.GROUP_1,
-              tests: [
-                {
-                  name: consts.TEST_1,
-                  testsFunctions: [expect.any(Function)],
-                },
-              ],
-            },
-          ],
-        },
-      ];
-      expect(tests).toEqual(expectedTests);
-    });
-
-    it("should return empty test (only with group)", async () => {
-      const pathFile = "tests/mocks/sampleEmptyGroup.ts";
-      const tests = await reader.getTestsFromFiles({
-        filesPattern: [pathFile],
-      });
-      const expectedTests: ITestFile[] = [
-        {
-          path: pathFile,
-          isEmpty: true,
-          groups: [],
-        },
-      ];
-      expect(tests).toEqual(expectedTests);
-    });
-
-    it("should return empty test (only with test)", async () => {
-      const pathFile = "tests/mocks/sampleEmptyTest.ts";
-      const tests = await reader.getTestsFromFiles({
-        filesPattern: [pathFile],
-      });
-      const expectedTests: ITestFile[] = [
-        {
-          path: pathFile,
-          isEmpty: true,
-          groups: [],
-        },
-      ];
-      expect(tests).toEqual(expectedTests);
     });
 
     describe("when working with auto search for config files (js, ts, json)", () => {

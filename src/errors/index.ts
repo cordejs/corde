@@ -7,3 +7,5 @@ export * from "./propertyError";
 export * from "./typeError";
 export * from "./timeoutError";
 export * from "./queueFunctionError";
+export * from "./testError";
+export * from "./commandTestError";

@@ -8,8 +8,7 @@ interface IBaseGroup {
 
 export class Group implements IEntityHook {
   name?: string | number | boolean | undefined;
-  subGroups?: Group[] | undefined;
-  tests: ITest[];
+  readonly closures: (Group | ITest)[];
   readonly beforeEachHooks: Queue<VoidLikeFunction>;
   readonly afterEachHooks: Queue<VoidLikeFunction>;
   readonly afterAllHooks: Queue<VoidLikeFunction>;
@@ -17,7 +16,7 @@ export class Group implements IEntityHook {
 
   constructor({ name, tests }: IBaseGroup) {
     this.name = name;
-    this.tests = tests ?? [];
+    this.closures = tests ?? [];
     this.beforeEachHooks = new Queue();
     this.beforeAllHooks = new Queue();
     this.afterEachHooks = new Queue();

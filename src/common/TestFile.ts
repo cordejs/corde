@@ -1,5 +1,5 @@
 import { Queue } from "../data-structures";
-import { IEntityHook, ITest, Nullable, VoidLikeFunction } from "../types";
+import { TestFileActionType, IEntityHook, ITest, Nullable, VoidLikeFunction } from "../types";
 import { Group } from "./Group";
 
 export class TestFile implements IEntityHook {
@@ -9,8 +9,7 @@ export class TestFile implements IEntityHook {
   readonly afterAllHooks: Queue<VoidLikeFunction>;
   readonly afterEachHooks: Queue<VoidLikeFunction>;
 
-  readonly tests: ITest[];
-  readonly groups: Group[];
+  readonly closures: TestFileActionType[];
 
   isInsideGroupClausure: boolean;
   isInsideTestClausure: boolean;
@@ -20,8 +19,7 @@ export class TestFile implements IEntityHook {
     this.path = path;
     this.isInsideGroupClausure = false;
     this.isInsideTestClausure = false;
-    this.groups = [];
-    this.tests = [];
+    this.closures = [];
     this.afterAllHooks = new Queue();
     this.beforeAllHooks = new Queue();
     this.beforeEachHooks = new Queue();
@@ -30,27 +28,14 @@ export class TestFile implements IEntityHook {
 
   addTest(test: ITest) {
     if (this.currentGroup) {
-      this.currentGroup.tests.push(test);
+      this.currentGroup.closures.push(test);
     } else {
-      this.tests.push(test);
+      this.closures.push(test);
     }
   }
 
   isEmpty() {
-    return this.tests.length === 0 && this.areGroupsEmpty(this.groups);
-  }
-
-  private areGroupsEmpty(groups: Group[]): boolean {
-    for (const group of groups) {
-      if (group.tests.length === 0 && group.subGroups?.length === 0) {
-        return false;
-      }
-
-      if (group.subGroups) {
-        return this.areGroupsEmpty(group.subGroups);
-      }
-    }
-    return true;
+    return this.closures.length === 0;
   }
 
   addBeforeEachHook(fn: VoidLikeFunction) {
@@ -69,14 +54,19 @@ export class TestFile implements IEntityHook {
     this.addToHook(fn, "afterEachHooks");
   }
 
+  private getGroupActions() {
+    return this.closures.filter((c) => c instanceof Group) as Group[];
+  }
+
   private addToHook(fn: VoidLikeFunction, hookFunctionName: keyof IEntityHook) {
     if (!fn) {
       return;
     }
 
     let hook: Nullable<Queue<VoidLikeFunction>> = null;
-    if (this.groups.length > 1 && this.isInsideGroupClausure) {
-      hook = this.groups[this.groups.length - 1][hookFunctionName];
+    if (this.closures.length > 1 && this.isInsideGroupClausure) {
+      const groups = this.getGroupActions();
+      hook = groups[groups.length - 1][hookFunctionName];
     }
 
     hook = this[hookFunctionName];

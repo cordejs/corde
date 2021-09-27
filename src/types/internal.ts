@@ -23,6 +23,7 @@ import {
   Colors,
   RolePermission,
 } from ".";
+import { Group } from "../common/Group";
 import { Events } from "../core/events";
 import { Queue } from "../data-structures";
 
@@ -165,6 +166,10 @@ export interface IAssertionProps {
   MessageType: MessageType;
 }
 
+export type ArgResponse<T extends (...args: any) => any> = ReturnType<T> extends Promise<infer V>
+  ? V
+  : T;
+
 /**
  * Represents **test** structure
  */
@@ -172,6 +177,8 @@ export interface ITest {
   toResolveName: () => Promise<string | number | boolean>;
   action: VoidLikeFunction;
 }
+
+export type TestFileActionType = Group | ITest;
 
 /**
  * Represents **group** structure
@@ -184,15 +191,6 @@ export interface IGroup {
   afterEachHooks: Queue<VoidLikeFunction>;
   afterAllHooks: Queue<VoidLikeFunction>;
   beforeAllHooks: Queue<VoidLikeFunction>;
-}
-
-/**
- * Contain all test cases | groups of a test file.
- */
-export interface ITestFile {
-  path: string;
-  groups: IGroup[];
-  isEmpty: boolean;
 }
 
 /**

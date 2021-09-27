@@ -2,7 +2,6 @@ import { testCollector } from "../../src/common/testCollector";
 import { Client, CollectorFilter } from "discord.js";
 import MockDiscord from "../mocks/mockDiscord";
 import { initCordeClient, initCordeClientWithChannel } from "../testHelper";
-import { ToReturn } from "../../src/expect/matches";
 import { MockEvents } from "../mocks/mockEvents";
 import { runtime } from "../../src/common/runtime";
 
@@ -14,7 +13,6 @@ let _cordeClient = initCordeClient(mockDiscord, _client);
 
 describe("Testing CordeBot object", () => {
   beforeEach(() => {
-    testCollector.clearIsolatedTestFunctions();
     mockDiscord.resetMocks();
 
     _client = new Client();
@@ -22,27 +20,6 @@ describe("Testing CordeBot object", () => {
 
     jest.resetAllMocks();
     jest.clearAllMocks();
-  });
-
-  it("should add a test function", () => {
-    testCollector.addTestFunction((corde) => {
-      const testCase = new ToReturn({
-        cordeBot: corde,
-        channelId: runtime.channelId,
-        guildId: runtime.guildId,
-        command: "test",
-        isNot: false,
-        isCascade: false,
-        timeout: 100,
-      });
-      return testCase.action("");
-    });
-    expect(testCollector.cloneIsolatedTestFunctions().length).toBe(1);
-  });
-
-  it("should not add a test function", () => {
-    testCollector.addTestFunction(null);
-    expect(testCollector.cloneIsolatedTestFunctions().length).toBe(0);
   });
 
   describe("testing findGuild()", () => {

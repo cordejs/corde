@@ -13,25 +13,37 @@ import {
   TEXT_PASS,
 } from "../consts";
 import { Queue } from "../data-structures";
-import { IRunnerReport, ISemiRunnerReport, ITest, ITestReport, VoidLikeFunction } from "../types";
+import {
+  IRunnerReport,
+  ISemiRunnerReport,
+  ITest,
+  ITestReport,
+  Nullable,
+  VoidLikeFunction,
+} from "../types";
 import { stringIsNullOrEmpty, Timer } from "../utils";
 import { LogUpdate } from "../utils";
 import { TestFile } from "../common/TestFile";
 import { Group } from "../common/Group";
 import { runtime } from "../common/runtime";
+import { TestError } from "../errors";
 
+type ReportStatusType = "pass" | "fail" | "empty";
+
+/**
+ * @internal
+ */
 export class TestExecutor {
   private _logUpdate: LogUpdate;
+  private _semiReport!: ISemiRunnerReport;
 
   constructor(logUpdate: LogUpdate) {
     this._logUpdate = logUpdate;
+    this.initReport();
   }
 
-  async runTestsAndPrint(testFiles: TestFile[]): Promise<IRunnerReport> {
-    const testsTimer = new Timer();
-    testsTimer.start();
-
-    const semiReport: ISemiRunnerReport = {
+  private initReport() {
+    this._semiReport = {
       totalTests: 0,
       totalTestFiles: 0,
       totalTestsPassed: 0,
@@ -41,55 +53,43 @@ export class TestExecutor {
       totalEmptyTestFiles: 0,
       totalEmptyTests: 0,
     };
+  }
 
-    runtime.internalEvents.on("test_end", (report) => {
-      if (report.pass) {
-        semiReport.totalTestsPassed++;
-        return;
-      }
-
-      semiReport.totalTestsFailed++;
-      this.printReportData(report);
-    });
+  async runTestsAndPrint(testFiles: TestFile[]): Promise<IRunnerReport> {
+    this.initReport();
+    const testsTimer = new Timer();
+    testsTimer.start();
 
     for (const testFile of testFiles) {
-      if (testFile.isEmpty()) {
-        this._logUpdate.append(`${TAG_PENDING("EMPTY")}  ${testFile.path}`);
-        this._logUpdate.persist();
-        semiReport.totalEmptyTestFiles++;
-        semiReport.totalTestFiles++;
-      } else {
-        if (await this.executeTestFile(testFile, semiReport)) {
-          semiReport.totalTestFilesPassed++;
-        } else {
-          semiReport.totalTestFilesFailed++;
-        }
-      }
+      await this.executeTestFile(testFile);
     }
+
     const testsDiff = testsTimer.stop();
 
     return {
       testTimer: testsDiff[0],
-      ...semiReport,
+      ...this._semiReport,
     };
   }
 
-  private async executeTestFile(testFile: TestFile, semiReport: ISemiRunnerReport) {
+  private async executeTestFile(testFile: TestFile) {
+    if (testFile.isEmpty()) {
+      this._logUpdate.append(`${TAG_PENDING("EMPTY")}  ${testFile.path}`);
+      this._logUpdate.persist();
+      this._semiReport.totalEmptyTestFiles++;
+      this._semiReport.totalTestFiles++;
+      return;
+    }
+
     const testFileTimer = new Timer();
-    semiReport.totalTestFiles++;
-    let fileHasPassed = true;
+    this._semiReport.totalTestFiles++;
 
     testFileTimer.start();
     const logIndex = this._logUpdate.append(`${TAG_PENDING()}  ${testFile.path}`);
 
     await this.executeHookFunction(testFile.beforeAllHooks);
 
-    for (const group of testFile.groups) {
-      const allTestsPassed = await this.executeGroup(group, semiReport, testFile);
-      if (!allTestsPassed) {
-        fileHasPassed = false;
-      }
-    }
+    const status = await this.executeClosures(testFile.closures, testFile);
 
     await this.executeHookFunction(testFile.afterAllHooks);
 
@@ -98,7 +98,7 @@ export class TestExecutor {
     let fileLabel = TAG_PASS();
     let fileNameLabel = testFile.path;
 
-    if (!fileHasPassed) {
+    if (status === "fail") {
       fileLabel = TAG_FAIL();
       fileNameLabel = chalk.red(fileNameLabel);
     }
@@ -110,40 +110,43 @@ export class TestExecutor {
 
     this._logUpdate.persist();
 
-    return fileHasPassed;
+    if (status === "pass") {
+      this._semiReport.totalTestFilesPassed++;
+    } else if (status === "fail") {
+      this._semiReport.totalTestFilesFailed++;
+    } else {
+      this._semiReport.totalEmptyTestFiles++;
+    }
   }
 
-  private async executeGroup(group: Group, semiReport: ISemiRunnerReport, testFile: TestFile) {
-    let fileHasPassed = true;
+  private async executeGroup(group: Group, testFile: TestFile) {
+    let status: ReportStatusType = "pass";
     await this.executeHookFunction(group.beforeAllHooks);
-    for (const test of group.tests) {
-      const hasPassed = await this.executeTest(test, semiReport, testFile, group);
-      if (!hasPassed) {
-        fileHasPassed = false;
-      }
-    }
+    status = await this.executeClosures(group.closures, testFile);
     await this.executeHookFunction(group.afterAllHooks);
+    return status;
+  }
 
-    if (group.subGroups) {
-      for (const subGroup of group.subGroups) {
-        const hasPassed = await this.executeGroup(subGroup, semiReport, testFile);
-        if (!hasPassed) {
-          fileHasPassed = false;
+  private async executeClosures(closures: (ITest | Group)[], testFile: TestFile) {
+    let status: ReportStatusType = "pass";
+    for (const closure of closures) {
+      if (closure instanceof Group) {
+        status = (await this.executeGroup(closure, testFile)) as ReportStatusType;
+      } else {
+        const report = await this.executeTest(closure, testFile);
+
+        if (!report) {
+          status = "empty";
+        } else {
+          status = report.pass ? "pass" : "fail";
         }
       }
     }
-
-    return fileHasPassed;
+    return status;
   }
 
-  private async executeTest(
-    test: ITest,
-    semiReport: ISemiRunnerReport,
-    testFile: TestFile,
-    group: Group,
-  ) {
+  private async executeTest(test: ITest, testFile: TestFile, group?: Group) {
     const testTimer = new Timer();
-    let fileHasPassed = true;
     testTimer.start();
     let logPosition = 0;
 
@@ -151,18 +154,18 @@ export class TestExecutor {
     const testText = this.createTestText(testName);
     logPosition = this._logUpdate.appendLine(testText);
 
-    const reports = await this.runTest(test, testFile, group);
+    const report = await this.runTest(test, testFile, group);
 
-    if (reports.length === 0) {
-      semiReport.totalEmptyTests++;
-      semiReport.totalTests++;
+    this._semiReport.totalTests++;
+    if (!report) {
+      this._semiReport.totalEmptyTests++;
     }
 
     const testDiff = testTimer.stop();
 
-    const testNameLabel = this.ITestReportLabelFunction(reports);
+    const testNameLabel = this.testReportLabelFunction(report);
 
-    const formatedGroupName = !stringIsNullOrEmpty(group.name) ? group.name + " -> " : "";
+    const formatedGroupName = !stringIsNullOrEmpty(group?.name) ? group?.name + " -> " : "";
 
     if (stringIsNullOrEmpty(testName)) {
       this._logUpdate.updateLine(
@@ -180,48 +183,34 @@ export class TestExecutor {
       );
     }
 
-    if (!this.printTestsReportAndUpdateRunnerReport(reports, semiReport)) {
-      fileHasPassed = false;
-    }
+    this.printReportAndUpdateRunnerReport(report);
 
-    return fileHasPassed;
+    return report;
   }
 
-  private printTestsReportAndUpdateRunnerReport(
-    reports: ITestReport[],
-    semiReport: ISemiRunnerReport,
-  ) {
-    let fileHasPassed = true;
-    for (const report of reports) {
-      semiReport.totalTests++;
-      if (!this.printReportAndUpdateRunnerReport(report, semiReport)) {
-        fileHasPassed = false;
-      }
-    }
-    return fileHasPassed;
-  }
-
-  private ITestReportLabelFunction(reports: ITestReport[]) {
-    if (reports.length === 0) {
+  private testReportLabelFunction(report?: ITestReport) {
+    if (!report) {
       return (text: string) => TEXT_EMPTY(" " + TEST_RUNNING_ICON + " " + text + " (empty)");
     }
 
-    if (reports.some((report) => !report.pass)) {
+    if (!report.pass) {
       return (text: string) => TEXT_FAIL(TEST_FAIL_ICON + " " + text);
     }
     return (text: string) => TEXT_PASS(TEST_PASSED_ICON + " " + text);
   }
 
-  private printReportAndUpdateRunnerReport(report: ITestReport, semiReport: ISemiRunnerReport) {
-    if (report.pass) {
-      semiReport.totalTestsPassed++;
-      return true;
+  private printReportAndUpdateRunnerReport(report?: ITestReport) {
+    if (!report) {
+      return;
     }
 
-    semiReport.totalTestsFailed++;
-    this.printReportData(report);
+    if (report.pass) {
+      this._semiReport.totalTestsPassed++;
+    } else {
+      this._semiReport.totalTestsFailed++;
+    }
 
-    return false;
+    this.printReportData(report);
   }
 
   private printReportData(report: ITestReport) {
@@ -230,7 +219,7 @@ export class TestExecutor {
     }
 
     if (!report.pass && report.trace) {
-      this._logUpdate.appendLine(report.trace);
+      this._logUpdate.appendLine(report.trace + "\n");
     }
   }
 
@@ -246,8 +235,8 @@ export class TestExecutor {
     return `${MESSAGE_TAB_SPACE}${icon} ${testName}`;
   }
 
-  async runTest(test: ITest, testFile: TestFile, group: Group) {
-    const reports: ITestReport[] = [];
+  async runTest(test: ITest, testFile: TestFile, group?: Group) {
+    let report: Nullable<ITestReport> = undefined;
     // before e after hooks will run just one time
     // for test structure (if the hook fail)
     let keepRunningBeforeEachFunctions = true;
@@ -255,29 +244,45 @@ export class TestExecutor {
 
     if (keepRunningBeforeEachFunctions) {
       const testFileHookOk = await this.executeHookFunction(testFile.beforeEachHooks);
-      const groupHookOk = await this.executeHookFunction(group.beforeEachHooks);
+      const groupHookOk = await this.executeHookFunction(group?.beforeEachHooks);
       keepRunningBeforeEachFunctions = testFileHookOk && groupHookOk;
     }
 
-    const onTestEnd = (report: ITestReport) => {
-      reports.push(report);
+    const onTestEnd = (_report: ITestReport) => {
+      report = _report;
     };
 
     runtime.internalEvents.on("test_end", onTestEnd);
 
-    await test.action();
+    try {
+      await test.action();
+    } catch (error) {
+      if (error instanceof TestError) {
+        report = {
+          message: error.message,
+          pass: error.pass,
+          testName: error.testName,
+          trace: error.trace,
+        };
+      }
+    }
 
     runtime.internalEvents.removeListener("test_end", onTestEnd);
 
     if (keepRunningAfterEachFunctions) {
       const testFileHookOk = await this.executeHookFunction(testFile.afterEachHooks);
-      const groupHookOk = await this.executeHookFunction(group.afterEachHooks);
+      const groupHookOk = await this.executeHookFunction(group?.afterEachHooks);
       keepRunningAfterEachFunctions = testFileHookOk && groupHookOk;
     }
-    return reports;
+
+    return report;
   }
 
-  private async executeHookFunction(queues: Queue<VoidLikeFunction>) {
+  private async executeHookFunction(queues?: Queue<VoidLikeFunction>) {
+    if (!queues) {
+      return true;
+    }
+
     const _functionErrors = await queues.executeWithCatchCollectAsync();
     if (_functionErrors && _functionErrors.length) {
       printHookErrors(_functionErrors);

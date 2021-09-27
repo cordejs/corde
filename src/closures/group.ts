@@ -25,7 +25,7 @@ export const group = <T extends any>(
       const resolvedName = await resolveName(definitionResolvable);
       const groupEntity = new Group({ name: resolvedName });
       testCollector.currentTestFile.currentGroup = groupEntity;
-      testCollector.currentTestFile.groups.push(groupEntity);
+      testCollector.currentTestFile.closures.push(groupEntity);
       await testDefinitions();
       testCollector.currentTestFile.currentGroup = undefined;
     }

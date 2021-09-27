@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import chalk from "chalk";
 import { runtime } from "../common/runtime";
+import { TestError } from "../errors";
 import { ITestProps, ITestReport } from "../types";
 import { corde } from "../types/globals";
 import { getStackTrace, typeOf } from "../utils";
@@ -82,6 +83,7 @@ function createMatcherFn(matcher: string, isNot: boolean, expected: any, isDebug
       const report = matcherFn.bind(props, ...args)();
       if (!report.pass) {
         report.trace = trace;
+        throw new TestError(report);
       }
 
       runtime.internalEvents.emit("test_end", report);
@@ -95,10 +97,10 @@ function createMatcherFn(matcher: string, isNot: boolean, expected: any, isDebug
         message: handleError(error),
         trace: trace,
       };
-      runtime.internalEvents.emit("test_end", failedReport);
       if (isDebug) {
         return failedReport;
       }
+      throw new TestError(failedReport);
     }
   };
 }
