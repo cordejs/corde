@@ -1,18 +1,31 @@
-import { testCollector } from "../../src/common/testCollector";
-import { ITestReport } from "../../src/types";
+import { TestCollector, testCollector } from "../../src/common/testCollector";
 
+let _testCollector: TestCollector;
 describe("testing testCollector", () => {
-  it("should clear testsFunctions", () => {
-    testCollector.isInsideGroupClausure = true;
-    testCollector.addTestFunction(() => {
-      const report: ITestReport = {
-        testName: "",
-        pass: true,
-      };
-      return Promise.resolve(report);
+  beforeEach(() => {
+    _testCollector = new TestCollector();
+  });
+
+  it("should add a test file", () => {
+    const testFile = _testCollector.createTestFile("path");
+    expect(testFile).toEqual(_testCollector.currentTestFile);
+    expect(testFile.path).toEqual("path");
+  });
+
+  it("should clear all testFiles", () => {
+    _testCollector.createTestFile("path");
+    expect(_testCollector.testFiles).toHaveLength(1);
+    _testCollector.clearTestFiles();
+    expect(_testCollector.testFiles).toHaveLength(0);
+  });
+
+  it("should add group closure", async () => {
+    let a = 1;
+    _testCollector.addToGroupClousure(() => {
+      a = 2;
     });
-    expect(testCollector.cloneTestFunctions().length).toBe(1);
-    testCollector.clearTestFunctions();
-    expect(testCollector.cloneTestFunctions().length).toBe(0);
+
+    await _testCollector.executeGroupClojure();
+    expect(a).toEqual(2);
   });
 });

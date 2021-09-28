@@ -343,7 +343,7 @@ it("should get report for splited groups", async () => {
   expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot("without ANSI Colors");
 });
 
-fit("should get report for multiple files", async () => {
+it("should get report for multiple files", async () => {
   testCollector.clearTestFiles();
   testCollector.createTestFile("file 1");
 

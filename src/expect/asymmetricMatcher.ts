@@ -105,10 +105,6 @@ export class AsymmetricMatcher {
       return typeOf(value) === "array";
     }
 
-    if (classType === Array) {
-      return typeOf(value) === "array";
-    }
-
     if (classType === Object) {
       return typeOf(value) === "object";
     }

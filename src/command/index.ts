@@ -39,6 +39,7 @@ function createMatcherFn({
   cordeBot,
   guildId,
 }: ICreateMatcherParam) {
+  const trace = getStackTrace(undefined, true, matcher);
   if (!testCollector.currentTestFile?.isInsideTestClausure && !isCascade) {
     throw new Error("command can only be used inside a test(it) clausure");
   }
@@ -63,7 +64,6 @@ function createMatcherFn({
       return arg;
     });
 
-    const trace = getStackTrace(undefined, true, matcher);
     try {
       const matcherFn = pickFn(matcher as KeyOfMatcher);
 

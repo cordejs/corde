@@ -20,6 +20,10 @@ function pickFn(name: KeyOfMatcher) {
 }
 
 function createMatcherFn(matcher: string, isNot: boolean, expected: any, isDebug: boolean) {
+  const trace = getStackTrace(Infinity, true, matcher);
+  if (!testCollector.currentTestFile?.isInsideTestClausure && !isDebug) {
+    throw new Error("expect can only be used inside a test(it) clausure");
+  }
   return (...args: any[]): ITestReport | void => {
     // If someone pass expect.any, we must invoke it to return
     // the Any matcher.
@@ -44,7 +48,6 @@ function createMatcherFn(matcher: string, isNot: boolean, expected: any, isDebug
       return arg;
     });
 
-    const trace = getStackTrace(undefined, true, matcher);
     try {
       const matcherFn = pickFn(matcher as KeyOfMatcher);
 
@@ -90,7 +93,9 @@ function createMatcherFn(matcher: string, isNot: boolean, expected: any, isDebug
 
       const report = matcherFn.bind(props, ...args)();
       if (!report.pass) {
-        report.trace = trace;
+        if (!isDebug) {
+          report.trace = trace;
+        }
         throw new TestError(report);
       }
 
@@ -106,6 +111,7 @@ function createMatcherFn(matcher: string, isNot: boolean, expected: any, isDebug
         trace: trace,
       };
       if (isDebug) {
+        delete failedReport.trace;
         return failedReport;
       }
       throw new TestError(failedReport);

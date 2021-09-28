@@ -9,7 +9,6 @@ Object {
     got: [31mobject[39m
 ",
   "pass": false,
-  "trace": "    at toBeDate tests\\\\expect\\\\matchers\\\\toBeDate.test.ts:35:55",
 }
 `;
 
@@ -22,7 +21,6 @@ Object {
     got: [31mnumber[39m
 ",
   "pass": false,
-  "trace": "    at toBeDate tests\\\\expect\\\\matchers\\\\toBeDate.test.ts:35:55",
 }
 `;
 
@@ -35,7 +33,6 @@ Object {
     got: [31mobject[39m
 ",
   "pass": false,
-  "trace": "    at toBeDate Object.<anonymous> (tests\\\\expect\\\\matchers\\\\toBeDate.test.ts:29:61)",
 }
 `;
 
@@ -48,7 +45,6 @@ Object {
     got: [31msymbol[39m
 ",
   "pass": false,
-  "trace": "    at toBeDate tests\\\\expect\\\\matchers\\\\toBeDate.test.ts:35:55",
 }
 `;
 
@@ -61,7 +57,6 @@ Object {
     got: [31mstring[39m
 ",
   "pass": false,
-  "trace": "    at toBeDate tests\\\\expect\\\\matchers\\\\toBeDate.test.ts:35:55",
 }
 `;
 
@@ -74,7 +69,6 @@ Object {
     got: [31many(Number)[39m
 ",
   "pass": false,
-  "trace": "    at toBeDate Object.<anonymous> (tests\\\\expect\\\\matchers\\\\toBeDate.test.ts:24:78)",
 }
 `;
 
@@ -87,7 +81,6 @@ Object {
     got: [31mnull[39m
 ",
   "pass": false,
-  "trace": "    at toBeDate tests\\\\expect\\\\matchers\\\\toBeDate.test.ts:35:55",
 }
 `;
 
@@ -100,6 +93,5 @@ Object {
     got: [31mundefined[39m
 ",
   "pass": false,
-  "trace": "    at toBeDate tests\\\\expect\\\\matchers\\\\toBeDate.test.ts:35:55",
 }
 `;

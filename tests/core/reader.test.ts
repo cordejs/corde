@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { runtime } from "../../src/common/runtime";
+import { testCollector } from "../../src/common/testCollector";
 import { reader } from "../../src/core/reader";
 import { FileError } from "../../src/errors";
 import { beforeAll as _beforeAll } from "../../src/hooks";
@@ -66,6 +67,7 @@ describe("reader class", () => {
 
     describe("testing getTestsFromFiles", () => {
       it("should throw error due to no file", async () => {
+        testCollector.createTestFile("path");
         try {
           await reader.getTestsFromFiles(null);
           fail();
@@ -83,13 +85,6 @@ describe("reader class", () => {
           filesPattern: [process.cwd(), "tests/mocks/sampleSingleTest.ts"],
         });
         expect(tests).toBeTruthy();
-      });
-
-      it("should return empty due to inexistance of the file", async () => {
-        const tests = await reader.getTestsFromFiles({
-          filesPattern: [path.resolve(process.cwd(), "tests/mocks/sampleWithSingleTest.ts")],
-        });
-        expect(tests.length).toEqual(0);
       });
     });
 

@@ -9,7 +9,6 @@ Object {
     got: [31mobject[39m
 ",
   "pass": false,
-  "trace": "    at toBeBoolean tests\\\\expect\\\\matchers\\\\toBeBoolean.test.ts:35:55",
 }
 `;
 
@@ -22,7 +21,6 @@ Object {
     got: [31mnumber[39m
 ",
   "pass": false,
-  "trace": "    at toBeBoolean tests\\\\expect\\\\matchers\\\\toBeBoolean.test.ts:35:55",
 }
 `;
 
@@ -35,7 +33,6 @@ Object {
     got: [31msymbol[39m
 ",
   "pass": false,
-  "trace": "    at toBeBoolean tests\\\\expect\\\\matchers\\\\toBeBoolean.test.ts:35:55",
 }
 `;
 
@@ -48,7 +45,6 @@ Object {
     got: [31mstring[39m
 ",
   "pass": false,
-  "trace": "    at toBeBoolean tests\\\\expect\\\\matchers\\\\toBeBoolean.test.ts:35:55",
 }
 `;
 
@@ -61,7 +57,6 @@ Object {
     got: [31many(Number)[39m
 ",
   "pass": false,
-  "trace": "    at toBeBoolean Object.<anonymous> (tests\\\\expect\\\\matchers\\\\toBeBoolean.test.ts:24:78)",
 }
 `;
 
@@ -74,7 +69,6 @@ Object {
     got: [31mboolean[39m
 ",
   "pass": false,
-  "trace": "    at toBeBoolean Object.<anonymous> (tests\\\\expect\\\\matchers\\\\toBeBoolean.test.ts:29:56)",
 }
 `;
 
@@ -87,7 +81,6 @@ Object {
     got: [31mnull[39m
 ",
   "pass": false,
-  "trace": "    at toBeBoolean tests\\\\expect\\\\matchers\\\\toBeBoolean.test.ts:35:55",
 }
 `;
 
@@ -100,6 +93,5 @@ Object {
     got: [31mundefined[39m
 ",
   "pass": false,
-  "trace": "    at toBeBoolean tests\\\\expect\\\\matchers\\\\toBeBoolean.test.ts:35:55",
 }
 `;

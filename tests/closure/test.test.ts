@@ -1,5 +1,6 @@
 import { testCollector } from "../../src/common/testCollector";
 import { test as _test } from "../../src/closures";
+import { ITest } from "../../src/types";
 
 describe("Testing test function", () => {
   beforeEach(() => {
@@ -13,8 +14,8 @@ describe("Testing test function", () => {
       a = 2;
     });
 
-    expect(testCollector.currentTestFile.tests).toHaveLength(1);
-    await testCollector.currentTestFile.tests[0].action();
+    expect(testCollector.currentTestFile.closures).toHaveLength(1);
+    await (testCollector.currentTestFile.closures[0] as ITest).action();
     expect(a).toBe(2);
   });
 });

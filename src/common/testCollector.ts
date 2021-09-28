@@ -7,16 +7,14 @@ import { TestFile } from "./TestFile";
  * collection.
  * @internal
  */
-class TestCollector {
+export class TestCollector {
   isInsideGroupClausure: boolean;
   isInsideTestClausure: boolean;
-
   assertions: IAssertionProps[];
-
   testsPass: number;
   testsFailed: number;
-
   testFiles: TestFile[];
+  currentSuite!: ITest;
 
   private static _instance: TestCollector;
   private groupClousureFunction: Queue<VoidLikeFunction>;
@@ -25,9 +23,7 @@ class TestCollector {
     return this.testFiles[this.testFiles.length - 1];
   }
 
-  currentSuite!: ITest;
-
-  private constructor() {
+  constructor() {
     this.testFiles = [];
     this.isInsideGroupClausure = false;
     this.isInsideTestClausure = false;

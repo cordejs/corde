@@ -9,7 +9,6 @@ Object {
     got: '[31mobject[39m'
 ",
   "pass": false,
-  "trace": "    at toBeDefined Object.<anonymous> (tests\\\\expect\\\\matchers\\\\toBeDefined.test.ts:30:61)",
 }
 `;
 
@@ -22,7 +21,6 @@ Object {
     got: '[31mnull[39m'
 ",
   "pass": false,
-  "trace": "    at toBeDefined Object.<anonymous> (tests\\\\expect\\\\matchers\\\\toBeDefined.test.ts:25:51)",
 }
 `;
 
@@ -35,6 +33,5 @@ Object {
     got: '[31mundefined[39m'
 ",
   "pass": false,
-  "trace": "    at toBeDefined Object.<anonymous> (tests\\\\expect\\\\matchers\\\\toBeDefined.test.ts:20:56)",
 }
 `;
