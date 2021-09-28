@@ -27,6 +27,7 @@ import { TestFile } from "../common/TestFile";
 import { Group } from "../common/Group";
 import { runtime } from "../common/runtime";
 import { TestError } from "../errors";
+import { testCollector } from "../common/testCollector";
 
 type ReportStatusType = "pass" | "fail" | "empty";
 
@@ -248,13 +249,24 @@ export class TestExecutor {
       keepRunningBeforeEachFunctions = testFileHookOk && groupHookOk;
     }
 
-    const onTestEnd = (_report: ITestReport) => {
-      report = _report;
+    const onSuiteEnd = (_report: ITestReport) => {
+      if (!testCollector.currentSuite?.markedAsFailed) {
+        report = _report;
+      }
     };
 
-    runtime.internalEvents.on("test_end", onTestEnd);
+    const onSuiteForceFail = (_report: ITestReport) => {
+      report = _report;
+      if (testCollector.currentSuite) {
+        testCollector.currentSuite.markedAsFailed = true;
+      }
+    };
+
+    runtime.internalEvents.on("test_end", onSuiteEnd);
+    runtime.internalEvents.on("suite_forced_fail", onSuiteForceFail);
 
     try {
+      testCollector.currentSuite = test;
       await test.action();
     } catch (error) {
       if (error instanceof TestError) {
@@ -267,7 +279,8 @@ export class TestExecutor {
       }
     }
 
-    runtime.internalEvents.removeListener("test_end", onTestEnd);
+    runtime.internalEvents.removeListener("test_end", onSuiteEnd);
+    runtime.internalEvents.removeListener("suite_forced_fail", onSuiteForceFail);
 
     if (keepRunningAfterEachFunctions) {
       const testFileHookOk = await this.executeHookFunction(testFile.afterEachHooks);

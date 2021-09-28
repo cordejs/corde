@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import chalk from "chalk";
 import { runtime } from "../common/runtime";
+import { testCollector } from "../common/testCollector";
 import { TestError } from "../errors";
 import { ITestProps, ITestReport } from "../types";
 import { corde } from "../types/globals";
@@ -22,6 +23,13 @@ function createMatcherFn(matcher: string, isNot: boolean, expected: any, isDebug
   return (...args: any[]): ITestReport | void => {
     // If someone pass expect.any, we must invoke it to return
     // the Any matcher.
+
+    // If the suite is already marked as failed,
+    // There is no need to run other tests.
+    // Same for command assertion
+    if (testCollector.currentSuite?.markedAsFailed) {
+      return;
+    }
 
     if (expected === any) {
       args = [expected(), ...args];

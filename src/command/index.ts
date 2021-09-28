@@ -49,6 +49,13 @@ function createMatcherFn({
     // If someone pass expect.any, we must invoke it to return
     // the Any matcher.
 
+    // If the suite is already marked as failed,
+    // There is no need to run other tests.
+    // Same for command assertion
+    if (testCollector.currentSuite?.markedAsFailed) {
+      return;
+    }
+
     args = args.map((arg) => {
       if (arg === any) {
         return arg();

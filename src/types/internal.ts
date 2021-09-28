@@ -176,6 +176,7 @@ export type ArgResponse<T extends (...args: any) => any> = ReturnType<T> extends
 export interface ITest {
   toResolveName: () => Promise<string | number | boolean>;
   action: VoidLikeFunction;
+  markedAsFailed?: boolean;
 }
 
 export type TestFileActionType = Group | ITest;

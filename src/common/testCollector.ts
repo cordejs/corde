@@ -1,5 +1,5 @@
 import { Queue } from "../data-structures";
-import { IAssertionProps, VoidLikeFunction } from "../types";
+import { IAssertionProps, ITest, VoidLikeFunction } from "../types";
 import { TestFile } from "./TestFile";
 
 /**
@@ -24,6 +24,8 @@ class TestCollector {
   get currentTestFile() {
     return this.testFiles[this.testFiles.length - 1];
   }
+
+  currentSuite!: ITest;
 
   private constructor() {
     this.testFiles = [];
