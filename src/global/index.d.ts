@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/triple-slash-reference */
 
+// Project: https://www.cordejs.org
+// GitHub:  https://github.com/cordejs/corde
+// Definitions by: Lucas Magalhaes <https://github.com/lucasgmagalhaes>
+// TypeScript Version: 4.4
+
 /// <reference path="./closures.d.ts" />
 /// <reference path="./command.d.ts" />
 /// <reference path="./expect.d.ts" />

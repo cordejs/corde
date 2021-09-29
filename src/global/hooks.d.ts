@@ -78,7 +78,7 @@ declare const beforeEach: corde.IHook;
 declare const afterEach: corde.IHook;
 
 /**
- * asdas
+ * Definition of corde's types
  */
 declare namespace corde {
   export interface IHook {

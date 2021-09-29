@@ -14,7 +14,7 @@ import { resolveName } from "../utils";
  *
  * @since 1.0
  */
-export const group = <T extends any>(
+export const group: corde.ITestClousure = <T extends any>(
   definitionResolvable: T,
   testDefinitions: VoidLikeFunction,
 ) => {

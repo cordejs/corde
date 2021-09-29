@@ -24,6 +24,7 @@ function clearAndBuild() {
 
     echo "building $2..."
     tsc -p $2
+    node copyTypes.js
 }
 
 function watch() {

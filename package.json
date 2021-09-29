@@ -3,7 +3,7 @@
   "version": "4.4.1",
   "description": "A simple library for Discord bot tests",
   "main": "./lib/index.js",
-  "types": "./lib/src/global/index.d.ts",
+  "types": "lib/src/global",
   "directories": {
     "lib": "bin"
   },
