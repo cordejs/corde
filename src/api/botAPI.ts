@@ -10,18 +10,7 @@ import {
 } from "discord.js";
 import { CordeClientError } from "../errors";
 import { mapper } from "../mapper/messageMapper";
-import {
-  IChannelIdentifier,
-  ICordeBot,
-  ICreateChannelOptions,
-  ICreateChannelOptionsSimple,
-  IGuildCreateOptions,
-  IGuildIdentifier,
-  IMessageEmbed,
-  IRoleData,
-  IRoleIdentifier,
-  Primitive,
-} from "../types";
+import { ICordeBot, Primitive } from "../types";
 import { isPrimitiveValue } from "../utils";
 
 export class BotAPI {
@@ -244,8 +233,8 @@ export class BotAPI {
    * @throws Error if corde bot is not connected.
    * @return Channel searched or undefined.
    */
-  getChannel(identifier: IChannelIdentifier): TextChannel | undefined;
-  getChannel(identifier?: string | IChannelIdentifier) {
+  getChannel(identifier: corde.IChannelIdentifier): TextChannel | undefined;
+  getChannel(identifier?: string | corde.IChannelIdentifier) {
     this._throwErrorIfNotLogged("Corde is not connected yet to fetch any data");
 
     if (!identifier) {
@@ -288,8 +277,8 @@ export class BotAPI {
    * @throws Error if corde bot is not connected.
    * @return Guild searched or undefined.
    */
-  getGuild(identifier: IGuildIdentifier): Guild | undefined;
-  getGuild(identifier?: string | IGuildIdentifier) {
+  getGuild(identifier: corde.IGuildIdentifier): Guild | undefined;
+  getGuild(identifier?: string | corde.IGuildIdentifier) {
     this._throwErrorIfNotLogged("Can not get any guild while corde bot is not connected yet");
 
     if (!identifier) {
@@ -334,8 +323,8 @@ export class BotAPI {
    * @since 2.0
    */
   send(message: string | number | boolean | bigint): Promise<Message>;
-  send(message: IMessageEmbed): Promise<Message>;
-  send(message: Primitive | IMessageEmbed): Promise<Message> {
+  send(message: corde.IMessageEmbed): Promise<Message>;
+  send(message: Primitive | corde.IMessageEmbed): Promise<Message> {
     if (!message) {
       throw new Error("Can not send a empty message");
     }
@@ -371,8 +360,8 @@ export class BotAPI {
    *
    * @since 2.1
    */
-  createRole(data: IRoleData): Promise<Role>;
-  createRole(data?: string | IRoleData) {
+  createRole(data: corde.IRoleData): Promise<Role>;
+  createRole(data?: string | corde.IRoleData) {
     this._throwErrorIfNotLogged("Bot is not connected yet. Can not create a role");
     if (typeof data === "string") {
       return this._bot.roleManager.create({ data: { name: data } });
@@ -413,8 +402,8 @@ export class BotAPI {
    * @throws Error if corde's bot isn't connected yet.
    * @returns Created guild.
    */
-  createGuild(options: IGuildCreateOptions): Promise<Guild>;
-  createGuild(options: string | IGuildCreateOptions) {
+  createGuild(options: corde.IGuildCreateOptions): Promise<Guild>;
+  createGuild(options: string | corde.IGuildCreateOptions) {
     this._throwErrorIfNotLogged("Could not create the guild while corde bot isn't connected yet");
 
     const errorMessage = "Could not create a guild with an invalid name";
@@ -455,9 +444,9 @@ export class BotAPI {
    * @returns Created channel.
    */
   createChannel(
-    channelOptions: ICreateChannelOptions,
+    channelOptions: corde.ICreateChannelOptions,
   ): Promise<TextChannel | VoiceChannel | CategoryChannel>;
-  createChannel(options: string | ICreateChannelOptions) {
+  createChannel(options: string | corde.ICreateChannelOptions) {
     this._throwErrorIfNotLogged("Could not create the channel while corde bot isn't connected yet");
 
     if (typeof options === "string") {
@@ -493,8 +482,8 @@ export class BotAPI {
    * @throws Error if corde's bot isn't connected yet.
    * @returns Created channel.
    */
-  createVoiceChannel(options: ICreateChannelOptionsSimple): Promise<VoiceChannel>;
-  createVoiceChannel(options: string | ICreateChannelOptionsSimple) {
+  createVoiceChannel(options: corde.ICreateChannelOptionsSimple): Promise<VoiceChannel>;
+  createVoiceChannel(options: string | corde.ICreateChannelOptionsSimple) {
     return this._createChannel(options, "voice");
   }
 
@@ -525,8 +514,8 @@ export class BotAPI {
    * @throws Error if corde's bot isn't connected yet.
    * @returns Created channel.
    */
-  createTextChannel(options: ICreateChannelOptionsSimple): Promise<TextChannel>;
-  createTextChannel(options: string | ICreateChannelOptionsSimple) {
+  createTextChannel(options: corde.ICreateChannelOptionsSimple): Promise<TextChannel>;
+  createTextChannel(options: string | corde.ICreateChannelOptionsSimple) {
     return this._createChannel(options, "text");
   }
 
@@ -557,8 +546,8 @@ export class BotAPI {
    * @throws Error if corde's bot isn't connected yet.
    * @returns Created channel.
    */
-  createCategoryChannel(options: ICreateChannelOptionsSimple): Promise<CategoryChannel>;
-  createCategoryChannel(options: string | ICreateChannelOptionsSimple) {
+  createCategoryChannel(options: corde.ICreateChannelOptionsSimple): Promise<CategoryChannel>;
+  createCategoryChannel(options: string | corde.ICreateChannelOptionsSimple) {
     return this._createChannel(options, "category");
   }
 
@@ -582,8 +571,8 @@ export class BotAPI {
    * @throws CordeClientError if corde's bot is not connected.
    * @returns Role that matches the provided **id** or **name**
    */
-  getRole(data: IRoleIdentifier): Role | undefined;
-  getRole(data: string | IRoleIdentifier) {
+  getRole(data: corde.IRoleIdentifier): Role | undefined;
+  getRole(data: string | corde.IRoleIdentifier) {
     this._throwErrorIfNotLogged("Bot is not connected yet. No role can be searched");
     return this._getRole(data);
   }
@@ -596,7 +585,7 @@ export class BotAPI {
     return undefined;
   }
 
-  private _getRole(data: string | IRoleIdentifier) {
+  private _getRole(data: string | corde.IRoleIdentifier) {
     if (typeof data === "string") {
       return this._bot.getRoles().find((r) => r.id === data);
     }
@@ -604,8 +593,8 @@ export class BotAPI {
   }
 
   private _createChannel(
-    options: string | ICreateChannelOptionsSimple,
-    type?: ICreateChannelOptions["type"],
+    options: string | corde.ICreateChannelOptionsSimple,
+    type?: corde.ICreateChannelOptions["type"],
   ) {
     this._throwErrorIfNotLogged("Could not create the channel while corde bot isn't connected yet");
 

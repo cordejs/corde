@@ -5,11 +5,10 @@ import { init } from "./init";
 import { validate } from "./validate";
 import { ConfigFileType } from "../types";
 import pack from "../package";
-import { Config } from "../types";
 import { reader } from "../core/reader";
 import { initEnvVariables } from "../envVariables";
 import { initErrorHandlers } from "../errorHandler";
-import injectGlobals from "../global/init";
+import injectGlobals from "../core/injectGlobals";
 import { runtime } from "../common/runtime";
 
 initErrorHandlers();
@@ -40,7 +39,7 @@ program
       " for Array, use only 'corde <path1> <path2>'",
   )
   .action(async () => {
-    const options = program.opts() as Config.ICLIOptions;
+    const options = program.opts() as corde.Config.ICLIOptions;
     await exec(options);
   });
 

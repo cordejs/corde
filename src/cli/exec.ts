@@ -7,7 +7,7 @@ import { summary } from "../core/summary";
 import { TestExecutor } from "../core/testExecutor";
 import { LogUpdate } from "../utils/logUpdate";
 import { validate } from "./validate";
-import { Config, StrictObject } from "../types";
+import { StrictObject } from "../types";
 import registerTsNode from "../core/tsRegister";
 import { debug } from "../common/debug";
 import { DEFAULT_CONFIG } from "../consts";
@@ -24,7 +24,7 @@ process.on("uncaughtException", () => {
 
 let spinner: Ora;
 
-export async function exec(options: Config.ICLIOptions) {
+export async function exec(options: corde.Config.ICLIOptions) {
   if (options.config) {
     runtime.configFilePath = options.config;
   }

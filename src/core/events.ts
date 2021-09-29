@@ -20,7 +20,6 @@ import {
 } from "discord.js";
 import { once } from "events";
 import { DEFAULT_TEST_TIMEOUT } from "../consts";
-import { IEmoji, IMessageIdentifier, IRoleIdentifier } from "../types";
 import { deepEqual, executePromiseWithTimeout } from "../utils";
 import { Validator } from "../utils";
 
@@ -31,8 +30,8 @@ export interface EventResume {
 }
 
 export interface SearchMessageReactionsOptions {
-  emojis?: IEmoji[];
-  messageIdentifier?: IMessageIdentifier;
+  emojis?: corde.IEmoji[];
+  messageIdentifier?: corde.IMessageIdentifier;
   authorId?: string;
   timeout?: number;
   channelId?: string;
@@ -204,7 +203,7 @@ export class Events {
    * @internal
    */
   onceRoleDelete(
-    roleIdentifier?: IRoleIdentifier,
+    roleIdentifier?: corde.IRoleIdentifier,
     timeout?: number,
     guildId?: string,
   ): Promise<Role> {
@@ -769,7 +768,11 @@ export class Events {
    * @returns The pinned message
    * @internal
    */
-  onceMessagePinned(messageIdentifier?: IMessageIdentifier, timeout?: number, channelId?: string) {
+  onceMessagePinned(
+    messageIdentifier?: corde.IMessageIdentifier,
+    timeout?: number,
+    channelId?: string,
+  ) {
     return this._onceMessageSetPinneble(
       (oldMessage, newMessage) => !(oldMessage.pinned as boolean) && (newMessage.pinned as boolean),
       messageIdentifier,
@@ -787,7 +790,7 @@ export class Events {
    * @internal
    */
   onceMessageUnPinned(
-    messageIdentifier?: IMessageIdentifier,
+    messageIdentifier?: corde.IMessageIdentifier,
     timeout?: number,
     channelId?: string,
   ) {
@@ -804,7 +807,7 @@ export class Events {
       oldMessage: Message | PartialMessage,
       newMessage: Message | PartialMessage,
     ) => boolean,
-    messageIdentifier?: IMessageIdentifier,
+    messageIdentifier?: corde.IMessageIdentifier,
     timeout?: number,
     channelId?: string,
   ) {
@@ -841,7 +844,7 @@ export class Events {
    * @internal
    */
   onceMessageContentOrEmbedChange(
-    messageIdentifier?: IMessageIdentifier,
+    messageIdentifier?: corde.IMessageIdentifier,
     timeout?: number,
     channelId?: string,
   ) {
@@ -938,7 +941,7 @@ export class Events {
   /**
    * @internal
    */
-  onceRoleRenamed(roleIdentifier?: IRoleIdentifier, timeout?: number, guildId?: string) {
+  onceRoleRenamed(roleIdentifier?: corde.IRoleIdentifier, timeout?: number, guildId?: string) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.name !== newRole.name,
       timeout,
@@ -950,7 +953,11 @@ export class Events {
   /**
    * @internal
    */
-  onceRolePositionUpdate(roleIdentifier?: IRoleIdentifier, timeout?: number, guildId?: string) {
+  onceRolePositionUpdate(
+    roleIdentifier?: corde.IRoleIdentifier,
+    timeout?: number,
+    guildId?: string,
+  ) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.rawPosition !== newRole.rawPosition,
       timeout,
@@ -962,7 +969,7 @@ export class Events {
   /**
    * @internal
    */
-  onceRoleUpdateColor(roleIdentifier?: IRoleIdentifier, timeout?: number, guildId?: string) {
+  onceRoleUpdateColor(roleIdentifier?: corde.IRoleIdentifier, timeout?: number, guildId?: string) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.color !== newRole.color,
       timeout,
@@ -974,7 +981,7 @@ export class Events {
   /**
    * @internal
    */
-  onceRoleHoistUpdate(roleIdentifier?: IRoleIdentifier, timeout?: number, guildId?: string) {
+  onceRoleHoistUpdate(roleIdentifier?: corde.IRoleIdentifier, timeout?: number, guildId?: string) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.hoist !== newRole.hoist,
       timeout,
@@ -986,7 +993,11 @@ export class Events {
   /**
    * @internal
    */
-  onceRoleMentionableUpdate(roleIdentifier?: IRoleIdentifier, timeout?: number, guildId?: string) {
+  onceRoleMentionableUpdate(
+    roleIdentifier?: corde.IRoleIdentifier,
+    timeout?: number,
+    guildId?: string,
+  ) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.mentionable !== newRole.mentionable,
       timeout,
@@ -1002,7 +1013,7 @@ export class Events {
    * @internal
    */
   onceRolePermissionUpdate(
-    roleIdentifier: IRoleIdentifier,
+    roleIdentifier: corde.IRoleIdentifier,
     timeout = DEFAULT_TEST_TIMEOUT,
     guildId?: string,
   ) {
@@ -1023,7 +1034,7 @@ export class Events {
     }, timeout);
   }
 
-  private roleMatchRoleData(roleIdentifier: IRoleIdentifier | undefined, role: Role) {
+  private roleMatchRoleData(roleIdentifier: corde.IRoleIdentifier | undefined, role: Role) {
     return role.id === roleIdentifier?.id || role.name === roleIdentifier?.name;
   }
 
@@ -1103,7 +1114,7 @@ export class Events {
   private _onRoleUpdateWithTimeout(
     comparable: (oldRole: Role, newRole: Role) => boolean,
     timeout?: number,
-    roleIdentifier?: IRoleIdentifier,
+    roleIdentifier?: corde.IRoleIdentifier,
     guildId?: string,
   ) {
     const validator = new Validator<[Role, Role]>();

@@ -1,4 +1,3 @@
-import { IMessageIdentifier } from "../../../types";
 import { typeOf } from "../../../utils";
 import { CommandState } from "../commandstate";
 import { messageUtils } from "./messageUtils";
@@ -8,7 +7,7 @@ import { messageUtils } from "./messageUtils";
  */
 export async function shouldUnPin(
   this: CommandState,
-  messageIdentifier: IMessageIdentifier | string,
+  messageIdentifier: corde.IMessageIdentifier | string,
 ) {
   if (
     !messageIdentifier ||
@@ -20,7 +19,7 @@ export async function shouldUnPin(
     );
   }
 
-  let _msgIdentifier: IMessageIdentifier;
+  let _msgIdentifier: corde.IMessageIdentifier;
 
   if (typeof messageIdentifier === "string") {
     _msgIdentifier = { id: messageIdentifier };

@@ -12,13 +12,7 @@ import {
   VoiceChannel,
 } from "discord.js";
 import { CordeClientError } from "../errors";
-import {
-  ICordeBot,
-  IMessageIdentifier,
-  IRoleIdentifier,
-  IVoiceChannelState,
-  Primitive,
-} from "../types";
+import { ICordeBot, IVoiceChannelState, Primitive } from "../types";
 import { typeOf } from "../utils";
 import { Events } from "./events";
 
@@ -184,11 +178,11 @@ export class CordeBot implements ICordeBot {
   }
 
   async findMessage(filter: (message: Message) => boolean): Promise<Message | undefined>;
-  async findMessage(data: IMessageIdentifier): Promise<Message | undefined>;
+  async findMessage(data: corde.IMessageIdentifier): Promise<Message | undefined>;
   async findMessage(
-    data: IMessageIdentifier | ((message: Message) => boolean),
+    data: corde.IMessageIdentifier | ((message: Message) => boolean),
   ): Promise<Message | undefined> {
-    const messageIdentifier: IMessageIdentifier = data as IMessageIdentifier;
+    const messageIdentifier: corde.IMessageIdentifier = data as corde.IMessageIdentifier;
 
     if (messageIdentifier && messageIdentifier.content) {
       return this._findMessage((m) => m.content === messageIdentifier.content);
@@ -210,11 +204,11 @@ export class CordeBot implements ICordeBot {
     return this.guild.roles.fetch();
   }
 
-  async hasRole(roleIdentifier: IRoleIdentifier) {
+  async hasRole(roleIdentifier: corde.IRoleIdentifier) {
     return !!(await this.findRole(roleIdentifier));
   }
 
-  async findRole(roleIdentifier: IRoleIdentifier) {
+  async findRole(roleIdentifier: corde.IRoleIdentifier) {
     const cache = (await this.guild.roles.fetch())?.cache;
     if (roleIdentifier.id) {
       return cache.find((r) => r.id === roleIdentifier.id);

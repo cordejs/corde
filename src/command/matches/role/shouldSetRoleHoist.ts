@@ -1,5 +1,4 @@
 import { Role } from "discord.js";
-import { IRoleIdentifier } from "../../../types";
 import { roleUtils } from "../../roleUtils";
 import { typeOf } from "../../../utils";
 import { CommandState } from "../commandstate";
@@ -10,7 +9,7 @@ import { CommandState } from "../commandstate";
 export async function shouldSetRoleHoist(
   this: CommandState,
   hoist: boolean,
-  roleIdentifier: string | IRoleIdentifier,
+  roleIdentifier: string | corde.IRoleIdentifier,
 ) {
   const identifier = roleUtils.getRoleData(roleIdentifier);
   const error = roleUtils.getErrorForUndefinedRoleData(identifier);

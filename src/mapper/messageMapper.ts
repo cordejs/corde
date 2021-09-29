@@ -1,9 +1,8 @@
 import { EmbedFieldData, MessageAttachment, MessageEmbed } from "discord.js";
-import { IMessageEmbed } from "../types";
 import { isString, typeOf } from "../utils";
 
 export namespace mapper {
-  export function embedInterfaceToMessageEmbed(embedLike: IMessageEmbed) {
+  export function embedInterfaceToMessageEmbed(embedLike: corde.IMessageEmbed) {
     const embed = new MessageEmbed();
     if (!embedLike || typeOf(embedLike) !== "object") {
       return embed;
@@ -95,7 +94,7 @@ export namespace mapper {
       return {};
     }
 
-    const embedLike: IMessageEmbed = {};
+    const embedLike: corde.IMessageEmbed = {};
 
     if (message.url) {
       embedLike.url = message.url;

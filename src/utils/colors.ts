@@ -1,8 +1,6 @@
-import { ColorResolvable } from "discord.js";
 import { isString } from ".";
-import { ColorsHex } from "../types";
 
-export function resolveColor(color: ColorResolvable) {
+export function resolveColor(color: corde.ColorResolvable) {
   if (color > 0 && color < 0xffffff) {
     return +color;
   }
@@ -16,7 +14,7 @@ export function resolveColor(color: ColorResolvable) {
     return (color[0] << 16) + (color[1] << 8) + color[2];
   }
 
-  const value = ColorsHex[color as keyof typeof ColorsHex];
+  const value = corde.ColorsHex[color as keyof typeof corde.ColorsHex];
   if (value) {
     return value;
   }

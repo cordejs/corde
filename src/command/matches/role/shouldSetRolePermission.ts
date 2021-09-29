@@ -1,5 +1,5 @@
 import { Role } from "discord.js";
-import { IRoleIdentifier, permissionsArray, RolePermission } from "../../../types";
+import { PERMISSIONS } from "../../../consts";
 import { diff, typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
 import { CommandState } from "../commandstate";
@@ -9,8 +9,8 @@ import { CommandState } from "../commandstate";
  */
 export async function shouldSetRolePermission(
   this: CommandState,
-  roleIdentifier: string | IRoleIdentifier,
-  permissions: RolePermission[],
+  roleIdentifier: string | corde.IRoleIdentifier,
+  permissions: corde.RolePermission[],
 ) {
   const identifier = roleUtils.getRoleData(roleIdentifier);
   const error = roleUtils.getErrorForUndefinedRoleData(identifier);
@@ -31,7 +31,7 @@ export async function shouldSetRolePermission(
   }
 
   if (permissions && !isPermissionsValid(permissions)) {
-    return this.createReport(diff(permissionsArray, permissions));
+    return this.createReport(diff(PERMISSIONS, permissions));
   }
 
   const oldRole = await this.cordeBot.findRole(identifier);
@@ -83,7 +83,7 @@ export async function shouldSetRolePermission(
   );
 }
 
-function getPermissionsString(permissions: RolePermission[]) {
+function getPermissionsString(permissions: corde.RolePermission[]) {
   if (!permissions) {
     return null;
   }
@@ -105,9 +105,9 @@ function getPermissionsString(permissions: RolePermission[]) {
   return permissions.join(", ");
 }
 
-function isPermissionsValid(permissions: RolePermission[]) {
+function isPermissionsValid(permissions: corde.RolePermission[]) {
   for (let i = 0; i < permissions.length; i++) {
-    if (!permissionsArray.includes(permissions[i])) {
+    if (!PERMISSIONS.includes(permissions[i])) {
       return false;
     }
   }

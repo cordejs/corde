@@ -12,8 +12,8 @@ import { buildReportMessage } from "../../utils";
  *
  */
 export class CommandState {
-  protected expectation: any;
-  protected hasPassed: boolean;
+  expectation: any;
+  hasPassed: boolean;
 
   readonly isNot: boolean;
   readonly command?: string | number | boolean;

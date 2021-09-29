@@ -1,5 +1,5 @@
 import { Role } from "discord.js";
-import { IRoleIdentifier, ITestReport } from "../../../types";
+import { ITestReport } from "../../../types";
 import { roleUtils } from "../../roleUtils";
 import { CommandState } from "../commandstate";
 
@@ -8,7 +8,7 @@ import { CommandState } from "../commandstate";
  */
 export async function shouldDeleteRole(
   this: CommandState,
-  roleIdentifier: string | IRoleIdentifier,
+  roleIdentifier: string | corde.IRoleIdentifier,
 ) {
   const identifier = roleUtils.getRoleData(roleIdentifier);
   const roleOrFailObject = await getRoleOrInvalidMessage(this, identifier);
@@ -51,7 +51,7 @@ export async function shouldDeleteRole(
   return this.createReport(`expected: role ${role.id} to ${this.isNot ? "not " : ""}be deleted`);
 }
 
-async function getRoleOrInvalidMessage(prop: CommandState, roleIdentifier: IRoleIdentifier) {
+async function getRoleOrInvalidMessage(prop: CommandState, roleIdentifier: corde.IRoleIdentifier) {
   const error = roleUtils.getErrorForUndefinedRoleData(roleIdentifier);
 
   if (error) {

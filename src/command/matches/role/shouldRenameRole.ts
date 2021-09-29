@@ -1,5 +1,4 @@
 import { Role } from "discord.js";
-import { IRoleIdentifier } from "../../../types";
 import { typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
 import { CommandState } from "../commandstate";
@@ -10,7 +9,7 @@ import { CommandState } from "../commandstate";
 export async function shouldRenameRole(
   this: CommandState,
   newName: string,
-  roleIdentifier: IRoleIdentifier | string,
+  roleIdentifier: corde.IRoleIdentifier | string,
 ) {
   const identifier = roleUtils.getRoleData(roleIdentifier);
   const error = roleUtils.getErrorForUndefinedRoleData(identifier);

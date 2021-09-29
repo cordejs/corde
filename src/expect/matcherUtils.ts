@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { ITestProps } from "..";
+import { ITestProps } from "../types";
 import { asymetricTypeOf, buildReportMessage, isNumber, isString, typeOf } from "../utils";
 import { AsymmetricMatcher } from "./asymmetricMatcher";
 

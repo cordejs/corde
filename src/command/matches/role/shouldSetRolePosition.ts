@@ -1,4 +1,3 @@
-import { IRoleIdentifier } from "../../../types";
 import { typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
 import { CommandState } from "../commandstate";
@@ -9,7 +8,7 @@ import { CommandState } from "../commandstate";
 export async function shouldSetRolePosition(
   this: CommandState,
   newPosition: number,
-  roleIdentifier: string | IRoleIdentifier,
+  roleIdentifier: string | corde.IRoleIdentifier,
 ) {
   const identifier = roleUtils.getRoleData(roleIdentifier);
   const error = roleUtils.getErrorForUndefinedRoleData(identifier);

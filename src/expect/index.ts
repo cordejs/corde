@@ -4,7 +4,6 @@ import { runtime } from "../common/runtime";
 import { testCollector } from "../common/testCollector";
 import { TestError } from "../errors";
 import { ITestProps, ITestReport } from "../types";
-import { corde } from "../types/globals";
 import { getStackTrace, typeOf } from "../utils";
 import { any } from "./asymmetricMatcher";
 import * as matchers from "./matchers";
@@ -153,7 +152,7 @@ type DebugExpectType<T> = {
 };
 
 export interface IDebugExpect {
-  <T extends any>(value: T): DebugExpectType<corde.IMatchersWithNot<T>>;
+  <T extends any>(value: T): DebugExpectType<corde.IExpectMatchersWithNot<T>>;
   any(...classType: any[]): any;
 }
 

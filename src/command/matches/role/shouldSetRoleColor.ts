@@ -1,6 +1,5 @@
 import chalk from "chalk";
 import { ColorResolvable, Role } from "discord.js";
-import { IRoleIdentifier } from "../../../types";
 import { resolveColor, rgba, typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
 import { CommandState } from "../commandstate";
@@ -11,7 +10,7 @@ import { CommandState } from "../commandstate";
 export async function shouldSetRoleColor(
   this: CommandState,
   color: ColorResolvable,
-  roleIdentifier: string | IRoleIdentifier,
+  roleIdentifier: string | corde.IRoleIdentifier,
 ) {
   const identifier = roleUtils.getRoleData(roleIdentifier);
   const error = roleUtils.getErrorForUndefinedRoleData(identifier);

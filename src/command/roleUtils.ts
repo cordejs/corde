@@ -1,9 +1,8 @@
 import { Role } from "discord.js";
-import { IRoleIdentifier } from "../types";
 import { formatObject } from "../utils";
 
 export namespace roleUtils {
-  export function createExpectedMessageForRoleData(roleIdentifier: IRoleIdentifier) {
+  export function createExpectedMessageForRoleData(roleIdentifier: corde.IRoleIdentifier) {
     if (!roleIdentifier) {
       return null;
     }
@@ -23,7 +22,7 @@ export namespace roleUtils {
     return null;
   }
 
-  export function getErrorForUndefinedRoleData(roleIdentifier: IRoleIdentifier) {
+  export function getErrorForUndefinedRoleData(roleIdentifier: corde.IRoleIdentifier) {
     if (!roleIdentifier) {
       return "expected: data to identifier the role (id or name)\n" + "received: null";
     }
@@ -33,7 +32,7 @@ export namespace roleUtils {
 
   export function validateRole(
     role: Role | undefined,
-    roleIdentifier: IRoleIdentifier,
+    roleIdentifier: corde.IRoleIdentifier,
   ): string | undefined {
     if (!role) {
       const message = roleUtils.createExpectedMessageForRoleData(roleIdentifier);
@@ -51,12 +50,12 @@ export namespace roleUtils {
     return undefined;
   }
 
-  export function getRoleData(roleIdentifier: string | IRoleIdentifier) {
-    let data: IRoleIdentifier;
+  export function getRoleData(roleIdentifier: string | corde.IRoleIdentifier) {
+    let data: corde.IRoleIdentifier;
     if (typeof roleIdentifier === "string") {
       data = { id: roleIdentifier };
     } else {
-      data = roleIdentifier as IRoleIdentifier;
+      data = roleIdentifier as corde.IRoleIdentifier;
     }
     return data;
   }

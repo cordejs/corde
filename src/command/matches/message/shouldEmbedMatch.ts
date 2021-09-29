@@ -1,5 +1,4 @@
 import { Message } from "discord.js";
-import { IMessageEmbed } from "../../../types";
 import { diff, isPartialOf, keysOf, pick, typeOf } from "../../../utils";
 import { CommandState } from "../commandstate";
 import { messageUtils } from "./messageUtils";
@@ -7,7 +6,7 @@ import { messageUtils } from "./messageUtils";
 /**
  * @internal
  */
-export async function shouldEmbedMatch(this: CommandState, embed: IMessageEmbed) {
+export async function shouldEmbedMatch(this: CommandState, embed: corde.IMessageEmbed) {
   if (typeOf(embed) !== "object") {
     return this.createFailedTest(
       "expected: parameter to be an object of type IMesageEmbed \n",
@@ -62,6 +61,6 @@ export async function shouldEmbedMatch(this: CommandState, embed: IMessageEmbed)
     );
   }
 
-  const partialReturned = pick(formatedReturnedEmbed, ...keysOf<IMessageEmbed>(embed));
+  const partialReturned = pick(formatedReturnedEmbed, ...keysOf<corde.IMessageEmbed>(embed));
   return this.createFailedTest(diff<any>(embed, partialReturned));
 }

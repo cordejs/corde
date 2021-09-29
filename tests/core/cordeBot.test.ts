@@ -1,9 +1,6 @@
-import { testCollector } from "../../src/common/testCollector";
-import { Client, CollectorFilter } from "discord.js";
+import { Client } from "discord.js";
 import MockDiscord from "../mocks/mockDiscord";
 import { initCordeClient, initCordeClientWithChannel } from "../testHelper";
-import { MockEvents } from "../mocks/mockEvents";
-import { runtime } from "../../src/common/runtime";
 
 const DEFAULT_PREFIX = "!";
 const mockDiscord = new MockDiscord();

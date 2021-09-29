@@ -1,5 +1,5 @@
 import { Message } from "discord.js";
-import { IMessageEditedIdentifier, IMessageEmbed, Primitive } from "../../../types";
+import { Primitive } from "../../../types";
 import { isPrimitiveValue, typeOf } from "../../../utils";
 import { CommandState } from "../commandstate";
 import { messageUtils } from "./messageUtils";
@@ -9,8 +9,8 @@ import { messageUtils } from "./messageUtils";
  */
 export async function shouldEditMessage(
   this: CommandState,
-  newValue: Primitive | IMessageEmbed,
-  messageIdentifier?: IMessageEditedIdentifier | string,
+  newValue: Primitive | corde.IMessageEmbed,
+  messageIdentifier?: corde.IMessageEditedIdentifier | string,
 ) {
   if (!isPrimitiveValue(newValue) && typeOf(newValue) !== "object") {
     return this.createReport(
@@ -25,7 +25,7 @@ export async function shouldEditMessage(
     return this.createFailedTest(error.message);
   }
 
-  let _messageData: IMessageEditedIdentifier | undefined;
+  let _messageData: corde.IMessageEditedIdentifier | undefined;
 
   if (typeof messageIdentifier === "string") {
     _messageData = { id: messageIdentifier };

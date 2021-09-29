@@ -1,6 +1,6 @@
 import { MessageReaction, PartialUser, User } from "discord.js";
 import { TimeoutError } from "../../../errors";
-import { IEmoji, EmojisType, IMessageIdentifier } from "../../../types";
+import { EmojisType } from "../../../types";
 import { typeOf } from "../../../utils";
 import { CommandState } from "../commandstate";
 
@@ -12,7 +12,7 @@ import { CommandState } from "../commandstate";
 export async function shouldRemoveReaction(
   this: CommandState,
   emojis: EmojisType,
-  messageIdentifier?: IMessageIdentifier | string,
+  messageIdentifier?: corde.IMessageIdentifier | string,
 ) {
   if (
     messageIdentifier != null &&
@@ -40,7 +40,7 @@ export async function shouldRemoveReaction(
 
   let reactionsWithAuthors: [MessageReaction, User | PartialUser | void][];
   try {
-    const emojiLike = emojis.map((e: string | IEmoji) => {
+    const emojiLike = emojis.map((e: string | corde.IEmoji) => {
       if (typeof e === "string") {
         return { name: e };
       }
@@ -104,7 +104,7 @@ function reactionsFromResponse(
 
 function stringifyReactionToPrint(emojis: EmojisType) {
   return emojis
-    .map((e: string | IEmoji) => {
+    .map((e: string | corde.IEmoji) => {
       if (typeof e !== "string") {
         if (e.id) {
           return e.id;

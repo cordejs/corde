@@ -1,12 +1,12 @@
 import { Message } from "discord.js";
-import { IMessageEmbed, Primitive } from "../../../types";
+import { Primitive } from "../../../types";
 import { CommandState } from "../commandstate";
 import { messageUtils } from "./messageUtils";
 
 /**
  * @internal
  */
-export async function shouldReturn(this: CommandState, expected: Primitive | IMessageEmbed) {
+export async function shouldReturn(this: CommandState, expected: Primitive | corde.IMessageEmbed) {
   const errorReport = messageUtils.validateExpect(this, expected);
 
   if (errorReport) {

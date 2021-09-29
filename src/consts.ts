@@ -51,3 +51,5 @@ export const TEST_RUNNING_ICON = "●";
 // This must be a adicional space because the icon gets overlayed by the text.
 export const TEST_PASSED_ICON = TEXT_PASS("✔ ");
 export const TEST_FAIL_ICON = TEXT_FAIL("x");
+
+export const PERMISSIONS: [keyof typeof corde.Permission] = Object.keys(corde.Permission) as any;

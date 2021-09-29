@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import { testCollector } from "../common/testCollector";
-import { corde } from "../types/globals";
 import { getStackTrace } from "../utils";
 import { any } from "../expect/asymmetricMatcher";
 import * as matchers from "./matches";

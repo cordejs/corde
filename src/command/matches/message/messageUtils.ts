@@ -1,16 +1,10 @@
 import { EmbedFieldData, Message, MessageAttachment, MessageEmbed } from "discord.js";
-import {
-  IMessageEditedIdentifier,
-  IMessageEmbed,
-  IMessageIdentifier,
-  MessageType,
-  Primitive,
-} from "../../../types";
+import { MessageType, Primitive } from "../../../types";
 import { deepEqual, diff, formatObject, isPrimitiveValue, typeOf } from "../../../utils";
-import { ICommandMatcherProps } from "../../types";
+import { CommandState } from "../commandstate";
 
 export namespace messageUtils {
-  export function validateExpect(matcher: ICommandMatcherProps, expect: Primitive | IMessageEmbed) {
+  export function validateExpect(matcher: CommandState, expect: Primitive | corde.IMessageEmbed) {
     if (!isPrimitiveValue(expect) && typeOf(expect) !== "object") {
       return matcher.createReport(
         "expected: expect value to be a primitive value (string, boolean, number) or an IMessageEmbed\n",
@@ -21,8 +15,8 @@ export namespace messageUtils {
   }
 
   export function createReportForExpectAndResponse(
-    matcher: ICommandMatcherProps,
-    expect: Primitive | IMessageEmbed,
+    matcher: CommandState,
+    expect: Primitive | corde.IMessageEmbed,
     returnedMessage: Message,
   ) {
     matcher.hasPassed = isMessagesEquals(returnedMessage, expect);
@@ -32,9 +26,9 @@ export namespace messageUtils {
       return matcher.createPassTest();
     }
 
-    let embedReturned: IMessageEmbed | undefined;
+    let embedReturned: corde.IMessageEmbed | undefined;
     if (returnedMessage?.embeds[0]) {
-      embedReturned = getMessageByType(returnedMessage, "embed") as IMessageEmbed;
+      embedReturned = getMessageByType(returnedMessage, "embed") as corde.IMessageEmbed;
     }
 
     if (typeOf(expect) === "object" && embedReturned) {
@@ -63,7 +57,7 @@ export namespace messageUtils {
 
   export function isMessagesEquals(
     returnedMessage: Message,
-    expectation: Primitive | IMessageEmbed,
+    expectation: Primitive | corde.IMessageEmbed,
   ) {
     if (!returnedMessage || !expectation) {
       return false;
@@ -136,7 +130,7 @@ export namespace messageUtils {
   }
 
   export function humanizeMessageIdentifierObject(
-    msgIdentifier: IMessageIdentifier | IMessageEditedIdentifier,
+    msgIdentifier: corde.IMessageIdentifier | corde.IMessageEditedIdentifier,
   ) {
     if (!msgIdentifier) {
       return "";
@@ -144,11 +138,11 @@ export namespace messageUtils {
     if (msgIdentifier?.id) {
       return `message of id ${msgIdentifier.id}`;
     }
-    if ((msgIdentifier as IMessageIdentifier).content) {
-      return `message of content "${(msgIdentifier as IMessageIdentifier).content}"`;
+    if ((msgIdentifier as corde.IMessageIdentifier).content) {
+      return `message of content "${(msgIdentifier as corde.IMessageIdentifier).content}"`;
     }
-    if ((msgIdentifier as IMessageEditedIdentifier).oldContent) {
-      return `message of content "${(msgIdentifier as IMessageEditedIdentifier).oldContent}"`;
+    if ((msgIdentifier as corde.IMessageEditedIdentifier).oldContent) {
+      return `message of content "${(msgIdentifier as corde.IMessageEditedIdentifier).oldContent}"`;
     }
     return "";
   }
@@ -158,7 +152,7 @@ export namespace messageUtils {
       return {};
     }
 
-    const embedLike: IMessageEmbed = {};
+    const embedLike: corde.IMessageEmbed = {};
 
     if (message.url) {
       embedLike.url = message.url;
@@ -246,7 +240,7 @@ export namespace messageUtils {
     return embedLike;
   }
 
-  export function embedMessageInterfaceToMessageEmbed(embedLike: IMessageEmbed) {
+  export function embedMessageInterfaceToMessageEmbed(embedLike: corde.IMessageEmbed) {
     const embed = new MessageEmbed();
     if (!embedLike || typeOf(embedLike) !== "object") {
       return embed;
