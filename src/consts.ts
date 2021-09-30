@@ -1,5 +1,6 @@
 import chalk from "chalk";
 import path from "path";
+import { Permission } from "./enums";
 import { IConfigOptions } from "./types";
 
 export const DEFAULT_TEST_TIMEOUT = 5000;
@@ -52,4 +53,4 @@ export const TEST_RUNNING_ICON = "●";
 export const TEST_PASSED_ICON = TEXT_PASS("✔ ");
 export const TEST_FAIL_ICON = TEXT_FAIL("x");
 
-export const PERMISSIONS: [keyof typeof corde.Permission] = Object.keys(corde.Permission) as any;
+export const PERMISSIONS: [keyof typeof Permission] = Object.keys(Permission) as any;

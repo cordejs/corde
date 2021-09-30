@@ -227,7 +227,7 @@ declare namespace corde {
      *
      * @since 2.0
      */
-    shouldSetRoleColor(color: ColorResolvable, roleIdentifier: IRoleIdentifier): TReturn;
+    shouldSetRoleColor(color: corde.ColorResolvable, roleIdentifier: IRoleIdentifier): TReturn;
     /**
      * Check if a command changed a role color.
      *
@@ -236,7 +236,7 @@ declare namespace corde {
      *
      * @since 2.0
      */
-    shouldSetRoleColor(color: Colors, roleId: string): TReturn;
+    shouldSetRoleColor(color: corde.ColorResolvable, roleId: string): TReturn;
     /**
      * Check if a command changed a role color.
      *
@@ -245,7 +245,7 @@ declare namespace corde {
      *
      * @since 2.0
      */
-    shouldSetRoleColor(color: Colors, roleIdentifier: IRoleIdentifier): TReturn;
+    shouldSetRoleColor(color: corde.ColorResolvable, roleIdentifier: IRoleIdentifier): TReturn;
 
     /**
      * Check if a command deletes a role.

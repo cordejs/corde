@@ -1,4 +1,5 @@
 import { isString } from ".";
+import { ColorsHex } from "..";
 
 export function resolveColor(color: corde.ColorResolvable) {
   if (color > 0 && color < 0xffffff) {
@@ -14,7 +15,7 @@ export function resolveColor(color: corde.ColorResolvable) {
     return (color[0] << 16) + (color[1] << 8) + color[2];
   }
 
-  const value = corde.ColorsHex[color as keyof typeof corde.ColorsHex];
+  const value = ColorsHex[color as keyof typeof ColorsHex];
   if (value) {
     return value;
   }

@@ -7,7 +7,7 @@ import { CommandState } from "../commandstate";
 /**
  * @internal
  */
-export async function shouldAddReaction(
+async function _shouldAddReaction(
   this: CommandState,
   emojis: EmojisType,
   messageIdentifier?: corde.IMessageIdentifier | string,
@@ -112,3 +112,6 @@ function stringifyReactionToPrint(emojis: EmojisType) {
     })
     .join(", ");
 }
+
+export const shouldAddReaction: corde.IMessageMatches<any>["shouldAddReaction"] =
+  _shouldAddReaction;
