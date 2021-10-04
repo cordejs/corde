@@ -24,12 +24,12 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: v1-deps-{{ checksum "yarn.lock" }}
+          key: v2-deps-{{ checksum "yarn.lock" }}
       - run:
           name: Install dependencies
           command: yarn install
       - save_cache:
-          key: v1-deps-{{ checksum "yarn.lock" }}
+          key: v2-deps-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
       - *persist-step
