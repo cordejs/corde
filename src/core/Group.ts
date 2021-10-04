@@ -17,9 +17,10 @@ export class Group implements IEntityHook {
   constructor({ name, tests }: IBaseGroup) {
     this.name = name;
     this.closures = tests ?? [];
-    this.beforeEachHooks = new Queue();
-    this.beforeAllHooks = new Queue();
-    this.afterEachHooks = new Queue();
-    this.afterAllHooks = new Queue();
+    const defaultProps = { clearOnExecution: false };
+    this.beforeEachHooks = new Queue(defaultProps);
+    this.beforeAllHooks = new Queue(defaultProps);
+    this.afterEachHooks = new Queue(defaultProps);
+    this.afterAllHooks = new Queue(defaultProps);
   }
 }

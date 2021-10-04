@@ -1,4 +1,4 @@
-import { runtime } from "../common/runtime";
+import { runtime } from "../core/runtime";
 import { getStackTrace } from "../utils";
 
 /**

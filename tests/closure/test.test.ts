@@ -1,4 +1,4 @@
-import { testCollector } from "../../src/common/testCollector";
+import { testCollector } from "../../src/core/testCollector";
 import { test as _test } from "../../src/closures";
 import { ITest } from "../../src/types";
 

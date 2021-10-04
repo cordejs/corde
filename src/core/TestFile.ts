@@ -20,10 +20,11 @@ export class TestFile implements IEntityHook {
     this.isInsideGroupClausure = false;
     this.isInsideTestClausure = false;
     this.closures = [];
-    this.afterAllHooks = new Queue();
-    this.beforeAllHooks = new Queue();
-    this.beforeEachHooks = new Queue();
-    this.afterEachHooks = new Queue();
+    const defaultProps = { clearOnExecution: false };
+    this.afterAllHooks = new Queue(defaultProps);
+    this.beforeAllHooks = new Queue(defaultProps);
+    this.beforeEachHooks = new Queue(defaultProps);
+    this.afterEachHooks = new Queue(defaultProps);
   }
 
   addTest(test: ITest) {

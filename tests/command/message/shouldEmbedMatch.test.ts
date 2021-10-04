@@ -2,7 +2,7 @@ import { Client } from "discord.js";
 import MockDiscord from "../../mocks/mockDiscord";
 import { createCordeBotWithMockedFunctions, testHelper } from "../../testHelper";
 import { ICordeBot, IMessageEmbed, ITestReport } from "../../../src/types";
-import { runtime } from "../../../src/common/runtime";
+import { runtime } from "../../../src/core/runtime";
 import { debugCommand } from "../../../src/command";
 import { MockEvents } from "../../mocks";
 import { isNullOrUndefined } from "../../../src/utils";

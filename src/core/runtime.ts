@@ -1,12 +1,10 @@
 import { IConfigOptions, ICordeBot } from "../types";
-import { Config } from "./config";
+import { Config, CordeBot, IInternalEvents } from ".";
 import { Client } from "discord.js";
-import { CordeBot } from "../core/cordeBot";
 import { ConfigError } from "../errors";
 import path from "path";
 import { replaceAll } from "../utils";
 import { ROOT_DIR } from "../consts";
-import { IInternalEvents } from "../core/internalEvents";
 import { EventEmitter } from "stream";
 
 const Environment = {
@@ -103,16 +101,9 @@ class Runtime {
     return this._internalEvents;
   }
 
-  private constructor() {
-    this._configs = new Config();
+  constructor() {
     this._internalEvents = new EventEmitter();
-  }
-
-  static getInstance() {
-    if (!Runtime._instance) {
-      Runtime._instance = new Runtime();
-    }
-    return Runtime._instance;
+    this._configs = new Config();
   }
 
   setConfigs(_configs: Partial<IConfigOptions>, forceUpdate?: boolean) {
@@ -171,5 +162,5 @@ class Runtime {
 /**
  * Singleton of Runtime.
  */
-const runtime = Runtime.getInstance();
+const runtime = new Runtime();
 export { runtime };

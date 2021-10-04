@@ -1,5 +1,5 @@
 import { Client } from "discord.js";
-import { runtime } from "../../../src/common/runtime";
+import { runtime } from "../../../src/core/runtime";
 import { ICordeBot, ITestReport } from "../../../src/types";
 import { buildReportMessage, typeOf } from "../../../src/utils";
 import MockDiscord from "../../mocks/mockDiscord";

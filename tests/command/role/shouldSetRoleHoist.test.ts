@@ -10,7 +10,7 @@ import {
 import { ICordeBot, ITestReport } from "../../../src/types";
 import { buildReportMessage } from "../../../src/utils";
 import { MockEvents } from "../../mocks/mockEvents";
-import { runtime } from "../../../src/common/runtime";
+import { runtime } from "../../../src/core/runtime";
 import { debugCommand } from "../../../src/command";
 
 const testName = "shouldSetRoleHoist";

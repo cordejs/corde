@@ -1,5 +1,5 @@
-import { runtime } from "../common/runtime";
-import { testCollector } from "../common/testCollector";
+import { runtime } from "../core/runtime";
+import { testCollector } from "../core/testCollector";
 import { VoidLikeFunction } from "../types";
 import { executePromiseWithTimeout, resolveName } from "../utils";
 
@@ -14,11 +14,11 @@ import { executePromiseWithTimeout, resolveName } from "../utils";
  *
  * @since 1.0
  */
-export const test = <T extends any>(
+export function test<T extends any>(
   expectationDescription: T,
   assertion: VoidLikeFunction,
   timeout?: number | undefined,
-) => {
+) {
   const _internalTest = async () => {
     testCollector.currentTestFile.isInsideTestClausure = true;
 
@@ -42,7 +42,7 @@ export const test = <T extends any>(
     },
     toResolveName: () => resolveName(expectationDescription),
   });
-};
+}
 
 /**
  * Alias for `test`

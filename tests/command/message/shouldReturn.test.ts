@@ -3,7 +3,7 @@ import MockDiscord from "../../mocks/mockDiscord";
 import { MockEvents } from "../../mocks";
 import { createCordeBotWithMockedFunctions, testHelper } from "../../testHelper";
 import { ICordeBot, ITestReport } from "../../../src/types";
-import { runtime } from "../../../src/common/runtime";
+import { runtime } from "../../../src/core/runtime";
 
 import { debugCommand } from "../../../src/command";
 

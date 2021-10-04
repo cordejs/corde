@@ -4,8 +4,8 @@ import { createCordeBotWithMockedFunctions, getFullConsoleLog, testHelper } from
 import { MockEvents } from "../../mocks/mockEvents";
 import { ICordeBot, ITestReport } from "../../../src/types";
 import { debugCommand } from "../../../src/command";
-import { runtime } from "../../../src/common/runtime";
-import { testCollector } from "../../../src/common/testCollector";
+import { runtime } from "../../../src/core/runtime";
+import { testCollector } from "../../../src/core/testCollector";
 
 const testName = "shouldDeleteRole";
 

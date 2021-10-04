@@ -1,5 +1,5 @@
-import { Group } from "../common/Group";
-import { testCollector } from "../common/testCollector";
+import { Group } from "../core/Group";
+import { testCollector } from "../core/testCollector";
 import { VoidLikeFunction } from "../types";
 import { resolveName } from "../utils";
 
@@ -14,10 +14,7 @@ import { resolveName } from "../utils";
  *
  * @since 1.0
  */
-export const group: corde.ITestClousure = <T extends any>(
-  definitionResolvable: T,
-  testDefinitions: VoidLikeFunction,
-) => {
+export function group<T extends any>(definitionResolvable: T, testDefinitions: VoidLikeFunction) {
   const _internalGroup = async () => {
     testCollector.currentTestFile.isInsideGroupClausure = true;
 
@@ -38,7 +35,7 @@ export const group: corde.ITestClousure = <T extends any>(
   }
 
   testCollector.addToGroupClousure(() => _internalGroup());
-};
+}
 
 /**
  * Alias for `describe`

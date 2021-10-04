@@ -1,4 +1,4 @@
-import { Colors, ColorsHex } from "../../src/types";
+import { Colors, ColorsHex } from "../../src";
 import { resolveColor } from "../../src/utils/colors";
 
 describe("testing colors", () => {

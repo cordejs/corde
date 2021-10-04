@@ -1,11 +1,12 @@
 import { Client } from "discord.js";
 import MockDiscord from "../../mocks/mockDiscord";
 import { createCordeBotWithMockedFunctions, testHelper } from "../../testHelper";
-import { ICordeBot, ITestReport, Permission } from "../../../src/types";
+import { ICordeBot, ITestReport } from "../../../src/types";
 import { calcPermissionsValue } from "../../../src/utils";
 import { MockEvents } from "../../mocks/mockEvents";
-import { runtime } from "../../../src/common/runtime";
+import { runtime } from "../../../src/core/runtime";
 import { debugCommand } from "../../../src/command";
+import { Permission } from "../../../src";
 
 const testName = "shouldSetRolePermission";
 
@@ -32,7 +33,9 @@ describe(`testing ${testName} function`, () => {
   });
 
   it("should fail due to undefined roleIdentifier", async () => {
-    const report = await debugCon().shouldSetRolePermission(undefined, ["ADD_REACTIONS"]);
+    const report = await debugCon()
+      // @ts-ignore
+      .shouldSetRolePermission(undefined, ["ADD_REACTIONS"]);
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
@@ -159,7 +162,9 @@ describe(`testing ${testName} function`, () => {
   it("should return a not passed test due expected name did not match to received", async () => {
     const mockEvent = new MockEvents(cordeClient, mockDiscord);
     mockEvent.mockOnceRolePermissionsUpdate(mockDiscord.role);
-    const report = await debugCon().shouldSetRolePermission({ id: "123" }, null);
+    const report = await debugCon()
+      // @ts-ignore
+      .shouldSetRolePermission({ id: "123" }, null);
 
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();

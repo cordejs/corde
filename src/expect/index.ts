@@ -1,12 +1,16 @@
 /* eslint-disable no-console */
 import chalk from "chalk";
-import { runtime } from "../common/runtime";
-import { testCollector } from "../common/testCollector";
+import { runtime } from "../core/runtime";
+import { testCollector } from "../core/testCollector";
 import { TestError } from "../errors";
 import { ITestProps, ITestReport } from "../types";
 import { getStackTrace, typeOf } from "../utils";
 import { any } from "./asymmetricMatcher";
 import * as matchers from "./matchers";
+
+type Matchers = {
+  not: typeof matchers;
+} & typeof matchers;
 
 interface IMatcher {
   (props: ITestProps, ...args: any[]): ITestReport;
@@ -143,7 +147,19 @@ function createLocalExpect(isDebug: boolean) {
   return localExpect;
 }
 
-export const expect = createLocalExpect(false) as corde.IExpect;
+interface MatcherFn {
+  <T extends any>(value: T): { not: ExpectType<typeof matchers> } & ExpectType<typeof matchers>;
+}
+
+type DropFirst<T extends unknown[]> = T extends [any, ...infer U] ? U : never;
+
+type ExpectType<T> = {
+  [P in keyof T]: T[P] extends (...args: any[]) => any
+    ? (...params: DropFirst<Parameters<T[P]>>) => { pass: boolean; message: string }
+    : DebugExpectType<T[P]>;
+};
+
+export const expect = createLocalExpect(false) as MatcherFn;
 
 type DebugExpectType<T> = {
   [P in keyof T]: T[P] extends (...args: any[]) => any
@@ -152,7 +168,7 @@ type DebugExpectType<T> = {
 };
 
 export interface IDebugExpect {
-  <T extends any>(value: T): DebugExpectType<corde.IExpectMatchersWithNot<T>>;
+  <T extends any>(value: T): ExpectType<Matchers>;
   any(...classType: any[]): any;
 }
 

@@ -9,7 +9,7 @@ import { reader } from "../core/reader";
 import { initEnvVariables } from "../envVariables";
 import { initErrorHandlers } from "../errorHandler";
 import injectGlobals from "../core/injectGlobals";
-import { runtime } from "../common/runtime";
+import { runtime } from "../core/runtime";
 
 initErrorHandlers();
 initEnvVariables();

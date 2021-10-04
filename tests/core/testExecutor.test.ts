@@ -7,7 +7,7 @@ import { afterEach as _afterEach, beforeEach as _beforeEach } from "../../src/ho
 import { IRunnerReport } from "../../src/types";
 import { group, test } from "../../src/closures";
 import { expect as _expect } from "../../src/expect";
-import { testCollector } from "../../src/common/testCollector";
+import { testCollector } from "../../src/core/testCollector";
 
 let logUpdate: LogUpdate;
 let testRunner: TestExecutor;

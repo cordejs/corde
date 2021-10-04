@@ -81,7 +81,7 @@ exports[`testing toBeValidDate should return false for valid date (1) (isNot tru
 "
 `;
 
-exports[`testing toBeValidDate should return false for valid date (2021-09-28T19:14:30.665Z) (isNot true) 1`] = `
+exports[`testing toBeValidDate should return false for valid date (2021-10-04T18:18:55.943Z) (isNot true) 1`] = `
 "    
     expect([32mexpected[39m).not.toBeValidDate()
     

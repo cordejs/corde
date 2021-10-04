@@ -3,7 +3,7 @@ import MockDiscord from "../../mocks/mockDiscord";
 import { createCordeBotWithMockedFunctions, testHelper } from "../../testHelper";
 import { MockEvents } from "../../mocks/mockEvents";
 import { ICordeBot, ITestReport } from "../../../src/types";
-import { runtime } from "../../../src/common/runtime";
+import { runtime } from "../../../src/core/runtime";
 import { debugCommand } from "../../../src/command";
 
 const testName = "shouldMessageContentContains";

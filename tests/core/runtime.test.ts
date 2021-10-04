@@ -1,4 +1,4 @@
-import { runtime } from "../../src/common/runtime";
+import { runtime } from "../../src/core/runtime";
 import { DEFAULT_TEST_TIMEOUT } from "../../src/consts";
 
 import { IConfigOptions } from "../../src/types";
@@ -17,6 +17,7 @@ const config: IConfigOptions = {
 describe("Testing runtime", () => {
   it("Should throw an error", () => {
     try {
+      // @ts-ignore
       runtime.setConfigs(undefined);
     } catch (error) {
       expect(error instanceof Error).toBe(true);
@@ -30,14 +31,13 @@ describe("Testing runtime", () => {
     expect(spy).toBeCalledTimes(1);
   });
 
-  it("should call bot.login", async (done) => {
+  it("should call bot.login", async () => {
     runtime.setConfigs(config);
     const spy = jest.spyOn(runtime.bot, "login");
     try {
       await runtime.loginBot("13");
     } catch (error) {
       expect(spy).toBeCalledTimes(1);
-      done();
     }
   });
 

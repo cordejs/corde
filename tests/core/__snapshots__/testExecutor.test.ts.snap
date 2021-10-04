@@ -46,8 +46,8 @@ exports[`should get report for multiple tests inside a group and failed tests 1`
     at Array.forEach (<anonymous>)
     at localExpect (src\\\\expect\\\\index.ts:151:42)
     at tests\\\\core\\\\testExecutor.test.ts:172:27
-    at _internalTest (src\\\\closures\\\\test.ts:30:13)
-    at src\\\\closures\\\\test.ts:40:17
+    at _internalTest (src\\\\closures\\\\test.ts:31:13)
+    at src\\\\closures\\\\test.ts:41:17
     at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
 "
 `;
@@ -70,8 +70,8 @@ exports[`should get report for multiple tests inside a group and failed tests: w
     at Array.forEach (<anonymous>)
     at localExpect (src\\\\expect\\\\index.ts:151:42)
     at tests\\\\core\\\\testExecutor.test.ts:172:27
-    at _internalTest (src\\\\closures\\\\test.ts:30:13)
-    at src\\\\closures\\\\test.ts:40:17
+    at _internalTest (src\\\\closures\\\\test.ts:31:13)
+    at src\\\\closures\\\\test.ts:41:17
     at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
 "
 `;
@@ -114,8 +114,8 @@ exports[`should get report for splited groups 1`] = `
     at Array.forEach (<anonymous>)
     at localExpect (src\\\\expect\\\\index.ts:151:42)
     at tests\\\\core\\\\testExecutor.test.ts:267:27
-    at _internalTest (src\\\\closures\\\\test.ts:30:13)
-    at src\\\\closures\\\\test.ts:40:17
+    at _internalTest (src\\\\closures\\\\test.ts:31:13)
+    at src\\\\closures\\\\test.ts:41:17
     at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
 
    [32m[32m✔ [39m[32m test closure 5[39m   [36m10ms[39m
@@ -133,8 +133,8 @@ exports[`should get report for splited groups 1`] = `
     at Array.forEach (<anonymous>)
     at localExpect (src\\\\expect\\\\index.ts:151:42)
     at tests\\\\core\\\\testExecutor.test.ts:281:27
-    at _internalTest (src\\\\closures\\\\test.ts:30:13)
-    at src\\\\closures\\\\test.ts:40:17
+    at _internalTest (src\\\\closures\\\\test.ts:31:13)
+    at src\\\\closures\\\\test.ts:41:17
     at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
 
    [32m[32m✔ [39m[32m test closure 9[39m   [36m10ms[39m
@@ -152,8 +152,8 @@ exports[`should get report for splited groups 1`] = `
     at Array.forEach (<anonymous>)
     at localExpect (src\\\\expect\\\\index.ts:151:42)
     at tests\\\\core\\\\testExecutor.test.ts:295:27
-    at _internalTest (src\\\\closures\\\\test.ts:30:13)
-    at src\\\\closures\\\\test.ts:40:17
+    at _internalTest (src\\\\closures\\\\test.ts:31:13)
+    at src\\\\closures\\\\test.ts:41:17
     at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
 "
 `;
@@ -176,8 +176,8 @@ exports[`should get report for splited groups: without ANSI Colors 1`] = `
     at Array.forEach (<anonymous>)
     at localExpect (src\\\\expect\\\\index.ts:151:42)
     at tests\\\\core\\\\testExecutor.test.ts:267:27
-    at _internalTest (src\\\\closures\\\\test.ts:30:13)
-    at src\\\\closures\\\\test.ts:40:17
+    at _internalTest (src\\\\closures\\\\test.ts:31:13)
+    at src\\\\closures\\\\test.ts:41:17
     at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
 
    ✔  test closure 5   10ms
@@ -195,8 +195,8 @@ exports[`should get report for splited groups: without ANSI Colors 1`] = `
     at Array.forEach (<anonymous>)
     at localExpect (src\\\\expect\\\\index.ts:151:42)
     at tests\\\\core\\\\testExecutor.test.ts:281:27
-    at _internalTest (src\\\\closures\\\\test.ts:30:13)
-    at src\\\\closures\\\\test.ts:40:17
+    at _internalTest (src\\\\closures\\\\test.ts:31:13)
+    at src\\\\closures\\\\test.ts:41:17
     at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
 
    ✔  test closure 9   10ms
@@ -214,8 +214,8 @@ exports[`should get report for splited groups: without ANSI Colors 1`] = `
     at Array.forEach (<anonymous>)
     at localExpect (src\\\\expect\\\\index.ts:151:42)
     at tests\\\\core\\\\testExecutor.test.ts:295:27
-    at _internalTest (src\\\\closures\\\\test.ts:30:13)
-    at src\\\\closures\\\\test.ts:40:17
+    at _internalTest (src\\\\closures\\\\test.ts:31:13)
+    at src\\\\closures\\\\test.ts:41:17
     at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
 "
 `;
@@ -307,8 +307,8 @@ exports[`should print report for single group and a single test 1`] = `
     at Array.forEach (<anonymous>)
     at localExpect (src\\\\expect\\\\index.ts:151:42)
     at tests\\\\core\\\\testExecutor.test.ts:93:27
-    at _internalTest (src\\\\closures\\\\test.ts:30:13)
-    at src\\\\closures\\\\test.ts:40:17
+    at _internalTest (src\\\\closures\\\\test.ts:31:13)
+    at src\\\\closures\\\\test.ts:41:17
     at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
 "
 `;
@@ -328,8 +328,8 @@ exports[`should print report for single group and a single test: without ANSI Co
     at Array.forEach (<anonymous>)
     at localExpect (src\\\\expect\\\\index.ts:151:42)
     at tests\\\\core\\\\testExecutor.test.ts:93:27
-    at _internalTest (src\\\\closures\\\\test.ts:30:13)
-    at src\\\\closures\\\\test.ts:40:17
+    at _internalTest (src\\\\closures\\\\test.ts:31:13)
+    at src\\\\closures\\\\test.ts:41:17
     at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
 "
 `;

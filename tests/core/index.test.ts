@@ -1,7 +1,17 @@
-import { CordeBot } from "../../src/core/cordeBot";
+import { Config } from "../../src/core/config";
+import { testCollector } from "../../src/core/testCollector";
+import { runtime } from "../../src/core/runtime";
 
-describe("Testing exports of common index", () => {
-  it("Should import successfully CordeBot", () => {
-    expect(CordeBot).toBeTruthy();
+describe("Define tests for index of common module", () => {
+  it("Should import runtime", () => {
+    expect(runtime).toBeTruthy();
+  });
+
+  it("Should import Config", () => {
+    expect(Config).toBeTruthy();
+  });
+
+  it("Should import testCollector", () => {
+    expect(testCollector).toBeTruthy();
   });
 });

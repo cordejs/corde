@@ -1,11 +1,11 @@
-import { group } from "../../src/closures";
+import { group, test as _test } from "../../src/closures";
 import { expect as _expect } from "../../src/expect";
 import { summary } from "../../src/core/summary";
 import { TestExecutor } from "../../src/core/testExecutor";
-import { buildReportMessage, LogUpdate } from "../../src/utils";
+import { LogUpdate } from "../../src/utils";
 import { mockTimer } from "../mocks/mockTimer";
-import { removeANSIColorStyle, TestFileGeneratorInfo } from "../testHelper";
-import { testCollector } from "../../src/common/testCollector";
+import { removeANSIColorStyle } from "../testHelper";
+import { testCollector } from "../../src/core/testCollector";
 
 let logUpdate: LogUpdate;
 let testRunner: TestExecutor;

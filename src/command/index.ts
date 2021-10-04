@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
-import { testCollector } from "../common/testCollector";
+import { testCollector } from "../core/testCollector";
 import { getStackTrace } from "../utils";
 import { any } from "../expect/asymmetricMatcher";
 import * as matchers from "./matches";
-import { runtime } from "../common/runtime";
+import { runtime } from "../core/runtime";
 import { ICordeBot, ITestReport } from "../types";
 import { CommandState } from "./matches/commandstate";
 

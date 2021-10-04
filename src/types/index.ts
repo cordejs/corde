@@ -12,7 +12,7 @@ import {
   VoiceChannel,
   VoiceConnection,
 } from "discord.js";
-import { Group } from "../common/Group";
+import { Group } from "../core/Group";
 import { Events } from "../core/events";
 import { Queue } from "../data-structures";
 

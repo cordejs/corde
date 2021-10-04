@@ -4,7 +4,7 @@ import * as validateFunc from "../../src/cli/validate";
 import * as goFunc from "../../src/cli/exec";
 
 import { program } from "../../src/cli/cli";
-import { runtime } from "../../src/common/runtime";
+import { runtime } from "../../src/core/runtime";
 import { reader } from "../../src/core/reader";
 
 describe("testing cli", () => {

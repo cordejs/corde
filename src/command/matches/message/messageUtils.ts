@@ -130,7 +130,7 @@ export namespace messageUtils {
   }
 
   export function humanizeMessageIdentifierObject(
-    msgIdentifier: corde.IMessageIdentifier | corde.IMessageEditedIdentifier,
+    msgIdentifier?: corde.IMessageIdentifier | corde.IMessageEditedIdentifier,
   ) {
     if (!msgIdentifier) {
       return "";
@@ -147,7 +147,7 @@ export namespace messageUtils {
     return "";
   }
 
-  export function messageEmbedToMessageEmbedInterface(message: MessageEmbed) {
+  export function messageEmbedToMessageEmbedInterface(message?: MessageEmbed) {
     if (!message) {
       return {};
     }
@@ -240,7 +240,7 @@ export namespace messageUtils {
     return embedLike;
   }
 
-  export function embedMessageInterfaceToMessageEmbed(embedLike: corde.IMessageEmbed) {
+  export function embedMessageInterfaceToMessageEmbed(embedLike?: corde.IMessageEmbed) {
     const embed = new MessageEmbed();
     if (!embedLike || typeOf(embedLike) !== "object") {
       return embed;

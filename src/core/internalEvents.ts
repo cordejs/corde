@@ -1,5 +1,5 @@
 import { EventEmitter } from "stream";
-import { TestFile } from "../common/TestFile";
+import { TestFile } from "../core/TestFile";
 import { ITestReport } from "../types";
 
 export interface IInternalEvents extends EventEmitter {

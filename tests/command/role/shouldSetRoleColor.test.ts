@@ -1,11 +1,11 @@
 import { Client } from "discord.js";
-import { runtime } from "../../../src/common/runtime";
-import { Colors, ICordeBot, ITestReport } from "../../../src/types";
+import { ICordeBot, ITestReport } from "../../../src/types";
 import MockDiscord from "../../mocks/mockDiscord";
 import { MockEvents } from "../../mocks/mockEvents";
 import { createCordeBotWithMockedFunctions, testHelper } from "../../testHelper";
 
 import { debugCommand } from "../../../src/command";
+import { Colors } from "../../../src";
 
 const testName = "shouldSetRoleColor";
 
@@ -32,14 +32,18 @@ describe(`testing ${testName} function`, () => {
   });
 
   it("should fail due to undefined roleIdentifier", async () => {
-    const report = await debugCon().shouldSetRoleColor(Colors.BLUE, undefined);
+    const report = await debugCon()
+      // @ts-ignore
+      .shouldSetRoleColor(Colors.BLUE, undefined);
 
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
 
   it("should fail due to invalid color", async () => {
-    const report = await debugCon().shouldSetRoleColor(null, { id: "132" });
+    const report = await debugCon()
+      // @ts-ignore
+      .shouldSetRoleColor(null, { id: "132" });
 
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();

@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { printHookErrors } from "../common/printHookError";
+import { printHookErrors } from "../core/printHookError";
 import {
   MESSAGE_TAB_SPACE,
   TAG_FAIL,
@@ -23,11 +23,11 @@ import {
 } from "../types";
 import { stringIsNullOrEmpty, Timer } from "../utils";
 import { LogUpdate } from "../utils";
-import { TestFile } from "../common/TestFile";
-import { Group } from "../common/Group";
-import { runtime } from "../common/runtime";
+import { TestFile } from "../core/TestFile";
+import { Group } from "../core/Group";
+import { runtime } from "../core/runtime";
 import { TestError } from "../errors";
-import { testCollector } from "../common/testCollector";
+import { testCollector } from "../core/testCollector";
 
 type ReportStatusType = "pass" | "fail" | "empty";
 
@@ -120,7 +120,7 @@ export class TestExecutor {
     }
   }
 
-  private async executeGroup(group: Group, testFile: TestFile) {
+  private async executeGroup(group: Group, testFile: TestFile): Promise<ReportStatusType> {
     let status: ReportStatusType = "pass";
     await this.executeHookFunction(group.beforeAllHooks);
     status = await this.executeClosures(group.closures, testFile);
@@ -132,7 +132,7 @@ export class TestExecutor {
     let status: ReportStatusType = "pass";
     for (const closure of closures) {
       if (closure instanceof Group) {
-        status = (await this.executeGroup(closure, testFile)) as ReportStatusType;
+        status = await this.executeGroup(closure, testFile);
       } else {
         const report = await this.executeTest(closure, testFile);
 
@@ -291,12 +291,12 @@ export class TestExecutor {
     return report;
   }
 
-  private async executeHookFunction(queues?: Queue<VoidLikeFunction>) {
-    if (!queues) {
+  private async executeHookFunction(queue?: Queue<VoidLikeFunction>) {
+    if (!queue) {
       return true;
     }
 
-    const _functionErrors = await queues.executeWithCatchCollectAsync();
+    const _functionErrors = await queue.executeWithCatchCollectAsync();
     if (_functionErrors && _functionErrors.length) {
       printHookErrors(_functionErrors);
       return false;

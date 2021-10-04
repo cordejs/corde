@@ -1,5 +1,10 @@
 import { GenericFunction, ParametersAsOptional } from "../types";
 import crypto from "crypto";
+import { isNullOrUndefined } from "../utils";
+
+interface IQueueProps {
+  clearOnExecution?: boolean;
+}
 
 export function createHash() {
   const current_date = new Date().valueOf().toString();
@@ -17,6 +22,12 @@ export function createHash() {
 export class Queue<T extends GenericFunction> {
   private readonly _funcs: Map<string, T>;
   private _defaultParameters: Parameters<T>[];
+
+  /**
+   * Define if all functions should be removed after
+   * queue execution.
+   */
+  clearOnExecution: boolean;
 
   [Symbol.iterator]() {
     return this._funcs.values();
@@ -41,9 +52,12 @@ export class Queue<T extends GenericFunction> {
     return this._defaultParameters.length;
   }
 
-  constructor() {
+  constructor(props: IQueueProps) {
     this._funcs = new Map<string, T>();
     this._defaultParameters = [];
+    this.clearOnExecution = isNullOrUndefined(props?.clearOnExecution)
+      ? true
+      : Boolean(props?.clearOnExecution);
   }
 
   /**
@@ -103,7 +117,7 @@ export class Queue<T extends GenericFunction> {
         returnList.push(value);
       }
     }
-    this.clear();
+    this.executeAfterRunProcess();
     return returnList;
   }
 
@@ -126,7 +140,7 @@ export class Queue<T extends GenericFunction> {
         returnList.push(value);
       }
     }
-    this.clear();
+    this.executeAfterRunProcess();
     return returnList;
   }
 
@@ -160,7 +174,7 @@ export class Queue<T extends GenericFunction> {
         }
       }
     }
-    this.clear();
+    this.executeAfterRunProcess();
     return returnValues;
   }
 
@@ -195,7 +209,7 @@ export class Queue<T extends GenericFunction> {
         }
       }
     }
-    this.clear();
+    this.executeAfterRunProcess();
     return returnValues;
   }
 
@@ -220,7 +234,7 @@ export class Queue<T extends GenericFunction> {
         errors.push(error);
       }
     }
-    this.clear();
+    this.executeAfterRunProcess();
     return errors;
   }
 
@@ -245,7 +259,7 @@ export class Queue<T extends GenericFunction> {
         errors.push(error);
       }
     }
-    this.clear();
+    this.executeAfterRunProcess();
     return errors;
   }
 
@@ -355,6 +369,12 @@ export class Queue<T extends GenericFunction> {
       throw new Error(
         `Could not pass more arguments ${argsToPass.length} than what the function ${fn.name} supports ${fn.length}`,
       );
+    }
+  }
+
+  private executeAfterRunProcess() {
+    if (this.clearOnExecution) {
+      this.clear();
     }
   }
 }

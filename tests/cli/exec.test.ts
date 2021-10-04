@@ -1,7 +1,7 @@
 import { Reader } from "../../src/core/reader";
 import * as validateFn from "../../src/cli/validate";
 import * as execCommand from "../../src/cli/exec";
-import { runtime } from "../../src/common/runtime";
+import { runtime } from "../../src/core/runtime";
 import { DEFAULT_TEST_TIMEOUT } from "../../src/consts";
 import { IConfigOptions } from "../../src/types";
 import { summary } from "../../src/core/summary";
@@ -85,8 +85,8 @@ describe("testing configs load", () => {
 
 function mockExecProces(config: IConfigOptions) {
   Reader.prototype.loadConfig = jest.fn().mockReturnValue(config);
-  jest.spyOn(validateFn, "validate").mockImplementation(null);
-  jest.spyOn(execCommand, "runTests").mockImplementation(null);
+  jest.spyOn(validateFn, "validate").mockImplementation(undefined);
+  jest.spyOn(execCommand, "runTests").mockImplementation(undefined);
   mockProcess.mockProcessExit();
   runtime.loginBot = jest.fn().mockReturnValue(Promise.resolve());
   runtime.events.onceReady = jest.fn().mockReturnValue(Promise.resolve());

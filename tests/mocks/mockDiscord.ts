@@ -24,9 +24,8 @@ import {
   VoiceState,
   VoiceChannel,
 } from "discord.js";
+import { ColorsHex } from "../../src";
 import { messageUtils } from "../../src/command/matches/message/messageUtils";
-import { IMessageEmbed } from "../../src/types";
-import { ColorsHex } from "../../src/types";
 
 /**
  * @private
@@ -106,10 +105,10 @@ export default class MockDiscord {
   private _speaking!: Speaking;
   private _presence!: Presence;
   private _voiceState!: VoiceState;
-  private _messageEmbedSimple: IMessageEmbed;
-  private _messageWithEmbed: Message;
-  private _pinnedMessage: Message;
-  private _unPinnedMessage: Message;
+  private _messageEmbedSimple!: corde.IMessageEmbed;
+  private _messageWithEmbed!: Message;
+  private _pinnedMessage!: Message;
+  private _unPinnedMessage!: Message;
   private _textChannelCollection!: Collection<string, TextChannel>;
   private _guildCollection!: Collection<string, Guild>;
   private _channelCollection!: Collection<string, Channel>;
@@ -617,7 +616,7 @@ export default class MockDiscord {
   createEmbedMessageLike(
     customColor = ColorsHex.DARK_BLUE,
     customTitle = "Some title",
-  ): IMessageEmbed {
+  ): corde.IMessageEmbed {
     return {
       color: customColor,
       title: customTitle,
@@ -685,10 +684,10 @@ export default class MockDiscord {
       name: "test",
       timestamp: new Date(),
       type: "COMPETING",
-      details: null,
-      party: null,
-      state: null,
-      url: null,
+      details: undefined,
+      party: undefined,
+      state: undefined,
+      url: undefined,
     };
 
     const presenceData: PresenceData = {

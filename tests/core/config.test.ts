@@ -1,5 +1,5 @@
 import { IConfigOptions } from "../../src/types";
-import { Config } from "../../src/common/config";
+import { Config } from "../../src/core";
 import path from "path";
 
 let config: Config;

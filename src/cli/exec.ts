@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import chalk from "chalk";
 import ora, { Color, Ora } from "ora";
-import { runtime } from "../common/runtime";
+import { runtime } from "../core/runtime";
 import { reader } from "../core/reader";
 import { summary } from "../core/summary";
 import { TestExecutor } from "../core/testExecutor";
@@ -9,7 +9,7 @@ import { LogUpdate } from "../utils/logUpdate";
 import { validate } from "./validate";
 import { StrictObject } from "../types";
 import registerTsNode from "../core/tsRegister";
-import { debug } from "../common/debug";
+import { debug } from "../core/debug";
 import { DEFAULT_CONFIG } from "../consts";
 
 declare module "ora" {

@@ -9,25 +9,16 @@ import {
   TextChannel,
 } from "discord.js";
 import { Stream } from "stream";
-import {
-  IFile,
-  IMessageEmbedAuthor,
-  IMessageEmbedFooter,
-  IMessageEmbed,
-  IMinifiedEmbedMessage,
-  ITestReport,
-  ColorsHex,
-  Colors,
-} from "../../../src/types";
 
 import MockDiscord from "../../mocks/mockDiscord";
 import { messageUtils } from "../../../src/command/matches/message/messageUtils";
+import { Colors, ColorsHex } from "../../../src";
 
 describe("testing messageUtils", () => {
   describe("testing createNotFoundMessageForMessageData", () => {
     it("should convert messageEmbedSimple simples data to messageEmbed", () => {
       const timeNow = Date.now();
-      const messageLike: IMessageEmbed = {
+      const messageLike: corde.IMessageEmbed = {
         color: 3447003,
         description: "test description",
         fields: [
@@ -46,7 +37,7 @@ describe("testing messageUtils", () => {
     });
 
     it("should return empty message when pass null", () => {
-      const embed = messageUtils.embedMessageInterfaceToMessageEmbed(null);
+      const embed = messageUtils.embedMessageInterfaceToMessageEmbed(undefined);
       expect(embed).toBeTruthy();
     });
 
@@ -65,27 +56,29 @@ describe("testing messageUtils", () => {
     });
 
     it("should convert messageEmbedSimple author string", () => {
-      const messageLike: IMessageEmbed = {
-        author: "lucas",
+      const messageLike: corde.IMessageEmbed = {
+        author: "foo",
       };
       const embed = messageUtils.embedMessageInterfaceToMessageEmbed(messageLike);
-      expect(embed.author).toMatchObject<IMessageEmbedAuthor>({
-        name: "lucas",
+      expect(embed.author).toMatchObject<corde.IMessageEmbedAuthor>({
+        name: "foo",
       });
     });
 
     it("should convert messageEmbedSimple author object", () => {
-      const messageLike: IMessageEmbed = {
+      const messageLike: corde.IMessageEmbed = {
         author: {
-          name: "lucas",
+          name: "foo",
         },
       };
       const embed = messageUtils.embedMessageInterfaceToMessageEmbed(messageLike);
-      expect(embed.author).toMatchObject(messageLike.author);
+      expect(embed.author).toMatchObject<corde.IMessageEmbedAuthor>({
+        name: "foo",
+      });
     });
 
     it("should convert messageEmbedSimple files string", () => {
-      const messageLike: IMessageEmbed = {
+      const messageLike: corde.IMessageEmbed = {
         files: ["test 1"],
       };
       const embed = messageUtils.embedMessageInterfaceToMessageEmbed(messageLike);
@@ -94,7 +87,7 @@ describe("testing messageUtils", () => {
 
     it("should convert messageEmbedSimple files object", () => {
       const stream = new Stream();
-      const messageLike: IMessageEmbed = {
+      const messageLike: corde.IMessageEmbed = {
         files: [
           {
             name: "file 1",
@@ -103,7 +96,7 @@ describe("testing messageUtils", () => {
         ],
       };
       const embed = messageUtils.embedMessageInterfaceToMessageEmbed(messageLike);
-      expect(embed.files).toMatchObject<IFile[]>([
+      expect(embed.files).toMatchObject<corde.IFile[]>([
         {
           name: "file 1",
           attachment: stream,
@@ -118,7 +111,7 @@ describe("testing messageUtils", () => {
           value: "field 1 value",
         },
       ];
-      const messageLike: IMessageEmbed = {
+      const messageLike: corde.IMessageEmbed = {
         fields,
       };
       const embed = messageUtils.embedMessageInterfaceToMessageEmbed(messageLike);
@@ -126,11 +119,11 @@ describe("testing messageUtils", () => {
     });
 
     it("should convert messageEmbedSimple footer object", () => {
-      const footer: IMessageEmbedFooter = {
+      const footer: corde.IMessageEmbedFooter = {
         iconURL: "www.google",
         text: "footer text",
       };
-      const messageLike: IMessageEmbed = {
+      const messageLike: corde.IMessageEmbed = {
         footer,
       };
       const embed = messageUtils.embedMessageInterfaceToMessageEmbed(messageLike);
@@ -138,10 +131,10 @@ describe("testing messageUtils", () => {
     });
 
     it("should convert messageEmbedSimple footer string", () => {
-      const footer: IMessageEmbedFooter = {
+      const footer: corde.IMessageEmbedFooter = {
         text: "footer text",
       };
-      const messageLike: IMessageEmbed = {
+      const messageLike: corde.IMessageEmbed = {
         footer: "footer text",
       };
       const embed = messageUtils.embedMessageInterfaceToMessageEmbed(messageLike);
@@ -152,7 +145,7 @@ describe("testing messageUtils", () => {
       const thumbnail: MessageEmbedThumbnail = {
         url: "wwww.google",
       };
-      const messageLike: IMessageEmbed = {
+      const messageLike: corde.IMessageEmbed = {
         thumbnailUrl: "wwww.google",
       };
       const embed = messageUtils.embedMessageInterfaceToMessageEmbed(messageLike);
@@ -169,14 +162,14 @@ describe("testing messageUtils", () => {
       });
 
       expect(
-        (messageUtils.getMessageByType(messageEmbed, "embed") as IMinifiedEmbedMessage).image,
+        (messageUtils.getMessageByType(messageEmbed, "embed") as corde.IMinifiedEmbedMessage).image,
       ).toBeTruthy();
     });
   });
 
   describe("testing humanizeMessageIdentifierObject", () => {
     it("should return '' for no identifier", () => {
-      expect(messageUtils.humanizeMessageIdentifierObject(null)).toEqual("");
+      expect(messageUtils.humanizeMessageIdentifierObject(undefined)).toEqual("");
     });
 
     it("should return message refering to the content", () => {
@@ -203,25 +196,25 @@ describe("testing messageUtils", () => {
     });
 
     it("should return empty object", () => {
-      const msg = messageUtils.messageEmbedToMessageEmbedInterface(null);
+      const msg = messageUtils.messageEmbedToMessageEmbedInterface(undefined);
       expect(msg).toEqual({});
     });
 
     it("should set color", () => {
       embed.setColor(Colors.DARK_AQUA);
       const msg = messageUtils.messageEmbedToMessageEmbedInterface(embed);
-      expect(msg).toEqual<IMessageEmbed>({ color: ColorsHex.DARK_AQUA });
+      expect(msg).toEqual<corde.IMessageEmbed>({ color: ColorsHex.DARK_AQUA });
     });
 
     it("should set author object", () => {
-      const author: IMessageEmbedAuthor = {
+      const author: corde.IMessageEmbedAuthor = {
         name: "cordebot",
         iconURL: "www.google.com?icon",
         url: "www.google.com?url",
       };
       embed.setAuthor(author.name, author.iconURL, author.url);
       const msg = messageUtils.messageEmbedToMessageEmbedInterface(embed);
-      expect(msg).toEqual<IMessageEmbed>({
+      expect(msg).toEqual<corde.IMessageEmbed>({
         author,
       });
     });
@@ -229,7 +222,7 @@ describe("testing messageUtils", () => {
     it("should set author name string", () => {
       embed.setAuthor("bot");
       const msg = messageUtils.messageEmbedToMessageEmbedInterface(embed);
-      expect(msg).toEqual<IMessageEmbed>({
+      expect(msg).toEqual<corde.IMessageEmbed>({
         author: "bot",
       });
     });
@@ -237,12 +230,12 @@ describe("testing messageUtils", () => {
     it("should set description", () => {
       embed.setDescription("description");
       const msg = messageUtils.messageEmbedToMessageEmbedInterface(embed);
-      expect(msg).toEqual<IMessageEmbed>({
+      expect(msg).toEqual<corde.IMessageEmbed>({
         description: "description",
       });
     });
 
-    const footer: IMessageEmbedFooter = {
+    const footer: corde.IMessageEmbedFooter = {
       iconURL: "www.google.com",
       text: "test footer",
     };
@@ -250,7 +243,7 @@ describe("testing messageUtils", () => {
     it("should set footer object", () => {
       embed.setFooter(footer.text, footer.iconURL);
       const msg = messageUtils.messageEmbedToMessageEmbedInterface(embed);
-      expect(msg).toEqual<IMessageEmbed>({
+      expect(msg).toEqual<corde.IMessageEmbed>({
         footer,
       });
     });
@@ -258,7 +251,7 @@ describe("testing messageUtils", () => {
     it("should set footer string", () => {
       embed.setFooter(footer.text);
       const msg = messageUtils.messageEmbedToMessageEmbedInterface(embed);
-      expect(msg).toEqual<IMessageEmbed>({
+      expect(msg).toEqual<corde.IMessageEmbed>({
         footer: footer.text,
       });
     });
@@ -266,7 +259,7 @@ describe("testing messageUtils", () => {
     it("should set image", () => {
       embed.setImage("wwww");
       const msg = messageUtils.messageEmbedToMessageEmbedInterface(embed);
-      expect(msg).toEqual<IMessageEmbed>({
+      expect(msg).toEqual<corde.IMessageEmbed>({
         image: "wwww",
       });
     });
@@ -274,7 +267,7 @@ describe("testing messageUtils", () => {
     it("should set thumbnail", () => {
       embed.setThumbnail("wwww");
       const msg = messageUtils.messageEmbedToMessageEmbedInterface(embed);
-      expect(msg).toEqual<IMessageEmbed>({
+      expect(msg).toEqual<corde.IMessageEmbed>({
         thumbnailUrl: "wwww",
       });
     });
@@ -283,7 +276,7 @@ describe("testing messageUtils", () => {
       const date = new Date();
       embed.setTimestamp(date);
       const msg = messageUtils.messageEmbedToMessageEmbedInterface(embed);
-      expect(msg).toEqual<IMessageEmbed>({
+      expect(msg).toEqual<corde.IMessageEmbed>({
         timestamp: date.getTime(),
       });
     });
@@ -291,7 +284,7 @@ describe("testing messageUtils", () => {
     it("should set title", () => {
       embed.setTitle("title");
       const msg = messageUtils.messageEmbedToMessageEmbedInterface(embed);
-      expect(msg).toEqual<IMessageEmbed>({
+      expect(msg).toEqual<corde.IMessageEmbed>({
         title: "title",
       });
     });
@@ -299,7 +292,7 @@ describe("testing messageUtils", () => {
     it("should set url", () => {
       embed.setURL("www");
       const msg = messageUtils.messageEmbedToMessageEmbedInterface(embed);
-      expect(msg).toEqual<IMessageEmbed>({
+      expect(msg).toEqual<corde.IMessageEmbed>({
         url: "www",
       });
     });
@@ -307,7 +300,7 @@ describe("testing messageUtils", () => {
     it("should set files", () => {
       embed.files.push(new MessageAttachment("www", "test"));
       const msg = messageUtils.messageEmbedToMessageEmbedInterface(embed);
-      expect(msg).toEqual<IMessageEmbed>({
+      expect(msg).toEqual<corde.IMessageEmbed>({
         files: [
           {
             attachment: "www",
@@ -325,7 +318,7 @@ describe("testing messageUtils", () => {
         proxyURL: "ww",
       };
       const msg = messageUtils.messageEmbedToMessageEmbedInterface(embed);
-      expect(msg).toEqual<IMessageEmbed>({
+      expect(msg).toEqual<corde.IMessageEmbed>({
         image: {
           url: "www",
           height: 800,

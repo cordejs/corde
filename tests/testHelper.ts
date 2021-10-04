@@ -3,11 +3,11 @@ import fs from "fs";
 import MockDiscord from "./mocks/mockDiscord";
 import { Client } from "discord.js";
 import { CordeBot } from "../src/core/cordeBot";
-import { ICordeBot, ITest, ITestFile, TestFunctionType, ITestReport } from "../src/types";
+import { ICordeBot, ITestReport } from "../src/types";
 import { IExpectTestBaseParams } from "../src/types";
-import { runtime } from "../src/common/runtime";
+import { runtime } from "../src/core/runtime";
 import { buildReportMessage } from "../src/utils";
-import { testCollector } from "../src/common/testCollector";
+import { testCollector } from "../src/core/testCollector";
 import { CommandState } from "../src/command/matches/commandstate";
 
 export const normalTsPath = path.resolve(process.cwd(), "corde.ts");

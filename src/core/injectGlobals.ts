@@ -1,7 +1,7 @@
 import * as hooks from "../hooks";
 import * as closures from "../closures";
 import { BotAPI, ConfigAPI, fail } from "../api";
-import { runtime } from "../common/runtime";
+import { runtime } from "../core/runtime";
 import { IConfigOptions } from "../types";
 import { expect } from "../expect";
 import { command } from "../command";

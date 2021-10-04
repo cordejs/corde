@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import corde from "../../lib";
 import { wait } from "../../lib/src/utils";
-import { testCollector } from "../../lib/src/common/testCollector";
+import { testCollector } from "../../lib/src/core/testCollector";
 
 corde.afterAll(async () => {
   await wait(100);

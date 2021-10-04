@@ -1,4 +1,4 @@
-import { testCollector } from "../../src/common/testCollector";
+import { testCollector } from "../../src/core/testCollector";
 import { Queue } from "../../src/data-structures";
 import { beforeEach as hook } from "../../src/hooks";
 import { VoidLikeFunction } from "../../src/types";

@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
-import { runtime } from "../../src/common/runtime";
-import { testCollector } from "../../src/common/testCollector";
+import { runtime } from "../../src/core/runtime";
+import { testCollector } from "../../src/core/testCollector";
 import { reader } from "../../src/core/reader";
 import { FileError } from "../../src/errors";
 import { beforeAll as _beforeAll } from "../../src/hooks";
