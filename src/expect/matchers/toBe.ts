@@ -2,7 +2,6 @@ import chalk from "chalk";
 import { ITestProps } from "../../types";
 import { buildReportMessage, diff, typeOf } from "../../utils";
 import { matcherUtils } from "../matcherUtils";
-import { MatcherFn } from "../types";
 
 /**
  * @internal
