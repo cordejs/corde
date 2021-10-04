@@ -3,22 +3,11 @@ import { testCollector } from "../core/testCollector";
 import { VoidLikeFunction } from "../types";
 import { executePromiseWithTimeout, resolveName } from "../utils";
 
-/**
- * Define a single test. A test should contain one or more expectations that test action of
- * the discord bot.
- * A spec whose expectations all succeed will be passing and a spec with any failures will fail.
- *
- * @param expectationDescription Textual description of what this test is checking
- * @param assertion Function that contains the code of your test. If not provided it will be ignored in the report.
- * @param timeout Custom timeout for an async test
- *
- * @since 1.0
- */
-export function test<T extends any>(
-  expectationDescription: T,
+export const test: corde.ITestClousure = <T extends any>(
+  description: T,
   assertion: VoidLikeFunction,
   timeout?: number | undefined,
-) {
+) => {
   const _internalTest = async () => {
     testCollector.currentTestFile.isInsideTestClausure = true;
 
@@ -40,9 +29,9 @@ export function test<T extends any>(
         }
       }, timeout ?? runtime.timeout);
     },
-    toResolveName: () => resolveName(expectationDescription),
+    toResolveName: () => resolveName(description),
   });
-}
+};
 
 /**
  * Alias for `test`

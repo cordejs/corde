@@ -2,7 +2,7 @@ import { testCollector } from "../core/testCollector";
 import { getStackTrace, isFunction } from "../utils";
 import { hookBuilder } from "./hookBuilder";
 
-export function afterEach(fn: () => void | Promise<void>, timeout?: number) {
+export const afterEach: corde.IHook = (fn: () => void | Promise<void>, timeout?: number) => {
   if (isFunction(fn)) {
     const trace = getStackTrace();
     hookBuilder({
@@ -13,4 +13,4 @@ export function afterEach(fn: () => void | Promise<void>, timeout?: number) {
       timeout,
     });
   }
-}
+};

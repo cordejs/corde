@@ -2,11 +2,12 @@ import chalk from "chalk";
 import { ITestProps } from "../../types";
 import { buildReportMessage, diff, typeOf } from "../../utils";
 import { matcherUtils } from "../matcherUtils";
+import { MatcherFn } from "../types";
 
 /**
  * @internal
  */
-export function toBe(this: ITestProps, expected: any, received: any) {
+export function _toBe(this: ITestProps, expected: any, received: any) {
   let pass = matcherUtils.matchValues(() => expected === received, expected, received);
 
   let comparator = "===";

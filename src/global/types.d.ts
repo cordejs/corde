@@ -15,15 +15,37 @@ declare namespace corde {
   }[KeyOf<T>];
 
   export interface IDescribeClousure {
+    /**
+     * Create a group of tests.
+     *
+     * @param descriptionDefinition Resolvable description of the group. It is often a string,
+     * but can be sync or async functions, numbers, booleans... Functions will be executed to get the
+     * primitive value of then.
+     *
+     * @param testDefinitions Function for Corde to invoke that will define inner suites a test
+     *
+     * @since 1.0
+     */
     <T extends unknown>(
-      definitionResolvable: T,
+      description: T,
       testDefinitions: (() => void) | (() => Promise<void>),
     ): void;
   }
 
   export interface ITestClousure {
+    /**
+     * Define a single test. A test should contain one or more expectations that test action of
+     * the discord bot.
+     * A spec whose expectations all succeed will be passing and a spec with any failures will fail.
+     *
+     * @param expectationDescription Textual description of what this test is checking
+     * @param assertion Function that contains the code of your test. If not provided it will be ignored in the report.
+     * @param timeout Custom timeout for an async test
+     *
+     * @since 1.0
+     */
     <T extends unknown>(
-      definitionResolvable: T,
+      description: T,
       testDefinitions: (() => void) | (() => Promise<void>),
       timeout?: number | undefined,
     ): void;
