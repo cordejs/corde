@@ -3,7 +3,7 @@ import { expect as _expect } from "../../src/expect";
 import { TestExecutor } from "../../src/core/TestExecutor";
 import { LogUpdate } from "../../src/utils";
 import { mockTimer } from "../mocks/mockTimer";
-import { testCollector } from "../../src/core/testCollector";
+import { testCollector } from "../../src/core/TestCollector";
 
 import {
   beforeEach as _beforeEach,

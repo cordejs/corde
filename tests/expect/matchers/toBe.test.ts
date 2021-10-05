@@ -3,7 +3,7 @@ import { cordeExpect } from "../../../src/expect";
 const fn1 = () => null;
 const fn2 = fn1;
 
-const array1 = [];
+const array1: any[] = [];
 const array2 = array1;
 
 const obj1 = {};

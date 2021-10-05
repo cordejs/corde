@@ -5,7 +5,7 @@ exports[`testing toBeValidDate should return false for invalid date (any(Boolean
     expect([32mexpected[39m).toBeValidDate()
     
     [1mexpected[22m should be a valid [32mdate[39m.
-    got: [31m{ ... }[39m
+    got: [31many(Boolean)[39m
 "
 `;
 
@@ -14,7 +14,7 @@ exports[`testing toBeValidDate should return false for invalid date (any(Object)
     expect([32mexpected[39m).toBeValidDate()
     
     [1mexpected[22m should be a valid [32mdate[39m.
-    got: [31m{ ... }[39m
+    got: [31many(Object)[39m
 "
 `;
 
@@ -23,7 +23,7 @@ exports[`testing toBeValidDate should return false for invalid date (any(String)
     expect([32mexpected[39m).toBeValidDate()
     
     [1mexpected[22m should be a valid [32mdate[39m.
-    got: [31m{ ... }[39m
+    got: [31many(String)[39m
 "
 `;
 
@@ -32,7 +32,7 @@ exports[`testing toBeValidDate should return false for invalid date (any(Symbol)
     expect([32mexpected[39m).toBeValidDate()
     
     [1mexpected[22m should be a valid [32mdate[39m.
-    got: [31m{ ... }[39m
+    got: [31many(Symbol)[39m
 "
 `;
 
@@ -81,7 +81,7 @@ exports[`testing toBeValidDate should return false for valid date (1) (isNot tru
 "
 `;
 
-exports[`testing toBeValidDate should return false for valid date (2021-10-04T18:18:55.943Z) (isNot true) 1`] = `
+exports[`testing toBeValidDate should return false for valid date (2021-10-05T15:43:00.122Z) (isNot true) 1`] = `
 "    
     expect([32mexpected[39m).not.toBeValidDate()
     
@@ -95,7 +95,7 @@ exports[`testing toBeValidDate should return false for valid date (any(Date)) (i
     expect([32mexpected[39m).not.toBeValidDate()
     
     [1mexpected[22m should not be a valid [32mdate[39m.
-    got: [31m{ ... }[39m
+    got: [31many(Date)[39m
 "
 `;
 
@@ -104,7 +104,7 @@ exports[`testing toBeValidDate should return false for valid date (any(Number)) 
     expect([32mexpected[39m).not.toBeValidDate()
     
     [1mexpected[22m should not be a valid [32mdate[39m.
-    got: [31m{ ... }[39m
+    got: [31many(Number)[39m
 "
 `;
 
@@ -113,7 +113,7 @@ exports[`testing toBeValidDate should return false for valid date (any) (isNot t
     expect([32mexpected[39m).not.toBeValidDate()
     
     [1mexpected[22m should not be a valid [32mdate[39m.
-    got: [31m{ ... }[39m
+    got: [31many[39m
 "
 `;
 
@@ -124,6 +124,6 @@ exports[`testing toBeValidDate should return false for valid date (function any(
     expect([32mexpected[39m).not.toBeValidDate()
     
     [1mexpected[22m should not be a valid [32mdate[39m.
-    got: [31m{ ... }[39m
+    got: [31many[39m
 "
 `;

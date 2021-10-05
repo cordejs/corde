@@ -1,4 +1,4 @@
-import { testCollector } from "../../src/core/testCollector";
+import { testCollector } from "../../src/core/TestCollector";
 import { group, test } from "../../src/closures";
 import { expect as cordeExpect, expect as _expect } from "../../src/expect";
 import { ITest } from "../../src/types";

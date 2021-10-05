@@ -9,7 +9,7 @@ export * from "./printHookError";
 export * from "./Reader";
 export * from "./runtime";
 export * from "./summary";
-export * from "./testCollector";
+export * from "./TestCollector";
 export * from "./TestExecutor";
 export * from "./tsRegister";
 export * from "./CordeBot";

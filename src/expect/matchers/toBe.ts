@@ -6,7 +6,7 @@ import { matcherUtils } from "../matcherUtils";
 /**
  * @internal
  */
-export function _toBe(this: ITestProps, expected: any, received: any) {
+export function toBe(this: ITestProps, expected: any, received: any) {
   let pass = matcherUtils.matchValues(() => expected === received, expected, received);
 
   let comparator = "===";

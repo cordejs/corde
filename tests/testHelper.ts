@@ -7,7 +7,7 @@ import { ICordeBot, ITestReport } from "../src/types";
 import { IExpectTestBaseParams } from "../src/types";
 import { runtime } from "../src/core/runtime";
 import { buildReportMessage } from "../src/utils";
-import { testCollector } from "../src/core/testCollector";
+import { testCollector } from "../src/core/TestCollector";
 import { CommandState } from "../src/command/matches/commandstate";
 
 export const normalTsPath = path.resolve(process.cwd(), "corde.ts");

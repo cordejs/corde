@@ -1,4 +1,4 @@
-import { testCollector } from "../core/testCollector";
+import { testCollector } from "../core/TestCollector";
 import { getStackTrace } from "../utils";
 import { hookBuilder } from "./hookBuilder";
 

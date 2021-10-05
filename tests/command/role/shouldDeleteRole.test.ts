@@ -5,7 +5,7 @@ import { MockEvents } from "../../mocks/mockEvents";
 import { ICordeBot, ITestReport } from "../../../src/types";
 import { debugCommand } from "../../../src/command";
 import { runtime } from "../../../src/core/runtime";
-import { testCollector } from "../../../src/core/testCollector";
+import { testCollector } from "../../../src/core/TestCollector";
 
 const testName = "shouldDeleteRole";
 

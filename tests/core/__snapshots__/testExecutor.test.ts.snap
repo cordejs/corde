@@ -42,13 +42,13 @@ exports[`should get report for multiple tests inside a group and failed tests 1`
     
     expect: [32m1[39m !== [31m1[39m
 
-    at toEqual src\\\\expect\\\\index.ts:153:30
+    at toEqual /workspaces/corde/src/expect/index.ts:153:30
     at Array.forEach (<anonymous>)
-    at localExpect (src\\\\expect\\\\index.ts:151:42)
-    at tests\\\\core\\\\testExecutor.test.ts:172:27
-    at _internalTest (src\\\\closures\\\\test.ts:31:13)
-    at src\\\\closures\\\\test.ts:41:17
-    at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
+    at localExpect (/workspaces/corde/src/expect/index.ts:151:42)
+    at /workspaces/corde/tests/core/testExecutor.test.ts:172:27
+    at _internalTest (/workspaces/corde/src/closures/test.ts:19:13)
+    at /workspaces/corde/src/closures/test.ts:29:17
+    at /workspaces/corde/src/utils/executePromiseWithTimeout.ts:62:5
 "
 `;
 
@@ -66,13 +66,13 @@ exports[`should get report for multiple tests inside a group and failed tests: w
     
     expect: 1 !== 1
 
-    at toEqual src\\\\expect\\\\index.ts:153:30
+    at toEqual /workspaces/corde/src/expect/index.ts:153:30
     at Array.forEach (<anonymous>)
-    at localExpect (src\\\\expect\\\\index.ts:151:42)
-    at tests\\\\core\\\\testExecutor.test.ts:172:27
-    at _internalTest (src\\\\closures\\\\test.ts:31:13)
-    at src\\\\closures\\\\test.ts:41:17
-    at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
+    at localExpect (/workspaces/corde/src/expect/index.ts:151:42)
+    at /workspaces/corde/tests/core/testExecutor.test.ts:172:27
+    at _internalTest (/workspaces/corde/src/closures/test.ts:19:13)
+    at /workspaces/corde/src/closures/test.ts:29:17
+    at /workspaces/corde/src/utils/executePromiseWithTimeout.ts:62:5
 "
 `;
 
@@ -110,13 +110,13 @@ exports[`should get report for splited groups 1`] = `
     
     expect: [32m1[39m !== [31m1[39m
 
-    at toEqual src\\\\expect\\\\index.ts:153:30
+    at toEqual /workspaces/corde/src/expect/index.ts:153:30
     at Array.forEach (<anonymous>)
-    at localExpect (src\\\\expect\\\\index.ts:151:42)
-    at tests\\\\core\\\\testExecutor.test.ts:267:27
-    at _internalTest (src\\\\closures\\\\test.ts:31:13)
-    at src\\\\closures\\\\test.ts:41:17
-    at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
+    at localExpect (/workspaces/corde/src/expect/index.ts:151:42)
+    at /workspaces/corde/tests/core/testExecutor.test.ts:267:27
+    at _internalTest (/workspaces/corde/src/closures/test.ts:19:13)
+    at /workspaces/corde/src/closures/test.ts:29:17
+    at /workspaces/corde/src/utils/executePromiseWithTimeout.ts:62:5
 
    [32m[32m✔ [39m[32m test closure 5[39m   [36m10ms[39m
    [32m[32m✔ [39m[32m test closure 6[39m   [36m10ms[39m
@@ -129,13 +129,13 @@ exports[`should get report for splited groups 1`] = `
     
     expect: [32m1[39m !== [31m1[39m
 
-    at toEqual src\\\\expect\\\\index.ts:153:30
+    at toEqual /workspaces/corde/src/expect/index.ts:153:30
     at Array.forEach (<anonymous>)
-    at localExpect (src\\\\expect\\\\index.ts:151:42)
-    at tests\\\\core\\\\testExecutor.test.ts:281:27
-    at _internalTest (src\\\\closures\\\\test.ts:31:13)
-    at src\\\\closures\\\\test.ts:41:17
-    at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
+    at localExpect (/workspaces/corde/src/expect/index.ts:151:42)
+    at /workspaces/corde/tests/core/testExecutor.test.ts:281:27
+    at _internalTest (/workspaces/corde/src/closures/test.ts:19:13)
+    at /workspaces/corde/src/closures/test.ts:29:17
+    at /workspaces/corde/src/utils/executePromiseWithTimeout.ts:62:5
 
    [32m[32m✔ [39m[32m test closure 9[39m   [36m10ms[39m
    [32m[32m✔ [39m[32m test closure 10[39m   [36m10ms[39m
@@ -148,13 +148,13 @@ exports[`should get report for splited groups 1`] = `
     
     expect: [32m1[39m !== [31m1[39m
 
-    at toEqual src\\\\expect\\\\index.ts:153:30
+    at toEqual /workspaces/corde/src/expect/index.ts:153:30
     at Array.forEach (<anonymous>)
-    at localExpect (src\\\\expect\\\\index.ts:151:42)
-    at tests\\\\core\\\\testExecutor.test.ts:295:27
-    at _internalTest (src\\\\closures\\\\test.ts:31:13)
-    at src\\\\closures\\\\test.ts:41:17
-    at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
+    at localExpect (/workspaces/corde/src/expect/index.ts:151:42)
+    at /workspaces/corde/tests/core/testExecutor.test.ts:295:27
+    at _internalTest (/workspaces/corde/src/closures/test.ts:19:13)
+    at /workspaces/corde/src/closures/test.ts:29:17
+    at /workspaces/corde/src/utils/executePromiseWithTimeout.ts:62:5
 "
 `;
 
@@ -172,13 +172,13 @@ exports[`should get report for splited groups: without ANSI Colors 1`] = `
     
     expect: 1 !== 1
 
-    at toEqual src\\\\expect\\\\index.ts:153:30
+    at toEqual /workspaces/corde/src/expect/index.ts:153:30
     at Array.forEach (<anonymous>)
-    at localExpect (src\\\\expect\\\\index.ts:151:42)
-    at tests\\\\core\\\\testExecutor.test.ts:267:27
-    at _internalTest (src\\\\closures\\\\test.ts:31:13)
-    at src\\\\closures\\\\test.ts:41:17
-    at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
+    at localExpect (/workspaces/corde/src/expect/index.ts:151:42)
+    at /workspaces/corde/tests/core/testExecutor.test.ts:267:27
+    at _internalTest (/workspaces/corde/src/closures/test.ts:19:13)
+    at /workspaces/corde/src/closures/test.ts:29:17
+    at /workspaces/corde/src/utils/executePromiseWithTimeout.ts:62:5
 
    ✔  test closure 5   10ms
    ✔  test closure 6   10ms
@@ -191,13 +191,13 @@ exports[`should get report for splited groups: without ANSI Colors 1`] = `
     
     expect: 1 !== 1
 
-    at toEqual src\\\\expect\\\\index.ts:153:30
+    at toEqual /workspaces/corde/src/expect/index.ts:153:30
     at Array.forEach (<anonymous>)
-    at localExpect (src\\\\expect\\\\index.ts:151:42)
-    at tests\\\\core\\\\testExecutor.test.ts:281:27
-    at _internalTest (src\\\\closures\\\\test.ts:31:13)
-    at src\\\\closures\\\\test.ts:41:17
-    at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
+    at localExpect (/workspaces/corde/src/expect/index.ts:151:42)
+    at /workspaces/corde/tests/core/testExecutor.test.ts:281:27
+    at _internalTest (/workspaces/corde/src/closures/test.ts:19:13)
+    at /workspaces/corde/src/closures/test.ts:29:17
+    at /workspaces/corde/src/utils/executePromiseWithTimeout.ts:62:5
 
    ✔  test closure 9   10ms
    ✔  test closure 10   10ms
@@ -210,13 +210,13 @@ exports[`should get report for splited groups: without ANSI Colors 1`] = `
     
     expect: 1 !== 1
 
-    at toEqual src\\\\expect\\\\index.ts:153:30
+    at toEqual /workspaces/corde/src/expect/index.ts:153:30
     at Array.forEach (<anonymous>)
-    at localExpect (src\\\\expect\\\\index.ts:151:42)
-    at tests\\\\core\\\\testExecutor.test.ts:295:27
-    at _internalTest (src\\\\closures\\\\test.ts:31:13)
-    at src\\\\closures\\\\test.ts:41:17
-    at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
+    at localExpect (/workspaces/corde/src/expect/index.ts:151:42)
+    at /workspaces/corde/tests/core/testExecutor.test.ts:295:27
+    at _internalTest (/workspaces/corde/src/closures/test.ts:19:13)
+    at /workspaces/corde/src/closures/test.ts:29:17
+    at /workspaces/corde/src/utils/executePromiseWithTimeout.ts:62:5
 "
 `;
 
@@ -303,13 +303,13 @@ exports[`should print report for single group and a single test 1`] = `
     
     expect: [32m1[39m !== [31m1[39m
 
-    at toEqual src\\\\expect\\\\index.ts:153:30
+    at toEqual /workspaces/corde/src/expect/index.ts:153:30
     at Array.forEach (<anonymous>)
-    at localExpect (src\\\\expect\\\\index.ts:151:42)
-    at tests\\\\core\\\\testExecutor.test.ts:93:27
-    at _internalTest (src\\\\closures\\\\test.ts:31:13)
-    at src\\\\closures\\\\test.ts:41:17
-    at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
+    at localExpect (/workspaces/corde/src/expect/index.ts:151:42)
+    at /workspaces/corde/tests/core/testExecutor.test.ts:93:27
+    at _internalTest (/workspaces/corde/src/closures/test.ts:19:13)
+    at /workspaces/corde/src/closures/test.ts:29:17
+    at /workspaces/corde/src/utils/executePromiseWithTimeout.ts:62:5
 "
 `;
 
@@ -324,12 +324,12 @@ exports[`should print report for single group and a single test: without ANSI Co
     
     expect: 1 !== 1
 
-    at toEqual src\\\\expect\\\\index.ts:153:30
+    at toEqual /workspaces/corde/src/expect/index.ts:153:30
     at Array.forEach (<anonymous>)
-    at localExpect (src\\\\expect\\\\index.ts:151:42)
-    at tests\\\\core\\\\testExecutor.test.ts:93:27
-    at _internalTest (src\\\\closures\\\\test.ts:31:13)
-    at src\\\\closures\\\\test.ts:41:17
-    at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
+    at localExpect (/workspaces/corde/src/expect/index.ts:151:42)
+    at /workspaces/corde/tests/core/testExecutor.test.ts:93:27
+    at _internalTest (/workspaces/corde/src/closures/test.ts:19:13)
+    at /workspaces/corde/src/closures/test.ts:29:17
+    at /workspaces/corde/src/utils/executePromiseWithTimeout.ts:62:5
 "
 `;
