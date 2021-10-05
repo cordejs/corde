@@ -42,7 +42,6 @@ declare namespace corde {
      * @since 5.0
      */
     toEqual(value: T): void;
-    toBeCloseTo(expected: T, precisionopt: number): void;
     /**
      * Checks if `expected` has a defined value (is not `null` or `undefined`).
      * @since 5.0
@@ -271,20 +270,19 @@ declare namespace corde {
      * @since 5.0
      */
     toBeTruthy(): void;
-    toContain(expected: T): void;
-    toHaveBeenCalled(): void;
-    toHaveBeenCalledBefore(expected: any): void;
-    toHaveBeenCalledOnceWith(): void;
-    toHaveBeenCalledTimes(amount: number): void;
-    toHaveBeenCalledWith(): void;
-    toMatch(expected: any): void;
-    toThrow<U extends any>(expectedThrow: U): void;
-    toThrowError<U extends Error>(expectedopt: U): void;
-    toBeArrayOfBooleans(): void;
-    toBeArrayOfNumbers(): void;
-    toBeArrayOfObjects(): void;
-    toBeArrayOfStrings(): void;
-    toBeArrayOfSize(number: any): void;
+    /**
+     * Checks if a string has another string inclued on it.
+     *
+     * @example
+     *
+     * expect("foo bar").toStringContains("bar"); // Pass
+     * expect("foo bar").toStringContains("foo"); // Pass
+     * expect("foo bar").toStringContains("fii"); // Fail
+     *
+     * @param incluedValue Value to be inside `expected` string.
+     * @since 5.0
+     */
+    toStringContains(incluedValue: T): void;
     /**
      * Checks if `value` is an empty array.
      *
@@ -295,9 +293,6 @@ declare namespace corde {
      * @since 5.0
      */
     toBeEmptyArray(): void;
-    toBeNonEmptyArray(): void;
-    toBeAfter(otherDate: Date): void;
-    toBeBefore(otherDate: Date): void;
     /**
      * Checks if `expected` is:
      *
@@ -343,21 +338,6 @@ declare namespace corde {
      * @since 5.0
      */
     toBeFunction(): void;
-    toThrowAnyError(): void;
-    toThrowErrorOfType(constructorName: any): void;
-    toBeNear(otherNumber: number | bigint, epsilon: any): void;
-    toBeOddNumber(): void;
-    toBeWithinRange(floor: any, ceiling: any): void;
-    toBeEmptyObject(): void;
-    toBeNonEmptyObject(): void;
-    toBeRegExp(): void;
-    toBeEmptyString(): void;
-    toBeHtmlString(): void;
-    toBeJsonString(): void;
-    toBeLongerThan(otherString: string): void;
-    toBeNonEmptyString(): void;
-    toBeSameLengthAs(otherString: string): void;
-    toBeShorterThan(otherString: string): void;
     /**
      * Checks if `expected` has the length defined in `length`.
      * Only works with:
@@ -475,8 +455,40 @@ declare namespace corde {
      * @since 5.0
      */
     toBeBoolean(): void;
+    /**
+     * Checks if a string in constituted of white spaces
+     *
+     * @example
+     *
+     * expect("    ").toBeWhitespace(); // Pass
+     * expect("aaa").toBeWhitespace(); // Fail
+     *
+     * @since 5.0
+     */
     toBeWhitespace(): void;
+    /**
+     * Checks if a string that ends with a defined value.
+     *
+     * @example
+     *
+     * expect("foo").toStartWith("o"); // Pass
+     * expect("foo").toStartWith("fo"); // Fail
+     *
+     * @param substring Value to be in the end of te string.
+     * @since 5.0
+     */
     toEndWith(substring: string): void;
+    /**
+     * Checks if a string that starts with a defined value.
+     *
+     * @example
+     *
+     * expect("foo").toStartWith("fo"); // Pass
+     * expect("foo").toStartWith("o"); // Fail
+     *
+     * @param substring Value to be in the beggining of te string.
+     * @since 5.0
+     */
     toStartWith(substring: string): void;
   }
 }

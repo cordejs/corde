@@ -1,6 +1,5 @@
-import chalk from "chalk";
 import { ITestProps } from "../../types";
-import { buildReportMessage, asymetricTypeOf } from "../../utils";
+import { buildReportMessage } from "../../utils";
 import { matcherUtils } from "../matcherUtils";
 
 /**
@@ -26,7 +25,7 @@ export function toStartWith(this: ITestProps, expected: any, value: string) {
     isNotText = " not";
   }
 
-  let message = matcherUtils.getFailMessageForStringsLengthTest({
+  const message = matcherUtils.getFailMessageForStringsLengthTest({
     expectationText: "start with",
     expected,
     props: this,

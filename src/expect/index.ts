@@ -4,7 +4,7 @@ import { runtime } from "../core/runtime";
 import { testCollector } from "../core/testCollector";
 import { TestError } from "../errors";
 import { ITestProps, ITestReport } from "../types";
-import { getStackTrace, typeOf } from "../utils";
+import { getStackTrace, isAsymetricMatcher, typeOf } from "../utils";
 import { any } from "./asymmetricMatcher";
 import * as matchers from "./matchers";
 
@@ -64,7 +64,7 @@ function createMatcherFn(matcher: string, isNot: boolean, expected: any, isDebug
             .join(",")})`;
         },
         formatValue: (value: any) => {
-          if (typeof value === "symbol") {
+          if (typeof value === "symbol" || isAsymetricMatcher(value)) {
             return value.toString();
           }
 
@@ -163,7 +163,7 @@ export const expect = createLocalExpect(false) as MatcherFn;
 
 type DebugExpectType<T> = {
   [P in keyof T]: T[P] extends (...args: any[]) => any
-    ? (...params: Parameters<T[P]>) => { pass: boolean; message: string }
+    ? (...params: DropFirst<Parameters<T[P]>>) => { pass: boolean; message: string }
     : DebugExpectType<T[P]>;
 };
 

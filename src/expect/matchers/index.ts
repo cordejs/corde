@@ -37,3 +37,4 @@ export * from "./toBeRegExp";
 export * from "./toBeSameLengthAs";
 export * from "./toBeWhitespace";
 export * from "./toBeNonEmptyString";
+export * from "./toStringContains";

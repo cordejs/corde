@@ -16,7 +16,7 @@ export function toBeTrue(this: ITestProps, expected: any) {
 
   const expectedType = asymetricTypeOf(expected);
 
-  let message = expectedType === "boolean" ? expected : expectedType;
+  const message = expectedType === "boolean" ? expected : expectedType;
 
   return {
     pass,
