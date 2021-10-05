@@ -22,7 +22,7 @@ function addToGlobalScope(name: string, value: any) {
   getGlobal()[name] = value;
 }
 
-export default function injectGlobals() {
+export function injectGlobals() {
   Object.getOwnPropertyNames(hooks).forEach((hookName) => {
     addToGlobalScope(hookName, (hooks as any)[hookName]);
   });

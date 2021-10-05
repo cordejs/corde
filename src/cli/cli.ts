@@ -5,11 +5,9 @@ import { init } from "./init";
 import { validate } from "./validate";
 import { ConfigFileType } from "../types";
 import pack from "../package";
-import { reader } from "../core/Reader";
 import { initEnvVariables } from "../envVariables";
 import { initErrorHandlers } from "../errorHandler";
-import injectGlobals from "../core/injectGlobals";
-import { runtime } from "../core/runtime";
+import { injectGlobals, runtime, reader } from "../core";
 
 initErrorHandlers();
 initEnvVariables();
