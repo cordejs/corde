@@ -1,4 +1,4 @@
-import { Config } from "../../src/core/config";
+import { Config } from "../../src/core/Config";
 import { testCollector } from "../../src/core/testCollector";
 import { runtime } from "../../src/core/runtime";
 

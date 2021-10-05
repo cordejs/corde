@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { printHookErrors } from "../core/printHookError";
+import { printHookErrors } from "./printHookError";
 import {
   MESSAGE_TAB_SPACE,
   TAG_FAIL,
@@ -23,11 +23,11 @@ import {
 } from "../types";
 import { stringIsNullOrEmpty, Timer } from "../utils";
 import { LogUpdate } from "../utils";
-import { TestFile } from "../core/TestFile";
-import { Group } from "../core/Group";
-import { runtime } from "../core/runtime";
+import { TestFile } from "./TestFile";
+import { Group } from "./Group";
+import { runtime } from "./runtime";
 import { TestError } from "../errors";
-import { testCollector } from "../core/testCollector";
+import { testCollector } from "./testCollector";
 
 type ReportStatusType = "pass" | "fail" | "empty";
 

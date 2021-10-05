@@ -2,7 +2,7 @@ import path from "path";
 import fs from "fs";
 import MockDiscord from "./mocks/mockDiscord";
 import { Client } from "discord.js";
-import { CordeBot } from "../src/core/cordeBot";
+import { CordeBot } from "../src/core/CordeBot";
 import { ICordeBot, ITestReport } from "../src/types";
 import { IExpectTestBaseParams } from "../src/types";
 import { runtime } from "../src/core/runtime";

@@ -1,4 +1,4 @@
-import { Reader } from "../../src/core/reader";
+import { Reader } from "../../src/core/Reader";
 import * as validateFn from "../../src/cli/validate";
 import * as execCommand from "../../src/cli/exec";
 import { runtime } from "../../src/core/runtime";

@@ -2,9 +2,9 @@
 import chalk from "chalk";
 import ora, { Color, Ora } from "ora";
 import { runtime } from "../core/runtime";
-import { reader } from "../core/reader";
+import { reader } from "../core/Reader";
 import { summary } from "../core/summary";
-import { TestExecutor } from "../core/testExecutor";
+import { TestExecutor } from "../core/TestExecutor";
 import { LogUpdate } from "../utils/logUpdate";
 import { validate } from "./validate";
 import { StrictObject } from "../types";

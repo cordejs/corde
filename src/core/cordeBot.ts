@@ -14,7 +14,7 @@ import {
 import { CordeClientError } from "../errors";
 import { ICordeBot, IVoiceChannelState, Primitive } from "../types";
 import { typeOf } from "../utils";
-import { Events } from "./events";
+import { Events } from "./Events";
 
 /**
  * Encapsulation of Discord Client with all specific

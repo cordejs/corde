@@ -1,4 +1,4 @@
-import { TestExecutor } from "../../src/core/testExecutor";
+import { TestExecutor } from "../../src/core/TestExecutor";
 import { LogUpdate } from "../../src/utils";
 import { removeANSIColorStyle } from "../testHelper";
 

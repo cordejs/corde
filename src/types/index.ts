@@ -13,7 +13,7 @@ import {
   VoiceConnection,
 } from "discord.js";
 import { Group } from "../core/Group";
-import { Events } from "../core/events";
+import { Events } from "../core/Events";
 import { Queue } from "../data-structures";
 
 export interface ITestReport {

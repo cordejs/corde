@@ -17,7 +17,7 @@ import {
   User,
   VoiceState,
 } from "discord.js";
-import { EventResume, Events } from "../../src/core/events";
+import { EventResume, Events } from "../../src/core/Events";
 import MockDiscord from "../mocks/mockDiscord";
 
 const client = new Client();

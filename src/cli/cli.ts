@@ -5,7 +5,7 @@ import { init } from "./init";
 import { validate } from "./validate";
 import { ConfigFileType } from "../types";
 import pack from "../package";
-import { reader } from "../core/reader";
+import { reader } from "../core/Reader";
 import { initEnvVariables } from "../envVariables";
 import { initErrorHandlers } from "../errorHandler";
 import injectGlobals from "../core/injectGlobals";

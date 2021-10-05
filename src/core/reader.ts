@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
 import fs from "fs";
 import path from "path";
-import { printHookErrors } from "../core/printHookError";
-import { runtime } from "../core/runtime";
-import { testCollector } from "../core/testCollector";
+import { printHookErrors } from "./printHookError";
+import { runtime } from "./runtime";
+import { testCollector } from "./testCollector";
 import { FileError } from "../errors";
 import { IConfigOptions, ITestFilePattern } from "../types";
 import { importFile, safeImportFile, utils } from "../utils";

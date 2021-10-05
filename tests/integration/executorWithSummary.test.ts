@@ -1,7 +1,7 @@
 import { group, test as _test } from "../../src/closures";
 import { expect as _expect } from "../../src/expect";
 import { summary } from "../../src/core/summary";
-import { TestExecutor } from "../../src/core/testExecutor";
+import { TestExecutor } from "../../src/core/TestExecutor";
 import { LogUpdate } from "../../src/utils";
 import { mockTimer } from "../mocks/mockTimer";
 import { removeANSIColorStyle } from "../testHelper";

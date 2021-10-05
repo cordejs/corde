@@ -1,6 +1,6 @@
 import { group as _group, it as _it } from "../../src/closures";
 import { expect as _expect } from "../../src/expect";
-import { TestExecutor } from "../../src/core/testExecutor";
+import { TestExecutor } from "../../src/core/TestExecutor";
 import { LogUpdate } from "../../src/utils";
 import { mockTimer } from "../mocks/mockTimer";
 import { testCollector } from "../../src/core/testCollector";
