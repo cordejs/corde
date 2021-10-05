@@ -52,7 +52,7 @@ export class Queue<T extends GenericFunction> {
     return this._defaultParameters.length;
   }
 
-  constructor(props: IQueueProps) {
+  constructor(props?: IQueueProps) {
     this._funcs = new Map<string, T>();
     this._defaultParameters = [];
     this.clearOnExecution = isNullOrUndefined(props?.clearOnExecution)

@@ -34,7 +34,11 @@ describe("testing queue structure", () => {
     });
 
     it("should throw error due to attempt to add a null | undefined value", () => {
-      expect(() => queue.enqueue(null)).toThrowError();
+      expect(() =>
+        queue
+          // @ts-ignore
+          .enqueue(null),
+      ).toThrowError();
     });
 
     it("should throw error due to attempt to add a non funtion value", () => {
@@ -63,7 +67,9 @@ describe("testing queue structure", () => {
     it("should not dequeue a function due to null guid", () => {
       const fn = () => {};
       queue.enqueue(fn);
-      const dequeued = queue.dequeue(null);
+      const dequeued = queue
+        // @ts-ignore
+        .dequeue(null);
       expect(queue.size).toBe(1);
       expect(dequeued).toBeFalsy();
     });
