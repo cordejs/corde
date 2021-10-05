@@ -25,7 +25,7 @@ export function toEndWith(this: ITestProps, expected: any, value: string) {
     isNotText = " not";
   }
 
-  let message = matcherUtils.getFailMessageForStringsLengthTest({
+  const message = matcherUtils.getFailMessageForStringsLengthTest({
     expectationText: "end with",
     expected,
     props: this,

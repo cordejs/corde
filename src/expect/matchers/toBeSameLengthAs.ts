@@ -1,4 +1,3 @@
-import chalk from "chalk";
 import { ITestProps } from "../../types";
 import { buildReportMessage, isString } from "../../utils";
 import { matcherUtils } from "../matcherUtils";
@@ -30,7 +29,7 @@ export function toBeSameLengthAs(this: ITestProps, expected: any, value: string)
     isNotText = " not";
   }
 
-  let message = matcherUtils.getFailMessageForStringsLengthTest({
+  const message = matcherUtils.getFailMessageForStringsLengthTest({
     expectationText: "have same length of",
     expected,
     props: this,
