@@ -182,7 +182,11 @@ export namespace testUtils {
   export function replaceStackTracePaths(value: string) {
     const regString = /(\/(.*)\/)|(src\\(.*)\\)/;
     let regx = new RegExp(regString, "g");
-    return value.replace(regx, "/<fake>/<file>/<path>/");
+    const pathClearnedValue = value.replace(regx, "/<fake>/<file>/<path>/");
+
+    const lineRegexString = /([.]ts(.*):)/;
+    let lineRegex = new RegExp(lineRegexString, "g");
+    return pathClearnedValue.replace(lineRegex, ".ts:200:");
   }
 
   export function createResolvedPassReport() {
