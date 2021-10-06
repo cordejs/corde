@@ -180,7 +180,7 @@ export namespace testUtils {
   }
 
   export function replaceStackTracePaths(value: string) {
-    const regString = /(\/(.*)\/)|( src\\(.*)\\)/;
+    const regString = /(\/(.*)\/)|(src\\(.*)\\)/;
     let regx = new RegExp(regString, "g");
     return value.replace(regx, "/<fake>/<file>/<path>/");
   }
