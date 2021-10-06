@@ -68,13 +68,17 @@ export function renameConfigTempFileNamesToNormal() {
  * @param property Object property to be mocked
  * @param value New value to property
  */
-export function mockProperty<T extends {}, K extends keyof T>(object: T, property: K, value: T[K]) {
+export function mockProperty<T extends {}, K extends keyof T>(
+  object: T,
+  property: K,
+  value: T[K]
+) {
   Object.defineProperty(object, property, { get: () => value });
 }
 
 export function createCordeBotWithMockedFunctions(
   mockDiscord: MockDiscord,
-  findRoleMock: any = mockDiscord.role,
+  findRoleMock: any = mockDiscord.role
 ) {
   const corde = initCordeClientWithChannel(mockDiscord, new Client());
   corde.getRoles = jest.fn().mockReturnValue(mockDiscord.roleManager.cache);
@@ -86,13 +90,15 @@ export function createCordeBotWithMockedFunctions(
 export function initCordeClientWithChannel(
   mockDiscord: MockDiscord,
   client: Client,
-  timeout = 500,
+  timeout = 500
 ) {
   client.guilds.cache.has = jest.fn().mockReturnValueOnce(true);
   client.guilds.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.guild);
 
   mockDiscord.guild.channels.cache.has = jest.fn().mockReturnValueOnce(true);
-  mockDiscord.guild.channels.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.textChannel);
+  mockDiscord.guild.channels.cache.find = jest
+    .fn()
+    .mockReturnValueOnce(mockDiscord.textChannel);
   return initCordeClient(mockDiscord, client, timeout);
 }
 
@@ -101,14 +107,14 @@ export const DEFAULT_PREFIX = "!";
 export function initCordeClient(
   mockDiscord: MockDiscord,
   clientInstance: Client,
-  timeout = 500,
+  timeout = 500
 ): ICordeBot {
   return new CordeBot(
     DEFAULT_PREFIX,
     mockDiscord.guild.id,
     mockDiscord.channel.id,
     mockDiscord.userBotId,
-    clientInstance,
+    clientInstance
   );
 }
 
@@ -121,7 +127,7 @@ export function executeWithDelay(fn: () => void, delay: number) {
 export function removeANSIColorStyle(value: string) {
   return value.replace(
     /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g,
-    "",
+    ""
   );
 }
 
@@ -139,11 +145,16 @@ export const testFileNames = [
   "/tests/file4.test.ts",
 ];
 
-export const testNames = ["test case1", "test case2", "test case3", "test case4"];
+export const testNames = [
+  "test case1",
+  "test case2",
+  "test case3",
+  "test case4",
+];
 
 export function _initTestSimpleInstance<T extends CommandState>(
   type: new (params: IExpectTestBaseParams) => T,
-  params: IExpectTestBaseParams,
+  params: IExpectTestBaseParams
 ) {
   return new type({
     command: params.command ?? "",
@@ -159,7 +170,7 @@ export function _initTestSimpleInstance<T extends CommandState>(
 export namespace testUtils {
   export function initTestClass<T extends CommandState>(
     type: new (params: IExpectTestBaseParams) => T,
-    params: Partial<IExpectTestBaseParams>,
+    params: Partial<IExpectTestBaseParams>
   ) {
     return new type({
       command: params.command ?? "",
@@ -179,11 +190,20 @@ export namespace testUtils {
     };
   }
 
+  export function replaceStackTracePaths(value: string) {
+    const regString = /\/(.*)\//;
+    let regx = new RegExp(regString);
+    return value.replace(regx, "/<fake>/<file>/<path>/");
+  }
+
   export function createResolvedPassReport() {
     return Promise.resolve(testUtils.createPassReport());
   }
 
-  export function createResolvedFailedReport(message: string[], trace?: string) {
+  export function createResolvedFailedReport(
+    message: string[],
+    trace?: string
+  ) {
     return Promise.resolve(testUtils.createFailedITestReport(message, trace));
   }
 
@@ -197,7 +217,11 @@ export namespace testUtils {
   }
 }
 
-export function createReport(entity: Object, pass: boolean, message?: string): ITestReport {
+export function createReport(
+  entity: Object,
+  pass: boolean,
+  message?: string
+): ITestReport {
   const obj: ITestReport = {
     pass,
     testName: entity.toString(),
@@ -215,7 +239,10 @@ export namespace testHelper {
     file.isInsideTestClausure = true;
     const mockDiscord = new MockDiscord();
     runtime.setConfigs({ timeout: 100 }, true);
-    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const cordeClient = createCordeBotWithMockedFunctions(
+      mockDiscord,
+      new Client()
+    );
     return [mockDiscord, cordeClient];
   }
 }
