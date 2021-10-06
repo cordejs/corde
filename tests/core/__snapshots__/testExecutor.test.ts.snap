@@ -14,13 +14,13 @@ exports[`- 1`] = `
     
     expect: [32m1[39m !== [31m1[39m
 
-    at toEqual src\\\\expect\\\\index.ts:153:30
+    at toEqual/<fake>/<file>/<path>/index.ts:153:30
     at Array.forEach (<anonymous>)
     at localExpect (src\\\\expect\\\\index.ts:151:42)
     at tests\\\\core\\\\testExecutor.test.ts:295:27
     at _internalTest (src\\\\closures\\\\test.ts:19:13)
-    at src\\\\closures\\\\test.ts:29:17
-    at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
+    at/<fake>/<file>/<path>/test.ts:29:17
+    at/<fake>/<file>/<path>/executePromiseWithTimeout.ts:62:5
 
    [32m[32m✔ [39m[32m test closure 5[39m   [36m10ms[39m
    [32m[32m✔ [39m[32m test closure 6[39m   [36m10ms[39m
@@ -33,13 +33,13 @@ exports[`- 1`] = `
     
     expect: [32m1[39m !== [31m1[39m
 
-    at toEqual src\\\\expect\\\\index.ts:153:30
+    at toEqual/<fake>/<file>/<path>/index.ts:153:30
     at Array.forEach (<anonymous>)
     at localExpect (src\\\\expect\\\\index.ts:151:42)
     at tests\\\\core\\\\testExecutor.test.ts:309:27
     at _internalTest (src\\\\closures\\\\test.ts:19:13)
-    at src\\\\closures\\\\test.ts:29:17
-    at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
+    at/<fake>/<file>/<path>/test.ts:29:17
+    at/<fake>/<file>/<path>/executePromiseWithTimeout.ts:62:5
 
    [32m[32m✔ [39m[32m test closure 9[39m   [36m10ms[39m
    [32m[32m✔ [39m[32m test closure 10[39m   [36m10ms[39m
@@ -52,13 +52,13 @@ exports[`- 1`] = `
     
     expect: [32m1[39m !== [31m1[39m
 
-    at toEqual src\\\\expect\\\\index.ts:153:30
+    at toEqual/<fake>/<file>/<path>/index.ts:153:30
     at Array.forEach (<anonymous>)
     at localExpect (src\\\\expect\\\\index.ts:151:42)
     at tests\\\\core\\\\testExecutor.test.ts:323:27
     at _internalTest (src\\\\closures\\\\test.ts:19:13)
-    at src\\\\closures\\\\test.ts:29:17
-    at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
+    at/<fake>/<file>/<path>/test.ts:29:17
+    at/<fake>/<file>/<path>/executePromiseWithTimeout.ts:62:5
 "
 `;
 
@@ -76,13 +76,13 @@ exports[`-: without ANSI Colors 1`] = `
     
     expect: 1 !== 1
 
-    at toEqual src\\\\expect\\\\index.ts:153:30
+    at toEqual/<fake>/<file>/<path>/index.ts:153:30
     at Array.forEach (<anonymous>)
     at localExpect (src\\\\expect\\\\index.ts:151:42)
     at tests\\\\core\\\\testExecutor.test.ts:295:27
     at _internalTest (src\\\\closures\\\\test.ts:19:13)
-    at src\\\\closures\\\\test.ts:29:17
-    at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
+    at/<fake>/<file>/<path>/test.ts:29:17
+    at/<fake>/<file>/<path>/executePromiseWithTimeout.ts:62:5
 
    ✔  test closure 5   10ms
    ✔  test closure 6   10ms
@@ -95,13 +95,13 @@ exports[`-: without ANSI Colors 1`] = `
     
     expect: 1 !== 1
 
-    at toEqual src\\\\expect\\\\index.ts:153:30
+    at toEqual/<fake>/<file>/<path>/index.ts:153:30
     at Array.forEach (<anonymous>)
     at localExpect (src\\\\expect\\\\index.ts:151:42)
     at tests\\\\core\\\\testExecutor.test.ts:309:27
     at _internalTest (src\\\\closures\\\\test.ts:19:13)
-    at src\\\\closures\\\\test.ts:29:17
-    at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
+    at/<fake>/<file>/<path>/test.ts:29:17
+    at/<fake>/<file>/<path>/executePromiseWithTimeout.ts:62:5
 
    ✔  test closure 9   10ms
    ✔  test closure 10   10ms
@@ -114,13 +114,13 @@ exports[`-: without ANSI Colors 1`] = `
     
     expect: 1 !== 1
 
-    at toEqual src\\\\expect\\\\index.ts:153:30
+    at toEqual/<fake>/<file>/<path>/index.ts:153:30
     at Array.forEach (<anonymous>)
     at localExpect (src\\\\expect\\\\index.ts:151:42)
     at tests\\\\core\\\\testExecutor.test.ts:323:27
     at _internalTest (src\\\\closures\\\\test.ts:19:13)
-    at src\\\\closures\\\\test.ts:29:17
-    at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
+    at/<fake>/<file>/<path>/test.ts:29:17
+    at/<fake>/<file>/<path>/executePromiseWithTimeout.ts:62:5
 "
 `;
 
@@ -166,13 +166,13 @@ exports[`should get report for multiple tests inside a group and failed tests 1`
     
     expect: [32m1[39m !== [31m1[39m
 
-    at toEqual src\\\\expect\\\\index.ts:153:30
+    at toEqual/<fake>/<file>/<path>/index.ts:153:30
     at Array.forEach (<anonymous>)
     at localExpect (src\\\\expect\\\\index.ts:151:42)
     at tests\\\\core\\\\testExecutor.test.ts:190:27
     at _internalTest (src\\\\closures\\\\test.ts:19:13)
-    at src\\\\closures\\\\test.ts:29:17
-    at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
+    at/<fake>/<file>/<path>/test.ts:29:17
+    at/<fake>/<file>/<path>/executePromiseWithTimeout.ts:62:5
 "
 `;
 
@@ -190,13 +190,13 @@ exports[`should get report for multiple tests inside a group and failed tests: w
     
     expect: 1 !== 1
 
-    at toEqual src\\\\expect\\\\index.ts:153:30
+    at toEqual/<fake>/<file>/<path>/index.ts:153:30
     at Array.forEach (<anonymous>)
     at localExpect (src\\\\expect\\\\index.ts:151:42)
     at tests\\\\core\\\\testExecutor.test.ts:190:27
     at _internalTest (src\\\\closures\\\\test.ts:19:13)
-    at src\\\\closures\\\\test.ts:29:17
-    at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
+    at/<fake>/<file>/<path>/test.ts:29:17
+    at/<fake>/<file>/<path>/executePromiseWithTimeout.ts:62:5
 "
 `;
 
@@ -303,13 +303,13 @@ exports[`should print report for single group and a single test 1`] = `
     
     expect: [32m1[39m !== [31m1[39m
 
-    at toEqual src\\\\expect\\\\index.ts:153:30
+    at toEqual/<fake>/<file>/<path>/index.ts:153:30
     at Array.forEach (<anonymous>)
     at localExpect (src\\\\expect\\\\index.ts:151:42)
     at tests\\\\core\\\\testExecutor.test.ts:102:27
     at _internalTest (src\\\\closures\\\\test.ts:19:13)
-    at src\\\\closures\\\\test.ts:29:17
-    at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
+    at/<fake>/<file>/<path>/test.ts:29:17
+    at/<fake>/<file>/<path>/executePromiseWithTimeout.ts:62:5
 "
 `;
 
@@ -324,12 +324,12 @@ exports[`should print report for single group and a single test: without ANSI Co
     
     expect: 1 !== 1
 
-    at toEqual src\\\\expect\\\\index.ts:153:30
+    at toEqual/<fake>/<file>/<path>/index.ts:153:30
     at Array.forEach (<anonymous>)
     at localExpect (src\\\\expect\\\\index.ts:151:42)
     at tests\\\\core\\\\testExecutor.test.ts:102:27
     at _internalTest (src\\\\closures\\\\test.ts:19:13)
-    at src\\\\closures\\\\test.ts:29:17
-    at src\\\\utils\\\\executePromiseWithTimeout.ts:62:5
+    at/<fake>/<file>/<path>/test.ts:29:17
+    at/<fake>/<file>/<path>/executePromiseWithTimeout.ts:62:5
 "
 `;

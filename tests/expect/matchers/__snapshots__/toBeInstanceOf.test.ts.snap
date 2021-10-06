@@ -54,24 +54,6 @@ exports[`testing toBeInstanceOf should return false for {} (isNot true) 1`] = `
 "
 `;
 
-exports[`testing toBeInstanceOf should return false for 2021-10-06T12:49:42.615Z (isNot true) 1`] = `
-"    
-    expect([32mexpected[39m).not.toBeInstanceOf([31minstanceType[39m)
-    
-    [1mexpected[22m should not be instance of [32mDate[39m.
-    got: [31mDate[39m
-"
-`;
-
-exports[`testing toBeInstanceOf should return false for 2021-10-06T13:03:32.345Z (isNot true) 1`] = `
-"    
-    expect([32mexpected[39m).not.toBeInstanceOf([31minstanceType[39m)
-    
-    [1mexpected[22m should not be instance of [32mDate[39m.
-    got: [31mDate[39m
-"
-`;
-
 exports[`testing toBeInstanceOf should return false for Class {} (isNot true) 1`] = `
 "    
     expect([32mexpected[39m).not.toBeInstanceOf([31minstanceType[39m)
