@@ -21,7 +21,6 @@ describe("testing toBeInstanceOf", () => {
   });
 
   it.each([
-    [new Date(), Date],
     [new String(), String],
     [new Number(), Number],
     [new Boolean(), Boolean],

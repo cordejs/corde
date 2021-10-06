@@ -38,8 +38,10 @@ it("should print report for 1 test file, 1 test closure and 1 test function", as
     totalTestsPassed: 1,
     totalTestFilesPassed: 1,
   });
-  expect(logUpdate.stdout).toMatchSnapshot();
-  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot("without ANSI Colors");
+
+  const stdoutClearned = testUtils.replaceStackTracePaths(logUpdate.stdout);
+  expect(stdoutClearned).toMatchSnapshot();
+  expect(removeANSIColorStyle(stdoutClearned)).toMatchSnapshot("without ANSI Colors");
 });
 
 it("should print report for 1 test file, 1 test closure and 2 test function", async () => {
@@ -60,8 +62,10 @@ it("should print report for 1 test file, 1 test closure and 2 test function", as
     totalTestFilesPassed: 1,
     testTimer: "10ms",
   });
-  expect(logUpdate.stdout).toMatchSnapshot();
-  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot("without ANSI Colors");
+
+  const stdoutClearned = testUtils.replaceStackTracePaths(logUpdate.stdout);
+  expect(stdoutClearned).toMatchSnapshot();
+  expect(removeANSIColorStyle(stdoutClearned)).toMatchSnapshot("without ANSI Colors");
 });
 
 it("should print a report for a group with a test with multiple expects", async () => {
@@ -85,8 +89,10 @@ it("should print a report for a group with a test with multiple expects", async 
     totalTestFilesPassed: 1,
     testTimer: "10ms",
   });
-  expect(logUpdate.stdout).toMatchSnapshot();
-  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot("without ANSI Colors");
+
+  const stdoutClearned = testUtils.replaceStackTracePaths(logUpdate.stdout);
+  expect(stdoutClearned).toMatchSnapshot();
+  expect(removeANSIColorStyle(stdoutClearned)).toMatchSnapshot("without ANSI Colors");
 });
 
 it("should print report for single group and a single test", async () => {
@@ -109,8 +115,10 @@ it("should print report for single group and a single test", async () => {
     totalTestsPassed: 0,
     testTimer: "10ms",
   });
-  expect(logUpdate.stdout).toMatchSnapshot();
-  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot("without ANSI Colors");
+
+  const stdoutClearned = testUtils.replaceStackTracePaths(logUpdate.stdout);
+  expect(stdoutClearned).toMatchSnapshot();
+  expect(removeANSIColorStyle(stdoutClearned)).toMatchSnapshot("without ANSI Colors");
 });
 
 it("should get report for single group and a empty test", async () => {
@@ -131,8 +139,10 @@ it("should get report for single group and a empty test", async () => {
     totalTestFilesPassed: 0,
     testTimer: "10ms",
   });
-  expect(logUpdate.stdout).toMatchSnapshot();
-  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot("without ANSI Colors");
+
+  const stdoutClearned = testUtils.replaceStackTracePaths(logUpdate.stdout);
+  expect(stdoutClearned).toMatchSnapshot();
+  expect(removeANSIColorStyle(stdoutClearned)).toMatchSnapshot("without ANSI Colors");
 });
 
 it("should get report for multiple tests inside a group", async () => {
@@ -163,7 +173,7 @@ it("should get report for multiple tests inside a group", async () => {
     totalTestFilesPassed: 1,
     testTimer: "10ms",
   });
-  
+
   const stdoutClearned = testUtils.replaceStackTracePaths(logUpdate.stdout);
   expect(stdoutClearned).toMatchSnapshot();
   expect(removeANSIColorStyle(stdoutClearned)).toMatchSnapshot("without ANSI Colors");
@@ -203,6 +213,8 @@ it("should get report for multiple tests inside a group and failed tests", async
   });
 
   const stdoutClearned = testUtils.replaceStackTracePaths(logUpdate.stdout);
+
+  console.log(stdoutClearned);
   expect(stdoutClearned).toMatchSnapshot();
   expect(removeANSIColorStyle(stdoutClearned)).toMatchSnapshot("without ANSI Colors");
 });
@@ -347,7 +359,7 @@ it("-", async () => {
     totalTestFilesPassed: 0,
     testTimer: "10ms",
   });
-  
+
   const stdoutClearned = testUtils.replaceStackTracePaths(logUpdate.stdout);
   expect(stdoutClearned).toMatchSnapshot();
   expect(removeANSIColorStyle(stdoutClearned)).toMatchSnapshot("without ANSI Colors");
