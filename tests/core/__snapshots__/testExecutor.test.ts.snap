@@ -17,7 +17,7 @@ exports[`- 1`] = `
     at toEqual /<fake>/<file>/<path>/index.ts:200:30
     at Array.forEach (<anonymous>)
     at localExpect (/<fake>/<file>/<path>/index.ts:200:42)
-    at tests\\\\core\\\\testExecutor.test.ts:200:27
+    at /<fake>/<file>/<path>/testExecutor.test.ts:200:27
     at _internalTest (/<fake>/<file>/<path>/test.ts:200:13)
     at /<fake>/<file>/<path>/test.ts:200:17
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:5
@@ -36,7 +36,7 @@ exports[`- 1`] = `
     at toEqual /<fake>/<file>/<path>/index.ts:200:30
     at Array.forEach (<anonymous>)
     at localExpect (/<fake>/<file>/<path>/index.ts:200:42)
-    at tests\\\\core\\\\testExecutor.test.ts:200:27
+    at /<fake>/<file>/<path>/testExecutor.test.ts:200:27
     at _internalTest (/<fake>/<file>/<path>/test.ts:200:13)
     at /<fake>/<file>/<path>/test.ts:200:17
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:5
@@ -55,7 +55,7 @@ exports[`- 1`] = `
     at toEqual /<fake>/<file>/<path>/index.ts:200:30
     at Array.forEach (<anonymous>)
     at localExpect (/<fake>/<file>/<path>/index.ts:200:42)
-    at tests\\\\core\\\\testExecutor.test.ts:200:27
+    at /<fake>/<file>/<path>/testExecutor.test.ts:200:27
     at _internalTest (/<fake>/<file>/<path>/test.ts:200:13)
     at /<fake>/<file>/<path>/test.ts:200:17
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:5
@@ -79,7 +79,7 @@ exports[`-: without ANSI Colors 1`] = `
     at toEqual /<fake>/<file>/<path>/index.ts:200:30
     at Array.forEach (<anonymous>)
     at localExpect (/<fake>/<file>/<path>/index.ts:200:42)
-    at tests\\\\core\\\\testExecutor.test.ts:200:27
+    at /<fake>/<file>/<path>/testExecutor.test.ts:200:27
     at _internalTest (/<fake>/<file>/<path>/test.ts:200:13)
     at /<fake>/<file>/<path>/test.ts:200:17
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:5
@@ -98,7 +98,7 @@ exports[`-: without ANSI Colors 1`] = `
     at toEqual /<fake>/<file>/<path>/index.ts:200:30
     at Array.forEach (<anonymous>)
     at localExpect (/<fake>/<file>/<path>/index.ts:200:42)
-    at tests\\\\core\\\\testExecutor.test.ts:200:27
+    at /<fake>/<file>/<path>/testExecutor.test.ts:200:27
     at _internalTest (/<fake>/<file>/<path>/test.ts:200:13)
     at /<fake>/<file>/<path>/test.ts:200:17
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:5
@@ -117,7 +117,7 @@ exports[`-: without ANSI Colors 1`] = `
     at toEqual /<fake>/<file>/<path>/index.ts:200:30
     at Array.forEach (<anonymous>)
     at localExpect (/<fake>/<file>/<path>/index.ts:200:42)
-    at tests\\\\core\\\\testExecutor.test.ts:200:27
+    at /<fake>/<file>/<path>/testExecutor.test.ts:200:27
     at _internalTest (/<fake>/<file>/<path>/test.ts:200:13)
     at /<fake>/<file>/<path>/test.ts:200:17
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:5
@@ -169,7 +169,7 @@ exports[`should get report for multiple tests inside a group and failed tests 1`
     at toEqual /<fake>/<file>/<path>/index.ts:200:30
     at Array.forEach (<anonymous>)
     at localExpect (/<fake>/<file>/<path>/index.ts:200:42)
-    at tests\\\\core\\\\testExecutor.test.ts:200:27
+    at /<fake>/<file>/<path>/testExecutor.test.ts:200:27
     at _internalTest (/<fake>/<file>/<path>/test.ts:200:13)
     at /<fake>/<file>/<path>/test.ts:200:17
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:5
@@ -193,7 +193,7 @@ exports[`should get report for multiple tests inside a group and failed tests: w
     at toEqual /<fake>/<file>/<path>/index.ts:200:30
     at Array.forEach (<anonymous>)
     at localExpect (/<fake>/<file>/<path>/index.ts:200:42)
-    at tests\\\\core\\\\testExecutor.test.ts:200:27
+    at /<fake>/<file>/<path>/testExecutor.test.ts:200:27
     at _internalTest (/<fake>/<file>/<path>/test.ts:200:13)
     at /<fake>/<file>/<path>/test.ts:200:17
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:5
@@ -306,7 +306,7 @@ exports[`should print report for single group and a single test 1`] = `
     at toEqual /<fake>/<file>/<path>/index.ts:200:30
     at Array.forEach (<anonymous>)
     at localExpect (/<fake>/<file>/<path>/index.ts:200:42)
-    at tests\\\\core\\\\testExecutor.test.ts:200:27
+    at /<fake>/<file>/<path>/testExecutor.test.ts:200:27
     at _internalTest (/<fake>/<file>/<path>/test.ts:200:13)
     at /<fake>/<file>/<path>/test.ts:200:17
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:5
@@ -327,7 +327,7 @@ exports[`should print report for single group and a single test: without ANSI Co
     at toEqual /<fake>/<file>/<path>/index.ts:200:30
     at Array.forEach (<anonymous>)
     at localExpect (/<fake>/<file>/<path>/index.ts:200:42)
-    at tests\\\\core\\\\testExecutor.test.ts:200:27
+    at /<fake>/<file>/<path>/testExecutor.test.ts:200:27
     at _internalTest (/<fake>/<file>/<path>/test.ts:200:13)
     at /<fake>/<file>/<path>/test.ts:200:17
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:5
