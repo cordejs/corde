@@ -7,15 +7,14 @@ const executorList: TypeExecutor[] = [];
 class ExpectExample {
   toReturn() {
     const trace = getStackTrace();
-    executorList.push(() => {
-      return Promise.resolve<ITestReport>({
+    executorList.push(async () => {
+      const r = await Promise.resolve<ITestReport>({
         testName: "",
         pass: false,
         message: "error",
-      }).then((r) => {
-        r.trace = trace;
-        return r;
       });
+      r.trace = trace;
+      return r;
     });
   }
 }

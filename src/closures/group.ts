@@ -1,5 +1,5 @@
 import { Group } from "../core/Group";
-import { testCollector } from "../core/testCollector";
+import { testCollector } from "../core/TestCollector";
 import { VoidLikeFunction } from "../types";
 import { resolveName } from "../utils";
 

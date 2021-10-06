@@ -4,7 +4,7 @@ import MockDiscord from "../mocks/mockDiscord";
 import { createCordeBotWithMockedFunctions, testHelper } from "../testHelper";
 import { expect as _expect } from "../../src/expect";
 import { debugCommand } from "../../src/command";
-import { testCollector } from "../../src/core/testCollector";
+import { testCollector } from "../../src/core/TestCollector";
 
 const testName = "shouldHaveResult";
 

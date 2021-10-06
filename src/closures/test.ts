@@ -1,5 +1,5 @@
 import { runtime } from "../core/runtime";
-import { testCollector } from "../core/testCollector";
+import { testCollector } from "../core/TestCollector";
 import { VoidLikeFunction } from "../types";
 import { executePromiseWithTimeout, resolveName } from "../utils";
 

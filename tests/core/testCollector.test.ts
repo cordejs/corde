@@ -1,4 +1,4 @@
-import { TestCollector, testCollector } from "../../src/core/testCollector";
+import { TestCollector, testCollector } from "../../src/core/TestCollector";
 
 let _testCollector: TestCollector;
 describe("testing testCollector", () => {

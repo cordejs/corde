@@ -250,7 +250,7 @@ exports[`testing toBe should return true to 1 and any (isNot true) 1`] = `
     
     expect([32mexpected[39m).not.toBe([31mreceived[39m)
     
-    expect: [32m1[39m !== [31m{ ... }[39m
+    expect: [32m1[39m !== [31many[39m
 "
 `;
 
@@ -270,7 +270,7 @@ exports[`testing toBe should return true to any and 1 (isNot true) 1`] = `
     
     expect([32mexpected[39m).not.toBe([31mreceived[39m)
     
-    expect: [32m{ ... }[39m !== [31m1[39m
+    expect: [32many[39m !== [31m1[39m
 "
 `;
 
@@ -290,7 +290,7 @@ exports[`testing toBe should return true to any(Number) and 1 (isNot true) 1`] =
     
     expect([32mexpected[39m).not.toBe([31mreceived[39m)
     
-    expect: [32m{ ... }[39m !== [31m1[39m
+    expect: [32many(Number)[39m !== [31m1[39m
 "
 `;
 

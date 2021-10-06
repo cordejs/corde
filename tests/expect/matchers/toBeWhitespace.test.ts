@@ -16,11 +16,11 @@ const FAIL_TESTS = [
 describe("testing toBeWhitespace", () => {
   describe.each(PASS_TESTS)("", (expected) => {
     it(`should return true for ${expected} (isNot false)`, () => {
-      expect(cordeExpect(expected).toBeWhitespace()).toEqual({ pass: true, message: "" });
+      expect(cordeExpect(expected).toBeWhiteSpace()).toEqual({ pass: true, message: "" });
     });
 
     it(`should return true for ${expected} (isNot true)`, () => {
-      const report = cordeExpect(expected).not.toBeWhitespace();
+      const report = cordeExpect(expected).not.toBeWhiteSpace();
       expect(report.pass).toBeFalsy();
       expect(report.message).toMatchSnapshot();
     });
@@ -28,13 +28,13 @@ describe("testing toBeWhitespace", () => {
 
   describe.each(FAIL_TESTS)("", (expected) => {
     it(`should return true for ${expected} (isNot false)`, () => {
-      const report = cordeExpect(expected).toBeWhitespace();
+      const report = cordeExpect(expected).toBeWhiteSpace();
       expect(report.pass).toBeFalsy();
       expect(report.message).toMatchSnapshot();
     });
 
     it(`should return true for ${expected} (isNot true)`, () => {
-      expect(cordeExpect(expected).not.toBeWhitespace()).toEqual({
+      expect(cordeExpect(expected).not.toBeWhiteSpace()).toEqual({
         pass: true,
         message: "",
       });

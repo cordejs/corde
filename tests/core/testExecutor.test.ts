@@ -7,7 +7,7 @@ import { afterEach as _afterEach, beforeEach as _beforeEach } from "../../src/ho
 import { IRunnerReport } from "../../src/types";
 import { group, test } from "../../src/closures";
 import { expect as _expect } from "../../src/expect";
-import { testCollector } from "../../src/core/testCollector";
+import { testCollector } from "../../src/core/TestCollector";
 
 let logUpdate: LogUpdate;
 let testRunner: TestExecutor;
@@ -271,7 +271,7 @@ it("should get report for subtests", async () => {
   expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot("without ANSI Colors");
 });
 
-it("should get report for splited groups", async () => {
+it("-", async () => {
   group("group 1", () => {
     test("test closure 1", () => {
       _expect(1).toEqual(1);

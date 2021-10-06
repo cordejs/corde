@@ -5,7 +5,7 @@ import { TestExecutor } from "../../src/core/TestExecutor";
 import { LogUpdate } from "../../src/utils";
 import { mockTimer } from "../mocks/mockTimer";
 import { removeANSIColorStyle } from "../testHelper";
-import { testCollector } from "../../src/core/testCollector";
+import { testCollector } from "../../src/core/TestCollector";
 
 let logUpdate: LogUpdate;
 let testRunner: TestExecutor;

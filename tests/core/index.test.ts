@@ -1,5 +1,5 @@
 import { Config } from "../../src/core/Config";
-import { testCollector } from "../../src/core/testCollector";
+import { testCollector } from "../../src/core/TestCollector";
 import { runtime } from "../../src/core/runtime";
 
 describe("Define tests for index of common module", () => {
