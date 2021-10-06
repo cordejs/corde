@@ -271,7 +271,7 @@ it("should get report for subtests", async () => {
   expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot("without ANSI Colors");
 });
 
-it("should get report for splited groups", async () => {
+it("-", async () => {
   group("group 1", () => {
     test("test closure 1", () => {
       _expect(1).toEqual(1);

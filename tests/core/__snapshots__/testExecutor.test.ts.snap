@@ -1,5 +1,129 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`- 1`] = `
+"
+[41m[30m FAIL [39m[49m   [31mtest file[39m   [36m10ms[39m
+   [32m[32m✔ [39m[32m test closure 1[39m   [36m10ms[39m
+   [32m[32m✔ [39m[32m test closure 2[39m   [36m10ms[39m
+   [32m[32m✔ [39m[32m test closure 3[39m   [36m10ms[39m
+   [31m[31mx[39m[31m test closure 4[39m   [36m10ms[39m
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
+    
+    expect([32mexpected[39m).not.toEqual([31mreceived[39m)
+    
+    expect: [32m1[39m !== [31m1[39m
+
+    at toEqual /workspaces/corde/src/expect/index.ts:153:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/workspaces/corde/src/expect/index.ts:151:42)
+    at /workspaces/corde/tests/core/testExecutor.test.ts:267:27
+    at _internalTest (/workspaces/corde/src/closures/test.ts:19:13)
+    at /workspaces/corde/src/closures/test.ts:29:17
+    at /workspaces/corde/src/utils/executePromiseWithTimeout.ts:62:5
+
+   [32m[32m✔ [39m[32m test closure 5[39m   [36m10ms[39m
+   [32m[32m✔ [39m[32m test closure 6[39m   [36m10ms[39m
+   [32m[32m✔ [39m[32m test closure 7[39m   [36m10ms[39m
+   [31m[31mx[39m[31m test closure 8[39m   [36m10ms[39m
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
+    
+    expect([32mexpected[39m).not.toEqual([31mreceived[39m)
+    
+    expect: [32m1[39m !== [31m1[39m
+
+    at toEqual /workspaces/corde/src/expect/index.ts:153:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/workspaces/corde/src/expect/index.ts:151:42)
+    at /workspaces/corde/tests/core/testExecutor.test.ts:281:27
+    at _internalTest (/workspaces/corde/src/closures/test.ts:19:13)
+    at /workspaces/corde/src/closures/test.ts:29:17
+    at /workspaces/corde/src/utils/executePromiseWithTimeout.ts:62:5
+
+   [32m[32m✔ [39m[32m test closure 9[39m   [36m10ms[39m
+   [32m[32m✔ [39m[32m test closure 10[39m   [36m10ms[39m
+   [32m[32m✔ [39m[32m test closure 11[39m   [36m10ms[39m
+   [31m[31mx[39m[31m test closure 12[39m   [36m10ms[39m
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
+    
+    expect([32mexpected[39m).not.toEqual([31mreceived[39m)
+    
+    expect: [32m1[39m !== [31m1[39m
+
+    at toEqual /workspaces/corde/src/expect/index.ts:153:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/workspaces/corde/src/expect/index.ts:151:42)
+    at /workspaces/corde/tests/core/testExecutor.test.ts:295:27
+    at _internalTest (/workspaces/corde/src/closures/test.ts:19:13)
+    at /workspaces/corde/src/closures/test.ts:29:17
+    at /workspaces/corde/src/utils/executePromiseWithTimeout.ts:62:5
+"
+`;
+
+exports[`-: without ANSI Colors 1`] = `
+"
+ FAIL    test file   10ms
+   ✔  test closure 1   10ms
+   ✔  test closure 2   10ms
+   ✔  test closure 3   10ms
+   x test closure 4   10ms
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /workspaces/corde/src/expect/index.ts:153:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/workspaces/corde/src/expect/index.ts:151:42)
+    at /workspaces/corde/tests/core/testExecutor.test.ts:267:27
+    at _internalTest (/workspaces/corde/src/closures/test.ts:19:13)
+    at /workspaces/corde/src/closures/test.ts:29:17
+    at /workspaces/corde/src/utils/executePromiseWithTimeout.ts:62:5
+
+   ✔  test closure 5   10ms
+   ✔  test closure 6   10ms
+   ✔  test closure 7   10ms
+   x test closure 8   10ms
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /workspaces/corde/src/expect/index.ts:153:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/workspaces/corde/src/expect/index.ts:151:42)
+    at /workspaces/corde/tests/core/testExecutor.test.ts:281:27
+    at _internalTest (/workspaces/corde/src/closures/test.ts:19:13)
+    at /workspaces/corde/src/closures/test.ts:29:17
+    at /workspaces/corde/src/utils/executePromiseWithTimeout.ts:62:5
+
+   ✔  test closure 9   10ms
+   ✔  test closure 10   10ms
+   ✔  test closure 11   10ms
+   x test closure 12   10ms
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /workspaces/corde/src/expect/index.ts:153:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/workspaces/corde/src/expect/index.ts:151:42)
+    at /workspaces/corde/tests/core/testExecutor.test.ts:295:27
+    at _internalTest (/workspaces/corde/src/closures/test.ts:19:13)
+    at /workspaces/corde/src/closures/test.ts:29:17
+    at /workspaces/corde/src/utils/executePromiseWithTimeout.ts:62:5
+"
+`;
+
 exports[`should get report for multiple files 1`] = `
 "
 [42m[30m PASS [39m[49m   file 1   [36m10ms[39m
@@ -94,130 +218,6 @@ exports[`should get report for single group and a empty test: without ANSI Color
 "
  PASS    test file   10ms
     ● test closure (empty)   10ms"
-`;
-
-exports[`should get report for splited groups 1`] = `
-"
-[41m[30m FAIL [39m[49m   [31mtest file[39m   [36m10ms[39m
-   [32m[32m✔ [39m[32m test closure 1[39m   [36m10ms[39m
-   [32m[32m✔ [39m[32m test closure 2[39m   [36m10ms[39m
-   [32m[32m✔ [39m[32m test closure 3[39m   [36m10ms[39m
-   [31m[31mx[39m[31m test closure 4[39m   [36m10ms[39m
-    
-    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
-    
-    expect([32mexpected[39m).not.toEqual([31mreceived[39m)
-    
-    expect: [32m1[39m !== [31m1[39m
-
-    at toEqual /workspaces/corde/src/expect/index.ts:153:30
-    at Array.forEach (<anonymous>)
-    at localExpect (/workspaces/corde/src/expect/index.ts:151:42)
-    at /workspaces/corde/tests/core/testExecutor.test.ts:267:27
-    at _internalTest (/workspaces/corde/src/closures/test.ts:19:13)
-    at /workspaces/corde/src/closures/test.ts:29:17
-    at /workspaces/corde/src/utils/executePromiseWithTimeout.ts:62:5
-
-   [32m[32m✔ [39m[32m test closure 5[39m   [36m10ms[39m
-   [32m[32m✔ [39m[32m test closure 6[39m   [36m10ms[39m
-   [32m[32m✔ [39m[32m test closure 7[39m   [36m10ms[39m
-   [31m[31mx[39m[31m test closure 8[39m   [36m10ms[39m
-    
-    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
-    
-    expect([32mexpected[39m).not.toEqual([31mreceived[39m)
-    
-    expect: [32m1[39m !== [31m1[39m
-
-    at toEqual /workspaces/corde/src/expect/index.ts:153:30
-    at Array.forEach (<anonymous>)
-    at localExpect (/workspaces/corde/src/expect/index.ts:151:42)
-    at /workspaces/corde/tests/core/testExecutor.test.ts:281:27
-    at _internalTest (/workspaces/corde/src/closures/test.ts:19:13)
-    at /workspaces/corde/src/closures/test.ts:29:17
-    at /workspaces/corde/src/utils/executePromiseWithTimeout.ts:62:5
-
-   [32m[32m✔ [39m[32m test closure 9[39m   [36m10ms[39m
-   [32m[32m✔ [39m[32m test closure 10[39m   [36m10ms[39m
-   [32m[32m✔ [39m[32m test closure 11[39m   [36m10ms[39m
-   [31m[31mx[39m[31m test closure 12[39m   [36m10ms[39m
-    
-    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
-    
-    expect([32mexpected[39m).not.toEqual([31mreceived[39m)
-    
-    expect: [32m1[39m !== [31m1[39m
-
-    at toEqual /workspaces/corde/src/expect/index.ts:153:30
-    at Array.forEach (<anonymous>)
-    at localExpect (/workspaces/corde/src/expect/index.ts:151:42)
-    at /workspaces/corde/tests/core/testExecutor.test.ts:295:27
-    at _internalTest (/workspaces/corde/src/closures/test.ts:19:13)
-    at /workspaces/corde/src/closures/test.ts:29:17
-    at /workspaces/corde/src/utils/executePromiseWithTimeout.ts:62:5
-"
-`;
-
-exports[`should get report for splited groups: without ANSI Colors 1`] = `
-"
- FAIL    test file   10ms
-   ✔  test closure 1   10ms
-   ✔  test closure 2   10ms
-   ✔  test closure 3   10ms
-   x test closure 4   10ms
-    
-    Tip: toEqual asserts the value of properties. To compare their identity use toBe
-    
-    expect(expected).not.toEqual(received)
-    
-    expect: 1 !== 1
-
-    at toEqual /workspaces/corde/src/expect/index.ts:153:30
-    at Array.forEach (<anonymous>)
-    at localExpect (/workspaces/corde/src/expect/index.ts:151:42)
-    at /workspaces/corde/tests/core/testExecutor.test.ts:267:27
-    at _internalTest (/workspaces/corde/src/closures/test.ts:19:13)
-    at /workspaces/corde/src/closures/test.ts:29:17
-    at /workspaces/corde/src/utils/executePromiseWithTimeout.ts:62:5
-
-   ✔  test closure 5   10ms
-   ✔  test closure 6   10ms
-   ✔  test closure 7   10ms
-   x test closure 8   10ms
-    
-    Tip: toEqual asserts the value of properties. To compare their identity use toBe
-    
-    expect(expected).not.toEqual(received)
-    
-    expect: 1 !== 1
-
-    at toEqual /workspaces/corde/src/expect/index.ts:153:30
-    at Array.forEach (<anonymous>)
-    at localExpect (/workspaces/corde/src/expect/index.ts:151:42)
-    at /workspaces/corde/tests/core/testExecutor.test.ts:281:27
-    at _internalTest (/workspaces/corde/src/closures/test.ts:19:13)
-    at /workspaces/corde/src/closures/test.ts:29:17
-    at /workspaces/corde/src/utils/executePromiseWithTimeout.ts:62:5
-
-   ✔  test closure 9   10ms
-   ✔  test closure 10   10ms
-   ✔  test closure 11   10ms
-   x test closure 12   10ms
-    
-    Tip: toEqual asserts the value of properties. To compare their identity use toBe
-    
-    expect(expected).not.toEqual(received)
-    
-    expect: 1 !== 1
-
-    at toEqual /workspaces/corde/src/expect/index.ts:153:30
-    at Array.forEach (<anonymous>)
-    at localExpect (/workspaces/corde/src/expect/index.ts:151:42)
-    at /workspaces/corde/tests/core/testExecutor.test.ts:295:27
-    at _internalTest (/workspaces/corde/src/closures/test.ts:19:13)
-    at /workspaces/corde/src/closures/test.ts:29:17
-    at /workspaces/corde/src/utils/executePromiseWithTimeout.ts:62:5
-"
 `;
 
 exports[`should get report for subgroups 1`] = `

@@ -21,7 +21,7 @@ describe("testing toBeValidDate", () => {
     [cordeExpect.any(Date)],
     [cordeExpect.any(Number)],
     [cordeExpect.any],
-  ])("should return false for valid date (%s) (isNot true)", (value) => {
+  ])("should return false for valid date (isNot true)", (value) => {
     const report = cordeExpect(value).not.toBeValidDate();
     expect(report.pass).toBeFalsy();
     expect(report.message).toMatchSnapshot();
