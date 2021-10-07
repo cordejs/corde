@@ -90,7 +90,7 @@ describe(`testing ${testName} function`, () => {
 
       const report = await debugCon().shouldDeleteRole({ id: "123" });
       expect(report).toMatchObject(failReport);
-      expect(report).toMatchSnapshot();
+      //expect(report).toMatchSnapshot();
     });
 
     it("should get timeout when trying to delete the role", async () => {
@@ -108,7 +108,9 @@ describe(`testing ${testName} function`, () => {
       const events = new MockEvents(cordeClient, mockDiscord);
       events.mockOnceRoleDelete();
 
-      const report = await debugCon().shouldDeleteRole(null);
+      const report = await debugCon()
+        // @ts-ignore
+        .shouldDeleteRole(null);
       delete report.trace;
 
       expect(report).toMatchObject(failReport);
