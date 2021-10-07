@@ -90,6 +90,7 @@ describe(`testing ${testName} function`, () => {
 
       const report = await debugCon().shouldDeleteRole({ id: "123" });
       expect(report).toMatchObject(failReport);
+      // https://app.circleci.com/pipelines/github/cordejs/corde/3481/workflows/770ba82b-7c05-4f87-8c97-ad7538305bd6/jobs/13282
       //expect(report).toMatchSnapshot();
     });
 
