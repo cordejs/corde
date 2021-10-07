@@ -52,14 +52,6 @@ Object {
 }
 `;
 
-exports[`testing shouldDeleteRole function isNot false should return a passed report for a deleted role 1`] = `
-Object {
-  "message": "Cannot read property 'guild' of undefined",
-  "pass": false,
-  "testName": "shouldDeleteRole",
-}
-`;
-
 exports[`testing shouldDeleteRole function isNot false should return a passed report for a found role with property role.deleted = true role 1`] = `
 Object {
   "pass": true,

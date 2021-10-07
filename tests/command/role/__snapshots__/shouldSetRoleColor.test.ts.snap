@@ -10,17 +10,6 @@ Object {
 }
 `;
 
-exports[`testing shouldSetRoleColor function should fail due to role hadn't color changed 1`] = `
-Object {
-  "message": "    
-    expected: change role color from [38;2;255;255;255m-1[39m to [38;2;52;73;94m3426654[39m
-    received: the color was not changed
-",
-  "pass": false,
-  "testName": "shouldSetRoleColor",
-}
-`;
-
 exports[`testing shouldSetRoleColor function should fail due to undefined roleIdentifier 1`] = `
 Object {
   "message": "    
@@ -36,28 +25,6 @@ exports[`testing shouldSetRoleColor function should return a failed test due to 
 Object {
   "message": "    
     can not send message to channel x
-",
-  "pass": false,
-  "testName": "shouldSetRoleColor",
-}
-`;
-
-exports[`testing shouldSetRoleColor function should return a not passed test due expected name did not match to received 1`] = `
-Object {
-  "message": "    
-    expected: change role color from [38;2;0;0;0mundefined[39m to [38;2;26;188;156m1752220[39m
-    received: 3447003
-",
-  "pass": false,
-  "testName": "shouldSetRoleColor",
-}
-`;
-
-exports[`testing shouldSetRoleColor function should return a not passed test due to color should not change (isNot true) 1`] = `
-Object {
-  "message": "    
-    expected: change role color from [38;2;0;0;0mundefined[39m to [38;2;194;124;14m12745742[39m
-    received: 3447003
 ",
   "pass": false,
   "testName": "shouldSetRoleColor",
