@@ -9249,9 +9249,9 @@ typedarray@^0.0.6:
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
 typedoc-plugin-markdown@^3.6.0:
-  version "3.11.0"
-  resolved "https://registry.yarnpkg.com/typedoc-plugin-markdown/-/typedoc-plugin-markdown-3.11.0.tgz#1ae3f92cc259cb10503099eb1a7f53c05f331674"
-  integrity sha512-zewcbzOlMV9nbhLsJhKBpoRW4J32LgbfdqwYfEfzzeE+wGOaOfsM6g7QH+ZKj8n+knH4sLCtk6XMN1TI/a1UuQ==
+  version "3.11.3"
+  resolved "https://registry.yarnpkg.com/typedoc-plugin-markdown/-/typedoc-plugin-markdown-3.11.3.tgz#be340b905903f1ce552fa2fa7d677db408ab1041"
+  integrity sha512-rWiHbEIe0oZetDIsBR24XJVxGOJ91kDcHoj2KhFKxCLoJGX659EKBQkHne9QJ4W2stGhu1fRgFyQaouSBnxukA==
   dependencies:
     handlebars "^4.7.7"
 
