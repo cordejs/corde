@@ -3596,9 +3596,9 @@ delayed-stream@~1.0.0:
   integrity sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
 
 dependency-cruiser@^10.0.1:
-  version "10.3.1"
-  resolved "https://registry.yarnpkg.com/dependency-cruiser/-/dependency-cruiser-10.3.1.tgz#d966cc05ccddbe7933103e67bfa1b1696a24671b"
-  integrity sha512-zLOcF9Sgdr61+Cn2SJqtzaRRQXh4GAhssevmORydvuOYjjhNS68L5P2R9zczEtZnfP7VWcK0/9lMySSKP1LUHA==
+  version "10.5.0"
+  resolved "https://registry.yarnpkg.com/dependency-cruiser/-/dependency-cruiser-10.5.0.tgz#f8f48eddd0cd8169b34eb57f04f496fee266cd5f"
+  integrity sha512-3kkck5U+xzi+MysnALt6l/5fsOa+WhVa7lUpybsYpRqTYRILNzFZA2MLHrYBZNJSCJHFoNJdD0lZNkJpovRWXw==
   dependencies:
     acorn "8.5.0"
     acorn-jsx "5.3.2"
@@ -3614,7 +3614,7 @@ dependency-cruiser@^10.0.1:
     glob "7.2.0"
     handlebars "4.7.7"
     indent-string "^4.0.0"
-    inquirer "8.1.5"
+    inquirer "8.2.0"
     json5 "2.2.0"
     lodash "4.17.21"
     safe-regex "2.1.1"
@@ -5321,10 +5321,10 @@ inquirer@8.1.2:
     strip-ansi "^6.0.0"
     through "^2.3.6"
 
-inquirer@8.1.5:
-  version "8.1.5"
-  resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-8.1.5.tgz#2dc5159203c826d654915b5fe6990fd17f54a150"
-  integrity sha512-G6/9xUqmt/r+UvufSyrPpt84NYwhKZ9jLsgMbQzlx804XErNupor8WQdBnBRrXmBfTPpuwf1sV+ss2ovjgdXIg==
+inquirer@8.2.0:
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-8.2.0.tgz#f44f008dd344bbfc4b30031f45d984e034a3ac3a"
+  integrity sha512-0crLweprevJ02tTuA6ThpoAERAGyVILC4sS74uib58Xf/zSr1/ZWtmm7D5CI+bSQEaA04f0K7idaHpQbSWgiVQ==
   dependencies:
     ansi-escapes "^4.2.1"
     chalk "^4.1.1"
