@@ -1,6 +1,6 @@
 import * as hooks from "../hooks";
 import * as closures from "../closures";
-import { BotAPI, ConfigAPI, fail } from "../api";
+import { BotAPI, ConfigAPI, corde } from "../api";
 import { runtime } from "../core/runtime";
 import { IConfigOptions } from "../types";
 import { expect } from "../expect";
@@ -36,6 +36,6 @@ export function injectGlobals() {
   addToGlobalScope("con", command);
 
   addToGlobalScope("bot", getBot());
-  addToGlobalScope("fail", fail);
+  addToGlobalScope("corde", corde);
   addToGlobalScope("configs", getConfigs());
 }

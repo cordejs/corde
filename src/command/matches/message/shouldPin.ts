@@ -35,7 +35,11 @@ export async function shouldPin(
 
   const msgString = messageUtils.humanizeMessageIdentifierObject(_msgIdentifier);
   try {
-    await this.cordeBot.events.onceMessagePinned(_msgIdentifier, this.timeout, this.channelId);
+    await this.cordeBot.events.onceMessagePinned({
+      messageIdentifier: _msgIdentifier,
+      timeout: this.timeout,
+      channelId: this.channelId,
+    });
   } catch {
     if (this.isNot) {
       return this.createPassTest();

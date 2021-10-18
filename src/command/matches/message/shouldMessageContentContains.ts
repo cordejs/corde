@@ -17,11 +17,11 @@ export async function shouldMessageContentContains(this: CommandState, expect: s
 
   let returnedMessage: Message;
   try {
-    returnedMessage = await this.cordeBot.events.onceMessage(
-      this.cordeBot.testBotId,
-      this.channelId,
-      this.timeout,
-    );
+    returnedMessage = await this.cordeBot.events.onceMessage({
+      authorId: this.cordeBot.testBotId,
+      channelId: this.channelId,
+      timeout: this.timeout,
+    });
   } catch {
     if (this.isNot) {
       return this.createPassTest();

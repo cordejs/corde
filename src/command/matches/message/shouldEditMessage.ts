@@ -36,11 +36,11 @@ export async function shouldEditMessage(
   let returnedMessage: Message;
 
   try {
-    returnedMessage = await this.cordeBot.events.onceMessageContentOrEmbedChange(
-      _messageData,
-      this.timeout,
-      this.channelId,
-    );
+    returnedMessage = await this.cordeBot.events.onceMessageContentOrEmbedChange({
+      messageIdentifier: _messageData,
+      timeout: this.timeout,
+      channelId: this.channelId,
+    });
   } catch {
     if (this.isNot) {
       return this.createPassTest();

@@ -47,7 +47,11 @@ export async function shouldSetRoleHoist(
 
   let role: Role;
   try {
-    role = await this.cordeBot.events.onceRoleHoistUpdate(identifier, this.timeout, this.guildId);
+    role = await this.cordeBot.events.onceRoleHoistUpdate({
+      roleIdentifier: identifier,
+      timeout: this.timeout,
+      guildId: this.guildId,
+    });
   } catch {
     if (this.isNot) {
       return this.createPassTest();

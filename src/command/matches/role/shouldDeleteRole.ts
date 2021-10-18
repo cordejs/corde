@@ -26,7 +26,11 @@ export async function shouldDeleteRole(
   }
 
   try {
-    await this.cordeBot.events.onceRoleDelete(identifier, this.timeout, this.guildId);
+    await this.cordeBot.events.onceRoleDelete({
+      roleIdentifier: identifier,
+      timeout: this.timeout,
+      guildId: this.guildId,
+    });
   } catch {
     if (this.isNot) {
       return this.createPassTest();

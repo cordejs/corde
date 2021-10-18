@@ -90,6 +90,24 @@ declare namespace corde {
     url: string;
   }
 
+  export interface IMessageEventOptions {
+    messageIdentifier?: corde.IMessageIdentifier;
+    authorId?: string;
+    channelId?: string | null;
+    timeout?: number;
+  }
+
+  export interface ISearchMessageReactionsOptions {
+    emojis?: corde.IEmoji[];
+    messageIdentifier?: corde.IMessageIdentifier;
+    authorId?: string;
+    timeout?: number;
+    channelId?: string;
+  }
+
+  export interface IMessageContentEvent
+    extends Omit<corde.IMessageEventOptions, "messageIdentifier"> {}
+
   export interface IMessageIdentifier {
     /**
      * Text of a message, use it to find a message if you don't know
@@ -223,6 +241,12 @@ declare namespace corde {
     name?: string;
     url?: string;
     iconURL?: string;
+  }
+
+  export interface IRoleEventOptions {
+    roleIdentifier?: corde.IRoleIdentifier;
+    timeout?: number;
+    guildId?: string;
   }
 
   /**

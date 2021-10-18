@@ -46,7 +46,11 @@ export async function shouldRenameRole(
 
   let newRole: Role;
   try {
-    newRole = await this.cordeBot.events.onceRoleRenamed(identifier, this.timeout, this.guildId);
+    newRole = await this.cordeBot.events.onceRoleRenamed({
+      roleIdentifier: identifier,
+      timeout: this.timeout,
+      guildId: this.guildId,
+    });
   } catch {
     if (this.isNot) {
       return this.createPassTest();

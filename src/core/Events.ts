@@ -29,14 +29,6 @@ export interface EventResume {
   nonce: string | undefined;
 }
 
-export interface SearchMessageReactionsOptions {
-  emojis?: corde.IEmoji[];
-  messageIdentifier?: corde.IMessageIdentifier;
-  authorId?: string;
-  timeout?: number;
-  channelId?: string;
-}
-
 // https://gist.github.com/koad/316b265a91d933fd1b62dddfcc3ff584
 
 /**
@@ -202,19 +194,15 @@ export class Events {
    * @returns Deleted role.
    * @internal
    */
-  onceRoleDelete(
-    roleIdentifier?: corde.IRoleIdentifier,
-    timeout?: number,
-    guildId?: string,
-  ): Promise<Role> {
+  onceRoleDelete(options?: corde.IRoleEventOptions): Promise<Role> {
     const validator = new Validator<[Role]>();
 
-    if (roleIdentifier) {
-      validator.add((role) => this.roleMatchRoleData(roleIdentifier, role));
+    if (options?.roleIdentifier) {
+      validator.add((role) => this.roleMatchRoleData(options?.roleIdentifier, role));
     }
 
-    if (guildId) {
-      validator.add((role) => role.guild.id === guildId);
+    if (options?.guildId) {
+      validator.add((role) => role.guild.id === options?.guildId);
     }
 
     return executePromiseWithTimeout((resolve) => {
@@ -223,7 +211,7 @@ export class Events {
           resolve(deletedRole);
         }
       });
-    }, timeout);
+    }, options?.timeout);
   }
 
   /**
@@ -552,20 +540,22 @@ export class Events {
     this._client.on("message", fn);
   }
 
+  // TODO: Refact once message to accept message content
+
   /**
    * Emitted once a message is created.
    * @returns Created message.
    * @internal
    */
-  onceMessage(authorId?: string, channelId?: string | null, timeout?: number) {
+  onceMessage(options?: corde.IMessageContentEvent) {
     const validator = new Validator<[Message]>();
 
-    if (authorId) {
-      validator.add((mgs) => mgs.author.id === authorId);
+    if (options?.authorId) {
+      validator.add((mgs) => mgs.author.id === options?.authorId);
     }
 
-    if (channelId) {
-      validator.add((mgs) => mgs.channel.id === channelId);
+    if (options?.channelId) {
+      validator.add((mgs) => mgs.channel.id === options?.channelId);
     }
 
     return executePromiseWithTimeout<Message>((resolve) => {
@@ -574,7 +564,7 @@ export class Events {
           resolve(message);
         }
       });
-    }, timeout);
+    }, options?.timeout);
   }
 
   /**
@@ -637,7 +627,7 @@ export class Events {
    * @returns A list of relation of reactions added and the author.
    * @internal
    */
-  onceMessageReactionsAdd(filter?: SearchMessageReactionsOptions) {
+  onceMessageReactionsAdd(filter?: corde.ISearchMessageReactionsOptions) {
     return this._onceMessageReactionUpdate("onMessageReactionAdd", filter);
   }
 
@@ -646,13 +636,13 @@ export class Events {
    * @returns A list of relation of reactions removed and the author.
    * @internal
    */
-  onceMessageReactionsRemove(filter?: SearchMessageReactionsOptions) {
+  onceMessageReactionsRemove(filter?: corde.ISearchMessageReactionsOptions) {
     return this._onceMessageReactionUpdate("onMessageReactionRemoveEmoji", filter);
   }
 
   private _onceMessageReactionUpdate(
     event: "onMessageReactionAdd" | "onMessageReactionRemoveEmoji",
-    filter?: SearchMessageReactionsOptions,
+    filter?: corde.ISearchMessageReactionsOptions,
   ) {
     const { emojis, messageIdentifier, authorId, timeout, channelId } = filter ?? {};
 
@@ -768,16 +758,10 @@ export class Events {
    * @returns The pinned message
    * @internal
    */
-  onceMessagePinned(
-    messageIdentifier?: corde.IMessageIdentifier,
-    timeout?: number,
-    channelId?: string,
-  ) {
+  onceMessagePinned(options?: corde.IMessageEventOptions) {
     return this._onceMessageSetPinneble(
       (oldMessage, newMessage) => !(oldMessage.pinned as boolean) && (newMessage.pinned as boolean),
-      messageIdentifier,
-      timeout,
-      channelId,
+      options,
     );
   }
 
@@ -789,16 +773,10 @@ export class Events {
    * @returns The pinned message
    * @internal
    */
-  onceMessageUnPinned(
-    messageIdentifier?: corde.IMessageIdentifier,
-    timeout?: number,
-    channelId?: string,
-  ) {
+  onceMessageUnPinned(options?: corde.IMessageEventOptions) {
     return this._onceMessageSetPinneble(
       (oldMessage, newMessage) => (oldMessage.pinned as boolean) && !(newMessage.pinned as boolean),
-      messageIdentifier,
-      timeout,
-      channelId,
+      options,
     );
   }
 
@@ -807,23 +785,21 @@ export class Events {
       oldMessage: Message | PartialMessage,
       newMessage: Message | PartialMessage,
     ) => boolean,
-    messageIdentifier?: corde.IMessageIdentifier,
-    timeout?: number,
-    channelId?: string,
+    options?: corde.IMessageEventOptions,
   ) {
     const validator = new Validator<[Message | PartialMessage, Message | PartialMessage]>();
     validator.add(validation);
 
-    if (messageIdentifier) {
+    if (options?.messageIdentifier) {
       validator.add(
         (oldMessage) =>
-          oldMessage.id === messageIdentifier.id ||
-          oldMessage.content === messageIdentifier.content,
+          oldMessage.id === options?.messageIdentifier?.id ||
+          oldMessage.content === options?.messageIdentifier?.content,
       );
     }
 
-    if (channelId) {
-      validator.add((message) => message.channel.id === channelId);
+    if (options?.channelId) {
+      validator.add((message) => message.channel.id === options?.channelId);
     }
 
     return executePromiseWithTimeout<Message | PartialMessage>((resolve) => {
@@ -832,7 +808,7 @@ export class Events {
           resolve(newMessage);
         }
       });
-    }, timeout);
+    }, options?.timeout);
   }
 
   /**
@@ -843,11 +819,7 @@ export class Events {
    * @returns A message who had his content changed
    * @internal
    */
-  onceMessageContentOrEmbedChange(
-    messageIdentifier?: corde.IMessageIdentifier,
-    timeout?: number,
-    channelId?: string,
-  ) {
+  onceMessageContentOrEmbedChange(options?: corde.IMessageEventOptions) {
     const validator = new Validator<[Message | PartialMessage, Message | PartialMessage]>();
     validator.add(
       (oldMessage, newMessage) =>
@@ -855,16 +827,16 @@ export class Events {
         this.messagesHasDifferentsEmbeds(oldMessage, newMessage),
     );
 
-    if (messageIdentifier) {
+    if (options?.messageIdentifier) {
       validator.add(
         (oldMessage) =>
-          oldMessage.id === messageIdentifier.id ||
-          oldMessage.content === messageIdentifier.content,
+          oldMessage.id === options?.messageIdentifier?.id ||
+          oldMessage.content === options?.messageIdentifier?.content,
       );
     }
 
-    if (channelId) {
-      validator.add((message) => message.channel.id === channelId);
+    if (options?.channelId) {
+      validator.add((message) => message.channel.id === options?.channelId);
     }
 
     return executePromiseWithTimeout<Message>((resolve) => {
@@ -874,7 +846,7 @@ export class Events {
           resolve(fullMessage);
         }
       });
-    }, timeout);
+    }, options?.timeout);
   }
 
   private messagesHasDifferentsEmbeds(
@@ -941,68 +913,50 @@ export class Events {
   /**
    * @internal
    */
-  onceRoleRenamed(roleIdentifier?: corde.IRoleIdentifier, timeout?: number, guildId?: string) {
+  onceRoleRenamed(options?: corde.IRoleEventOptions) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.name !== newRole.name,
-      timeout,
-      roleIdentifier,
-      guildId,
+      options,
     );
   }
 
   /**
    * @internal
    */
-  onceRolePositionUpdate(
-    roleIdentifier?: corde.IRoleIdentifier,
-    timeout?: number,
-    guildId?: string,
-  ) {
+  onceRolePositionUpdate(options?: corde.IRoleEventOptions) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.rawPosition !== newRole.rawPosition,
-      timeout,
-      roleIdentifier,
-      guildId,
+      options,
     );
   }
 
   /**
    * @internal
    */
-  onceRoleUpdateColor(roleIdentifier?: corde.IRoleIdentifier, timeout?: number, guildId?: string) {
+  onceRoleUpdateColor(options?: corde.IRoleEventOptions) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.color !== newRole.color,
-      timeout,
-      roleIdentifier,
-      guildId,
+      options,
     );
   }
 
   /**
    * @internal
    */
-  onceRoleHoistUpdate(roleIdentifier?: corde.IRoleIdentifier, timeout?: number, guildId?: string) {
+  onceRoleHoistUpdate(options?: corde.IRoleEventOptions) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.hoist !== newRole.hoist,
-      timeout,
-      roleIdentifier,
-      guildId,
+      options,
     );
   }
 
   /**
    * @internal
    */
-  onceRoleMentionableUpdate(
-    roleIdentifier?: corde.IRoleIdentifier,
-    timeout?: number,
-    guildId?: string,
-  ) {
+  onceRoleMentionableUpdate(options?: corde.IRoleEventOptions) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.mentionable !== newRole.mentionable,
-      timeout,
-      roleIdentifier,
-      guildId,
+      options,
     );
   }
 
@@ -1036,10 +990,6 @@ export class Events {
 
   private roleMatchRoleData(roleIdentifier: corde.IRoleIdentifier | undefined, role: Role) {
     return role.id === roleIdentifier?.id || role.name === roleIdentifier?.name;
-  }
-
-  private rolesPermissionsMatch(oldRole: Role, newRole: Role) {
-    return oldRole.permissions.equals(newRole.permissions);
   }
 
   /**
@@ -1113,20 +1063,18 @@ export class Events {
 
   private _onRoleUpdateWithTimeout(
     comparable: (oldRole: Role, newRole: Role) => boolean,
-    timeout?: number,
-    roleIdentifier?: corde.IRoleIdentifier,
-    guildId?: string,
+    options?: corde.IRoleEventOptions,
   ) {
     const validator = new Validator<[Role, Role]>();
 
     validator.add((oldRole, newRole) => comparable(oldRole, newRole));
 
-    if (roleIdentifier) {
-      validator.add((_, newRole) => this.roleMatchRoleData(roleIdentifier, newRole));
+    if (options?.roleIdentifier) {
+      validator.add((_, newRole) => this.roleMatchRoleData(options?.roleIdentifier, newRole));
     }
 
-    if (guildId) {
-      validator.add((role) => role.guild.id === guildId);
+    if (options?.guildId) {
+      validator.add((role) => role.guild.id === options?.guildId);
     }
 
     return executePromiseWithTimeout<Role>((resolve) => {
@@ -1135,6 +1083,6 @@ export class Events {
           resolve(newRole);
         }
       });
-    }, timeout);
+    }, options?.timeout);
   }
 }

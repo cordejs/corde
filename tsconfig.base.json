@@ -16,7 +16,7 @@
     "moduleResolution": "node",
     "newLine": "LF",
     "noImplicitAny": true,
-    "removeComments": false,
+    "removeComments": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "allowSyntheticDefaultImports": true,

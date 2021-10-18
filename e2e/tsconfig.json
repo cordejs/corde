@@ -1,6 +1,6 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "types": ["../lib/src/global"]
+    "typeRoots": ["../src/global"]
   }
 }

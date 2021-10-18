@@ -40,7 +40,11 @@ export async function shouldSetRoleColor(
   let role: Role;
 
   try {
-    role = await this.cordeBot.events.onceRoleUpdateColor(identifier, this.timeout, this.guildId);
+    role = await this.cordeBot.events.onceRoleUpdateColor({
+      roleIdentifier: identifier,
+      timeout: this.timeout,
+      guildId: this.guildId,
+    });
   } catch {
     if (this.isNot) {
       return this.createPassTest();

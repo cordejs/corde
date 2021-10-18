@@ -21,11 +21,11 @@ export async function shouldReturn(this: CommandState, expected: Primitive | cor
 
   let returnedMessage: Message;
   try {
-    returnedMessage = await this.cordeBot.events.onceMessage(
-      this.cordeBot.testBotId,
-      this.channelId,
-      this.timeout,
-    );
+    returnedMessage = await this.cordeBot.events.onceMessage({
+      authorId: this.cordeBot.testBotId,
+      channelId: this.channelId,
+      timeout: this.timeout,
+    });
   } catch {
     if (this.isNot) {
       return this.createPassTest();
