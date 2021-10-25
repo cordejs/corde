@@ -1,6 +1,6 @@
 {
   "name": "corde",
-  "version": "4.4.1",
+  "version": "4.4.2",
   "description": "A simple library for Discord bot tests",
   "main": "./lib/index.js",
   "types": "lib/src/global",
@@ -48,7 +48,7 @@
     "lint": "eslint src/**/*.ts",
     "validate-ci": "circleci config validate",
     "jestClear": "jest --clearCache",
-    "_postinstall": "husky install",
+    "postinstall": "husky install",
     "prepublishOnly": "pinst --disable",
     "postpublish": "pinst --enable"
   },
@@ -78,7 +78,7 @@
     "@types/rimraf": "^3.0.0",
     "@types/semver": "^7.3.6",
     "@types/uuid": "^8.3.0",
-    "@types/ws": "^7.2.4",
+    "@types/ws": "^8.2.0",
     "@typescript-eslint/eslint-plugin": "^4.20.0",
     "@typescript-eslint/parser": "^4.20.0",
     "auto-changelog": "^2.3.0",
@@ -129,8 +129,8 @@
     "fast-glob": "^3.2.5",
     "fast-json-stable-stringify": "^2.1.0",
     "jest-diff": "^27.0.2",
-    "log-update": "^4.0.0",
-    "ora": "^5.4.1",
+    "log-update": "4.0.0",
+    "ora": "5.4.1",
     "pretty-format": "^27.0.1",
     "tslib": "^2.2.0"
   },

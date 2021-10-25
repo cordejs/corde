@@ -45,6 +45,10 @@ module.exports = {
         },
         {
           type: "doc",
+          id: "environmentvariables",
+        },
+        {
+          type: "doc",
           id: "expect",
         },
         {
