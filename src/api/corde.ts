@@ -1,9 +1,12 @@
-import { Message } from "discord.js";
 import { runtime, testCollector } from "../core";
+import { FunctionOnly } from "../types";
 import { getStackTrace } from "../utils";
+import { CommandEvent } from "./CommandEvent";
 
-export const corde = {
-  fail: function (message: string) {
+type CordeType = FunctionOnly<typeof corde>;
+
+export const cordeInternal: CordeType = {
+  fail(message?: string) {
     if (!testCollector.isInsideTestClausure) {
       throw new Error("Can not fail a suite without being inside a suite");
     }
@@ -14,19 +17,16 @@ export const corde = {
       trace: getStackTrace(),
     });
   },
-  wait: function (time: number) {
+  wait(time: number) {
     Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, time);
   },
   send(command: string) {
     const promise = runtime.bot.sendMessage(command);
     return new CommandEvent(promise);
   },
-  waitAsync: function (time: number) {
+  waitAsync(time: number) {
     return new Promise<void>((resolve) => {
       setTimeout(resolve, time);
     });
   },
 };
-
-const commandEvent = corde.send("a");
-const message = await commandEvent.waitMessage();

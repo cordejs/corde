@@ -16,6 +16,10 @@ import { Group } from "../core/Group";
 import { Events } from "../core/Events";
 import { Queue } from "../data-structures";
 
+export type FunctionOnly<T> = {
+  [U in keyof T]: T[U] extends (...args: any[]) => any ? T[U] : never;
+};
+
 export interface ITestReport {
   pass: boolean;
   testName?: string;

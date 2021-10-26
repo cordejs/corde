@@ -24,4 +24,8 @@ export class CommandEvent implements corde.ICommandEvent {
       ...options,
     });
   }
+
+  onceChannelCreate() {
+    return runtime.events.onceChannelCreate();
+  }
 }

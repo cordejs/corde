@@ -87,5 +87,5 @@ declare namespace corde {
    */
   export function waitAsync(miliseconds: number): Promise<void>;
 
-  export function send(): corde.ICommandEvent;
+  export function send(command: string): corde.ICommandEvent;
 }

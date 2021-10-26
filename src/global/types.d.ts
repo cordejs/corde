@@ -14,6 +14,18 @@ declare namespace corde {
     [K in KeyOf<T>]: T[K] extends (...args: any[]) => any ? never : K;
   }[KeyOf<T>];
 
+  export interface EventResume {
+    count: number;
+    index: number;
+    nonce: string | undefined;
+  }
+
+  export interface ICreateChannelFilter {
+    name?: string;
+    isText?: boolean;
+    timeout?: number;
+  }
+
   export interface IDescribeClousure {
     /**
      * Create a group of tests.
@@ -90,18 +102,41 @@ declare namespace corde {
     url: string;
   }
 
-  export interface IMessageEventOptions {
-    messageIdentifier?: corde.IMessageIdentifier;
-    authorId?: string;
-    channelId?: string | null;
+  export interface IDefaultOptions {
     timeout?: number;
   }
 
-  export interface ISearchMessageReactionsOptions {
+  export interface IEmojiDeleteOptions extends IEmojiCreateOptions {}
+  export interface IEmojiUpdateOptions extends IEmojiCreateOptions {}
+
+  export interface IEmojiCreateOptions extends IDefaultOptions {
+    emojiIdentifier: corde.IEmoji;
+  }
+
+  export interface IChannelPinsUpdateOptions extends IChannelDeleteOptions {}
+  export interface IChannelUpdateOptions extends IChannelDeleteOptions {}
+
+  export interface IChannelDeleteOptions extends IDefaultOptions {
+    channelIdentifier?: corde.IChannelIdentifier;
+  }
+
+  export interface IMessageEventOptions extends IDefaultOptions {
+    messageIdentifier?: corde.IMessageIdentifier;
+    authorId?: string;
+    channelId?: string | null;
+  }
+
+  export interface IMessageReactionRemoveOptions extends IDefaultOptions {
+    emojis?: corde.IEmoji;
+    messageIdentifier?: corde.IMessageIdentifier;
+    authorId?: string;
+    channelId?: string;
+  }
+
+  export interface ISearchMessageReactionsOptions extends IDefaultOptions {
     emojis?: corde.IEmoji[];
     messageIdentifier?: corde.IMessageIdentifier;
     authorId?: string;
-    timeout?: number;
     channelId?: string;
   }
 
@@ -303,32 +338,6 @@ declare namespace corde {
 
   export type VerificationLevelType = "NONE" | "LOW" | "MEDIUM" | "HIGH" | "VERY_HIGH";
 
-  /**
-   * @see https://discord.com/developers/docs/resources/guild#guild-object-verification-level
-   */
-  export enum VerificationLevel {
-    /**
-     * Unrestricted
-     */
-    NONE = "NONE",
-    /**
-     * Must have verified email on account
-     */
-    LOW = "LOW",
-    /**
-     * Must be registered on Discord for longer than 5 minutes
-     */
-    MEDIUM = "MEDIUM",
-    /**
-     * Must be a member of the server for longer than 10 minutes
-     */
-    HIGH = "HIGH",
-    /**
-     * Must have a verified phone number
-     */
-    VERY_HIGH = "VERY_HIGH",
-  }
-
   export type ColorResolvable =
     | "DEFAULT"
     | "WHITE"
@@ -386,74 +395,6 @@ declare namespace corde {
     | "VIP_REGIONS"
     | "WELCOME_SCREEN_ENABLED";
 
-  /**
-   * Defines Guild's features
-   *
-   * @see https://discord.com/developers/docs/resources/guild#guild-object-guild-features
-   */
-  export enum GuildFeatures {
-    /**
-     * Guild has access to set an invite splash background
-     */
-    INVITE_SPLASH = "INVITE_SPLASH",
-    /**
-     * Guild has access to set 384kbps bitrate in voice (previously VIP voice servers)
-     */
-    VIP_REGIONS = "VIP_REGIONS",
-    /**
-     * Guild has access to set a vanity URL
-     */
-    VANITY_URL = "VANITY_URL",
-    /**
-     * Guild is verified
-     */
-    VERIFIED = "VERIFIED",
-    /**
-     * Guild is partnered
-     */
-    PARTNERED = "PARTNERED",
-    /**
-     * Guild can enable welcome screen, Membership Screening, and discovery, and receives community updates
-     */
-    COMMUNITY = "COMMUNITY",
-    /**
-     * Guild has access to use commerce features (i.e. create store channels)
-     */
-    COMMERCE = "COMMERCE",
-    /**
-     * Guild has access to create news channels
-     */
-    NEWS = "NEWS",
-    /**
-     * Guild can be discovered in the directory
-     */
-    DISCOVERABLE = "DISCOVERABLE",
-    /**
-     * Guild can be featured in the directory
-     */
-    FEATURABLE = "FEATURABLE",
-    /**
-     * Guild has access to set an animated guild icon
-     */
-    ANIMATED_ICON = "ANIMATED_ICON",
-    /**
-     * Guild has access to set a guild banner image
-     */
-    BANNER = "BANNER",
-    /**
-     * Guild has enabled the welcome screen
-     */
-    WELCOME_SCREEN_ENABLED = "WELCOME_SCREEN_ENABLED",
-    /**
-     * Guild has enabled [Membership Screening](https://discord.com/developers/docs/resources/guild#membership-screening-object)
-     */
-    MEMBER_VERIFICATION_GATE_ENABLED = "MEMBER_VERIFICATION_GATE_ENABLED",
-    /**
-     * Guild can be previewed before joining via Membership Screening or the directory
-     */
-    PREVIEW_ENABLED = "PREVIEW_ENABLED",
-  }
-
   export type RecursiveReadonlyArray<T> = ReadonlyArray<T | RecursiveReadonlyArray<T>>;
   export type SystemChannelFlagsString = "WELCOME_MESSAGE_DISABLED" | "BOOST_MESSAGE_DISABLED";
   export type SystemChannelFlagsResolvable = BitFieldResolvable<SystemChannelFlagsString>;
@@ -467,22 +408,6 @@ declare namespace corde {
   export interface IImageURLOptions {
     format?: AllowedImageFormat;
     size?: ImageSize;
-  }
-
-  /**
-   * System channel flags of Discord
-   *
-   * @see https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags
-   */
-  export enum SystemChannelFlag {
-    /**
-     * Suppress member join notifications
-     */
-    SUPPRESS_JOIN_NOTIFICATIONS = "SUPPRESS_JOIN_NOTIFICATIONS",
-    /**
-     * Suppress server boost notifications
-     */
-    SUPPRESS_PREMIUM_SUBSCRIPTIONS = "SUPPRESS_PREMIUM_SUBSCRIPTIONS",
   }
 
   export type Locale =

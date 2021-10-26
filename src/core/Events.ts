@@ -4,6 +4,7 @@ import {
   ClientEvents,
   Collection,
   Guild,
+  GuildChannel,
   GuildEmoji,
   GuildMember,
   Message,
@@ -20,14 +21,8 @@ import {
 } from "discord.js";
 import { once } from "events";
 import { DEFAULT_TEST_TIMEOUT } from "../consts";
-import { deepEqual, executePromiseWithTimeout } from "../utils";
+import { deepEqual, executePromiseWithTimeout, getChannelName, isNullOrUndefined } from "../utils";
 import { Validator } from "../utils";
-
-export interface EventResume {
-  count: number;
-  index: number;
-  nonce: string | undefined;
-}
 
 // https://gist.github.com/koad/316b265a91d933fd1b62dddfcc3ff584
 
@@ -73,8 +68,37 @@ export class Events {
    * @returns Reaction removed.
    * @internal
    */
-  onceMessageReactionRemoveEmoji(): Promise<MessageReaction> {
-    return this._once<MessageReaction>("messageReactionRemoveEmoji");
+  onceMessageReactionRemoveEmoji(
+    options?: corde.IMessageReactionRemoveOptions,
+  ): Promise<MessageReaction> {
+    const validator = new Validator<[MessageReaction]>();
+
+    if (options?.emojis) {
+      validator.add(
+        (message) =>
+          options.emojis?.name === message.emoji.name || options.emojis?.id === message.emoji.id,
+      );
+    }
+
+    if (options?.messageIdentifier) {
+      validator.add(
+        (messageReaction) =>
+          messageReaction.message.id === options.messageIdentifier?.id ||
+          messageReaction.message.content === options.messageIdentifier?.content,
+      );
+    }
+
+    if (options?.channelId) {
+      validator.add((messageReaction) => messageReaction.message.channel.id === options.channelId);
+    }
+
+    return executePromiseWithTimeout((resolve) => {
+      this.onMessageReactionRemoveEmoji((message) => {
+        if (validator.isValid(message)) {
+          resolve(message);
+        }
+      });
+    }, options?.timeout);
   }
 
   /**
@@ -91,8 +115,26 @@ export class Events {
    * @returns Created channel.
    * @internal
    */
-  onceChannelCreate(): Promise<Channel> {
-    return this._once<Channel>("channelCreate");
+  onceChannelCreate(options?: corde.ICreateChannelFilter): Promise<Channel> {
+    const validator = new Validator<[Channel]>();
+
+    if (options?.name) {
+      validator.add(
+        (channel) => channel.isText() && (channel as GuildChannel).name === options.name,
+      );
+    }
+
+    if (!isNullOrUndefined(options?.isText)) {
+      validator.add((channel) => channel.isText() === options?.isText);
+    }
+
+    return executePromiseWithTimeout((resolve) => {
+      this.onChannelCreate((channel) => {
+        if (validator.isValid(channel)) {
+          resolve(channel);
+        }
+      });
+    }, options?.timeout);
   }
 
   /**
@@ -109,8 +151,24 @@ export class Events {
    * @returns Deleted channel.
    * @internal
    */
-  onceChannelDelete(): Promise<Channel> {
-    return this._once<Channel>("channelDelete");
+  onceChannelDelete(options?: corde.IChannelDeleteOptions): Promise<Channel> {
+    const validator = new Validator<[Channel]>();
+
+    if (options?.channelIdentifier) {
+      validator.add(
+        (channel) =>
+          channel.id === options.channelIdentifier?.id ||
+          options.channelIdentifier?.name === getChannelName(channel),
+      );
+    }
+
+    return executePromiseWithTimeout((resolve) => {
+      this.onChannelDelete((channel) => {
+        if (validator.isValid(channel)) {
+          resolve(channel);
+        }
+      });
+    }, options?.timeout);
   }
 
   /**
@@ -133,8 +191,24 @@ export class Events {
    * @returns `Channel` and `date` of it's change.
    * @internal
    */
-  async onceChannelPinsUpdate(): Promise<[Channel, Date]> {
-    return this._once<[Channel, Date]>("channelPinsUpdate");
+  async onceChannelPinsUpdate(options?: corde.IChannelPinsUpdateOptions): Promise<[Channel, Date]> {
+    const validator = new Validator<[Channel]>();
+
+    if (options?.channelIdentifier) {
+      validator.add(
+        (channel) =>
+          channel.id === options.channelIdentifier?.id ||
+          options.channelIdentifier?.name === getChannelName(channel),
+      );
+    }
+
+    return executePromiseWithTimeout((resolve) => {
+      this.onChannelPinsUpdate((channel, updateDate) => {
+        if (validator.isValid(channel)) {
+          resolve([channel, updateDate]);
+        }
+      });
+    }, options?.timeout);
   }
 
   /**
@@ -151,8 +225,24 @@ export class Events {
    * @returns `Old channel` and `new value` of the channel.
    * @internal
    */
-  async onceChannelUpdate(): Promise<[Channel, Channel]> {
-    return this._once<[Channel, Channel]>("channelUpdate");
+  onceChannelUpdate(options?: corde.IChannelUpdateOptions): Promise<[Channel, Channel]> {
+    const validator = new Validator<[Channel]>();
+
+    if (options?.channelIdentifier) {
+      validator.add(
+        (channel) =>
+          channel.id === options.channelIdentifier?.id ||
+          options.channelIdentifier?.name === getChannelName(channel),
+      );
+    }
+
+    return executePromiseWithTimeout((resolve) => {
+      this.onChannelUpdate((oldChannel, newChannel) => {
+        if (validator.isValid(newChannel)) {
+          resolve([oldChannel, newChannel]);
+        }
+      });
+    }, options?.timeout);
   }
 
   /**
@@ -168,8 +258,8 @@ export class Events {
    * Emitted once for general debugging information.
    * @internal
    */
-  async onceDebug(): Promise<string> {
-    return await this._once<string>("debug");
+  onceDebug(): Promise<string> {
+    return this._once<string>("debug");
   }
 
   /**
@@ -246,8 +336,23 @@ export class Events {
    * @returns Created emoji.
    * @internal
    */
-  onceEmojiCreate(): Promise<GuildEmoji> {
-    return this._once<GuildEmoji>("emojiCreate");
+  onceEmojiCreate(options?: corde.IEmojiCreateOptions): Promise<GuildEmoji> {
+    const validator = new Validator<[GuildEmoji]>();
+
+    if (options?.emojiIdentifier) {
+      validator.add(
+        (emoji) =>
+          emoji.name === options.emojiIdentifier.name || emoji.id === options.emojiIdentifier.id,
+      );
+    }
+
+    return executePromiseWithTimeout((resolve) => {
+      this.onEmojiCreate((emoji) => {
+        if (validator.isValid(emoji)) {
+          resolve(emoji);
+        }
+      });
+    }, options?.timeout);
   }
 
   /**
@@ -439,7 +544,11 @@ export class Events {
    * @internal
    */
   onGuildMemberChunk(
-    fn: (members: Collection<string, GuildMember>, guild: Guild, eventResume: EventResume) => void,
+    fn: (
+      members: Collection<string, GuildMember>,
+      guild: Guild,
+      eventResume: corde.EventResume,
+    ) => void,
   ) {
     this._client.on("guildMembersChunk", fn);
   }
@@ -450,7 +559,9 @@ export class Events {
    * @internal
    */
   onceGuildMemberChunk() {
-    return this._once<[Collection<string, GuildMember>, Guild, EventResume]>("guildMembersChunk");
+    return this._once<[Collection<string, GuildMember>, Guild, corde.EventResume]>(
+      "guildMembersChunk",
+    );
   }
 
   /**
