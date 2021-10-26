@@ -41,3 +41,4 @@ export * from "./safeImportFile";
 export * from "./importFile";
 export * from "./asyncHandler";
 export * from "./syncHandler";
+export * from "./getChannelName";
