@@ -1,14 +1,17 @@
+type ValidatorFunction<TParameters extends any[]> = (
+  ...params: TParameters
+) => boolean | undefined | null;
 /**
  * @internal
  */
 export class Validator<TParameters extends any[]> {
-  private _validators: ((...params: TParameters) => boolean)[];
+  private _validators: ValidatorFunction<TParameters>[];
 
   constructor() {
     this._validators = [];
   }
 
-  add(fn: (...params: TParameters) => boolean) {
+  add(fn: ValidatorFunction<TParameters>) {
     this._validators.push(fn);
   }
 
