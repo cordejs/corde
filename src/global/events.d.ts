@@ -101,28 +101,32 @@ declare namespace corde {
      * @returns Created emoji.
      * @internal
      */
-    onceEmojiCreate(): Promise<import("discord.js").GuildEmoji>;
+    onceEmojiCreate(options?: corde.IEmojiCreateOptions): Promise<import("discord.js").GuildEmoji>;
 
     /**
      * Emitted once a custom guild emoji is deleted.
      * @returns The emoji that was deleted.
      * @internal
      */
-    onceEmojiDelete(): Promise<import("discord.js").GuildEmoji>;
+    onceEmojiDelete(options?: corde.IEmojiDeleteOptions): Promise<import("discord.js").GuildEmoji>;
 
     /**
      * Emitted once a custom guild emoji is updated.
      * @returns `Old` and `new` role value.
      * @internal
      */
-    onceEmojiUpdate(): Promise<[import("discord.js").GuildEmoji, import("discord.js").GuildEmoji]>;
+    onceEmojiUpdate(
+      options?: corde.IEmojiUpdateOptions,
+    ): Promise<[import("discord.js").GuildEmoji, import("discord.js").GuildEmoji]>;
 
     /**
      * Emitted once a member is banned from a guild.
      * @returns `guild` where the user was banned from, and the `user` itself
      * @internal
      */
-    onceGuildBan(): Promise<[import("discord.js").Guild, import("discord.js").User]>;
+    onceGuildBan(
+      options?: corde.IGuildBanOptions,
+    ): Promise<[import("discord.js").Guild, import("discord.js").User]>;
 
     /**
      * Emitted once a member is unbanned from a guild.
@@ -130,28 +134,32 @@ declare namespace corde {
      * from ban, and the `user`.
      * @internal
      */
-    onceGuildBanRemove(): Promise<[import("discord.js").Guild, import("discord.js").User]>;
+    onceGuildBanRemove(
+      options?: corde.IGuildBanRemoveOptions,
+    ): Promise<[import("discord.js").Guild, import("discord.js").User]>;
 
     /**
      * Emitted once the client joins a guild.
      * @returns Created guild.
      * @internal
      */
-    onceGuildCreate(): Promise<import("discord.js").Guild>;
+    onceGuildCreate(options?: corde.IGuildCreateFilterOptions): Promise<import("discord.js").Guild>;
 
     /**
      * Emitted once a guild is deleted/left.
      * @returns Deleted guild.
      * @internal
      */
-    onceGuildDelete(): Promise<import("discord.js").Guild>;
+    onceGuildDelete(options?: corde.IGuildDeleteOptions): Promise<import("discord.js").Guild>;
 
     /**
      * Emitted once a user joins a guild.
      * @returns Member who was added to guild.
      * @internal
      */
-    onceGuildMemberAdd(): Promise<import("discord.js").GuildMember>;
+    onceGuildMemberAdd(
+      options?: corde.IGuildMemberAvailableOptions,
+    ): Promise<import("discord.js").GuildMember>;
 
     /**
      * Emitted once a member becomes available in a large guild.
@@ -274,9 +282,7 @@ declare namespace corde {
      * @internal
      */
     onceMessagePinned(
-      messageIdentifier?: IMessageIdentifier,
-      timeout?: number,
-      channelId?: string,
+      options?: corde.IMessageEventOptions,
     ): Promise<import("discord.js").Message | import("discord.js").PartialMessage>;
     /**
      * Emitted once a message is unPinned
@@ -287,9 +293,7 @@ declare namespace corde {
      * @internal
      */
     onceMessageUnPinned(
-      messageIdentifier?: IMessageIdentifier,
-      timeout?: number,
-      channelId?: string,
+      options?: corde.IMessageEventOptions,
     ): Promise<import("discord.js").Message | import("discord.js").PartialMessage>;
     /**
      * Emitted once a message with `id` x or `content` y, or its embed message has changed.
@@ -300,9 +304,7 @@ declare namespace corde {
      * @internal
      */
     onceMessageContentOrEmbedChange(
-      messageIdentifier?: IMessageIdentifier,
-      timeout?: number,
-      channelId?: string,
+      options?: corde.IMessageEventOptions,
     ): Promise<import("discord.js").Message>;
 
     /**
@@ -328,43 +330,25 @@ declare namespace corde {
     /**
      * @internal
      */
-    onceRoleRenamed(
-      roleIdentifier?: IRoleIdentifier,
-      timeout?: number,
-      guildId?: string,
-    ): Promise<import("discord.js").Role>;
+    onceRoleRenamed(options?: corde.IRoleEventOptions): Promise<import("discord.js").Role>;
 
     /**
      * @internal
      */
-    onceRolePositionUpdate(
-      roleIdentifier?: IRoleIdentifier,
-      timeout?: number,
-      guildId?: string,
-    ): Promise<import("discord.js").Role>;
+    onceRolePositionUpdate(options?: corde.IRoleEventOptions): Promise<import("discord.js").Role>;
     /**
      * @internal
      */
-    onceRoleUpdateColor(
-      roleIdentifier?: IRoleIdentifier,
-      timeout?: number,
-      guildId?: string,
-    ): Promise<import("discord.js").Role>;
+    onceRoleUpdateColor(options?: corde.IRoleEventOptions): Promise<import("discord.js").Role>;
     /**
      * @internal
      */
-    onceRoleHoistUpdate(
-      roleIdentifier?: IRoleIdentifier,
-      timeout?: number,
-      guildId?: string,
-    ): Promise<import("discord.js").Role>;
+    onceRoleHoistUpdate(options?: corde.IRoleEventOptions): Promise<import("discord.js").Role>;
     /**
      * @internal
      */
     onceRoleMentionableUpdate(
-      roleIdentifier?: IRoleIdentifier,
-      timeout?: number,
-      guildId?: string,
+      options?: corde.IRoleEventOptions,
     ): Promise<import("discord.js").Role>;
     /**
      * Waits for changes in permission of a specific role.

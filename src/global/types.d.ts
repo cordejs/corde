@@ -109,6 +109,18 @@ declare namespace corde {
   export interface IEmojiDeleteOptions extends IEmojiCreateOptions {}
   export interface IEmojiUpdateOptions extends IEmojiCreateOptions {}
 
+  export interface IGuildMemberRemoveOptions extends IGuildMemberAvailableOptions {}
+
+  export interface IGuildMemberAvailableOptions extends IDefaultOptions {
+    member: corde.IGuildMemberIdentifier;
+  }
+
+  export interface IGuildMemberAddOptions extends IDefaultOptions {
+    member?: corde.IGuildMemberIdentifier;
+    guild?: corde.IGuildIdentifier;
+    user?: corde.IUserIdentifier;
+  }
+
   export interface IEmojiCreateOptions extends IDefaultOptions {
     emojiIdentifier: corde.IEmoji;
   }
@@ -168,13 +180,21 @@ declare namespace corde {
     name?: string;
   }
 
+  export type RoleIdentifier = {
+    name?: string;
+  } & IIdentifier;
+
   export interface IChannelIdentifier extends IIdentifier {
     name?: string;
   }
 
   export type ChannelType = "voice" | "text" | "category";
 
-  export interface IGuildCreateOptions extends GuildCreateOptions {
+  export interface IGuildCreateFilterOptions extends IDefaultOptions {
+    name: string;
+  }
+
+  export interface IGuildCreateOptions extends IDefaultOptions {
     name: string;
   }
 
@@ -182,10 +202,24 @@ declare namespace corde {
     name: string;
   }
 
+  export interface IGuildBanRemoveOptions extends IGuildBanOptions {}
+
+  export interface IGuildBanOptions extends IDefaultOptions {
+    guildIdentifier: corde.IGuildIdentifier;
+    userIdentifier: corde.IUserIdentifier;
+  }
+
   export interface ICreateChannelOptionsSimple extends Omit<ICreateChannelOptions, "type"> {}
 
+  export interface IUserIdentifier extends IGuildIdentifier {}
+
+  export interface IGuildDeleteOptions extends IDefaultOptions, IGuildIdentifier {}
   export interface IGuildIdentifier extends IIdentifier {
     name?: string;
+  }
+
+  export interface IGuildMemberIdentifier extends IIdentifier {
+    nickname?: string;
   }
 
   export interface IBaseRole {

@@ -21,8 +21,9 @@ import {
 } from "discord.js";
 import { once } from "events";
 import { DEFAULT_TEST_TIMEOUT } from "../consts";
-import { deepEqual, executePromiseWithTimeout, getChannelName, isNullOrUndefined } from "../utils";
+import { deepEqual, executePromiseWithTimeout, isNullOrUndefined } from "../utils";
 import { Validator } from "../utils";
+import { getChannelName } from "../utils/getChannelName";
 
 // https://gist.github.com/koad/316b265a91d933fd1b62dddfcc3ff584
 
@@ -30,7 +31,7 @@ import { Validator } from "../utils";
  * Encapsulation of Discord.js events.
  * @internal
  */
-export class Events {
+export class Events implements corde.IOnceEvents {
   protected readonly _client: Client;
 
   constructor(client: Client) {
@@ -369,8 +370,23 @@ export class Events {
    * @returns The emoji that was deleted.
    * @internal
    */
-  onceEmojiDelete(): Promise<GuildEmoji> {
-    return this._once<GuildEmoji>("emojiDelete");
+  onceEmojiDelete(options?: corde.IEmojiDeleteOptions): Promise<GuildEmoji> {
+    const validator = new Validator<[GuildEmoji]>();
+
+    if (options?.emojiIdentifier) {
+      validator.add(
+        (emoji) =>
+          emoji.name === options.emojiIdentifier.name || emoji.id === options.emojiIdentifier.id,
+      );
+    }
+
+    return executePromiseWithTimeout((resolve) => {
+      this.onEmojiDelete((emoji) => {
+        if (validator.isValid(emoji)) {
+          resolve(emoji);
+        }
+      });
+    }, options?.timeout);
   }
 
   /**
@@ -387,8 +403,23 @@ export class Events {
    * @returns `Old` and `new` role value.
    * @internal
    */
-  onceEmojiUpdate(): Promise<[GuildEmoji, GuildEmoji]> {
-    return this._once<[GuildEmoji, GuildEmoji]>("emojiUpdate");
+  onceEmojiUpdate(options?: corde.IEmojiDeleteOptions): Promise<[GuildEmoji, GuildEmoji]> {
+    const validator = new Validator<[GuildEmoji]>();
+
+    if (options?.emojiIdentifier) {
+      validator.add(
+        (emoji) =>
+          emoji.name === options.emojiIdentifier.name || emoji.id === options.emojiIdentifier.id,
+      );
+    }
+
+    return executePromiseWithTimeout((resolve) => {
+      this.onEmojiUpdate((old, newEmoji) => {
+        if (validator.isValid(newEmoji)) {
+          resolve([old, newEmoji]);
+        }
+      });
+    }, options?.timeout);
   }
 
   /**
@@ -419,13 +450,28 @@ export class Events {
     this._client.on("guildBanAdd", fn);
   }
 
-  /**
-   * Emitted once a member is banned from a guild.
-   * @returns `guild` where the user was banned from, and the `user` itself
-   * @internal
-   */
-  onceGuildBan() {
-    return this._once<[Guild, User]>("guildBanAdd");
+  onceGuildBan(options?: corde.IGuildBanOptions) {
+    const validator = new Validator<[Guild, User]>();
+
+    if (options?.guildIdentifier) {
+      validator.add((guild) => this.getGuildIdentifierValidation(guild, options.guildIdentifier));
+    }
+
+    if (options?.guildIdentifier) {
+      validator.add((guild) => this.getGuildIdentifierValidation(guild, options.guildIdentifier));
+    }
+
+    if (options?.userIdentifier) {
+      validator.add((_, user) => this.getUserIdentifierValidation(user, options?.userIdentifier));
+    }
+
+    return executePromiseWithTimeout<[Guild, User]>((resolve) => {
+      this.onGuildBan((guild, user) => {
+        if (validator.isValid(guild, user)) {
+          resolve([guild, user]);
+        }
+      });
+    }, options?.timeout);
   }
 
   /**
@@ -438,14 +484,28 @@ export class Events {
     this._client.on("guildBanRemove", fn);
   }
 
-  /**
-   * Emitted once a member is unbanned from a guild.
-   * @returns the `guild` that the user was removed
-   * from ban, and the `user`.
-   * @internal
-   */
-  onceGuildBanRemove() {
-    return this._once<[Guild, User]>("guildBanRemove");
+  onceGuildBanRemove(options?: corde.IGuildBanRemoveOptions) {
+    const validator = new Validator<[Guild, User]>();
+
+    if (options?.guildIdentifier) {
+      validator.add((guild) => this.getGuildIdentifierValidation(guild, options.guildIdentifier));
+    }
+
+    if (options?.guildIdentifier) {
+      validator.add((guild) => this.getGuildIdentifierValidation(guild, options.guildIdentifier));
+    }
+
+    if (options?.userIdentifier) {
+      validator.add((_, user) => this.getUserIdentifierValidation(user, options?.userIdentifier));
+    }
+
+    return executePromiseWithTimeout<[Guild, User]>((resolve) => {
+      this.onGuildBanRemove((guild, user) => {
+        if (validator.isValid(guild, user)) {
+          resolve([guild, user]);
+        }
+      });
+    }, options?.timeout);
   }
 
   /**
@@ -457,13 +517,20 @@ export class Events {
     this._client.on("guildCreate", fn);
   }
 
-  /**
-   * Emitted once the client joins a guild.
-   * @returns Created guild.
-   * @internal
-   */
-  onceGuildCreate() {
-    return this._once<Guild>("guildCreate");
+  onceGuildCreate(options?: corde.IGuildCreateFilterOptions) {
+    const validator = new Validator<[Guild]>();
+
+    if (options?.name) {
+      validator.add((guild) => guild.name === options.name);
+    }
+
+    return executePromiseWithTimeout<Guild>((resolve) => {
+      this.onGuildCreate((guild) => {
+        if (validator.isValid(guild)) {
+          resolve(guild);
+        }
+      });
+    }, options?.timeout);
   }
 
   /**
@@ -475,13 +542,22 @@ export class Events {
     this._client.on("guildDelete", fn);
   }
 
-  /**
-   * Emitted once a guild is deleted/left.
-   * @returns Deleted guild.
-   * @internal
-   */
-  onceGuildDelete() {
-    return this._once<Guild>("guildDelete");
+  onceGuildDelete(options?: corde.IGuildDeleteOptions) {
+    const validator = new Validator<[Guild]>();
+
+    if (options?.name || options?.id) {
+      validator.add((guild) =>
+        this.getGuildIdentifierValidation(guild, { id: options.id, name: options.name }),
+      );
+    }
+
+    return executePromiseWithTimeout<Guild>((resolve) => {
+      this.onGuildDelete((guild) => {
+        if (validator.isValid(guild)) {
+          resolve(guild);
+        }
+      });
+    }, options?.timeout);
   }
 
   /**
@@ -493,13 +569,27 @@ export class Events {
     this._client.on("guildMemberAdd", fn);
   }
 
-  /**
-   * Emitted once a user joins a guild.
-   * @returns Member who was added to guild.
-   * @internal
-   */
-  onceGuildMemberAdd() {
-    return this._once<GuildMember>("guildMemberAdd");
+  onceGuildMemberAdd(options?: corde.IGuildMemberAddOptions) {
+    const validator = new Validator<[GuildMember]>();
+    if (options?.member) {
+      validator.add((member) => this.getGuildMemberIdentifierValidation(member, options.member));
+    }
+
+    if (options?.guild) {
+      validator.add((member) => this.getGuildIdentifierValidation(member.guild, options.guild));
+    }
+
+    if (options?.user) {
+      validator.add((member) => this.getUserIdentifierValidation(member.user, options?.user));
+    }
+
+    return executePromiseWithTimeout<GuildMember>((resolve) => {
+      this.onGuildMemberAdd((guildMember) => {
+        if (validator.isValid(guildMember)) {
+          resolve(guildMember);
+        }
+      });
+    }, options?.timeout);
   }
 
   /**
@@ -511,13 +601,20 @@ export class Events {
     this._client.on("guildMemberAvailable", fn);
   }
 
-  /**
-   * Emitted once a member becomes available in a large guild.
-   * @returns Guild who is available.
-   * @internal
-   */
-  onceGuildMemberAvailable() {
-    return this._once<GuildMember | PartialGuildMember>("guildMemberAvailable");
+  onceGuildMemberAvailable(options?: corde.IGuildMemberAvailableOptions) {
+    const validator = new Validator<[GuildMember | PartialGuildMember]>();
+
+    if (options?.member) {
+      validator.add((member) => this.getGuildMemberIdentifierValidation(member, options.member));
+    }
+
+    return executePromiseWithTimeout<GuildMember | PartialGuildMember>((resolve) => {
+      this.onGuildMemberAvailable((guildMember) => {
+        if (validator.isValid(guildMember)) {
+          resolve(guildMember);
+        }
+      });
+    }, options?.timeout);
   }
 
   /**
@@ -529,13 +626,20 @@ export class Events {
     this._client.on("guildMemberRemove", fn);
   }
 
-  /**
-   * Emitted once a member leaves a guild, or is kicked.
-   * @returns Member of guild who kicked.
-   * @internal
-   */
-  onceGuildMemberRemove() {
-    return this._once<GuildMember | PartialGuildMember>("guildMemberRemove");
+  onceGuildMemberRemove(options?: corde.IGuildMemberRemoveOptions) {
+    const validator = new Validator<[GuildMember | PartialGuildMember]>();
+
+    if (options?.member) {
+      validator.add((member) => this.getGuildMemberIdentifierValidation(member, options.member));
+    }
+
+    return executePromiseWithTimeout<GuildMember | PartialGuildMember>((resolve) => {
+      this.onGuildMemberRemove((guildMember) => {
+        if (validator.isValid(guildMember)) {
+          resolve(guildMember);
+        }
+      });
+    }, options?.timeout);
   }
 
   /**
@@ -1195,5 +1299,20 @@ export class Events {
         }
       });
     }, options?.timeout);
+  }
+
+  private getGuildIdentifierValidation(guild: Guild, identifier?: corde.IGuildIdentifier) {
+    return guild.name === identifier?.name || guild.id === identifier?.id;
+  }
+
+  private getGuildMemberIdentifierValidation(
+    member: GuildMember | PartialGuildMember,
+    identifier?: corde.IGuildMemberIdentifier,
+  ) {
+    return member.nickname === identifier?.nickname || member.id === identifier?.id;
+  }
+
+  private getUserIdentifierValidation(user: User, identifier?: corde.IUserIdentifier) {
+    return user.id === identifier?.id || user.username === identifier?.name;
   }
 }
