@@ -350,6 +350,7 @@ declare namespace corde {
     onceRoleMentionableUpdate(
       options?: corde.IRoleEventOptions,
     ): Promise<import("discord.js").Role>;
+
     /**
      * Waits for changes in permission of a specific role.
      * @param roleIdentifier `id` or `name` to identify the role.
@@ -361,6 +362,24 @@ declare namespace corde {
       timeout?: number,
       guildId?: string,
     ): Promise<import("discord.js").Role>;
+
+    /**
+     * Emitted whenever a user's details (e.g. username) are changed.
+     * @param fn function to receive the old and the new value of the user.
+     * @internal
+     */
+    onceUserUpdate(): Promise<
+      [import("discord.js").User | import("discord.js").PartialUser, import("discord.js").User]
+    >;
+
+    /**
+     * Emitted once a user changes voice state - e.g. joins/leaves a channel, mutes/unmutes.
+     * @returns `Old` and the `new` voiceState value.
+     * @internal
+     */
+    onceVoiceStateUpdate(): Promise<
+      [import("discord.js").VoiceState, import("discord.js").VoiceState]
+    >;
   }
   export interface ICommandEvent {
     waitMessage(): Promise<import("discord.js").Message>;
