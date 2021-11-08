@@ -69,7 +69,6 @@
     "@types/gulp-babel": "^6.1.29",
     "@types/gulp-strip-comments": "^2.5.0",
     "@types/jest": "^27.0.0",
-    "@types/lodash": "^4.14.170",
     "@types/merge-stream": "^1.1.2",
     "@types/mock-fs": "^4.13.0",
     "@types/node": "^16.0.0",
