@@ -14,7 +14,7 @@ declare namespace corde {
     [K in KeyOf<T>]: T[K] extends (...args: any[]) => any ? never : K;
   }[KeyOf<T>];
 
-  export interface EventResume {
+  export interface IEventResume {
     count: number;
     index: number;
     nonce: string | undefined;
@@ -104,6 +104,15 @@ declare namespace corde {
 
   export interface IDefaultOptions {
     timeout?: number;
+  }
+
+  export interface IGuildMemberSpeakingOptions extends IGuildMemberIdentifier, IDefaultOptions {}
+  export interface IGuildMemberUpdateOptions extends IGuildMemberIdentifier, IDefaultOptions {}
+
+  export interface IGuildMemberChunkOptions {
+    timeout?: number;
+    guild: corde.IGuildIdentifier;
+    guildMembers: corde.IGuildMemberIdentifier[];
   }
 
   export interface IEmojiDeleteOptions extends IEmojiCreateOptions {}

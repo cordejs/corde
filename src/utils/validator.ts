@@ -1,6 +1,7 @@
 type ValidatorFunction<TParameters extends any[]> = (
   ...params: TParameters
 ) => boolean | undefined | null;
+
 /**
  * @internal
  */

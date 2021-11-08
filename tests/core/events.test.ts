@@ -17,7 +17,7 @@ import {
   User,
   VoiceState,
 } from "discord.js";
-import { EventResume, Events } from "../../src/core";
+import { IEventResume, Events } from "../../src/core";
 import MockDiscord from "../mocks/mockDiscord";
 
 const client = new Client();
@@ -446,7 +446,7 @@ describe("testing events event", () => {
   describe("testing guildMemberChunk event", () => {
     const eventName = "guildMembersChunk";
 
-    const eventResume: EventResume = {
+    const eventResume: IEventResume = {
       count: 1,
       index: 0,
       nonce: "",
@@ -455,7 +455,7 @@ describe("testing events event", () => {
     it("should get callback", () => {
       let _members!: Collection<string, GuildMember>;
       let _guild!: Guild;
-      let _resume!: EventResume;
+      let _resume!: IEventResume;
 
       events.onGuildMemberChunk((members, guild, resume) => {
         _members = members;
@@ -463,12 +463,7 @@ describe("testing events event", () => {
         _resume = resume;
       });
 
-      client.emit(
-        eventName,
-        mockDiscord.guildMemberCollection,
-        mockDiscord.guild,
-        eventResume
-      );
+      client.emit(eventName, mockDiscord.guildMemberCollection, mockDiscord.guild, eventResume);
       expect(_members).toEqual(mockDiscord.guildMemberCollection);
       expect(_guild).toEqual(mockDiscord.guild);
       expect(_resume).toEqual(eventResume);
@@ -476,12 +471,7 @@ describe("testing events event", () => {
 
     it("should get async once", async () => {
       const promise = events.onceGuildMemberChunk();
-      client.emit(
-        eventName,
-        mockDiscord.guildMemberCollection,
-        mockDiscord.guild,
-        eventResume
-      );
+      client.emit(eventName, mockDiscord.guildMemberCollection, mockDiscord.guild, eventResume);
       const [_members, _guild, _resume] = await promise;
       expect(_members).toEqual(mockDiscord.guildMemberCollection);
       expect(_guild).toEqual(mockDiscord.guild);
@@ -913,10 +903,7 @@ describe("testing events event", () => {
 
     it("should throw timeout for waiting", () => {
       expect(async () => {
-        const promise = events.onceRolePermissionUpdate(
-          { name: "potatoe" },
-          100
-        );
+        const promise = events.onceRolePermissionUpdate({ name: "potatoe" }, 100);
         client.emit(eventName, mockDiscord.role, updatedRole);
         await promise;
       }).rejects.toBeTruthy();

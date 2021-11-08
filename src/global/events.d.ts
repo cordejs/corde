@@ -184,11 +184,12 @@ declare namespace corde {
      * @returns The collection of members that the guild received.
      * @internal
      */
-    onceGuildMemberChunk(): Promise<
+    onceGuildMemberChunk(
+      options?: corde.IGuildMemberChunkOptions,
+    ): Promise<
       [
         import("discord.js").Collection<string, import("discord.js").GuildMember>,
         import("discord.js").Guild,
-        corde.EventResume,
       ]
     >;
 
@@ -197,12 +198,9 @@ declare namespace corde {
      * @returns The guild's member who is speaking.
      * @internal
      */
-    onceGuildMemberSpeaking(): Promise<
-      [
-        import("discord.js").GuildMember | import("discord.js").PartialGuildMember,
-        Readonly<import("discord.js").Speaking>,
-      ]
-    >;
+    onceGuildMemberSpeaking(
+      options?: corde.IGuildMemberSpeakingOptions,
+    ): Promise<import("discord.js").GuildMember | import("discord.js").PartialGuildMember>;
 
     /**
      * Emitted once a guild member changes - i.e. new role, removed role, nickname.

@@ -482,16 +482,36 @@ export class Events implements corde.IOnceEvents {
     fn: (
       members: Collection<string, GuildMember>,
       guild: Guild,
-      eventResume: corde.EventResume,
+      eventResume: corde.IEventResume,
     ) => void,
   ) {
     this._client.on("guildMembersChunk", fn);
   }
 
-  onceGuildMemberChunk() {
-    return this._once<[Collection<string, GuildMember>, Guild, corde.EventResume]>(
-      "guildMembersChunk",
-    );
+  onceGuildMemberChunk(options?: corde.IGuildMemberChunkOptions) {
+    const validator = new Validator<[Collection<string, GuildMember>, Guild]>();
+
+    if (options?.guild) {
+      validator.add((_, guild) => this.getGuildIdentifierValidation(guild, options.guild));
+    }
+
+    if (options?.guildMembers && options.guildMembers.length > 0) {
+      validator.add((col) =>
+        options.guildMembers.every((optionsMember) =>
+          col.some((colMember) =>
+            this.getGuildMemberIdentifierValidation(colMember, optionsMember),
+          ),
+        ),
+      );
+    }
+
+    return executePromiseWithTimeout<[Collection<string, GuildMember>, Guild]>((resolve) => {
+      this.onGuildMemberChunk((guildMembers, guild) => {
+        if (validator.isValid(guildMembers, guild)) {
+          resolve([guildMembers, guild]);
+        }
+      });
+    }, options?.timeout);
   }
 
   onGuildMemberSpeaking(
@@ -500,10 +520,25 @@ export class Events implements corde.IOnceEvents {
     this._client.on("guildMemberSpeaking", fn);
   }
 
-  onceGuildMemberSpeaking() {
-    return this._once<[GuildMember | PartialGuildMember, Readonly<Speaking>]>(
-      "guildMemberSpeaking",
-    );
+  onceGuildMemberSpeaking(options?: corde.IGuildMemberSpeakingOptions) {
+    const validator = new Validator<[GuildMember | PartialGuildMember]>();
+
+    if (options?.id || options?.nickname) {
+      validator.add((member) =>
+        this.getGuildMemberIdentifierValidation(member, {
+          id: options.id,
+          nickname: options.nickname,
+        }),
+      );
+    }
+
+    return executePromiseWithTimeout<GuildMember | PartialGuildMember>((resolve) => {
+      this.onGuildMemberSpeaking((guildMember) => {
+        if (validator.isValid(guildMember)) {
+          resolve(guildMember);
+        }
+      });
+    }, options?.timeout);
   }
 
   onGuildMemberUpdate(
@@ -512,15 +547,35 @@ export class Events implements corde.IOnceEvents {
     this._client.on("guildMemberUpdate", fn);
   }
 
-  onceGuildMemberUpdate() {
-    return this._once<[GuildMember | PartialGuildMember, GuildMember]>("guildMemberUpdate");
+  onceGuildMemberUpdate(options?: corde.IGuildMemberUpdateOptions) {
+    const validator = new Validator<[GuildMember | PartialGuildMember, GuildMember]>();
+
+    if (options?.id || options?.nickname) {
+      validator.add((old) =>
+        this.getGuildMemberIdentifierValidation(old, {
+          id: options.id,
+          nickname: options.nickname,
+        }),
+      );
+    }
+
+    return executePromiseWithTimeout<[GuildMember | PartialGuildMember, GuildMember]>((resolve) => {
+      this.onGuildMemberUpdate((oldGuildMember, newGuildMember) => {
+        if (validator.isValid(oldGuildMember, newGuildMember)) {
+          resolve([oldGuildMember, newGuildMember]);
+        }
+      });
+    }, options?.timeout);
   }
 
   onGuildUnavailable(fn: (guild: Guild) => void) {
     this._client.on("guildUnavailable", fn);
   }
 
-  onceGuildUnavailable() {
+  onceGuildUnavailable(options?: { timeout?: number; id?: string; name?: string }) {
+    const validator = new Validator<Guild>();
+    if (options?.id || options?.name) {
+    }
     return this._once<Guild>("guildUnavailable");
   }
 
