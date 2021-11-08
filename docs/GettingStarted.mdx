@@ -17,6 +17,10 @@ Or [`npm`](https://www.npmjs.com/package/corde):
 npm install --save-dev corde
 ```
 
+:::info
+Do not install corde globally. It will lead to testing files with an empty message when you run corde.
+:::
+
 Note: Corde documentation uses `yarn` commands, but `npm` will also work. You can compare `yarn` and `npm` commands in the [yarn docs, here](https://yarnpkg.com/en/docs/migrating-from-npm#toc-cli-commands-comparison).
 
 :::info
@@ -28,7 +32,7 @@ Let's get started writing a simple test for a bot that sends just send a simple 
 First, we need the `corde` config file. The fastest way to do that is by calling corde CLI with the following command:
 
 ```bash
-yarn corde --init
+yarn corde init
 ```
 
 This command will create the `corde.config.json` file at the root of your project. For more details about the `init` command
