@@ -36,9 +36,10 @@
 
 ## 😀 Table of Content
 
-- [About](#-about)
-- [Getting Started](#-getting-started)
-- [Configurations](#%EF%B8%8F-configurations)
+- [😀 Table of Content](#-table-of-content)
+- [👀 About](#-about)
+- [Documentation](#documentation)
+- [🚀 Getting started](#-getting-started)
 
 ## 👀 About
 
@@ -52,7 +53,7 @@ The bellow documentation is a resume of what you can find in [Corde's site](http
 
 **Node.js 14.0 or newer is required**
 
-Starting to create tests with Corde is simple. First, install it locally with npm `npm i -D corde` or yarn `yarn add -D corde`. You can also install it globally: `npm i -g corde` or `yarn global add corde`.
+Starting to create tests with Corde is simple. First, install it locally with npm `npm i -D corde` or yarn `yarn add -D corde`.
 
 After installed, add the file `corde.config.json` in the root of your application with the following structure:
 
