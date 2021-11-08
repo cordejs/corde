@@ -17,6 +17,11 @@ Steps to reproduce the behavior:
 3. Scroll down to '....'
 4. See error
 
+**Link repo with the error**
+
+A repo to reproduce the error with instructions for how to
+set things ready to start testing.
+
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 
