@@ -9,7 +9,7 @@ import { TestExecutor } from "../core/testExecutor";
 import { LogUpdate } from "../utils/logUpdate";
 import { validate } from "./validate";
 import { Config, StrictObject } from "../types";
-import registerTsNode from "../core/tsRegister";
+import { registerTsNode } from "../core/tsRegister";
 import { debug } from "../common/debug";
 import { DEFAULT_CONFIG } from "../consts";
 
