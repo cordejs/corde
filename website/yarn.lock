@@ -2523,7 +2523,7 @@
   dependencies:
     "@docusaurus/core" "2.0.0-beta.8"
 
-"@docusaurus/plugin-sitemap@2.0.0-beta.8", "@docusaurus/plugin-sitemap@^2.0.0-beta.8":
+"@docusaurus/plugin-sitemap@2.0.0-beta.8":
   version "2.0.0-beta.8"
   resolved "https://registry.yarnpkg.com/@docusaurus/plugin-sitemap/-/plugin-sitemap-2.0.0-beta.8.tgz#731d97ff8e495cd66f8ba1c6b1426c61726d46c5"
   integrity sha512-oz2Hu1q34kvsgPb6DWM8cpzKmNy02BYtv+2GTrg016V+beGr8PNcHkxzgGtdN+Se5zJqdtRQvOPQtIZOJQntcA==
@@ -2533,6 +2533,20 @@
     "@docusaurus/utils" "2.0.0-beta.8"
     "@docusaurus/utils-common" "2.0.0-beta.8"
     "@docusaurus/utils-validation" "2.0.0-beta.8"
+    fs-extra "^10.0.0"
+    sitemap "^7.0.0"
+    tslib "^2.3.1"
+
+"@docusaurus/plugin-sitemap@^2.0.0-beta.9":
+  version "2.0.0-beta.9"
+  resolved "https://registry.yarnpkg.com/@docusaurus/plugin-sitemap/-/plugin-sitemap-2.0.0-beta.9.tgz#4c944b6fc4e8fa4625a6fd985ec21d6455c31647"
+  integrity sha512-p6Qc1vo/yb1v767/u0E72inkGKayx77HDKsDOGrNj2IH0db0cMsskBLeKYcDfVz5+dtmFrR+lubINp7TyofkvA==
+  dependencies:
+    "@docusaurus/core" "2.0.0-beta.9"
+    "@docusaurus/types" "2.0.0-beta.9"
+    "@docusaurus/utils" "2.0.0-beta.9"
+    "@docusaurus/utils-common" "2.0.0-beta.9"
+    "@docusaurus/utils-validation" "2.0.0-beta.9"
     fs-extra "^10.0.0"
     sitemap "^7.0.0"
     tslib "^2.3.1"
