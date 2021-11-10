@@ -8,8 +8,8 @@ import fg from "fast-glob";
  * @returns Absolute path of all files
  * @interal
  */
-export async function getFiles(pattern: string | string[], ignorePaterns?: string[]) {
-  return await fg(pattern, {
+export function getFiles(pattern: string | string[], ignorePaterns?: string[]) {
+  return fg(pattern, {
     ignore: ignorePaterns ?? [],
     absolute: true,
     extglob: true,
