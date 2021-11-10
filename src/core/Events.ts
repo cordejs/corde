@@ -2,6 +2,7 @@ import {
   Channel,
   Client,
   ClientEvents,
+  ClientPresenceStatusData,
   Collection,
   Guild,
   GuildChannel,
@@ -14,6 +15,7 @@ import {
   PartialMessage,
   PartialUser,
   Presence,
+  PresenceStatus,
   Role,
   Speaking,
   User,
@@ -572,19 +574,42 @@ export class Events implements corde.IOnceEvents {
     this._client.on("guildUnavailable", fn);
   }
 
-  onceGuildUnavailable(options?: { timeout?: number; id?: string; name?: string }) {
-    const validator = new Validator<Guild>();
+  onceGuildUnavailable(options?: corde.IGuildUnvailableOptions) {
+    const validator = new Validator<[Guild]>();
+
     if (options?.id || options?.name) {
+      validator.add((guild) =>
+        this.getGuildIdentifierValidation(guild, { id: options.id, name: options.name }),
+      );
     }
-    return this._once<Guild>("guildUnavailable");
+    return executePromiseWithTimeout<Guild>((resolve) => {
+      this.onGuildUnavailable((guild) => {
+        if (validator.isValid(guild)) {
+          resolve(guild);
+        }
+      });
+    }, options?.timeout);
   }
 
   onGuildUpdate(fn: (oldGuild: Guild, newGuild: Guild) => void) {
     this._client.on("guildUpdate", fn);
   }
 
-  onceGuildUpdate() {
-    return this._once<[Guild, Guild]>("guildUpdate");
+  onceGuildUpdate(options?: corde.IGuildUnvailableOptions) {
+    const validator = new Validator<[Guild, Guild]>();
+
+    if (options?.id || options?.name) {
+      validator.add((guild) =>
+        this.getGuildIdentifierValidation(guild, { id: options.id, name: options.name }),
+      );
+    }
+    return executePromiseWithTimeout<[Guild, Guild]>((resolve) => {
+      this.onGuildUpdate((oldGuild, newGuild) => {
+        if (validator.isValid(oldGuild, newGuild)) {
+          resolve([oldGuild, newGuild]);
+        }
+      });
+    }, options?.timeout);
   }
 
   onMessage(fn: (message: Message) => void) {
@@ -617,24 +642,107 @@ export class Events implements corde.IOnceEvents {
     this._client.on("messageDelete", fn);
   }
 
-  onceMessageDelete() {
-    return this._once<Message | PartialMessage>("messageDelete");
+  onceMessageDelete(options?: corde.IMessageDeleteOptions) {
+    const validator = new Validator<[Message | PartialMessage]>();
+
+    if (options?.authorId) {
+      validator.add((mgs) => mgs.author?.id === options?.authorId);
+    }
+
+    if (options?.channelId) {
+      validator.add((mgs) => mgs.channel.id === options?.channelId);
+    }
+
+    return executePromiseWithTimeout<Message | PartialMessage>((resolve) => {
+      this.onMessageDelete((message) => {
+        if (validator.isValid(message)) {
+          resolve(message);
+        }
+      });
+    }, options?.timeout);
   }
 
   onMessageDeleteBulk(fn: (deletedMessages: Collection<string, Message | PartialMessage>) => void) {
     this._client.on("messageDeleteBulk", fn);
   }
 
-  onceMessageDeleteBulk() {
-    return this._once<Collection<string, Message | PartialMessage>>("messageDeleteBulk");
+  onceMessageDeleteBulk(options?: corde.IMessageDeleteBulkOptions) {
+    const validator = new Validator<[Collection<string, Message | PartialMessage>]>();
+
+    const _options = this.getIMessageDeleteOptionsArray(options);
+
+    for (const option of _options) {
+      if (option?.authorId) {
+        validator.add((mgs) => mgs.some((m) => m.author?.id === option?.authorId));
+      }
+
+      if (option?.channelId) {
+        validator.add((mgs) => mgs.some((m) => m.channel.id === option?.channelId));
+      }
+
+      if (option?.messageIdentifier) {
+        validator.add((mgs) =>
+          mgs.some((m) => this.getMessageIdentifierValidation(m, option.messageIdentifier)),
+        );
+      }
+    }
+
+    return executePromiseWithTimeout<Collection<string, Message | PartialMessage>>((resolve) => {
+      this.onMessageDeleteBulk((messages) => {
+        if (validator.isValid(messages)) {
+          resolve(messages);
+        }
+      });
+    }, options?.timeout);
+  }
+
+  private getIMessageDeleteOptionsArray(deleteOptions?: corde.IMessageDeleteBulkOptions) {
+    if (!deleteOptions?.options) {
+      return [];
+    }
+
+    if (Array.isArray(deleteOptions.options)) {
+      return deleteOptions.options;
+    }
+
+    return [deleteOptions.options];
   }
 
   onMessageReactionAdd(fn: (addedReaction: MessageReaction, author: User | PartialUser) => void) {
     this._client.on("messageReactionAdd", fn);
   }
 
-  onceMessageReactionAdd() {
-    return this._once<[MessageReaction, User | PartialUser]>("messageReactionAdd");
+  onceMessageReactionAdd(options?: corde.IMessageReactionAddOptions) {
+    const validator = new Validator<[MessageReaction, User | PartialUser]>();
+
+    if (options?.authorId) {
+      validator.add((_, user) => user.id === options.authorId);
+    }
+
+    if (options?.messageIdentifier) {
+      validator.add((reaction) =>
+        this.getMessageIdentifierValidation(reaction.message, options.messageIdentifier),
+      );
+    }
+
+    if (options?.emojis) {
+      validator.add(
+        (reaction) =>
+          options.emojis?.id === reaction.emoji.id || options.emojis?.name === reaction.emoji.name,
+      );
+    }
+
+    if (options?.channelId) {
+      validator.add((reaction) => reaction.message.channel.id === options?.channelId);
+    }
+
+    return executePromiseWithTimeout<[MessageReaction, User | PartialUser]>((resolve) => {
+      this.onMessageReactionAdd((reaction, user) => {
+        if (validator.isValid(reaction, user)) {
+          resolve([reaction, user]);
+        }
+      });
+    }, options?.timeout);
   }
 
   onceMessageReactionsAdd(filter?: corde.ISearchMessageReactionsOptions) {
@@ -673,6 +781,7 @@ export class Events implements corde.IOnceEvents {
     if (authorId) {
       validator.add((_, author) => !author || author.id === authorId);
     }
+
     const response: [MessageReaction, User | PartialUser | void][] = [];
     return executePromiseWithTimeout<[MessageReaction, User | PartialUser | void][]>(
       (resolve) => {
@@ -707,8 +816,37 @@ export class Events implements corde.IOnceEvents {
     this._client.on("messageReactionRemove", fn);
   }
 
-  onceMessageReactionRemove() {
-    return this._once<[MessageReaction, User | PartialUser]>("messageReactionRemove");
+  onceMessageReactionRemove(options?: corde.IMessageReactionRemoveOptions) {
+    const validator = new Validator<[MessageReaction, User | PartialUser]>();
+
+    if (options?.authorId) {
+      validator.add((_, user) => user.id === options.authorId);
+    }
+
+    if (options?.messageIdentifier) {
+      validator.add((reaction) =>
+        this.getMessageIdentifierValidation(reaction.message, options.messageIdentifier),
+      );
+    }
+
+    if (options?.emojis) {
+      validator.add(
+        (reaction) =>
+          options.emojis?.id === reaction.emoji.id || options.emojis?.name === reaction.emoji.name,
+      );
+    }
+
+    if (options?.channelId) {
+      validator.add((reaction) => reaction.message.channel.id === options?.channelId);
+    }
+
+    return executePromiseWithTimeout<[MessageReaction, User | PartialUser]>((resolve) => {
+      this.onMessageReactionRemove((reaction, user) => {
+        if (validator.isValid(reaction, user)) {
+          resolve([reaction, user]);
+        }
+      });
+    }, options?.timeout);
   }
 
   /**
@@ -721,8 +859,22 @@ export class Events implements corde.IOnceEvents {
     this._client.on("messageReactionRemoveAll", fn);
   }
 
-  onceMessageReactionRemoveAll() {
-    return this._once<Message | PartialMessage>("messageReactionRemoveAll");
+  onceMessageReactionRemoveAll(options?: corde.IMessageReactionRemoveAllOptions) {
+    const validator = new Validator<[Message | PartialMessage]>();
+
+    if (options?.id || options?.content) {
+      validator.add((message) =>
+        this.getMessageIdentifierValidation(message, { content: options.content, id: options.id }),
+      );
+    }
+
+    return executePromiseWithTimeout<Message | PartialMessage>((resolve) => {
+      this.onMessageReactionRemoveAll((message) => {
+        if (validator.isValid(message)) {
+          resolve(message);
+        }
+      });
+    }, options?.timeout);
   }
 
   /**
@@ -736,8 +888,28 @@ export class Events implements corde.IOnceEvents {
     this._client.on("messageUpdate", fn);
   }
 
-  onceMessageUpdate() {
-    return this._once<[Message | PartialMessage, Message | PartialMessage]>("messageUpdate");
+  onceMessageUpdate(options?: corde.IMessageUpdateOptions) {
+    const validator = new Validator<[Message | PartialMessage, Message | PartialMessage]>();
+
+    if (options?.id || options?.content) {
+      validator.add((_, newMessage) =>
+        this.getMessageIdentifierValidation(newMessage, {
+          content: options.content,
+          id: options.id,
+        }),
+      );
+    }
+
+    return executePromiseWithTimeout<[Message | PartialMessage, Message | PartialMessage]>(
+      (resolve) => {
+        this.onMessageUpdate((oldMessage, newMessage) => {
+          if (validator.isValid(oldMessage, newMessage)) {
+            resolve([oldMessage, newMessage]);
+          }
+        });
+      },
+      options?.timeout,
+    );
   }
 
   onceMessagePinned(options?: corde.IMessageEventOptions) {
@@ -831,8 +1003,50 @@ export class Events implements corde.IOnceEvents {
     this._client.on("presenceUpdate", fn);
   }
 
-  oncePresenceUpdate() {
-    return this._once<[Presence, Presence]>("presenceUpdate");
+  oncePresenceUpdate(options?: {
+    timeout?: number;
+    user?: corde.IUserIdentifier;
+    presenceStatus?: PresenceStatus;
+    guild?: corde.IGuildIdentifier;
+    clientePresence?: ClientPresenceStatusData;
+  }) {
+    const validator = new Validator<[Presence | undefined, Presence]>();
+
+    if (options?.guild) {
+      validator.add(({ guild }) => this.getGuildIdentifierValidation(guild, options.guild));
+    }
+
+    if (options?.clientePresence?.desktop) {
+      validator.add(
+        (_, { clientStatus }) => clientStatus?.desktop === options.clientePresence?.desktop,
+      );
+    }
+
+    if (options?.clientePresence?.mobile) {
+      validator.add(
+        (_, { clientStatus }) => clientStatus?.mobile === options.clientePresence?.mobile,
+      );
+    }
+
+    if (options?.clientePresence?.web) {
+      validator.add((_, { clientStatus }) => clientStatus?.web === options.clientePresence?.web);
+    }
+
+    if (options?.presenceStatus) {
+      validator.add((_, { status }) => status === options.presenceStatus);
+    }
+
+    if (options?.user) {
+      validator.add((_, { user }) => this.getUserIdentifierValidation(user, options.user));
+    }
+
+    return executePromiseWithTimeout<Presence>((resolve) => {
+      this.onPresenceUpdate((oldPresence, newPresence) => {
+        if (validator.isValid(oldPresence, newPresence)) {
+          resolve(newPresence);
+        }
+      });
+    }, options?.timeout);
   }
 
   /**
@@ -1001,8 +1215,15 @@ export class Events implements corde.IOnceEvents {
     }, options?.timeout);
   }
 
-  private getGuildIdentifierValidation(guild: Guild, identifier?: corde.IGuildIdentifier) {
-    return guild.name === identifier?.name || guild.id === identifier?.id;
+  private getGuildIdentifierValidation(guild?: Guild | null, identifier?: corde.IGuildIdentifier) {
+    return guild?.name === identifier?.name || guild?.id === identifier?.id;
+  }
+
+  private getMessageIdentifierValidation(
+    message: Message | PartialMessage,
+    identifier?: corde.IMessageIdentifier,
+  ) {
+    return message.id === identifier?.id || message.content === identifier?.content;
   }
 
   private getGuildMemberIdentifierValidation(
@@ -1012,7 +1233,10 @@ export class Events implements corde.IOnceEvents {
     return member.nickname === identifier?.nickname || member.id === identifier?.id;
   }
 
-  private getUserIdentifierValidation(user: User, identifier?: corde.IUserIdentifier) {
-    return user.id === identifier?.id || user.username === identifier?.name;
+  private getUserIdentifierValidation(
+    user?: User | PartialUser | null,
+    identifier?: corde.IUserIdentifier,
+  ) {
+    return user?.id === identifier?.id || user?.username === identifier?.name;
   }
 }

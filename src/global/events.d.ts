@@ -310,7 +310,7 @@ declare namespace corde {
      * @returns Old and new presence values.
      * @internal
      */
-    oncePresenceUpdate(): Promise<[import("discord.js").Presence, import("discord.js").Presence]>;
+    oncePresenceUpdate(): Promise<import("discord.js").Presence>;
 
     /**
      * Emitted once a role is created.

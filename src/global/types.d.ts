@@ -108,6 +108,8 @@ declare namespace corde {
 
   export interface IGuildMemberSpeakingOptions extends IGuildMemberIdentifier, IDefaultOptions {}
   export interface IGuildMemberUpdateOptions extends IGuildMemberIdentifier, IDefaultOptions {}
+  export interface IGuildUnvailableOptions extends IGuildIdentifier, IDefaultOptions {}
+  export interface IGuildUpdateOptions extends IGuildIdentifier, IDefaultOptions {}
 
   export interface IGuildMemberChunkOptions {
     timeout?: number;
@@ -141,11 +143,23 @@ declare namespace corde {
     channelIdentifier?: corde.IChannelIdentifier;
   }
 
+  export interface IMessageDeleteBulkOptions {
+    options?: Omit<IMessageDeleteOptions, "timeout"> | Omit<IMessageDeleteOptions, "timeout">[];
+    timeout?: number;
+  }
+
+  export interface IMessageDeleteOptions extends IMessageEventOptions {}
+
   export interface IMessageEventOptions extends IDefaultOptions {
     messageIdentifier?: corde.IMessageIdentifier;
     authorId?: string;
     channelId?: string | null;
   }
+
+  export interface IMessageReactionAddOptions extends IMessageReactionRemoveOptions {}
+
+  export interface IMessageReactionRemoveAllOptions extends IMessageIdentifier, IDefaultOptions {}
+  export interface IMessageUpdateOptions extends IMessageIdentifier, IDefaultOptions {}
 
   export interface IMessageReactionRemoveOptions extends IDefaultOptions {
     emojis?: corde.IEmoji;
