@@ -150,6 +150,21 @@ declare namespace corde {
 
   export interface IMessageDeleteOptions extends IMessageEventOptions {}
 
+  export interface IPresenceUpdateEventOptions {
+    user?: corde.IUserIdentifier;
+    presenceStatus?: import("discord.js").PresenceStatus;
+    guild?: corde.IGuildIdentifier;
+    clientePresence?: import("discord.js").ClientPresenceStatusData;
+  }
+
+  export interface IRoleCreateEventOptions extends IDefaultOptions {
+    name?: string;
+    guild?: corde.IGuildIdentifier;
+  }
+
+  export interface IRoleUpdateEventOptions extends IDefaultOptions, IRoleIdentifier {}
+  export interface IRoleRenamedEventOptions extends IRoleUpdateEventOptions {}
+
   export interface IMessageEventOptions extends IDefaultOptions {
     messageIdentifier?: corde.IMessageIdentifier;
     authorId?: string;

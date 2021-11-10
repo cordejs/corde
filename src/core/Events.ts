@@ -1010,7 +1010,7 @@ export class Events implements corde.IOnceEvents {
     guild?: corde.IGuildIdentifier;
     clientePresence?: ClientPresenceStatusData;
   }) {
-    const validator = new Validator<[Presence | undefined, Presence]>();
+    const validator = new Validator<[Presence]>();
 
     if (options?.guild) {
       validator.add(({ guild }) => this.getGuildIdentifierValidation(guild, options.guild));
@@ -1018,31 +1018,29 @@ export class Events implements corde.IOnceEvents {
 
     if (options?.clientePresence?.desktop) {
       validator.add(
-        (_, { clientStatus }) => clientStatus?.desktop === options.clientePresence?.desktop,
+        ({ clientStatus }) => clientStatus?.desktop === options.clientePresence?.desktop,
       );
     }
 
     if (options?.clientePresence?.mobile) {
-      validator.add(
-        (_, { clientStatus }) => clientStatus?.mobile === options.clientePresence?.mobile,
-      );
+      validator.add(({ clientStatus }) => clientStatus?.mobile === options.clientePresence?.mobile);
     }
 
     if (options?.clientePresence?.web) {
-      validator.add((_, { clientStatus }) => clientStatus?.web === options.clientePresence?.web);
+      validator.add(({ clientStatus }) => clientStatus?.web === options.clientePresence?.web);
     }
 
     if (options?.presenceStatus) {
-      validator.add((_, { status }) => status === options.presenceStatus);
+      validator.add(({ status }) => status === options.presenceStatus);
     }
 
     if (options?.user) {
-      validator.add((_, { user }) => this.getUserIdentifierValidation(user, options.user));
+      validator.add(({ user }) => this.getUserIdentifierValidation(user, options.user));
     }
 
     return executePromiseWithTimeout<Presence>((resolve) => {
-      this.onPresenceUpdate((oldPresence, newPresence) => {
-        if (validator.isValid(oldPresence, newPresence)) {
+      this.onPresenceUpdate((_, newPresence) => {
+        if (validator.isValid(newPresence)) {
           resolve(newPresence);
         }
       });
@@ -1058,8 +1056,24 @@ export class Events implements corde.IOnceEvents {
     this._client.on("roleCreate", fn);
   }
 
-  onceRoleCreate() {
-    return this._once<Role>("roleCreate");
+  onceRoleCreate(options?: corde.IRoleCreateEventOptions) {
+    const validator = new Validator<[Role]>();
+
+    if (options?.name) {
+      validator.add((r) => r.name === options.name);
+    }
+
+    if (options?.guild) {
+      validator.add(({ guild }) => this.getGuildIdentifierValidation(guild, options.guild));
+    }
+
+    return executePromiseWithTimeout<Role>((resolve) => {
+      this.onRoleCreate((role) => {
+        if (validator.isValid(role)) {
+          resolve(role);
+        }
+      });
+    }, options?.timeout);
   }
 
   /**
@@ -1071,11 +1085,25 @@ export class Events implements corde.IOnceEvents {
     this._client.on("roleUpdate", fn);
   }
 
-  onceRoleUpdate() {
-    return this._once<[Role, Role]>("roleUpdate");
+  onceRoleUpdate(options?: corde.IRoleUpdateEventOptions) {
+    const validator = new Validator<[Role, Role]>();
+
+    if (options?.id || options?.name) {
+      validator.add((role) =>
+        this.getRoleIdentifierValidation(role, { id: options.id, name: options.name }),
+      );
+    }
+
+    return executePromiseWithTimeout<[Role, Role]>((resolve) => {
+      this.onRoleUpdate((newRole, oldRole) => {
+        if (validator.isValid(newRole, oldRole)) {
+          resolve([newRole, oldRole]);
+        }
+      });
+    }, options?.timeout);
   }
 
-  onceRoleRenamed(options?: corde.IRoleEventOptions) {
+  onceRoleRenamed(options?: corde.IRoleRenamedEventOptions) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.name !== newRole.name,
       options,
@@ -1213,6 +1241,10 @@ export class Events implements corde.IOnceEvents {
         }
       });
     }, options?.timeout);
+  }
+
+  private getRoleIdentifierValidation(role?: Role, identifier?: corde.IRoleIdentifier) {
+    return role?.name === identifier?.name || role?.id === identifier?.id;
   }
 
   private getGuildIdentifierValidation(guild?: Guild | null, identifier?: corde.IGuildIdentifier) {
