@@ -1,11 +1,35 @@
-import { Message } from "discord.js";
+import {
+  // Channel,
+  // Collection,
+  // Guild,
+  // GuildEmoji,
+  // GuildMember,
+  Message,
+  // MessageReaction,
+  // PartialGuildMember,
+  // PartialMessage,
+  // PartialUser,
+  // Presence,
+  // Role,
+  // User,
+  // VoiceState,
+} from "discord.js";
 import { runtime } from "../core";
 
-export class CommandEvent implements corde.ICommandEvent {
-  constructor(private messagePromise: Promise<Message>) {}
+export class CommandEvent {
+  private _message!: Message;
+  private readonly _messagePromise: Promise<Message>;
+
+  constructor(messagePromise: Promise<Message>) {
+    this._messagePromise = messagePromise;
+    this._messagePromise.then((m) => (this._message = m));
+  }
 
   waitMessage() {
-    return this.messagePromise;
+    if (this._message) {
+      return Promise.resolve(this._message);
+    }
+    return this._messagePromise;
   }
 
   onceMessage(options?: corde.IMessageEventOptions) {
