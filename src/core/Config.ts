@@ -24,6 +24,8 @@ export class Config implements Readonly<IConfigOptions> {
   private _exitOnFileReadingError?: boolean;
   private _extensions?: string[];
   private _rootDir!: string;
+  private _useConfigValuesInEventsDefaultParameters!: boolean;
+  private _useTimoutValueInEventsDefaultParameters!: boolean;
 
   get cordeBotToken() {
     return this._cordeBotToken;
@@ -52,6 +54,7 @@ export class Config implements Readonly<IConfigOptions> {
   get botPrefix() {
     return this._botPrefix;
   }
+
   get testMatches() {
     return this._testMatches;
   }
@@ -74,6 +77,14 @@ export class Config implements Readonly<IConfigOptions> {
 
   get rootDir() {
     return this._rootDir;
+  }
+
+  get useConfigValuesInEventsDefaultParameters() {
+    return this._useConfigValuesInEventsDefaultParameters;
+  }
+
+  get useTimoutValueInEventsDefaultParameters() {
+    return this._useTimoutValueInEventsDefaultParameters;
   }
 
   /**
@@ -129,6 +140,22 @@ export class Config implements Readonly<IConfigOptions> {
 
     if (config.botToken && (!this.botToken || forceUpdate)) {
       this._botToken = config.botToken;
+    }
+
+    if (
+      config.useConfigValuesInEventsDefaultParameters &&
+      (!this.useConfigValuesInEventsDefaultParameters || forceUpdate)
+    ) {
+      this._useConfigValuesInEventsDefaultParameters =
+        config.useConfigValuesInEventsDefaultParameters;
+    }
+
+    if (
+      config.useTimoutValueInEventsDefaultParameters &&
+      (!this.useTimoutValueInEventsDefaultParameters || forceUpdate)
+    ) {
+      this._useTimoutValueInEventsDefaultParameters =
+        config.useTimoutValueInEventsDefaultParameters;
     }
 
     if (

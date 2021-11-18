@@ -263,6 +263,25 @@ export interface IConfigOptions {
    * @default process.cwd()
    */
   rootDir?: string;
+  /**
+   * If true, uses configs such as `channelId` and `guildId` in
+   * events parameters if they are no provided.
+   *
+   * @default false
+   */
+  useConfigValuesInEventsDefaultParameters?: boolean;
+  /**
+   * If true, uses config timeout value in events parameters,
+   * or, it's default value if it's not provided in configs.
+   *
+   * This option only forces the usage of `timeout` value,
+   * ignoring the others.
+   *
+   * If you want to use **all** values, mark `useConfigValuesInEventsDefaultParameters: true`
+   *
+   * @default true
+   */
+  useTimoutValueInEventsDefaultParameters?: boolean;
 }
 
 export interface IJSONFile {
