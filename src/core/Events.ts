@@ -2,7 +2,6 @@ import {
   Channel,
   Client,
   ClientEvents,
-  ClientPresenceStatusData,
   Collection,
   Guild,
   GuildChannel,
@@ -15,7 +14,6 @@ import {
   PartialMessage,
   PartialUser,
   Presence,
-  PresenceStatus,
   Role,
   Speaking,
   User,
@@ -298,7 +296,7 @@ export class Events implements corde.IOnceEvents {
     if (options?.emojiIdentifier) {
       validator.add(
         (emoji) =>
-          emoji.name === options.emojiIdentifier.name || emoji.id === options.emojiIdentifier.id,
+          emoji.name === options.emojiIdentifier?.name || emoji.id === options.emojiIdentifier?.id,
       );
     }
 
@@ -327,7 +325,7 @@ export class Events implements corde.IOnceEvents {
     if (options?.emojiIdentifier) {
       validator.add(
         (emoji) =>
-          emoji.name === options.emojiIdentifier.name || emoji.id === options.emojiIdentifier.id,
+          emoji.name === options.emojiIdentifier?.name || emoji.id === options.emojiIdentifier?.id,
       );
     }
 
@@ -356,7 +354,7 @@ export class Events implements corde.IOnceEvents {
     if (options?.emojiIdentifier) {
       validator.add(
         (emoji) =>
-          emoji.name === options.emojiIdentifier.name || emoji.id === options.emojiIdentifier.id,
+          emoji.name === options.emojiIdentifier?.name || emoji.id === options.emojiIdentifier?.id,
       );
     }
 
@@ -615,7 +613,7 @@ export class Events implements corde.IOnceEvents {
 
     if (options?.guildMembers && options.guildMembers.length > 0) {
       validator.add((col) =>
-        options.guildMembers.every((optionsMember) =>
+        options.guildMembers?.every((optionsMember) =>
           col.some((colMember) =>
             this.getGuildMemberIdentifierValidation(colMember, optionsMember),
           ),
@@ -1191,13 +1189,7 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  oncePresenceUpdate(options?: {
-    timeout?: number;
-    user?: corde.IUserIdentifier;
-    presenceStatus?: PresenceStatus;
-    guild?: corde.IGuildIdentifier;
-    clientePresence?: ClientPresenceStatusData;
-  }) {
+  oncePresenceUpdate(options?: corde.IPresenceUpdateOptions) {
     const validator = new Validator<[Presence]>();
 
     if (options?.guild) {

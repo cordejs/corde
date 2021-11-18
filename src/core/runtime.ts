@@ -161,6 +161,7 @@ class Runtime {
 
 /**
  * Singleton of Runtime.
+ * @internal
  */
 const runtime = new Runtime();
 export { runtime };

@@ -113,8 +113,8 @@ declare namespace corde {
 
   export interface IGuildMemberChunkOptions {
     timeout?: number;
-    guild: corde.IGuildIdentifier;
-    guildMembers: corde.IGuildMemberIdentifier[];
+    guild?: corde.IGuildIdentifier;
+    guildMembers?: corde.IGuildMemberIdentifier[];
   }
 
   export interface IEmojiDeleteOptions extends IEmojiCreateOptions {}
@@ -123,7 +123,7 @@ declare namespace corde {
   export interface IGuildMemberRemoveOptions extends IGuildMemberAvailableOptions {}
 
   export interface IGuildMemberAvailableOptions extends IDefaultOptions {
-    member: corde.IGuildMemberIdentifier;
+    member?: corde.IGuildMemberIdentifier;
   }
 
   export interface IGuildMemberAddOptions extends IDefaultOptions {
@@ -133,7 +133,7 @@ declare namespace corde {
   }
 
   export interface IEmojiCreateOptions extends IDefaultOptions {
-    emojiIdentifier: corde.IEmoji;
+    emojiIdentifier?: corde.IEmoji;
   }
 
   export interface IChannelPinsUpdateOptions extends IChannelDeleteOptions {}
@@ -229,7 +229,14 @@ declare namespace corde {
   export type ChannelType = "voice" | "text" | "category";
 
   export interface IGuildCreateFilterOptions extends IDefaultOptions {
-    name: string;
+    name?: string;
+  }
+
+  export interface IPresenceUpdateOptions extends IDefaultOptions {
+    user?: corde.IUserIdentifier;
+    presenceStatus?: import("discord.js").PresenceStatus;
+    guild?: corde.IGuildIdentifier;
+    clientePresence?: import("discord.js").ClientPresenceStatusData;
   }
 
   export interface IGuildCreateOptions extends IDefaultOptions {
@@ -243,8 +250,8 @@ declare namespace corde {
   export interface IGuildBanRemoveOptions extends IGuildBanOptions {}
 
   export interface IGuildBanOptions extends IDefaultOptions {
-    guildIdentifier: corde.IGuildIdentifier;
-    userIdentifier: corde.IUserIdentifier;
+    guildIdentifier?: corde.IGuildIdentifier;
+    userIdentifier?: corde.IUserIdentifier;
   }
 
   export interface ICreateChannelOptionsSimple extends Omit<ICreateChannelOptions, "type"> {}

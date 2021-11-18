@@ -78,7 +78,11 @@ export const cordeEvent: corde.IOnceEvents = {
    * @global
    */
   onceChannelDelete: function (options?: corde.IChannelDeleteOptions): Promise<Channel> {
-    throw new Error("Function not implemented.");
+    return runtime.events.onceChannelDelete({
+      channelIdentifier: options?.channelIdentifier ?? { id: runtime.configs.channelId },
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
@@ -86,31 +90,49 @@ export const cordeEvent: corde.IOnceEvents = {
   onceChannelPinsUpdate: function (
     options?: corde.IChannelPinsUpdateOptions,
   ): Promise<[Channel, Date]> {
-    throw new Error("Function not implemented.");
+    return runtime.events.onceChannelPinsUpdate({
+      channelIdentifier: options?.channelIdentifier ?? { id: runtime.configs.channelId },
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
    */
   onceChannelUpdate: function (options?: corde.IChannelUpdateOptions): Promise<[Channel, Channel]> {
-    throw new Error("Function not implemented.");
+    return runtime.events.onceChannelUpdate({
+      channelIdentifier: options?.channelIdentifier ?? { id: runtime.configs.channelId },
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
    */
   onceRoleDelete: function (options?: corde.IRoleEventOptions): Promise<Role> {
-    throw new Error("Function not implemented.");
+    return runtime.events.onceRoleDelete({
+      guildId: options?.guildId ?? runtime.configs.guildId,
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
    */
   onceEmojiCreate: function (options?: corde.IEmojiCreateOptions): Promise<GuildEmoji> {
-    throw new Error("Function not implemented.");
+    return runtime.events.onceEmojiCreate({
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
    */
   onceEmojiDelete: function (options?: corde.IEmojiDeleteOptions): Promise<GuildEmoji> {
-    throw new Error("Function not implemented.");
+    return runtime.events.onceEmojiDelete({
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
@@ -118,51 +140,80 @@ export const cordeEvent: corde.IOnceEvents = {
   onceEmojiUpdate: function (
     options?: corde.IEmojiUpdateOptions,
   ): Promise<[GuildEmoji, GuildEmoji]> {
-    throw new Error("Function not implemented.");
+    return runtime.events.onceEmojiUpdate({
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
    */
   onceGuildBan: function (options?: corde.IGuildBanOptions): Promise<[Guild, User]> {
-    throw new Error("Function not implemented.");
+    return runtime.events.onceGuildBan({
+      guildIdentifier: options?.guildIdentifier ?? { id: runtime.configs.guildId },
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
    */
   onceGuildBanRemove: function (options?: corde.IGuildBanRemoveOptions): Promise<[Guild, User]> {
-    throw new Error("Function not implemented.");
+    return runtime.events.onceGuildBanRemove({
+      guildIdentifier: options?.guildIdentifier ?? { id: runtime.configs.guildId },
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
    */
   onceGuildCreate: function (options?: corde.IGuildCreateFilterOptions): Promise<Guild> {
-    throw new Error("Function not implemented.");
+    return runtime.events.onceGuildCreate({
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
    */
   onceGuildDelete: function (options?: corde.IGuildDeleteOptions): Promise<Guild> {
-    throw new Error("Function not implemented.");
+    return runtime.events.onceGuildDelete({
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
    */
-  onceGuildMemberAdd: function (
+  onceGuildMemberAdd: function (options?: corde.IGuildMemberAddOptions): Promise<GuildMember> {
+    return runtime.events.onceGuildMemberAdd({
+      guild: options?.guild ?? { id: runtime.configs.guildId },
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
+  },
+  /**
+   * @global
+   */
+  onceGuildMemberAvailable: function (
     options?: corde.IGuildMemberAvailableOptions,
-  ): Promise<GuildMember> {
-    throw new Error("Function not implemented.");
+  ): Promise<GuildMember | PartialGuildMember> {
+    return runtime.events.onceGuildMemberAvailable({
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
    */
-  onceGuildMemberAvailable: function (): Promise<GuildMember | PartialGuildMember> {
-    throw new Error("Function not implemented.");
-  },
-  /**
-   * @global
-   */
-  onceGuildMemberRemove: function (): Promise<GuildMember | PartialGuildMember> {
-    throw new Error("Function not implemented.");
+  onceGuildMemberRemove: function (
+    options?: corde.IGuildMemberRemoveOptions,
+  ): Promise<GuildMember | PartialGuildMember> {
+    return runtime.events.onceGuildMemberRemove({
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
@@ -170,7 +221,11 @@ export const cordeEvent: corde.IOnceEvents = {
   onceGuildMemberChunk: function (
     options?: corde.IGuildMemberChunkOptions,
   ): Promise<[Collection<string, GuildMember>, Guild]> {
-    throw new Error("Function not implemented.");
+    return runtime.events.onceGuildMemberChunk({
+      guild: options?.guild ?? { id: runtime.configs.guildId },
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
@@ -178,49 +233,87 @@ export const cordeEvent: corde.IOnceEvents = {
   onceGuildMemberSpeaking: function (
     options?: corde.IGuildMemberSpeakingOptions,
   ): Promise<GuildMember | PartialGuildMember> {
-    throw new Error("Function not implemented.");
+    return runtime.events.onceGuildMemberSpeaking({
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
    */
-  onceGuildMemberUpdate: function (): Promise<[GuildMember | PartialGuildMember, GuildMember]> {
-    throw new Error("Function not implemented.");
+  onceGuildMemberUpdate: function (
+    options?: corde.IGuildMemberUpdateOptions,
+  ): Promise<[GuildMember | PartialGuildMember, GuildMember]> {
+    return runtime.events.onceGuildMemberUpdate({
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
    */
-  onceGuildUnavailable: function (): Promise<Guild> {
-    throw new Error("Function not implemented.");
+  onceGuildUnavailable: function (options?: corde.IGuildUnvailableOptions): Promise<Guild> {
+    return runtime.events.onceGuildUnavailable({
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
    */
-  onceGuildUpdate: function (): Promise<[Guild, Guild]> {
-    throw new Error("Function not implemented.");
+  onceGuildUpdate: function (options?: corde.IGuildUnvailableOptions): Promise<[Guild, Guild]> {
+    return runtime.events.onceGuildUpdate({
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
    */
-  onceMessageDelete: function (): Promise<Message | PartialMessage> {
-    throw new Error("Function not implemented.");
+  onceMessageDelete: function (
+    options?: corde.IMessageDeleteOptions,
+  ): Promise<Message | PartialMessage> {
+    return runtime.events.onceMessageDelete({
+      authorId: options?.authorId ?? runtime.configs.botTestId,
+      channelId: options?.channelId ?? runtime.configs.channelId,
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
    */
-  onceMessageDeleteBulk: function (): Promise<Collection<string, Message | PartialMessage>> {
-    throw new Error("Function not implemented.");
+  onceMessageDeleteBulk: function (
+    options?: corde.IMessageDeleteBulkOptions,
+  ): Promise<Collection<string, Message | PartialMessage>> {
+    return runtime.events.onceMessageDeleteBulk({
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
    */
-  onceMessageReactionRemove: function (): Promise<[MessageReaction, User | PartialUser]> {
-    throw new Error("Function not implemented.");
+  onceMessageReactionRemove: function (
+    options?: corde.IMessageReactionRemoveOptions,
+  ): Promise<[MessageReaction, User | PartialUser]> {
+    return runtime.events.onceMessageReactionRemove({
+      authorId: options?.authorId ?? runtime.configs.botTestId,
+      channelId: options?.channelId ?? runtime.configs.channelId,
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
    */
-  onceMessageUpdate: function (): Promise<[Message | PartialMessage, Message | PartialMessage]> {
-    throw new Error("Function not implemented.");
+  onceMessageUpdate: function (
+    options?: corde.IMessageUpdateOptions,
+  ): Promise<[Message | PartialMessage, Message | PartialMessage]> {
+    return runtime.events.onceMessageUpdate({
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
@@ -228,7 +321,10 @@ export const cordeEvent: corde.IOnceEvents = {
   onceMessagePinned: function (
     options?: corde.IMessageEventOptions,
   ): Promise<Message | PartialMessage> {
-    throw new Error("Function not implemented.");
+    return runtime.events.onceMessagePinned({
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
@@ -236,7 +332,10 @@ export const cordeEvent: corde.IOnceEvents = {
   onceMessageUnPinned: function (
     options?: corde.IMessageEventOptions,
   ): Promise<Message | PartialMessage> {
-    throw new Error("Function not implemented.");
+    return runtime.events.onceMessageUnPinned({
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
@@ -244,68 +343,120 @@ export const cordeEvent: corde.IOnceEvents = {
   onceMessageContentOrEmbedChange: function (
     options?: corde.IMessageEventOptions,
   ): Promise<Message> {
-    throw new Error("Function not implemented.");
-  },
-
-  oncePresenceUpdate: function (): Promise<Presence> {
-    throw new Error("Function not implemented.");
-  },
-  /**
-   * @global
-   */
-  onceRoleCreate: function (): Promise<Role> {
-    throw new Error("Function not implemented.");
+    return runtime.events.onceMessageContentOrEmbedChange({
+      authorId: options?.authorId ?? runtime.configs.botTestId,
+      channelId: options?.channelId ?? runtime.configs.channelId,
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
    */
-  onceRoleUpdate: function (): Promise<[Role, Role]> {
-    throw new Error("Function not implemented.");
+  oncePresenceUpdate: function (options?: corde.IPresenceUpdateOptions): Promise<Presence> {
+    return runtime.events.oncePresenceUpdate({
+      guild: options?.guild ?? { id: runtime.configs.guildId },
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
+  },
+  /**
+   * @global
+   */
+  onceRoleCreate: function (options?: corde.IRoleCreateEventOptions): Promise<Role> {
+    return runtime.events.onceRoleCreate({
+      guild: options?.guild ?? { id: runtime.configs.guildId },
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
+  },
+  /**
+   * @global
+   */
+  onceRoleUpdate: function (options?: corde.IRoleUpdateEventOptions): Promise<[Role, Role]> {
+    return runtime.events.onceRoleUpdate({
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
    */
   onceRoleRenamed: function (options?: corde.IRoleEventOptions): Promise<Role> {
-    throw new Error("Function not implemented.");
+    return runtime.events.onceRoleRenamed({
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
    */
   onceRolePositionUpdate: function (options?: corde.IRoleEventOptions): Promise<Role> {
-    throw new Error("Function not implemented.");
+    return runtime.events.onceRolePositionUpdate({
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
-   */ onceRoleUpdateColor: function (options?: corde.IRoleEventOptions): Promise<Role> {
-    throw new Error("Function not implemented.");
+   */
+  onceRoleUpdateColor: function (options?: corde.IRoleEventOptions): Promise<Role> {
+    return runtime.events.onceRoleUpdateColor({
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
-   */ onceRoleHoistUpdate: function (options?: corde.IRoleEventOptions): Promise<Role> {
-    throw new Error("Function not implemented.");
+   */
+  onceRoleHoistUpdate: function (options?: corde.IRoleEventOptions): Promise<Role> {
+    return runtime.events.onceRoleHoistUpdate({
+      guildId: options?.guildId ?? runtime.configs.guildId,
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
-   */ onceRoleMentionableUpdate: function (options?: corde.IRoleEventOptions): Promise<Role> {
-    throw new Error("Function not implemented.");
+   */
+  onceRoleMentionableUpdate: function (options?: corde.IRoleEventOptions): Promise<Role> {
+    return runtime.events.onceRoleMentionableUpdate({
+      guildId: options?.guildId ?? runtime.configs.guildId,
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
-   */ onceRolePermissionUpdate: function (
-    options?: corde.IRolePermissionUpdateOptions,
-  ): Promise<Role> {
-    throw new Error("Function not implemented.");
+   */
+  onceRolePermissionUpdate: function (options?: corde.IRolePermissionUpdateOptions): Promise<Role> {
+    return runtime.events.onceRolePermissionUpdate({
+      guild: options?.guild ?? { id: runtime.configs.guildId },
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
-   */ onceUserUpdate: function (options?: IUserUpdateOptions): Promise<[User | PartialUser, User]> {
-    throw new Error("Function not implemented.");
+   */
+  onceUserUpdate: function (
+    options?: corde.IUserUpdateOptions,
+  ): Promise<[User | PartialUser, User]> {
+    return runtime.events.onceUserUpdate({
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
   /**
    * @global
-   */ onceVoiceStateUpdate: function (
-    options?: IVoiceStateUpdateOptions,
+   */
+  onceVoiceStateUpdate: function (
+    options?: corde.IVoiceStateUpdateOptions,
   ): Promise<[VoiceState, VoiceState]> {
-    throw new Error("Function not implemented.");
+    return runtime.events.onceVoiceStateUpdate({
+      channel: options?.channel ?? { id: runtime.configs.channelId },
+      timeout: options?.timeout ?? runtime.configs.timeout,
+      ...options,
+    });
   },
 };
