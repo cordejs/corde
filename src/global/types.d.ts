@@ -256,6 +256,19 @@ declare namespace corde {
     name?: string;
   }
 
+  export interface IVoiceStateUpdateOptions extends IDefaultOptions {
+    id?: string;
+    channel?: IChannelIdentifier;
+    guild?: IGuildIdentifier;
+    selfDeaf?: boolean;
+    selfMute?: boolean;
+    serverDeaf?: boolean;
+    serverMute?: boolean;
+    sessionID?: string;
+    streaming?: boolean;
+    selfVideo?: boolean;
+  }
+
   export interface IGuildMemberIdentifier extends IIdentifier {
     nickname?: string;
   }
@@ -354,6 +367,15 @@ declare namespace corde {
     roleIdentifier?: corde.IRoleIdentifier;
     timeout?: number;
     guildId?: string;
+  }
+
+  export interface IRolePermissionUpdateOptions extends IDefaultOptions {
+    role?: IRoleIdentifier;
+    guild?: IGuildIdentifier;
+  }
+
+  export interface IUserUpdateOptions extends IDefaultOptions {
+    user?: IUserIdentifier;
   }
 
   /**

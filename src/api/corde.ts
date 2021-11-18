@@ -1,10 +1,13 @@
 import { runtime, testCollector } from "../core";
-import { FunctionOnly } from "../types";
+import { MapObj } from "../types";
 import { getStackTrace } from "../utils";
-import { CommandEvent } from "./CommandEvent";
+import { cordeEvent } from "./cordeEvent";
 
-type CordeType = FunctionOnly<typeof corde>;
+type CordeType = MapObj<typeof corde>;
 
+/**
+ * @global
+ */
 export const cordeInternal: CordeType = {
   fail(message?: string) {
     if (!testCollector.isInsideTestClausure) {
@@ -21,8 +24,10 @@ export const cordeInternal: CordeType = {
     Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, time);
   },
   send(command: string) {
-    const promise = runtime.bot.sendMessage(command);
-    return new CommandEvent(promise);
+    return runtime.bot.sendMessage(command);
+  },
+  events: {
+    ...cordeEvent,
   },
   waitAsync(time: number) {
     return new Promise<void>((resolve) => {

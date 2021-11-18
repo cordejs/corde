@@ -87,5 +87,7 @@ declare namespace corde {
    */
   export function waitAsync(miliseconds: number): Promise<void>;
 
-  export function send(command: string): corde.ICommandEvent;
+  export function send(command: string): Promise<import("discord.js").Message>;
+
+  export const events: corde.IOnceEvents;
 }

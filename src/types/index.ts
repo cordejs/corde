@@ -316,3 +316,7 @@ export interface IVoiceChannelState {
   channel: VoiceChannel;
   connection?: VoiceConnection;
 }
+
+export type MapObj<T> = {
+  [U in keyof T]: T[U];
+};
