@@ -214,7 +214,14 @@ declare namespace corde {
     id?: string;
   }
 
-  export interface IRoleIdentifier extends IIdentifier {
+  export interface IRoleIdentifier {
+    /**
+     * Role's id.
+     */
+    id?: string;
+    /**
+     * Role's name.
+     */
     name?: string;
   }
 
@@ -222,7 +229,14 @@ declare namespace corde {
     name?: string;
   } & IIdentifier;
 
-  export interface IChannelIdentifier extends IIdentifier {
+  export interface IChannelIdentifier {
+    /**
+     * Channel's id
+     */
+    id?: string;
+    /**
+     * Channel's name (If exists)
+     */
     name?: string;
   }
 
@@ -264,15 +278,45 @@ declare namespace corde {
   }
 
   export interface IVoiceStateUpdateOptions extends IDefaultOptions {
+    /**
+     * Filter by voice status id;
+     */
     id?: string;
+    /**
+     * Filter by VoiceChannel identifier where the state is from.
+     */
     channel?: IChannelIdentifier;
+    /**
+     * Filter by the Guild where the state is from.
+     */
     guild?: IGuildIdentifier;
+    /**
+     * Filter by a voice state that was self-deafened.
+     */
     selfDeaf?: boolean;
+    /**
+     *
+     */
     selfMute?: boolean;
+    /**
+     *
+     */
     serverDeaf?: boolean;
+    /**
+     *
+     */
     serverMute?: boolean;
+    /**
+     *
+     */
     sessionID?: string;
+    /**
+     *
+     */
     streaming?: boolean;
+    /**
+     *
+     */
     selfVideo?: boolean;
   }
 

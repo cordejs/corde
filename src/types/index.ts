@@ -20,6 +20,13 @@ export type FunctionOnly<T> = {
   [U in keyof T]: T[U] extends (...args: any[]) => any ? T[U] : never;
 };
 
+/**
+ * Marks the type as **null** or **undefined**
+ *
+ * @internal
+ */
+export type Optional<T> = T | null | undefined;
+
 export interface ITestReport {
   pass: boolean;
   testName?: string;
