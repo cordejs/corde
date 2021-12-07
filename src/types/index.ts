@@ -289,6 +289,12 @@ export interface IConfigOptions {
    * @default true
    */
   useTimoutValueInEventsDefaultParameters?: boolean;
+  /**
+   * If true, corde will connect it's bot when start tests.
+   *
+   * @default true
+   */
+  loginCordeBotOnStart?: boolean;
 }
 
 export interface IJSONFile {
