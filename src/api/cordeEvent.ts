@@ -34,10 +34,6 @@ function getChannelId(options?: IDefault) {
   return options?.channelId ?? runtime.configs.channelId;
 }
 
-function getGuildId(options?: IDefault) {
-  return getGuildId(options);
-}
-
 function getTimeout(options?: IDefault) {
   return options?.timeout ?? runtime.configs.timeout;
 }
@@ -46,8 +42,12 @@ function getChannel(channel: Optional<corde.IChannelIdentifier>): corde.IChannel
   return channel ?? { id: runtime.configs.channelId };
 }
 
-function getGuild(options?: IDefault): corde.IGuildIdentifier {
-  return getGuild(options);
+function getGuild(guild: Optional<corde.IGuildIdentifier>): corde.IGuildIdentifier {
+  return guild ?? { id: runtime.configs.channelId };
+}
+
+function getAuthor(author: Optional<corde.IAuthorIdentifier>): corde.IAuthorIdentifier {
+  return author ?? { id: runtime.configs.botTestId };
 }
 
 function getDefaultOptionsIfNeeded<T extends any>(options?: any): T {
@@ -80,7 +80,7 @@ export const cordeEvent: corde.IOnceEvents = {
   /**
    * @global
    */
-  onceMessage(options?: corde.IMessageEventOptions) {
+  onceMessage(options?: corde.IMessageEventFilter) {
     if (runtime.configs.useConfigValuesInEventsDefaultParameters) {
       options = getDefaultOptionsIfNeeded(options);
     }
@@ -90,7 +90,7 @@ export const cordeEvent: corde.IOnceEvents = {
   /**
    * @global
    */
-  onceMessageReactionsAdd(options?: corde.ISearchMessageReactionsOptions) {
+  onceMessageReactionsAdd(options?: corde.ISearchMessageReactionsFilter) {
     if (runtime.configs.useConfigValuesInEventsDefaultParameters) {
       options = getDefaultOptionsIfNeeded(options);
     }
@@ -108,7 +108,7 @@ export const cordeEvent: corde.IOnceEvents = {
    * @global
    */
   onceMessageReactionAdd: function (
-    options?: corde.IMessageReactionAddOptions,
+    options?: corde.IMessageReactionAddFilter,
   ): Promise<[MessageReaction, User | PartialUser]> {
     if (runtime.configs.useConfigValuesInEventsDefaultParameters) {
       options = getDefaultOptionsIfNeeded(options);
@@ -120,7 +120,7 @@ export const cordeEvent: corde.IOnceEvents = {
    * @global
    */
   onceMessageReactionRemoveEmoji: function (
-    options?: corde.IMessageReactionRemoveOptions,
+    options?: corde.IMessageReactionRemoveFilter,
   ): Promise<MessageReaction> {
     if (runtime.configs.useConfigValuesInEventsDefaultParameters) {
       options = {
@@ -134,7 +134,7 @@ export const cordeEvent: corde.IOnceEvents = {
   /**
    * @global
    */
-  onceChannelDelete: function (options?: corde.IChannelDeleteOptions): Promise<Channel> {
+  onceChannelDelete: function (options?: corde.IChannelDeleteFilter): Promise<Channel> {
     if (runtime.configs.useConfigValuesInEventsDefaultParameters) {
       options = {
         channel: getChannel(options?.channel),
@@ -148,7 +148,7 @@ export const cordeEvent: corde.IOnceEvents = {
    * @global
    */
   onceChannelPinsUpdate: function (
-    options?: corde.IChannelPinsUpdateOptions,
+    options?: corde.IChannelPinsUpdateFilter,
   ): Promise<[Channel, Date]> {
     if (runtime.configs.useConfigValuesInEventsDefaultParameters) {
       options = {
@@ -162,7 +162,7 @@ export const cordeEvent: corde.IOnceEvents = {
   /**
    * @global
    */
-  onceChannelUpdate: function (options?: corde.IChannelUpdateOptions): Promise<[Channel, Channel]> {
+  onceChannelUpdate: function (options?: corde.IChannelUpdateFilter): Promise<[Channel, Channel]> {
     if (runtime.configs.useConfigValuesInEventsDefaultParameters) {
       options = {
         channel: getChannel(options?.channel),
@@ -175,10 +175,10 @@ export const cordeEvent: corde.IOnceEvents = {
   /**
    * @global
    */
-  onceRoleDelete: function (options?: corde.IRoleEventOptions): Promise<Role> {
+  onceRoleDelete: function (options?: corde.IRoleEventFilter): Promise<Role> {
     if (runtime.configs.useConfigValuesInEventsDefaultParameters) {
       options = {
-        guildId: getGuildId(options),
+        guild: getGuild(options?.guild),
         ...options,
       };
     }
@@ -188,14 +188,14 @@ export const cordeEvent: corde.IOnceEvents = {
   /**
    * @global
    */
-  onceEmojiCreate: function (options?: corde.IEmojiCreateOptions): Promise<GuildEmoji> {
+  onceEmojiCreate: function (options?: corde.IEmojiCreateFilter): Promise<GuildEmoji> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceEmojiCreate(options);
   },
   /**
    * @global
    */
-  onceEmojiDelete: function (options?: corde.IEmojiDeleteOptions): Promise<GuildEmoji> {
+  onceEmojiDelete: function (options?: corde.IEmojiDeleteFilter): Promise<GuildEmoji> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceEmojiDelete(options);
   },
@@ -203,7 +203,7 @@ export const cordeEvent: corde.IOnceEvents = {
    * @global
    */
   onceEmojiUpdate: function (
-    options?: corde.IEmojiUpdateOptions,
+    options?: corde.IEmojiUpdateFilter,
   ): Promise<[GuildEmoji, GuildEmoji]> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceEmojiUpdate(options);
@@ -211,27 +211,27 @@ export const cordeEvent: corde.IOnceEvents = {
   /**
    * @global
    */
-  onceGuildBan: function (options?: corde.IGuildBanOptions): Promise<[Guild, User]> {
+  onceGuildBan: function (options?: corde.IGuildBanFilter): Promise<[Guild, User]> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceGuildBan({
-      guildIdentifier: getGuild(options),
+      guild: getGuild(options?.guild),
       ...options,
     });
   },
   /**
    * @global
    */
-  onceGuildBanRemove: function (options?: corde.IGuildBanRemoveOptions): Promise<[Guild, User]> {
+  onceGuildBanRemove: function (options?: corde.IGuildBanRemoveFilter): Promise<[Guild, User]> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceGuildBanRemove({
-      guildIdentifier: getGuild(options),
+      guild: getGuild(options?.guild),
       ...options,
     });
   },
   /**
    * @global
    */
-  onceGuildCreate: function (options?: corde.IGuildCreateFilterOptions): Promise<Guild> {
+  onceGuildCreate: function (options?: corde.IGuildCreateFilter): Promise<Guild> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceGuildCreate({
       ...options,
@@ -240,7 +240,7 @@ export const cordeEvent: corde.IOnceEvents = {
   /**
    * @global
    */
-  onceGuildDelete: function (options?: corde.IGuildDeleteOptions): Promise<Guild> {
+  onceGuildDelete: function (options?: corde.IGuildDeleteFilter): Promise<Guild> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceGuildDelete({
       ...options,
@@ -249,10 +249,10 @@ export const cordeEvent: corde.IOnceEvents = {
   /**
    * @global
    */
-  onceGuildMemberAdd: function (options?: corde.IGuildMemberAddOptions): Promise<GuildMember> {
+  onceGuildMemberAdd: function (options?: corde.IGuildMemberAddFilter): Promise<GuildMember> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceGuildMemberAdd({
-      guild: getGuild(options),
+      guild: getGuild(options?.guild),
       ...options,
     });
   },
@@ -260,7 +260,7 @@ export const cordeEvent: corde.IOnceEvents = {
    * @global
    */
   onceGuildMemberAvailable: function (
-    options?: corde.IGuildMemberAvailableOptions,
+    options?: corde.IGuildMemberAvailableFilter,
   ): Promise<GuildMember | PartialGuildMember> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceGuildMemberAvailable({
@@ -271,7 +271,7 @@ export const cordeEvent: corde.IOnceEvents = {
    * @global
    */
   onceGuildMemberRemove: function (
-    options?: corde.IGuildMemberRemoveOptions,
+    options?: corde.IGuildMemberRemoveFilter,
   ): Promise<GuildMember | PartialGuildMember> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceGuildMemberRemove({
@@ -282,11 +282,11 @@ export const cordeEvent: corde.IOnceEvents = {
    * @global
    */
   onceGuildMemberChunk: function (
-    options?: corde.IGuildMemberChunkOptions,
+    options?: corde.IGuildMemberChunkFilter,
   ): Promise<[Collection<string, GuildMember>, Guild]> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceGuildMemberChunk({
-      guild: getGuild(options),
+      guild: getGuild(options?.guild),
       ...options,
     });
   },
@@ -294,7 +294,7 @@ export const cordeEvent: corde.IOnceEvents = {
    * @global
    */
   onceGuildMemberSpeaking: function (
-    options?: corde.IGuildMemberSpeakingOptions,
+    options?: corde.IGuildMemberSpeakingFilter,
   ): Promise<GuildMember | PartialGuildMember> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceGuildMemberSpeaking({
@@ -305,7 +305,7 @@ export const cordeEvent: corde.IOnceEvents = {
    * @global
    */
   onceGuildMemberUpdate: function (
-    options?: corde.IGuildMemberUpdateOptions,
+    options?: corde.IGuildMemberUpdateFilter,
   ): Promise<[GuildMember | PartialGuildMember, GuildMember]> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceGuildMemberUpdate({
@@ -315,7 +315,7 @@ export const cordeEvent: corde.IOnceEvents = {
   /**
    * @global
    */
-  onceGuildUnavailable: function (options?: corde.IGuildUnvailableOptions): Promise<Guild> {
+  onceGuildUnavailable: function (options?: corde.IGuildUnvailableFilter): Promise<Guild> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceGuildUnavailable({
       ...options,
@@ -324,7 +324,7 @@ export const cordeEvent: corde.IOnceEvents = {
   /**
    * @global
    */
-  onceGuildUpdate: function (options?: corde.IGuildUnvailableOptions): Promise<[Guild, Guild]> {
+  onceGuildUpdate: function (options?: corde.IGuildUnvailableFilter): Promise<[Guild, Guild]> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceGuildUpdate({
       ...options,
@@ -334,12 +334,12 @@ export const cordeEvent: corde.IOnceEvents = {
    * @global
    */
   onceMessageDelete: function (
-    options?: corde.IMessageDeleteOptions,
+    options?: corde.IMessageDeleteFilter,
   ): Promise<Message | PartialMessage> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceMessageDelete({
-      authorId: getAuthorId(options),
-      channelId: getChannelId(options),
+      author: getAuthor(options?.author),
+      channel: getChannel(options?.channel),
       ...options,
     });
   },
@@ -347,7 +347,7 @@ export const cordeEvent: corde.IOnceEvents = {
    * @global
    */
   onceMessageDeleteBulk: function (
-    options?: corde.IMessageDeleteBulkOptions,
+    options?: corde.IMessageDeleteBulkFilter,
   ): Promise<Collection<string, Message | PartialMessage>> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceMessageDeleteBulk({
@@ -358,12 +358,12 @@ export const cordeEvent: corde.IOnceEvents = {
    * @global
    */
   onceMessageReactionRemove: function (
-    options?: corde.IMessageReactionRemoveOptions,
+    options?: corde.IMessageReactionRemoveFilter,
   ): Promise<[MessageReaction, User | PartialUser]> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceMessageReactionRemove({
-      authorId: getAuthorId(options),
-      channelId: getChannelId(options),
+      author: getAuthor(options.author),
+      channel: getChannel(options.channel),
       ...options,
     });
   },
@@ -371,7 +371,7 @@ export const cordeEvent: corde.IOnceEvents = {
    * @global
    */
   onceMessageUpdate: function (
-    options?: corde.IMessageUpdateOptions,
+    options?: corde.IMessageUpdateFilter,
   ): Promise<[Message | PartialMessage, Message | PartialMessage]> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceMessageUpdate({
@@ -382,7 +382,7 @@ export const cordeEvent: corde.IOnceEvents = {
    * @global
    */
   onceMessagePinned: function (
-    options?: corde.IMessageEventOptions,
+    options?: corde.IMessageEventFilter,
   ): Promise<Message | PartialMessage> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceMessagePinned({
@@ -393,7 +393,7 @@ export const cordeEvent: corde.IOnceEvents = {
    * @global
    */
   onceMessageUnPinned: function (
-    options?: corde.IMessageEventOptions,
+    options?: corde.IMessageEventFilter,
   ): Promise<Message | PartialMessage> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceMessageUnPinned({
@@ -404,29 +404,29 @@ export const cordeEvent: corde.IOnceEvents = {
    * @global
    */
   onceMessageContentOrEmbedChange: function (
-    options?: corde.IMessageEventOptions,
+    options?: corde.IMessageEventFilter,
   ): Promise<Message> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceMessageContentOrEmbedChange({
-      authorId: getAuthorId(options),
-      channelId: getChannelId(options),
+      author: getAuthor(options?.author),
+      channel: getChannel(options?.channel),
       ...options,
     });
   },
   /**
    * @global
    */
-  oncePresenceUpdate: function (options?: corde.IPresenceUpdateOptions): Promise<Presence> {
+  oncePresenceUpdate: function (options?: corde.IPresenceUpdateFilter): Promise<Presence> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.oncePresenceUpdate({
-      guild: getGuild(options),
+      guild: getGuild(options.guild),
       ...options,
     });
   },
   /**
    * @global
    */
-  onceRoleCreate: function (options?: corde.IRoleCreateEventOptions): Promise<Role> {
+  onceRoleCreate: function (options?: corde.IRoleCreateEventFilter): Promise<Role> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceRoleCreate({
       guild: getGuild(options),
@@ -436,7 +436,7 @@ export const cordeEvent: corde.IOnceEvents = {
   /**
    * @global
    */
-  onceRoleUpdate: function (options?: corde.IRoleUpdateEventOptions): Promise<[Role, Role]> {
+  onceRoleUpdate: function (options?: corde.IRoleUpdateEventFilter): Promise<[Role, Role]> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceRoleUpdate({
       ...options,
@@ -445,7 +445,7 @@ export const cordeEvent: corde.IOnceEvents = {
   /**
    * @global
    */
-  onceRoleRenamed: function (options?: corde.IRoleEventOptions): Promise<Role> {
+  onceRoleRenamed: function (options?: corde.IRoleEventFilter): Promise<Role> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceRoleRenamed({
       ...options,
@@ -454,7 +454,7 @@ export const cordeEvent: corde.IOnceEvents = {
   /**
    * @global
    */
-  onceRolePositionUpdate: function (options?: corde.IRoleEventOptions): Promise<Role> {
+  onceRolePositionUpdate: function (options?: corde.IRoleEventFilter): Promise<Role> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceRolePositionUpdate({
       ...options,
@@ -463,7 +463,7 @@ export const cordeEvent: corde.IOnceEvents = {
   /**
    * @global
    */
-  onceRoleUpdateColor: function (options?: corde.IRoleEventOptions): Promise<Role> {
+  onceRoleUpdateColor: function (options?: corde.IRoleEventFilter): Promise<Role> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceRoleUpdateColor({
       ...options,
@@ -472,30 +472,30 @@ export const cordeEvent: corde.IOnceEvents = {
   /**
    * @global
    */
-  onceRoleHoistUpdate: function (options?: corde.IRoleEventOptions): Promise<Role> {
+  onceRoleHoistUpdate: function (options?: corde.IRoleEventFilter): Promise<Role> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceRoleHoistUpdate({
-      guildId: getGuildId(options),
+      guild: getGuild(options?.guild),
       ...options,
     });
   },
   /**
    * @global
    */
-  onceRoleMentionableUpdate: function (options?: corde.IRoleEventOptions): Promise<Role> {
+  onceRoleMentionableUpdate: function (options?: corde.IRoleEventFilter): Promise<Role> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceRoleMentionableUpdate({
-      guildId: getGuildId(options),
+      guild: getGuild(options.guild),
       ...options,
     });
   },
   /**
    * @global
    */
-  onceRolePermissionUpdate: function (options?: corde.IRolePermissionUpdateOptions): Promise<Role> {
+  onceRolePermissionUpdate: function (options?: corde.IRolePermissionUpdateFilter): Promise<Role> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceRolePermissionUpdate({
-      guild: getGuild(options),
+      guild: getGuild(options.guild),
       ...options,
     });
   },
@@ -503,7 +503,7 @@ export const cordeEvent: corde.IOnceEvents = {
    * @global
    */
   onceUserUpdate: function (
-    options?: corde.IUserUpdateOptions,
+    options?: corde.IUserUpdateFilter,
   ): Promise<[User | PartialUser, User]> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceUserUpdate({
@@ -514,7 +514,7 @@ export const cordeEvent: corde.IOnceEvents = {
    * @global
    */
   onceVoiceStateUpdate: function (
-    options?: corde.IVoiceStateUpdateOptions,
+    options?: corde.IVoiceStateUpdateFilter,
   ): Promise<[VoiceState, VoiceState]> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.events.onceVoiceStateUpdate({

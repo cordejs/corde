@@ -26,6 +26,11 @@ export class Config implements Readonly<IConfigOptions> {
   private _rootDir!: string;
   private _useConfigValuesInEventsDefaultParameters!: boolean;
   private _useTimoutValueInEventsDefaultParameters!: boolean;
+  private _loginCordeBotOnStart!: boolean;
+
+  get loginCordeBotOnStart() {
+    return this._loginCordeBotOnStart;
+  }
 
   get cordeBotToken() {
     return this._cordeBotToken;

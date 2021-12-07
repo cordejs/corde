@@ -28,6 +28,9 @@ export const DEFAULT_CONFIG: Required<IConfigOptions> = {
   extensions: [".js", ".ts"],
   modulePathIgnorePatterns: ["(?:^|/)node_modules/"],
   rootDir: process.cwd(),
+  useConfigValuesInEventsDefaultParameters: false,
+  useTimoutValueInEventsDefaultParameters: true,
+  loginCordeBotOnStart: true,
 };
 
 export const TAG_PENDING = (text = "RUNS") => chalk.bgYellow(chalk.black(` ${text} `));

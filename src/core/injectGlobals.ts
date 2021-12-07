@@ -1,8 +1,7 @@
 import * as hooks from "../hooks";
 import * as closures from "../closures";
-import { BotAPI, ConfigAPI, corde } from "../api";
+import { BotAPI, ConfigAPI, cordeInternal } from "../api";
 import { runtime } from "../core/runtime";
-import { IConfigOptions } from "../types";
 import { expect } from "../expect";
 import { command } from "../command";
 
@@ -10,7 +9,7 @@ function getGlobal() {
   return global as any;
 }
 
-function getConfigs(): Readonly<Required<IConfigOptions>> {
+function getConfigs() {
   return new ConfigAPI(runtime.configs);
 }
 
@@ -36,6 +35,6 @@ export function injectGlobals() {
   addToGlobalScope("con", command);
 
   addToGlobalScope("bot", getBot());
-  addToGlobalScope("corde", corde);
+  addToGlobalScope("corde", cordeInternal);
   addToGlobalScope("configs", getConfigs());
 }

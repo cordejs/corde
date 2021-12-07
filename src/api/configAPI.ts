@@ -4,6 +4,24 @@ import { IConfigOptions } from "../types";
 export class ConfigAPI implements Readonly<Required<IConfigOptions>> {
   constructor(private _internalConfigs: IConfigOptions) {}
 
+  get useConfigValuesInEventsDefaultParameters() {
+    return (
+      this._internalConfigs.useConfigValuesInEventsDefaultParameters ??
+      DEFAULT_CONFIG.useConfigValuesInEventsDefaultParameters
+    );
+  }
+
+  get useTimoutValueInEventsDefaultParameters() {
+    return (
+      this._internalConfigs.useTimoutValueInEventsDefaultParameters ??
+      DEFAULT_CONFIG.useTimoutValueInEventsDefaultParameters
+    );
+  }
+
+  get loginCordeBotOnStart() {
+    return this._internalConfigs.loginCordeBotOnStart ?? DEFAULT_CONFIG.loginCordeBotOnStart;
+  }
+
   get cordeBotToken() {
     return this._internalConfigs.cordeBotToken;
   }
