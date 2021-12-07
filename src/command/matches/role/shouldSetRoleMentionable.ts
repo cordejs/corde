@@ -48,9 +48,9 @@ export async function shouldSetRoleMentionable(
   let role: Role;
   try {
     role = await this.cordeBot.events.onceRoleMentionableUpdate({
-      roleIdentifier: identifier,
+      ...identifier,
       timeout: this.timeout,
-      guildId: this.guildId,
+      guild: { id: this.guildId },
     });
   } catch {
     if (this.isNot) {

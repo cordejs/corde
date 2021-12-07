@@ -41,9 +41,9 @@ export async function shouldSetRoleColor(
 
   try {
     role = await this.cordeBot.events.onceRoleUpdateColor({
-      roleIdentifier: identifier,
+      ...identifier,
       timeout: this.timeout,
-      guildId: this.guildId,
+      guild: { id: this.guildId },
     });
   } catch {
     if (this.isNot) {

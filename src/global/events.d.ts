@@ -26,7 +26,7 @@ declare namespace corde {
      * @since 5.0
      */
     onceMessage(
-      options?: corde.IMessageEventOptions | undefined,
+      options?: corde.IMessageEventFilter | undefined,
     ): Promise<import("discord.js").Message>;
 
     /**
@@ -39,7 +39,7 @@ declare namespace corde {
      * @since 5.0
      */
     onceMessageReactionAdd(
-      options?: corde.IMessageReactionAddOptions,
+      options?: corde.IMessageReactionAddFilter,
     ): Promise<
       [
         import("discord.js").MessageReaction,
@@ -60,7 +60,7 @@ declare namespace corde {
      * @since 5.0
      */
     onceMessageReactionsAdd(
-      options?: corde.ISearchMessageReactionsOptions | undefined,
+      options?: corde.ISearchMessageReactionsFilter,
     ): Promise<
       [
         import("discord.js").MessageReaction,
@@ -78,7 +78,7 @@ declare namespace corde {
      * @since 5.0
      */
     onceMessageReactionRemoveEmoji(
-      options?: corde.IMessageReactionRemoveOptions,
+      options?: corde.IMessageReactionRemoveFilter,
     ): Promise<import("discord.js").MessageReaction>;
 
     /**
@@ -90,7 +90,7 @@ declare namespace corde {
      * @throws TimeoutError if no channel is created in the defined time.
      * @since 5.0
      */
-    onceChannelDelete(options?: corde.IChannelDeleteOptions): Promise<import("discord.js").Channel>;
+    onceChannelDelete(options?: corde.IChannelDeleteFilter): Promise<import("discord.js").Channel>;
 
     /**
      * Emitted when the pins of a channel are updated.
@@ -104,7 +104,7 @@ declare namespace corde {
      * @since 5.0
      */
     onceChannelPinsUpdate(
-      options?: corde.IChannelPinsUpdateOptions,
+      options?: corde.IChannelPinsUpdateFilter,
     ): Promise<[import("discord.js").Channel, Date]>;
 
     /**
@@ -117,7 +117,7 @@ declare namespace corde {
      * @since 5.0
      */
     onceChannelUpdate(
-      options?: corde.IChannelUpdateOptions,
+      options?: corde.IChannelUpdateFilter,
     ): Promise<[import("discord.js").Channel, import("discord.js").Channel]>;
 
     /**
@@ -135,7 +135,7 @@ declare namespace corde {
      * @since 5.0
      */
     onceRoleDelete(
-      options?: corde.IRoleEventOptions | undefined,
+      options?: corde.IRoleEventFilter | undefined,
     ): Promise<import("discord.js").Role>;
 
     /**
@@ -147,7 +147,7 @@ declare namespace corde {
      * @throws TimeoutError if no channel is created in the defined time.
      * @since 5.0
      */
-    onceEmojiCreate(options?: corde.IEmojiCreateOptions): Promise<import("discord.js").GuildEmoji>;
+    onceEmojiCreate(options?: corde.IEmojiCreateFilter): Promise<import("discord.js").GuildEmoji>;
 
     /**
      * Emitted when a custom guild emoji is deleted.
@@ -158,7 +158,7 @@ declare namespace corde {
      * @throws TimeoutError if no channel is created in the defined time.
      * @since 5.0
      */
-    onceEmojiDelete(options?: corde.IEmojiDeleteOptions): Promise<import("discord.js").GuildEmoji>;
+    onceEmojiDelete(options?: corde.IEmojiDeleteFilter): Promise<import("discord.js").GuildEmoji>;
 
     /**
      * Emitted when a custom guild emoji is updated.
@@ -170,7 +170,7 @@ declare namespace corde {
      * @since 5.0
      */
     onceEmojiUpdate(
-      options?: corde.IEmojiUpdateOptions,
+      options?: corde.IEmojiUpdateFilter,
     ): Promise<[import("discord.js").GuildEmoji, import("discord.js").GuildEmoji]>;
 
     /**
@@ -183,7 +183,7 @@ declare namespace corde {
      * @since 5.0
      */
     onceGuildBan(
-      options?: corde.IGuildBanOptions,
+      options?: corde.IGuildBanFilter,
     ): Promise<[import("discord.js").Guild, import("discord.js").User]>;
 
     /**
@@ -196,7 +196,7 @@ declare namespace corde {
      * @since 5.0
      */
     onceGuildBanRemove(
-      options?: corde.IGuildBanRemoveOptions,
+      options?: corde.IGuildBanRemoveFilter,
     ): Promise<[import("discord.js").Guild, import("discord.js").User]>;
 
     /**
@@ -208,7 +208,7 @@ declare namespace corde {
      * @throws TimeoutError if no channel is created in the defined time.
      * @since 5.0
      */
-    onceGuildCreate(options?: corde.IGuildCreateFilterOptions): Promise<import("discord.js").Guild>;
+    onceGuildCreate(options?: corde.IGuildCreateFilter): Promise<import("discord.js").Guild>;
 
     /**
      * Emitted when a guild is deleted/left.
@@ -219,7 +219,7 @@ declare namespace corde {
      * @throws TimeoutError if no channel is created in the defined time.
      * @since 5.0
      */
-    onceGuildDelete(options?: corde.IGuildDeleteOptions): Promise<import("discord.js").Guild>;
+    onceGuildDelete(options?: corde.IGuildDeleteFilter): Promise<import("discord.js").Guild>;
 
     /**
      * Emitted when a user joins a guild.
@@ -231,7 +231,7 @@ declare namespace corde {
      * @since 5.0
      */
     onceGuildMemberAdd(
-      options?: corde.IGuildMemberAddOptions,
+      options?: corde.IGuildMemberAddFilter,
     ): Promise<import("discord.js").GuildMember>;
 
     /**
@@ -244,7 +244,7 @@ declare namespace corde {
      * @since 5.0
      */
     onceGuildMemberAvailable(
-      options?: corde.IGuildMemberAvailableOptions,
+      options?: corde.IGuildMemberAvailableFilter,
     ): Promise<import("discord.js").GuildMember | import("discord.js").PartialGuildMember>;
 
     /**
@@ -257,7 +257,7 @@ declare namespace corde {
      * @since 5.0
      */
     onceGuildMemberRemove(
-      options?: corde.IGuildMemberRemoveOptions,
+      options?: corde.IGuildMemberRemoveFilter,
     ): Promise<import("discord.js").GuildMember | import("discord.js").PartialGuildMember>;
 
     /**
@@ -270,7 +270,7 @@ declare namespace corde {
      * @since 5.0
      */
     onceGuildMemberChunk(
-      options?: corde.IGuildMemberChunkOptions,
+      options?: corde.IGuildMemberChunkFilter,
     ): Promise<
       [
         import("discord.js").Collection<string, import("discord.js").GuildMember>,
@@ -288,7 +288,7 @@ declare namespace corde {
      * @since 5.0
      */
     onceGuildMemberSpeaking(
-      options?: corde.IGuildMemberSpeakingOptions,
+      options?: corde.IGuildMemberSpeakingFilter,
     ): Promise<import("discord.js").GuildMember | import("discord.js").PartialGuildMember>;
 
     /**
@@ -301,7 +301,7 @@ declare namespace corde {
      * @since 5.0
      */
     onceGuildMemberUpdate(
-      options?: corde.IGuildMemberUpdateOptions,
+      options?: corde.IGuildMemberUpdateFilter,
     ): Promise<
       [
         import("discord.js").GuildMember | import("discord.js").PartialGuildMember,
@@ -319,7 +319,7 @@ declare namespace corde {
      * @since 5.0
      */
     onceGuildUnavailable(
-      options?: corde.IGuildUnvailableOptions,
+      options?: corde.IGuildUnvailableFilter,
     ): Promise<import("discord.js").Guild>;
 
     /**
@@ -332,7 +332,7 @@ declare namespace corde {
      * @since 5.0
      */
     onceGuildUpdate(
-      options?: corde.IGuildUnvailableOptions,
+      options?: corde.IGuildUpdateFilter,
     ): Promise<[import("discord.js").Guild, import("discord.js").Guild]>;
 
     /**
@@ -345,7 +345,7 @@ declare namespace corde {
      * @since 5.0
      */
     onceMessageDelete(
-      options?: corde.IMessageDeleteOptions,
+      options?: corde.IMessageDeleteFilter,
     ): Promise<import("discord.js").Message | import("discord.js").PartialMessage>;
 
     /**
@@ -358,7 +358,7 @@ declare namespace corde {
      * @since 5.0
      */
     onceMessageDeleteBulk(
-      options?: corde.IMessageDeleteBulkOptions,
+      options?: corde.IMessageDeleteBulkFilter,
     ): Promise<
       import("discord.js").Collection<
         string,
@@ -376,7 +376,7 @@ declare namespace corde {
      * @since 5.0
      */
     onceMessageReactionRemove(
-      options?: corde.IMessageReactionRemoveOptions,
+      options?: corde.IMessageReactionRemoveFilter,
     ): Promise<
       [
         import("discord.js").MessageReaction,
@@ -394,7 +394,7 @@ declare namespace corde {
      * @since 5.0
      */
     onceMessageUpdate(
-      options?: corde.IMessageUpdateOptions,
+      options?: corde.IMessageUpdateFilter,
     ): Promise<
       [
         import("discord.js").Message | import("discord.js").PartialMessage,
@@ -412,7 +412,7 @@ declare namespace corde {
      * @since 5.0
      */
     onceMessagePinned(
-      options?: corde.IMessageEventOptions,
+      options?: corde.IMessageEventFilter,
     ): Promise<import("discord.js").Message | import("discord.js").PartialMessage>;
 
     /**
@@ -425,7 +425,7 @@ declare namespace corde {
      * @since 5.0
      */
     onceMessageUnPinned(
-      options?: corde.IMessageEventOptions,
+      options?: corde.IMessageEventFilter,
     ): Promise<import("discord.js").Message | import("discord.js").PartialMessage>;
 
     /**
@@ -438,7 +438,7 @@ declare namespace corde {
      * @since 5.0
      */
     onceMessageContentOrEmbedChange(
-      options?: corde.IMessageEventOptions,
+      options?: corde.IMessageEventFilter,
     ): Promise<import("discord.js").Message>;
 
     /**
@@ -451,7 +451,7 @@ declare namespace corde {
      * @since 5.0
      */
     oncePresenceUpdate(
-      options?: corde.IPresenceUpdateOptions,
+      options?: corde.IPresenceUpdateFilter,
     ): Promise<import("discord.js").Presence>;
 
     /**
@@ -463,7 +463,7 @@ declare namespace corde {
      * @throws TimeoutError if no channel is created in the defined time.
      * @since 5.0
      */
-    onceRoleCreate(options?: corde.IRoleCreateEventOptions): Promise<import("discord.js").Role>;
+    onceRoleCreate(options?: corde.IRoleCreateEventFilter): Promise<import("discord.js").Role>;
 
     /**
      * Emitted when a guild role is updated.
@@ -475,7 +475,7 @@ declare namespace corde {
      * @since 5.0
      */
     onceRoleUpdate(
-      options?: corde.IRoleUpdateEventOptions,
+      options?: corde.IRoleUpdateEventFilter,
     ): Promise<[import("discord.js").Role, import("discord.js").Role]>;
 
     /**
@@ -487,7 +487,7 @@ declare namespace corde {
      * @throws TimeoutError if no channel is created in the defined time.
      * @since 5.0
      */
-    onceRoleRenamed(options?: corde.IRoleEventOptions): Promise<import("discord.js").Role>;
+    onceRoleRenamed(options?: corde.IRoleEventFilter): Promise<import("discord.js").Role>;
 
     /**
      * Emitted when a role's `position` is updated.
@@ -498,7 +498,7 @@ declare namespace corde {
      * @throws TimeoutError if no channel is created in the defined time.
      * @since 5.0
      */
-    onceRolePositionUpdate(options?: corde.IRoleEventOptions): Promise<import("discord.js").Role>;
+    onceRolePositionUpdate(options?: corde.IRoleEventFilter): Promise<import("discord.js").Role>;
 
     /**
      * Emitted when a role's `color` is updated.
@@ -509,7 +509,7 @@ declare namespace corde {
      * @throws TimeoutError if no channel is created in the defined time.
      * @since 5.0
      */
-    onceRoleUpdateColor(options?: corde.IRoleEventOptions): Promise<import("discord.js").Role>;
+    onceRoleUpdateColor(options?: corde.IRoleEventFilter): Promise<import("discord.js").Role>;
 
     /**
      * Emitted when a role's `hoist` is updated.
@@ -520,7 +520,7 @@ declare namespace corde {
      * @throws TimeoutError if no channel is created in the defined time.
      * @since 5.0
      */
-    onceRoleHoistUpdate(options?: corde.IRoleEventOptions): Promise<import("discord.js").Role>;
+    onceRoleHoistUpdate(options?: corde.IRoleEventFilter): Promise<import("discord.js").Role>;
 
     /**
      * Emitted when a role's `mentionable` is updated.
@@ -531,9 +531,7 @@ declare namespace corde {
      * @throws TimeoutError if no channel is created in the defined time.
      * @since 5.0
      */
-    onceRoleMentionableUpdate(
-      options?: corde.IRoleEventOptions,
-    ): Promise<import("discord.js").Role>;
+    onceRoleMentionableUpdate(options?: corde.IRoleEventFilter): Promise<import("discord.js").Role>;
 
     /**
      * Emitted when a role's `permission` is updated.
@@ -545,7 +543,7 @@ declare namespace corde {
      * @since 5.0
      */
     onceRolePermissionUpdate(
-      options?: corde.IRolePermissionUpdateOptions,
+      options?: corde.IRolePermissionUpdateFilter,
     ): Promise<import("discord.js").Role>;
 
     /**
@@ -558,7 +556,7 @@ declare namespace corde {
      * @since 5.0
      */
     onceUserUpdate(
-      options?: corde.IUserUpdateOptions,
+      options?: corde.IUserUpdateFilter,
     ): Promise<
       [import("discord.js").User | import("discord.js").PartialUser, import("discord.js").User]
     >;
@@ -573,7 +571,7 @@ declare namespace corde {
      * @since 5.0
      */
     onceVoiceStateUpdate(
-      options?: corde.IVoiceStateUpdateOptions,
+      options?: corde.IVoiceStateUpdateFilter,
     ): Promise<[import("discord.js").VoiceState, import("discord.js").VoiceState]>;
   }
 }

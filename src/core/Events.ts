@@ -67,14 +67,14 @@ export class Events implements corde.IOnceEvents {
    * @internal
    */
   onceMessageReactionRemoveEmoji(
-    options?: corde.IMessageReactionRemoveEmojiOptions,
+    options?: corde.IMessageReactionRemoveEmojiFilter,
   ): Promise<MessageReaction> {
     const validator = new Validator<[MessageReaction]>();
 
-    if (options?.emojis) {
+    if (options?.emoji) {
       validator.add(
         (message) =>
-          options.emojis?.name === message.emoji.name || options.emojis?.id === message.emoji.id,
+          options.emoji?.name === message.emoji.name || options.emoji?.id === message.emoji.id,
       );
     }
 
@@ -109,7 +109,7 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceChannelCreate(options?: corde.CreateChannelOptions): Promise<Channel> {
+  onceChannelCreate(options?: corde.ICreateChannelFilter): Promise<Channel> {
     const validator = new Validator<[Channel]>();
 
     if (options?.name) {
@@ -141,7 +141,7 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceChannelDelete(options?: corde.IChannelDeleteOptions): Promise<Channel> {
+  onceChannelDelete(options?: corde.IChannelDeleteFilter): Promise<Channel> {
     const validator = new Validator<[Channel]>();
 
     if (options?.channel) {
@@ -167,7 +167,7 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceChannelPinsUpdate(options?: corde.IChannelPinsUpdateOptions): Promise<[Channel, Date]> {
+  onceChannelPinsUpdate(options?: corde.IChannelPinsUpdateFilter): Promise<[Channel, Date]> {
     const validator = new Validator<[Channel]>();
 
     if (options?.channel) {
@@ -193,7 +193,7 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceChannelUpdate(options?: corde.IChannelUpdateOptions): Promise<[Channel, Channel]> {
+  onceChannelUpdate(options?: corde.IChannelUpdateFilter): Promise<[Channel, Channel]> {
     const validator = new Validator<[Channel]>();
 
     if (options?.channel) {
@@ -233,15 +233,15 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceRoleDelete(options?: corde.IRoleEventOptions): Promise<Role> {
+  onceRoleDelete(options?: corde.IRoleEventFilter): Promise<Role> {
     const validator = new Validator<[Role]>();
 
-    if (options?.roleIdentifier) {
-      validator.add((role) => this.roleMatchRoleData(options?.roleIdentifier, role));
+    if (options?.id || options?.name) {
+      validator.add((role) => this.roleMatchRoleData({ id: options.id, name: options.name }, role));
     }
 
-    if (options?.guildId) {
-      validator.add((role) => role.guild.id === options?.guildId);
+    if (options?.guild) {
+      validator.add((role) => this.getguildValidation(role.guild, options.guild));
     }
 
     return executePromiseWithTimeout((resolve) => {
@@ -281,13 +281,12 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceEmojiCreate(options?: corde.IEmojiCreateOptions): Promise<GuildEmoji> {
+  onceEmojiCreate(options?: corde.IEmojiCreateFilter): Promise<GuildEmoji> {
     const validator = new Validator<[GuildEmoji]>();
 
-    if (options?.emojiIdentifier) {
+    if (options?.emoji) {
       validator.add(
-        (emoji) =>
-          emoji.name === options.emojiIdentifier?.name || emoji.id === options.emojiIdentifier?.id,
+        (emoji) => emoji.name === options.emoji?.name || emoji.id === options.emoji?.id,
       );
     }
 
@@ -310,13 +309,12 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceEmojiDelete(options?: corde.IEmojiDeleteOptions): Promise<GuildEmoji> {
+  onceEmojiDelete(options?: corde.IEmojiDeleteFilter): Promise<GuildEmoji> {
     const validator = new Validator<[GuildEmoji]>();
 
-    if (options?.emojiIdentifier) {
+    if (options?.emoji) {
       validator.add(
-        (emoji) =>
-          emoji.name === options.emojiIdentifier?.name || emoji.id === options.emojiIdentifier?.id,
+        (emoji) => emoji.name === options.emoji?.name || emoji.id === options.emoji?.id,
       );
     }
 
@@ -339,13 +337,12 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceEmojiUpdate(options?: corde.IEmojiDeleteOptions): Promise<[GuildEmoji, GuildEmoji]> {
+  onceEmojiUpdate(options?: corde.IEmojiDeleteFilter): Promise<[GuildEmoji, GuildEmoji]> {
     const validator = new Validator<[GuildEmoji]>();
 
-    if (options?.emojiIdentifier) {
+    if (options?.emoji) {
       validator.add(
-        (emoji) =>
-          emoji.name === options.emojiIdentifier?.name || emoji.id === options.emojiIdentifier?.id,
+        (emoji) => emoji.name === options.emoji?.name || emoji.id === options.emoji?.id,
       );
     }
 
@@ -382,19 +379,15 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceGuildBan(options?: corde.IGuildBanOptions) {
+  onceGuildBan(options?: corde.IGuildBanFilter) {
     const validator = new Validator<[Guild, User]>();
 
-    if (options?.guildIdentifier) {
-      validator.add((guild) => this.getGuildIdentifierValidation(guild, options.guildIdentifier));
+    if (options?.guild) {
+      validator.add((guild) => this.getguildValidation(guild, options.guild));
     }
 
-    if (options?.guildIdentifier) {
-      validator.add((guild) => this.getGuildIdentifierValidation(guild, options.guildIdentifier));
-    }
-
-    if (options?.userIdentifier) {
-      validator.add((_, user) => this.getUserIdentifierValidation(user, options?.userIdentifier));
+    if (options?.user) {
+      validator.add((_, user) => this.getUserIdentifierValidation(user, options?.user));
     }
 
     return executePromiseWithTimeout<[Guild, User]>((resolve) => {
@@ -416,19 +409,15 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceGuildBanRemove(options?: corde.IGuildBanRemoveOptions) {
+  onceGuildBanRemove(options?: corde.IGuildBanRemoveFilter) {
     const validator = new Validator<[Guild, User]>();
 
-    if (options?.guildIdentifier) {
-      validator.add((guild) => this.getGuildIdentifierValidation(guild, options.guildIdentifier));
+    if (options?.guild) {
+      validator.add((guild) => this.getguildValidation(guild, options.guild));
     }
 
-    if (options?.guildIdentifier) {
-      validator.add((guild) => this.getGuildIdentifierValidation(guild, options.guildIdentifier));
-    }
-
-    if (options?.userIdentifier) {
-      validator.add((_, user) => this.getUserIdentifierValidation(user, options?.userIdentifier));
+    if (options?.user) {
+      validator.add((_, user) => this.getUserIdentifierValidation(user, options?.user));
     }
 
     return executePromiseWithTimeout<[Guild, User]>((resolve) => {
@@ -450,7 +439,7 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceGuildCreate(options?: corde.IGuildCreateFilterOptions) {
+  onceGuildCreate(options?: corde.IGuildCreateFilter) {
     const validator = new Validator<[Guild]>();
 
     if (options?.name) {
@@ -476,12 +465,12 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceGuildDelete(options?: corde.IGuildDeleteOptions) {
+  onceGuildDelete(options?: corde.IGuildDeleteFilter) {
     const validator = new Validator<[Guild]>();
 
     if (options?.name || options?.id) {
       validator.add((guild) =>
-        this.getGuildIdentifierValidation(guild, { id: options.id, name: options.name }),
+        this.getguildValidation(guild, { id: options.id, name: options.name }),
       );
     }
 
@@ -504,14 +493,14 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceGuildMemberAdd(options?: corde.IGuildMemberAddOptions) {
+  onceGuildMemberAdd(options?: corde.IGuildMemberAddFilter) {
     const validator = new Validator<[GuildMember]>();
     if (options?.member) {
       validator.add((member) => this.getGuildMemberIdentifierValidation(member, options.member));
     }
 
     if (options?.guild) {
-      validator.add((member) => this.getGuildIdentifierValidation(member.guild, options.guild));
+      validator.add((member) => this.getguildValidation(member.guild, options.guild));
     }
 
     if (options?.user) {
@@ -537,7 +526,7 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceGuildMemberAvailable(options?: corde.IGuildMemberAvailableOptions) {
+  onceGuildMemberAvailable(options?: corde.IGuildMemberAvailableFilter) {
     const validator = new Validator<[GuildMember | PartialGuildMember]>();
 
     if (options?.member) {
@@ -563,7 +552,7 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceGuildMemberRemove(options?: corde.IGuildMemberRemoveOptions) {
+  onceGuildMemberRemove(options?: corde.IGuildMemberRemoveFilter) {
     const validator = new Validator<[GuildMember | PartialGuildMember]>();
 
     if (options?.member) {
@@ -595,11 +584,11 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceGuildMemberChunk(options?: corde.IGuildMemberChunkOptions) {
+  onceGuildMemberChunk(options?: corde.IGuildMemberChunkFilter) {
     const validator = new Validator<[Collection<string, GuildMember>, Guild]>();
 
     if (options?.guild) {
-      validator.add((_, guild) => this.getGuildIdentifierValidation(guild, options.guild));
+      validator.add((_, guild) => this.getguildValidation(guild, options.guild));
     }
 
     if (options?.guildMembers && options.guildMembers.length > 0) {
@@ -633,7 +622,7 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceGuildMemberSpeaking(options?: corde.IGuildMemberSpeakingOptions) {
+  onceGuildMemberSpeaking(options?: corde.IGuildMemberSpeakingFilter) {
     const validator = new Validator<[GuildMember | PartialGuildMember]>();
 
     if (options?.id || options?.nickname) {
@@ -666,7 +655,7 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceGuildMemberUpdate(options?: corde.IGuildMemberUpdateOptions) {
+  onceGuildMemberUpdate(options?: corde.IGuildMemberUpdateFilter) {
     const validator = new Validator<[GuildMember | PartialGuildMember, GuildMember]>();
 
     if (options?.id || options?.nickname) {
@@ -697,12 +686,12 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceGuildUnavailable(options?: corde.IGuildUnvailableOptions) {
+  onceGuildUnavailable(options?: corde.IGuildUnvailableFilter) {
     const validator = new Validator<[Guild]>();
 
     if (options?.id || options?.name) {
       validator.add((guild) =>
-        this.getGuildIdentifierValidation(guild, { id: options.id, name: options.name }),
+        this.getguildValidation(guild, { id: options.id, name: options.name }),
       );
     }
     return executePromiseWithTimeout<Guild>((resolve) => {
@@ -724,12 +713,12 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceGuildUpdate(options?: corde.IGuildUnvailableOptions) {
+  onceGuildUpdate(options?: corde.IGuildUnvailableFilter) {
     const validator = new Validator<[Guild, Guild]>();
 
     if (options?.id || options?.name) {
       validator.add((guild) =>
-        this.getGuildIdentifierValidation(guild, { id: options.id, name: options.name }),
+        this.getguildValidation(guild, { id: options.id, name: options.name }),
       );
     }
     return executePromiseWithTimeout<[Guild, Guild]>((resolve) => {
@@ -792,7 +781,7 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceMessageDelete(options?: corde.IMessageDeleteOptions) {
+  onceMessageDelete(options?: corde.IMessageDeleteFilter) {
     const validator = new Validator<[Message | PartialMessage]>();
 
     if (options?.author) {
@@ -822,10 +811,10 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceMessageDeleteBulk(options?: corde.IMessageDeleteBulkOptions) {
+  onceMessageDeleteBulk(options?: corde.IMessageDeleteBulkFilter) {
     const validator = new Validator<[Collection<string, Message | PartialMessage>]>();
 
-    const _options = this.getIMessageDeleteOptionsArray(options);
+    const _options = this.getIMessageDeleteFilterArray(options);
 
     for (const option of _options) {
       if (option?.author) {
@@ -856,7 +845,7 @@ export class Events implements corde.IOnceEvents {
     }, options?.timeout);
   }
 
-  private getIMessageDeleteOptionsArray(deleteOptions?: corde.IMessageDeleteBulkOptions) {
+  private getIMessageDeleteFilterArray(deleteOptions?: corde.IMessageDeleteBulkFilter) {
     if (!deleteOptions?.options) {
       return [];
     }
@@ -878,7 +867,7 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceMessageReactionAdd(options?: corde.IMessageReactionAddOptions) {
+  onceMessageReactionAdd(options?: corde.IMessageReactionAddFilter) {
     const validator = new Validator<[MessageReaction, User | PartialUser]>();
 
     if (options?.author) {
@@ -891,10 +880,10 @@ export class Events implements corde.IOnceEvents {
       );
     }
 
-    if (options?.emojis) {
+    if (options?.emoji) {
       validator.add(
         (reaction) =>
-          options.emojis?.id === reaction.emoji.id || options.emojis?.name === reaction.emoji.name,
+          options.emoji?.id === reaction.emoji.id || options.emoji?.name === reaction.emoji.name,
       );
     }
 
@@ -916,44 +905,43 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceMessageReactionsAdd(filter?: corde.ISearchMessageReactionsOptions) {
+  onceMessageReactionsAdd(filter?: corde.ISearchMessageReactionsFilter) {
     return this._onceMessageReactionUpdate("onMessageReactionAdd", filter);
   }
 
   /**
    * @internal
    */
-  onceMessageReactionsRemove(filter?: corde.ISearchMessageReactionsOptions) {
+  onceMessageReactionsRemove(filter?: corde.ISearchMessageReactionsFilter) {
     return this._onceMessageReactionUpdate("onMessageReactionRemoveEmoji", filter);
   }
 
   private _onceMessageReactionUpdate(
     event: "onMessageReactionAdd" | "onMessageReactionRemoveEmoji",
-    filter?: corde.ISearchMessageReactionsOptions,
+    filter?: corde.ISearchMessageReactionsFilter,
   ) {
-    const { emojis, messageIdentifier, authorId, timeout, channelId } = filter ?? {};
-
     const validator = new Validator<[MessageReaction, User | PartialUser | void]>();
 
-    if (emojis) {
+    if (filter?.emojis) {
       validator.add((reaction) =>
-        emojis.some((e) => e.id === reaction.emoji.id || e.name === reaction.emoji.name),
+        filter?.emojis?.some((e) => e.id === reaction.emoji.id || e.name === reaction.emoji.name),
       );
     }
 
-    if (channelId) {
-      validator.add((reaction) => reaction.message.channel.id === channelId);
-    }
-
-    if (messageIdentifier) {
-      validator.add(
-        ({ message }) =>
-          message.id === messageIdentifier.id || message.content === messageIdentifier.content,
+    if (filter?.channel) {
+      validator.add((reaction) =>
+        this.getChannelIdentifierValidation(reaction.message.channel, filter?.channel),
       );
     }
 
-    if (authorId) {
-      validator.add((_, author) => !author || author.id === authorId);
+    if (filter?.message) {
+      validator.add((reaction) =>
+        this.getMessageIdentifierValidation(reaction.message, filter?.message),
+      );
+    }
+
+    if (filter?.author) {
+      validator.add((_, author) => this.getUserIdentifierValidation(author, filter?.author));
     }
 
     const response: [MessageReaction, User | PartialUser | void][] = [];
@@ -964,16 +952,16 @@ export class Events implements corde.IOnceEvents {
             response.push([reaction, author]);
           }
 
-          if (!emojis && !authorId && !messageIdentifier) {
+          if (!filter?.emojis && !filter?.author && !filter?.message) {
             resolve(response);
           }
 
-          if (response.length === emojis?.length) {
+          if (response.length === filter?.emojis?.length) {
             resolve(response);
           }
         });
       },
-      timeout,
+      filter?.timeout,
       response,
     );
   }
@@ -993,7 +981,7 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceMessageReactionRemove(options?: corde.IMessageReactionRemoveOptions) {
+  onceMessageReactionRemove(options?: corde.IMessageReactionRemoveFilter) {
     const validator = new Validator<[MessageReaction, User | PartialUser]>();
 
     if (options?.author) {
@@ -1006,10 +994,10 @@ export class Events implements corde.IOnceEvents {
       );
     }
 
-    if (options?.emojis) {
+    if (options?.emoji) {
       validator.add(
         (reaction) =>
-          options.emojis?.id === reaction.emoji.id || options.emojis?.name === reaction.emoji.name,
+          options.emoji?.id === reaction.emoji.id || options.emoji?.name === reaction.emoji.name,
       );
     }
 
@@ -1070,7 +1058,7 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceMessageUpdate(options?: corde.IMessageUpdateOptions) {
+  onceMessageUpdate(options?: corde.IMessageUpdateFilter) {
     const validator = new Validator<[Message | PartialMessage, Message | PartialMessage]>();
 
     if (options?.id || options?.content) {
@@ -1097,7 +1085,7 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceMessagePinned(options?: corde.IMessageEventOptions) {
+  onceMessagePinned(options?: corde.IMessageEventFilter) {
     return this._onceMessageSetPinneble(
       (oldMessage, newMessage) => !(oldMessage.pinned as boolean) && (newMessage.pinned as boolean),
       options,
@@ -1107,7 +1095,7 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceMessageUnPinned(options?: corde.IMessageEventOptions) {
+  onceMessageUnPinned(options?: corde.IMessageEventFilter) {
     return this._onceMessageSetPinneble(
       (oldMessage, newMessage) => (oldMessage.pinned as boolean) && !(newMessage.pinned as boolean),
       options,
@@ -1119,7 +1107,7 @@ export class Events implements corde.IOnceEvents {
       oldMessage: Message | PartialMessage,
       newMessage: Message | PartialMessage,
     ) => boolean,
-    options?: corde.IMessageEventOptions,
+    options?: corde.IMessageEventFilter,
   ) {
     const validator = new Validator<[Message | PartialMessage, Message | PartialMessage]>();
     validator.add(validation);
@@ -1148,7 +1136,7 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceMessageContentOrEmbedChange(options?: corde.IMessageEventOptions) {
+  onceMessageContentOrEmbedChange(options?: corde.IMessageEventFilter) {
     const validator = new Validator<[Message | PartialMessage, Message | PartialMessage]>();
     validator.add(
       (oldMessage, newMessage) =>
@@ -1197,25 +1185,25 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  oncePresenceUpdate(options?: corde.IPresenceUpdateOptions) {
+  oncePresenceUpdate(options?: corde.IPresenceUpdateFilter) {
     const validator = new Validator<[Presence]>();
 
     if (options?.guild) {
-      validator.add(({ guild }) => this.getGuildIdentifierValidation(guild, options.guild));
+      validator.add(({ guild }) => this.getguildValidation(guild, options.guild));
     }
 
-    if (options?.clientePresence?.desktop) {
+    if (options?.clientPresence?.desktop) {
       validator.add(
-        ({ clientStatus }) => clientStatus?.desktop === options.clientePresence?.desktop,
+        ({ clientStatus }) => clientStatus?.desktop === options.clientPresence?.desktop,
       );
     }
 
-    if (options?.clientePresence?.mobile) {
-      validator.add(({ clientStatus }) => clientStatus?.mobile === options.clientePresence?.mobile);
+    if (options?.clientPresence?.mobile) {
+      validator.add(({ clientStatus }) => clientStatus?.mobile === options.clientPresence?.mobile);
     }
 
-    if (options?.clientePresence?.web) {
-      validator.add(({ clientStatus }) => clientStatus?.web === options.clientePresence?.web);
+    if (options?.clientPresence?.web) {
+      validator.add(({ clientStatus }) => clientStatus?.web === options.clientPresence?.web);
     }
 
     if (options?.presenceStatus) {
@@ -1247,7 +1235,7 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceRoleCreate(options?: corde.IRoleCreateEventOptions) {
+  onceRoleCreate(options?: corde.IRoleCreateEventFilter) {
     const validator = new Validator<[Role]>();
 
     if (options?.name) {
@@ -1255,7 +1243,7 @@ export class Events implements corde.IOnceEvents {
     }
 
     if (options?.guild) {
-      validator.add(({ guild }) => this.getGuildIdentifierValidation(guild, options.guild));
+      validator.add(({ guild }) => this.getguildValidation(guild, options.guild));
     }
 
     return executePromiseWithTimeout<Role>((resolve) => {
@@ -1279,13 +1267,11 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceRoleUpdate(options?: corde.IRoleUpdateEventOptions) {
+  onceRoleUpdate(options?: corde.IRoleUpdateEventFilter) {
     const validator = new Validator<[Role, Role]>();
 
     if (options?.id || options?.name) {
-      validator.add((role) =>
-        this.getRoleIdentifierValidation(role, { id: options.id, name: options.name }),
-      );
+      validator.add((role) => this.getroleValidation(role, { id: options.id, name: options.name }));
     }
 
     return executePromiseWithTimeout<[Role, Role]>((resolve) => {
@@ -1310,7 +1296,7 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceRolePositionUpdate(options?: corde.IRoleEventOptions) {
+  onceRolePositionUpdate(options?: corde.IRoleEventFilter) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.rawPosition !== newRole.rawPosition,
       options,
@@ -1320,7 +1306,7 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceRoleUpdateColor(options?: corde.IRoleEventOptions) {
+  onceRoleUpdateColor(options?: corde.IRoleEventFilter) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.color !== newRole.color,
       options,
@@ -1330,7 +1316,7 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceRoleHoistUpdate(options?: corde.IRoleEventOptions) {
+  onceRoleHoistUpdate(options?: corde.IRoleEventFilter) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.hoist !== newRole.hoist,
       options,
@@ -1340,7 +1326,7 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceRoleMentionableUpdate(options?: corde.IRoleEventOptions) {
+  onceRoleMentionableUpdate(options?: corde.IRoleEventFilter) {
     return this._onRoleUpdateWithTimeout(
       (oldRole, newRole) => oldRole.mentionable !== newRole.mentionable,
       options,
@@ -1350,15 +1336,17 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceRolePermissionUpdate(options?: corde.IRolePermissionUpdateOptions) {
+  onceRolePermissionUpdate(options?: corde.IRolePermissionUpdateFilter) {
     const validator = new Validator<[Role, Role]>();
 
-    if (options?.role) {
-      validator.add((_, newRole) => this.roleMatchRoleData(options?.role, newRole));
+    if (options?.id || options?.name) {
+      validator.add((_, newRole) =>
+        this.roleMatchRoleData({ id: options.id, name: options.name }, newRole),
+      );
     }
 
     if (options?.guild) {
-      validator.add((newRole) => this.getGuildIdentifierValidation(newRole.guild, options?.guild));
+      validator.add((newRole) => this.getguildValidation(newRole.guild, options?.guild));
     }
 
     return executePromiseWithTimeout<Role>((resolve) => {
@@ -1371,7 +1359,7 @@ export class Events implements corde.IOnceEvents {
   }
 
   private roleMatchRoleData(roleIdentifier: corde.IRoleIdentifier | undefined, role: Role) {
-    return role.id === roleIdentifier?.id || role.name === roleIdentifier?.name;
+    return roleIdentifier?.id === role?.id || roleIdentifier?.name === role?.name;
   }
 
   /**
@@ -1403,7 +1391,7 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceUserUpdate(options?: corde.IUserUpdateOptions) {
+  onceUserUpdate(options?: corde.IUserUpdateFilter) {
     const validator = new Validator<[User | PartialUser, User]>();
 
     if (options?.user) {
@@ -1431,7 +1419,7 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceVoiceStateUpdate(options?: corde.IVoiceStateUpdateOptions) {
+  onceVoiceStateUpdate(options?: corde.IVoiceStateUpdateFilter) {
     const validator = new Validator<[VoiceState, VoiceState]>();
 
     if (!isNullOrUndefined(options?.channel)) {
@@ -1441,7 +1429,7 @@ export class Events implements corde.IOnceEvents {
     }
 
     if (!isNullOrUndefined(options?.guild)) {
-      validator.add((_, state) => this.getGuildIdentifierValidation(state.guild, options?.guild));
+      validator.add((_, state) => this.getguildValidation(state.guild, options?.guild));
     }
 
     if (!isNullOrUndefined(options?.id)) {
@@ -1501,18 +1489,20 @@ export class Events implements corde.IOnceEvents {
 
   private _onRoleUpdateWithTimeout(
     comparable: (oldRole: Role, newRole: Role) => boolean,
-    options?: corde.IRoleEventOptions,
+    options?: corde.IRoleEventFilter,
   ) {
     const validator = new Validator<[Role, Role]>();
 
     validator.add((oldRole, newRole) => comparable(oldRole, newRole));
 
-    if (options?.roleIdentifier) {
-      validator.add((_, newRole) => this.roleMatchRoleData(options?.roleIdentifier, newRole));
+    if (options?.id || options?.name) {
+      validator.add((_, newRole) =>
+        this.roleMatchRoleData({ id: options?.id, name: options?.name }, newRole),
+      );
     }
 
-    if (options?.guildId) {
-      validator.add((role) => role.guild.id === options?.guildId);
+    if (options?.guild) {
+      validator.add((role) => this.getroleValidation(role, options.guild));
     }
 
     return executePromiseWithTimeout<Role>((resolve) => {
@@ -1524,10 +1514,7 @@ export class Events implements corde.IOnceEvents {
     }, options?.timeout);
   }
 
-  private getRoleIdentifierValidation(
-    role: Optional<Role>,
-    identifier: Optional<corde.IRoleIdentifier>,
-  ) {
+  private getroleValidation(role: Optional<Role>, identifier: Optional<corde.IRoleIdentifier>) {
     return role?.name === identifier?.name || role?.id === identifier?.id;
   }
 
@@ -1546,10 +1533,7 @@ export class Events implements corde.IOnceEvents {
     return channel?.id === identifier?.id;
   }
 
-  private getGuildIdentifierValidation(
-    guild: Optional<Guild>,
-    identifier: Optional<corde.IGuildIdentifier>,
-  ) {
+  private getguildValidation(guild: Optional<Guild>, identifier: Optional<corde.IGuildIdentifier>) {
     return guild?.name === identifier?.name || guild?.id === identifier?.id;
   }
 
@@ -1568,7 +1552,7 @@ export class Events implements corde.IOnceEvents {
   }
 
   private getUserIdentifierValidation(
-    user: Optional<User | PartialUser>,
+    user: void | Optional<User | PartialUser>,
     identifier: Optional<corde.IUserIdentifier>,
   ) {
     return user?.id === identifier?.id || user?.username === identifier?.name;

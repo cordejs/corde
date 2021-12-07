@@ -37,9 +37,9 @@ export async function shouldEditMessage(
 
   try {
     returnedMessage = await this.cordeBot.events.onceMessageContentOrEmbedChange({
-      messageIdentifier: _messageData,
+      message: _messageData,
       timeout: this.timeout,
-      channelId: this.channelId,
+      channel: { id: this.channelId },
     });
   } catch {
     if (this.isNot) {

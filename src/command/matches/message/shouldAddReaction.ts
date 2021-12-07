@@ -49,11 +49,11 @@ async function _shouldAddReaction(
       typeof messageIdentifier === "string" ? { id: messageIdentifier } : messageIdentifier;
 
     reactionsWithAuthors = await this.cordeBot.events.onceMessageReactionsAdd({
-      authorId: this.cordeBot.testBotId,
+      author: { id: this.cordeBot.testBotId },
       emojis: emojiLike,
-      messageIdentifier: _messageData,
+      message: _messageData,
       timeout: this.timeout,
-      channelId: this.channelId,
+      channel: { id: this.channelId },
     });
   } catch (error) {
     if (this.isNot) {

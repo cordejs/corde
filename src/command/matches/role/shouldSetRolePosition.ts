@@ -55,11 +55,11 @@ export async function shouldSetRolePosition(
   }
 
   try {
-    role = await this.cordeBot.events.onceRolePositionUpdate(
-      identifier,
-      this.timeout,
-      this.guildId,
-    );
+    role = await this.cordeBot.events.onceRolePositionUpdate({
+      ...identifier,
+      timeout: this.timeout,
+      guild: { id: this.guildId },
+    });
   } catch {
     if (this.isNot) {
       return this.createPassTest();

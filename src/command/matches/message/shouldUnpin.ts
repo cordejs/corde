@@ -36,9 +36,9 @@ export async function shouldUnPin(
   const msgString = messageUtils.humanizeMessageIdentifierObject(_msgIdentifier);
   try {
     await this.cordeBot.events.onceMessageUnPinned({
-      messageIdentifier: _msgIdentifier,
+      message: _msgIdentifier,
       timeout: this.timeout,
-      channelId: this.channelId,
+      channel: { id: this.channelId },
     });
   } catch {
     if (this.isNot) {

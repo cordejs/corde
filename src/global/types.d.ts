@@ -20,10 +20,15 @@ declare namespace corde {
     nonce: string | undefined;
   }
 
-  export interface ICreateChannelFilter {
+  export interface ICreateChannelFilter extends IDefaultOptions {
+    /**
+     * Filter by the channel's name.
+     */
     name?: string;
+    /**
+     * Filter by a channel that is Text (`TextChannel` | `DMChannel` | `NewsChannel`).
+     */
     isText?: boolean;
-    timeout?: number;
   }
 
   export interface IDescribeClousure {
@@ -103,95 +108,204 @@ declare namespace corde {
   }
 
   export interface IDefaultOptions {
+    /**
+     * Time in seconds to corde waits for an event occour.
+     */
     timeout?: number;
   }
 
-  export interface IGuildMemberSpeakingOptions extends IGuildMemberIdentifier, IDefaultOptions {}
-  export interface IGuildMemberUpdateOptions extends IGuildMemberIdentifier, IDefaultOptions {}
-  export interface IGuildUnvailableOptions extends IGuildIdentifier, IDefaultOptions {}
-  export interface IGuildUpdateOptions extends IGuildIdentifier, IDefaultOptions {}
+  export interface IGuildMemberSpeakingFilter extends IGuildMemberIdentifier, IDefaultOptions {}
+  export interface IGuildMemberUpdateFilter extends IGuildMemberIdentifier, IDefaultOptions {}
+  export interface IGuildUnvailableFilter extends IGuildIdentifier, IDefaultOptions {}
+  export interface IGuildUpdateFilter extends IGuildIdentifier, IDefaultOptions {}
 
-  export interface IGuildMemberChunkOptions {
-    timeout?: number;
+  export interface IGuildMemberChunkFilter extends IDefaultOptions {
+    /**
+     * Filter by guild.
+     */
     guild?: corde.IGuildIdentifier;
+    /**
+     * Filter by guild's members.
+     */
     guildMembers?: corde.IGuildMemberIdentifier[];
   }
 
-  export interface IEmojiDeleteOptions extends IEmojiCreateOptions {}
-  export interface IEmojiUpdateOptions extends IEmojiCreateOptions {}
+  export interface IEmojiDeleteFilter extends IEmojiCreateFilter {}
+  export interface IEmojiUpdateFilter extends IEmojiCreateFilter {}
 
-  export interface IGuildMemberRemoveOptions extends IGuildMemberAvailableOptions {}
+  export interface IGuildMemberRemoveFilter extends IGuildMemberAvailableFilter {}
 
-  export interface IGuildMemberAvailableOptions extends IDefaultOptions {
+  export interface IGuildMemberAvailableFilter extends IDefaultOptions {
+    /**
+     * Filter by guild member.
+     */
     member?: corde.IGuildMemberIdentifier;
   }
 
-  export interface IGuildMemberAddOptions extends IDefaultOptions {
+  export interface IGuildMemberAddFilter extends IDefaultOptions {
+    /**
+     * Filter by guild member.
+     */
     member?: corde.IGuildMemberIdentifier;
+    /**
+     * Filter by guild identifier.
+     */
     guild?: corde.IGuildIdentifier;
+    /**
+     * Filter by user's identifier.
+     */
     user?: corde.IUserIdentifier;
   }
 
-  export interface IEmojiCreateOptions extends IDefaultOptions {
-    emojiIdentifier?: corde.IEmoji;
+  export interface IEmojiCreateFilter extends IDefaultOptions {
+    /**
+     * Filter by emoji.
+     */
+    emoji?: corde.IEmoji;
   }
 
-  export interface IChannelPinsUpdateOptions extends IChannelDeleteOptions {}
-  export interface IChannelUpdateOptions extends IChannelDeleteOptions {}
+  export interface IChannelPinsUpdateFilter extends IChannelDeleteFilter {}
+  export interface IChannelUpdateFilter extends IChannelDeleteFilter {}
 
-  export interface IChannelDeleteOptions extends IDefaultOptions {
-    channelIdentifier?: corde.IChannelIdentifier;
+  export interface IChannelDeleteFilter extends IDefaultOptions {
+    /**
+     * Filter by a channel's identifier.
+     */
+    channel?: IChannelIdentifier;
   }
 
-  export interface IMessageDeleteBulkOptions {
-    options?: Omit<IMessageDeleteOptions, "timeout"> | Omit<IMessageDeleteOptions, "timeout">[];
-    timeout?: number;
+  export interface IMessageDeleteBulkFilter extends IDefaultOptions {
+    options?: Omit<IMessageDeleteFilter, "timeout"> | Omit<IMessageDeleteFilter, "timeout">[];
   }
 
-  export interface IMessageDeleteOptions extends IMessageEventOptions {}
+  export interface IMessageDeleteFilter extends IMessageEventFilter {}
 
   export interface IPresenceUpdateEventOptions {
+    /**
+     * Filter by user's identifier.
+     */
     user?: corde.IUserIdentifier;
+    /**
+     * Filter by the presence status.
+     */
     presenceStatus?: import("discord.js").PresenceStatus;
+    /**
+     * Filter by guild's identifier.
+     */
     guild?: corde.IGuildIdentifier;
-    clientePresence?: import("discord.js").ClientPresenceStatusData;
+    /**
+     * Filter by client presence.
+     */
+    clientPresence?: import("discord.js").ClientPresenceStatusData;
   }
 
-  export interface IRoleCreateEventOptions extends IDefaultOptions {
+  export interface IRoleCreateEventFilter extends IDefaultOptions {
+    /**
+     * Filter by role's name.
+     */
     name?: string;
+    /**
+     * Filter by guild's identifier.
+     */
     guild?: corde.IGuildIdentifier;
   }
 
-  export interface IRoleUpdateEventOptions extends IDefaultOptions, IRoleIdentifier {}
-  export interface IRoleRenamedEventOptions extends IRoleUpdateEventOptions {}
+  export interface IRoleUpdateEventFilter extends IDefaultOptions, IRoleIdentifier {}
+  export interface IRoleRenamedEventOptions extends IRoleUpdateEventFilter {}
 
-  export interface IMessageEventOptions extends IDefaultOptions {
-    messageIdentifier?: corde.IMessageIdentifier;
-    authorId?: string;
-    channelId?: string | null;
+  export interface IMessageEventFilter extends IDefaultOptions {
+    /**
+     * Filter by a message's identifier.
+     */
+    message?: IMessageIdentifier;
+    /**
+     * Filter by a author's identifier.
+     */
+    author?: IAuthorIdentifier;
+    /**
+     * Filter by a channel's identifier.
+     */
+    channel?: IChannelIdentifier;
   }
 
-  export interface IMessageReactionAddOptions extends IMessageReactionRemoveOptions {}
+  export interface IAuthorIdentifier {
+    /**
+     * User's id.
+     */
+    id?: string;
+    /**
+     * User's username.
+     */
+    username?: string;
+    /**
+     * Filter by if the author is or not a bot.
+     */
+    isBot?: boolean;
+  }
+
+  export interface IMessageReactionAddFilter extends IMessageReactionRemoveFilter {}
 
   export interface IMessageReactionRemoveAllOptions extends IMessageIdentifier, IDefaultOptions {}
-  export interface IMessageUpdateOptions extends IMessageIdentifier, IDefaultOptions {}
+  export interface IMessageUpdateFilter extends IMessageIdentifier, IDefaultOptions {}
 
-  export interface IMessageReactionRemoveOptions extends IDefaultOptions {
-    emojis?: corde.IEmoji;
-    messageIdentifier?: corde.IMessageIdentifier;
-    authorId?: string;
-    channelId?: string;
+  export interface IMessageReactionRemoveFilter extends IDefaultOptions {
+    /**
+     * Filter by the reaction emoji.
+     */
+    emoji?: IEmoji;
+    /**
+     * Filter by the message that the reaction belong
+     */
+    message?: IMessageIdentifier;
+    /**
+     * Filter by the author of the reaction.
+     */
+    author?: IAuthorIdentifier;
+    /**
+     * Filter by the channel where the message that the reaction
+     * belongs to.
+     */
+    channel?: IChannelIdentifier;
   }
 
-  export interface ISearchMessageReactionsOptions extends IDefaultOptions {
-    emojis?: corde.IEmoji[];
-    messageIdentifier?: corde.IMessageIdentifier;
-    authorId?: string;
-    channelId?: string;
+  export interface IMessageReactionRemoveEmojiFilter extends IDefaultOptions {
+    /**
+     * Filter by a emoji.
+     */
+    emoji?: IEmoji;
+    /**
+     * Filter by the message that the reaction belong
+     */
+    message?: IMessageIdentifier;
+    /**
+     * Filter by the channel where the message that the reaction
+     * belongs to.
+     */
+    channel?: IChannelIdentifier;
+  }
+
+  export interface ISearchMessageReactionsFilter extends IDefaultOptions {
+    /**
+     * Filter by a collection of emojis.
+     */
+    emojis?: IEmoji[];
+    /**
+     * Filter by the message that the reaction belong
+     */
+    message?: IMessageIdentifier;
+    /**
+     * Filter by the author of the reaction.
+     */
+    author?: IAuthorIdentifier;
+    /**
+     * Filter by the channel where the message that the reaction
+     * belongs to.
+     */
+    channel?: IChannelIdentifier;
   }
 
   export interface IMessageContentEvent
-    extends Omit<corde.IMessageEventOptions, "messageIdentifier"> {}
+    extends Omit<corde.IMessageEventFilter, "messageIdentifier"> {}
 
   export interface IMessageIdentifier {
     /**
@@ -242,42 +356,77 @@ declare namespace corde {
 
   export type ChannelType = "voice" | "text" | "category";
 
-  export interface IGuildCreateFilterOptions extends IDefaultOptions {
+  export interface IGuildCreateFilter extends IDefaultOptions {
+    /**
+     * Filter by guild's name.
+     */
     name?: string;
   }
 
-  export interface IPresenceUpdateOptions extends IDefaultOptions {
+  export interface IPresenceUpdateFilter extends IDefaultOptions {
+    /**
+     * Filter by the user that refers to the presence.
+     */
     user?: corde.IUserIdentifier;
+    /**
+     * Filter by presence status
+     */
     presenceStatus?: import("discord.js").PresenceStatus;
+    /**
+     * Filter by guild's identififer.
+     */
     guild?: corde.IGuildIdentifier;
-    clientePresence?: import("discord.js").ClientPresenceStatusData;
+    /**
+     * Filter by client presence.
+     */
+    clientPresence?: import("discord.js").ClientPresenceStatusData;
   }
 
-  export interface IGuildCreateOptions extends IDefaultOptions {
+  export interface IGuildCreateOptions extends GuildCreateOptions {
+    /**
+     * Filter by guild's name.
+     */
     name: string;
   }
 
   export interface ICreateChannelOptions extends GuildCreateChannelOptions {
+    /**
+     * Filter by channel's name.
+     */
     name: string;
   }
 
-  export interface IGuildBanRemoveOptions extends IGuildBanOptions {}
+  export interface IGuildBanRemoveFilter extends IGuildBanFilter {}
 
-  export interface IGuildBanOptions extends IDefaultOptions {
-    guildIdentifier?: corde.IGuildIdentifier;
-    userIdentifier?: corde.IUserIdentifier;
+  export interface IGuildBanFilter extends IDefaultOptions {
+    /**
+     * Filter by guild's identifier.
+     */
+    guild?: corde.IGuildIdentifier;
+    /**
+     * Filter by user's identifier.
+     */
+    user?: corde.IUserIdentifier;
   }
 
   export interface ICreateChannelOptionsSimple extends Omit<ICreateChannelOptions, "type"> {}
 
   export interface IUserIdentifier extends IGuildIdentifier {}
 
-  export interface IGuildDeleteOptions extends IDefaultOptions, IGuildIdentifier {}
-  export interface IGuildIdentifier extends IIdentifier {
+  export interface IGuildDeleteFilter extends IDefaultOptions, IGuildIdentifier {}
+
+  export interface IGuildIdentifier {
+    /**
+     * Guild's id.
+     */
+    id?: string;
+    /**
+     * Guild's name.
+     */
     name?: string;
   }
 
-  export interface IVoiceStateUpdateOptions extends IDefaultOptions {
+  export interface IVoiceStateUpdateFilter extends IDefaultOptions {
     /**
      * Filter by voice status id;
      */
@@ -295,27 +444,27 @@ declare namespace corde {
      */
     selfDeaf?: boolean;
     /**
-     *
+     * Filter by a voice state that was self-muted.
      */
     selfMute?: boolean;
     /**
-     *
+     * Filter by a voice state that was deafened server-wide.
      */
     serverDeaf?: boolean;
     /**
-     *
+     * Filter by a voice state that was muted server-wide.
      */
     serverMute?: boolean;
     /**
-     *
+     * Filter by id of a member's connection.
      */
     sessionID?: string;
     /**
-     *
+     * Filter by a member that is streaming using "Screen Share"
      */
     streaming?: boolean;
     /**
-     *
+     * Filter by a voice state that is with camera enabled.
      */
     selfVideo?: boolean;
   }
@@ -414,18 +563,24 @@ declare namespace corde {
     iconURL?: string;
   }
 
-  export interface IRoleEventOptions {
-    roleIdentifier?: corde.IRoleIdentifier;
-    timeout?: number;
-    guildId?: string;
-  }
-
-  export interface IRolePermissionUpdateOptions extends IDefaultOptions {
-    role?: IRoleIdentifier;
+  export interface IRoleEventFilter extends IRoleIdentifier, IDefaultOptions {
+    /**
+     * Filter by a `Guild` identifier.
+     */
     guild?: IGuildIdentifier;
   }
 
-  export interface IUserUpdateOptions extends IDefaultOptions {
+  export interface IRolePermissionUpdateFilter extends IRoleIdentifier, IDefaultOptions {
+    /**
+     * Filter by a `Guild` identifier.
+     */
+    guild?: IGuildIdentifier;
+  }
+
+  export interface IUserUpdateFilter extends IDefaultOptions {
+    /**
+     * Filter by a `User` identifier.
+     */
     user?: IUserIdentifier;
   }
 

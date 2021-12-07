@@ -49,11 +49,11 @@ export async function shouldSetRolePermission(
 
   let role: Role;
   try {
-    role = await this.cordeBot.events.onceRolePermissionUpdate(
-      identifier,
-      this.timeout,
-      this.guildId,
-    );
+    role = await this.cordeBot.events.onceRolePermissionUpdate({
+      ...identifier,
+      timeout: this.timeout,
+      guild: { id: this.guildId },
+    });
   } catch {
     if (this.isNot) {
       return this.createPassTest();

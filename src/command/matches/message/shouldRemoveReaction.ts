@@ -52,9 +52,9 @@ export async function shouldRemoveReaction(
 
     reactionsWithAuthors = await this.cordeBot.events.onceMessageReactionsRemove({
       emojis: emojiLike,
-      messageIdentifier: _messageData,
+      message: _messageData,
       timeout: this.timeout,
-      channelId: this.channelId,
+      channel: { id: this.channelId },
     });
   } catch (error) {
     if (this.isNot) {

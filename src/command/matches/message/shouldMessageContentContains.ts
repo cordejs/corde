@@ -18,8 +18,8 @@ export async function shouldMessageContentContains(this: CommandState, expect: s
   let returnedMessage: Message;
   try {
     returnedMessage = await this.cordeBot.events.onceMessage({
-      authorId: this.cordeBot.testBotId,
-      channelId: this.channelId,
+      author: { id: this.cordeBot.testBotId },
+      channel: { id: this.channelId },
       timeout: this.timeout,
     });
   } catch {

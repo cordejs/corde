@@ -22,8 +22,8 @@ export async function shouldReturn(this: CommandState, expected: Primitive | cor
   let returnedMessage: Message;
   try {
     returnedMessage = await this.cordeBot.events.onceMessage({
-      authorId: this.cordeBot.testBotId,
-      channelId: this.channelId,
+      author: { id: this.cordeBot.testBotId },
+      channel: { id: this.channelId },
       timeout: this.timeout,
     });
   } catch {
