@@ -25,7 +25,7 @@ import { stringIsNullOrEmpty, Timer } from "../utils";
 import { LogUpdate } from "../utils";
 import { TestFile } from "./TestFile";
 import { Group } from "./Group";
-import { runtime } from "./runtime";
+import { runtime } from ".";
 import { TestError } from "../errors";
 import { testCollector } from "./TestCollector";
 

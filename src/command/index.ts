@@ -3,7 +3,7 @@ import { testCollector } from "../core/TestCollector";
 import { getStackTrace } from "../utils";
 import { any } from "../expect/asymmetricMatcher";
 import * as matchers from "./matches";
-import { runtime } from "../core/runtime";
+import { runtime } from "../core";
 import { ICordeBot, ITestReport } from "../types";
 import { CommandState } from "./matches/commandstate";
 

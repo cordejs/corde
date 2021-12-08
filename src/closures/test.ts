@@ -1,4 +1,4 @@
-import { runtime } from "../core/runtime";
+import { runtime } from "../core";
 import { testCollector } from "../core/TestCollector";
 import { VoidLikeFunction } from "../types";
 import { executePromiseWithTimeout, resolveName } from "../utils";

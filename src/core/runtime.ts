@@ -15,11 +15,12 @@ const Environment = {
 /**
  * @internal
  */
-class Runtime {
+export class Runtime {
+  public configFilePath!: string;
+  public files!: string[];
+
   private _internalEvents: IInternalEvents;
-  private static _instance: Runtime;
-  configFilePath!: string;
-  files!: string[];
+  private _mocks: Array<corde.IMockInstance<any, any, any>>;
 
   private readonly _configs: Config;
   private _bot!: ICordeBot;
@@ -104,6 +105,7 @@ class Runtime {
   constructor() {
     this._internalEvents = new EventEmitter();
     this._configs = new Config();
+    this._mocks = [];
   }
 
   setConfigs(_configs: Partial<IConfigOptions>, forceUpdate?: boolean) {
@@ -157,11 +159,12 @@ class Runtime {
       new Client(),
     );
   }
-}
 
-/**
- * Singleton of Runtime.
- * @internal
- */
-const runtime = new Runtime();
-export { runtime };
+  addMock(mock: corde.IMockInstance<any, any, any>) {
+    this._mocks.push(mock);
+  }
+
+  resetAllMocks() {
+    this._mocks.forEach((mock) => mock.restore());
+  }
+}

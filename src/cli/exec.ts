@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import chalk from "chalk";
 import ora, { Color, Ora } from "ora";
-import { runtime } from "../core/runtime";
+import { runtime } from "../core";
 import { reader } from "../core/Reader";
 import { summary } from "../core/summary";
 import { TestExecutor } from "../core/TestExecutor";

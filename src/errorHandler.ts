@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { runtime } from "./core/runtime";
+import { runtime } from "./core";
 import { exit } from "./exit";
 
 export function initErrorHandlers() {

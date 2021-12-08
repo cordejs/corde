@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import chalk from "chalk";
-import { runtime } from "../core/runtime";
+import { runtime } from "../core";
 import { testCollector } from "../core/TestCollector";
 import { TestError } from "../errors";
 import { ITestProps, ITestReport } from "../types";

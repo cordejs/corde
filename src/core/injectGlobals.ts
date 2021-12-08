@@ -1,7 +1,7 @@
 import * as hooks from "../hooks";
 import * as closures from "../closures";
 import { BotAPI, ConfigAPI, cordeInternal } from "../api";
-import { runtime } from "../core/runtime";
+import { runtime } from "../core";
 import { expect } from "../expect";
 import { command } from "../command";
 

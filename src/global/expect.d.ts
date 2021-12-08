@@ -490,5 +490,29 @@ declare namespace corde {
      * @since 5.0
      */
     toStartWith(substring: string): void;
+    /**
+     * @since 5.0
+     */
+    toBeArrayOfBooleans(): void;
+    /**
+     * @since 5.0
+     */
+    toBeArrayOfNumbers(): void;
+    /**
+     * @since 5.0
+     */
+    toBeArrayOfObjects(): void;
+    /**
+     * @since 5.0
+     */
+    toBeArrayOfStrings(): void;
+    /**
+     * @since 5.0
+     */
+    toThrowError(): void;
+    /**
+     * @since 5.0
+     */
+    toThrowErrorOfType<TError extends any>(errorType: TError): void;
   }
 }

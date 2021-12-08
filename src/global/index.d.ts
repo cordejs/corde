@@ -10,6 +10,7 @@
 /// <reference path="./expect.d.ts" />
 /// <reference path="./hooks.d.ts" />
 /// <reference path="./types.d.ts" />
+/// <reference path="./mock.d.ts" />
 
 /**
  * Definition of Corde's types and utility functions
@@ -90,4 +91,29 @@ declare namespace corde {
   export function send(command: string): Promise<import("discord.js").Message>;
 
   export const events: corde.IOnceEvents;
+
+  /**
+   * Creates a mock instance for a given object.
+   * Use it to create simple mocks for `functions` and `properties` of the given object.
+   *
+   * @example
+   *
+   * const obj = {
+   *   sum: (number1: number, number2: number) => {
+   *      return number1 + number2;
+   *   }
+   * }
+   *
+   * const mock = corde.mock(obj, "sum").mockReturnValue(1);
+   *
+   * obj.sum(1, 1); // Return 1
+   *
+   * @param object Entity that countains properties or functions that will be mocked.
+   * @param prop Name of the property or function to be mocked.
+   * @returns Instance of a mocked object.
+   */
+  export function mock<TEntity extends Record<string, unknown>, U extends keyof TEntity>(
+    object: TEntity,
+    prop: U,
+  ): corde.IMockInstance<TEntity, U, TEntity[U]>;
 }

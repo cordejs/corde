@@ -2,6 +2,7 @@ import { runtime, testCollector } from "../core";
 import { MapObj } from "../types";
 import { getStackTrace } from "../utils";
 import { cordeEvent } from "./cordeEvent";
+import { ObjectMock } from "./ObjectMock";
 
 type CordeType = MapObj<typeof corde>;
 
@@ -28,6 +29,14 @@ export const cordeInternal: CordeType = {
   },
   events: {
     ...cordeEvent,
+  },
+  mock<TEntity extends Record<string, unknown>, U extends keyof TEntity>(
+    object: TEntity,
+    prop: U,
+  ): ObjectMock<TEntity, U> {
+    const mockInstance = new ObjectMock(object, prop);
+    runtime.addMock(mockInstance);
+    return mockInstance;
   },
   waitAsync(time: number) {
     return new Promise<void>((resolve) => {
