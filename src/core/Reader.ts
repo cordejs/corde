@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import { printHookErrors } from "./printHookError";
 import { runtime } from ".";
-import { testCollector } from "./TestCollector";
+import { testCollector } from ".";
 import { FileError } from "../errors";
 import { IConfigOptions, ITestFilePattern } from "../types";
 import { importFile, safeImportFile, utils } from "../utils";

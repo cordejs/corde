@@ -27,7 +27,7 @@ import { TestFile } from "./TestFile";
 import { Group } from "./Group";
 import { runtime } from ".";
 import { TestError } from "../errors";
-import { testCollector } from "./TestCollector";
+import { testCollector } from ".";
 
 type ReportStatusType = "pass" | "fail" | "empty";
 

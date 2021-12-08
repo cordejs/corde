@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import chalk from "chalk";
 import { runtime } from "../core";
-import { testCollector } from "../core/TestCollector";
+import { testCollector } from "../core";
 import { TestError } from "../errors";
 import { ITestProps, ITestReport } from "../types";
 import { getStackTrace, isAsymetricMatcher, typeOf } from "../utils";

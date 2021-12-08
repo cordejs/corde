@@ -164,14 +164,13 @@ describe("testing corde mock", () => {
   });
 
   it("should mock implementation giving null to it", () => {
-    const obj = {
+    const obj: { sumOne: (value: number) => any } = {
       sumOne: (value: number) => {
         return value + 1;
       },
     };
 
-    // @ts-ignore
-    cordeInternal.mock(obj, "sumOne").mockImplementationOnce(null);
+    cordeInternal.mock(obj, "sumOne").setImplementationOnce(() => null);
     expect(obj.sumOne(1)).toBeFalsy();
   });
 

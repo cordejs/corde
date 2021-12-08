@@ -58,6 +58,3 @@ export class TestCollector {
     return this.groupClousureFunction?.executeWithCatchCollectAsync();
   }
 }
-
-const testCollector = TestCollector.getInstance();
-export { testCollector };
