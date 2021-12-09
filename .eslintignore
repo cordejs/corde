@@ -8,4 +8,3 @@ website/node_modules
 website/i18n/*.js
 website/static
 !.eslintrc.js
-tests/
