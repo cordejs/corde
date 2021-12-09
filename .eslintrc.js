@@ -11,10 +11,12 @@ module.exports = {
   plugins: ["@typescript-eslint"],
   rules: {
     "no-console": "error",
+    "no-inner-declarations": "off",
     quotes: ["error", "double"],
     "space-before-function-paren": "off",
     "no-unused-vars": "off",
     "comma-dangle": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/no-empty-interface": "off",
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/explicit-module-boundary-types": "off",
