@@ -16,7 +16,6 @@ export class TestCollector {
   testFiles: TestFile[];
   currentSuite!: ITest;
 
-  private static _instance: TestCollector;
   private groupClousureFunction: Queue<VoidLikeFunction>;
 
   get currentTestFile() {
@@ -41,13 +40,6 @@ export class TestCollector {
   createTestFile(filePath: string) {
     this.testFiles.push(new TestFile(filePath));
     return this.currentTestFile;
-  }
-
-  static getInstance() {
-    if (!TestCollector._instance) {
-      TestCollector._instance = new TestCollector();
-    }
-    return TestCollector._instance;
   }
 
   addToGroupClousure(fn: () => void | Promise<void>) {
