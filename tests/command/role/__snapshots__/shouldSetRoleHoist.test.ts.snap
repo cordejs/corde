@@ -3,8 +3,8 @@
 exports[`testing shouldSetRoleHoist function should fail due to no role hoist was not updated 1`] = `
 Object {
   "message": "    
-    expected: hoist to be false
-    received: role hoist was not updated
+    expected: role with id 123
+    received: null
 ",
   "pass": false,
   "testName": "shouldSetRoleHoist",
@@ -35,8 +35,8 @@ Object {
 exports[`testing shouldSetRoleHoist function should return a failed test due to hoist should not change (isNot true) 1`] = `
 Object {
   "message": "    
-    expected: hoist to not be true
-    received: true
+    expected: role with id 123
+    received: null
 ",
   "pass": false,
   "testName": "shouldSetRoleHoist",
@@ -46,8 +46,8 @@ Object {
 exports[`testing shouldSetRoleHoist function should return a not passed test due expected name did not match to received 1`] = `
 Object {
   "message": "    
-    expected: hoist to be false
-    received: true
+    expected: role with id 123
+    received: null
 ",
   "pass": false,
   "testName": "shouldSetRoleHoist",

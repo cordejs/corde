@@ -23,11 +23,7 @@ Object {
 
 exports[`testing shouldUnPin function should return a failed test due to isNot false and timeout 1`] = `
 Object {
-  "message": "    
-    expected: unpin message of id 1233
-    received: informed message was not unpinned
-",
-  "pass": false,
+  "pass": true,
   "testName": "shouldUnPin",
 }
 `;

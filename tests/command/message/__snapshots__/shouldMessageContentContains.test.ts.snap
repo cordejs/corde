@@ -14,8 +14,7 @@ Object {
 exports[`testing shouldMessageContentContains function should get fail test due to bot returned different messages both primitive values 1`] = `
 Object {
   "message": "    
-    expected: testing bot to send a message
-    received: no message was sent
+    expected 'message to contain' to contains 'expect value'
 ",
   "pass": false,
   "testName": "shouldMessageContentContains",
@@ -38,7 +37,11 @@ Object {
 
 exports[`testing shouldMessageContentContains function should get success test due to timeout but isNot = true 1`] = `
 Object {
-  "pass": true,
+  "message": "    
+    expected: testing bot to send a message
+    received: no message was sent
+",
+  "pass": false,
   "testName": "shouldMessageContentContains",
 }
 `;

@@ -3,7 +3,7 @@
 exports[`testing shouldEditMessage function should fail due to message was not edited by the bot (no messageIdentifier as object with content) 1`] = `
 Object {
   "message": "    
-    expected: testing bot to edit the message of content \\"message test\\"
+    expected: testing bot to edit the message of id 123
     received: message was not edited
 ",
   "pass": false,
@@ -25,7 +25,7 @@ Object {
 exports[`testing shouldEditMessage function should fail due to message was not edited by the bot (no messageIdentifier as string) 1`] = `
 Object {
   "message": "    
-    expected: testing bot to edit the message of id 123
+    expected: testing bot to edit the last message sent
     received: message was not edited
 ",
   "pass": false,
@@ -133,7 +133,7 @@ Object {
       \\"title\\": \\"Some title\\",
       \\"url\\": \\"https://discord.js.org/\\",
     }
-    received: 'this is the message content'
+    received: '2'
 ",
   "pass": false,
   "testName": "shouldEditMessage",
@@ -191,7 +191,7 @@ exports[`testing shouldEditMessage function should get fail test due to bot retu
 Object {
   "message": "    
     expected: 'expect value'
-    received: 'this is the message content'
+    received: '2'
 ",
   "pass": false,
   "testName": "shouldEditMessage",
@@ -246,7 +246,11 @@ Object {
 
 exports[`testing shouldEditMessage function should get success test due to timeout but isNot = true 1`] = `
 Object {
-  "pass": true,
+  "message": "    
+    expected: testing bot to edit the message of content \\"message test\\"
+    received: message was not edited
+",
+  "pass": false,
   "testName": "shouldEditMessage",
 }
 `;

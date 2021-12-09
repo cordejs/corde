@@ -3,8 +3,8 @@
 exports[`testing shouldSetRoleMentionable function should fail due to no role mentionable was not updated 1`] = `
 Object {
   "message": "    
-    expected: mentionable to be false
-    received: role mentionable was not updated
+    expected: role with id 123
+    received: null
 ",
   "pass": false,
   "testName": "shouldSetRoleMentionable",
@@ -35,8 +35,8 @@ Object {
 exports[`testing shouldSetRoleMentionable function should return a not passed test due to mentionable should not change (isNot true) 1`] = `
 Object {
   "message": "    
-    expected: mentionable to not be false
-    received: false
+    expected: role with id 123
+    received: null
 ",
   "pass": false,
   "testName": "shouldSetRoleMentionable",
