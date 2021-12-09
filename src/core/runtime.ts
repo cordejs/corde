@@ -1,6 +1,9 @@
 import { IConfigOptions, ICordeBot } from "../types";
-import { Config, CordeBot, IInternalEvents } from ".";
+import { IInternalEvents } from "./internalEvents";
+import { CordeBot } from "./CordeBot";
 import { Client } from "discord.js";
+import { Config } from "./Config";
+import { TestCollector } from "./TestCollector";
 import { ConfigError } from "../errors";
 import path from "path";
 import { replaceAll } from "../utils";
@@ -19,6 +22,7 @@ export class Runtime {
   public configFilePath!: string;
   public files!: string[];
 
+  public readonly testCollector: TestCollector;
   private _internalEvents: IInternalEvents;
   private _mocks: Array<corde.IMockInstance<any, any, any>>;
 
@@ -106,6 +110,7 @@ export class Runtime {
     this._internalEvents = new EventEmitter();
     this._configs = new Config();
     this._mocks = [];
+    this.testCollector = new TestCollector();
   }
 
   setConfigs(_configs: Partial<IConfigOptions>, forceUpdate?: boolean) {
@@ -168,3 +173,6 @@ export class Runtime {
     this._mocks.forEach((mock) => mock.restore());
   }
 }
+
+const runtime = new Runtime();
+export { runtime };
