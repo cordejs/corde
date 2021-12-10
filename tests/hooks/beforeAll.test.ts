@@ -1,4 +1,4 @@
-import { testCollector } from "../../src/core/TestCollector";
+import runtime from "../../src/core";
 import { Queue } from "../../src/data-structures";
 import { beforeAll as hook } from "../../src/hooks";
 import { VoidLikeFunction } from "../../src/types";
@@ -8,9 +8,9 @@ let queue: Queue<VoidLikeFunction>;
 
 describe("testing beforeAll function", () => {
   beforeEach(() => {
-    testCollector.clearTestFiles();
-    testCollector.createTestFile("test");
-    queue = testCollector.currentTestFile.beforeAllHooks;
+    runtime.testCollector.clearTestFiles();
+    runtime.testCollector.createTestFile("test");
+    queue = runtime.testCollector.currentTestFile.beforeAllHooks;
   });
 
   it("should add a function", () => {
@@ -46,6 +46,7 @@ describe("testing beforeAll function", () => {
   });
 
   it("Should do nothing", () => {
+    // @ts-ignore
     hook(undefined);
     const length = queue.size;
     expect(length).toBe(0);

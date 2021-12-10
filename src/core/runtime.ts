@@ -172,3 +172,6 @@ export class Runtime {
     this._mocks.forEach((mock) => mock.restore());
   }
 }
+
+const runtime = new Runtime();
+export default runtime;

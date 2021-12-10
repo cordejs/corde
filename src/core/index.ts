@@ -1,3 +1,6 @@
+import runtime from "./runtime";
+export default runtime;
+
 export * from "./Group";
 export * from "./TestFile";
 export * from "./Config";
@@ -13,8 +16,3 @@ export * from "./TestExecutor";
 export * from "./tsRegister";
 export * from "./CordeBot";
 export * from "./Logger";
-
-import { Runtime } from "./runtime";
-
-const runtime = new Runtime();
-export default runtime;

@@ -69,10 +69,12 @@ describe("testing _logger", () => {
     expect(spyError).toBeCalledWith(chalk.red("error"));
   });
 
-  it("should call console.profile", () => {
-    _logger.profile("error");
-    expect(spyProfile).toBeCalledTimes(1);
-  });
+  if (spyProfile) {
+    it("should call console.profile", () => {
+      _logger.profile("error");
+      expect(spyProfile).toBeCalledTimes(1);
+    });
+  }
 
   it("should call console.debug", () => {
     _logger.debug("debug");
@@ -154,9 +156,15 @@ describe("testing _logger", () => {
   });
 
   it("should call console.table with properties", () => {
-    _logger.table("table", ["a", "b"]);
+    _logger.table([
+      { a: 1, b: "Y" },
+      { a: "Z", b: 2 },
+    ]);
     expect(spyTable).toBeCalledTimes(1);
-    expect(spyTable).toBeCalledWith("table", "a", "b");
+    expect(spyTable).toBeCalledWith([
+      { a: 1, b: "Y" },
+      { a: "Z", b: 2 },
+    ]);
   });
 
   it("should call console.time", () => {

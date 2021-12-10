@@ -52,8 +52,8 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceReady(): Promise<void> {
-    return this._once<void>("ready");
+  async onceReady(): Promise<void> {
+    await this._once<void>("ready");
   }
 
   /**
