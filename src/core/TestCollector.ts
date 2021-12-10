@@ -8,7 +8,32 @@ import { TestFile } from "./TestFile";
  * @internal
  */
 export class TestCollector {
+  /**
+   * Define is Node.js is running a group(describe) closure.
+   *
+   * *This value must be set by the closure itself*
+   *
+   * @example
+   *
+   *                // isInsideTestClausure = false;
+   * group("", () => {
+   *  ...           // isInsideTestClausure = true;
+   * });
+   */
   isInsideGroupClausure: boolean;
+
+  /**
+   * Define is Node.js is running a test(it) closure.
+   *
+   * *This value must be set by the closure itself*
+   *
+   * @example
+   *
+   *                // isInsideTestClausure = false;
+   * it("", () => {
+   *  ...           // isInsideTestClausure = true;
+   * });
+   */
   isInsideTestClausure: boolean;
   assertions: IAssertionProps[];
   testsPass: number;

@@ -10,7 +10,7 @@ describe("testing validator", () => {
   it("validation should pass with double parameters", () => {
     const validator = new Validator<[number, string]>();
     validator.add((num, stri) => num > 0 && stri === "test");
-    validator.add((num, _) => num === 1);
+    validator.add((num) => num === 1);
     expect(validator.isValid(1, "test")).toBeTruthy();
   });
 

@@ -3,7 +3,6 @@ import MockDiscord from "../../mocks/mockDiscord";
 import { MockEvents } from "../../mocks";
 import { createCordeBotWithMockedFunctions, testHelper } from "../../testHelper";
 import { ICordeBot, ITestReport } from "../../../src/types";
-import { runtime } from "../../../src/core/runtime";
 
 import { debugCommand } from "../../../src/command";
 
@@ -34,7 +33,9 @@ describe(`testing ${testName} function`, () => {
   it.each([[null], [undefined]])(
     "should return a failed test due to invalid parameter (null)",
     async (value) => {
-      const report = await debugCon().shouldReturn(value);
+      const report = await debugCon()
+        // @ts-expect-error
+        .shouldReturn(value);
       expect(report).toMatchObject(failReport);
       expect(report).toMatchSnapshot();
     },

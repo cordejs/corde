@@ -7,7 +7,7 @@
 
 import env from "dotenv";
 
-var result = env.config();
+const result = env.config();
 
 // Do not throw any error if the project in running inside CI.
 if (!process.env.CI && result.error) {

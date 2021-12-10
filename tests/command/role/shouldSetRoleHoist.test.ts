@@ -1,16 +1,8 @@
 import { Client } from "discord.js";
 import MockDiscord from "../../mocks/mockDiscord";
-import {
-  createCordeBotWithMockedFunctions,
-  createReport,
-  initCordeClientWithChannel,
-  testHelper,
-  testUtils,
-} from "../../testHelper";
+import { createCordeBotWithMockedFunctions, testHelper } from "../../testHelper";
 import { ICordeBot, ITestReport } from "../../../src/types";
-import { buildReportMessage } from "../../../src/utils";
 import { MockEvents } from "../../mocks/mockEvents";
-import { runtime } from "../../../src/core/runtime";
 import { debugCommand } from "../../../src/command";
 
 const testName = "shouldSetRoleHoist";
@@ -38,7 +30,7 @@ describe(`testing ${testName} function`, () => {
   });
 
   it("should fail due to undefined roleIdentifier", async () => {
-    const report = await debugCon().shouldSetRoleHoist(true, undefined);
+    const report = await debugCon().shouldSetRoleHoist(true, "");
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });

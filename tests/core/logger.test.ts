@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const spyInfo = jest.spyOn(console, "info");
 const spyLog = jest.spyOn(console, "log");
 const spyError = jest.spyOn(console, "error");
@@ -66,6 +67,11 @@ describe("testing _logger", () => {
     _logger.error("error");
     expect(spyError).toBeCalledTimes(1);
     expect(spyError).toBeCalledWith(chalk.red("error"));
+  });
+
+  it("should call console.profile", () => {
+    _logger.profile("error");
+    expect(spyProfile).toBeCalledTimes(1);
   });
 
   it("should call console.debug", () => {

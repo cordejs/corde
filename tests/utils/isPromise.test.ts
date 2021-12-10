@@ -49,11 +49,11 @@ describe("testing isPromise function", () => {
   });
 
   test("sync function should be false", () => {
-    expect(isPromise(() => {})).toBeFalsy();
+    expect(isPromise(() => 1)).toBeFalsy();
   });
 
   test("sync function should be false", () => {
-    expect(isPromise(() => {})).toBeFalsy();
+    expect(isPromise(() => 1)).toBeFalsy();
   });
 
   test("promise resolve should be true", () => {

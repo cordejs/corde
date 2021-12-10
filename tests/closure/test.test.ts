@@ -1,6 +1,8 @@
-import { testCollector } from "../../src/core/TestCollector";
 import { test as _test } from "../../src/closures";
+import runtime from "../../src/core";
 import { ITest } from "../../src/types";
+
+const { testCollector } = runtime;
 
 describe("Testing test function", () => {
   beforeEach(() => {

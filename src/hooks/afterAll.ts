@@ -1,8 +1,9 @@
-import { testCollector } from "../core";
+import runtime from "../core";
 import { getStackTrace } from "../utils";
 import { hookBuilder } from "./hookBuilder";
 
 export const afterAll: corde.IHook = (fn: () => void | Promise<void>, timeout?: number) => {
+  const { testCollector } = runtime;
   if (typeof fn === "function") {
     const trace = getStackTrace();
     hookBuilder({

@@ -1,7 +1,7 @@
 import path from "path";
 import { DEFAULT_CONFIG, ROOT_DIR } from "../consts";
 import { IConfigOptions } from "../types";
-import * as utils from "../utils";
+import { isNumber, replaceAll } from "../utils";
 
 /**
  * Default interface of JSON config
@@ -92,6 +92,10 @@ export class Config implements Readonly<IConfigOptions> {
     return this._useTimoutValueInEventsDefaultParameters;
   }
 
+  getConfigTimeoutOrDefault() {
+    return this._timeout ?? DEFAULT_CONFIG.timeout;
+  }
+
   /**
    * Initialize Configs with default values.
    */
@@ -132,7 +136,7 @@ export class Config implements Readonly<IConfigOptions> {
     }
 
     if (config.project && (!this.project || forceUpdate)) {
-      this._project = path.normalize(utils.replaceAll(config.project, ROOT_DIR, this.rootDir));
+      this._project = path.normalize(replaceAll(config.project, ROOT_DIR, this.rootDir));
     }
 
     if (config.botTestId && (!this.botTestId || forceUpdate)) {
@@ -178,7 +182,7 @@ export class Config implements Readonly<IConfigOptions> {
       this._guildId = config.guildId;
     }
 
-    if (utils.isNumber(config.timeout) && (!this.timeout || forceUpdate)) {
+    if (isNumber(config.timeout) && (!this.timeout || forceUpdate)) {
       // Forces to set timeout to a number
       this._timeout = +(config.timeout as any);
     }
@@ -212,7 +216,7 @@ export class Config implements Readonly<IConfigOptions> {
   private getArrayWithRootReplaced(array: string[]) {
     return array.map((val) => {
       if (val.includes(ROOT_DIR)) {
-        return path.normalize(utils.replaceAll(val, ROOT_DIR, this._rootDir));
+        return path.normalize(replaceAll(val, ROOT_DIR, this._rootDir));
       }
       return val;
     });

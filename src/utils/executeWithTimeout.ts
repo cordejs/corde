@@ -1,4 +1,4 @@
-import { utils } from "./utils";
+import { isInDebugMode } from ".";
 
 /**
  * Executes a function with a timeout.
@@ -18,7 +18,7 @@ export async function executeWithTimeout<TResult extends any>(
     throw new Error("can not execute an null function");
   }
 
-  if (utils.isInDebugMode()) {
+  if (isInDebugMode()) {
     return await fn();
   }
 

@@ -1,8 +1,7 @@
 import { Client } from "discord.js";
 import MockDiscord from "../../mocks/mockDiscord";
 import { createCordeBotWithMockedFunctions, testHelper } from "../../testHelper";
-import { ICordeBot, IMessageEmbed, ITestReport } from "../../../src/types";
-import { runtime } from "../../../src/core/runtime";
+import { ICordeBot, ITestReport } from "../../../src/types";
 import { debugCommand } from "../../../src/command";
 import { MockEvents } from "../../mocks";
 import { isNullOrUndefined } from "../../../src/utils";
@@ -39,7 +38,9 @@ describe(`testing ${testName} function`, () => {
 
   it("should return a failed test due to invalid parameter (null)", async () => {
     mockEmbedMessage();
-    const report = await debugCon().shouldEmbedMatch(null);
+    const report = await debugCon()
+      // @ts-expect-error
+      .shouldEmbedMatch(null);
 
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
@@ -73,20 +74,24 @@ describe(`testing ${testName} function`, () => {
 
   describe("testing each property of messageEmbed", () => {
     const simpleEmbed = mockDiscord.messageEmbedSimple;
-    function testProperty(testName: string, messageEmbed: IMessageEmbed, options?: TestOption) {
+    function testProperty(
+      testName: string,
+      messageEmbed: corde.IMessageEmbed,
+      options?: TestOption,
+    ) {
       const itFn = options?.only ? it.only : it;
 
       itFn(testName, async () => {
         mockEmbedMessage();
         let report: ITestReport = {} as any;
 
-        if (options.isNot) {
+        if (options?.isNot) {
           report = await debugCon().not.shouldEmbedMatch(messageEmbed);
         } else {
           report = await debugCon().shouldEmbedMatch(messageEmbed);
         }
 
-        if (isNullOrUndefined(options.pass) || options.pass) {
+        if (isNullOrUndefined(options?.pass) || options?.pass) {
           expect(report).toEqual(passReport);
         } else {
           expect(report).toMatchObject(failReport);

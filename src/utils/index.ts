@@ -34,7 +34,6 @@ export * from "./rgba";
 export * from "./stringIsNullOrEmpty";
 export * from "./timer";
 export * from "./typeOf";
-export * from "./utils";
 export * from "./validator";
 export * from "./wait";
 export * from "./safeImportFile";

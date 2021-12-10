@@ -62,6 +62,68 @@ exports[`- 1`] = `
 "
 `;
 
+exports[`-: without ANSI Colors 1`] = `
+"
+ FAIL    test file   10ms
+   ✔  test closure 1   10ms
+   ✔  test closure 2   10ms
+   ✔  test closure 3   10ms
+   x test closure 4   10ms
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /<fake>/<file>/<path>/index.ts:200:100
+    at Array.forEach (<anonymous>)
+    at localExpect (/<fake>/<file>/<path>/index.ts:200:100)
+    at /<fake>/<file>/<path>/testExecutor.test.ts:200:100
+    at _internalTest (/<fake>/<file>/<path>/test.ts:200:100)
+    at /<fake>/<file>/<path>/test.ts:200:100
+    at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:100
+
+   ✔  test closure 5   10ms
+   ✔  test closure 6   10ms
+   ✔  test closure 7   10ms
+   x test closure 8   10ms
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /<fake>/<file>/<path>/index.ts:200:100
+    at Array.forEach (<anonymous>)
+    at localExpect (/<fake>/<file>/<path>/index.ts:200:100)
+    at /<fake>/<file>/<path>/testExecutor.test.ts:200:100
+    at _internalTest (/<fake>/<file>/<path>/test.ts:200:100)
+    at /<fake>/<file>/<path>/test.ts:200:100
+    at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:100
+
+   ✔  test closure 9   10ms
+   ✔  test closure 10   10ms
+   ✔  test closure 11   10ms
+   x test closure 12   10ms
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /<fake>/<file>/<path>/index.ts:200:100
+    at Array.forEach (<anonymous>)
+    at localExpect (/<fake>/<file>/<path>/index.ts:200:100)
+    at /<fake>/<file>/<path>/testExecutor.test.ts:200:100
+    at _internalTest (/<fake>/<file>/<path>/test.ts:200:100)
+    at /<fake>/<file>/<path>/test.ts:200:100
+    at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:100
+"
+`;
+
 exports[`should get report for multiple files 1`] = `
 "
 [42m[30m PASS [39m[49m   file 1   [36m10ms[39m
@@ -70,6 +132,16 @@ exports[`should get report for multiple files 1`] = `
    [32m[32m✔ [39m[32m test closure 2[39m   [36m10ms[39m
 [42m[30m PASS [39m[49m   file 3   [36m10ms[39m
    [32m[32m✔ [39m[32m test closure 3[39m   [36m10ms[39m"
+`;
+
+exports[`should get report for multiple files: without ANSI Colors 1`] = `
+"
+ PASS    file 1   10ms
+   ✔  test closure 1   10ms
+ PASS    file 2   10ms
+   ✔  test closure 2   10ms
+ PASS    file 3   10ms
+   ✔  test closure 3   10ms"
 `;
 
 exports[`should get report for multiple tests inside a group 1`] = `
@@ -104,16 +176,60 @@ exports[`should get report for multiple tests inside a group and failed tests 1`
 "
 `;
 
+exports[`should get report for multiple tests inside a group and failed tests: without ANSI Colors 1`] = `
+"
+ FAIL    test file   10ms
+   ✔  test closure   10ms
+   ✔  test closure   10ms
+   ✔  test closure   10ms
+   x test closure   10ms
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /<fake>/<file>/<path>/index.ts:200:100
+    at Array.forEach (<anonymous>)
+    at localExpect (/<fake>/<file>/<path>/index.ts:200:100)
+    at /<fake>/<file>/<path>/testExecutor.test.ts:200:100
+    at _internalTest (/<fake>/<file>/<path>/test.ts:200:100)
+    at /<fake>/<file>/<path>/test.ts:200:100
+    at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:100
+"
+`;
+
+exports[`should get report for multiple tests inside a group: without ANSI Colors 1`] = `
+"
+ PASS    test file   10ms
+   ✔  test closure   10ms
+   ✔  test closure   10ms
+   ✔  test closure   10ms"
+`;
+
 exports[`should get report for single group and a empty test 1`] = `
 "
 [42m[30m PASS [39m[49m   test file   [36m10ms[39m
    [93m ● test closure (empty)[39m   [36m10ms[39m"
 `;
 
+exports[`should get report for single group and a empty test: without ANSI Colors 1`] = `
+"
+ PASS    test file   10ms
+    ● test closure (empty)   10ms"
+`;
+
 exports[`should get report for subgroups 1`] = `
 "
 [42m[30m PASS [39m[49m   test file   [36m10ms[39m
    [32m[32m✔ [39m[32m test[39m   [36m10ms[39m"
+`;
+
+exports[`should get report for subgroups: without ANSI Colors 1`] = `
+"
+ PASS    test file   10ms
+   ✔  test   10ms"
 `;
 
 exports[`should get report for subtests 1`] = `
@@ -128,10 +244,28 @@ exports[`should get report for subtests 1`] = `
    [32m[32m✔ [39m[32m t7[39m   [36m10ms[39m"
 `;
 
+exports[`should get report for subtests: without ANSI Colors 1`] = `
+"
+ PASS    test file   10ms
+    ● t1 (empty)   10ms
+    ● t2 (empty)   10ms
+    ● t3 (empty)   10ms
+    ● t4 (empty)   10ms
+    ● t5 (empty)   10ms
+    ● t6 (empty)   10ms
+   ✔  t7   10ms"
+`;
+
 exports[`should print a report for a group with a test with multiple expects 1`] = `
 "
 [42m[30m PASS [39m[49m   test file   [36m10ms[39m
    [32m[32m✔ [39m[32m test closure[39m   [36m10ms[39m"
+`;
+
+exports[`should print a report for a group with a test with multiple expects: without ANSI Colors 1`] = `
+"
+ PASS    test file   10ms
+   ✔  test closure   10ms"
 `;
 
 exports[`should print report for 1 test file, 1 test closure and 1 test function 1`] = `
@@ -140,10 +274,22 @@ exports[`should print report for 1 test file, 1 test closure and 1 test function
    [32m[32m✔ [39m[32m test closure[39m   [36m10ms[39m"
 `;
 
+exports[`should print report for 1 test file, 1 test closure and 1 test function: without ANSI Colors 1`] = `
+"
+ PASS    test file   10ms
+   ✔  test closure   10ms"
+`;
+
 exports[`should print report for 1 test file, 1 test closure and 2 test function 1`] = `
 "
 [42m[30m PASS [39m[49m   test file   [36m10ms[39m
    [32m[32m✔ [39m[32m test closure[39m   [36m10ms[39m"
+`;
+
+exports[`should print report for 1 test file, 1 test closure and 2 test function: without ANSI Colors 1`] = `
+"
+ PASS    test file   10ms
+   ✔  test closure   10ms"
 `;
 
 exports[`should print report for single group and a single test 1`] = `
@@ -156,6 +302,27 @@ exports[`should print report for single group and a single test 1`] = `
     expect([32mexpected[39m).not.toEqual([31mreceived[39m)
     
     expect: [32m1[39m !== [31m1[39m
+
+    at toEqual /<fake>/<file>/<path>/index.ts:200:100
+    at Array.forEach (<anonymous>)
+    at localExpect (/<fake>/<file>/<path>/index.ts:200:100)
+    at /<fake>/<file>/<path>/testExecutor.test.ts:200:100
+    at _internalTest (/<fake>/<file>/<path>/test.ts:200:100)
+    at /<fake>/<file>/<path>/test.ts:200:100
+    at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:100
+"
+`;
+
+exports[`should print report for single group and a single test: without ANSI Colors 1`] = `
+"
+ FAIL    test file   10ms
+   x test closure   10ms
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
 
     at toEqual /<fake>/<file>/<path>/index.ts:200:100
     at Array.forEach (<anonymous>)

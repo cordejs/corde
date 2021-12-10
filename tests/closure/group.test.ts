@@ -1,7 +1,9 @@
-import { testCollector } from "../../src/core/TestCollector";
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { group, test } from "../../src/closures";
-import { expect as cordeExpect, expect as _expect } from "../../src/expect";
+import runtime from "../../src/core";
 import { ITest } from "../../src/types";
+
+const { testCollector } = runtime;
 
 describe("testing group function", () => {
   beforeEach(() => {

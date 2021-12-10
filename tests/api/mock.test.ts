@@ -158,7 +158,6 @@ describe("testing corde mock", () => {
       },
     };
 
-    const sum = obj.sumOne;
     cordeInternal.mock(obj, "sumOne").setImplementation(() => null);
     expect(obj.sumOne(1)).toBeFalsy();
   });

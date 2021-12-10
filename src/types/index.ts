@@ -121,6 +121,8 @@ export type RejectFunction = (reason?: any) => void;
 export type EmojisType = string[] | corde.IEmoji[] | (string | corde.IEmoji)[];
 export type Nullable<T> = T | undefined | null;
 
+export type ObjectLike = Record<string, any>;
+
 export type FullPrimitives = (Primitive & undefined) | null;
 export type DeepReadonly<T> = T extends FullPrimitives ? T : DeepReadonlyObject<T>;
 

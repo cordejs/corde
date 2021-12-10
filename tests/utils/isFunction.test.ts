@@ -2,7 +2,7 @@ import { isFunction } from "../../src/utils";
 
 describe("testing isFunction function", () => {
   test("should return true for a function", () => {
-    expect(isFunction(() => {})).toBeTruthy();
+    expect(isFunction(() => 1)).toBeTruthy();
   });
 
   test("should return false for a non function", () => {

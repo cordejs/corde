@@ -26,8 +26,7 @@ describe("testing isPrimitiveValue function", () => {
   });
 
   it("class instance should not be primitive", () => {
-    let a: string | number | {};
-    a = "";
+    const a = "";
     expect(isPrimitiveValue(a)).toBeTruthy();
   });
 });

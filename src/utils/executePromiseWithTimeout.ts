@@ -1,5 +1,5 @@
+import { isInDebugMode } from ".";
 import { TimeoutError } from "../errors";
-import { utils } from "./utils";
 
 /**
  * Execute a function that returns a promise, passing a `resolve` and
@@ -43,7 +43,7 @@ export function executePromiseWithTimeout<TResult extends any>(
     throw new Error("can not execute an null function");
   }
 
-  if (utils.isInDebugMode()) {
+  if (isInDebugMode()) {
     return new Promise<TResult>((resolve, reject) => {
       fn((value) => {
         resolve(value as TResult);

@@ -1,4 +1,3 @@
-import { IMessageEmbed } from "../../src/types";
 import { isPartialOf } from "../../src/utils";
 
 describe("testing isPartialOf", () => {
@@ -31,18 +30,22 @@ describe("testing isPartialOf", () => {
   });
 
   it("null values should match", () => {
+    // @ts-ignore
     expect(isPartialOf(null, null)).toBeTruthy();
   });
 
   it("undefined values should match", () => {
+    // @ts-ignore
     expect(isPartialOf(undefined, undefined)).toBeTruthy();
   });
 
   it("null and object values should return false", () => {
+    // @ts-ignore
     expect(isPartialOf({ abc: 1 }, undefined)).toBeFalsy();
   });
 
   it("null and object values should return false", () => {
+    // @ts-ignore
     expect(isPartialOf(undefined, { abc: 1 })).toBeFalsy();
   });
 
@@ -57,8 +60,8 @@ describe("testing isPartialOf", () => {
   it("functions should return true", () => {
     expect(
       isPartialOf(
-        () => {},
-        () => {},
+        () => 1,
+        () => 1,
       ),
     ).toBeTruthy();
   });

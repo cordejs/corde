@@ -20,12 +20,11 @@ import {
   Presence,
   PresenceStatus,
   ActivityType,
-  Activity,
   VoiceState,
-  VoiceChannel,
 } from "discord.js";
 import { ColorsHex } from "../../src";
 import { messageUtils } from "../../src/command/matches/message/messageUtils";
+import { ObjectLike } from "../../src/types";
 
 /**
  * @private
@@ -45,7 +44,7 @@ export interface ActivityData {
   state?: string;
   application_id: string;
   timestamp: Date;
-  party?: object;
+  party?: ObjectLike;
 }
 
 export interface PresenceData {

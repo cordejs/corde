@@ -1,16 +1,18 @@
+/* eslint-disable no-console */
 import { TestExecutor } from "../../src/core/TestExecutor";
 import { LogUpdate } from "../../src/utils";
 import { removeANSIColorStyle, testUtils } from "../testHelper";
 
 import { mockTimer } from "../mocks/mockTimer";
-import { afterEach as _afterEach, beforeEach as _beforeEach } from "../../src/hooks";
 import { IRunnerReport } from "../../src/types";
 import { group, test } from "../../src/closures";
 import { expect as _expect } from "../../src/expect";
-import { testCollector } from "../../src/core/TestCollector";
+import runtime from "../../src/core";
 
 let logUpdate: LogUpdate;
 let testRunner: TestExecutor;
+
+const { testCollector } = runtime;
 
 mockTimer();
 

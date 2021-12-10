@@ -18,16 +18,17 @@ export async function login() {
 
 bot.on("message", async (message) => {
   try {
-    const args = message.content.slice(config.botPrefix.length).trim().split(" ");
+    const args = message.content.slice(config?.botPrefix?.length).trim().split(" ");
     const command = args.shift();
     await handleCommands(message, command);
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error);
     throw new Error("Could not execute operation");
   }
 });
 
-async function handleCommands(message: Message, command: string) {
+async function handleCommands(message: Message, command?: string) {
   if (command === "ping") {
     await ping(message);
   } else if (command === "embed") {

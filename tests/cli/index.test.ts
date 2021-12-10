@@ -1,5 +1,3 @@
-// For some reason, errorHandler is being throwed when imported here.
-
 describe("Testing export of cli index", () => {
   beforeAll(() => {
     process.env.ENV = "TEST";
@@ -9,7 +7,10 @@ describe("Testing export of cli index", () => {
   });
   it("Should export cli", () => {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
       expect(require("../../src/cli")).toBeTruthy();
-    } catch (error) {}
+    } catch (error) {
+      // For some reason, errorHandler is being throwed when imported here.
+    }
   });
 });

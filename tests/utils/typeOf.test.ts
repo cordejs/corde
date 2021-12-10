@@ -34,7 +34,11 @@ describe("testing typeOf", () => {
   });
 
   it("should get function", () => {
-    expect(typeOf(() => {})).toEqual("function");
+    expect(
+      typeOf(() => {
+        return 1;
+      }),
+    ).toEqual("function");
   });
 
   it("should return array", () => {

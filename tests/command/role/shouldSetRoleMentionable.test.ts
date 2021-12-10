@@ -3,7 +3,6 @@ import MockDiscord from "../../mocks/mockDiscord";
 import { createCordeBotWithMockedFunctions, testHelper } from "../../testHelper";
 import { ICordeBot, ITestReport } from "../../../src/types";
 import { MockEvents } from "../../mocks/mockEvents";
-import { runtime } from "../../../src/core/runtime";
 import { debugCommand } from "../../../src/command";
 
 const testName = "shouldSetRoleMentionable";
@@ -31,7 +30,7 @@ describe(`testing ${testName} function`, () => {
   });
 
   it("should fail due to undefined roleIdentifier", async () => {
-    const report = await debugCon().shouldSetRoleMentionable(true, undefined);
+    const report = await debugCon().shouldSetRoleMentionable(true, { id: "" });
 
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
@@ -46,7 +45,9 @@ describe(`testing ${testName} function`, () => {
   });
 
   it("should return false due to invalid mentionable parameter (undefined)", async () => {
-    const report = await debugCon().shouldSetRoleMentionable(undefined, { id: "123" });
+    const report = await debugCon()
+      // @ts-expect-error
+      .shouldSetRoleMentionable(undefined, { id: "123" });
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Logger } from "../../src/core";
 
 const logger = new Logger(process.stdout);

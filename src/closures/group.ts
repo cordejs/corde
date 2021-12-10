@@ -1,5 +1,5 @@
 import { Group } from "../core/Group";
-import { testCollector } from "../core";
+import runtime from "../core";
 import { VoidLikeFunction } from "../types";
 import { resolveName } from "../utils";
 
@@ -7,6 +7,7 @@ export const group: corde.IDescribeClousure = <T extends any>(
   description: T,
   testDefinitions: VoidLikeFunction,
 ) => {
+  const { testCollector } = runtime;
   const _internalGroup = async () => {
     testCollector.currentTestFile.isInsideGroupClausure = true;
 

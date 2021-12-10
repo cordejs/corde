@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import { FileError, PropertyError } from "../errors";
 import { IConfigOptions } from "../types";
-import { stringIsNullOrEmpty, utils } from "../utils";
+import { getFiles, stringIsNullOrEmpty } from "../utils";
 
 /**
  * Check if configs are valid. Throws an exception
@@ -55,7 +55,7 @@ async function validatePaths(pathsDir: string[] | undefined, errors: string[]) {
   }
 
   for (const pathDir of pathsDir) {
-    const files = await utils.getFiles(pathDir);
+    const files = await getFiles(pathDir);
 
     if (files.length === 0) {
       errors.push(`path: ${pathDir} does not exists`);

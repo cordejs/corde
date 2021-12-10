@@ -3,11 +3,10 @@ import fs from "fs";
 import MockDiscord from "./mocks/mockDiscord";
 import { Client } from "discord.js";
 import { CordeBot } from "../src/core/CordeBot";
-import { ICordeBot, ITestReport } from "../src/types";
+import { ICordeBot, ITestReport, ObjectLike } from "../src/types";
 import { IExpectTestBaseParams } from "../src/types";
 import { runtime } from "../src/core/runtime";
 import { buildReportMessage } from "../src/utils";
-import { testCollector } from "../src/core/TestCollector";
 import { CommandState } from "../src/command/matches/commandstate";
 
 export const normalTsPath = path.resolve(process.cwd(), "corde.ts");
@@ -68,7 +67,11 @@ export function renameConfigTempFileNamesToNormal() {
  * @param property Object property to be mocked
  * @param value New value to property
  */
-export function mockProperty<T extends {}, K extends keyof T>(object: T, property: K, value: T[K]) {
+export function mockProperty<T extends ObjectLike, K extends keyof T>(
+  object: T,
+  property: K,
+  value: T[K],
+) {
   Object.defineProperty(object, property, { get: () => value });
 }
 
@@ -79,30 +82,22 @@ export function createCordeBotWithMockedFunctions(
   const corde = initCordeClientWithChannel(mockDiscord, new Client());
   corde.getRoles = jest.fn().mockReturnValue(mockDiscord.roleManager.cache);
   corde.findRole = jest.fn().mockReturnValue(findRoleMock);
-  corde.sendTextMessage = jest.fn().mockImplementation(() => {});
+  corde.sendTextMessage = jest.fn().mockImplementation(() => 1);
   return corde;
 }
 
-export function initCordeClientWithChannel(
-  mockDiscord: MockDiscord,
-  client: Client,
-  timeout = 500,
-) {
+export function initCordeClientWithChannel(mockDiscord: MockDiscord, client: Client) {
   client.guilds.cache.has = jest.fn().mockReturnValueOnce(true);
   client.guilds.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.guild);
 
   mockDiscord.guild.channels.cache.has = jest.fn().mockReturnValueOnce(true);
   mockDiscord.guild.channels.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.textChannel);
-  return initCordeClient(mockDiscord, client, timeout);
+  return initCordeClient(mockDiscord, client);
 }
 
 export const DEFAULT_PREFIX = "!";
 
-export function initCordeClient(
-  mockDiscord: MockDiscord,
-  clientInstance: Client,
-  timeout = 500,
-): ICordeBot {
+export function initCordeClient(mockDiscord: MockDiscord, clientInstance: Client): ICordeBot {
   return new CordeBot(
     DEFAULT_PREFIX,
     mockDiscord.guild.id,
@@ -120,6 +115,7 @@ export function executeWithDelay(fn: () => void, delay: number) {
 
 export function removeANSIColorStyle(value: string) {
   return value.replace(
+    // eslint-disable-next-line no-control-regex
     /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g,
     "",
   );
@@ -181,11 +177,11 @@ export namespace testUtils {
 
   export function replaceStackTracePaths(value: string) {
     const regString = /(\/(.*)\/)|(src\\(.*)\\)|(tests\\(.*)\\)/;
-    let regx = new RegExp(regString, "g");
+    const regx = new RegExp(regString, "g");
     const pathClearnedValue = value.replace(regx, "/<fake>/<file>/<path>/");
 
     const lineRegexString = /([.]ts(.*):)(\d+)/;
-    let lineRegex = new RegExp(lineRegexString, "g");
+    const lineRegex = new RegExp(lineRegexString, "g");
     return pathClearnedValue.replace(lineRegex, ".ts:200:100");
   }
 
@@ -207,7 +203,7 @@ export namespace testUtils {
   }
 }
 
-export function createReport(entity: Object, pass: boolean, message?: string): ITestReport {
+export function createReport(entity: ObjectLike, pass: boolean, message?: string): ITestReport {
   const obj: ITestReport = {
     pass,
     testName: entity.toString(),
@@ -221,7 +217,7 @@ export function createReport(entity: Object, pass: boolean, message?: string): I
 
 export namespace testHelper {
   export function initCommandTestsFixtures(): [MockDiscord, ICordeBot] {
-    const file = testCollector.createTestFile("");
+    const file = runtime.testCollector.createTestFile("");
     file.isInsideTestClausure = true;
     const mockDiscord = new MockDiscord();
     runtime.setConfigs({ timeout: 100 }, true);

@@ -2,11 +2,10 @@
 import fs from "fs";
 import path from "path";
 import { printHookErrors } from "./printHookError";
-import { runtime } from ".";
-import { testCollector } from ".";
+import runtime from ".";
 import { FileError } from "../errors";
 import { IConfigOptions, ITestFilePattern } from "../types";
-import { importFile, safeImportFile, utils } from "../utils";
+import { getFiles, importFile, safeImportFile } from "../utils";
 
 export class Reader {
   /**
@@ -50,19 +49,21 @@ export class Reader {
     const filesPath: string[] = [];
 
     try {
-      const matches = await utils.getFiles(filesPattern.filesPattern, filesPattern.ignorePattern);
+      const matches = await getFiles(filesPattern.filesPattern, filesPattern.ignorePattern);
       filesPath.push(...matches);
     } catch (error) {
       console.log(error);
     }
 
+    const { configs, testCollector } = runtime;
+
     for (const file of filesPath) {
       const extension = path.extname(file);
-      if (runtime.extensions?.includes(extension)) {
+      if (configs.extensions?.includes(extension)) {
         const resolvedCwd = process.cwd().replace(/\\/g, "/");
         testCollector.createTestFile(file.replace(resolvedCwd + "/", ""));
 
-        if (runtime.exitOnFileReadingError) {
+        if (configs.exitOnFileReadingError) {
           await importFile(file);
         } else {
           await safeImportFile(file, console.error);

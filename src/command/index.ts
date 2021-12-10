@@ -1,9 +1,8 @@
 /* eslint-disable no-console */
-import { testCollector } from "../core";
 import { getStackTrace } from "../utils";
 import { any } from "../expect/asymmetricMatcher";
 import * as matchers from "./matches";
-import { runtime } from "../core";
+import runtime from "../core";
 import { ICordeBot, ITestReport } from "../types";
 import { CommandState } from "./matches/commandstate";
 
@@ -39,6 +38,8 @@ function createMatcherFn({
   guildId,
 }: ICreateMatcherParam) {
   const trace = getStackTrace(undefined, true, matcher);
+  const { testCollector, configs } = runtime;
+
   if (!testCollector.currentTestFile?.isInsideTestClausure && !isCascade) {
     throw new Error("command can only be used inside a test(it) clausure");
   }
@@ -70,9 +71,9 @@ function createMatcherFn({
         isNot,
         cordeBot: isDebug ? cordeBot ?? runtime.bot : runtime.bot,
         command: commandName,
-        timeout: runtime.timeout,
-        guildId: guildId ?? runtime.guildId,
-        channelId: channelId ?? runtime.channelId,
+        timeout: configs.getConfigTimeoutOrDefault(),
+        guildId: guildId ?? configs.guildId,
+        channelId: channelId ?? configs.channelId,
         testName: matcher,
         isCascade: isCascade ?? false,
       });

@@ -1,12 +1,9 @@
 import {
-  Client,
   EmbedFieldData,
-  Message,
   MessageAttachment,
   MessageEmbed,
   MessageEmbedImage,
   MessageEmbedThumbnail,
-  TextChannel,
 } from "discord.js";
 import { Stream } from "stream";
 
@@ -174,13 +171,13 @@ describe("testing messageUtils", () => {
 
     it("should return message refering to the content", () => {
       expect(messageUtils.humanizeMessageIdentifierObject({ content: "test" })).toEqual(
-        `message of content "test"`,
+        'message of content "test"',
       );
     });
 
     it("should return message refering to the oldContent", () => {
       expect(messageUtils.humanizeMessageIdentifierObject({ oldContent: "test" })).toEqual(
-        `message of content "test"`,
+        'message of content "test"',
       );
     });
 

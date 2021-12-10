@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import chalk from "chalk";
 import ora, { Color, Ora } from "ora";
-import { runtime } from "../core";
+import runtime from "../core";
 import { reader } from "../core/Reader";
 import { summary } from "../core/summary";
 import { TestExecutor } from "../core/TestExecutor";
@@ -33,7 +33,7 @@ export async function exec(options: corde.Config.ICLIOptions) {
   // when registering from configs.
   registerTsNode(DEFAULT_CONFIG.project as any);
 
-  debug("runtime.project: ", runtime.project);
+  debug("runtime.project: ", runtime.configs.project);
   debug("runtime.configFilePath: " + runtime.configFilePath);
 
   await loadConfigs();
@@ -43,7 +43,7 @@ export async function exec(options: corde.Config.ICLIOptions) {
     runtime.setConfigs({ testMatches: options.files.split(" ") }, true);
   }
 
-  if (runtime.project) {
+  if (runtime.configs.project) {
     registerTsNode(runtime.configs);
   }
 
@@ -62,15 +62,15 @@ export async function runTests() {
   startLoading("login to corde bot");
 
   try {
-    const loginPromise = runtime.loginBot(runtime.cordeBotToken);
-    const readyPromise = runtime.events.onceReady();
+    const loginPromise = runtime.bot.login(runtime.configs.cordeBotToken);
+    const readyPromise = runtime.bot.events.onceReady();
     await Promise.allSettled([loginPromise, readyPromise]);
 
     spinner.stop();
 
     const testMatches = await reader.getTestsFromFiles({
-      filesPattern: runtime.testMatches,
-      ignorePattern: runtime.modulePathIgnorePatterns,
+      filesPattern: runtime.configs.testMatches,
+      ignorePattern: runtime.configs.modulePathIgnorePatterns,
     });
 
     if (testMatches.length === 0) {
@@ -82,7 +82,7 @@ export async function runTests() {
     const testRunner = new TestExecutor(log);
     const executionReport = await testRunner.runTestsAndPrint(testMatches);
 
-    if (runtime.environment.isE2eTest) {
+    if (runtime.isE2eTest) {
       console.log(log.stdout);
     }
 

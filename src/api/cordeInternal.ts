@@ -1,4 +1,4 @@
-import { runtime, testCollector } from "../core";
+import runtime from "../core";
 import { MapObj } from "../types";
 import { getStackTrace } from "../utils";
 import { cordeEvent } from "./cordeEvent";
@@ -11,7 +11,7 @@ type CordeType = MapObj<typeof corde>;
  */
 export const cordeInternal: CordeType = {
   fail(message?: string) {
-    if (!testCollector.isInsideTestClausure) {
+    if (!runtime.testCollector.isInsideTestClausure) {
       throw new Error("Can not fail a suite without being inside a suite");
     }
 

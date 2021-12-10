@@ -3,7 +3,6 @@ import MockDiscord from "../../mocks/mockDiscord";
 import { createCordeBotWithMockedFunctions, testHelper } from "../../testHelper";
 import { ICordeBot, ITestReport } from "../../../src/types";
 import { MockEvents } from "../../mocks/mockEvents";
-import { runtime } from "../../../src/core/runtime";
 import { debugCommand } from "../../../src/command";
 
 const testName = "shouldRenameRole";
@@ -31,7 +30,7 @@ describe(`testing ${testName} function`, () => {
   });
 
   it("should fail due to undefined roleIdentifier", async () => {
-    const report = await debugCon().shouldRenameRole("egg", undefined);
+    const report = await debugCon().shouldRenameRole("egg", "");
 
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();

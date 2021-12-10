@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import chalk from "chalk";
-import { runtime } from "../core";
-import { testCollector } from "../core";
+import runtime from "../core";
 import { TestError } from "../errors";
 import { ITestProps, ITestReport } from "../types";
 import { getStackTrace, isAsymetricMatcher, typeOf } from "../utils";
@@ -23,6 +22,7 @@ function pickFn(name: KeyOfMatcher) {
 }
 
 function createMatcherFn(matcher: string, isNot: boolean, expected: any, isDebug: boolean) {
+  const { testCollector } = runtime;
   const trace = getStackTrace(Infinity, true, matcher);
   if (!testCollector.currentTestFile?.isInsideTestClausure && !isDebug) {
     throw new Error("expect can only be used inside a test(it) clausure");

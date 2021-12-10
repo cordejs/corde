@@ -1,6 +1,5 @@
 import { Config } from "../../src/core/Config";
-import { testCollector } from "../../src/core/TestCollector";
-import { runtime } from "../../src/core/runtime";
+import runtime from "../../src/core";
 
 describe("Define tests for index of common module", () => {
   it("Should import runtime", () => {
@@ -12,6 +11,6 @@ describe("Define tests for index of common module", () => {
   });
 
   it("Should import testCollector", () => {
-    expect(testCollector).toBeTruthy();
+    expect(runtime.testCollector).toBeTruthy();
   });
 });

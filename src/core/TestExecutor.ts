@@ -25,9 +25,8 @@ import { stringIsNullOrEmpty, Timer } from "../utils";
 import { LogUpdate } from "../utils";
 import { TestFile } from "./TestFile";
 import { Group } from "./Group";
-import { runtime } from ".";
 import { TestError } from "../errors";
-import { testCollector } from ".";
+import runtime from ".";
 
 type ReportStatusType = "pass" | "fail" | "empty";
 
@@ -248,6 +247,8 @@ export class TestExecutor {
       const groupHookOk = await this.executeHookFunction(group?.beforeEachHooks);
       keepRunningBeforeEachFunctions = testFileHookOk && groupHookOk;
     }
+
+    const { testCollector } = runtime;
 
     const onSuiteEnd = (_report: ITestReport) => {
       if (!testCollector.currentSuite?.markedAsFailed) {

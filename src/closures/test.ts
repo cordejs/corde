@@ -1,5 +1,4 @@
-import { runtime } from "../core";
-import { testCollector } from "../core";
+import runtime from "../core";
 import { VoidLikeFunction } from "../types";
 import { executePromiseWithTimeout, resolveName } from "../utils";
 
@@ -8,6 +7,7 @@ export const test: corde.ITestClousure = <T extends any>(
   assertion: VoidLikeFunction,
   timeout?: number | undefined,
 ) => {
+  const { testCollector } = runtime;
   const _internalTest = async () => {
     testCollector.currentTestFile.isInsideTestClausure = true;
 
@@ -27,7 +27,7 @@ export const test: corde.ITestClousure = <T extends any>(
         } catch (error) {
           reject(error);
         }
-      }, timeout ?? runtime.timeout);
+      }, timeout ?? runtime.configs.getConfigTimeoutOrDefault());
     },
     toResolveName: () => resolveName(description),
   });

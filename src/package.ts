@@ -1,11 +1,11 @@
 // Cannot be `import` as it's not under TS root dir
 
-import { runtime } from "./core";
+import runtime from "./core";
 
 type PackageJson = typeof import("../package.json");
 
 function getPackage(): PackageJson {
-  if (runtime.environment.isUnityTest) {
+  if (runtime.isUnityTest) {
     return require("../package.json");
   }
   return require("../../package.json");

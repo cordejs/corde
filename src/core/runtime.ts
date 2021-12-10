@@ -10,11 +10,6 @@ import { replaceAll } from "../utils";
 import { ROOT_DIR } from "../consts";
 import { EventEmitter } from "stream";
 
-const Environment = {
-  isUnityTest: process.env.ENV === "UNITY_TEST",
-  isE2eTest: process.env.ENV === "E2E_TEST",
-};
-
 /**
  * @internal
  */
@@ -37,12 +32,16 @@ export class Runtime {
     return this._bot;
   }
 
-  get isTestEnv() {
-    return this.environment.isE2eTest || this.environment.isUnityTest;
+  get isUnityTest() {
+    return process.env.ENV === "UNITY_TEST";
   }
 
-  get environment() {
-    return Environment;
+  get isE2eTest() {
+    return process.env.ENV === "E2E_TEST";
+  }
+
+  get isTestEnv() {
+    return this.isE2eTest || this.isUnityTest;
   }
 
   get exitOnFileReadingError() {
@@ -173,6 +172,3 @@ export class Runtime {
     this._mocks.forEach((mock) => mock.restore());
   }
 }
-
-const runtime = new Runtime();
-export { runtime };

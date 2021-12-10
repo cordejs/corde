@@ -1,7 +1,7 @@
 import { Client } from "discord.js";
 import { BotAPI } from "../../src/api";
 import { mapper } from "../../src/mapper/messageMapper";
-import { ICordeBot, IMessageEmbed } from "../../src/types";
+import { ICordeBot } from "../../src/types";
 import MockDiscord from "../mocks/mockDiscord";
 import { initCordeClientWithChannel } from "../testHelper";
 
@@ -36,6 +36,7 @@ describe("testing corde bot API", () => {
 
   it("should throw error due to invalid message", async () => {
     try {
+      // @ts-ignore
       await bot.send(undefined);
       fail();
     } catch (error) {
@@ -48,7 +49,7 @@ describe("testing corde bot API", () => {
       .spyOn(cordeBot, "sendMessage")
       .mockImplementation(() => Promise.resolve(mockDiscord.message));
 
-    const embed: IMessageEmbed = {
+    const embed: corde.IMessageEmbed = {
       author: "me",
     };
 
@@ -57,36 +58,51 @@ describe("testing corde bot API", () => {
   });
 
   it("should return true for message author be corde's bot", () => {
-    mockDiscord.message.author.id = cordeBot.id;
+    mockDiscord.message.author.id = cordeBot.id ?? "";
     bot.isMessageAuthor(mockDiscord.message);
   });
 
   it("should call joinVoiceChannel", async () => {
-    const spy = jest.spyOn(cordeBot, "joinVoiceChannel").mockImplementation(null);
+    const spy = jest
+      .spyOn(cordeBot, "joinVoiceChannel")
+      // @ts-ignore
+      .mockImplementation(null);
     await bot.joinVoiceChannel("");
     expect(spy).toBeCalledTimes(1);
   });
 
   it("should call leaveVoiceChannel", async () => {
-    const spy = jest.spyOn(cordeBot, "leaveVoiceChannel").mockImplementation(null);
+    const spy = jest
+      .spyOn(cordeBot, "leaveVoiceChannel")
+      // @ts-ignore
+      .mockImplementation(null);
     bot.leaveVoiceChannel();
     expect(spy).toBeCalledTimes(1);
   });
 
   it("should call isInVoiceChannel", async () => {
-    const spy = jest.spyOn(cordeBot, "isInVoiceChannel").mockImplementation(null);
+    const spy = jest
+      .spyOn(cordeBot, "isInVoiceChannel")
+      // @ts-ignore
+      .mockImplementation(null);
     bot.isInVoiceChannel();
     expect(spy).toBeCalledTimes(1);
   });
 
   it("should call fetchChannel", async () => {
-    const spy = jest.spyOn(cordeBot, "fetchChannel").mockImplementation(null);
+    const spy = jest
+      .spyOn(cordeBot, "fetchChannel")
+      // @ts-ignore
+      .mockImplementation(null);
     await bot.fetchChannel("1");
     expect(spy).toBeCalledTimes(1);
   });
 
   it("should call fetchGuild", async () => {
-    const spy = jest.spyOn(cordeBot, "fetchGuild").mockImplementation(null);
+    const spy = jest
+      .spyOn(cordeBot, "fetchGuild")
+      // @ts-ignore
+      .mockImplementation(null);
     await bot.fetchGuild("1");
     expect(spy).toBeCalledTimes(1);
   });
@@ -178,7 +194,10 @@ describe("testing corde bot API", () => {
     });
 
     it("should fetchRole return undefined based on roleId", async () => {
-      const spy = jest.spyOn(cordeBot.guild.roles, "fetch").mockImplementation(null);
+      const spy = jest
+        .spyOn(cordeBot.guild.roles, "fetch")
+        // @ts-expect-error
+        .mockImplementation(null);
       const response = await bot.fetchRole("1");
       expect(response).toEqual(undefined);
       expect(spy).toBeCalled();
@@ -200,7 +219,7 @@ describe("testing corde bot API", () => {
       const spy = jest
         .spyOn(cordeBot.guild.roles, "fetch")
         .mockResolvedValue(mockDiscord.role as any);
-      const response = await bot.fetchRole("1", mockDiscord.guildCollection.first().id);
+      const response = await bot.fetchRole("1", mockDiscord.guildCollection.first()?.id ?? "");
       expect(response).toEqual(mockDiscord.role);
       expect(spy).toBeCalled();
     });
@@ -216,7 +235,11 @@ describe("testing corde bot API", () => {
         .spyOn(cordeBot.client.guilds, "fetch")
         .mockResolvedValue(mockDiscord.guild as any);
 
-      const response = await bot.fetchRole("1", mockDiscord.guildCollection.first().id, true);
+      const response = await bot.fetchRole(
+        "1",
+        mockDiscord.guildCollection.first()?.id ?? "",
+        true,
+      );
       expect(response).toEqual(mockDiscord.role);
       expect(spy).toBeCalled();
       expect(spyGuildFetch).toBeCalled();
@@ -227,6 +250,7 @@ describe("testing corde bot API", () => {
       jest.spyOn(cordeBot.guild.roles, "fetch").mockResolvedValue(mockDiscord.role as any);
       const spyGuildFetch = jest
         .spyOn(cordeBot.client.guilds, "fetch")
+        // @ts-expect-error
         .mockResolvedValue(undefined);
       const response = await bot.fetchRole("1", "1231", true);
       expect(response).toEqual(undefined);
@@ -252,18 +276,20 @@ describe("testing corde bot API", () => {
     it("should get channel by id", () => {
       cordeBot.client.channels.cache = mockDiscord.textChannelCollection;
       const channel = mockDiscord.textChannelCollection.first();
-      expect(bot.getChannel(channel.id)).toEqual(channel);
+      expect(bot.getChannel(channel?.id ?? "")).toEqual(channel);
     });
 
     it("should get channel by id inside object", () => {
       cordeBot.client.channels.cache = mockDiscord.textChannelCollection;
       const channel = mockDiscord.textChannelCollection.first();
+      // @ts-expect-error
       expect(bot.getChannel({ id: channel.id })).toEqual(channel);
     });
 
     it("should get channel by name inside object", () => {
       cordeBot.client.channels.cache = mockDiscord.textChannelCollection;
       const channel = mockDiscord.textChannelCollection.first();
+      // @ts-expect-error
       expect(bot.getChannel({ name: channel.name })).toEqual(channel);
     });
 
@@ -282,18 +308,21 @@ describe("testing corde bot API", () => {
     it("should get guild by id", () => {
       cordeBot.client.guilds.cache = mockDiscord.guildCollection;
       const guild = mockDiscord.guildCollection.first();
+      // @ts-expect-error
       expect(bot.getGuild(guild.id)).toEqual(guild);
     });
 
     it("should get guild by id inside object", () => {
       cordeBot.client.guilds.cache = mockDiscord.guildCollection;
       const guild = mockDiscord.guildCollection.first();
+      // @ts-expect-error
       expect(bot.getGuild({ id: guild.id })).toEqual(guild);
     });
 
     it("should get guild by name inside object", () => {
       cordeBot.client.guilds.cache = mockDiscord.guildCollection;
       const guild = mockDiscord.guildCollection.first();
+      // @ts-expect-error
       expect(bot.getGuild({ name: guild.name })).toEqual(guild);
     });
 
@@ -305,13 +334,19 @@ describe("testing corde bot API", () => {
 
   describe("testing createRole", () => {
     it("should call roleManager to create a new role passing object", async () => {
-      const spy = jest.spyOn(cordeBot.roleManager, "create").mockImplementation(null);
+      const spy = jest
+        .spyOn(cordeBot.roleManager, "create")
+        // @ts-expect-error
+        .mockImplementation(null);
       await bot.createRole({});
       expect(spy).toBeCalled();
     });
 
     it("should call roleManager to create a new role passing string", async () => {
-      const spy = jest.spyOn(cordeBot.roleManager, "create").mockImplementation(null);
+      const spy = jest
+        .spyOn(cordeBot.roleManager, "create")
+        // @ts-expect-error
+        .mockImplementation(null);
       await bot.createRole("aa");
       expect(spy).toBeCalled();
     });
@@ -336,7 +371,10 @@ describe("testing corde bot API", () => {
     });
 
     it("should call guildManager to create a new guild", async () => {
-      const spy = jest.spyOn(cordeBot.roleManager, "create").mockImplementation(null);
+      const spy = jest
+        .spyOn(cordeBot.roleManager, "create")
+        // @ts-expect-error
+        .mockImplementation(null);
       await bot.createRole({ name: "aaa" });
       expect(spy).toBeCalled();
     });
@@ -344,7 +382,10 @@ describe("testing corde bot API", () => {
 
   describe("testing createGuild", () => {
     it("should call guildManager to create a new role passing object", async () => {
-      const spy = jest.spyOn(cordeBot.client.guilds, "create").mockImplementation(null);
+      const spy = jest
+        .spyOn(cordeBot.client.guilds, "create")
+        // @ts-expect-error
+        .mockImplementation(null);
       await bot.createGuild({
         name: "test",
       });
@@ -352,13 +393,17 @@ describe("testing corde bot API", () => {
     });
 
     it("should call guildManager to create a new role passing string", async () => {
-      const spy = jest.spyOn(cordeBot.client.guilds, "create").mockImplementation(null);
+      const spy = jest
+        .spyOn(cordeBot.client.guilds, "create")
+        // @ts-expect-error
+        .mockImplementation(null);
       await bot.createGuild("aa");
       expect(spy).toBeCalled();
     });
 
     it("should throw exception due to invalid name", async () => {
       try {
+        // @ts-expect-error
         await bot.createGuild(undefined);
         fail();
       } catch (error) {
@@ -379,7 +424,10 @@ describe("testing corde bot API", () => {
     });
 
     it("should call guildManager to create a new guild", async () => {
-      const spy = jest.spyOn(cordeBot.client.guilds, "create").mockImplementation(null);
+      const spy = jest
+        .spyOn(cordeBot.client.guilds, "create")
+        // @ts-expect-error
+        .mockImplementation(null);
       await bot.createGuild({ name: "aaa" });
       expect(spy).toBeCalled();
     });
@@ -397,13 +445,19 @@ describe("testing corde bot API", () => {
     });
 
     it("should call guild.channels.create with a string value", async () => {
-      const spy = jest.spyOn(cordeBot.guild.channels, "create").mockImplementation(null);
+      const spy = jest
+        .spyOn(cordeBot.guild.channels, "create")
+        // @ts-expect-error
+        .mockImplementation(null);
       await bot.createChannel("aaa");
       expect(spy).toBeCalled();
     });
 
     it("should call guild.channels.create with object", async () => {
-      const spy = jest.spyOn(cordeBot.guild.channels, "create").mockImplementation(null);
+      const spy = jest
+        .spyOn(cordeBot.guild.channels, "create")
+        // @ts-expect-error
+        .mockImplementation(null);
       await bot.createChannel({ name: "aaa" });
       expect(spy).toBeCalled();
     });
@@ -421,14 +475,20 @@ describe("testing corde bot API", () => {
     });
 
     it("should call guild.channels.create passing type = 'voice' (using string name)", async () => {
-      const spy = jest.spyOn(cordeBot.guild.channels, "create").mockImplementation(null);
+      const spy = jest
+        .spyOn(cordeBot.guild.channels, "create")
+        // @ts-expect-error
+        .mockImplementation(null);
       const name = "aaa";
       await bot.createVoiceChannel("aaa");
       expect(spy).toBeCalledWith(name, { type: "voice" });
     });
 
     it("should call guild.channels.create passing type = 'voice' (using object name)", async () => {
-      const spy = jest.spyOn(cordeBot.guild.channels, "create").mockImplementation(null);
+      const spy = jest
+        .spyOn(cordeBot.guild.channels, "create")
+        // @ts-expect-error
+        .mockImplementation(null);
       const name = "aaa";
       await bot.createVoiceChannel({ name });
       expect(spy).toBeCalledWith(name, { name, type: "voice" });
@@ -447,14 +507,20 @@ describe("testing corde bot API", () => {
     });
 
     it("should call guild.channels.create passing type = 'text' (using string name)", async () => {
-      const spy = jest.spyOn(cordeBot.guild.channels, "create").mockImplementation(null);
+      const spy = jest
+        .spyOn(cordeBot.guild.channels, "create")
+        // @ts-expect-error
+        .mockImplementation(null);
       const name = "aaa";
       await bot.createTextChannel("aaa");
       expect(spy).toBeCalledWith(name, { type: "text" });
     });
 
     it("should call guild.channels.create passing type = 'text' (using object name)", async () => {
-      const spy = jest.spyOn(cordeBot.guild.channels, "create").mockImplementation(null);
+      const spy = jest
+        .spyOn(cordeBot.guild.channels, "create")
+        // @ts-expect-error
+        .mockImplementation(null);
       const name = "aaa";
       await bot.createTextChannel({ name });
       expect(spy).toBeCalledWith(name, { name, type: "text" });
@@ -473,14 +539,20 @@ describe("testing corde bot API", () => {
     });
 
     it("should call guild.channels.create passing type = 'category' (using string name)", async () => {
-      const spy = jest.spyOn(cordeBot.guild.channels, "create").mockImplementation(null);
+      const spy = jest
+        .spyOn(cordeBot.guild.channels, "create")
+        // @ts-expect-error
+        .mockImplementation(null);
       const name = "aaa";
       await bot.createCategoryChannel("aaa");
       expect(spy).toBeCalledWith(name, { type: "category" });
     });
 
     it("should call guild.channels.create passing type = 'category' (using object name)", async () => {
-      const spy = jest.spyOn(cordeBot.guild.channels, "create").mockImplementation(null);
+      const spy = jest
+        .spyOn(cordeBot.guild.channels, "create")
+        // @ts-expect-error
+        .mockImplementation(null);
       const name = "aaa";
       await bot.createCategoryChannel({ name });
       expect(spy).toBeCalledWith(name, { name, type: "category" });
@@ -501,6 +573,7 @@ describe("testing corde bot API", () => {
     it("should get role from cache using id (string)", () => {
       cordeBot.guild.roles.cache = mockDiscord.roleManager.cache;
       const testRole = mockDiscord.roleManager.cache.first();
+      // @ts-expect-error
       const role = bot.getRole(testRole.id);
       expect(role).toEqual(testRole);
     });
@@ -508,6 +581,7 @@ describe("testing corde bot API", () => {
     it("should get role from cache using id (in object)", () => {
       cordeBot.guild.roles.cache = mockDiscord.roleManager.cache;
       const testRole = mockDiscord.roleManager.cache.first();
+      // @ts-expect-error
       const role = bot.getRole({ id: testRole.id });
       expect(role).toEqual(testRole);
     });
@@ -515,6 +589,7 @@ describe("testing corde bot API", () => {
     it("should get role from cache using name (in object)", () => {
       cordeBot.guild.roles.cache = mockDiscord.roleManager.cache;
       const testRole = mockDiscord.roleManager.cache.first();
+      // @ts-expect-error
       const role = bot.getRole({ name: testRole.name });
       expect(role).toEqual(testRole);
     });

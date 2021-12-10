@@ -1,22 +1,10 @@
 import { Client } from "discord.js";
-import { ICordeBot, ITestReport } from "../../src/types";
+import { ICordeBot } from "../../src/types";
 import MockDiscord from "../mocks/mockDiscord";
 import { createCordeBotWithMockedFunctions, testHelper } from "../testHelper";
-import { expect as _expect } from "../../src/expect";
 import { debugCommand } from "../../src/command";
-import { testCollector } from "../../src/core/TestCollector";
 
 const testName = "shouldHaveResult";
-
-const failReport: ITestReport = {
-  pass: false,
-  testName,
-};
-
-const passReport: ITestReport = {
-  pass: true,
-  testName,
-};
 
 let mockDiscord = new MockDiscord();
 let cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());

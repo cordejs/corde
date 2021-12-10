@@ -1,16 +1,18 @@
-import { group, test as _test } from "../../src/closures";
+import { group } from "../../src/closures";
 import { expect as _expect } from "../../src/expect";
 import { summary } from "../../src/core/summary";
 import { TestExecutor } from "../../src/core/TestExecutor";
 import { LogUpdate } from "../../src/utils";
 import { mockTimer } from "../mocks/mockTimer";
 import { removeANSIColorStyle } from "../testHelper";
-import { testCollector } from "../../src/core/TestCollector";
+import runtime from "../../src/core";
 
 let logUpdate: LogUpdate;
 let testRunner: TestExecutor;
 
 mockTimer();
+
+const { testCollector } = runtime;
 
 beforeEach(() => {
   logUpdate = new LogUpdate();

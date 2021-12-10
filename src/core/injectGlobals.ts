@@ -1,27 +1,22 @@
-import * as hooks from "../hooks";
-import * as closures from "../closures";
-import { BotAPI, ConfigAPI, cordeInternal } from "../api";
-import { runtime } from "../core";
-import { expect } from "../expect";
-import { command } from "../command";
-
 function getGlobal() {
   return global as any;
-}
-
-function getConfigs() {
-  return new ConfigAPI(runtime.configs);
-}
-
-function getBot() {
-  return new BotAPI(runtime.bot);
 }
 
 function addToGlobalScope(name: string, value: any) {
   getGlobal()[name] = value;
 }
 
-export function injectGlobals() {
+export async function injectGlobals() {
+  const hooks = await import("../hooks");
+  const closures = await import("../closures");
+  const { BotAPI, ConfigAPI, cordeInternal } = await import("../api");
+  const core = await import("../core");
+  const { expect } = await import("../expect");
+  const { command } = await import("../command");
+
+  const bot = new BotAPI(core.default.bot);
+  const config = new ConfigAPI(core.default.configs);
+
   Object.getOwnPropertyNames(hooks).forEach((hookName) => {
     addToGlobalScope(hookName, (hooks as any)[hookName]);
   });
@@ -34,7 +29,7 @@ export function injectGlobals() {
   addToGlobalScope("command", command);
   addToGlobalScope("con", command);
 
-  addToGlobalScope("bot", getBot());
+  addToGlobalScope("bot", bot);
   addToGlobalScope("corde", cordeInternal);
-  addToGlobalScope("configs", getConfigs());
+  addToGlobalScope("configs", config);
 }

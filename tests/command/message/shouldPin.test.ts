@@ -1,6 +1,5 @@
 import { Client } from "discord.js";
 import { debugCommand } from "../../../src/command";
-import { runtime } from "../../../src/core/runtime";
 import { ICordeBot, ITestReport } from "../../../src/types";
 import MockDiscord from "../../mocks/mockDiscord";
 import { MockEvents } from "../../mocks/mockEvents";
@@ -31,13 +30,17 @@ describe(`testing ${testName} function`, () => {
   });
 
   it("should return error message due to no mesageIdentifier (null)", async () => {
-    const report = await debugCon().shouldPin(null);
+    const report = await debugCon()
+      // @ts-expect-error
+      .shouldPin(null);
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
 
   it("should return error message due to no mesageIdentifier (undefined)", async () => {
-    const report = await debugCon().shouldPin(undefined);
+    const report = await debugCon()
+      // @ts-expect-error
+      .shouldPin(undefined);
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });

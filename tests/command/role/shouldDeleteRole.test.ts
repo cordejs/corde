@@ -1,11 +1,9 @@
 import { Client } from "discord.js";
 import MockDiscord from "../../mocks/mockDiscord";
-import { createCordeBotWithMockedFunctions, getFullConsoleLog, testHelper } from "../../testHelper";
+import { createCordeBotWithMockedFunctions, testHelper } from "../../testHelper";
 import { MockEvents } from "../../mocks/mockEvents";
 import { ICordeBot, ITestReport } from "../../../src/types";
 import { debugCommand } from "../../../src/command";
-import { runtime } from "../../../src/core/runtime";
-import { testCollector } from "../../../src/core/TestCollector";
 
 const testName = "shouldDeleteRole";
 

@@ -17,14 +17,12 @@ import {
   User,
   VoiceState,
 } from "discord.js";
-import { IEventResume, Events } from "../../src/core";
+import { Events } from "../../src/core";
 import MockDiscord from "../mocks/mockDiscord";
 
 const client = new Client();
 const mockDiscord = new MockDiscord();
 let events: Events;
-
-const DEFAULT_DELAY = 10;
 
 beforeEach(() => {
   events = new Events(client);
@@ -195,7 +193,7 @@ describe("testing events event", () => {
 
     it("should fail when get async once with roleIdentifier", async () => {
       expect(async () => {
-        const promise = events.onceRoleDelete({ id: "123" }, 10);
+        const promise = events.onceRoleDelete({ id: "123", timeout: 10 });
         client.emit(eventName, mockDiscord.role);
         await promise;
       }).rejects.toBeTruthy();
@@ -446,7 +444,7 @@ describe("testing events event", () => {
   describe("testing guildMemberChunk event", () => {
     const eventName = "guildMembersChunk";
 
-    const eventResume: IEventResume = {
+    const eventResume: corde.IEventResume = {
       count: 1,
       index: 0,
       nonce: "",
@@ -455,7 +453,7 @@ describe("testing events event", () => {
     it("should get callback", () => {
       let _members!: Collection<string, GuildMember>;
       let _guild!: Guild;
-      let _resume!: IEventResume;
+      let _resume!: corde.IEventResume;
 
       events.onGuildMemberChunk((members, guild, resume) => {
         _members = members;
@@ -472,10 +470,9 @@ describe("testing events event", () => {
     it("should get async once", async () => {
       const promise = events.onceGuildMemberChunk();
       client.emit(eventName, mockDiscord.guildMemberCollection, mockDiscord.guild, eventResume);
-      const [_members, _guild, _resume] = await promise;
+      const [_members, _guild] = await promise;
       expect(_members).toEqual(mockDiscord.guildMemberCollection);
       expect(_guild).toEqual(mockDiscord.guild);
-      expect(_resume).toEqual(eventResume);
     });
   });
 
@@ -499,10 +496,8 @@ describe("testing events event", () => {
       const promise = events.onceGuildMemberSpeaking();
 
       client.emit(eventName, mockDiscord.guildMember, mockDiscord.speaking);
-      const [_guildMember, _speaking] = await promise;
-
+      const _guildMember = await promise;
       expect(_guildMember).toEqual(mockDiscord.guildMember);
-      expect(_speaking).toEqual(mockDiscord.speaking);
     });
   });
 
@@ -601,7 +596,7 @@ describe("testing events event", () => {
     });
 
     it("should get async once with messageIdentifier", async () => {
-      const promise = events.onceMessage(mockDiscord.message.author.id);
+      const promise = events.onceMessage({ message: mockDiscord.message });
       client.emit(eventName, mockDiscord.message);
       const message = await promise;
       expect(message).toEqual(mockDiscord.message);
@@ -609,7 +604,11 @@ describe("testing events event", () => {
 
     it("should fail when get async once with messageIdentifier", async () => {
       expect(async () => {
-        const promise = events.onceMessage("123", null, 10);
+        const promise = events.onceMessage({
+          message: {
+            content: "",
+          },
+        });
         client.emit(eventName, mockDiscord.message);
         await promise;
       }).rejects.toBeTruthy();
@@ -692,10 +691,6 @@ describe("testing events event", () => {
             name: mockDiscord.messageReaction.emoji.name,
           },
         ],
-        messageIdentifier: {
-          id: mockDiscord.messageReaction.message.id,
-        },
-        authorId: mockDiscord.user.id,
       });
       client.emit(eventName, mockDiscord.messageReaction, mockDiscord.user);
       const reactionsWithAuthors = await promise;
@@ -718,7 +713,9 @@ describe("testing events event", () => {
 
     it("should return message pinned filter", async () => {
       const promise = events.onceMessagePinned({
-        id: mockDiscord.unPinnedMessage.id,
+        message: {
+          id: mockDiscord.unPinnedMessage.id,
+        },
       });
       const updatedMessage = Object.assign({}, mockDiscord.unPinnedMessage);
       updatedMessage.pinned = true;
@@ -818,8 +815,7 @@ describe("testing events event", () => {
 
       const promise = events.oncePresenceUpdate();
       client.emit(eventName, mockDiscord.presence, updatedPresence);
-      const [_oldPresence, _newPresence] = await promise;
-      expect(_oldPresence).toEqual(mockDiscord.presence);
+      const _newPresence = await promise;
       expect(_newPresence).toEqual(updatedPresence);
     });
   });
@@ -903,7 +899,7 @@ describe("testing events event", () => {
 
     it("should throw timeout for waiting", () => {
       expect(async () => {
-        const promise = events.onceRolePermissionUpdate({ name: "potatoe" }, 100);
+        const promise = events.onceRolePermissionUpdate({ name: "potatoe", timeout: 10 });
         client.emit(eventName, mockDiscord.role, updatedRole);
         await promise;
       }).rejects.toBeTruthy();
