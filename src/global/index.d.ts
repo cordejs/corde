@@ -42,7 +42,7 @@ declare namespace corde {
    * Without through a error for the failed assertion and send the command
    * "ping" to Discord.
    *
-   * **Others functions will be executed normally, so be carefull about that.**
+   * **Others functions will be executed normally, so be carefully about that.**
    *
    * ```javascript
    *
@@ -68,10 +68,10 @@ declare namespace corde {
    *   // .... Do other stuffs
    * });
    *
-   * @param miliseconds Time in miliseconds of the delay
+   * @param milliseconds Time in milliseconds of the delay
    * @since 5.0
    */
-  export function wait(miliseconds: number): void;
+  export function wait(milliseconds: number): void;
   /**
    * Creates a asynchronously delay
    *
@@ -83,10 +83,10 @@ declare namespace corde {
    *   // .... Do other stuffs
    * });
    *
-   * @param miliseconds Time in miliseconds of the delay
+   * @param milliseconds Time in milliseconds of the delay
    * @since 5.0
    */
-  export function waitAsync(miliseconds: number): Promise<void>;
+  export function waitAsync(milliseconds: number): Promise<void>;
 
   export function send(command: string): Promise<import("discord.js").Message>;
 
@@ -108,7 +108,7 @@ declare namespace corde {
    *
    * obj.sum(1, 1); // Return 1
    *
-   * @param object Entity that countains properties or functions that will be mocked.
+   * @param object Entity that contains properties or functions that will be mocked.
    * @param prop Name of the property or function to be mocked.
    * @returns Instance of a mocked object.
    */

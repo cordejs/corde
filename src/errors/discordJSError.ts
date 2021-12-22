@@ -1,5 +1,5 @@
 import { Errors } from "./defaults";
-import { InternalError } from ".";
+import { InternalError } from "./internalError";
 
 /**
  * Related to a [Discord.js](https://discord.js.org/#/docs/main/stable/general/welcome) error.

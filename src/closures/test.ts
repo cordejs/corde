@@ -9,13 +9,13 @@ export const test: corde.ITestClousure = <T extends any>(
 ) => {
   const { testCollector } = runtime;
   const _internalTest = async () => {
-    testCollector.currentTestFile.isInsideTestClausure = true;
+    testCollector.currentTestFile.isInsideTestClosure = true;
 
     if (assertion) {
       await assertion();
     }
 
-    testCollector.currentTestFile.isInsideTestClausure = false;
+    testCollector.currentTestFile.isInsideTestClosure = false;
   };
 
   testCollector.currentTestFile.addTest({

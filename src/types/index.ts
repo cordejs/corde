@@ -330,6 +330,7 @@ export interface IExpectTestBaseParams {
 }
 export interface IExpectTestParams extends IExpectTestBaseParams {
   testName: string;
+  mustSendCommand: boolean;
 }
 
 export interface IMacherContructorArgs {

@@ -1,7 +1,7 @@
 import { EmbedFieldData, Message, MessageAttachment, MessageEmbed } from "discord.js";
 import { MessageType, Primitive } from "../../../types";
 import { deepEqual, diff, formatObject, isPrimitiveValue, typeOf } from "../../../utils";
-import { CommandState } from "../commandstate";
+import { CommandState } from "../commandState";
 
 export namespace messageUtils {
   export function validateExpect(matcher: CommandState, expect: Primitive | corde.IMessageEmbed) {

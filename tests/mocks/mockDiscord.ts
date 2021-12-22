@@ -393,7 +393,23 @@ export default class MockDiscord {
   }
 
   createMockClient() {
-    return new Client();
+    /**
+     * Initialize without the restSweepInterval was causing timeout error:
+     * 
+     * at Client.setInterval (node_modules/discord.js/src/client/BaseClient.js:107:22)
+      at new RESTManager (node_modules/discord.js/src/rest/RESTManager.js:18:14)
+      at new BaseClient (node_modules/discord.js/src/client/BaseClient.js:49:17)
+      at new Client (node_modules/discord.js/src/client/Client.js:35:5)
+      at createCordeBotWithMockedFunctions (tests/testHelper.ts:82:57)
+      at Object.<anonymous> (tests/command/message/messageContentContains.test.ts:84:25)
+      at async TestScheduler.scheduleTests (node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at async runJest (node_modules/@jest/core/build/runJest.js:404:19)
+      at async _run10000 (node_modules/@jest/core/build/cli/index.js:320:7)
+      at async runCLI (node_modules/@jest/core/build/cli/index.js:173:3)
+     */
+    return new Client({
+      restSweepInterval: 0,
+    });
   }
 
   createMockId() {

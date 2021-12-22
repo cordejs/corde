@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
-import { getStackTrace } from "../utils";
+import { forEachProp, getStackTrace, isNullOrUndefined } from "../utils";
 import { any } from "../expect/asymmetricMatcher";
 import * as matchers from "./matches";
 import runtime from "../core";
 import { ICordeBot, ITestReport } from "../types";
-import { CommandState } from "./matches/commandstate";
+import { CommandState } from "./matches/commandState";
 
 interface ICreateMatcherParam {
   matcher: string;
@@ -15,6 +15,8 @@ interface ICreateMatcherParam {
   isDebug: boolean;
   isCascade?: boolean;
   cordeBot?: ICordeBot;
+  trace?: string;
+  mustSendCommand?: boolean;
 }
 
 interface IMatcher {
@@ -27,21 +29,108 @@ function pickFn(name: KeyOfMatcher) {
   return matchers[name] as any as IMatcher;
 }
 
-function createMatcherFn({
-  matcher,
-  isNot,
-  commandName,
-  channelId,
-  isDebug,
-  isCascade,
-  cordeBot,
-  guildId,
-}: ICreateMatcherParam) {
+function buildAndMatcherFunctions(params: ICreateMatcherParam) {
+  const { commandName, isDebug, channelId, cordeBot, mustSendCommand } = params;
+
+  const commandReturn: any = {};
+  commandReturn.not = {};
+
+  forEachProp(matchers, (matcher) => {
+    commandReturn[matcher] = createMatcherFn({
+      commandName,
+      isDebug,
+      isNot: false,
+      matcher,
+      channelId,
+      cordeBot,
+      mustSendCommand,
+    });
+    commandReturn.not[matcher] = createMatcherFn({
+      commandName,
+      isDebug,
+      isNot: true,
+      matcher,
+      channelId,
+      cordeBot,
+      mustSendCommand,
+    });
+  });
+
+  return commandReturn;
+}
+
+class PromiseCommand extends Promise<any> implements corde.ICommandPromise {
+  private readonly _param: ICreateMatcherParam;
+
+  get and(): corde.AllCommandMatches {
+    return buildAndMatcherFunctions({
+      mustSendCommand: false,
+      ...this._param,
+    });
+  }
+
+  constructor(
+    executor: (resolve: (value: any) => void, reject: (reason?: any) => void) => void,
+    param: ICreateMatcherParam,
+  ) {
+    super(executor);
+    this._param = param;
+  }
+
+  [Symbol.toStringTag]: string;
+}
+
+async function resolveTestFunction(
+  params: ICreateMatcherParam,
+  fn: (...args: any[]) => Promise<ITestReport>,
+): Promise<any> {
+  try {
+    const report = await fn();
+    if (!report.pass && !params.isDebug) {
+      report.trace = params.trace;
+    }
+
+    runtime.internalEvents.emit("test_end", report);
+
+    if (params.isDebug) {
+      return report;
+    }
+  } catch (error) {
+    const failedReport: ITestReport = {
+      pass: false,
+      testName: params.matcher,
+      message: handleError(error),
+    };
+
+    if (!params.isDebug) {
+      failedReport.trace = params.trace;
+    }
+
+    runtime.internalEvents.emit("test_end", failedReport);
+    if (params.isDebug) {
+      return failedReport;
+    }
+  }
+}
+
+function createMatcherFn(params: ICreateMatcherParam) {
+  const {
+    matcher,
+    isNot,
+    commandName,
+    channelId,
+    isDebug,
+    isCascade,
+    cordeBot,
+    guildId,
+    mustSendCommand,
+  } = params;
+
   const trace = getStackTrace(undefined, true, matcher);
   const { testCollector, configs } = runtime;
 
-  if (!testCollector.currentTestFile?.isInsideTestClausure && !isCascade) {
-    throw new Error("command can only be used inside a test(it) clausure");
+  if (!testCollector.currentTestFile?.isInsideTestClosure && !isCascade) {
+    throw new Error("command can only be used inside a test(it) closure");
   }
 
   return async (
@@ -64,53 +153,26 @@ function createMatcherFn({
       return arg;
     });
 
-    try {
-      const matcherFn = pickFn(matcher as KeyOfMatcher);
+    const matcherFn = pickFn(matcher as KeyOfMatcher);
 
-      const props = new CommandState({
-        isNot,
-        cordeBot: isDebug ? cordeBot ?? runtime.bot : runtime.bot,
-        command: commandName,
-        timeout: configs.getConfigTimeoutOrDefault(),
-        guildId: guildId ?? configs.guildId,
-        channelId: channelId ?? configs.channelId,
-        testName: matcher,
-        isCascade: isCascade ?? false,
-      });
+    const props = new CommandState({
+      isNot,
+      cordeBot: isDebug ? cordeBot ?? runtime.bot : runtime.bot,
+      command: commandName,
+      timeout: configs.getConfigTimeoutOrDefault(),
+      guildId: guildId ?? configs.guildId,
+      channelId: channelId ?? configs.channelId,
+      testName: matcher,
+      isCascade: isCascade ?? false,
+      mustSendCommand: isNullOrUndefined(mustSendCommand) ? true : !!mustSendCommand,
+    });
 
-      const fn = matcherFn.bind(props, ...args);
-
-      if (isCascade) {
-        return fn;
-      }
-
-      const report = await fn();
-
-      if (!report.pass && !isDebug) {
-        report.trace = trace;
-      }
-
-      runtime.internalEvents.emit("test_end", report);
-
-      if (isDebug) {
-        return report;
-      }
-    } catch (error) {
-      const failedReport: ITestReport = {
-        pass: false,
-        testName: matcher,
-        message: handleError(error),
-      };
-
-      if (!isDebug) {
-        failedReport.trace = trace;
-      }
-
-      runtime.internalEvents.emit("test_end", failedReport);
-      if (isDebug) {
-        return failedReport;
-      }
-    }
+    const fn = matcherFn.bind(props, ...args);
+    params.trace = trace;
+    return new PromiseCommand(async (resolve) => {
+      const response = await resolveTestFunction(params, fn);
+      resolve(response);
+    }, params);
   };
 }
 
@@ -122,13 +184,17 @@ function handleError(error: any) {
 }
 
 function createLocalCommand(isDebug: boolean) {
-  let localExpect: any = {};
+  let localCommand: any = {};
 
-  localExpect = (commandName: any, channelId?: string, cordeBot?: ICordeBot) => {
-    const _expect: any = {};
-    _expect.not = {};
-    Object.getOwnPropertyNames(matchers).forEach((matcher) => {
-      _expect[matcher] = createMatcherFn({
+  localCommand = (commandName: any, channelId?: string, cordeBot?: ICordeBot) => {
+    const commandReturn: any = {
+      should: {
+        not: {},
+      },
+    };
+
+    forEachProp(matchers, (matcher) => {
+      commandReturn.should[matcher] = createMatcherFn({
         commandName,
         isDebug,
         isNot: false,
@@ -136,7 +202,7 @@ function createLocalCommand(isDebug: boolean) {
         channelId,
         cordeBot,
       });
-      _expect.not[matcher] = createMatcherFn({
+      commandReturn.should.not[matcher] = createMatcherFn({
         commandName,
         isDebug,
         isNot: true,
@@ -145,43 +211,36 @@ function createLocalCommand(isDebug: boolean) {
         cordeBot,
       });
     });
-    return _expect;
+
+    return commandReturn;
   };
 
-  Object.getOwnPropertyNames(matchers).forEach((matcher) => {
-    localExpect[matcher] = createMatcherFn({
-      isDebug,
-      isNot: false,
-      matcher,
-      isCascade: true,
-    });
-  });
+  localCommand.any = any;
 
-  localExpect.any = any;
-
-  return localExpect;
+  return localCommand;
 }
 
 export const command = createLocalCommand(false) as corde.ICommand;
 
-type Matchers = {
-  not: typeof matchers;
-} & typeof matchers;
-
-type DebugExpectType<T, TResponse extends "cascade" | "unique"> = {
-  [P in keyof T]: T[P] extends (...args: any[]) => any
-    ? (
-        ...params: Parameters<T[P]>
-      ) => TResponse extends "cascade" ? () => ReturnType<T[P]> : ReturnType<T[P]>
-    : DebugExpectType<T[P], TResponse>;
+type DebugTypes<T extends any> = {
+  [P in keyof T]: T[P] extends (...args: any[]) => Promise<any>
+    ? (...params: Parameters<T[P]>) => Promise<{
+        pass: boolean;
+        testName: string;
+        message: string;
+        trace?: string;
+      }>
+    : T[P] extends Record<string, any>
+    ? DebugTypes<T[P]>
+    : T[P];
 };
 
-export interface IDebugExpect extends DebugExpectType<Matchers, "cascade"> {
-  <T extends any>(value: T, channelId?: string, cordeBot?: ICordeBot): DebugExpectType<
-    Matchers,
-    "unique"
-  >;
-  any(...classType: any[]): any;
+interface DebugFn {
+  <T extends any>(
+    value: T,
+    channelId?: string,
+    cordeBot?: ICordeBot,
+  ): DebugTypes<corde.IShouldCommands>;
 }
 
 /**
@@ -190,4 +249,4 @@ export interface IDebugExpect extends DebugExpectType<Matchers, "cascade"> {
  *
  * @internal
  */
-export const debugCommand = createLocalCommand(true) as IDebugExpect;
+export const debugCommand = createLocalCommand(true) as DebugFn;

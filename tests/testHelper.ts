@@ -5,9 +5,9 @@ import { Client } from "discord.js";
 import { CordeBot } from "../src/core/CordeBot";
 import { ICordeBot, ITestReport, ObjectLike } from "../src/types";
 import { IExpectTestBaseParams } from "../src/types";
-import { runtime } from "../src/core/runtime";
 import { buildReportMessage } from "../src/utils";
-import { CommandState } from "../src/command/matches/commandstate";
+import { CommandState } from "../src/command/matches/commandState";
+import runtime from "../src/core";
 
 export const normalTsPath = path.resolve(process.cwd(), "corde.ts");
 export const tempTsPath = path.resolve(process.cwd(), "__corde.ts");
@@ -79,7 +79,7 @@ export function createCordeBotWithMockedFunctions(
   mockDiscord: MockDiscord,
   findRoleMock: any = mockDiscord.role,
 ) {
-  const corde = initCordeClientWithChannel(mockDiscord, new Client());
+  const corde = initCordeClientWithChannel(mockDiscord, mockDiscord.client);
   corde.getRoles = jest.fn().mockReturnValue(mockDiscord.roleManager.cache);
   corde.findRole = jest.fn().mockReturnValue(findRoleMock);
   corde.sendTextMessage = jest.fn().mockImplementation(() => 1);
@@ -218,10 +218,10 @@ export function createReport(entity: ObjectLike, pass: boolean, message?: string
 export namespace testHelper {
   export function initCommandTestsFixtures(): [MockDiscord, ICordeBot] {
     const file = runtime.testCollector.createTestFile("");
-    file.isInsideTestClausure = true;
+    file.isInsideTestClosure = true;
     const mockDiscord = new MockDiscord();
     runtime.setConfigs({ timeout: 100 }, true);
-    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, mockDiscord.client);
     return [mockDiscord, cordeClient];
   }
 }

@@ -11,7 +11,7 @@ type CordeType = MapObj<typeof corde>;
  */
 export const cordeInternal: CordeType = {
   fail(message?: string) {
-    if (!runtime.testCollector.isInsideTestClausure) {
+    if (!runtime.testCollector.isInsideTestClosure) {
       throw new Error("Can not fail a suite without being inside a suite");
     }
 

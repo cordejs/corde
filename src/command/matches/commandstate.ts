@@ -24,6 +24,7 @@ export class CommandState {
   readonly guildId: string | undefined;
   readonly channelIdToSendCommand?: string;
   readonly channelId: string;
+  readonly mustSendCommand: boolean;
 
   /**
    * Initialize the match class with its default values.
@@ -42,6 +43,7 @@ export class CommandState {
     guildId,
     channelId,
     channelIdToSendCommand,
+    mustSendCommand,
   }: IExpectTestParams) {
     this.isNot = isNot;
     this.command = command;
@@ -53,6 +55,7 @@ export class CommandState {
     this.guildId = guildId;
     this.channelIdToSendCommand = channelIdToSendCommand;
     this.channelId = channelId;
+    this.mustSendCommand = mustSendCommand;
   }
 
   invertHasPassedIfIsNot() {
@@ -72,12 +75,14 @@ export class CommandState {
    */
   sendCommandMessage(forceSend?: boolean) {
     // Tests in cascade controus when the message should be sent.
-    if (!this.isCascade || forceSend) {
-      if (!this.command) {
-        throw new Error("can not send a empty message");
-      }
+    if ((this.mustSendCommand || forceSend) && !this.command) {
+      throw new Error("can not send a empty message");
+    }
+
+    if ((this.mustSendCommand || forceSend) && this.command) {
       return this.cordeBot.sendTextMessage(this.command, this.channelIdToSendCommand);
     }
+
     return Promise.resolve();
   }
 

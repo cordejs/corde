@@ -38,7 +38,7 @@ declare namespace corde {
      *
      * @example
      *
-     * // Suposing that the config is:
+     * // Supposing that the config is:
      * const cordeConfig = {
      *  guildId: "123",
      *  botPrefix: "!"
@@ -55,6 +55,29 @@ declare namespace corde {
   }
 
   export interface ICommandPromise extends Promise<void> {
+    /**
+     * Defines that a single command should do more than one action.
+     * Use this to append multiple assertions using a single command.
+     *
+     * Each command test extends Promise class, allowing that
+     * normal promises functions be appended and not requiring a function
+     * to wait for execution at the end of all calls.
+     * @example
+     *
+     * await con("ping").should.respond("pong")
+     *            .and.createRole({ name: "foo" });
+     *
+     * await con("ping").should.respond("pong");
+     * await con("ping").should.not.respond("pong");
+     * await con("ping").should.inChannel("123").respond("pong");
+     * await con("ping").should.respond("pong").and.not.createChannel({ name: "foo" });
+     *
+     * await con("ping").should
+     *            .pinMessage({ id: "12141" })
+     *            .then(() => console.log("I was executed")) // Then callback returns void
+     *
+     * @since 5.0
+     */
     and: AllCommandMatches;
   }
 
@@ -111,7 +134,7 @@ declare namespace corde {
      *
      * @since 2.0
      */
-    pin(messageId: string): TReturn;
+    pinMessage(messageId: string): TReturn;
     /**
      * Verify if a command pinned a message.
      *
@@ -119,7 +142,7 @@ declare namespace corde {
      *
      * @since 2.0
      */
-    pin(messageIdentifier: IMessageIdentifier): TReturn;
+    pinMessage(messageIdentifier: IMessageIdentifier): TReturn;
 
     /**
      * Verify if a command unpinned a message.
@@ -129,7 +152,7 @@ declare namespace corde {
      *
      * @since 2.0
      */
-    unPin(messageId: string): TReturn;
+    unPinMessage(messageId: string): TReturn;
     /**
      * Verify if a command unpinned a message.
      *
@@ -137,7 +160,7 @@ declare namespace corde {
      *
      * @since 2.0
      */
-    unPin(messageIdentifier: IMessageIdentifier): TReturn;
+    unPinMessage(messageIdentifier: IMessageIdentifier): TReturn;
 
     /**
      * Verify if a command edited a message.
@@ -166,7 +189,7 @@ declare namespace corde {
      *    description: "Some description here"
      *  }
      *
-     *  // The follow test will pass because we are only cheching if the returning embed
+     *  // The follow test will pass because we are only checking if the returning embed
      *  // has the color property equals.
      *
      *  expect("embed").toEmbedMatch({ color: "#0099ff" }); // Test pass
@@ -384,7 +407,7 @@ declare namespace corde {
      *
      * @example
      *
-     * // Suposing that the config is:
+     * // Supposing that the config is:
      * const cordeConfig = {
      *  channelId: "123",
      *  botPrefix: "!"
@@ -407,24 +430,52 @@ declare namespace corde {
     ISetChannelMatchers<TReturn> &
     ISetGuildMatchers<TReturn>;
 
-  export type AllCommandMatches = CommandMatchers<Promise<void>> &
+  export type AllCommandMatches = CommandMatchers<ICommandPromise> &
     IsNotWithHaveResults &
     ISetChannelMatchers<ICommandPromise> &
     ISetGuildMatchers<ICommandPromise>;
 
   export interface IShouldCommands {
+    /**
+     * Prefix property to access all tests functions.
+     */
     should: AllCommandMatches;
   }
 
-  export interface ICommand extends AllMatches<any> {
+  export interface ICommandLocation {
+    channelId?: string;
+    guildId?: string;
+  }
+
+  export interface ICommand {
     /**
      * Receives which command will be tested.
      *
      * Do not inform the command prefix if
      * it's already informed in **configs**
      *
+     * `location` parameter has **channelId** and **guildId**. If only channelId be provided,
+     * corde will assume that the command must be sent in the guildId provided in configs.
+     *
+     * If the channelId isn't of the guild provided in configs, corde will search for all guilds
+     * that the bot is connected to and look for the provided channelId, pay attention that this
+     * operation is slower, so, if the provided channelId is of another guild different from the one informed
+     * in configs, put inform it to make tests faster.
+     *
+     * @example
+     *
+     * // Given the config
+     * {
+     *    guildId: "guild123"
+     * }
+     *
+     * con("ping")
+     * con("ping", { channelId: "123" }) // Will assume that channelId "123" belongs to guild123
+     * con("ping", { channelId: "12312", guildId: "321" })
+     *
+     *
      * @param commandNameResolvable Command name. (Empty strings will resolve failed test)
-     * @param channelId Defines the channel where the command should be sent to.
+     * @param location Defines the guild and channel (in the guild) where the command will be sent to.
      *
      * @returns An object with all possible tests to be done
      * in the bot.
@@ -433,7 +484,7 @@ declare namespace corde {
      */
     <T extends (() => number | string) | number | string>(
       commandNameResolvable: T,
-      channelId?: string,
+      location?: ICommandLocation,
     ): IShouldCommands;
   }
 }

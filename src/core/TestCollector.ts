@@ -15,12 +15,12 @@ export class TestCollector {
    *
    * @example
    *
-   *                // isInsideTestClausure = false;
+   *                // isInsideTestClosure = false;
    * group("", () => {
-   *  ...           // isInsideTestClausure = true;
+   *  ...           // isInsideTestClosure = true;
    * });
    */
-  isInsideGroupClausure: boolean;
+  isInsideGroupClosure: boolean;
 
   /**
    * Define is Node.js is running a test(it) closure.
@@ -29,12 +29,12 @@ export class TestCollector {
    *
    * @example
    *
-   *                // isInsideTestClausure = false;
+   *                // isInsideTestClosure = false;
    * it("", () => {
-   *  ...           // isInsideTestClausure = true;
+   *  ...           // isInsideTestClosure = true;
    * });
    */
-  isInsideTestClausure: boolean;
+  isInsideTestClosure: boolean;
   assertions: IAssertionProps[];
   testsPass: number;
   testsFailed: number;
@@ -49,8 +49,8 @@ export class TestCollector {
 
   constructor() {
     this.testFiles = [];
-    this.isInsideGroupClausure = false;
-    this.isInsideTestClausure = false;
+    this.isInsideGroupClosure = false;
+    this.isInsideTestClosure = false;
 
     this.assertions = [];
     this.testsPass = 0;

@@ -1,10 +1,14 @@
 import chalk from "chalk";
 import { EXPECT_RECEIVED_TAB_SPACE } from "../../consts";
 import { ITestReport } from "../../types";
-import { CommandState } from "./commandstate";
+import { CommandState } from "./commandState";
 
 /**
+ * Function to be injected globally.
+ * **Do not use it directly**.
+ *
  * @internal
+ * @deprecated
  */
 export async function shouldHaveResult(
   this: CommandState,

@@ -11,14 +11,14 @@ export class TestFile implements IEntityHook {
 
   readonly closures: TestFileActionType[];
 
-  isInsideGroupClausure: boolean;
-  isInsideTestClausure: boolean;
+  isInsideGroupClosure: boolean;
+  isInsideTestClosure: boolean;
   currentGroup?: Group;
 
   constructor(path: string) {
     this.path = path;
-    this.isInsideGroupClausure = false;
-    this.isInsideTestClausure = false;
+    this.isInsideGroupClosure = false;
+    this.isInsideTestClosure = false;
     this.closures = [];
     const defaultProps = { clearOnExecution: false };
     this.afterAllHooks = new Queue(defaultProps);
@@ -65,7 +65,7 @@ export class TestFile implements IEntityHook {
     }
 
     let hook: Nullable<Queue<VoidLikeFunction>> = null;
-    if (this.closures.length > 1 && this.isInsideGroupClausure) {
+    if (this.closures.length > 1 && this.isInsideGroupClosure) {
       const groups = this.getGroupActions();
       hook = groups[groups.length - 1][hookFunctionName];
     }

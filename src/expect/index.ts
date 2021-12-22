@@ -24,8 +24,8 @@ function pickFn(name: KeyOfMatcher) {
 function createMatcherFn(matcher: string, isNot: boolean, expected: any, isDebug: boolean) {
   const { testCollector } = runtime;
   const trace = getStackTrace(Infinity, true, matcher);
-  if (!testCollector.currentTestFile?.isInsideTestClausure && !isDebug) {
-    throw new Error("expect can only be used inside a test(it) clausure");
+  if (!testCollector.currentTestFile?.isInsideTestClosure && !isDebug) {
+    throw new Error("expect can only be used inside a test(it) Closure");
   }
   return (...args: any[]): ITestReport | void => {
     // If someone pass expect.any, we must invoke it to return

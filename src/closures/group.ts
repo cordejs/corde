@@ -9,7 +9,7 @@ export const group: corde.IDescribeClousure = <T extends any>(
 ) => {
   const { testCollector } = runtime;
   const _internalGroup = async () => {
-    testCollector.currentTestFile.isInsideGroupClausure = true;
+    testCollector.currentTestFile.isInsideGroupClosure = true;
 
     if (testDefinitions) {
       const resolvedName = await resolveName(description);
@@ -20,10 +20,10 @@ export const group: corde.IDescribeClousure = <T extends any>(
       testCollector.currentTestFile.currentGroup = undefined;
     }
 
-    testCollector.currentTestFile.isInsideGroupClausure = false;
+    testCollector.currentTestFile.isInsideGroupClosure = false;
   };
 
-  if (testCollector.currentTestFile.isInsideTestClausure) {
+  if (testCollector.currentTestFile.isInsideTestClosure) {
     throw new Error("Cannot nest a group inside a test");
   }
 

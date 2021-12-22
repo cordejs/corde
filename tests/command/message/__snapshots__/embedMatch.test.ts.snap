@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing embedMatch function should get failed test due to bot returned equal messages that matches isnot(true) 1`] = `
+Object {
+  "message": "    
+    expected: embed message from bot do not match with expectation
+    received: both returned and expectation embed messages matches
+",
+  "pass": false,
+  "testName": "embedMatch",
+}
+`;
+
+exports[`testing embedMatch function should get success test due to bot returned equal messages that matches 1`] = `
+Object {
+  "pass": true,
+  "testName": "embedMatch",
+}
+`;
+
+exports[`testing embedMatch function should return a failed test due to invalid parameter (null) 1`] = `
+Object {
+  "message": "    
+    expected: parameter to be an object of type IMesageEmbed 
+    received: null
+",
+  "pass": false,
+  "testName": "embedMatch",
+}
+`;

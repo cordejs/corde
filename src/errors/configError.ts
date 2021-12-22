@@ -1,5 +1,5 @@
 import { Errors } from "./defaults";
-import { InternalError } from ".";
+import { InternalError } from "./internalError";
 
 /**
  * Related to corde configs.

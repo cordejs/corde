@@ -1,4 +1,4 @@
-import { TestError } from ".";
+import { TestError } from "./testError";
 import { ITestReport } from "../types";
 
 /**

@@ -1,0 +1,161 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing respond function should fail due to no message was sent by the bot 1`] = `
+Object {
+  "message": "    
+    expected: testing bot to send a message
+    received: no message was sent
+",
+  "pass": false,
+  "testName": "respond",
+}
+`;
+
+exports[`testing respond function should get fail test due to bot returned different messages (expect embed and returned primitive) 1`] = `
+Object {
+  "message": "    
+    expected: Object {
+      \\"author\\": Object {
+        \\"iconURL\\": \\"https://i.imgur.com/wSTFkRM.png\\",
+        \\"name\\": \\"Some name\\",
+        \\"url\\": \\"https://discord.js.org\\",
+      },
+      \\"color\\": 2123412,
+      \\"description\\": \\"Some description here\\",
+      \\"fields\\": Array [
+        Object {
+          \\"inline\\": false,
+          \\"name\\": \\"Regular field title\\",
+          \\"value\\": \\"Some value here\\",
+        },
+        Object {
+          \\"inline\\": false,
+          \\"name\\": \\"​\\",
+          \\"value\\": \\"​\\",
+        },
+        Object {
+          \\"inline\\": true,
+          \\"name\\": \\"Inline field title\\",
+          \\"value\\": \\"Some value here\\",
+        },
+        Object {
+          \\"inline\\": true,
+          \\"name\\": \\"Inline field title\\",
+          \\"value\\": \\"Some value here\\",
+        },
+      ],
+      \\"files\\": Array [
+        \\"https://i.imgur.com/wSTFkRM.png\\",
+      ],
+      \\"thumbnailUrl\\": \\"https://i.imgur.com/wSTFkRM.png\\",
+      \\"title\\": \\"Some title\\",
+      \\"url\\": \\"https://discord.js.org/\\",
+    }
+    received: 'this is the message content'
+",
+  "pass": false,
+  "testName": "respond",
+}
+`;
+
+exports[`testing respond function should get fail test due to bot returned different messages (expect primitive and returned embed) 1`] = `
+Object {
+  "message": "    
+    expected: 'expect value'
+    received: Object {
+      \\"author\\": Object {
+        \\"iconURL\\": \\"https://i.imgur.com/wSTFkRM.png\\",
+        \\"name\\": \\"Some name\\",
+        \\"url\\": \\"https://discord.js.org\\",
+      },
+      \\"color\\": 2123412,
+      \\"description\\": \\"Some description here\\",
+      \\"fields\\": Array [
+        Object {
+          \\"inline\\": false,
+          \\"name\\": \\"Regular field title\\",
+          \\"value\\": \\"Some value here\\",
+        },
+        Object {
+          \\"inline\\": false,
+          \\"name\\": \\"​\\",
+          \\"value\\": \\"​\\",
+        },
+        Object {
+          \\"inline\\": true,
+          \\"name\\": \\"Inline field title\\",
+          \\"value\\": \\"Some value here\\",
+        },
+        Object {
+          \\"inline\\": true,
+          \\"name\\": \\"Inline field title\\",
+          \\"value\\": \\"Some value here\\",
+        },
+      ],
+      \\"files\\": Array [
+        \\"https://i.imgur.com/wSTFkRM.png\\",
+      ],
+      \\"thumbnailUrl\\": \\"https://i.imgur.com/wSTFkRM.png\\",
+      \\"title\\": \\"Some title\\",
+      \\"url\\": \\"https://discord.js.org/\\",
+    }
+",
+  "pass": false,
+  "testName": "respond",
+}
+`;
+
+exports[`testing respond function should get fail test due to bot returned different messages both primitive values 1`] = `
+Object {
+  "message": "    
+    expected: 'expect value'
+    received: 'this is the message content'
+",
+  "pass": false,
+  "testName": "respond",
+}
+`;
+
+exports[`testing respond function should get failed test due to bot returned equal messages (isNot true) 1`] = `
+Object {
+  "message": "    
+    expected: message from bot be different from expectation
+    received: both returned and expectation are equal
+",
+  "pass": false,
+  "testName": "respond",
+}
+`;
+
+exports[`testing respond function should return a failed test due to failure in message sending 1`] = `
+Object {
+  "message": "    
+    expected: testing bot to send a message
+    received: no message was sent
+",
+  "pass": false,
+  "testName": "respond",
+}
+`;
+
+exports[`testing respond function should return a failed test due to invalid parameter (null) 1`] = `
+Object {
+  "message": "    
+    expected: expect value to be a primitive value (string, boolean, number) or an IMessageEmbed
+    received: null
+",
+  "pass": false,
+  "testName": "respond",
+}
+`;
+
+exports[`testing respond function should return a failed test due to invalid parameter (null) 2`] = `
+Object {
+  "message": "    
+    expected: expect value to be a primitive value (string, boolean, number) or an IMessageEmbed
+    received: undefined
+",
+  "pass": false,
+  "testName": "respond",
+}
+`;

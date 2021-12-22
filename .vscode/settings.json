@@ -2,6 +2,6 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.tslint": true
   },
-  "cSpell.words": ["Corde's", "corde", "cordebot"],
+  "cSpell.words": ["corde", "Corde's", "cordebot", "Magalhaes"],
   "typescript.tsdk": "node_modules\\typescript\\lib"
 }

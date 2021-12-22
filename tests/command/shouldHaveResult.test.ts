@@ -7,7 +7,7 @@ import { debugCommand } from "../../src/command";
 const testName = "shouldHaveResult";
 
 let mockDiscord = new MockDiscord();
-let cordeClient = createCordeBotWithMockedFunctions(mockDiscord, new Client());
+let cordeClient = createCordeBotWithMockedFunctions(mockDiscord, mockDiscord.client);
 
 function debugCon(customCommand?: string, customChannelId?: string, customClient?: ICordeBot) {
   return debugCommand(customCommand ?? "con", customChannelId, customClient ?? cordeClient);

@@ -1,4 +1,4 @@
-import { InternalError } from ".";
+import { InternalError } from "./internalError";
 import { Errors } from "./defaults";
 
 /**
