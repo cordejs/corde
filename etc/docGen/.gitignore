@@ -1,0 +1,8 @@
+node_modules/
+lib/
+.nyc_output/
+coverage/
+.test-temp/
+output.md
+.cache/
+dist/

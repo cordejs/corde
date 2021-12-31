@@ -1,0 +1,19 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "prettier",
+    "plugin:mocha/recommended"
+  ],
+  "plugins": ["@typescript-eslint", "mocha"],
+  "rules": {
+    "mocha/no-mocha-arrows": "off",
+    "@typescript-eslint/ban-types": "off"
+  }
+}
