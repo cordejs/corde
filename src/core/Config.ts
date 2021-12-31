@@ -25,7 +25,7 @@ export class Config implements Readonly<IConfigOptions> {
   private _extensions?: string[];
   private _rootDir!: string;
   private _useConfigValuesInEventsDefaultParameters!: boolean;
-  private _useTimoutValueInEventsDefaultParameters!: boolean;
+  private _useTimeoutValueInEventsDefaultParameters!: boolean;
   private _loginCordeBotOnStart!: boolean;
 
   get loginCordeBotOnStart() {
@@ -88,8 +88,8 @@ export class Config implements Readonly<IConfigOptions> {
     return this._useConfigValuesInEventsDefaultParameters;
   }
 
-  get useTimoutValueInEventsDefaultParameters() {
-    return this._useTimoutValueInEventsDefaultParameters;
+  get useTimeoutValueInEventsDefaultParameters() {
+    return this._useTimeoutValueInEventsDefaultParameters;
   }
 
   getConfigTimeoutOrDefault() {
@@ -160,11 +160,11 @@ export class Config implements Readonly<IConfigOptions> {
     }
 
     if (
-      config.useTimoutValueInEventsDefaultParameters &&
-      (!this.useTimoutValueInEventsDefaultParameters || forceUpdate)
+      config.useTimeoutValueInEventsDefaultParameters &&
+      (!this.useTimeoutValueInEventsDefaultParameters || forceUpdate)
     ) {
-      this._useTimoutValueInEventsDefaultParameters =
-        config.useTimoutValueInEventsDefaultParameters;
+      this._useTimeoutValueInEventsDefaultParameters =
+        config.useTimeoutValueInEventsDefaultParameters;
     }
 
     if (

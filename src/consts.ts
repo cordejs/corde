@@ -29,7 +29,7 @@ export const DEFAULT_CONFIG: Required<IConfigOptions> = {
   modulePathIgnorePatterns: ["(?:^|/)node_modules/"],
   rootDir: process.cwd(),
   useConfigValuesInEventsDefaultParameters: false,
-  useTimoutValueInEventsDefaultParameters: true,
+  useTimeoutValueInEventsDefaultParameters: true,
   loginCordeBotOnStart: true,
 };
 

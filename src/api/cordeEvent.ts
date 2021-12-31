@@ -61,7 +61,7 @@ function getDefaultOptionsIfNeeded<T extends any>(options?: any): T {
 }
 
 function getTimeoutParameterIfNeeded(options?: corde.IDefaultOptions & Record<string, any>) {
-  if (runtime.configs.useTimoutValueInEventsDefaultParameters) {
+  if (runtime.configs.useTimeoutValueInEventsDefaultParameters) {
     return {
       timeout: getTimeout(options),
       ...options,

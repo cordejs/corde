@@ -11,10 +11,10 @@ export class ConfigAPI implements Readonly<Required<IConfigOptions>> {
     );
   }
 
-  get useTimoutValueInEventsDefaultParameters() {
+  get useTimeoutValueInEventsDefaultParameters() {
     return (
-      this._internalConfigs.useTimoutValueInEventsDefaultParameters ??
-      DEFAULT_CONFIG.useTimoutValueInEventsDefaultParameters
+      this._internalConfigs.useTimeoutValueInEventsDefaultParameters ??
+      DEFAULT_CONFIG.useTimeoutValueInEventsDefaultParameters
     );
   }
 

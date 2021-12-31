@@ -290,7 +290,7 @@ export interface IConfigOptions {
    *
    * @default true
    */
-  useTimoutValueInEventsDefaultParameters?: boolean;
+  useTimeoutValueInEventsDefaultParameters?: boolean;
   /**
    * If true, corde will connect it's bot when start tests.
    *

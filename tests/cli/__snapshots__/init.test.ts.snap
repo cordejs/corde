@@ -16,7 +16,7 @@ exports[`Testing creation of config file in init should create corde.config.js f
   modulePathIgnorePatterns: [\\"(?:^|/)node_modules/\\"],
   rootDir: \\"\\",
   useConfigValuesInEventsDefaultParameters: false,
-  useTimoutValueInEventsDefaultParameters: true,
+  useTimeoutValueInEventsDefaultParameters: true,
   loginCordeBotOnStart: true
 }"
 `;
@@ -38,7 +38,7 @@ exports[`Testing creation of config file in init should create corde.config.json
   \\"modulePathIgnorePatterns\\": [\\"(?:^|/)node_modules/\\"],
   \\"rootDir\\": \\"\\",
   \\"useConfigValuesInEventsDefaultParameters\\": false,
-  \\"useTimoutValueInEventsDefaultParameters\\": true,
+  \\"useTimeoutValueInEventsDefaultParameters\\": true,
   \\"loginCordeBotOnStart\\": true
 }"
 `;
@@ -59,7 +59,7 @@ exports[`Testing creation of config file in init should create corde.config.ts f
   modulePathIgnorePatterns: [\\"(?:^|/)node_modules/\\"],
   rootDir: \\"\\",
   useConfigValuesInEventsDefaultParameters: false,
-  useTimoutValueInEventsDefaultParameters: true,
+  useTimeoutValueInEventsDefaultParameters: true,
   loginCordeBotOnStart: true
 }"
 `;
