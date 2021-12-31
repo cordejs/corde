@@ -9,7 +9,7 @@ import {
   testHelper,
 } from "../../testHelper";
 
-const testName = "shouldSetRolePosition";
+const testName = "setRolePosition";
 
 const failReport: ITestReport = {
   pass: false,
@@ -38,7 +38,9 @@ describe("testing ToSetRolePosition operation", () => {
   });
 
   it("should fail due to undefined roleIdentifier", async () => {
-    const report = await debugCon().shouldSetRolePosition(1, "");
+    const report = await debugCon()
+      .should// @ts-expect-error
+      .setRolePosition(1, "");
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
@@ -46,7 +48,7 @@ describe("testing ToSetRolePosition operation", () => {
   it("should fail due to newPosition is not a number", async () => {
     const report = await debugCon()
       // @ts-ignore
-      .shouldSetRolePosition("batata", { id: "1231231" });
+      .should.setRolePosition("batata", { id: "1231231" });
 
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
@@ -55,7 +57,7 @@ describe("testing ToSetRolePosition operation", () => {
   it("should find and must return passed report due to 'changed position' (isNot false)", async () => {
     const mockEvent = new MockEvents(cordeClient, mockDiscord);
     mockEvent.mockOnceRolePositionUpdate();
-    const report = await debugCon().shouldSetRolePosition(-1, { id: "123" });
+    const report = await debugCon().should.setRolePosition(-1, { id: "123" });
     expect(report).toEqual(passReport);
   });
 
@@ -63,26 +65,26 @@ describe("testing ToSetRolePosition operation", () => {
     const mockEvent = new MockEvents(cordeClient, mockDiscord);
     mockEvent.mockOnceRolePositionUpdate();
 
-    const report = await debugCon().not.shouldSetRolePosition(-2, { id: "123" });
+    const report = await debugCon().should.not.setRolePosition(-2, { id: "123" });
 
     expect(report).toEqual(passReport);
     expect(report).toMatchSnapshot();
   });
 
   it("should not find a role and must return a failed test (isNot true)", async () => {
-    const report = await debugCon().shouldSetRolePosition(1, { id: "123" });
+    const report = await debugCon().should.setRolePosition(1, { id: "123" });
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
 
   it("should not find a role and must return a failed test (isNot false)", async () => {
-    const report = await debugCon().shouldSetRolePosition(2, { id: "123" });
+    const report = await debugCon().should.setRolePosition(2, { id: "123" });
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
 
   it("should return a not passed test due to new position be higher than the permitted (isNot false)", async () => {
-    const report = await debugCon().shouldSetRolePosition(2, { id: "123" });
+    const report = await debugCon().should.setRolePosition(2, { id: "123" });
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
@@ -92,32 +94,32 @@ describe("testing ToSetRolePosition operation", () => {
       .fn()
       // @ts-expect-error
       .mockImplementation(null);
-    const report = await debugCon().shouldSetRolePosition(1, { id: "123" });
+    const report = await debugCon().should.setRolePosition(1, { id: "123" });
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
 
   it("should return a passed report due to timeout and isNot true", async () => {
     cordeClient.findRole = jest.fn().mockReturnValue(mockDiscord.role);
-    const report = await debugCon().not.shouldSetRolePosition(-2, { id: "123" });
+    const report = await debugCon().should.not.setRolePosition(-2, { id: "123" });
     expect(report).toEqual(passReport);
     expect(report).toMatchSnapshot();
   });
 
   it("should return a failed report due to timeout and isNot false", async () => {
     cordeClient.findRole = jest.fn().mockReturnValue(mockDiscord.role);
-    const report = await debugCon().shouldSetRolePosition(-2, { id: "123" });
+    const report = await debugCon().should.setRolePosition(-2, { id: "123" });
 
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
 
-  it("should return a failed report position setted was different than expected", async () => {
+  it("should return a failed report position set was different than expected", async () => {
     cordeClient.findRole = jest.fn().mockReturnValue(mockDiscord.role);
 
     const mockEvent = new MockEvents(cordeClient, mockDiscord);
     mockEvent.mockOnceRolePositionUpdate();
-    const report = await debugCon().shouldSetRolePosition(-2, { id: "123" });
+    const report = await debugCon().should.setRolePosition(-2, { id: "123" });
 
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
@@ -133,7 +135,7 @@ describe("testing ToSetRolePosition operation", () => {
       .fn()
       .mockImplementation(() => Promise.reject(new Error(erroMessage)));
 
-    const report = await debugCon().shouldSetRolePosition(-1, { id: "123" });
+    const report = await debugCon().should.setRolePosition(-1, { id: "123" });
 
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();

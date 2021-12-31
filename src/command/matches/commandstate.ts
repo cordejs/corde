@@ -69,12 +69,12 @@ export class CommandState {
    * Sends `command` as message
    *
    * @param forceSend Defines if the message should be send even if the test if
-   * is cascade (this is offen used only by the TodoInCascade test).
+   * is cascade (this is often used only by the TodoInCascade test).
    *
    * @returns Message sent
    */
   sendCommandMessage(forceSend?: boolean) {
-    // Tests in cascade controus when the message should be sent.
+    // Tests in cascade controls when the message should be sent.
     if ((this.mustSendCommand || forceSend) && !this.command) {
       throw new Error("can not send a empty message");
     }

@@ -2,6 +2,7 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.tslint": true
   },
-  "cSpell.words": ["corde", "Corde's", "cordebot", "Magalhaes"],
-  "typescript.tsdk": "node_modules\\typescript\\lib"
+  "cSpell.words": ["batata", "corde", "Corde's", "cordebot", "Magalhaes"],
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "jest.jestCommandLine": "yarn jest"
 }

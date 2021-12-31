@@ -1,4 +1,3 @@
-import { Client } from "discord.js";
 import MockDiscord from "../../mocks/mockDiscord";
 import { createCordeBotWithMockedFunctions, testHelper } from "../../testHelper";
 import { ICordeBot, ITestReport } from "../../../src/types";
@@ -7,7 +6,7 @@ import { MockEvents } from "../../mocks/mockEvents";
 import { debugCommand } from "../../../src/command";
 import { Permission } from "../../../src";
 
-const testName = "shouldSetRolePermission";
+const testName = "setRolePermission";
 
 const failReport: ITestReport = {
   pass: false,
@@ -34,7 +33,7 @@ describe(`testing ${testName} function`, () => {
   it("should fail due to undefined roleIdentifier", async () => {
     const report = await debugCon()
       // @ts-ignore
-      .shouldSetRolePermission(undefined, ["ADD_REACTIONS"]);
+      .should.setRolePermission(undefined, ["ADD_REACTIONS"]);
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
@@ -42,7 +41,7 @@ describe(`testing ${testName} function`, () => {
   it("should return false due to invalid permission parameter (object)", async () => {
     const report = await debugCon()
       // @ts-ignore
-      .shouldSetRolePermission({ id: "123" }, {});
+      .should.setRolePermission({ id: "123" }, {});
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
@@ -50,14 +49,14 @@ describe(`testing ${testName} function`, () => {
   it("should fail due to invalid permission value", async () => {
     const report = await debugCon()
       // @ts-ignore
-      .shouldSetRolePermission({ id: "123" }, ["BANANA"]);
+      .should.setRolePermission({ id: "123" }, ["BANANA"]);
     expect(report).toMatchObject(failReport);
   });
 
   it("should return false due to invalid permission parameter (undefined)", async () => {
     const report = await debugCon()
       // @ts-ignore
-      .shouldSetRolePermission({ id: "123" }, {});
+      .should.setRolePermission({ id: "123" }, {});
 
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
@@ -65,20 +64,20 @@ describe(`testing ${testName} function`, () => {
 
   it("should return false due to not found role", async () => {
     cordeClient.findRole = jest.fn().mockReturnValue(null);
-    const report = await debugCon().shouldSetRolePermission({ id: "123" }, ["ATTACH_FILES"]);
+    const report = await debugCon().should.setRolePermission({ id: "123" }, "ATTACH_FILES");
 
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
 
   it("should fail due to role permissions was not updated", async () => {
-    const report = await debugCon().shouldSetRolePermission({ id: "123" }, ["ATTACH_FILES"]);
+    const report = await debugCon().should.setRolePermission({ id: "123" }, "ATTACH_FILES");
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
 
   it("should return true due to isNot true and no role change", async () => {
-    const report = await debugCon().not.shouldSetRolePermission({ id: "123" }, ["ATTACH_FILES"]);
+    const report = await debugCon().should.not.setRolePermission({ id: "123" }, "ATTACH_FILES");
     expect(report).toEqual(passReport);
     expect(report).toMatchSnapshot();
   });
@@ -91,9 +90,9 @@ describe(`testing ${testName} function`, () => {
     );
 
     mockEvent.mockOnceRolePermissionsUpdate(mockRole);
-    const report = await debugCon().shouldSetRolePermission(
+    const report = await debugCon().should.setRolePermission(
       { id: "123" },
-      mockRole.permissions.toArray(),
+      ...mockRole.permissions.toArray(),
     );
     expect(report).toEqual(passReport);
     expect(report).toMatchSnapshot();
@@ -107,7 +106,7 @@ describe(`testing ${testName} function`, () => {
     const mockEvent = new MockEvents(cordeClient, mockDiscord);
 
     mockEvent.mockOnceRolePermissionsUpdate(mockRole);
-    const report = await debugCon().not.shouldSetRolePermission({ id: "123" }, ["ADMINISTRATOR"]);
+    const report = await debugCon().should.not.setRolePermission({ id: "123" }, "ADMINISTRATOR");
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
@@ -120,10 +119,11 @@ describe(`testing ${testName} function`, () => {
     const mockEvent = new MockEvents(cordeClient, mockDiscord);
 
     mockEvent.mockOnceRolePermissionsUpdate(mockRole);
-    const report = await debugCon().not.shouldSetRolePermission({ id: "123" }, [
+    const report = await debugCon().should.not.setRolePermission(
+      { id: "123" },
       "ADMINISTRATOR",
       "BAN_MEMBERS",
-    ]);
+    );
 
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
@@ -139,11 +139,12 @@ describe(`testing ${testName} function`, () => {
 
     mockEvent.mockOnceRolePermissionsUpdate(mockRole);
 
-    const report = await debugCon().not.shouldSetRolePermission({ id: "123" }, [
+    const report = await debugCon().should.not.setRolePermission(
+      { id: "123" },
       "ADMINISTRATOR",
       "BAN_MEMBERS",
       "CONNECT",
-    ]);
+    );
 
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
@@ -152,7 +153,7 @@ describe(`testing ${testName} function`, () => {
   it("should return a not passed test due expected name did not match to received", async () => {
     const mockEvent = new MockEvents(cordeClient, mockDiscord);
     mockEvent.mockOnceRolePermissionsUpdate(mockDiscord.role);
-    const report = await debugCon().shouldSetRolePermission({ id: "123" }, ["ATTACH_FILES"]);
+    const report = await debugCon().should.setRolePermission({ id: "123" }, "ATTACH_FILES");
 
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
@@ -163,7 +164,7 @@ describe(`testing ${testName} function`, () => {
     mockEvent.mockOnceRolePermissionsUpdate(mockDiscord.role);
     const report = await debugCon()
       // @ts-ignore
-      .shouldSetRolePermission({ id: "123" }, null);
+      .should.setRolePermission({ id: "123" }, null);
 
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
@@ -173,12 +174,12 @@ describe(`testing ${testName} function`, () => {
     cordeClient.findRole = jest.fn().mockReturnValue(mockDiscord.role);
     cordeClient.fetchRole = jest.fn().mockReturnValue(null);
 
-    const erroMessage = "can not send message to channel x";
+    const errorMessage = "can not send message to channel x";
     cordeClient.sendTextMessage = jest
       .fn()
-      .mockImplementation(() => Promise.reject(new Error(erroMessage)));
+      .mockImplementation(() => Promise.reject(new Error(errorMessage)));
 
-    const report = await debugCon().shouldSetRolePermission({ id: "123" }, ["ATTACH_FILES"]);
+    const report = await debugCon().should.setRolePermission({ id: "123" }, "ATTACH_FILES");
 
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
