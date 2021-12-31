@@ -43,6 +43,13 @@ Object {
 }
 `;
 
+exports[`testing pinMessage function should return a passed test due to isNot true and timeout 1`] = `
+Object {
+  "pass": true,
+  "testName": "pinMessage",
+}
+`;
+
 exports[`testing pinMessage function should return a passed test due to message pinned 1`] = `
 Object {
   "pass": true,

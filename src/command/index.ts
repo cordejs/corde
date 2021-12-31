@@ -169,9 +169,13 @@ function createMatcherFn(params: ICreateMatcherParam) {
 
     const fn = matcherFn.bind(props, ...args);
     params.trace = trace;
-    return new PromiseCommand(async (resolve) => {
-      const response = await resolveTestFunction(params, fn);
-      resolve(response);
+    return new PromiseCommand(async (resolve, reject) => {
+      try {
+        const response = await resolveTestFunction(params, fn);
+        resolve(response);
+      } catch (error) {
+        reject(error);
+      }
     }, params);
   };
 }

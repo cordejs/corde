@@ -46,7 +46,7 @@ describe(`testing ${testName} function`, () => {
 
   it("should return a passed test due to isNot true and timeout", async () => {
     const report = await debugCon()
-      .should.not // @ts-ignore
+      .should.not// @ts-expect-error
       .pinMessage("");
     expect(report).toEqual(passReport);
     expect(report).toMatchSnapshot();
@@ -54,7 +54,7 @@ describe(`testing ${testName} function`, () => {
 
   it("should return a failed test due to isNot false and timeout", async () => {
     const report = await debugCon()
-      .should // @ts-ignore
+      .should// @ts-expect-error
       .pinMessage("1233");
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();

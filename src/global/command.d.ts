@@ -398,7 +398,10 @@ declare namespace corde {
      * @see https://discord.com/developers/docs/topics/permissions#permissions
      * @since 2.0
      */
-    setRolePermission(roleIdentifier: IRoleIdentifier, ...permissions: RolePermission[]): TReturn;
+    setRolePermission(
+      roleIdentifier: IRoleIdentifier,
+      ...permissions: corde.RolePermission[]
+    ): TReturn;
   }
 
   export interface ISetChannelMatchers<TReturn extends any> {

@@ -33,13 +33,13 @@ describe(`testing ${testName} function`, () => {
       // @ts-ignore
       .should.editMessage(undefined);
     expect(report).toMatchObject(failReport);
-    expect(report).toMatchInlineSnapshot();
+    expect(report).toMatchSnapshot();
   });
 
   it("should return a failed test due to invalid parameter (undefined)", async () => {
     const report = await debugCon()
-      // @ts-ignore
-      .should.editMessage(undefined);
+      .should// @ts-expect-error
+      .editMessage(undefined);
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });

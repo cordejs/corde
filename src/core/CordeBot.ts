@@ -134,11 +134,13 @@ export class CordeBot implements ICordeBot {
    * @param message Message without prefix that will be sent to defined server's channel
    * @description The message is concatenated with the stored **prefix** and is sent to the channel.
    *
-   * @return Promise rejection if a testing bot does not send any message in the timeout value setted,
+   * @return Promise rejection if a testing bot does not send any message in the timeout value set,
    * or a resolve for the promise with the message returned by the testing bot.
    */
   async sendTextMessage(message: Primitive, channelId?: string): Promise<Message> {
-    this.validateMessageAndChannel(message);
+    this.throwIfMessageIsInvalid(message);
+    this.throwIfChannelIsInvalid();
+
     const formattedMessage = this._prefix + message;
 
     if (channelId) {
@@ -267,11 +269,13 @@ export class CordeBot implements ICordeBot {
     return `Error trying to login with token ${chalk.bold(token)}. \n` + error;
   }
 
-  private validateMessageAndChannel(message: Primitive) {
+  private throwIfMessageIsInvalid(message: Primitive) {
     if (!message || message.toString().trim() === "") {
       throw new CordeClientError("command to be sent can not be empty");
     }
+  }
 
+  private throwIfChannelIsInvalid() {
     if (!this.textChannel) {
       throw new CordeClientError("text channel not defined");
     }

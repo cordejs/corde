@@ -130,10 +130,10 @@ describe("testing ToSetRolePosition operation", () => {
     corde.getRoles = jest.fn().mockReturnValue(mockDiscord.roleManager.cache);
     corde.findRole = jest.fn().mockReturnValue(mockDiscord.role);
 
-    const erroMessage = "can not send message to channel x";
+    const errorMessage = "can not send message to channel x";
     corde.sendTextMessage = jest
       .fn()
-      .mockImplementation(() => Promise.reject(new Error(erroMessage)));
+      .mockImplementation(() => Promise.reject(new Error(errorMessage)));
 
     const report = await debugCon().should.setRolePosition(-1, { id: "123" });
 

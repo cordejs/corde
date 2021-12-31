@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing setRoleColor function should fail due to invalid color 1`] = `
+Object {
+  "message": "    
+    toSetRoleColor: invalid color informed - 'null'
+",
+  "pass": false,
+  "testName": "setRoleColor",
+}
+`;
+
+exports[`testing setRoleColor function should fail due to undefined roleIdentifier 1`] = `
+Object {
+  "message": "    
+    expected: data to identifier the role (id or name)
+    received: null
+",
+  "pass": false,
+  "testName": "setRoleColor",
+}
+`;
+
+exports[`testing setRoleColor function should return a failed test due to failure in message sending 1`] = `
+Object {
+  "message": "    
+    can not send message to channel x
+",
+  "pass": false,
+  "testName": "setRoleColor",
+}
+`;
+
+exports[`testing setRoleColor function should return false due to not found role 1`] = `
+Object {
+  "message": "    
+    expected: role with id 123
+    received: null
+",
+  "pass": false,
+  "testName": "setRoleColor",
+}
+`;
+
+exports[`testing setRoleColor function should return true due to isNot true and no role change 1`] = `
+Object {
+  "pass": true,
+  "testName": "setRoleColor",
+}
+`;
+
+exports[`testing setRoleColor function should return true due to role has changed the color (isNot false) 1`] = `
+Object {
+  "pass": true,
+  "testName": "setRoleColor",
+}
+`;

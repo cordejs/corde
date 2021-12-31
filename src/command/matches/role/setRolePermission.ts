@@ -13,7 +13,7 @@ import { CommandState } from "../commandState";
 export async function setRolePermission(
   this: CommandState,
   roleIdentifier: string | corde.IRoleIdentifier,
-  permissions: corde.RolePermission[],
+  ...permissions: corde.RolePermission[]
 ) {
   const identifier = roleUtils.getRoleData(roleIdentifier);
   const error = roleUtils.getErrorForUndefinedRoleData(identifier);

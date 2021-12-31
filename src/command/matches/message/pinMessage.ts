@@ -1,4 +1,4 @@
-import { typeOf } from "../../../utils";
+import { isNullOrUndefined, isObject, isString, typeOf } from "../../../utils";
 import { CommandState } from "../commandState";
 import { messageUtils } from "./messageUtils";
 
@@ -13,8 +13,8 @@ export async function pinMessage(
   messageIdentifier: corde.IMessageIdentifier | string,
 ) {
   if (
-    !messageIdentifier ||
-    (typeOf(messageIdentifier) !== "string" && typeOf(messageIdentifier) !== "object")
+    isNullOrUndefined(messageIdentifier) ||
+    (!isString(messageIdentifier) && !isObject(messageIdentifier))
   ) {
     return this.createReport(
       "expected: message identifier to be a string or a IMessageIdentifier object\n",

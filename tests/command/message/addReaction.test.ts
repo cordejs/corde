@@ -1,6 +1,5 @@
 import MockDiscord from "../../mocks/mockDiscord";
 import { createCordeBotWithMockedFunctions, testHelper } from "../../testHelper";
-import { Client } from "discord.js";
 import { ICordeBot, ITestReport } from "../../../src/types";
 import { MockEvents } from "../../mocks/mockEvents";
 import { debugCommand } from "../../../src/command";
@@ -38,15 +37,17 @@ describe(`testing ${testName} function`, () => {
   });
 
   it("should fail due to invalid emoji (undefined)", async () => {
-    // @ts-expect-error
-    const report = await debugCon().should.addReaction(undefined);
+    const report = await debugCon()
+      .should// @ts-expect-error
+      .addReaction(undefined);
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
 
   it("should fail due to invalid emoji (null)", async () => {
-    // @ts-expect-error
-    const report = await debugCon().should.addReaction(null);
+    const report = await debugCon()
+      .should// @ts-expect-error
+      .addReaction(null);
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
