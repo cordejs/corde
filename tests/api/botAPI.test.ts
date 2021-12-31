@@ -1,4 +1,3 @@
-import { Client } from "discord.js";
 import { BotAPI } from "../../src/api";
 import { mapper } from "../../src/mapper/messageMapper";
 import { ICordeBot } from "../../src/types";
@@ -11,7 +10,7 @@ let bot: BotAPI;
 let cordeBot: ICordeBot;
 
 beforeEach(() => {
-  const client = new Client();
+  const client = mockDiscord.createMockClient();
   client.readyAt = new Date();
   cordeBot = initCordeClientWithChannel(mockDiscord, client);
   client.emit("ready");

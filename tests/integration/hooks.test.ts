@@ -3,7 +3,6 @@ import { expect as _expect } from "../../src/expect";
 import { TestExecutor } from "../../src/core/TestExecutor";
 import { LogUpdate } from "../../src/utils";
 import { mockTimer } from "../mocks/mockTimer";
-import { testCollector } from "../../src/core/TestCollector";
 
 import {
   beforeEach as _beforeEach,
@@ -11,6 +10,7 @@ import {
   beforeAll as _beforeAll,
   afterAll as _afterAll,
 } from "../../src/hooks";
+import runtime from "../../src/core";
 
 let logUpdate: LogUpdate;
 let testRunner: TestExecutor;
@@ -26,33 +26,33 @@ function runFn(times: number, fn: () => void) {
 beforeEach(() => {
   logUpdate = new LogUpdate();
   testRunner = new TestExecutor(logUpdate);
-  testCollector.clearTestFiles();
-  testCollector.createTestFile("test file");
+  runtime.testCollector.clearTestFiles();
+  runtime.testCollector.createTestFile("test file");
 });
 
 describe("testing closures", () => {
   it("should add beforeEach hook to testFile", () => {
-    expect(testCollector.currentTestFile.beforeEachHooks.size).toEqual(0);
+    expect(runtime.testCollector.currentTestFile.beforeEachHooks.size).toEqual(0);
     _beforeEach(() => {});
-    expect(testCollector.currentTestFile.beforeEachHooks.size).toEqual(1);
+    expect(runtime.testCollector.currentTestFile.beforeEachHooks.size).toEqual(1);
   });
 
   it("should add afterEach hook to testFile", () => {
-    expect(testCollector.currentTestFile.afterEachHooks.size).toEqual(0);
+    expect(runtime.testCollector.currentTestFile.afterEachHooks.size).toEqual(0);
     _afterEach(() => {});
-    expect(testCollector.currentTestFile.afterEachHooks.size).toEqual(1);
+    expect(runtime.testCollector.currentTestFile.afterEachHooks.size).toEqual(1);
   });
 
   it("should add afterAll hook to testFile", () => {
-    expect(testCollector.currentTestFile.afterAllHooks.size).toEqual(0);
+    expect(runtime.testCollector.currentTestFile.afterAllHooks.size).toEqual(0);
     _afterAll(() => {});
-    expect(testCollector.currentTestFile.afterAllHooks.size).toEqual(1);
+    expect(runtime.testCollector.currentTestFile.afterAllHooks.size).toEqual(1);
   });
 
   it("should add beforeAll hook to testFile", () => {
-    expect(testCollector.currentTestFile.beforeAllHooks.size).toEqual(0);
+    expect(runtime.testCollector.currentTestFile.beforeAllHooks.size).toEqual(0);
     _beforeAll(() => {});
-    expect(testCollector.currentTestFile.beforeAllHooks.size).toEqual(1);
+    expect(runtime.testCollector.currentTestFile.beforeAllHooks.size).toEqual(1);
   });
 
   it("should execute beforeEach with one group and multiple its ", async () => {
@@ -69,8 +69,8 @@ describe("testing closures", () => {
       });
     });
 
-    await testCollector.executeGroupClojure();
-    await testRunner.runTestsAndPrint(testCollector.testFiles);
+    await runtime.testCollector.executeGroupClojure();
+    await testRunner.runTestsAndPrint(runtime.testCollector.testFiles);
 
     expect(value).toEqual(10);
   });
@@ -89,8 +89,8 @@ describe("testing closures", () => {
       });
     });
 
-    await testCollector.executeGroupClojure();
-    await testRunner.runTestsAndPrint(testCollector.testFiles);
+    await runtime.testCollector.executeGroupClojure();
+    await testRunner.runTestsAndPrint(runtime.testCollector.testFiles);
 
     expect(value).toEqual(10);
   });
@@ -109,8 +109,8 @@ describe("testing closures", () => {
       });
     });
 
-    await testCollector.executeGroupClojure();
-    await testRunner.runTestsAndPrint(testCollector.testFiles);
+    await runtime.testCollector.executeGroupClojure();
+    await testRunner.runTestsAndPrint(runtime.testCollector.testFiles);
 
     expect(value).toEqual(10);
   });
@@ -129,8 +129,8 @@ describe("testing closures", () => {
       });
     });
 
-    await testCollector.executeGroupClojure();
-    await testRunner.runTestsAndPrint(testCollector.testFiles);
+    await runtime.testCollector.executeGroupClojure();
+    await testRunner.runTestsAndPrint(runtime.testCollector.testFiles);
 
     expect(value).toEqual(10);
   });
@@ -149,8 +149,8 @@ describe("testing closures", () => {
       });
     });
 
-    await testCollector.executeGroupClojure();
-    await testRunner.runTestsAndPrint(testCollector.testFiles);
+    await runtime.testCollector.executeGroupClojure();
+    await testRunner.runTestsAndPrint(runtime.testCollector.testFiles);
 
     expect(value).toEqual(10);
   });
@@ -169,8 +169,8 @@ describe("testing closures", () => {
       });
     });
 
-    await testCollector.executeGroupClojure();
-    await testRunner.runTestsAndPrint(testCollector.testFiles);
+    await runtime.testCollector.executeGroupClojure();
+    await testRunner.runTestsAndPrint(runtime.testCollector.testFiles);
 
     expect(value).toEqual(10);
   });
@@ -192,8 +192,8 @@ describe("testing closures", () => {
       });
     });
 
-    await testCollector.executeGroupClojure();
-    await testRunner.runTestsAndPrint(testCollector.testFiles);
+    await runtime.testCollector.executeGroupClojure();
+    await testRunner.runTestsAndPrint(runtime.testCollector.testFiles);
 
     expect(value).toEqual(expectedValue);
   });

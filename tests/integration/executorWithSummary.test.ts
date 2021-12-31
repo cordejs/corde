@@ -1,4 +1,4 @@
-import { group } from "../../src/closures";
+import { group, test as _test } from "../../src/closures";
 import { expect as _expect } from "../../src/expect";
 import { summary } from "../../src/core/summary";
 import { TestExecutor } from "../../src/core/TestExecutor";
@@ -23,7 +23,7 @@ beforeEach(() => {
 
 it("should print report for 1 test file, 1 test closure and 1 failed function and 1 passed function", async () => {
   group("group", () => {
-    test("test closure", () => {
+    _test("test closure", () => {
       _expect(1).toEqual(1);
       _expect(1).toEqual(1);
     });

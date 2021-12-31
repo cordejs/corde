@@ -1,4 +1,3 @@
-import { Client } from "discord.js";
 import { debugCommand } from "../../../src/command";
 import { ICordeBot, ITestReport } from "../../../src/types";
 import MockDiscord from "../../mocks/mockDiscord";
@@ -39,7 +38,7 @@ describe("testing ToSetRolePosition operation", () => {
 
   it("should fail due to undefined roleIdentifier", async () => {
     const report = await debugCon()
-      .should// @ts-expect-error
+      .should // @ts-expect-error
       .setRolePosition(1, "");
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
@@ -126,7 +125,7 @@ describe("testing ToSetRolePosition operation", () => {
   });
 
   it("should return a failed test due to failure in message sending", async () => {
-    const corde = initCordeClientWithChannel(mockDiscord, new Client());
+    const corde = initCordeClientWithChannel(mockDiscord, mockDiscord.client);
     corde.getRoles = jest.fn().mockReturnValue(mockDiscord.roleManager.cache);
     corde.findRole = jest.fn().mockReturnValue(mockDiscord.role);
 

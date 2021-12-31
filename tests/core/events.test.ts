@@ -1,6 +1,5 @@
 import {
   Channel,
-  Client,
   Collection,
   Guild,
   GuildEmoji,
@@ -20,8 +19,9 @@ import {
 import { Events } from "../../src/core";
 import MockDiscord from "../mocks/mockDiscord";
 
-const client = new Client();
 const mockDiscord = new MockDiscord();
+const client = mockDiscord.client;
+
 let events: Events;
 
 beforeEach(() => {

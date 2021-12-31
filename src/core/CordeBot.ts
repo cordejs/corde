@@ -289,7 +289,7 @@ export class CordeBot implements ICordeBot {
     } else if (!this._client.guilds.cache.has(guildId)) {
       throw new CordeClientError(
         `Guild ${guildId} doesn't belong to corde bot. change the guild id ` +
-          " in corde.config or add the bot to a valid guild",
+          "in corde.config or add the bot to a valid guild",
       );
     } else {
       const guild = this._client.guilds.cache.find((_guild) => _guild.id === guildId);
