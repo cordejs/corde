@@ -1,7 +1,7 @@
 import { IConfigOptions, ICordeBot } from "../types";
 import { IInternalEvents } from "./internalEvents";
 import { CordeBot } from "./CordeBot";
-import { Client } from "discord.js";
+import { Client, Options } from "discord.js";
 import { Config } from "./Config";
 import { TestCollector } from "./TestCollector";
 import { ConfigError } from "../errors";
@@ -160,7 +160,7 @@ export class Runtime {
       this._configs.guildId,
       this._configs.channelId,
       this._configs.botTestId,
-      new Client(),
+      this.initClient(),
     );
   }
 
@@ -170,6 +170,10 @@ export class Runtime {
 
   resetAllMocks() {
     this._mocks.forEach((mock) => mock.restore());
+  }
+
+  private initClient() {
+    return new Client(Options.createDefault());
   }
 }
 

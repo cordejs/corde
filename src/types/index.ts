@@ -1,20 +1,22 @@
 import {
-  Channel,
+  AnyChannel,
   Client,
   Collection,
   Guild,
-  GuildChannel,
+  GuildBasedChannel,
   Message,
   MessageEmbed,
+  MessageOptions,
+  MessagePayload,
   Role,
   RoleManager,
   TextChannel,
   VoiceChannel,
-  VoiceConnection,
 } from "discord.js";
 import { Group } from "../core/Group";
 import { Events } from "../core/Events";
 import { Queue } from "../data-structures";
+import { VoiceConnection } from "@discordjs/voice";
 
 export type FunctionOnly<T> = {
   [U in keyof T]: T[U] extends (...args: any[]) => any ? T[U] : never;
@@ -73,7 +75,7 @@ export interface ICordeBot {
    * Sends a pure message without prefix it.
    * @param message Data to be sent to channel
    */
-  sendMessage(message: Primitive | MessageEmbed): Promise<Message>;
+  sendMessage(message: Primitive | MessageOptions | MessagePayload): Promise<Message>;
   /**
    * Send a message to a channel defined in configs.
    *
@@ -92,16 +94,18 @@ export interface ICordeBot {
   findMessage(
     data: corde.IMessageIdentifier | ((message: Message) => boolean),
   ): Promise<Message | undefined>;
-  fetchRoles(): Promise<RoleManager | null>;
+  fetchRoles(): Promise<Role[]>;
   fetchRole(id: string): Promise<Role | null>;
-  fetchChannel(id: string): Promise<Channel | undefined>;
+  fetchChannel(id: string): Promise<AnyChannel | undefined>;
   fetchGuild(id: string): Promise<Guild | undefined>;
   hasRole(roleIdentifier: corde.IRoleIdentifier): Promise<boolean>;
   findRole(roleIdentifier: corde.IRoleIdentifier): Promise<Role | undefined>;
   getRoles(): Collection<string, Role>;
   findGuild(guildId: string): Guild;
-  findChannel(channelId: string): GuildChannel | undefined;
-  findChannel(guild: Guild, channelId: string): GuildChannel | undefined;
+
+  findChannel(channelId: string): GuildBasedChannel | undefined;
+  findChannel(guild: Guild, channelId: string): GuildBasedChannel | undefined;
+
   joinVoiceChannel(channelId: string): Promise<IVoiceChannelState>;
   isInVoiceChannel(): boolean;
   leaveVoiceChannel(): void;

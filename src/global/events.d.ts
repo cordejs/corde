@@ -79,7 +79,7 @@ declare namespace corde {
      */
     onceMessageReactionRemoveEmoji(
       options?: corde.IMessageReactionRemoveFilter,
-    ): Promise<import("discord.js").MessageReaction>;
+    ): Promise<import("discord.js").MessageReaction | import("discord.js").PartialMessageReaction>;
 
     /**
      * Emitted when a channel is deleted.
@@ -105,7 +105,7 @@ declare namespace corde {
      */
     onceChannelPinsUpdate(
       options?: corde.IChannelPinsUpdateFilter,
-    ): Promise<[import("discord.js").Channel, Date]>;
+    ): Promise<[import("discord.js").TextBasedChannel, Date]>;
 
     /**
      * Emitted when a channel is updated - e.g. name change, topic change.
@@ -182,9 +182,7 @@ declare namespace corde {
      * @throws TimeoutError if no channel is created in the defined time.
      * @since 5.0
      */
-    onceGuildBan(
-      options?: corde.IGuildBanFilter,
-    ): Promise<[import("discord.js").Guild, import("discord.js").User]>;
+    onceGuildBan(options?: corde.IGuildBanFilter): Promise<import("discord.js").GuildBan>;
 
     /**
      * Emitted when a member is unbanned from a guild.
@@ -197,7 +195,7 @@ declare namespace corde {
      */
     onceGuildBanRemove(
       options?: corde.IGuildBanRemoveFilter,
-    ): Promise<[import("discord.js").Guild, import("discord.js").User]>;
+    ): Promise<import("discord.js").GuildBan>;
 
     /**
      * Emitted when the client joins a guild.

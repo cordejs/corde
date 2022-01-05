@@ -1,4 +1,4 @@
-import { EmbedFieldData, MessageAttachment, MessageEmbed } from "discord.js";
+import { EmbedFieldData, MessageEmbed } from "discord.js";
 import { isString, typeOf } from "../utils";
 
 export namespace mapper {
@@ -10,9 +10,11 @@ export namespace mapper {
 
     if (embedLike.author) {
       if (typeof embedLike.author === "string") {
-        embed.setAuthor(embedLike.author);
+        embed.setAuthor({
+          name: embedLike.author,
+        });
       } else {
-        embed.setAuthor(embedLike.author.name, embedLike.author.iconURL, embedLike.author.url);
+        embed.setAuthor(embedLike.author);
       }
     }
 
@@ -36,30 +38,8 @@ export namespace mapper {
       );
     }
 
-    if (embedLike.files) {
-      embed.attachFiles(
-        embedLike.files.map((file) => {
-          if (isString(file)) {
-            return file;
-          }
-
-          const attachment = new MessageAttachment(file.attachment);
-
-          if (file.name) {
-            attachment.setName(file.name);
-          }
-
-          return attachment;
-        }),
-      );
-    }
-
     if (embedLike.footer) {
-      if (isString(embedLike.footer)) {
-        embed.setFooter(embedLike.footer);
-      } else {
-        embed.setFooter(embedLike.footer.text, embedLike.footer.iconURL);
-      }
+      embed.setFooter(embedLike.footer);
     }
 
     if (embedLike.image) {
@@ -135,20 +115,6 @@ export namespace mapper {
       });
     }
 
-    if (message.files && message.files.length) {
-      embedLike.files = [];
-      message.files.forEach((file) => {
-        if (file instanceof MessageAttachment) {
-          embedLike.files?.push({
-            attachment: file.attachment,
-            name: file.name,
-          });
-        } else {
-          embedLike.files?.push(file);
-        }
-      });
-    }
-
     if (message.footer) {
       if (message.footer.iconURL) {
         embedLike.footer = {
@@ -156,7 +122,7 @@ export namespace mapper {
           text: message.footer.text,
         };
       } else if (message.footer.text) {
-        embedLike.footer = message.footer.text;
+        embedLike.footer = message.footer;
       }
     }
 

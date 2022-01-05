@@ -41,7 +41,7 @@ export class TestCollector {
   testFiles: TestFile[];
   currentSuite!: ITest;
 
-  private groupClousureFunction: Queue<VoidLikeFunction>;
+  private groupClosureFunction: Queue<VoidLikeFunction>;
 
   get currentTestFile() {
     return this.testFiles[this.testFiles.length - 1];
@@ -55,7 +55,7 @@ export class TestCollector {
     this.assertions = [];
     this.testsPass = 0;
     this.testsFailed = 0;
-    this.groupClousureFunction = new Queue();
+    this.groupClosureFunction = new Queue();
   }
 
   clearTestFiles() {
@@ -67,11 +67,11 @@ export class TestCollector {
     return this.currentTestFile;
   }
 
-  addToGroupClousure(fn: () => void | Promise<void>) {
-    this.groupClousureFunction.enqueue(fn);
+  addToGroupClosure(fn: () => void | Promise<void>) {
+    this.groupClosureFunction.enqueue(fn);
   }
 
   executeGroupClojure() {
-    return this.groupClousureFunction?.executeWithCatchCollectAsync();
+    return this.groupClosureFunction?.executeWithCatchCollectAsync();
   }
 }

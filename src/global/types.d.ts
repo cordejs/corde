@@ -2,7 +2,7 @@ declare namespace corde {
   type KeyOf<T> = keyof T;
 
   type Stream = import("stream").Stream;
-  type GuildCreateChannelOptions = import("discord.js").GuildCreateChannelOptions;
+  type GuildCreateChannelOptions = import("discord.js").GuildChannelCreateOptions;
   type GuildCreateOptions = import("discord.js").GuildCreateOptions;
   type BitField<T> = import("discord.js").BitField<T>;
 
@@ -31,7 +31,7 @@ declare namespace corde {
     isText?: boolean;
   }
 
-  export interface IDescribeClousure {
+  export interface IDescribeClosure {
     /**
      * Create a group of tests.
      *
@@ -49,7 +49,7 @@ declare namespace corde {
     ): void;
   }
 
-  export interface ITestClousure {
+  export interface ITestClosure {
     /**
      * Define a single test. A test should contain one or more expectations that test action of
      * the discord bot.
@@ -500,7 +500,7 @@ declare namespace corde {
     /**
      * footer text
      */
-    text?: string;
+    text: string;
     /**
      * URL of footer icon (only supports HTTP(s) and attachments)
      */
@@ -558,7 +558,7 @@ declare namespace corde {
   }
 
   export interface IMessageEmbedAuthor {
-    name?: string;
+    name: string;
     url?: string;
     iconURL?: string;
   }
@@ -595,7 +595,7 @@ declare namespace corde {
     /**
      * color code of the embed
      */
-    color?: ColorResolvable;
+    color?: import("discord.js").ColorResolvable;
     /**
      * description of embed
      */
@@ -611,7 +611,7 @@ declare namespace corde {
     /**
      * Footer url **or** information
      */
-    footer?: IMessageEmbedFooter | string;
+    footer?: IMessageEmbedFooter;
     /**
      * IImage URL **or** information
      */
