@@ -5,15 +5,10 @@ import { isNumber, replaceAll } from "../utils";
 
 /**
  * Default interface of JSON config
- *
- * @description `botToken` is not required.
- * only inform if is desired to start test bot with corde
- *
  */
 export class Config implements Readonly<IConfigOptions> {
   private _cordeBotToken!: string;
   private _botTestId!: string;
-  private _botToken!: string;
   private _channelId!: string;
   private _guildId!: string;
   private _timeout?: number;
@@ -31,10 +26,6 @@ export class Config implements Readonly<IConfigOptions> {
 
   get botTestId() {
     return this._botTestId;
-  }
-
-  get botToken() {
-    return this._botToken;
   }
 
   get channelId() {
@@ -125,10 +116,6 @@ export class Config implements Readonly<IConfigOptions> {
 
     if (config.extensions && (!this.extensions || forceUpdate)) {
       this._extensions = config.extensions;
-    }
-
-    if (config.botToken && (!this.botToken || forceUpdate)) {
-      this._botToken = config.botToken;
     }
 
     if (

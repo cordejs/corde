@@ -16,7 +16,7 @@ import { hookBuilder } from "./hookBuilder";
  *
  * const bot = new Discord.Client();
  * beforeStart(async () => {
- *   await bot.login(config.botToken);
+ *   await bot.login(botToken);
  * });
  *
  * @param fn code that will be executed **before** tests start.

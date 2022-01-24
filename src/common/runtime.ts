@@ -60,10 +60,6 @@ class Runtime {
     return this._configs.project;
   }
 
-  get botToken() {
-    return this._configs.botToken;
-  }
-
   get channelId() {
     return this._configs.channelId;
   }
