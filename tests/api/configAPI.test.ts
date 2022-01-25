@@ -20,10 +20,6 @@ describe("testing public configs api", () => {
     expect(configAPI.botTestId).toEqual(config.botTestId);
   });
 
-  it("should get value from botToken", () => {
-    expect(configAPI.botToken).toEqual(config.botToken);
-  });
-
   it("should get value from channelId", () => {
     expect(configAPI.channelId).toEqual(config.channelId);
   });

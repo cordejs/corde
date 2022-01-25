@@ -12,7 +12,6 @@ beforeEach(() => {
     cordeBotToken: "5e8862cd73694287ff341e75c95e3c6a",
     guildId: "21685198465498",
     testMatches: ["./tests/dirTestFiles/**"],
-    botToken: "1f77a63e0f60f3bf420edf67bfa3915b",
     timeout: 5000,
   };
 });
