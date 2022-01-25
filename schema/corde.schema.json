@@ -8,7 +8,6 @@
     {
       "cordeBotToken": "YaA4MDMiOTY2O4I2MjAwODMy.X2iRwg.Rf3-TqLExWuPQjxnVaDCGv9V7cB",
       "botTestId": "12412142412",
-      "botToken": "YaA4MDMiOTY2O4I2MjAwODMy.X2iRwg.Rf3-TqLExWuPQjxnVaDCGv9V7cB",
       "guildId": "514212632960122287894",
       "channelId": "514212632960122287894",
       "modulePathIgnorePatterns": ["(?:^|/)node_modules/"],
@@ -17,15 +16,7 @@
       "timeout": 5000
     }
   ],
-  "required": [
-    "cordeBotToken",
-    "botTestId",
-    "botToken",
-    "guildId",
-    "channelId",
-    "botPrefix",
-    "testMatches"
-  ],
+  "required": ["cordeBotToken", "botTestId", "guildId", "channelId", "botPrefix", "testMatches"],
   "properties": {
     "cordeBotToken": {
       "default": "",
@@ -35,10 +26,6 @@
     "botTestId": {
       "default": "",
       "title": "Your bot's id."
-    },
-    "botToken": {
-      "default": "",
-      "title": "Your bot's Token."
     },
     "guildId": {
       "default": "",

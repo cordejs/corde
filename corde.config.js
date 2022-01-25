@@ -15,6 +15,5 @@ module.exports = {
   cordeBotToken: process.env.CORDE_TEST_TOKEN,
   guildId: process.env.GUILD_ID,
   testMatches: [process.env.TEST_FILES_DIR],
-  botToken: process.env.BOT_TEST_TOKEN,
   timeout: process.env.TIME_OUT,
 };

@@ -61,7 +61,6 @@ After installed, add the file `corde.config.json` in the root of your applicatio
 {
    "cordeBotToken":  "<tokenForCordeBot>",
    "botTestId":  "<yourBotId>",
-   "botToken":  "<yourBotToken>",
    "guildId":  "<guildId>",
    "channelId":  "<channelId>",
    "botPrefix":  "!",

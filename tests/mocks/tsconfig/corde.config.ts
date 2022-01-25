@@ -5,6 +5,5 @@ module.exports = {
   cordeBotToken: "",
   guildId: "",
   testMatches: [""],
-  botToken: "",
   timeout: 5000,
 };
