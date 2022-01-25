@@ -1,6 +1,6 @@
 {
   "name": "corde",
-  "version": "4.4.5",
+  "version": "4.4.6",
   "description": "A simple library for Discord bot tests",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -83,7 +83,7 @@
     "babel-jest": "^27.0.1",
     "cli-spinners": "^2.4.0",
     "codecov": "^3.6.5",
-    "dotenv": "^10.0.0",
+    "dotenv": "^14.3.2",
     "eslint": "^7.23.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-config-standard": "^16.0.2",
