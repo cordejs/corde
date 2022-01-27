@@ -10,18 +10,17 @@ import {
   GuildEmoji,
   GuildMember,
   Message,
-  MessageReaction,
   NewsChannel,
   PartialDMChannel,
   PartialGuildMember,
   PartialMessage,
-  PartialMessageReaction,
   PartialUser,
   Presence,
   Role,
   TextBasedChannel,
   TextChannel,
   ThreadChannel,
+  Typing,
   User,
   VoiceState,
 } from "discord.js";
@@ -55,16 +54,14 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  async onceReady(): Promise<void> {
-    await this._once<void>("ready");
+  onceReady() {
+    return this._once<void>("ready");
   }
 
   /**
    * @internal
    */
-  onMessageReactionRemoveEmoji(
-    fn: (reaction: MessageReaction | PartialMessageReaction) => void,
-  ): void {
+  onMessageReactionRemoveEmoji(fn: (reaction: corde.PartialOrMessageReaction) => void): void {
     this._client.on("messageReactionRemoveEmoji", fn);
   }
 
@@ -72,7 +69,7 @@ export class Events implements corde.IOnceEvents {
    * @internal
    */
   onceMessageReactionRemoveEmoji(options?: corde.IMessageReactionRemoveEmojiFilter) {
-    const validator = new Validator<[MessageReaction | PartialMessageReaction]>();
+    const validator = new Validator<[corde.PartialOrMessageReaction]>();
 
     if (options?.emoji) {
       validator.add(
@@ -93,7 +90,7 @@ export class Events implements corde.IOnceEvents {
       );
     }
 
-    return executePromiseWithTimeout<MessageReaction | PartialMessageReaction>((resolve) => {
+    return executePromiseWithTimeout<corde.PartialOrMessageReaction>((resolve) => {
       this.onMessageReactionRemoveEmoji((message) => {
         if (validator.isValid(message)) {
           resolve(message);
@@ -656,7 +653,7 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceGuildUnavailable(options?: corde.IGuildUnvailableFilter) {
+  onceGuildUnavailable(options?: corde.IGuildUnavailableFilter) {
     const validator = new Validator<[Guild]>();
 
     if (options?.id || options?.name) {
@@ -683,7 +680,7 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onceGuildUpdate(options?: corde.IGuildUnvailableFilter) {
+  onceGuildUpdate(options?: corde.IGuildUnavailableFilter) {
     const validator = new Validator<[Guild, Guild]>();
 
     if (options?.id || options?.name) {
@@ -830,7 +827,9 @@ export class Events implements corde.IOnceEvents {
   /**
    * @internal
    */
-  onMessageReactionAdd(fn: (addedReaction: MessageReaction, author: User | PartialUser) => void) {
+  onMessageReactionAdd(
+    fn: (reaction: corde.PartialOrMessageReaction, user: User | PartialUser) => void,
+  ) {
     this._client.on("messageReactionAdd", fn);
   }
 
@@ -838,7 +837,7 @@ export class Events implements corde.IOnceEvents {
    * @internal
    */
   onceMessageReactionAdd(options?: corde.IMessageReactionAddFilter) {
-    const validator = new Validator<[MessageReaction, User | PartialUser]>();
+    const validator = new Validator<[corde.PartialOrMessageReaction, User | PartialUser]>();
 
     if (options?.author) {
       validator.add((_, user) => this.getUserIdentifierValidation(user, options.author));
@@ -863,13 +862,16 @@ export class Events implements corde.IOnceEvents {
       );
     }
 
-    return executePromiseWithTimeout<[MessageReaction, User | PartialUser]>((resolve) => {
-      this.onMessageReactionAdd((reaction, user) => {
-        if (validator.isValid(reaction, user)) {
-          resolve([reaction, user]);
-        }
-      });
-    }, options?.timeout);
+    return executePromiseWithTimeout<[corde.PartialOrMessageReaction, User | PartialUser]>(
+      (resolve) => {
+        this.onMessageReactionAdd((reaction, user) => {
+          if (validator.isValid(reaction, user)) {
+            resolve([reaction, user]);
+          }
+        });
+      },
+      options?.timeout,
+    );
   }
 
   /**
@@ -890,7 +892,7 @@ export class Events implements corde.IOnceEvents {
     event: "onMessageReactionAdd" | "onMessageReactionRemoveEmoji",
     filter?: corde.ISearchMessageReactionsFilter,
   ) {
-    const validator = new Validator<[MessageReaction, User | PartialUser | void]>();
+    const validator = new Validator<[corde.PartialOrMessageReaction, User | PartialUser | void]>();
 
     if (filter?.emojis) {
       validator.add((reaction) =>
@@ -914,22 +916,24 @@ export class Events implements corde.IOnceEvents {
       validator.add((_, author) => this.getUserIdentifierValidation(author, filter?.author));
     }
 
-    const response: [MessageReaction, User | PartialUser | void][] = [];
-    return executePromiseWithTimeout<[MessageReaction, User | PartialUser | void][]>(
+    const response: [corde.PartialOrMessageReaction, User | PartialUser | void][] = [];
+    return executePromiseWithTimeout<[corde.PartialOrMessageReaction, User | PartialUser | void][]>(
       (resolve) => {
-        this[event]((reaction: MessageReaction, author: User | PartialUser | void) => {
-          if (validator.isValid(reaction, author)) {
-            response.push([reaction, author]);
-          }
+        this[event](
+          (reaction: corde.PartialOrMessageReaction, author: User | PartialUser | void) => {
+            if (validator.isValid(reaction, author)) {
+              response.push([reaction, author]);
+            }
 
-          if (!filter?.emojis && !filter?.author && !filter?.message) {
-            resolve(response);
-          }
+            if (!filter?.emojis && !filter?.author && !filter?.message) {
+              resolve(response);
+            }
 
-          if (response.length === filter?.emojis?.length) {
-            resolve(response);
-          }
-        });
+            if (response.length === filter?.emojis?.length) {
+              resolve(response);
+            }
+          },
+        );
       },
       filter?.timeout,
       response,
@@ -943,7 +947,7 @@ export class Events implements corde.IOnceEvents {
    * @internal
    */
   onMessageReactionRemove(
-    fn: (removedReaction: MessageReaction, author: User | PartialUser) => void,
+    fn: (removedReaction: corde.PartialOrMessageReaction, author: User | PartialUser) => void,
   ) {
     this._client.on("messageReactionRemove", fn);
   }
@@ -952,7 +956,7 @@ export class Events implements corde.IOnceEvents {
    * @internal
    */
   onceMessageReactionRemove(options?: corde.IMessageReactionRemoveFilter) {
-    const validator = new Validator<[MessageReaction, User | PartialUser]>();
+    const validator = new Validator<[corde.PartialOrMessageReaction, User | PartialUser]>();
 
     if (options?.author) {
       validator.add((_, user) => this.getUserIdentifierValidation(user, options.author));
@@ -977,13 +981,16 @@ export class Events implements corde.IOnceEvents {
       );
     }
 
-    return executePromiseWithTimeout<[MessageReaction, User | PartialUser]>((resolve) => {
-      this.onMessageReactionRemove((reaction, user) => {
-        if (validator.isValid(reaction, user)) {
-          resolve([reaction, user]);
-        }
-      });
-    }, options?.timeout);
+    return executePromiseWithTimeout<[corde.PartialOrMessageReaction, User | PartialUser]>(
+      (resolve) => {
+        this.onMessageReactionRemove((reaction, user) => {
+          if (validator.isValid(reaction, user)) {
+            resolve([reaction, user]);
+          }
+        });
+      },
+      options?.timeout,
+    );
   }
 
   /**
@@ -1148,7 +1155,7 @@ export class Events implements corde.IOnceEvents {
    * @param fn function to receive the old and new presence values.
    * @internal
    */
-  onPresenceUpdate(fn: (oldMember: Presence | undefined, newMember: Presence) => void) {
+  onPresenceUpdate(fn: (oldMember: Presence | null, newMember: Presence) => void) {
     this._client.on("presenceUpdate", fn);
   }
 
@@ -1241,7 +1248,7 @@ export class Events implements corde.IOnceEvents {
     const validator = new Validator<[Role, Role]>();
 
     if (options?.id || options?.name) {
-      validator.add((role) => this.getroleValidation(role, { id: options.id, name: options.name }));
+      validator.add((role) => this.getRoleValidation(role, { id: options.id, name: options.name }));
     }
 
     return executePromiseWithTimeout<[Role, Role]>((resolve) => {
@@ -1338,7 +1345,7 @@ export class Events implements corde.IOnceEvents {
    * is typing.
    * @internal
    */
-  onTypingStart(fn: (channel: Channel | PartialDMChannel, user: User | PartialUser) => void) {
+  onTypingStart(fn: (typing: Typing) => void) {
     this._client.on("typingStart", fn);
   }
 
@@ -1427,7 +1434,7 @@ export class Events implements corde.IOnceEvents {
     }
 
     if (!isNullOrUndefined(options?.sessionID)) {
-      validator.add((_, state) => state.sessionID === options?.sessionID);
+      validator.add((_, state) => state.sessionId === options?.sessionID);
     }
 
     if (!isNullOrUndefined(options?.streaming)) {

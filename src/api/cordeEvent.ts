@@ -315,7 +315,7 @@ export const cordeEvent: corde.IOnceEvents = {
   /**
    * @global
    */
-  onceGuildUnavailable: function (options?: corde.IGuildUnvailableFilter): Promise<Guild> {
+  onceGuildUnavailable: function (options?: corde.IGuildUnavailableFilter): Promise<Guild> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.bot.events.onceGuildUnavailable({
       ...options,
@@ -324,7 +324,7 @@ export const cordeEvent: corde.IOnceEvents = {
   /**
    * @global
    */
-  onceGuildUpdate: function (options?: corde.IGuildUnvailableFilter): Promise<[Guild, Guild]> {
+  onceGuildUpdate: function (options?: corde.IGuildUnavailableFilter): Promise<[Guild, Guild]> {
     options = getTimeoutParameterIfNeeded(options);
     return runtime.bot.events.onceGuildUpdate({
       ...options,

@@ -116,7 +116,7 @@ declare namespace corde {
 
   export interface IGuildMemberSpeakingFilter extends IGuildMemberIdentifier, IDefaultOptions {}
   export interface IGuildMemberUpdateFilter extends IGuildMemberIdentifier, IDefaultOptions {}
-  export interface IGuildUnvailableFilter extends IGuildIdentifier, IDefaultOptions {}
+  export interface IGuildUnavailableFilter extends IGuildIdentifier, IDefaultOptions {}
   export interface IGuildUpdateFilter extends IGuildIdentifier, IDefaultOptions {}
 
   export interface IGuildMemberChunkFilter extends IDefaultOptions {
