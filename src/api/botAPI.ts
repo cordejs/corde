@@ -12,7 +12,7 @@ import {
 } from "discord.js";
 import { CordeClientError } from "../errors";
 import { ICordeBot, Primitive } from "../types";
-import { convertToArray } from "../utils/toArray";
+import { collectionToArray } from "../utils/collectionToArray";
 
 export class BotAPI {
   private _bot: ICordeBot;
@@ -47,7 +47,7 @@ export class BotAPI {
    */
   get channels() {
     this._throwErrorIfNotLogged();
-    return convertToArray(this._bot.client.channels.cache);
+    return collectionToArray(this._bot.client.channels.cache);
   }
 
   /**
@@ -64,7 +64,7 @@ export class BotAPI {
    */
   get guildMembers() {
     this._throwErrorIfNotLogged();
-    return convertToArray(this.guild.members.cache);
+    return collectionToArray(this.guild.members.cache);
   }
 
   /**
@@ -73,23 +73,18 @@ export class BotAPI {
    */
   get guilds() {
     this._throwErrorIfNotLogged();
-    return convertToArray(this._bot.client.guilds.cache);
+    return collectionToArray(this._bot.client.guilds.cache);
   }
 
   /**
    * Get all roles in **cache** of the guild
    * defined in configs.
    *
-   * Shortcut for:
-   *
-   * ```typescript
-   * this.getGuild().roles.cache.array()
-   * ```
    * @throws Error if corde bot is not connected.
    */
   get roles() {
     this._throwErrorIfNotLogged();
-    return convertToArray(this.getGuild().roles.cache);
+    return collectionToArray(this.getGuild().roles.cache);
   }
 
   /**

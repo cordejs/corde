@@ -1,4 +1,4 @@
-import { isObject } from ".";
+import { isObject } from "./isObject";
 import { isAsymetricMatcher } from "./isAsymetricMatcher";
 import { isNullOrUndefined } from "./isNullOrUndefined";
 

@@ -248,7 +248,7 @@ export interface IConfigOptions {
    */
   testMatches: string[];
   /**
-   * Definition of all paterns to ignore in tests search
+   * Definition of all patterns to ignore in tests search
    *
    * @default ["(?:^|/)node_modules/"]
    */

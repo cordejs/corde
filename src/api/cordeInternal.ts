@@ -24,11 +24,13 @@ export const cordeInternal: CordeType = {
   wait(time: number) {
     Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, time);
   },
+  waitAsync(time: number) {
+    return new Promise<void>((resolve) => {
+      setTimeout(resolve, time);
+    });
+  },
   send(command: string) {
     return runtime.bot.sendMessage(command);
-  },
-  events: {
-    ...cordeEvent,
   },
   mock<TEntity extends Record<string, unknown>, U extends keyof TEntity>(
     object: TEntity,
@@ -38,9 +40,7 @@ export const cordeInternal: CordeType = {
     runtime.addMock(mockInstance);
     return mockInstance;
   },
-  waitAsync(time: number) {
-    return new Promise<void>((resolve) => {
-      setTimeout(resolve, time);
-    });
+  events: {
+    ...cordeEvent,
   },
 };
