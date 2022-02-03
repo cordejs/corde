@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import { ITestProps } from "../../types";
-import { asymetricTypeOf, buildReportMessage, every, isBoolean } from "../../utils";
+import { asymmetricTypeOf, buildReportMessage, every, isBoolean } from "../../utils";
 import { matcherUtils } from "../matcherUtils";
 
 /**
@@ -37,7 +37,7 @@ export function toBeArrayOfBooleans(this: ITestProps, expected: any) {
           `${this.expectedColorFn("expected")} should${isNotText} be an ${chalk.green(
             "array of booleans",
           )}.\n`,
-          `got: ${chalk.red(asymetricTypeOf(expected))}`,
+          `got: ${chalk.red(asymmetricTypeOf(expected))}`,
         ),
   };
 }

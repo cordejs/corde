@@ -1,4 +1,4 @@
-import { isPromise } from ".";
+import { isPromise } from "./isPromise";
 import { ArgResponse } from "../types";
 
 export async function asyncHandler<T extends (...args: any) => any, U extends any>(

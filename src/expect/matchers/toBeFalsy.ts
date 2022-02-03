@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import { ITestProps } from "../../types";
-import { buildReportMessage, asymetricTypeOf } from "../../utils";
+import { buildReportMessage, asymmetricTypeOf } from "../../utils";
 
 /**
  * @internal
@@ -22,7 +22,7 @@ export function toBeFalsy(this: ITestProps, expected: any) {
           this.createHint(),
           "\n\n",
           `${this.expectedColorFn("expected")} should${isNotText} be a falsy value.\n`,
-          `got: ${chalk.red(asymetricTypeOf(expected))}`,
+          `got: ${chalk.red(asymmetricTypeOf(expected))}`,
         ),
   };
 }

@@ -1836,7 +1836,7 @@ text
  PASS  tests/utils/isNumeric.test.ts
  PASS  tests/utils/isFunction.test.ts
  PASS  tests/utils/formatObject.test.ts
- PASS  tests/utils/asymetricTypeOf.test.ts
+ PASS  tests/utils/asymmetricTypeOf.test.ts
  PASS  tests/utils/isNumber.test.ts
  PASS  tests/utils/diff.test.ts
  PASS  tests/cli/index.test.ts
@@ -2004,7 +2004,7 @@ All files                         |   87.51 |    82.18 |   87.73 |   87.73 |
  src/types                        |       0 |        0 |       0 |       0 |                                                                         
   index.ts                        |       0 |        0 |       0 |       0 |                                                                         
  src/utils                        |   92.34 |    93.53 |   92.11 |   92.13 |                                                                         
-  asymetricTypeOf.ts              |     100 |      100 |     100 |     100 |                                                                         
+  asymmetricTypeOf.ts              |     100 |      100 |     100 |     100 |                                                                         
   asyncHandler.ts                 |       0 |        0 |       0 |       0 | 7-15                                                                    
   buildReportMessage.ts           |     100 |       50 |     100 |     100 | 9                                                                       
   colors.ts                       |     100 |      100 |     100 |     100 |                                                                         
@@ -2019,7 +2019,7 @@ All files                         |   87.51 |    82.18 |   87.73 |   87.73 |
   getStackTrace.ts                |     100 |    93.33 |     100 |     100 | 36                                                                      
   importFile.ts                   |     100 |      100 |     100 |     100 |                                                                         
   index.ts                        |       0 |        0 |       0 |       0 |                                                                         
-  isAsymetricMatcher.ts           |     100 |      100 |     100 |     100 |                                                                         
+  isAsymmetricMatcher.ts           |     100 |      100 |     100 |     100 |                                                                         
   isBigint.ts                     |     100 |      100 |     100 |     100 |                                                                         
   isBoolean.ts                    |     100 |      100 |     100 |     100 |                                                                         
   isFunction.ts                   |     100 |      100 |     100 |     100 |                                                                         

@@ -1,5 +1,5 @@
 import { isObject } from "./isObject";
-import { isAsymetricMatcher } from "./isAsymetricMatcher";
+import { isAsymmetricMatcher } from "./isAsymmetricMatcher";
 import { isNullOrUndefined } from "./isNullOrUndefined";
 
 class AssertionResult extends Error {
@@ -120,15 +120,15 @@ function assertNullAndUndefined(obj1: any, obj2: any) {
 }
 
 function assertAssymetrics(obj1: any, obj2: any) {
-  if (isAsymetricMatcher(obj1) && isAsymetricMatcher(obj2)) {
+  if (isAsymmetricMatcher(obj1) && isAsymmetricMatcher(obj2)) {
     throw new AssertionResult(obj1.matchType(...obj2.getTypes()));
   }
 
-  if (isAsymetricMatcher(obj1)) {
+  if (isAsymmetricMatcher(obj1)) {
     throw new AssertionResult(obj1.matchValue(obj2));
   }
 
-  if (isAsymetricMatcher(obj2)) {
+  if (isAsymmetricMatcher(obj2)) {
     throw new AssertionResult(obj2.matchValue(obj1));
   }
 }

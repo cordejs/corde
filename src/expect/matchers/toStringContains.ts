@@ -1,20 +1,20 @@
 import chalk from "chalk";
 import { ITestProps } from "../../types";
-import { buildReportMessage, isAsymetricMatcher } from "../../utils";
+import { buildReportMessage, isAsymmetricMatcher } from "../../utils";
 import { matcherUtils } from "../matcherUtils";
 
 /**
  * @internal
  */
 export function toStringContains(this: ITestProps, expected: any, received: any) {
-  if (!isAsymetricMatcher(expected) && typeof expected !== "string") {
+  if (!isAsymmetricMatcher(expected) && typeof expected !== "string") {
     return {
       pass: false,
       message: `${this.expectedColorFn("expected")} must be a string`,
     };
   }
 
-  if (!isAsymetricMatcher(received) && typeof received !== "string") {
+  if (!isAsymmetricMatcher(received) && typeof received !== "string") {
     return {
       pass: false,
       message: `${this.expectedColorFn("received")} must be a string`,

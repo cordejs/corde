@@ -6,7 +6,7 @@ import { typeOf } from "./typeOf";
  *
  * @internal
  */
-export function asymetricTypeOf(value: any) {
+export function asymmetricTypeOf(value: any) {
   if (value instanceof AsymmetricMatcher) {
     return value.toString();
   }

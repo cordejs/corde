@@ -1,4 +1,4 @@
-export * from "./asymetricTypeOf";
+export * from "./asymmetricTypeOf";
 export * from "./buildReportMessage";
 export * from "./colors";
 export * from "./dateDiff";
@@ -10,7 +10,7 @@ export * from "./executeWithTimeout";
 export * from "./formatObject";
 export * from "./getFiles";
 export * from "./getStackTrace";
-export * from "./isAsymetricMatcher";
+export * from "./isAsymmetricMatcher";
 export * from "./isBigint";
 export * from "./isBoolean";
 export * from "./isFunction";

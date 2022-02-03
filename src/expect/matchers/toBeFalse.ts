@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import { ITestProps } from "../../types";
-import { buildReportMessage, asymetricTypeOf } from "../../utils";
+import { buildReportMessage, asymmetricTypeOf } from "../../utils";
 
 /**
  * @internal
@@ -14,7 +14,7 @@ export function toBeFalse(this: ITestProps, expected: any) {
     isNotText = " not";
   }
 
-  const expectedType = asymetricTypeOf(expected);
+  const expectedType = asymmetricTypeOf(expected);
 
   const message = expectedType === "boolean" ? expected : expectedType;
 

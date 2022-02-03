@@ -3,7 +3,7 @@ import chalk from "chalk";
 import runtime from "../core";
 import { TestError } from "../errors";
 import { ITestProps, ITestReport } from "../types";
-import { getStackTrace, isAsymetricMatcher, typeOf } from "../utils";
+import { getStackTrace, isAsymmetricMatcher, typeOf } from "../utils";
 import { any } from "./asymmetricMatcher";
 import * as matchers from "./matchers";
 
@@ -64,7 +64,7 @@ function createMatcherFn(matcher: string, isNot: boolean, expected: any, isDebug
             .join(",")})`;
         },
         formatValue: (value: any) => {
-          if (typeof value === "symbol" || isAsymetricMatcher(value)) {
+          if (typeof value === "symbol" || isAsymmetricMatcher(value)) {
             return value.toString();
           }
 

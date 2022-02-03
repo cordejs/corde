@@ -268,15 +268,15 @@
             <path fill="none" stroke="#757575" d="M2534.98,-1729.08C2539.27,-1826.88 2574.4,-2517.64 2716,-2654.56 2729.16,-2667.29 2746.74,-2674.17 2764.78,-2677.59"/>
             <polygon fill="#757575" stroke="#757575" points="2764.4,-2681.07 2774.82,-2679.15 2765.47,-2674.16 2764.4,-2681.07"/>
         </g>
-        <!-- src/utils/asymetricTypeOf.js -->
+        <!-- src/utils/asymmetricTypeOf.js -->
         <g id="node141" class="node">
-            <title>src/utils/asymetricTypeOf.js</title>
+            <title>src/utils/asymmetricTypeOf.js</title>
             <path fill="none" stroke="#ff6c60" d="M2936.83,-1709.06C2936.83,-1709.06 2761.17,-1709.06 2761.17,-1709.06 2757.33,-1709.06 2753.5,-1705.23 2753.5,-1701.4 2753.5,-1701.4 2753.5,-1693.73 2753.5,-1693.73 2753.5,-1689.9 2757.33,-1686.06 2761.17,-1686.06 2761.17,-1686.06 2936.83,-1686.06 2936.83,-1686.06 2940.67,-1686.06 2944.5,-1689.9 2944.5,-1693.73 2944.5,-1693.73 2944.5,-1701.4 2944.5,-1701.4 2944.5,-1705.23 2940.67,-1709.06 2936.83,-1709.06"/>
-            <text text-anchor="middle" x="2849" y="-1693.86" font-family="Arial" font-size="14.00" fill="#ff6c60">src/utils/asymetricTypeOf.js</text>
+            <text text-anchor="middle" x="2849" y="-1693.86" font-family="Arial" font-size="14.00" fill="#ff6c60">src/utils/asymmetricTypeOf.js</text>
         </g>
-        <!-- src/utils/index.js&#45;&gt;src/utils/asymetricTypeOf.js -->
+        <!-- src/utils/index.js&#45;&gt;src/utils/asymmetricTypeOf.js -->
         <g id="edge359" class="edge">
-            <title>src/utils/index.js&#45;&gt;src/utils/asymetricTypeOf.js</title>
+            <title>src/utils/index.js&#45;&gt;src/utils/asymmetricTypeOf.js</title>
             <path fill="none" stroke="#757575" d="M2591.64,-1713.92C2633.94,-1711.22 2692.77,-1707.47 2743.41,-1704.24"/>
             <polygon fill="#757575" stroke="#757575" points="2743.66,-1707.73 2753.42,-1703.6 2743.22,-1700.74 2743.66,-1707.73"/>
         </g>
@@ -352,15 +352,15 @@
             <path fill="none" stroke="#757575" d="M2535.05,-1705.94C2540.14,-1610.64 2581.95,-962.49 2716,-835.56 2739.46,-813.35 2776.5,-809.4 2805.39,-811.86"/>
             <polygon fill="#757575" stroke="#757575" points="2805.28,-815.37 2815.62,-813.03 2806.08,-808.42 2805.28,-815.37"/>
         </g>
-        <!-- src/utils/isAsymetricMatcher.js -->
+        <!-- src/utils/isAsymmetricMatcher.js -->
         <g id="node148" class="node">
-            <title>src/utils/isAsymetricMatcher.js</title>
+            <title>src/utils/isAsymmetricMatcher.js</title>
             <path fill="none" stroke="#c6c5fe" d="M3216.33,-836.06C3216.33,-836.06 3025.67,-836.06 3025.67,-836.06 3021.83,-836.06 3018,-832.23 3018,-828.4 3018,-828.4 3018,-820.73 3018,-820.73 3018,-816.9 3021.83,-813.06 3025.67,-813.06 3025.67,-813.06 3216.33,-813.06 3216.33,-813.06 3220.17,-813.06 3224,-816.9 3224,-820.73 3224,-820.73 3224,-828.4 3224,-828.4 3224,-832.23 3220.17,-836.06 3216.33,-836.06"/>
-            <text text-anchor="middle" x="3121" y="-820.86" font-family="Arial" font-size="14.00" fill="#c6c5fe">src/utils/isAsymetricMatcher.js</text>
+            <text text-anchor="middle" x="3121" y="-820.86" font-family="Arial" font-size="14.00" fill="#c6c5fe">src/utils/isAsymmetricMatcher.js</text>
         </g>
-        <!-- src/utils/index.js&#45;&gt;src/utils/isAsymetricMatcher.js -->
+        <!-- src/utils/index.js&#45;&gt;src/utils/isAsymmetricMatcher.js -->
         <g id="edge375" class="edge">
-            <title>src/utils/index.js&#45;&gt;src/utils/isAsymetricMatcher.js</title>
+            <title>src/utils/index.js&#45;&gt;src/utils/isAsymmetricMatcher.js</title>
             <path fill="none" stroke="#757575" d="M2534.88,-1705.84C2538.32,-1607.85 2567.51,-925.46 2716,-803.56 2766.19,-762.36 2954.63,-791.63 3055.43,-811.07"/>
             <polygon fill="#757575" stroke="#757575" points="3055.02,-814.55 3065.5,-813.03 3056.36,-807.68 3055.02,-814.55"/>
         </g>
@@ -3430,15 +3430,15 @@
             <path fill="none" stroke="#cfffac" d="M118.33,-3594.06C118.33,-3594.06 7.67,-3594.06 7.67,-3594.06 3.83,-3594.06 0,-3590.23 0,-3586.4 0,-3586.4 0,-3578.73 0,-3578.73 0,-3574.9 3.83,-3571.06 7.67,-3571.06 7.67,-3571.06 118.33,-3571.06 118.33,-3571.06 122.17,-3571.06 126,-3574.9 126,-3578.73 126,-3578.73 126,-3586.4 126,-3586.4 126,-3590.23 122.17,-3594.06 118.33,-3594.06"/>
             <text text-anchor="middle" x="63" y="-3578.86" font-family="Arial" font-size="14.00" fill="#cfffac">src/types/index.js</text>
         </g>
-        <!-- src/utils/asymetricTypeOf.js&#45;&gt;src/expect/asymmetricMatcher.js -->
+        <!-- src/utils/asymmetricTypeOf.js&#45;&gt;src/expect/asymmetricMatcher.js -->
         <g id="edge344" class="edge">
-            <title>src/utils/asymetricTypeOf.js&#45;&gt;src/expect/asymmetricMatcher.js</title>
+            <title>src/utils/asymmetricTypeOf.js&#45;&gt;src/expect/asymmetricMatcher.js</title>
             <path fill="none" stroke="#757575" d="M2944.9,-1691.81C3042.53,-1683.87 3185.62,-1665.91 3224,-1627.56 3326.83,-1524.82 3362.87,-1035.95 3369.72,-926.39"/>
             <polygon fill="#757575" stroke="#757575" points="3373.23,-926.41 3370.34,-916.21 3366.24,-925.98 3373.23,-926.41"/>
         </g>
-        <!-- src/utils/asymetricTypeOf.js&#45;&gt;src/utils/typeOf.js -->
+        <!-- src/utils/asymmetricTypeOf.js&#45;&gt;src/utils/typeOf.js -->
         <g id="edge345" class="edge">
-            <title>src/utils/asymetricTypeOf.js&#45;&gt;src/utils/typeOf.js</title>
+            <title>src/utils/asymmetricTypeOf.js&#45;&gt;src/utils/typeOf.js</title>
             <path fill="none" stroke="#757575" d="M2944.81,-1704.59C2978.82,-1707.11 3016.56,-1709.9 3048.28,-1712.25"/>
             <polygon fill="#757575" stroke="#757575" points="3048.13,-1715.75 3058.36,-1713 3048.64,-1708.77 3048.13,-1715.75"/>
         </g>
@@ -3472,9 +3472,9 @@
             <path fill="none" stroke="#757575" d="M2772.92,-829.35C2752.19,-832.42 2731.23,-839.14 2716,-853.56 2587.78,-974.97 2543.95,-1573.25 2535.93,-1695.72"/>
             <polygon fill="#757575" stroke="#757575" points="2532.43,-1695.57 2535.28,-1705.77 2539.41,-1696.02 2532.43,-1695.57"/>
         </g>
-        <!-- src/utils/deepEqual.js&#45;&gt;src/utils/isAsymetricMatcher.js -->
+        <!-- src/utils/deepEqual.js&#45;&gt;src/utils/isAsymmetricMatcher.js -->
         <g id="edge351" class="edge">
-            <title>src/utils/deepEqual.js&#45;&gt;src/utils/isAsymetricMatcher.js</title>
+            <title>src/utils/deepEqual.js&#45;&gt;src/utils/isAsymmetricMatcher.js</title>
             <path fill="none" stroke="#757575" d="M2925.21,-824.56C2950.78,-824.56 2979.94,-824.56 3007.77,-824.56"/>
             <polygon fill="#757575" stroke="#757575" points="3007.95,-828.06 3017.95,-824.56 3007.95,-821.06 3007.95,-828.06"/>
         </g>
@@ -3484,9 +3484,9 @@
             <path fill="none" stroke="#757575" d="M2925.03,-834.09C2943.73,-836.97 2963.68,-840.47 2982,-844.56 3014.04,-851.72 3049.54,-862.32 3076.51,-870.96"/>
             <polygon fill="#757575" stroke="#757575" points="3075.44,-874.29 3086.03,-874.04 3077.6,-867.63 3075.44,-874.29"/>
         </g>
-        <!-- src/utils/isAsymetricMatcher.js&#45;&gt;src/expect/asymmetricMatcher.js -->
+        <!-- src/utils/isAsymmetricMatcher.js&#45;&gt;src/expect/asymmetricMatcher.js -->
         <g id="edge403" class="edge">
-            <title>src/utils/isAsymetricMatcher.js&#45;&gt;src/expect/asymmetricMatcher.js</title>
+            <title>src/utils/isAsymmetricMatcher.js&#45;&gt;src/expect/asymmetricMatcher.js</title>
             <path fill="none" stroke="#757575" d="M3157.94,-836.11C3202.17,-850.32 3277.3,-874.46 3325.51,-889.95"/>
             <polygon fill="#757575" stroke="#757575" points="3324.48,-893.29 3335.07,-893.02 3326.62,-886.63 3324.48,-893.29"/>
         </g>

@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import { ITestProps } from "../../types";
-import { buildReportMessage, isPrimitiveValue, asymetricTypeOf } from "../../utils";
+import { buildReportMessage, isPrimitiveValue, asymmetricTypeOf } from "../../utils";
 import { matcherUtils } from "../matcherUtils";
 
 /**
@@ -30,7 +30,7 @@ export function toBePrimitive<T>(this: ITestProps, expected: T) {
           )} should${isNotText} be primitive expected (${chalk.green(
             "string | bigint | number | boolean",
           )}).\n`,
-          `got: ${chalk.red(asymetricTypeOf(expected))}`,
+          `got: ${chalk.red(asymmetricTypeOf(expected))}`,
         ),
   };
 }

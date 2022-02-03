@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import { ITestProps } from "../../types";
-import { buildReportMessage, asymetricTypeOf } from "../../utils";
+import { buildReportMessage, asymmetricTypeOf } from "../../utils";
 import { matcherUtils } from "../matcherUtils";
 
 /**
@@ -25,7 +25,7 @@ export function toBeNegativeInfinity(this: ITestProps, expected: any) {
     typeof expected !== "number" &&
     typeof expected !== "bigint"
   ) {
-    expectedOutput = asymetricTypeOf(expected);
+    expectedOutput = asymmetricTypeOf(expected);
   }
 
   return {
