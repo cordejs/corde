@@ -75,7 +75,9 @@ export interface ICordeBot {
    * Sends a pure message without prefix it.
    * @param message Data to be sent to channel
    */
-  sendMessage(message: Primitive | MessageOptions | MessagePayload): Promise<Message>;
+  sendMessage(
+    message: Primitive | MessageOptions | MessagePayload | MessageEmbed,
+  ): Promise<Message>;
   /**
    * Send a message to a channel defined in configs.
    *

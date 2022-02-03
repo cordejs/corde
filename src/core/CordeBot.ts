@@ -6,6 +6,7 @@ import {
   Guild,
   GuildBasedChannel,
   Message,
+  MessageEmbed,
   MessageOptions,
   MessagePayload,
   Role,
@@ -128,11 +129,11 @@ export class CordeBot implements ICordeBot {
    * Sends a pure message without prefix it.
    * @param message Data to be send to channel
    */
-  async sendMessage(message: Primitive | MessageOptions | MessagePayload) {
+  sendMessage(message: Primitive | MessageOptions | MessagePayload) {
     if (isPrimitiveValue(message)) {
-      return await this.textChannel.send(message.toString());
+      return this.textChannel.send(message.toString());
     }
-    return await this.textChannel.send(message);
+    return this.textChannel.send(message);
   }
 
   /**

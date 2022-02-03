@@ -5,6 +5,7 @@ declare namespace corde {
   type GuildCreateChannelOptions = import("discord.js").GuildChannelCreateOptions;
   type GuildCreateOptions = import("discord.js").GuildCreateOptions;
   type BitField<T> = import("discord.js").BitField<T>;
+  type Permission = import("discord.js").PermissionString;
 
   export type FunctionOnly<T> = {
     [K in KeyOf<T>]: T[K] extends (...args: any[]) => any ? K : never;
@@ -109,7 +110,7 @@ declare namespace corde {
 
   export interface IDefaultOptions {
     /**
-     * Time in seconds to corde waits for an event occour.
+     * Time in seconds to corde waits for an event occur.
      */
     timeout?: number;
   }
@@ -478,7 +479,7 @@ declare namespace corde {
     color?: ColorResolvable;
     isHoist?: boolean;
     position?: number;
-    permissions?: RolePermission;
+    permissions?: Permission;
     isMentionable?: boolean;
   }
 
@@ -605,13 +606,9 @@ declare namespace corde {
      */
     fields?: IEmbedFieldData[];
     /**
-     * files URLs **or** information of the embed.
-     */
-    files?: (IFile | string)[];
-    /**
      * Footer url **or** information
      */
-    footer?: IMessageEmbedFooter;
+    footer?: import("discord.js").EmbedFooterData;
     /**
      * IImage URL **or** information
      */
@@ -927,7 +924,7 @@ declare namespace corde {
     color?: ColorResolvable;
     hoist?: boolean;
     position?: number;
-    permissions?: RolePermission;
+    permissions?: Permission;
     mentionable?: boolean;
   }
 
@@ -944,37 +941,4 @@ declare namespace corde {
       config: string;
     }
   }
-
-  export type RolePermission =
-    | "CREATE_INSTANT_INVITE"
-    | "KICK_MEMBERS"
-    | "BAN_MEMBERS"
-    | "ADMINISTRATOR"
-    | "MANAGE_CHANNELS"
-    | "MANAGE_GUILD"
-    | "ADD_REACTIONS"
-    | "VIEW_AUDIT_LOG"
-    | "PRIORITY_SPEAKER"
-    | "STREAM"
-    | "VIEW_CHANNEL"
-    | "SEND_MESSAGES"
-    | "SEND_TTS_MESSAGES"
-    | "MANAGE_MESSAGES"
-    | "EMBED_LINKS"
-    | "ATTACH_FILES"
-    | "READ_MESSAGE_HISTORY"
-    | "MENTION_EVERYONE"
-    | "USE_EXTERNAL_EMOJIS"
-    | "VIEW_GUILD_INSIGHTS"
-    | "CONNECT"
-    | "SPEAK"
-    | "MUTE_MEMBERS"
-    | "DEAFEN_MEMBERS"
-    | "MOVE_MEMBERS"
-    | "USE_VAD"
-    | "CHANGE_NICKNAME"
-    | "MANAGE_NICKNAMES"
-    | "MANAGE_ROLES"
-    | "MANAGE_WEBHOOKS"
-    | "MANAGE_EMOJIS";
 }

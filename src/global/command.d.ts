@@ -5,6 +5,8 @@ declare const command: corde.ICommand;
 declare const con: typeof command;
 
 declare namespace corde {
+  type PermissionString = import("discord.js").PermissionString;
+
   /**
    * Defines all functions that can be used
    * to check a bot reaction of a command.
@@ -386,7 +388,7 @@ declare namespace corde {
      * @see https://discord.com/developers/docs/topics/permissions#permissions
      * @since 2.0
      */
-    setRolePermission(roleId: string, ...permissions: RolePermission[]): TReturn;
+    setRolePermission(roleId: string, ...permissions: PermissionString[]): TReturn;
     /**
      * Check if a command change the
      * [permissions](https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags)
@@ -398,10 +400,7 @@ declare namespace corde {
      * @see https://discord.com/developers/docs/topics/permissions#permissions
      * @since 2.0
      */
-    setRolePermission(
-      roleIdentifier: IRoleIdentifier,
-      ...permissions: corde.RolePermission[]
-    ): TReturn;
+    setRolePermission(roleIdentifier: IRoleIdentifier, ...permissions: PermissionString[]): TReturn;
   }
 
   export interface ISetChannelMatchers<TReturn extends any> {

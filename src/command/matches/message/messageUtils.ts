@@ -1,4 +1,4 @@
-import { EmbedFieldData, Message, MessageAttachment, MessageEmbed } from "discord.js";
+import { EmbedFieldData, Message, MessageEmbed } from "discord.js";
 import { MessageType, Primitive } from "../../../types";
 import { deepEqual, diff, formatObject, isPrimitiveValue, typeOf } from "../../../utils";
 import { CommandState } from "../commandState";
@@ -193,29 +193,8 @@ export namespace messageUtils {
       });
     }
 
-    if (message.files && message.files.length) {
-      embedLike.files = [];
-      message.files.forEach((file) => {
-        if (file instanceof MessageAttachment) {
-          embedLike.files?.push({
-            attachment: file.attachment,
-            name: file.name,
-          });
-        } else {
-          embedLike.files?.push(file);
-        }
-      });
-    }
-
     if (message.footer) {
-      if (message.footer.iconURL) {
-        embedLike.footer = {
-          iconURL: message.footer.iconURL,
-          text: message.footer.text,
-        };
-      } else if (message.footer.text) {
-        embedLike.footer = message.footer.text;
-      }
+      embedLike.footer = message.footer;
     }
 
     if (message.image) {
@@ -274,30 +253,8 @@ export namespace messageUtils {
       );
     }
 
-    if (embedLike.files) {
-      embed.attachFiles(
-        embedLike.files.map((file) => {
-          if (typeof file === "string") {
-            return file;
-          }
-
-          const attachment = new MessageAttachment(file.attachment);
-
-          if (file.name) {
-            attachment.setName(file.name);
-          }
-
-          return attachment;
-        }),
-      );
-    }
-
     if (embedLike.footer) {
-      if (typeof embedLike.footer === "string") {
-        embed.setFooter(embedLike.footer);
-      } else {
-        embed.setFooter(embedLike.footer.text, embedLike.footer.iconURL);
-      }
+      embed.setFooter(embedLike.footer);
     }
 
     if (embedLike.image) {
