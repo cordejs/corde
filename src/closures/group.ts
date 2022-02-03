@@ -3,7 +3,7 @@ import runtime from "../core";
 import { VoidLikeFunction } from "../types";
 import { resolveName } from "../utils";
 
-export const group: corde.IDescribeClousure = <T extends any>(
+export const group: corde.IDescribeClosure = <T extends any>(
   description: T,
   testDefinitions: VoidLikeFunction,
 ) => {
@@ -27,7 +27,7 @@ export const group: corde.IDescribeClousure = <T extends any>(
     throw new Error("Cannot nest a group inside a test");
   }
 
-  testCollector.addToGroupClousure(() => _internalGroup());
+  testCollector.addToGroupClosure(() => _internalGroup());
 };
 
 /**

@@ -42,15 +42,15 @@ export class LogUpdate {
 
   persist() {
     _logUpdate.done();
-    this._stdout += this.getlogValueString();
+    this._stdout += this.getLogValueString();
     this._logValue = [];
   }
 
-  private getlogValueString() {
+  private getLogValueString() {
     return this._logValue.join("");
   }
 
   private print() {
-    _logUpdate(this.getlogValueString());
+    _logUpdate(this.getLogValueString());
   }
 }

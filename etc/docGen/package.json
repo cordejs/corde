@@ -1,17 +1,4 @@
 {
-  "name": "typescript-documentation",
-  "version": "3.0.2",
-  "description": "Generate markdown API documentation directly from TypeScript source code",
-  "license": "MIT",
-  "main": "./lib/index.js",
-  "types": "./lib/index.d.ts",
-  "bin": "./lib/cli.js",
-  "files": [
-    "lib"
-  ],
-  "engines": {
-    "node": ">= 14.0.0"
-  },
   "scripts": {
     "start": "ts-node src/cli.ts",
     "lint": "eslint src/**/*.ts test/**/*.ts",
@@ -26,15 +13,6 @@
     "prepack": "npm run build",
     "update:dependencies": "npx npm-check-updates -u"
   },
-  "keywords": [
-    "typescript",
-    "documentation",
-    "generator",
-    "generate",
-    "markdown"
-  ],
-  "repository": "git@github.com:mucsi96/typescript-documentation.git",
-  "author": "Igor Mucsicska <mucsi_96@yahoo.com>",
   "dependencies": {
     "commander": "^8.2.0"
   },

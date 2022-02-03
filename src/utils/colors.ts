@@ -1,7 +1,8 @@
+import { ColorResolvable } from "discord.js";
 import { isString } from ".";
 import { ColorsHex } from "..";
 
-export function resolveColor(color: corde.ColorResolvable) {
+export function resolveColor(color: ColorResolvable) {
   if (color > 0 && color < 0xffffff) {
     return +color;
   }

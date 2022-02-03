@@ -1,4 +1,4 @@
-import { MessageReaction, PartialUser, User } from "discord.js";
+import { PartialUser, User } from "discord.js";
 import { TimeoutError } from "../../../errors";
 import { EmojisType } from "../../../types";
 import { typeOf } from "../../../utils";
@@ -39,7 +39,7 @@ export async function addReaction(
     return this.createFailedTest(error.message);
   }
 
-  let reactionsWithAuthors: [MessageReaction, User | PartialUser | void][];
+  let reactionsWithAuthors: [corde.PartialOrMessageReaction, void | User | PartialUser][];
   try {
     const emojiLike = emojis.map((e: string | corde.IEmoji) => {
       if (typeof e === "string") {
@@ -96,7 +96,7 @@ export async function addReaction(
 }
 
 function reactionsFromResponse(
-  reactionsWithAuthors: [MessageReaction, User | PartialUser | void][],
+  reactionsWithAuthors: [corde.PartialOrMessageReaction, void | User | PartialUser][],
 ) {
   const emojis = reactionsWithAuthors.map((r) => r[0].emoji);
   return emojis.map((e) => e.name).join(", ");

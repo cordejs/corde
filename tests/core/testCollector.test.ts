@@ -21,7 +21,7 @@ describe("testing testCollector", () => {
 
   it("should add group closure", async () => {
     let a = 1;
-    _testCollector.addToGroupClousure(() => {
+    _testCollector.addToGroupClosure(() => {
       a = 2;
     });
 

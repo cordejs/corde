@@ -4,17 +4,20 @@ import {
   Client,
   Collection,
   Guild,
-  GuildChannel,
+  GuildBasedChannel,
   Message,
   MessageEmbed,
+  MessageOptions,
+  MessagePayload,
   Role,
   TextChannel,
   VoiceChannel,
 } from "discord.js";
 import { CordeClientError } from "../errors";
 import { ICordeBot, IVoiceChannelState, Primitive } from "../types";
-import { typeOf } from "../utils";
+import { isPrimitiveValue, typeOf } from "../utils";
 import { Events } from ".";
+import { joinVoiceChannel } from "@discordjs/voice";
 
 /**
  * Encapsulation of Discord Client with all specific
@@ -103,12 +106,16 @@ export class CordeBot implements ICordeBot {
     }
   }
 
-  fetchChannel(id: string): Promise<Channel | undefined> {
-    return this._client.channels.fetch(id, true);
+  async fetchChannel(id: string) {
+    const channel = await this._client.channels.fetch(id, { cache: true });
+    if (channel) {
+      return channel;
+    }
+    return undefined;
   }
 
   fetchGuild(id: string): Promise<Guild | undefined> {
-    return this._client.guilds.fetch(id, true);
+    return this._client.guilds.fetch(id);
   }
 
   /**
@@ -122,8 +129,11 @@ export class CordeBot implements ICordeBot {
    * Sends a pure message without prefix it.
    * @param message Data to be send to channel
    */
-  async sendMessage(message: Primitive | MessageEmbed) {
-    return await this.textChannel.send(message);
+  sendMessage(message: Primitive | MessageOptions | MessagePayload) {
+    if (isPrimitiveValue(message)) {
+      return this.textChannel.send(message.toString());
+    }
+    return this.textChannel.send(message);
   }
 
   /**
@@ -169,7 +179,7 @@ export class CordeBot implements ICordeBot {
       return channel;
     }
 
-    return await this._client.channels.fetch(channelId, true);
+    return await this._client.channels.fetch(channelId, { cache: true });
   }
 
   /**
@@ -199,11 +209,12 @@ export class CordeBot implements ICordeBot {
   }
 
   fetchRole(id: string): Promise<Role | null> {
-    return this.guild.roles.fetch(id, false, true);
+    return this.guild.roles.fetch(id, { cache: true });
   }
 
-  fetchRoles() {
-    return this.guild.roles.fetch();
+  async fetchRoles() {
+    const roles = await this.guild.roles.fetch();
+    return roles.map((u) => u);
   }
 
   async hasRole(roleIdentifier: corde.IRoleIdentifier) {
@@ -211,11 +222,11 @@ export class CordeBot implements ICordeBot {
   }
 
   async findRole(roleIdentifier: corde.IRoleIdentifier) {
-    const cache = (await this.guild.roles.fetch())?.cache;
+    const roles = await this.fetchRoles();
     if (roleIdentifier.id) {
-      return cache.find((r) => r.id === roleIdentifier.id);
+      return roles.find((r) => r.id === roleIdentifier.id);
     } else if (roleIdentifier.name) {
-      return cache.find((r) => r.name === roleIdentifier.name);
+      return roles.find((r) => r.name === roleIdentifier.name);
     }
     return undefined;
   }
@@ -308,9 +319,9 @@ export class CordeBot implements ICordeBot {
     }
   }
 
-  findChannel(channelId: string): GuildChannel | undefined;
-  findChannel(guild: Guild, channelId: string): GuildChannel | undefined;
-  findChannel(channelIdOrGuild: Guild | string, channelId?: string): GuildChannel | undefined {
+  findChannel(channelId: string): GuildBasedChannel | undefined;
+  findChannel(guild: Guild, channelId: string): GuildBasedChannel | undefined;
+  findChannel(channelIdOrGuild: Guild | string, channelId?: string): GuildBasedChannel | undefined {
     if (typeof channelIdOrGuild === "string") {
       return this.guild.channels.cache.get(channelIdOrGuild);
     }
@@ -352,7 +363,12 @@ export class CordeBot implements ICordeBot {
     if (channel instanceof VoiceChannel) {
       this._voiceConnection = {
         channel: channel,
-        connection: await channel.join(),
+        connection: joinVoiceChannel({
+          channelId: channel.id,
+          guildId: channel.guildId,
+          // @ts-expect-error
+          adapterCreator: channel.guild.voiceAdapterCreator,
+        }),
       };
       return this._voiceConnection;
     }
@@ -373,7 +389,7 @@ export class CordeBot implements ICordeBot {
   }
 
   leaveVoiceChannel() {
-    this._voiceConnection?.channel.leave();
+    this._voiceConnection?.connection?.destroy();
     this._voiceConnection = undefined;
   }
 

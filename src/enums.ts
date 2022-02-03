@@ -146,11 +146,6 @@ export enum Permission {
    */
   MANAGE_WEBHOOKS = 0x20000000,
   /**
-   * Allows management and editing of emojis
-   * @summary Indifferent of channel
-   */
-  MANAGE_EMOJIS = 0x40000000,
-  /**
    * Allows the user to go live
    * @summary For **Voice** Channel only
    */
@@ -160,6 +155,56 @@ export enum Permission {
    * @summary Indifferent of channel
    */
   VIEW_GUILD_INSIGHTS = 0x00080000,
+  /**
+   * Allows management and editing of emojis and stickers
+   */
+  MANAGE_EMOJIS_AND_STICKERS = 0x0000000040000000,
+  /**
+   * Allows members to use application commands, including slash commands and context menu commands.
+   */
+  USE_APPLICATION_COMMANDS = 0x0000000080000000,
+  /**
+   * Allows for requesting to speak in stage channels.
+   * (*This permission is under active development and may be changed or removed*.)
+   */
+  REQUEST_TO_SPEAK = 0x0000000100000000,
+  /**
+   * Allows for deleting and archiving threads, and viewing all private threads
+   */
+  MANAGE_THREADS = 0x0000000400000000,
+  /**
+   * Allows for creating threads
+   */
+  CREATE_PUBLIC_THREADS = 0x0000000800000000,
+  /**
+   * Allows for creating private threads
+   */
+  CREATE_PRIVATE_THREADS = 0x0000001000000000,
+  /**
+   * Allows the usage of custom stickers from other servers
+   */
+  USE_EXTERNAL_STICKERS = 0x0000002000000000,
+  /**
+   * Allows for sending messages in threads
+   */
+  SEND_MESSAGES_IN_THREADS = 0x0000004000000000,
+  /**
+   * Allows for launching activities (applications with the **EMBEDDED** flag) in a voice channel
+   */
+  START_EMBEDDED_ACTIVITIES = 0x0000008000000000,
+  /**
+   * Allows for timing out users to prevent them from
+   * sending or reacting to messages in chat and threads,
+   * and from speaking in voice and stage channels
+   */
+  MODERATE_MEMBERS = 0x0000010000000000,
+  /**
+   * Allows for creating, editing, and deleting scheduled events
+   * @summary Indifferent of channel
+   */
+  MANAGE_EVENTS = 0x0000000200000000,
+  USE_PRIVATE_THREADS,
+  USE_PUBLIC_THREADS,
 }
 
 export enum ColorsHex {

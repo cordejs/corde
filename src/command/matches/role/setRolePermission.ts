@@ -1,4 +1,4 @@
-import { Role } from "discord.js";
+import { PermissionString, Role } from "discord.js";
 import { PERMISSIONS } from "../../../consts";
 import { diff, typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
@@ -13,7 +13,7 @@ import { CommandState } from "../commandState";
 export async function setRolePermission(
   this: CommandState,
   roleIdentifier: string | corde.IRoleIdentifier,
-  ...permissions: corde.RolePermission[]
+  ...permissions: PermissionString[]
 ) {
   const identifier = roleUtils.getRoleData(roleIdentifier);
   const error = roleUtils.getErrorForUndefinedRoleData(identifier);
@@ -86,7 +86,7 @@ export async function setRolePermission(
   );
 }
 
-function getPermissionsString(permissions: corde.RolePermission[]) {
+function getPermissionsString(permissions: PermissionString[]) {
   if (!permissions) {
     return null;
   }
@@ -108,7 +108,7 @@ function getPermissionsString(permissions: corde.RolePermission[]) {
   return permissions.join(", ");
 }
 
-function isPermissionsValid(permissions: corde.RolePermission[]) {
+function isPermissionsValid(permissions: PermissionString[]) {
   for (let i = 0; i < permissions.length; i++) {
     if (!PERMISSIONS.includes(permissions[i])) {
       return false;
