@@ -3,7 +3,7 @@ import { typeOf } from "./typeOf";
 
 /**
  * Resolves an name executing or converting it's value.
- * it's a safe function, so if any error occour, the function
+ * it's a safe function, so if any error occur, the function
  * will return an empty string.
  *
  * @param name Name like value.

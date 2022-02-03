@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import chalk from "chalk";
 import { InspectOptions } from "util";
-import { MESSAGE_TAB_SPACE } from "../consts";
+import { MESSAGE_TAB_SPACE } from "../const";
 import { getStackTrace } from "../utils";
 
 export interface StackContainer {

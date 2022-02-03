@@ -22,15 +22,15 @@ import { TimeoutError } from "../errors";
  *   }, 1000, items);
  * }
  *
- * // If the functions reachs the timeout, it will throw the
+ * // If the functions reach's the timeout, it will throw the
  * // exception TimeoutError with the items array as data property
  *
- * @throws TimeoutError if the function reachs timeout. This error has a property
+ * @throws TimeoutError if the function reach's timeout. This error has a property
  * data that is passed throw the `rejectedData` parameter
  *
  * @param fn function to be executed.
  * @param timeout Time to wait for completion of the function.
- * @param rejectedData Data that should be added in rejection if the function reachs timeout.
+ * @param rejectedData Data that should be added in rejection if the function reach's timeout.
  * @returns Return of `fn` parameter.
  * @internal
  */

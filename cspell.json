@@ -3,7 +3,21 @@
   "ignorePaths": [],
   "dictionaryDefinitions": [],
   "dictionaries": [],
-  "words": [],
+  "words": [
+    "circleci",
+    "clearbuild",
+    "codecov",
+    "commitlint",
+    "depcruise",
+    "Gomes",
+    "ICLI",
+    "lucasgmagalhaes",
+    "pinst",
+    "postpublish",
+    "tsdoc",
+    "tslog",
+    "typedoc"
+  ],
   "ignoreWords": [],
   "import": []
 }

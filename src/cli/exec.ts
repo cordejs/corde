@@ -10,7 +10,7 @@ import { validate } from "./validate";
 import { StrictObject } from "../types";
 import { registerTsNode } from "../core/tsRegister";
 import { debug } from "../core/debug";
-import { DEFAULT_CONFIG } from "../consts";
+import { DEFAULT_CONFIG } from "../const";
 
 declare module "ora" {
   interface Ora {
@@ -38,7 +38,7 @@ export async function exec(options: corde.Config.ICLIOptions) {
 
   await loadConfigs();
 
-  // Configs provied in CLI overrides configs in config file
+  // Configs provide in CLI overrides configs in config file
   if (options.files) {
     runtime.setConfigs({ testMatches: options.files.split(" ") }, true);
   }

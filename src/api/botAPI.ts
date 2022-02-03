@@ -389,7 +389,7 @@ export class BotAPI {
    * this.client.guilds.create("exampleName", { ... });
    * ```
    *
-   * @param options Informations about the guild.
+   * @param options information's about the guild.
    * @throws Error if corde's bot isn't connected yet.
    * @returns Created guild.
    */

@@ -32,7 +32,7 @@ type PartialWithAnyValue<T> = Partial<T> & KeyValue;
  * // It fails because property 'a' does not exists in objA.
  *
  * @param sample Partial object of `holder`
- * @param holder "Original" object wich contains all properties that `sample` should have in part
+ * @param holder "Original" object which contains all properties that `sample` should have in part
  * @returns If object `sample` has properties of `holder`
  */
 export function isPartialOf<T extends unknown>(

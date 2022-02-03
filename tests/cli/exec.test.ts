@@ -2,7 +2,7 @@ import { Reader } from "../../src/core/Reader";
 import * as validateFn from "../../src/cli/validate";
 import * as execCommand from "../../src/cli/exec";
 import runtime from "../../src/core";
-import { DEFAULT_TEST_TIMEOUT } from "../../src/consts";
+import { DEFAULT_TEST_TIMEOUT } from "../../src/const";
 import { IConfigOptions } from "../../src/types";
 import { summary } from "../../src/core/summary";
 import { mockProcess } from "../mocks";

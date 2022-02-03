@@ -1,4 +1,4 @@
-import { DEFAULT_STACK_TRACE_LIMIT, EXPECT_RECEIVED_TAB_SPACE } from "../consts";
+import { DEFAULT_STACK_TRACE_LIMIT, EXPECT_RECEIVED_TAB_SPACE } from "../const";
 
 /**
  * Gets the trace of the current function / object

@@ -1,4 +1,4 @@
-import { DEFAULT_CONFIG } from "../consts";
+import { DEFAULT_CONFIG } from "../const";
 import { IConfigOptions } from "../types";
 
 export class ConfigAPI implements Readonly<Required<IConfigOptions>> {

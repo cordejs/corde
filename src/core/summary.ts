@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { TEXT_EMPTY, TEXT_FAIL, TEXT_PASS } from "../consts";
+import { TEXT_EMPTY, TEXT_FAIL, TEXT_PASS } from "../const";
 import { IRunnerReport } from "../types";
 
 interface ISummaryLine {

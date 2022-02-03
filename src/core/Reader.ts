@@ -69,12 +69,12 @@ export class Reader {
           await safeImportFile(file, console.error);
         }
 
-        // After each file readed, execute group closures to load all tests
+        // After each file read, execute group closures to load all tests
         // into currentTestFile
-        const groupErros = await testCollector.executeGroupClojure();
+        const groupErrors = await testCollector.executeGroupClojure();
 
-        if (groupErros && groupErros.length) {
-          printHookErrors(groupErros);
+        if (groupErrors && groupErrors.length) {
+          printHookErrors(groupErrors);
         }
       }
     }

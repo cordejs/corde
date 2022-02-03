@@ -1,5 +1,5 @@
 import { PermissionString, Role } from "discord.js";
-import { PERMISSIONS } from "../../../consts";
+import { PERMISSIONS } from "../../../const";
 import { diff, typeOf } from "../../../utils";
 import { roleUtils } from "../../roleUtils";
 import { CommandState } from "../commandState";

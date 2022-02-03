@@ -11,7 +11,7 @@ import {
   TEXT_EMPTY,
   TEXT_FAIL,
   TEXT_PASS,
-} from "../consts";
+} from "../const";
 import { Queue } from "../data-structures";
 import {
   IRunnerReport,
@@ -165,19 +165,19 @@ export class TestExecutor {
 
     const testNameLabel = this.testReportLabelFunction(report);
 
-    const formatedGroupName = !stringIsNullOrEmpty(group?.name) ? group?.name + " -> " : "";
+    const formattedGroupName = !stringIsNullOrEmpty(group?.name) ? group?.name + " -> " : "";
 
     if (stringIsNullOrEmpty(testName)) {
       this._logUpdate.updateLine(
         logPosition,
         `${MESSAGE_TAB_SPACE}${testNameLabel(
-          formatedGroupName + "<empty test name>",
+          formattedGroupName + "<empty test name>",
         )}   ${chalk.cyan(testDiff[0])}`,
       );
     } else {
       this._logUpdate.updateLine(
         logPosition,
-        `${MESSAGE_TAB_SPACE}${testNameLabel(formatedGroupName + testName)}   ${chalk.cyan(
+        `${MESSAGE_TAB_SPACE}${testNameLabel(formattedGroupName + testName)}   ${chalk.cyan(
           testDiff[0],
         )}`,
       );

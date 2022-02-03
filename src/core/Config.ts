@@ -1,5 +1,5 @@
 import path from "path";
-import { DEFAULT_CONFIG, ROOT_DIR } from "../consts";
+import { DEFAULT_CONFIG, ROOT_DIR } from "../const";
 import { IConfigOptions } from "../types";
 import { isNumber, replaceAll } from "../utils";
 

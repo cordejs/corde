@@ -1,5 +1,5 @@
 import { ConfigAPI } from "../../src/api";
-import { DEFAULT_CONFIG } from "../../src/consts";
+import { DEFAULT_CONFIG } from "../../src/const";
 import { IConfigOptions } from "../../src/types";
 
 let configAPI: ConfigAPI;

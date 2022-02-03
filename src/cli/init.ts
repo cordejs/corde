@@ -2,7 +2,7 @@
 import chalk from "chalk";
 import fs from "fs";
 import path from "path";
-import { DEFAULT_CONFIG } from "../consts";
+import { DEFAULT_CONFIG } from "../const";
 import { FileError } from "../errors";
 import { ConfigFileType } from "../types";
 import { keysOf, typeOf } from "../utils";
