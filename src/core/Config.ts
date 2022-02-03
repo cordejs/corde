@@ -1,7 +1,8 @@
 import path from "path";
 import { DEFAULT_CONFIG, ROOT_DIR } from "../const";
 import { IConfigOptions } from "../types";
-import { isNumber, replaceAll } from "../utils";
+import { replaceAll } from "../utils/replaceAll";
+import { isNumber } from "../utils/isNumber";
 
 /**
  * Default interface of JSON config

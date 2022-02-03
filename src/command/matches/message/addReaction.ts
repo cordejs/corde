@@ -1,7 +1,7 @@
 import { PartialUser, User } from "discord.js";
 import { TimeoutError } from "../../../errors";
 import { EmojisType } from "../../../types";
-import { typeOf } from "../../../utils";
+import { typeOf } from "../../../utils/typeOf";
 import { CommandState } from "../commandState";
 
 /**

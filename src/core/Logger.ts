@@ -2,7 +2,7 @@
 import chalk from "chalk";
 import { InspectOptions } from "util";
 import { MESSAGE_TAB_SPACE } from "../const";
-import { getStackTrace } from "../utils";
+import { getStackTrace } from "../utils/getStackTrace";
 
 export interface StackContainer {
   name: string;

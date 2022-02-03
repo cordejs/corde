@@ -21,8 +21,9 @@ import {
   Nullable,
   VoidLikeFunction,
 } from "../types";
-import { stringIsNullOrEmpty, Timer } from "../utils";
-import { LogUpdate } from "../utils";
+import { Timer } from "../utils/Timer";
+import { stringIsNullOrEmpty } from "../utils/stringIsNullOrEmpty";
+import { LogUpdate } from "../utils/LogUpdate";
 import { TestFile } from "./TestFile";
 import { Group } from "./Group";
 import { TestError } from "../errors";

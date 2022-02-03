@@ -1,6 +1,7 @@
 import chalk from "chalk";
 import { ITestProps } from "../../types";
-import { buildReportMessage, asymmetricTypeOf } from "../../utils";
+import { asymmetricTypeOf } from "../../utils/asymmetricTypeOf";
+import { buildReportMessage } from "../../utils/buildReportMessage";
 import { matcherUtils } from "../matcherUtils";
 
 /**
@@ -10,7 +11,7 @@ export function toLength(this: ITestProps, expected: any, length: number) {
   let invalidParam = null;
 
   if (
-    !matcherUtils.isAsymetric(expected) &&
+    !matcherUtils.isAsymmetric(expected) &&
     !Array.isArray(expected) &&
     typeof expected !== "string"
   ) {
@@ -22,7 +23,7 @@ export function toLength(this: ITestProps, expected: any, length: number) {
   }
 
   if (
-    !matcherUtils.isAsymetric(length) &&
+    !matcherUtils.isAsymmetric(length) &&
     typeof length !== "number" &&
     typeof length !== "bigint"
   ) {

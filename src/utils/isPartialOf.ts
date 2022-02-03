@@ -1,4 +1,4 @@
-import { isObject } from ".";
+import { isObject } from "./isObject";
 
 type KeyValue = {
   [key: string]: any;

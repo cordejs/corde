@@ -1,4 +1,4 @@
-import { isInDebugMode } from ".";
+import { isInDebugMode } from "./isInDebugMode";
 
 /**
  * Executes a function with a timeout.

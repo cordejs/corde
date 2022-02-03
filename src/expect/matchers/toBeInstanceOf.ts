@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import { ITestProps } from "../../types";
-import { buildReportMessage } from "../../utils";
+import { buildReportMessage } from "../../utils/buildReportMessage";
 import { matcherUtils } from "../matcherUtils";
 
 /**
@@ -8,15 +8,15 @@ import { matcherUtils } from "../matcherUtils";
  */
 export function toBeInstanceOf(this: ITestProps, expected: any, instanceType: any) {
   const testFn = () => {
-    if (matcherUtils.isAsymetric(expected) && matcherUtils.isAsymetric(instanceType)) {
+    if (matcherUtils.isAsymmetric(expected) && matcherUtils.isAsymmetric(instanceType)) {
       return expected.matchType(...instanceType.getTypes());
     }
 
-    if (matcherUtils.isAsymetric(expected)) {
+    if (matcherUtils.isAsymmetric(expected)) {
       return expected.matchType(instanceType);
     }
 
-    if (matcherUtils.isAsymetric(instanceType)) {
+    if (matcherUtils.isAsymmetric(instanceType)) {
       return instanceType.matchType(expected.constructor);
     }
 
@@ -32,11 +32,11 @@ export function toBeInstanceOf(this: ITestProps, expected: any, instanceType: an
     isNotText = " not";
   }
 
-  const instanceTypeName = matcherUtils.isAsymetric(instanceType)
+  const instanceTypeName = matcherUtils.isAsymmetric(instanceType)
     ? instanceType.toString()
     : instanceType.name;
 
-  const expectedTypeName = matcherUtils.isAsymetric(expected)
+  const expectedTypeName = matcherUtils.isAsymmetric(expected)
     ? expected.toString()
     : expected.constructor.name;
 

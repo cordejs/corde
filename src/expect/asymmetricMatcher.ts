@@ -1,4 +1,4 @@
-import { typeOf } from "../utils";
+import { typeOf } from "../utils/typeOf";
 
 export class AsymmetricMatcher {
   private _classType: any[];

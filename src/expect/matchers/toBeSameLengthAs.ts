@@ -1,5 +1,6 @@
 import { ITestProps } from "../../types";
-import { buildReportMessage, isString } from "../../utils";
+import { buildReportMessage } from "../../utils/buildReportMessage";
+import { isString } from "../../utils/isString";
 import { matcherUtils } from "../matcherUtils";
 
 /**

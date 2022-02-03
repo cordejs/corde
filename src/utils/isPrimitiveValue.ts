@@ -1,4 +1,7 @@
-import { isNumber, isString, isBoolean, isBigint } from ".";
+import { isBigint } from "./isBigint";
+import { isBoolean } from "./isBoolean";
+import { isNumber } from "./isNumber";
+import { isString } from "./isString";
 
 /**
  * Check if a value is a primitive type.

@@ -1,5 +1,7 @@
 /* eslint-disable no-console */
-import { forEachProp, getStackTrace, isNullOrUndefined } from "../utils";
+import { forEachProp } from "../utils/forEachProp";
+import { getStackTrace } from "../utils/getStackTrace";
+import { isNullOrUndefined } from "../utils/isNullOrUndefined";
 import { any } from "../expect/asymmetricMatcher";
 import * as matchers from "./matches";
 import runtime from "../core/runtime";

@@ -1,4 +1,4 @@
-import { typeOf } from "../../../utils";
+import { typeOf } from "../../../utils/typeOf";
 import { roleUtils } from "../../roleUtils";
 import { CommandState } from "../commandState";
 

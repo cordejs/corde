@@ -5,7 +5,9 @@ import { printHookErrors } from "./printHookError";
 import runtime from "./runtime";
 import { FileError } from "../errors";
 import { IConfigOptions, ITestFilePattern } from "../types";
-import { getFiles, importFile, safeImportFile } from "../utils";
+import { getFiles } from "../utils/getFiles";
+import { importFile } from "../utils/importFile";
+import { safeImportFile } from "../utils/safeImportFile";
 
 export class Reader {
   /**

@@ -14,7 +14,8 @@ import {
 } from "discord.js";
 import { CordeClientError } from "../errors";
 import { ICordeBot, IVoiceChannelState, Primitive } from "../types";
-import { isPrimitiveValue, typeOf } from "../utils";
+import { isPrimitiveValue } from "../utils/isPrimitiveValue";
+import { typeOf } from "../utils/typeOf";
 import { Events } from "./Events";
 import { joinVoiceChannel } from "@discordjs/voice";
 

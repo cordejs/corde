@@ -1,6 +1,6 @@
 import { GenericFunction, ParametersAsOptional } from "../types";
 import crypto from "crypto";
-import { isNullOrUndefined } from "../utils";
+import { isNullOrUndefined } from "../utils/isNullOrUndefined";
 
 interface IQueueProps {
   clearOnExecution?: boolean;

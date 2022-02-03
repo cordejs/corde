@@ -1,6 +1,6 @@
 import runtime from "../core/runtime";
 import { MapObj } from "../types";
-import { getStackTrace } from "../utils";
+import { getStackTrace } from "../utils/getStackTrace";
 import { cordeEvent } from "./cordeEvent";
 import { ObjectMock } from "./ObjectMock";
 

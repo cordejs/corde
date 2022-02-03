@@ -1,6 +1,9 @@
 import chalk from "chalk";
+import { diff } from "jest-diff";
 import { ITestProps } from "../../types";
-import { buildReportMessage, deepEqual, diff, typeOf } from "../../utils";
+import { buildReportMessage } from "../../utils/buildReportMessage";
+import { deepEqual } from "../../utils/deepEqual";
+import { typeOf } from "../../utils/typeOf";
 import { matcherUtils } from "../matcherUtils";
 
 /**

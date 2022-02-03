@@ -1,13 +1,14 @@
 import chalk from "chalk";
 import { ITestProps } from "../../types";
-import { buildReportMessage, asymmetricTypeOf } from "../../utils";
+import { asymmetricTypeOf } from "../../utils/asymmetricTypeOf";
+import { buildReportMessage } from "../../utils/buildReportMessage";
 import { matcherUtils } from "../matcherUtils";
 
 /**
  * @internal
  */
 export function toBeNothing(this: ITestProps, expected: any) {
-  let pass = !matcherUtils.isAsymetric(expected) && (expected === null || expected === undefined);
+  let pass = !matcherUtils.isAsymmetric(expected) && (expected === null || expected === undefined);
   let isNotText = "";
 
   if (this.isNot) {

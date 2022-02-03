@@ -1,4 +1,5 @@
-import { isBigint, isNumber } from ".";
+import { isBigint } from "./isBigint";
+import { isNumber } from "./isNumber";
 
 /**
  * Checks if `value` is a numeric value (number or bigint)

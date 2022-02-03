@@ -1,5 +1,5 @@
 import { Role } from "discord.js";
-import { formatObject } from "../utils";
+import { formatObject } from "../utils/formatObject";
 
 export namespace roleUtils {
   export function createExpectedMessageForRoleData(roleIdentifier: corde.IRoleIdentifier) {

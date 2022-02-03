@@ -1,6 +1,7 @@
 import chalk from "chalk";
 import { ITestProps } from "../../types";
-import { buildReportMessage, asymmetricTypeOf } from "../../utils";
+import { asymmetricTypeOf } from "../../utils/asymmetricTypeOf";
+import { buildReportMessage } from "../../utils/buildReportMessage";
 
 /**
  * @internal

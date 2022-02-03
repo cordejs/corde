@@ -1,6 +1,9 @@
 import chalk from "chalk";
 import { ITestProps } from "../../types";
-import { asymmetricTypeOf, buildReportMessage, every, isNumber } from "../../utils";
+import { asymmetricTypeOf } from "../../utils/asymmetricTypeOf";
+import { buildReportMessage } from "../../utils/buildReportMessage";
+import { every } from "../../utils/every";
+import { isNumber } from "../../utils/isNumber";
 import { matcherUtils } from "../matcherUtils";
 
 /**

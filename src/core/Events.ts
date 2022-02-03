@@ -26,8 +26,10 @@ import {
 } from "discord.js";
 import { once } from "events";
 import { Optional } from "../types";
-import { deepEqual, executePromiseWithTimeout, isNullOrUndefined } from "../utils";
-import { Validator } from "../utils";
+import { deepEqual } from "../utils/deepEqual";
+import { executePromiseWithTimeout } from "../utils/executePromiseWithTimeout";
+import { isNullOrUndefined } from "../utils/isNullOrUndefined";
+import { Validator } from "../utils/validator";
 
 // https://gist.github.com/koad/316b265a91d933fd1b62dddfcc3ff584
 

@@ -1,5 +1,9 @@
 import { Message } from "discord.js";
-import { diff, isPartialOf, keysOf, pick, typeOf } from "../../../utils";
+import { diff } from "../../../utils/diff";
+import { isPartialOf } from "../../../utils/isPartialOf";
+import { keysOf } from "../../../utils/keysOf";
+import { pick } from "../../../utils/pick";
+import { typeOf } from "../../../utils/typeOf";
 import { CommandState } from "../commandState";
 import { messageUtils } from "./messageUtils";
 
@@ -45,11 +49,11 @@ export async function embedMatch(this: CommandState, embed: corde.IMessageEmbed)
     return this.createFailedTest("returned message has no embed message");
   }
 
-  const formatedReturnedEmbed = messageUtils.messageEmbedToMessageEmbedInterface(
+  const formattedReturnedEmbed = messageUtils.messageEmbedToMessageEmbedInterface(
     returnedMessage.embeds[0],
   );
 
-  this.hasPassed = isPartialOf<any>(embed, formatedReturnedEmbed);
+  this.hasPassed = isPartialOf<any>(embed, formattedReturnedEmbed);
 
   this.invertHasPassedIfIsNot();
 
@@ -64,6 +68,6 @@ export async function embedMatch(this: CommandState, embed: corde.IMessageEmbed)
     );
   }
 
-  const partialReturned = pick(formatedReturnedEmbed, ...keysOf<corde.IMessageEmbed>(embed));
+  const partialReturned = pick(formattedReturnedEmbed, ...keysOf<corde.IMessageEmbed>(embed));
   return this.createFailedTest(diff<any>(embed, partialReturned));
 }

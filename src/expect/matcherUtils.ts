@@ -1,9 +1,13 @@
 import chalk from "chalk";
 import { ITestProps } from "../types";
-import { asymmetricTypeOf, buildReportMessage, isNumber, isString, typeOf } from "../utils";
+import { asymmetricTypeOf } from "../utils/asymmetricTypeOf";
+import { buildReportMessage } from "../utils/buildReportMessage";
+import { isNumber } from "../utils/isNumber";
+import { isString } from "../utils/isString";
+import { typeOf } from "../utils/typeOf";
 import { AsymmetricMatcher } from "./asymmetricMatcher";
 
-interface IParamWithValidAsymetrics {
+interface IParamWithValidAsymmetric {
   value: any;
   validParameters?: any[];
 }
@@ -17,17 +21,17 @@ interface IStringTestParameters {
 }
 
 export namespace matcherUtils {
-  export function isAsymetric(value: any): value is AsymmetricMatcher {
+  export function isAsymmetric(value: any): value is AsymmetricMatcher {
     return value instanceof AsymmetricMatcher;
   }
 
   export function match(
     assertFn: () => boolean,
-    ...valuesWithParameters: IParamWithValidAsymetrics[]
+    ...valuesWithParameters: IParamWithValidAsymmetric[]
   ) {
-    const asymetricParams = valuesWithParameters.filter((param) => isAsymetric(param.value));
-    if (asymetricParams.length > 0) {
-      return asymetricParams.every((param) => {
+    const asymmetricParams = valuesWithParameters.filter((param) => isAsymmetric(param.value));
+    if (asymmetricParams.length > 0) {
+      return asymmetricParams.every((param) => {
         const paramValue = param.value as AsymmetricMatcher;
         return paramValue.matchType(...(param.validParameters ?? []));
       });
@@ -36,31 +40,31 @@ export namespace matcherUtils {
   }
 
   export function matchValues(testFn: () => boolean, expected: any, received: any) {
-    if (isAsymetric(expected) && matcherUtils.isAsymetric(received)) {
+    if (isAsymmetric(expected) && matcherUtils.isAsymmetric(received)) {
       return expected.matchType(...received.getTypes());
     }
 
-    if (isAsymetric(expected)) {
+    if (isAsymmetric(expected)) {
       return expected.matchValue(received);
     }
 
-    if (isAsymetric(received)) {
+    if (isAsymmetric(received)) {
       return received.matchValue(expected);
     }
 
     return testFn();
   }
 
-  export function isAsymetricSpecified(value: any) {
-    return isAsymetric(value) && !value.isSpecified();
+  export function isAsymmetricSpecified(value: any) {
+    return isAsymmetric(value) && !value.isSpecified();
   }
 
-  export function isAsymetricAny(value: any) {
-    return isAsymetric(value) && value.isSpecified();
+  export function isAsymmetricAny(value: any) {
+    return isAsymmetric(value) && value.isSpecified();
   }
 
   export function validateParameterAsNumber(value: any, received: any) {
-    if (!matcherUtils.isAsymetric(value) && !isNumber(value)) {
+    if (!matcherUtils.isAsymmetric(value) && !isNumber(value)) {
       return {
         pass: false,
         message: buildReportMessage(
@@ -70,7 +74,7 @@ export namespace matcherUtils {
       };
     }
 
-    if (!matcherUtils.isAsymetric(received) && !isNumber(received)) {
+    if (!matcherUtils.isAsymmetric(received) && !isNumber(received)) {
       return {
         pass: false,
         message: buildReportMessage(
@@ -83,7 +87,7 @@ export namespace matcherUtils {
     return null;
   }
 
-  export function getMessageForParamatersExpectedToBeStrings(
+  export function getMessageForParametersExpectedToBeStrings(
     props: ITestProps,
     expected: any,
     value: any,
@@ -110,7 +114,7 @@ export namespace matcherUtils {
         value,
       )}'`;
     } else {
-      return matcherUtils.getMessageForParamatersExpectedToBeStrings(props, expected, value);
+      return matcherUtils.getMessageForParametersExpectedToBeStrings(props, expected, value);
     }
   }
 }

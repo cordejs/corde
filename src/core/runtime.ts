@@ -6,7 +6,7 @@ import { Config } from "./Config";
 import { TestCollector } from "./TestCollector";
 import { ConfigError } from "../errors";
 import path from "path";
-import { replaceAll } from "../utils";
+import { replaceAll } from "../utils/replaceAll";
 import { ROOT_DIR } from "../const";
 import { EventEmitter } from "stream";
 

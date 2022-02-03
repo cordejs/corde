@@ -1,5 +1,5 @@
 import { ColorResolvable } from "discord.js";
-import { isString } from ".";
+import { isString } from "./isString";
 import { ColorsHex } from "..";
 
 export function resolveColor(color: ColorResolvable) {

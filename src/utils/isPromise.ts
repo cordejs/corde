@@ -1,4 +1,5 @@
-import { isFunction, isObject } from ".";
+import { isFunction } from "./isFunction";
+import { isObject } from "./isObject";
 
 /**
  * Checks if a value is a promise.

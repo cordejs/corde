@@ -1,7 +1,8 @@
 import chalk from "chalk";
 import runtime from "../core/runtime";
 import { VoidLikeFunction } from "../types";
-import { executePromiseWithTimeout, formatObject } from "../utils";
+import { executePromiseWithTimeout } from "../utils/executePromiseWithTimeout";
+import { formatObject } from "../utils/formatObject";
 
 interface HookParams {
   hookHandler: (fn: VoidLikeFunction) => void;

@@ -1,6 +1,7 @@
 import chalk from "chalk";
 import { ITestProps } from "../../types";
-import { buildReportMessage, isValidNumber } from "../../utils";
+import { buildReportMessage } from "../../utils/buildReportMessage";
+import { isValidNumber } from "../../utils/isValidNumber";
 import { matcherUtils } from "../matcherUtils";
 
 /**

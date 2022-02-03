@@ -1,5 +1,6 @@
 import runtime from "../core/runtime";
-import { getStackTrace, isFunction } from "../utils";
+import { isFunction } from "../utils/isFunction";
+import { getStackTrace } from "../utils/getStackTrace";
 import { hookBuilder } from "./hookBuilder";
 
 export const afterEach: corde.IHook = (fn: () => void | Promise<void>, timeout?: number) => {

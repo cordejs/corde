@@ -1,7 +1,7 @@
 import { Group } from "../core/Group";
 import runtime from "../core/runtime";
 import { VoidLikeFunction } from "../types";
-import { resolveName } from "../utils";
+import { resolveName } from "../utils/resolveName";
 
 export const group: corde.IDescribeClosure = <T extends any>(
   description: T,

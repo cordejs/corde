@@ -1,4 +1,4 @@
-import { isString } from ".";
+import { isString } from "./isString";
 
 /**
  * Check if a value is `null`, `undefined` or a empty `string`.

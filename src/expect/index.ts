@@ -3,7 +3,9 @@ import chalk from "chalk";
 import runtime from "../core/runtime";
 import { TestError } from "../errors";
 import { ITestProps, ITestReport } from "../types";
-import { getStackTrace, isAsymmetricMatcher, typeOf } from "../utils";
+import { getStackTrace } from "../utils/getStackTrace";
+import { isAsymmetricMatcher } from "../utils/isAsymmetricMatcher";
+import { typeOf } from "../utils/typeOf";
 import { any } from "./asymmetricMatcher";
 import * as matchers from "./matchers";
 

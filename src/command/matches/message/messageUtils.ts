@@ -1,6 +1,10 @@
 import { EmbedFieldData, Message, MessageEmbed } from "discord.js";
+import { diff } from "jest-diff";
 import { MessageType, Primitive } from "../../../types";
-import { deepEqual, diff, formatObject, isPrimitiveValue, typeOf } from "../../../utils";
+import { deepEqual } from "../../../utils/deepEqual";
+import { formatObject } from "../../../utils/formatObject";
+import { isPrimitiveValue } from "../../../utils/isPrimitiveValue";
+import { typeOf } from "../../../utils/typeOf";
 import { CommandState } from "../commandState";
 
 export namespace messageUtils {

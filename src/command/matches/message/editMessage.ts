@@ -1,6 +1,7 @@
 import { Message } from "discord.js";
 import { Primitive } from "../../../types";
-import { isPrimitiveValue, typeOf } from "../../../utils";
+import { isPrimitiveValue } from "../../../utils/isPrimitiveValue";
+import { typeOf } from "../../../utils/typeOf";
 import { CommandState } from "../commandState";
 import { messageUtils } from "./messageUtils";
 

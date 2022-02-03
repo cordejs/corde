@@ -1,5 +1,8 @@
 /* eslint-disable no-console */
-import { buildReportMessage, formatObject, LogUpdate } from "../utils";
+
+import { buildReportMessage } from "../utils/buildReportMessage";
+import { formatObject } from "../utils/formatObject";
+import { LogUpdate } from "../utils/LogUpdate";
 
 /**
  * @internal
@@ -12,8 +15,8 @@ export function printHookErrors(errors: Error[], log?: LogUpdate) {
       print(buildReportMessage(errors[i].message), log);
       print(buildReportMessage(errors[i].stack), log);
     } else {
-      const _formatedObject = formatObject(errors[i]);
-      print(buildReportMessage(_formatedObject));
+      const _formattedObject = formatObject(errors[i]);
+      print(buildReportMessage(_formattedObject));
     }
   }
 }

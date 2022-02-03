@@ -1,5 +1,5 @@
 import { ICordeBot, IExpectTestParams, ITestReport } from "../../types";
-import { buildReportMessage } from "../../utils";
+import { buildReportMessage } from "../../utils/buildReportMessage";
 
 /**
  * Entity helper for expectation assertions used for Corde tests

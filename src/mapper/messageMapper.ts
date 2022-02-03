@@ -1,5 +1,6 @@
 import { EmbedFieldData, MessageEmbed } from "discord.js";
-import { isString, typeOf } from "../utils";
+import { typeOf } from "../utils/typeOf";
+import { isString } from "../utils/isString";
 
 export namespace mapper {
   export function embedInterfaceToMessageEmbed(embedLike: corde.IMessageEmbed) {

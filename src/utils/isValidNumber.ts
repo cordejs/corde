@@ -1,4 +1,4 @@
-import { isNumeric } from ".";
+import { isNumeric } from "./isNumeric";
 
 /**
  * Checks if a value is a number and is different than **NaN**.

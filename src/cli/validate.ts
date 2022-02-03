@@ -1,7 +1,8 @@
 import chalk from "chalk";
 import { FileError, PropertyError } from "../errors";
 import { IConfigOptions } from "../types";
-import { getFiles, stringIsNullOrEmpty } from "../utils";
+import { getFiles } from "../utils/getFiles";
+import { stringIsNullOrEmpty } from "../utils/stringIsNullOrEmpty";
 
 /**
  * Check if configs are valid. Throws an exception
@@ -73,8 +74,8 @@ function addToErrorsIfPropertyIsMissing(
   }
 }
 
-function buildMissingPropertiesErrorAndThrow(errorString: string, erros: string[]) {
-  erros.forEach((error) => (errorString += `\n    ${chalk.red(`- ${error}`)}`));
+function buildMissingPropertiesErrorAndThrow(errorString: string, errors: string[]) {
+  errors.forEach((error) => (errorString += `\n    ${chalk.red(`- ${error}`)}`));
   errorString += "\n";
   throw new PropertyError(errorString);
 }

@@ -1,5 +1,5 @@
 import runtime from "../core/runtime";
-import { getStackTrace } from "../utils";
+import { getStackTrace } from "../utils/getStackTrace";
 import { hookBuilder } from "./hookBuilder";
 
 export const afterAll: corde.IHook = (fn: () => void | Promise<void>, timeout?: number) => {

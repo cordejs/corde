@@ -1,4 +1,4 @@
-import { isInDebugMode } from ".";
+import { isInDebugMode } from "./isInDebugMode";
 import { TimeoutError } from "../errors";
 
 /**
