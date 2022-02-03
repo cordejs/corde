@@ -1,4 +1,4 @@
-import runtime from "../core";
+import runtime from "../core/runtime";
 import { MapObj } from "../types";
 import { getStackTrace } from "../utils";
 import { cordeEvent } from "./cordeEvent";

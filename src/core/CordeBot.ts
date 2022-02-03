@@ -6,7 +6,6 @@ import {
   Guild,
   GuildBasedChannel,
   Message,
-  MessageEmbed,
   MessageOptions,
   MessagePayload,
   Role,
@@ -16,7 +15,7 @@ import {
 import { CordeClientError } from "../errors";
 import { ICordeBot, IVoiceChannelState, Primitive } from "../types";
 import { isPrimitiveValue, typeOf } from "../utils";
-import { Events } from ".";
+import { Events } from "./Events";
 import { joinVoiceChannel } from "@discordjs/voice";
 
 /**

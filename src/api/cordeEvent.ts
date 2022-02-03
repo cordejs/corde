@@ -1,4 +1,4 @@
-import runtime from "../core";
+import runtime from "../core/runtime";
 import { Optional } from "../types";
 
 interface IDefault {

@@ -2,7 +2,7 @@
 import fs from "fs";
 import path from "path";
 import { printHookErrors } from "./printHookError";
-import runtime from ".";
+import runtime from "./runtime";
 import { FileError } from "../errors";
 import { IConfigOptions, ITestFilePattern } from "../types";
 import { getFiles, importFile, safeImportFile } from "../utils";

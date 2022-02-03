@@ -2,7 +2,7 @@
 import { forEachProp, getStackTrace, isNullOrUndefined } from "../utils";
 import { any } from "../expect/asymmetricMatcher";
 import * as matchers from "./matches";
-import runtime from "../core";
+import runtime from "../core/runtime";
 import { ICordeBot, ITestReport } from "../types";
 import { CommandState } from "./matches/commandState";
 

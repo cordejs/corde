@@ -10,7 +10,7 @@ export async function injectGlobals() {
   const hooks = await import("../hooks");
   const closures = await import("../closures");
   const { BotAPI, ConfigAPI, cordeInternal } = await import("../api");
-  const core = await import("../core");
+  const core = await import("../core/runtime");
   const { expect } = await import("../expect");
   const { command } = await import("../command");
 

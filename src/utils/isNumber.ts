@@ -1,5 +1,5 @@
 /**
- * Oposite to `isNaN`.
+ * Opposite to `isNaN`.
  *
  * Check if a value is a number.
  *

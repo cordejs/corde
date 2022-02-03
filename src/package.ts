@@ -1,6 +1,6 @@
 // Cannot be `import` as it's not under TS root dir
 
-import runtime from "./core";
+import runtime from "./core/runtime";
 
 type PackageJson = typeof import("../package.json");
 

@@ -7,13 +7,15 @@ import { ConfigFileType } from "../types";
 import pack from "../package";
 import { initEnvVariables } from "../envVariables";
 import { initErrorHandlers } from "../errorHandler";
-import runtime, { injectGlobals, reader } from "../core";
+import runtime from "../core/runtime";
+import { injectGlobals } from "../core/injectGlobals";
+import { reader } from "../core/reader";
 
 initErrorHandlers();
 initEnvVariables();
 
 // global variables can not be injected when running unity tests
-// to not conflit with jest
+// to not conflict with jest
 
 if (!runtime.isUnityTest) {
   injectGlobals().catch((e) => console.error("could not load corde's globals: ", e));

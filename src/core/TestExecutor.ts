@@ -26,7 +26,7 @@ import { LogUpdate } from "../utils";
 import { TestFile } from "./TestFile";
 import { Group } from "./Group";
 import { TestError } from "../errors";
-import runtime from ".";
+import runtime from "./runtime";
 
 type ReportStatusType = "pass" | "fail" | "empty";
 
