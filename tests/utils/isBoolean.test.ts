@@ -1,4 +1,4 @@
-import { isBoolean } from "../../src/utils";
+import { isBoolean } from "../../src/utils/isBoolean";
 
 describe("testing isBoolean", () => {
   it.each([[1], [""], [{}], [[]]])("should return false for %s", (value) => {

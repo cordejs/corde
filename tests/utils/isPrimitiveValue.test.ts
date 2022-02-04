@@ -1,4 +1,4 @@
-import { isPrimitiveValue } from "../../src/utils";
+import { isPrimitiveValue } from "../../src/utils/isPrimitiveValue";
 
 describe("testing isPrimitiveValue function", () => {
   it("number should be primitive", () => {

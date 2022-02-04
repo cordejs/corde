@@ -1,4 +1,4 @@
-import { wait } from "../../src/utils";
+import { wait } from "../../src/utils/wait";
 import { performance } from "perf_hooks";
 
 describe("testing wait function", () => {
@@ -13,6 +13,7 @@ describe("testing wait function", () => {
     await expect(wait(-1)).rejects.toThrowError();
   });
   it("should throw error due to invalid value", async () => {
+    // @ts-expect-error
     await expect(wait(null)).rejects.toThrowError();
   });
 });

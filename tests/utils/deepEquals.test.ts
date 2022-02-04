@@ -1,4 +1,4 @@
-import { deepEqual } from "../../src/utils";
+import { deepEqual } from "../../src/utils/deepEqual";
 import { cordeExpect } from "../../src/expect";
 
 describe("deepEqual", () => {

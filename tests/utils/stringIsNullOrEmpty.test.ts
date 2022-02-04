@@ -1,4 +1,5 @@
-import { stringIsNullOrEmpty } from "../../src/utils";
+import { stringIsNullOrEmpty } from "../../src/utils/stringIsNullOrEmpty";
+
 describe("testing stringIsNullOrEmpty function", () => {
   test("empty string should return true", () => {
     expect(stringIsNullOrEmpty("")).toBeTruthy();

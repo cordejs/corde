@@ -1,4 +1,4 @@
-import { resolveName } from "../../src/utils";
+import { resolveName } from "../../src/utils/resolveName";
 
 describe("testing resolveName", () => {
   it("should return a number if gives a number", async () => {
@@ -6,7 +6,7 @@ describe("testing resolveName", () => {
     expect(resolved).toEqual(1);
   });
 
-  it("should return a stringfied symbol if gives a symbol", async () => {
+  it("should return a stringified symbol if gives a symbol", async () => {
     const symbol = Symbol("1");
     const resolved = await resolveName(symbol);
     expect(resolved).toEqual(symbol.toString());
@@ -27,7 +27,7 @@ describe("testing resolveName", () => {
     expect(resolved).toEqual(false);
   });
 
-  it("should return a stringfied object if gives a object", async () => {
+  it("should return a stringified object if gives a object", async () => {
     const resolved = await resolveName({});
     expect(resolved).toEqual("{}");
   });
@@ -81,7 +81,7 @@ describe("testing resolveName", () => {
     expect(resolved).toEqual(false);
   });
 
-  it("should return a stringfied object if gives a function that returns a object", async () => {
+  it("should return a stringified object if gives a function that returns a object", async () => {
     const resolved = await resolveName(() => {
       return {};
     });
@@ -108,7 +108,7 @@ describe("testing resolveName", () => {
     expect(resolved).toEqual(false);
   });
 
-  it("should return a stringfied object if gives a async function that returns a object", async () => {
+  it("should return a stringified object if gives a async function that returns a object", async () => {
     const resolved = await resolveName(() => Promise.resolve({}));
     expect(resolved).toEqual("{}");
   });

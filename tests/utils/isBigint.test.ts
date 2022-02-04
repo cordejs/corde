@@ -1,4 +1,4 @@
-import { isBigint } from "../../src/utils";
+import { isBigint } from "../../src/utils/isBigint";
 
 describe("testing isBigint", () => {
   it.each([[9007199254740991n]])("should return true for %s", (value) => {

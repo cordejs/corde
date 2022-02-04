@@ -1,4 +1,4 @@
-import { replaceAll } from "../../src/utils";
+import { replaceAll } from "../../src/utils/replaceAll";
 
 describe("testing replace all", () => {
   it("should replace all occurrences", () => {

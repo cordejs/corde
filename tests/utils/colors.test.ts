@@ -15,11 +15,11 @@ describe("testing colors", () => {
   });
 
   it("should get a color by number as string", () => {
-    expect(resolveColor("8359053")).toBe(ColorsHex.DARKER_GREY);
+    expect(resolveColor("#8359053")).toBe(ColorsHex.DARKER_GREY);
   });
 
   it("should return invalid color due to invalid string", () => {
-    expect(resolveColor("asdasd")).toBe(-1);
+    expect(resolveColor("#asdasd")).toBe(-1);
   });
 
   it("should return invalid color due to invalid string number", () => {

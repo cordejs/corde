@@ -1,4 +1,4 @@
-import { Validator } from "../../src/utils";
+import { Validator } from "../../src/utils/validator";
 
 describe("testing validator", () => {
   it("validation should pass", () => {
@@ -9,7 +9,7 @@ describe("testing validator", () => {
 
   it("validation should pass with double parameters", () => {
     const validator = new Validator<[number, string]>();
-    validator.add((num, stri) => num > 0 && stri === "test");
+    validator.add((num, _string) => num > 0 && _string === "test");
     validator.add((num) => num === 1);
     expect(validator.isValid(1, "test")).toBeTruthy();
   });

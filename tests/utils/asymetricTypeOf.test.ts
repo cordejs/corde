@@ -1,12 +1,12 @@
 import { any } from "../../src/expect/asymmetricMatcher";
-import * as utils from "../../src/utils";
+import { asymmetricTypeOf } from "../../src/utils/asymmetricTypeOf";
 
 describe("testing asymmetricTypeOf", () => {
-  it("should get correct typeof asymetric", () => {
-    expect(utils.asymmetricTypeOf(any(""))).toEqual(any("").toString());
+  it("should get correct typeof asymmetric", () => {
+    expect(asymmetricTypeOf(any(""))).toEqual(any("").toString());
   });
 
-  it("should get type for non asymetric value", () => {
-    expect(utils.asymmetricTypeOf("")).toEqual("string");
+  it("should get type for non asymmetric value", () => {
+    expect(asymmetricTypeOf("")).toEqual("string");
   });
 });

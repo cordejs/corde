@@ -1,4 +1,4 @@
-import { executeWithTimeout } from "../../src/utils";
+import { executeWithTimeout } from "../../src/utils/executeWithTimeout";
 
 describe("testing executeWithTimeout function", () => {
   it("should execute normal function", async () => {
@@ -14,6 +14,7 @@ describe("testing executeWithTimeout function", () => {
   });
 
   it("should throw exception for an null function", async () => {
+    // @ts-expect-error
     expect(executeWithTimeout(null, 1)).rejects.toThrow();
   });
 

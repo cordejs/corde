@@ -1,4 +1,4 @@
-import { forEachProp } from "../../src/utils";
+import { forEachProp } from "../../src/utils/forEachProp";
 
 describe("testing forEachProp", () => {
   it("should iterate", () => {

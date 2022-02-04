@@ -1,4 +1,4 @@
-import { isFunction } from "../../src/utils";
+import { isFunction } from "../../src/utils/isFunction";
 
 describe("testing isFunction function", () => {
   test("should return true for a function", () => {

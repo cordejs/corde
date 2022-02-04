@@ -1,4 +1,4 @@
-import { pick } from "../../src/utils";
+import { pick } from "../../src/utils/pick";
 
 describe("Testing pick function", () => {
   it("Should pick only a property", () => {

@@ -1,5 +1,6 @@
 import { TimeoutError } from "../../src/errors";
-import { executePromiseWithTimeout, wait } from "../../src/utils";
+import { executePromiseWithTimeout } from "../../src/utils/executePromiseWithTimeout";
+import { wait } from "../../src/utils/wait";
 
 describe("testing executePromiseWithTimeout", () => {
   it("should execute a function in time", async () => {

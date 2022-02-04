@@ -1,4 +1,4 @@
-import { typeOf } from "../../src/utils";
+import { typeOf } from "../../src/utils/typeOf";
 
 describe("testing typeOf", () => {
   it("should get number", () => {

@@ -5,9 +5,9 @@ import { Client } from "discord.js";
 import { CordeBot } from "../src/core/CordeBot";
 import { ICordeBot, ITestReport, ObjectLike } from "../src/types";
 import { IExpectTestBaseParams } from "../src/types";
-import { buildReportMessage } from "../src/utils";
+import { buildReportMessage } from "../src/utils/buildReportMessage";
 import { CommandState } from "../src/command/matches/commandState";
-import runtime from "../src/core";
+import runtime from "../src/core/runtime";
 
 export const normalTsPath = path.resolve(process.cwd(), "corde.ts");
 export const tempTsPath = path.resolve(process.cwd(), "__corde.ts");
@@ -101,7 +101,7 @@ export function initCordeClient(mockDiscord: MockDiscord, clientInstance: Client
   return new CordeBot(
     DEFAULT_PREFIX,
     mockDiscord.guild.id,
-    mockDiscord.channel.id,
+    mockDiscord.textChannel.id,
     mockDiscord.userBotId,
     clientInstance,
   );

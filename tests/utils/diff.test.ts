@@ -2,7 +2,7 @@
 // we just have to ensure that this lib is being called.
 
 import * as jestDiff from "jest-diff";
-import { diff } from "../../src/utils";
+import { diff } from "../../src/utils/diff";
 
 describe("testing diff function", () => {
   test("should call jest-diff", () => {

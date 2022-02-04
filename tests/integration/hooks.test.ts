@@ -1,7 +1,7 @@
 import { group as _group, it as _it } from "../../src/closures";
 import { expect as _expect } from "../../src/expect";
 import { TestExecutor } from "../../src/core/TestExecutor";
-import { LogUpdate } from "../../src/utils";
+import { LogUpdate } from "../../src/utils/logUpdate";
 import { mockTimer } from "../mocks/mockTimer";
 
 import {
@@ -10,7 +10,7 @@ import {
   beforeAll as _beforeAll,
   afterAll as _afterAll,
 } from "../../src/hooks";
-import runtime from "../../src/core";
+import runtime from "../../src/core/runtime";
 
 let logUpdate: LogUpdate;
 let testRunner: TestExecutor;

@@ -1,8 +1,8 @@
-import runtime from "../../src/core";
+import runtime from "../../src/core/runtime";
 import { Queue } from "../../src/data-structures";
 import { beforeEach as hook } from "../../src/hooks";
 import { VoidLikeFunction } from "../../src/types";
-import { wait } from "../../src/utils";
+import { wait } from "../../src/utils/wait";
 
 let queue: Queue<VoidLikeFunction>;
 

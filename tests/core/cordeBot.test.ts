@@ -1,17 +1,18 @@
+import { Client } from "discord.js";
 import MockDiscord from "../mocks/mockDiscord";
 import { initCordeClient, initCordeClientWithChannel } from "../testHelper";
 
 const DEFAULT_PREFIX = "!";
 const mockDiscord = new MockDiscord();
 
-let _client = mockDiscord.createMockClient();
+let _client = mockDiscord.mockClient<Client>();
 let _cordeClient = initCordeClient(mockDiscord, _client);
 
 describe("Testing CordeBot object", () => {
   beforeEach(() => {
     mockDiscord.resetMocks();
 
-    _client = mockDiscord.createMockClient();
+    _client = mockDiscord.mockClient();
     _cordeClient = initCordeClient(mockDiscord, _client);
 
     jest.resetAllMocks();
@@ -25,7 +26,7 @@ describe("Testing CordeBot object", () => {
         // @ts-expect-error
         client.guilds = null;
         initCordeClient(mockDiscord, client);
-        client.emit("ready");
+        client.emit("ready", client);
       } catch (error) {
         expect(error).toBeTruthy();
         done();
@@ -36,7 +37,7 @@ describe("Testing CordeBot object", () => {
       try {
         const client = mockDiscord.client;
         initCordeClient(mockDiscord, client);
-        client.emit("ready");
+        client.emit("ready", client);
       } catch (error) {
         expect(error).toBeTruthy();
       }
@@ -50,7 +51,7 @@ describe("Testing CordeBot object", () => {
         client.guilds.cache.find = jest.fn().mockReturnValueOnce(null);
 
         initCordeClient(mockDiscord, client);
-        client.emit("ready");
+        client.emit("ready", client);
       } catch (error) {
         expect(error).toBeTruthy();
       }
@@ -66,7 +67,7 @@ describe("Testing CordeBot object", () => {
       const findMock = jest.spyOn(corde, "findGuild");
 
       try {
-        client.emit("ready");
+        client.emit("ready", client);
       } catch (error) {
         expect(findMock).toHaveLastReturnedWith(mockDiscord.guild);
       }
@@ -87,7 +88,7 @@ describe("Testing CordeBot object", () => {
       const findMock = jest.spyOn(corde, "findChannel");
 
       try {
-        client.emit("ready");
+        client.emit("ready", client);
       } catch (error) {
         expect(findMock).toBeCalled();
         expect(error).toBeTruthy();
@@ -107,7 +108,7 @@ describe("Testing CordeBot object", () => {
       const findMock = jest.spyOn(corde, "findChannel");
 
       try {
-        client.emit("ready");
+        client.emit("ready", client);
       } catch (error) {
         expect(findMock).toBeCalled();
         expect(error).toBeTruthy();
@@ -126,7 +127,7 @@ describe("Testing CordeBot object", () => {
       const findMock = jest.spyOn(corde, "findChannel");
 
       try {
-        client.emit("ready");
+        client.emit("ready", client);
       } catch (error) {
         expect(findMock).toBeCalled();
         expect(error).toBeTruthy();
@@ -140,13 +141,15 @@ describe("Testing CordeBot object", () => {
       client.guilds.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.guild);
 
       mockDiscord.guild.channels.cache.has = jest.fn().mockReturnValueOnce(true);
-      mockDiscord.guild.channels.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.channel);
+      mockDiscord.guild.channels.cache.find = jest
+        .fn()
+        .mockReturnValueOnce(mockDiscord.textChannel);
 
       const corde = initCordeClient(mockDiscord, client);
       const findMock = jest.spyOn(corde, "findChannel");
 
-      client.emit("ready");
-      expect(findMock).toHaveLastReturnedWith(mockDiscord.channel);
+      client.emit("ready", client);
+      expect(findMock).toHaveLastReturnedWith(mockDiscord.textChannel);
     });
   });
 
@@ -201,7 +204,7 @@ describe("Testing CordeBot object", () => {
 
       const corde = initCordeClient(mockDiscord, client);
       const spy = jest.spyOn(mockDiscord.textChannel, "send");
-      client.emit("ready");
+      client.emit("ready", client);
       try {
         await corde.sendTextMessage("text");
       } catch (error) {
@@ -213,7 +216,7 @@ describe("Testing CordeBot object", () => {
       const client = mockDiscord.client;
       const corde = initCordeClientWithChannel(mockDiscord, client);
       mockDiscord.textChannel.send = jest.fn().mockReturnValue(mockDiscord.message);
-      client.emit("ready");
+      client.emit("ready", client);
       expect(await corde.sendTextMessage("ok")).toBe(mockDiscord.message);
     });
   });
@@ -223,7 +226,7 @@ describe("Testing CordeBot object", () => {
       const client = mockDiscord.client;
       client.readyAt = new Date();
       const corde = initCordeClientWithChannel(mockDiscord, client);
-      client.emit("ready");
+      client.emit("ready", client);
       expect(corde.isLoggedIn()).toBeTruthy();
     });
 
@@ -239,7 +242,7 @@ describe("Testing CordeBot object", () => {
     it("should find a not cached message using anonymous filter function", async () => {
       const client = mockDiscord.client;
       const corde = initCordeClientWithChannel(mockDiscord, client);
-      client.emit("ready");
+      client.emit("ready", client);
 
       mockDiscord.textChannel.messages.fetch = jest
         .fn()
@@ -252,7 +255,7 @@ describe("Testing CordeBot object", () => {
     it("should find a cached message using anonymous filter function", async () => {
       const client = mockDiscord.client;
       const corde = initCordeClientWithChannel(mockDiscord, client);
-      client.emit("ready");
+      client.emit("ready", client);
 
       mockDiscord.textChannel.messages.fetch = jest
         .fn()
@@ -266,7 +269,7 @@ describe("Testing CordeBot object", () => {
     it("should return null due to no parameter", async () => {
       const client = mockDiscord.client;
       const corde = initCordeClientWithChannel(mockDiscord, client);
-      client.emit("ready");
+      client.emit("ready", client);
 
       mockDiscord.textChannel.messages.cache = mockDiscord.messageCollection;
       mockDiscord.textChannel.messages.fetch = jest
@@ -282,7 +285,7 @@ describe("Testing CordeBot object", () => {
     it("should return null due to no no fetch data", async () => {
       const client = mockDiscord.client;
       const corde = initCordeClientWithChannel(mockDiscord, client);
-      client.emit("ready");
+      client.emit("ready", client);
 
       mockDiscord.textChannel.messages.cache.find = jest.fn().mockReturnValue(null);
       mockDiscord.textChannel.messages.fetch = jest
@@ -297,7 +300,7 @@ describe("Testing CordeBot object", () => {
     it("should find a cached message using message content", async () => {
       const client = mockDiscord.client;
       const corde = initCordeClientWithChannel(mockDiscord, client);
-      client.emit("ready");
+      client.emit("ready", client);
 
       mockDiscord.textChannel.messages.cache = mockDiscord.messageCollection;
       mockDiscord.textChannel.messages.fetch = jest
@@ -311,7 +314,7 @@ describe("Testing CordeBot object", () => {
     it("should find a not cached message using message content", async () => {
       const client = mockDiscord.client;
       const corde = initCordeClientWithChannel(mockDiscord, client);
-      client.emit("ready");
+      client.emit("ready", client);
 
       mockDiscord.textChannel.messages.fetch = jest
         .fn()
@@ -324,7 +327,7 @@ describe("Testing CordeBot object", () => {
     it("should find a cached message using message id", async () => {
       const client = mockDiscord.client;
       const corde = initCordeClientWithChannel(mockDiscord, client);
-      client.emit("ready");
+      client.emit("ready", client);
 
       mockDiscord.textChannel.messages.cache = mockDiscord.messageCollection;
       mockDiscord.textChannel.messages.fetch = jest
@@ -338,7 +341,7 @@ describe("Testing CordeBot object", () => {
     it("should find a not cached message using message id", async () => {
       const client = mockDiscord.client;
       const corde = initCordeClientWithChannel(mockDiscord, client);
-      client.emit("ready");
+      client.emit("ready", client);
 
       mockDiscord.textChannel.messages.fetch = jest
         .fn()
@@ -351,7 +354,7 @@ describe("Testing CordeBot object", () => {
     it("should not find a message", async () => {
       const client = mockDiscord.client;
       const corde = initCordeClientWithChannel(mockDiscord, client);
-      client.emit("ready");
+      client.emit("ready", client);
 
       mockDiscord.textChannel.messages.fetch = jest
         .fn()
@@ -469,6 +472,6 @@ describe("Testing CordeBot object", () => {
 function initCordeBot() {
   const client = mockDiscord.client;
   const corde = initCordeClientWithChannel(mockDiscord, client);
-  client.emit("ready");
+  client.emit("ready", client);
   return corde;
 }

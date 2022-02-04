@@ -1,6 +1,6 @@
-import { dateDiff } from "../../src/utils";
+import { dateDiff } from "../../src/utils/dateDiff";
 
-// DateFormat Date(year, month, day, hour, minute, second, milisecond)
+// DateFormat Date(year, month, day, hour, minute, second, millisecond)
 
 describe("testing dateDiff function", () => {
   test("should output 1s", () => {
@@ -53,11 +53,13 @@ describe("testing dateDiff function", () => {
 
   test("should output null due to no date1", () => {
     const date2 = new Date(2020, 12, 1, 10, 10, 10);
+    //@ts-expect-error
     expect(dateDiff(null, date2)).toEqual(["", 0]);
   });
 
   test("should output null due to no date2", () => {
     const date1 = new Date(2020, 12, 1, 10, 10, 10);
+    //@ts-expect-error
     expect(dateDiff(date1, null)).toEqual(["", 0]);
   });
 

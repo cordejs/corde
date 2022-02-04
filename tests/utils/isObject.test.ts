@@ -1,4 +1,4 @@
-import { isObject } from "../../src/utils";
+import { isObject } from "../../src/utils/isObject";
 
 describe("testing isObject", () => {
   it.each([[{}], [new Map()], [[]]])("should return true for %s", (value) => {

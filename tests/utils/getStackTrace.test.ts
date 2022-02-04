@@ -1,5 +1,5 @@
 import { ITestReport } from "../../src/types";
-import { getStackTrace } from "../../src/utils";
+import { getStackTrace } from "../../src/utils/getStackTrace";
 
 type TypeExecutor = () => Promise<ITestReport>;
 const executorList: TypeExecutor[] = [];

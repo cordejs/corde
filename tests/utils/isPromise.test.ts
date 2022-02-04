@@ -1,4 +1,4 @@
-import { isPromise } from "../../src/utils";
+import { isPromise } from "../../src/utils/isPromise";
 
 describe("testing isPromise function", () => {
   test("null should be false", () => {

@@ -1,13 +1,13 @@
 /* eslint-disable no-console */
 import { TestExecutor } from "../../src/core/TestExecutor";
-import { LogUpdate } from "../../src/utils";
+import { LogUpdate } from "../../src/utils/logUpdate";
 import { removeANSIColorStyle, testUtils } from "../testHelper";
 
 import { mockTimer } from "../mocks/mockTimer";
 import { IRunnerReport } from "../../src/types";
 import { group, test } from "../../src/closures";
 import { expect as _expect } from "../../src/expect";
-import runtime from "../../src/core";
+import runtime from "../../src/core/runtime";
 
 let logUpdate: LogUpdate;
 let testRunner: TestExecutor;

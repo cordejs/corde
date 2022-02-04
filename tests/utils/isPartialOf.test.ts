@@ -1,4 +1,4 @@
-import { isPartialOf } from "../../src/utils";
+import { isPartialOf } from "../../src/utils/isPartialOf";
 
 describe("testing isPartialOf", () => {
   it("should return true to equal objects", () => {
@@ -13,7 +13,7 @@ describe("testing isPartialOf", () => {
     expect(isPartialOf({ c: 1 }, { a: 1, b: 212 })).toBeFalsy();
   });
 
-  it("should return true due to subproperties equals", () => {
+  it("should return true due to properties equals", () => {
     expect(isPartialOf({ abc: { abc1: 1 } }, { a: 1, b: 212, abc: { abc1: 1 } })).toBeTruthy();
   });
 

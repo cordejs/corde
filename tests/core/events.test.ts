@@ -14,6 +14,8 @@ import {
   Role,
   User,
   VoiceState,
+  TextBasedChannel,
+  GuildBan,
 } from "discord.js";
 import { Events } from "../../src/core/Events";
 import MockDiscord from "../mocks/mockDiscord";
@@ -33,13 +35,13 @@ describe("testing events event", () => {
     it("should get callback", () => {
       let a = 0;
       events.onReady(() => (a = 1));
-      client.emit(eventName);
+      client.emit(eventName, client);
       expect(a).toBe(1);
     });
 
     it("should get async once", async () => {
       const promise = events.onceReady();
-      client.emit(eventName);
+      client.emit(eventName, client);
       const _void = await promise;
       expect(_void).toBeFalsy();
     });
@@ -67,15 +69,15 @@ describe("testing events event", () => {
     it("should get callback", () => {
       let _channel!: Channel;
       events.onChannelCreate((channel) => (_channel = channel));
-      client.emit(eventName, mockDiscord.channel);
-      expect(_channel).toEqual(mockDiscord.channel);
+      client.emit(eventName, mockDiscord.textChannel);
+      expect(_channel).toEqual(mockDiscord.textChannel);
     });
 
     it("should get async once", async () => {
       const promise = events.onceChannelCreate();
-      client.emit(eventName, mockDiscord.channel);
+      client.emit(eventName, mockDiscord.textChannel);
       const _channel = await promise;
-      expect(_channel).toEqual(mockDiscord.channel);
+      expect(_channel).toEqual(mockDiscord.textChannel);
     });
   });
 
@@ -84,39 +86,39 @@ describe("testing events event", () => {
     it("should get callback", () => {
       let _channel!: Channel;
       events.onChannelDelete((channel) => (_channel = channel));
-      client.emit(eventName, mockDiscord.channel);
-      expect(_channel).toEqual(mockDiscord.channel);
+      client.emit(eventName, mockDiscord.textChannel);
+      expect(_channel).toEqual(mockDiscord.textChannel);
     });
 
     it("should get async once", async () => {
       const promise = events.onceChannelDelete();
-      client.emit(eventName, mockDiscord.channel);
+      client.emit(eventName, mockDiscord.textChannel);
       const _channel = await promise;
-      expect(_channel).toEqual(mockDiscord.channel);
+      expect(_channel).toEqual(mockDiscord.textChannel);
     });
   });
 
   describe("testing channelPinsUpdate event", () => {
     const eventName = "channelPinsUpdate";
     it("should get callback", () => {
-      let _channel!: Channel;
+      let _channel!: TextBasedChannel;
       let _date!: Date;
       const now = new Date();
       events.onChannelPinsUpdate((channel, date) => {
         _channel = channel;
         _date = date;
       });
-      client.emit(eventName, mockDiscord.channel, now);
-      expect(_channel).toEqual(mockDiscord.channel);
+      client.emit(eventName, mockDiscord.textChannel, now);
+      expect(_channel).toEqual(mockDiscord.textChannel);
       expect(_date).toEqual(now);
     });
 
     it("should get async once", async () => {
       const now = new Date();
       const promise = events.onceChannelPinsUpdate();
-      client.emit(eventName, mockDiscord.channel, now);
+      client.emit(eventName, mockDiscord.textChannel, now);
       const [_channel, _date] = await promise;
-      expect(_channel).toEqual(mockDiscord.channel);
+      expect(_channel).toEqual(mockDiscord.textChannel);
       expect(_date).toEqual(now);
     });
   });
@@ -154,7 +156,7 @@ describe("testing events event", () => {
     const eventName = "debug";
     it("should get callback", () => {
       let a = "";
-      events.onDebug((argEmited) => (a = argEmited));
+      events.onDebug((argEmitted) => (a = argEmitted));
       client.emit(eventName, "test");
       expect(a).toEqual("test");
     });
@@ -267,7 +269,7 @@ describe("testing events event", () => {
     const eventName = "emojiUpdate";
     const oldEmoji = mockDiscord.guildEmoji;
     const newEmoji = mockDiscord.guildEmoji;
-    newEmoji.name = "potatoe";
+    newEmoji.name = "potatoes";
 
     it("should get callback", () => {
       let _oldEmoji!: GuildEmoji;
@@ -295,10 +297,10 @@ describe("testing events event", () => {
   describe("testing error event", () => {
     const eventName = "error";
     it("should get callback", () => {
-      let emitedError!: Error;
-      events.onError((error) => (emitedError = error));
+      let emittedError!: Error;
+      events.onError((error) => (emittedError = error));
       client.emit(eventName, new Error("Fail in connection"));
-      expect(emitedError).toBeInstanceOf(Error);
+      expect(emittedError).toBeInstanceOf(Error);
     });
 
     it("should get async once", async () => {
@@ -312,7 +314,7 @@ describe("testing events event", () => {
   describe("testing guildBanAdd event", () => {
     const eventName = "guildBanAdd";
     it("should get callback", () => {
-      let _guild!: Guild;
+      let _guild!: GuildBan;
       events.onGuildBan((guild) => {
         _guild = guild;
       });
@@ -882,16 +884,16 @@ describe("testing events event", () => {
       events.onTypingStart((typing) => {
         _typing = typing;
       });
-      client.emit(eventName, mockDiscord.channel, mockDiscord.user);
-      expect(_typing).toEqual(mockDiscord.channel);
+      client.emit(eventName, mockDiscord.textChannel, mockDiscord.user);
+      expect(_typing).toEqual(mockDiscord.textChannel);
       expect(_user).toEqual(mockDiscord.user);
     });
 
     it("should get async once", async () => {
       const promise = events.onceTypingStart();
-      client.emit(eventName, mockDiscord.channel, mockDiscord.user);
+      client.emit(eventName, mockDiscord.textChannel, mockDiscord.user);
       const [_channel, _user] = await promise;
-      expect(_channel).toEqual(mockDiscord.channel);
+      expect(_channel).toEqual(mockDiscord.textChannel);
       expect(_user).toEqual(mockDiscord.user);
     });
   });

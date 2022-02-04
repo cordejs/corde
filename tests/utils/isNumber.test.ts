@@ -1,4 +1,4 @@
-import { isNumber } from "../../src/utils";
+import { isNumber } from "../../src/utils/isNumber";
 
 describe("testing isNumber", () => {
   it.each([[1], [0], [-1], [NaN]])("should return true for %s", (value) => {
