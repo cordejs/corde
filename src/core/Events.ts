@@ -1,4 +1,7 @@
 import {
+  APIRequest,
+  ApplicationCommand,
+  CacheType,
   Channel,
   Client,
   ClientEvents,
@@ -9,6 +12,10 @@ import {
   GuildChannel,
   GuildEmoji,
   GuildMember,
+  GuildScheduledEvent,
+  Interaction,
+  InvalidRequestWarningData,
+  Invite,
   Message,
   NewsChannel,
   PartialDMChannel,
@@ -16,16 +23,21 @@ import {
   PartialMessage,
   PartialUser,
   Presence,
+  RateLimitData,
   Role,
+  StageInstance,
+  Sticker,
   TextBasedChannel,
   TextChannel,
   ThreadChannel,
+  ThreadMember,
   Typing,
+  CloseEvent,
   User,
   VoiceState,
 } from "discord.js";
 import { once } from "events";
-import { Optional } from "../types";
+import { ObjectLike, Optional } from "../types";
 import { deepEqual } from "../utils/deepEqual";
 import { executePromiseWithTimeout } from "../utils/executePromiseWithTimeout";
 import { isNullOrUndefined } from "../utils/isNullOrUndefined";
@@ -33,11 +45,32 @@ import { Validator } from "../utils/validator";
 
 // https://gist.github.com/koad/316b265a91d933fd1b62dddfcc3ff584
 
+type AddPrefix<TPrefix extends string, TKey> = TKey extends string
+  ? `${TPrefix}${Capitalize<TKey>}`
+  : never;
+
+type RemovePrefix<
+  TPrefix extends string,
+  TPrefixedKey extends string,
+> = TPrefixedKey extends AddPrefix<TPrefix, infer TKey> ? TKey : "";
+
+type PrefixedValue<
+  TObject extends ObjectLike,
+  TPrefixedKey extends string,
+  TPrefix extends string,
+> = TObject extends { [K in RemovePrefix<TPrefix, TPrefixedKey>]: infer TValue } ? TValue : never;
+
+type ClientEventsFn = {
+  [K in AddPrefix<"on", keyof ClientEvents>]: (
+    ...args: PrefixedValue<ClientEvents, "on", K>
+  ) => void;
+};
+
 /**
  * Encapsulation of Discord.js events.
  * @internal
  */
-export class Events implements corde.IOnceEvents {
+export class Events implements corde.IOnceEvents, ClientEventsFn {
   protected readonly _client: Client;
 
   constructor(client: Client) {
@@ -51,6 +84,348 @@ export class Events implements corde.IOnceEvents {
    */
   onReady(fn: () => void): void {
     this._client.on("ready", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onGuildMembersChunk(
+    fn: (
+      members: Collection<string, GuildMember>,
+      guild: Guild,
+      data: {
+        count: number;
+        index: number;
+        nonce: string | undefined;
+      },
+    ) => void,
+  ) {
+    this._client.on("guildMembersChunk", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onShardDisconnect(fn: (closeEvent: CloseEvent, shardId: number) => void) {
+    this._client.on("shardDisconnect", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onInteraction(fn: (interaction: Interaction<CacheType>) => void) {
+    this._client.on("interaction", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onInteractionCreate(fn: (interaction: Interaction<CacheType>) => void) {
+    this._client.on("interactionCreate", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onApiRequest(fn: (request: APIRequest) => void) {
+    this._client.on("apiRequest", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onApiResponse(fn: (response: APIRequest) => void) {
+    this._client.on("apiResponse", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onGuildBanAdd(fn: (ban: GuildBan) => void) {
+    this._client.on("onGuildBanAdd", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onApplicationCommandCreate(fn: (command: ApplicationCommand<ObjectLike>) => void) {
+    this._client.on("applicationCommandCreate", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onApplicationCommandDelete(fn: (command: ApplicationCommand<ObjectLike>) => void) {
+    this._client.on("applicationCommandDelete", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onApplicationCommandUpdate(
+    fn: (
+      oldCommand: ApplicationCommand<ObjectLike> | null,
+      newCommand: ApplicationCommand<ObjectLike>,
+    ) => void,
+  ) {
+    this._client.on("applicationCommandUpdate", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onCacheSweep(fn: (message: string) => void) {
+    this._client.on("cacheSweep", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onGuildScheduledEventCreate(
+    fn: (guildScheduledEvent: GuildScheduledEvent<corde.GuildScheduleEventType>) => void,
+  ) {
+    this._client.on("guildScheduledEventCreate", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onGuildScheduledEventDelete(
+    fn: (guildScheduledEvent: GuildScheduledEvent<corde.GuildScheduleEventType>) => void,
+  ) {
+    this._client.on("guildScheduledEventDelete", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onGuildScheduledEvent(
+    fn: (guildScheduledEvent: GuildScheduledEvent<corde.GuildScheduleEventType>) => void,
+  ) {
+    this._client.on("guildScheduledEvent", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onGuildScheduledEventUpdate(
+    fn: (guildScheduledEvent: GuildScheduledEvent<corde.GuildScheduleEventType>) => void,
+  ) {
+    this._client.on("guildScheduledEventUpdate", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onGuildScheduledEventUserAdd(
+    fn: (guildScheduledEvent: GuildScheduledEvent<corde.GuildScheduleEventType>) => void,
+  ) {
+    this._client.on("guildScheduledEventUserAdd", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onGuildScheduledEventUserRemove(
+    fn: (guildScheduledEvent: GuildScheduledEvent<corde.GuildScheduleEventType>) => void,
+  ) {
+    this._client.on("guildScheduledEventUserRemove", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onGuildIntegrationsUpdate(fn: (guild: Guild) => void) {
+    this._client.on("guildIntegrationsUpdate", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onRateLimit(fn: (rateLimitData: RateLimitData) => void) {
+    this._client.on("rateLimit", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onInviteCreate(fn: (invite: Invite) => void) {
+    this._client.on("inviteCreate", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onInviteDelete(fn: (invite: Invite) => void) {
+    this._client.on("inviteDelete", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onInvalidated(fn: () => void) {
+    this._client.on("invalidated", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onInvalidRequestWarning(fn: (invalidRequestWarningData: InvalidRequestWarningData) => void) {
+    this._client.on("invalidRequestWarning", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onWarn(fn: (message: string) => void) {
+    this._client.on("warn", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onMessageCreate(fn: (message: Message<boolean>) => void) {
+    this._client.on("messageCreate", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onThreadCreate(fn: (thread: ThreadChannel) => void) {
+    this._client.on("threadCreate", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onThreadDelete(fn: (thread: ThreadChannel) => void) {
+    this._client.on("threadDelete", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onThreadListSync(fn: (threads: Collection<string, ThreadChannel>) => void) {
+    this._client.on("threadListSync", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onThreadMemberUpdate(fn: (oldMember: ThreadMember, newMember: ThreadMember) => void) {
+    this._client.on("threadMemberUpdate", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onThreadMembersUpdate(
+    fn: (
+      oldMembers: Collection<string, ThreadMember>,
+      newMembers: Collection<string, ThreadMember>,
+    ) => void,
+  ) {
+    this._client.on("threadMembersUpdate", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onThreadUpdate(fn: (oldThread: ThreadChannel, newThread: ThreadChannel) => void) {
+    this._client.on("threadUpdate", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onStickerCreate(fn: (sticker: Sticker) => void) {
+    this._client.on("stickerCreate", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onStickerDelete(fn: (sticker: Sticker) => void) {
+    this._client.on("stickerDelete", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onStickerUpdate(fn: (sticker: Sticker) => void) {
+    this._client.on("stickerUpdate", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onVoiceServerUpdate(fn: (...args: any[]) => void) {
+    this._client.on("voiceServerUpdate", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onWebhookUpdate(fn: (channel: TextChannel | NewsChannel) => void) {
+    this._client.on("webhookUpdate", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onShardError(fn: (error: Error, shardId: number) => void) {
+    this._client.on("shardError", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onShardReconnecting(fn: (shardId: number) => void) {
+    this._client.on("shardReconnecting", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onShardReady(fn: (shardId: number, unavailableGuilds: Set<string> | undefined) => void) {
+    this._client.on("shardReady", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onShardResume(fn: (shardId: number, replayedEvents: number) => void) {
+    this._client.on("shardResume", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onRaw(fn: (...args: any[]) => void) {
+    this._client.on("raw", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onStageInstanceCreate(fn: (stageInstance: StageInstance) => void) {
+    this._client.on("stageInstanceCreate", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onStageInstanceUpdate(
+    fn: (oldStageInstance: StageInstance | null, newStageInstance: StageInstance) => void,
+  ) {
+    this._client.on("stageInstanceUpdate", fn);
+  }
+
+  /**
+   * @internal
+   */
+  onStageInstanceDelete(fn: (stageInstance: StageInstance) => void) {
+    this._client.on("stageInstanceDelete", fn);
   }
 
   /**

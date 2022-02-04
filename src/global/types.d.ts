@@ -15,6 +15,8 @@ declare namespace corde {
     [K in KeyOf<T>]: T[K] extends (...args: any[]) => any ? never : K;
   }[KeyOf<T>];
 
+  export type GuildScheduleEventType = "SCHEDULED" | "ACTIVE" | "COMPLETED" | "CANCELED";
+
   export interface IEventResume {
     count: number;
     index: number;
