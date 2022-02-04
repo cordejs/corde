@@ -10,7 +10,7 @@ describe("Testing export of cli index", () => {
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       expect(require("../../src/cli")).toBeTruthy();
     } catch (error) {
-      // For some reason, errorHandler is being throwed when imported here.
+      // For some reason, errorHandler is being thrown when imported here.
     }
   });
 });

@@ -3,7 +3,7 @@ import { createCordeBotWithMockedFunctions, testHelper } from "../../testHelper"
 import { ICordeBot, ITestReport } from "../../../src/types";
 import { debugCommand } from "../../../src/command";
 import { MockEvents } from "../../mocks";
-import { isNullOrUndefined } from "../../../src/utils";
+import { isNullOrUndefined } from "../../../src/utils/isNullOrUndefined";
 
 const testName = "embedMatch";
 
@@ -55,7 +55,7 @@ describe(`testing ${testName} function`, () => {
     expect(report).toMatchSnapshot();
   });
 
-  it("should get failed test due to bot returned equal messages that matches isnot(true)", async () => {
+  it("should get failed test due to bot returned equal messages that matches isNot(true)", async () => {
     mockEmbedMessage();
     const report = await debugCon().should.not.embedMatch({
       author: mockDiscord.messageEmbedSimple.author,
@@ -110,7 +110,7 @@ describe(`testing ${testName} function`, () => {
     );
 
     testProperty(
-      "should get passed due to title not match (isnot true)",
+      "should get passed due to title not match (isNot true)",
       {
         title: "",
       },
@@ -153,16 +153,6 @@ describe(`testing ${testName} function`, () => {
       "should get passed due to fields match",
       {
         fields: simpleEmbed.fields,
-      },
-      {
-        pass: true,
-      },
-    );
-
-    testProperty(
-      "should get passed due to files match",
-      {
-        files: simpleEmbed.files,
       },
       {
         pass: true,

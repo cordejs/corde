@@ -1,5 +1,5 @@
 import { test as _test } from "../../src/closures";
-import runtime from "../../src/core";
+import runtime from "../../src/core/runtime";
 import { ITest } from "../../src/types";
 
 const { testCollector } = runtime;

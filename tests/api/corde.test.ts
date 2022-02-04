@@ -1,6 +1,6 @@
 import { once } from "events";
 import { cordeInternal } from "../../src/api";
-import runtime from "../../src/core";
+import runtime from "../../src/core/runtime";
 
 describe("testing fail function", () => {
   it("should emit event for failed test", async () => {

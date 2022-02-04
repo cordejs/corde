@@ -1,7 +1,7 @@
 import MockDiscord from "../../mocks/mockDiscord";
 import { createCordeBotWithMockedFunctions, testHelper } from "../../testHelper";
 import { ICordeBot, ITestReport } from "../../../src/types";
-import { calcPermissionsValue } from "../../../src/utils";
+import { calcPermissionsValue } from "../../../src/utils/calcPermissionsValue";
 import { MockEvents } from "../../mocks/mockEvents";
 import { debugCommand } from "../../../src/command";
 import { Permission } from "../../../src";
@@ -86,6 +86,7 @@ describe(`testing ${testName} function`, () => {
     const mockEvent = new MockEvents(cordeClient, mockDiscord);
     const mockRole = mockDiscord.createMockRole(
       "test role",
+      // @ts-expect-error
       calcPermissionsValue(...mockDiscord.role.permissions.toArray().map((p) => Permission[p])),
     );
 

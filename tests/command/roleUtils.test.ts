@@ -1,9 +1,10 @@
 import { roleUtils } from "../../src/command/roleUtils";
-import { formatObject } from "../../src/utils";
+import { formatObject } from "../../src/utils/formatObject";
 import MockDiscord from "../mocks/mockDiscord";
 
 describe("testing createExpectedMessageForRoleData", () => {
   it("should get a error message for null roleIdentifier", () => {
+    // @ts-expect-error
     expect(roleUtils.createExpectedMessageForRoleData(null)).toBeFalsy();
   });
 
@@ -37,6 +38,7 @@ describe("testing createExpectedMessageForRoleData", () => {
 
 describe("testing getErrorForUndefinedRoleData", () => {
   it("should get a error message for undefined roleIdentifier", () => {
+    // @ts-expect-error
     expect(roleUtils.getErrorForUndefinedRoleData(null)).toEqual(
       "expected: data to identifier the role (id or name)\n" + "received: null",
     );
@@ -62,12 +64,14 @@ describe("testing validateRole", () => {
 
   it("should return a error message due to null role", () => {
     const roleIdentifier = { id: "1" };
+    // @ts-expect-error
     const message = roleUtils.validateRole(null, roleIdentifier);
     const errorMessage = roleUtils.createExpectedMessageForRoleData(roleIdentifier);
     expect(message).toEqual(`expected: ${errorMessage}\n` + "received: null");
   });
 
   it("should return a error message due to null role and roleIdentifier null", () => {
+    // @ts-expect-error
     const message = roleUtils.validateRole(null, null);
     expect(message).toEqual(
       "expected: a id or a name to identify the role\n" + `received: ${formatObject(null)}`,

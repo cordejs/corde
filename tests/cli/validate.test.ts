@@ -48,17 +48,17 @@ describe("Testing validate CLI function", () => {
     expect(async () => await validate(configs)).rejects.toThrow(PropertyError);
   });
 
-  it("Should return false due invlaid dir", () => {
+  it("Should return false due invalid dir", () => {
     configs.testMatches = ["./tests/dirTest/**"];
     expect(async () => await validate(configs)).rejects.toThrow(PropertyError);
   });
 
-  it("Should not throw error due to existance of file", () => {
+  it("Should not throw error due to existence of file", () => {
     configs.testMatches = ["./tests/dirTestFiles/testFile.test.ts"];
     expect(async () => await validate(configs)).not.toThrow(PropertyError);
   });
 
-  it("Should throw error due to inexistance of file", () => {
+  it("Should throw error due to inexistent of file", () => {
     configs.testMatches = ["./tests/dirTestFiles/testF.test.ts"];
     expect(async () => await validate(configs)).rejects.toThrow(PropertyError);
   });
@@ -68,6 +68,7 @@ describe("Testing validate CLI function", () => {
   });
 
   it("Should throw exception due to null parameter", () => {
+    // @ts-expect-error
     expect(async () => await validate(null)).rejects.toThrow(FileError);
   });
 });

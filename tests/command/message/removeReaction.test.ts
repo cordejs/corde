@@ -103,10 +103,10 @@ describe(`testing ${testName} function`, () => {
     cordeClient.getRoles = jest.fn().mockReturnValue(mockDiscord.roleManager.cache);
     cordeClient.findRole = jest.fn().mockReturnValue(mockDiscord.role);
 
-    const erroMessage = "can not send message to channel x";
+    const errorMessage = "can not send message to channel x";
     cordeClient.sendTextMessage = jest
       .fn()
-      .mockImplementation(() => Promise.reject(new Error(erroMessage)));
+      .mockImplementation(() => Promise.reject(new Error(errorMessage)));
 
     const report = await debugCon().should.removeReaction(["😀"], { id: "123" });
 

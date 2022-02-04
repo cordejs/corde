@@ -1,11 +1,4 @@
-import {
-  EmbedFieldData,
-  MessageAttachment,
-  MessageEmbed,
-  MessageEmbedImage,
-  MessageEmbedThumbnail,
-} from "discord.js";
-import { Stream } from "stream";
+import { EmbedFieldData, MessageEmbed, MessageEmbedImage, MessageEmbedThumbnail } from "discord.js";
 
 import MockDiscord from "../../mocks/mockDiscord";
 import { messageUtils } from "../../../src/command/matches/message/messageUtils";
@@ -72,33 +65,6 @@ describe("testing messageUtils", () => {
       expect(embed.author).toMatchObject<corde.IMessageEmbedAuthor>({
         name: "foo",
       });
-    });
-
-    it("should convert messageEmbedSimple files string", () => {
-      const messageLike: corde.IMessageEmbed = {
-        files: ["test 1"],
-      };
-      const embed = messageUtils.embedMessageInterfaceToMessageEmbed(messageLike);
-      expect(embed.files).toMatchObject<string[]>(["test 1"]);
-    });
-
-    it("should convert messageEmbedSimple files object", () => {
-      const stream = new Stream();
-      const messageLike: corde.IMessageEmbed = {
-        files: [
-          {
-            name: "file 1",
-            attachment: stream,
-          },
-        ],
-      };
-      const embed = messageUtils.embedMessageInterfaceToMessageEmbed(messageLike);
-      expect(embed.files).toMatchObject<corde.IFile[]>([
-        {
-          name: "file 1",
-          attachment: stream,
-        },
-      ]);
     });
 
     it("should convert messageEmbedSimple files string", () => {
@@ -169,13 +135,13 @@ describe("testing messageUtils", () => {
       expect(messageUtils.humanizeMessageIdentifierObject(undefined)).toEqual("");
     });
 
-    it("should return message refering to the content", () => {
+    it("should return message referring to the content", () => {
       expect(messageUtils.humanizeMessageIdentifierObject({ content: "test" })).toEqual(
         'message of content "test"',
       );
     });
 
-    it("should return message refering to the oldContent", () => {
+    it("should return message referring to the oldContent", () => {
       expect(messageUtils.humanizeMessageIdentifierObject({ oldContent: "test" })).toEqual(
         'message of content "test"',
       );
@@ -291,19 +257,6 @@ describe("testing messageUtils", () => {
       const msg = messageUtils.messageEmbedToMessageEmbedInterface(embed);
       expect(msg).toEqual<corde.IMessageEmbed>({
         url: "www",
-      });
-    });
-
-    it("should set files", () => {
-      embed.files.push(new MessageAttachment("www", "test"));
-      const msg = messageUtils.messageEmbedToMessageEmbedInterface(embed);
-      expect(msg).toEqual<corde.IMessageEmbed>({
-        files: [
-          {
-            attachment: "www",
-            name: "test",
-          },
-        ],
       });
     });
 

@@ -46,7 +46,7 @@ describe(`testing ${testName} function`, () => {
 
   it("should return a passed test due to isNot true and timeout", async () => {
     const report = await debugCon()
-      .should.not// @ts-expect-error
+      .should.not // @ts-expect-error
       .pinMessage("");
     expect(report).toEqual(passReport);
     expect(report).toMatchSnapshot();
@@ -54,7 +54,7 @@ describe(`testing ${testName} function`, () => {
 
   it("should return a failed test due to isNot false and timeout", async () => {
     const report = await debugCon()
-      .should// @ts-expect-error
+      .should // @ts-expect-error
       .pinMessage("1233");
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
@@ -90,10 +90,10 @@ describe(`testing ${testName} function`, () => {
     cordeClient.getRoles = jest.fn().mockReturnValue(mockDiscord.roleManager.cache);
     cordeClient.findRole = jest.fn().mockReturnValue(mockDiscord.role);
 
-    const erroMessage = "can not send message to channel x";
+    const errorMessage = "can not send message to channel x";
     cordeClient.sendTextMessage = jest
       .fn()
-      .mockImplementation(() => Promise.reject(new Error(erroMessage)));
+      .mockImplementation(() => Promise.reject(new Error(errorMessage)));
 
     const report = await debugCon().should.pinMessage({ id: "123" });
 

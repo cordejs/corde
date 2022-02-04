@@ -2,6 +2,6 @@
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "libTest",
-    "types": ["node", "jest", "../src/global"]
+    "types": ["node", "jest", "../src/global", "./discord.js.types"]
   }
 }

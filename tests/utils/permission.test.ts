@@ -1,5 +1,5 @@
 import { Permission } from "../../src";
-import { calcPermissionsValue } from "../../src/utils/permission";
+import { calcPermissionsValue } from "../../src/utils/calcPermissionsValue";
 
 describe("testing permission conversion", () => {
   it("should get value from permission", () => {
