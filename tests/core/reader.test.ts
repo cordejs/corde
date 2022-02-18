@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
-import runtime from "../../src/core";
 import { reader } from "../../src/core/Reader";
+import runtime from "../../src/core/runtime";
 import { FileError } from "../../src/errors";
 import { beforeAll as _beforeAll } from "../../src/hooks";
 

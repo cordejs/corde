@@ -1,5 +1,5 @@
 import { Config } from "../../src/core/Config";
-import runtime from "../../src/core";
+import runtime from "../../src/core/runtime";
 
 describe("Define tests for index of common module", () => {
   it("Should import runtime", () => {

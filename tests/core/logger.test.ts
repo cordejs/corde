@@ -42,7 +42,7 @@ if (console.timeStamp) {
 }
 
 import chalk from "chalk";
-import { Logger, StackContainer } from "../../src/core";
+import { Logger, StackContainer } from "../../src/core/Logger";
 
 const _logger = new Logger(process.stdout);
 

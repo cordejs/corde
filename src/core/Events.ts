@@ -35,6 +35,7 @@ import {
   CloseEvent,
   User,
   VoiceState,
+  MessageReaction,
 } from "discord.js";
 import { once } from "events";
 import { ObjectLike, Optional } from "../types";
@@ -432,7 +433,7 @@ export class Events implements corde.IOnceEvents, ClientEventsFn {
    * @internal
    */
   onceReady() {
-    return this._once<void>("ready");
+    return this._once<Client<true>>("ready");
   }
 
   /**
@@ -1376,7 +1377,9 @@ export class Events implements corde.IOnceEvents, ClientEventsFn {
    * removed.
    * @internal
    */
-  onMessageReactionRemoveAll(fn: (message: Message | PartialMessage) => void) {
+  onMessageReactionRemoveAll(
+    fn: (message: Message | PartialMessage, reactions: Collection<string, MessageReaction>) => void,
+  ) {
     this._client.on("messageReactionRemoveAll", fn);
   }
 

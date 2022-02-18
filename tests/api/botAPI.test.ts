@@ -1,6 +1,7 @@
+import { Collection, MessageOptions } from "discord.js";
 import { BotAPI } from "../../src/api";
-import { mapper } from "../../src/mapper/messageMapper";
 import { ICordeBot } from "../../src/types";
+import { collectionToArray } from "../../src/utils/collectionToArray";
 import MockDiscord from "../mocks/mockDiscord";
 import { initCordeClientWithChannel } from "../testHelper";
 
@@ -9,11 +10,16 @@ const mockDiscord = new MockDiscord();
 let bot: BotAPI;
 let cordeBot: ICordeBot;
 
+function replaceCollection<T, U>(from: Collection<T, U>, to: Collection<T, U>) {
+  to.clear();
+  from.forEach((value, key) => to.set(key, value));
+}
+
 beforeEach(() => {
-  const client = mockDiscord.createMockClient();
+  const client = mockDiscord.mockClient();
   client.readyAt = new Date();
   cordeBot = initCordeClientWithChannel(mockDiscord, client);
-  client.emit("ready");
+  client.emit("ready", client);
   bot = new BotAPI(cordeBot);
 });
 
@@ -48,12 +54,10 @@ describe("testing corde bot API", () => {
       .spyOn(cordeBot, "sendMessage")
       .mockImplementation(() => Promise.resolve(mockDiscord.message));
 
-    const embed: corde.IMessageEmbed = {
-      author: "me",
-    };
+    const embed: MessageOptions = {};
 
     await bot.send(embed);
-    expect(spy).toBeCalledWith(mapper.embedInterfaceToMessageEmbed(embed));
+    expect(spy).toBeCalled();
   });
 
   it("should return true for message author be corde's bot", () => {
@@ -112,7 +116,7 @@ describe("testing corde bot API", () => {
 
   describe("testing bot.channels", () => {
     it("should get discord.js client channels cache", () => {
-      expect(bot.channels).toEqual(cordeBot.client.channels.cache.array());
+      expect(bot.channels).toEqual(collectionToArray(cordeBot.client.channels.cache));
     });
 
     it("should throw error due to not logged bot", () => {
@@ -150,7 +154,7 @@ describe("testing corde bot API", () => {
     });
 
     it("should get discord.js client guilds", () => {
-      expect(bot.guilds).toEqual(cordeBot.client.guilds.cache.array());
+      expect(bot.guilds).toEqual(collectionToArray(cordeBot.client.guilds.cache));
     });
   });
 
@@ -160,7 +164,7 @@ describe("testing corde bot API", () => {
       expect(() => bot.guildMembers).toThrowError();
     });
     it("should get discord.js client members", () => {
-      expect(bot.guildMembers).toEqual(cordeBot.guild.members.cache.array());
+      expect(bot.guildMembers).toEqual(collectionToArray(cordeBot.guild.members.cache));
     });
   });
 
@@ -171,12 +175,13 @@ describe("testing corde bot API", () => {
     });
 
     it("should get discord.js client roles", () => {
-      expect(bot.roles).toEqual(cordeBot.guild.roles.cache.array());
+      expect(bot.roles).toEqual(collectionToArray(cordeBot.guild.roles.cache));
     });
   });
 
   it("should get only textChannels", () => {
     expect(bot.getOnlyTextChannels()).toHaveLength(0);
+    // @ts-expect-error
     cordeBot.client.channels.cache = mockDiscord.textChannelCollection;
     expect(bot.getOnlyTextChannels().length).not.toBe(0);
   });
@@ -214,6 +219,7 @@ describe("testing corde bot API", () => {
     });
 
     it("should get by invalid guildId without fetch", async () => {
+      // @ts-expect-error
       cordeBot.client.guilds.cache = mockDiscord.guildCollection;
       const spy = jest
         .spyOn(cordeBot.guild.roles, "fetch")
@@ -224,7 +230,7 @@ describe("testing corde bot API", () => {
     });
 
     it("should get by invalid guildId with fetch", async () => {
-      cordeBot.client.guilds.cache = mockDiscord.guildCollection;
+      replaceCollection(mockDiscord.guildCollection, cordeBot.client.guilds.cache);
 
       const spy = jest
         .spyOn(cordeBot.guild.roles, "fetch")
@@ -245,6 +251,7 @@ describe("testing corde bot API", () => {
     });
 
     it("should get by invalid guildId, not finding the guild", async () => {
+      // @ts-expect-error
       cordeBot.client.guilds.cache = mockDiscord.guildCollection;
       jest.spyOn(cordeBot.guild.roles, "fetch").mockResolvedValue(mockDiscord.role as any);
       const spyGuildFetch = jest
@@ -263,22 +270,26 @@ describe("testing corde bot API", () => {
 
   describe("testing getChannel", () => {
     it("should get channel defined in configs", () => {
+      // @ts-expect-error
       cordeBot.client.channels.cache = mockDiscord.textChannelCollection;
       expect(bot.getChannel()).toEqual(cordeBot.channel);
     });
 
     it("should return undefined due to no channel found in cache", () => {
+      // @ts-expect-error
       cordeBot.client.channels.cache = mockDiscord.textChannelCollection;
       expect(bot.getChannel({ id: "321foo" })).toEqual(undefined);
     });
 
     it("should get channel by id", () => {
+      // @ts-expect-error
       cordeBot.client.channels.cache = mockDiscord.textChannelCollection;
       const channel = mockDiscord.textChannelCollection.first();
       expect(bot.getChannel(channel?.id ?? "")).toEqual(channel);
     });
 
     it("should get channel by id inside object", () => {
+      // @ts-expect-error
       cordeBot.client.channels.cache = mockDiscord.textChannelCollection;
       const channel = mockDiscord.textChannelCollection.first();
       // @ts-expect-error
@@ -286,47 +297,47 @@ describe("testing corde bot API", () => {
     });
 
     it("should get channel by name inside object", () => {
-      cordeBot.client.channels.cache = mockDiscord.textChannelCollection;
+      replaceCollection(mockDiscord.textChannelCollection, cordeBot.client.channels.cache);
       const channel = mockDiscord.textChannelCollection.first();
       // @ts-expect-error
       expect(bot.getChannel({ name: channel.name })).toEqual(channel);
     });
 
     it("should return undefined", () => {
-      cordeBot.client.channels.cache = mockDiscord.textChannelCollection;
+      replaceCollection(mockDiscord.textChannelCollection, cordeBot.client.channels.cache);
       expect(bot.getChannel({ id: "aaaa" })).toEqual(undefined);
     });
   });
 
   describe("testing getGuild", () => {
     it("should get guild defined in configs", () => {
-      cordeBot.client.guilds.cache = mockDiscord.guildCollection;
+      replaceCollection(mockDiscord.guildCollection, cordeBot.client.guilds.cache);
       expect(bot.getGuild()).toEqual(cordeBot.guild);
     });
 
     it("should get guild by id", () => {
-      cordeBot.client.guilds.cache = mockDiscord.guildCollection;
+      replaceCollection(mockDiscord.guildCollection, cordeBot.client.guilds.cache);
       const guild = mockDiscord.guildCollection.first();
       // @ts-expect-error
       expect(bot.getGuild(guild.id)).toEqual(guild);
     });
 
     it("should get guild by id inside object", () => {
-      cordeBot.client.guilds.cache = mockDiscord.guildCollection;
+      replaceCollection(mockDiscord.guildCollection, cordeBot.client.guilds.cache);
       const guild = mockDiscord.guildCollection.first();
       // @ts-expect-error
       expect(bot.getGuild({ id: guild.id })).toEqual(guild);
     });
 
     it("should get guild by name inside object", () => {
-      cordeBot.client.guilds.cache = mockDiscord.guildCollection;
+      replaceCollection(mockDiscord.guildCollection, cordeBot.client.guilds.cache);
       const guild = mockDiscord.guildCollection.first();
       // @ts-expect-error
       expect(bot.getGuild({ name: guild.name })).toEqual(guild);
     });
 
     it("should return undefined", () => {
-      cordeBot.client.guilds.cache = mockDiscord.guildCollection;
+      replaceCollection(mockDiscord.guildCollection, cordeBot.client.guilds.cache);
       expect(bot.getGuild({ id: "aaaa" })).toEqual(undefined);
     });
   });
@@ -480,7 +491,7 @@ describe("testing corde bot API", () => {
         .mockImplementation(null);
       const name = "aaa";
       await bot.createVoiceChannel("aaa");
-      expect(spy).toBeCalledWith(name, { type: "voice" });
+      expect(spy).toBeCalledWith(name, { type: "GUILD_VOICE" });
     });
 
     it("should call guild.channels.create passing type = 'voice' (using object name)", async () => {
@@ -490,7 +501,7 @@ describe("testing corde bot API", () => {
         .mockImplementation(null);
       const name = "aaa";
       await bot.createVoiceChannel({ name });
-      expect(spy).toBeCalledWith(name, { name, type: "voice" });
+      expect(spy).toBeCalledWith(name, { name, type: "GUILD_VOICE" });
     });
   });
 
@@ -512,7 +523,7 @@ describe("testing corde bot API", () => {
         .mockImplementation(null);
       const name = "aaa";
       await bot.createTextChannel("aaa");
-      expect(spy).toBeCalledWith(name, { type: "text" });
+      expect(spy).toBeCalledWith(name, { type: "GUILD_TEXT" });
     });
 
     it("should call guild.channels.create passing type = 'text' (using object name)", async () => {
@@ -522,7 +533,7 @@ describe("testing corde bot API", () => {
         .mockImplementation(null);
       const name = "aaa";
       await bot.createTextChannel({ name });
-      expect(spy).toBeCalledWith(name, { name, type: "text" });
+      expect(spy).toBeCalledWith(name, { name, type: "GUILD_TEXT" });
     });
   });
 
@@ -544,7 +555,7 @@ describe("testing corde bot API", () => {
         .mockImplementation(null);
       const name = "aaa";
       await bot.createCategoryChannel("aaa");
-      expect(spy).toBeCalledWith(name, { type: "category" });
+      expect(spy).toBeCalledWith(name, { type: "GUILD_CATEGORY" });
     });
 
     it("should call guild.channels.create passing type = 'category' (using object name)", async () => {
@@ -554,7 +565,7 @@ describe("testing corde bot API", () => {
         .mockImplementation(null);
       const name = "aaa";
       await bot.createCategoryChannel({ name });
-      expect(spy).toBeCalledWith(name, { name, type: "category" });
+      expect(spy).toBeCalledWith(name, { name, type: "GUILD_CATEGORY" });
     });
   });
 
@@ -570,7 +581,7 @@ describe("testing corde bot API", () => {
     });
 
     it("should get role from cache using id (string)", () => {
-      cordeBot.guild.roles.cache = mockDiscord.roleManager.cache;
+      cordeBot.guild.roles = mockDiscord.roleManager;
       const testRole = mockDiscord.roleManager.cache.first();
       // @ts-expect-error
       const role = bot.getRole(testRole.id);
@@ -578,18 +589,14 @@ describe("testing corde bot API", () => {
     });
 
     it("should get role from cache using id (in object)", () => {
-      cordeBot.guild.roles.cache = mockDiscord.roleManager.cache;
       const testRole = mockDiscord.roleManager.cache.first();
-      // @ts-expect-error
-      const role = bot.getRole({ id: testRole.id });
+      const role = bot.getRole({ id: testRole?.id });
       expect(role).toEqual(testRole);
     });
 
     it("should get role from cache using name (in object)", () => {
-      cordeBot.guild.roles.cache = mockDiscord.roleManager.cache;
       const testRole = mockDiscord.roleManager.cache.first();
-      // @ts-expect-error
-      const role = bot.getRole({ name: testRole.name });
+      const role = bot.getRole({ name: testRole?.name });
       expect(role).toEqual(testRole);
     });
   });

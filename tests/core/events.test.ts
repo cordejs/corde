@@ -16,6 +16,7 @@ import {
   VoiceState,
   TextBasedChannel,
   GuildBan,
+  Typing,
 } from "discord.js";
 import { Events } from "../../src/core/Events";
 import MockDiscord from "../mocks/mockDiscord";
@@ -42,8 +43,8 @@ describe("testing events event", () => {
     it("should get async once", async () => {
       const promise = events.onceReady();
       client.emit(eventName, client);
-      const _void = await promise;
-      expect(_void).toBeFalsy();
+      const _client = await promise;
+      expect(_client).toEqual(client);
     });
   });
 
@@ -208,8 +209,8 @@ describe("testing events event", () => {
     });
   });
 
-  describe("testing disconnect event", () => {
-    const eventName = "disconnect";
+  describe("testing shardDisconnect event", () => {
+    const eventName = "shardDisconnect";
     it("should get callback", () => {
       let closeEvent!: CloseEvent;
       let code = 0;
@@ -217,14 +218,14 @@ describe("testing events event", () => {
         closeEvent = event;
         code = _code;
       });
-      client.emit(eventName, {}, 1);
+      client.emit(eventName, {} as any as CloseEvent, 1);
       expect(closeEvent).toEqual({});
       expect(code).toEqual(1);
     });
 
     it("should get async once", async () => {
       const promise = events.onceDisconnect();
-      client.emit(eventName, {}, 1);
+      client.emit(eventName, {} as any as CloseEvent, 1);
       const [closeEvent, code] = await promise;
       expect(closeEvent).toEqual({});
       expect(code).toEqual(1);
@@ -318,36 +319,34 @@ describe("testing events event", () => {
       events.onGuildBan((guild) => {
         _guild = guild;
       });
-      client.emit(eventName, mockDiscord.guild, mockDiscord.user);
-      expect(_guild).toEqual(mockDiscord.guild);
+      client.emit(eventName, mockDiscord.guildBan);
+      expect(_guild).toEqual(mockDiscord.guildBan);
     });
 
     it("should get async once", async () => {
       const promise = events.onceGuildBan();
-      client.emit(eventName, mockDiscord.guild, mockDiscord.user);
-      const [_guild, _user] = await promise;
-      expect(_guild).toEqual(mockDiscord.guild);
-      expect(_user).toBe(mockDiscord.user);
+      client.emit(eventName, mockDiscord.guildBan);
+      const _guildBan = await promise;
+      expect(_guildBan).toEqual(mockDiscord.guildBan);
     });
   });
 
   describe("testing guildBanRemove event", () => {
     const eventName = "guildBanRemove";
     it("should get callback", () => {
-      let _guild!: Guild;
+      let _guild!: GuildBan;
       events.onGuildBanRemove((guild) => {
         _guild = guild;
       });
-      client.emit(eventName, mockDiscord.guild, mockDiscord.user);
-      expect(_guild).toEqual(mockDiscord.guild);
+      client.emit(eventName, mockDiscord.guildBan);
+      expect(_guild).toEqual(mockDiscord.guildBan);
     });
 
     it("should get async once", async () => {
       const promise = events.onceGuildBanRemove();
-      client.emit(eventName, mockDiscord.guild, mockDiscord.user);
-      const [_guild, _user] = await promise;
-      expect(_guild).toEqual(mockDiscord.guild);
-      expect(_user).toBe(mockDiscord.user);
+      client.emit(eventName, mockDiscord.guildBan);
+      const _guild = await promise;
+      expect(_guild).toEqual(mockDiscord.guildBan);
     });
   });
 
@@ -658,7 +657,7 @@ describe("testing events event", () => {
         emojis: [
           {
             id: mockDiscord.messageReaction.emoji.id ?? "",
-            name: mockDiscord.messageReaction.emoji.name,
+            name: mockDiscord.messageReaction.emoji.name ?? "",
           },
         ],
       });
@@ -723,13 +722,13 @@ describe("testing events event", () => {
     it("should get callback", () => {
       let _message!: Message | PartialMessage;
       events.onMessageReactionRemoveAll((messages) => (_message = messages));
-      client.emit(eventName, mockDiscord.message);
+      client.emit(eventName, mockDiscord.message, mockDiscord.messageReactionCollection);
       expect(_message).toEqual(mockDiscord.message);
     });
 
     it("should get async once", async () => {
       const promise = events.onceMessageReactionRemoveAll();
-      client.emit(eventName, mockDiscord.message);
+      client.emit(eventName, mockDiscord.message, mockDiscord.messageReactionCollection);
       const message = await promise;
       expect(message).toEqual(mockDiscord.message);
     });
@@ -837,7 +836,9 @@ describe("testing events event", () => {
 
   describe("testing onceRolePermissionUpdate", () => {
     const eventName = "roleUpdate";
-    const updatedRole = mockDiscord.createMockRole("test", 0);
+    const updatedRole = mockDiscord.mockRole({
+      name: "test",
+    });
     updatedRole.id = mockDiscord.role.id;
     updatedRole.name = mockDiscord.role.name;
 
@@ -880,21 +881,18 @@ describe("testing events event", () => {
     const eventName = "typingStart";
     it("should get callback", () => {
       let _typing!: Typing;
-      let _user!: User | PartialUser;
       events.onTypingStart((typing) => {
         _typing = typing;
       });
-      client.emit(eventName, mockDiscord.textChannel, mockDiscord.user);
-      expect(_typing).toEqual(mockDiscord.textChannel);
-      expect(_user).toEqual(mockDiscord.user);
+      client.emit(eventName, mockDiscord.typing);
+      expect(_typing).toEqual(mockDiscord.typing);
     });
 
     it("should get async once", async () => {
       const promise = events.onceTypingStart();
-      client.emit(eventName, mockDiscord.textChannel, mockDiscord.user);
-      const [_channel, _user] = await promise;
-      expect(_channel).toEqual(mockDiscord.textChannel);
-      expect(_user).toEqual(mockDiscord.user);
+      client.emit(eventName, mockDiscord.typing);
+      const _typing = await promise;
+      expect(_typing).toEqual(mockDiscord.typing);
     });
   });
 

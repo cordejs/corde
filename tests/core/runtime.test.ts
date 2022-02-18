@@ -1,4 +1,4 @@
-import runtime from "../../src/core";
+import runtime from "../../src/core/runtime";
 import { DEFAULT_TEST_TIMEOUT } from "../../src/const";
 
 import { IConfigOptions } from "../../src/types";

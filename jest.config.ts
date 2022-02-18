@@ -9,6 +9,8 @@ module.exports = {
   collectCoverageFrom: ["./src/**/*.ts"],
   testMatch: ["**/tests/**/*.test.ts"],
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
+  modulePaths: ["<rootDir>", "./tests/fixtures"],
+  moduleDirectories: ["./tests/fixtures", "node_modules"],
   modulePathIgnorePatterns: ["./tests/mocks", "./tests/manual_test", "./tests/dirTestFiles"],
   projects: ["<rootDir>/tests"],
   restoreMocks: true,

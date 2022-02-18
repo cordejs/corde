@@ -23,8 +23,9 @@ import {
   Guild,
   PartialUser,
   BaseGuildTextChannel,
-  Options,
-} from "../discord.js.types";
+  Intents,
+  GuildBan,
+} from "discord.js";
 import { ColorsHex } from "../../src";
 import {
   PresenceUpdateStatus,
@@ -39,6 +40,7 @@ import {
 import { ObjectLike } from "../../src/types";
 import { collectionToArray } from "../../src/utils/collectionToArray";
 import { Fake } from "./fake";
+import { RawGuildBanData } from "discord.js/typings/rawDataTypes";
 
 /**
  * @private
@@ -98,6 +100,7 @@ export default class MockDiscord {
   private _messageEmbed!: MessageEmbed;
   private _client!: Client;
   private _guild!: Guild;
+  private _guildBan!: GuildBan;
   private _guildEmoji!: GuildEmoji;
   private _typing!: Typing;
   private _guildChannel!: GuildChannel;
@@ -137,7 +140,7 @@ export default class MockDiscord {
    * Get a mocked instance of Client
    */
   get client() {
-    return this._client as any as import("discord.js").Client;
+    return this._client;
   }
 
   /**
@@ -151,57 +154,61 @@ export default class MockDiscord {
    * Get a mocked instance of Guild
    */
   get guild() {
-    return this._guild as any as import("discord.js").Guild;
+    return this._guild;
+  }
+
+  get guildBan() {
+    return this._guildBan;
   }
 
   get typing() {
-    return this._typing as any as import("discord.js").Typing;
+    return this._typing;
   }
 
   /**
    * Get a mocked instance of GuildChannel
    */
   get guildChannel() {
-    return this._guildChannel as any as import("discord.js").GuildChannel;
+    return this._guildChannel;
   }
 
   /**
    * Get a mocked instance of TextChannel
    */
   get textChannel() {
-    return this._textChannel as any as import("discord.js").TextChannel;
+    return this._textChannel;
   }
 
   /**
    * Get a mocked instance of User
    */
   get user() {
-    return this._user as any as import("discord.js").User;
+    return this._user;
   }
 
   get userBot() {
-    return this._userBot as any as import("discord.js").User;
+    return this._userBot;
   }
 
   /**
    * Get a mocked instance of GuildMember
    */
   get guildMember() {
-    return this._guildMember as any as import("discord.js").GuildMember;
+    return this._guildMember;
   }
 
   /**
    * Get a mocked instance of Message
    */
   get message() {
-    return this._message as any as import("discord.js").Message;
+    return this._message;
   }
 
   /**
    * Get a mocked instance of GuildManager
    */
   get guildManager() {
-    return this._guildManager as any as import("discord.js").GuildManager;
+    return this._guildManager;
   }
 
   /**
@@ -209,10 +216,7 @@ export default class MockDiscord {
    * the content in this collection is **message**
    */
   get messageCollection() {
-    return this._messageCollection as any as import("discord.js").Collection<
-      string,
-      import("discord.js").Message<boolean>
-    >;
+    return this._messageCollection;
   }
 
   /**
@@ -220,7 +224,7 @@ export default class MockDiscord {
    * is for **this.message**
    */
   get messageReaction() {
-    return this._messageReaction as any as import("discord.js").MessageReaction;
+    return this._messageReaction;
   }
 
   /**
@@ -228,7 +232,7 @@ export default class MockDiscord {
    * to *this.message*
    */
   get isolatedMessageReaction() {
-    return this._isolatedMessageReaction as any as import("discord.js").MessageReaction;
+    return this._isolatedMessageReaction;
   }
 
   /**
@@ -242,10 +246,7 @@ export default class MockDiscord {
    * Get a message reaction collection for **this.reaction**
    */
   get messageReactionCollection() {
-    return this._messageReactionCollection as any as import("discord.js").Collection<
-      string,
-      import("discord.js").MessageReaction
-    >;
+    return this._messageReactionCollection;
   }
 
   /**
@@ -270,7 +271,7 @@ export default class MockDiscord {
   }
 
   get presence() {
-    return this._presence as any as import("discord.js").Presence;
+    return this._presence;
   }
 
   /**
@@ -300,29 +301,26 @@ export default class MockDiscord {
   }
 
   get role() {
-    return this._role as any as import("discord.js").Role;
+    return this._role;
   }
 
   /**
    * Role manager with some roles added to cache.
    */
   get roleManager() {
-    return this._roleManager as any as import("discord.js").RoleManager;
+    return this._roleManager;
   }
 
   get guildEmoji() {
-    return this._guildEmoji as any as import("discord.js").GuildEmoji;
+    return this._guildEmoji;
   }
 
   get guildMemberCollection() {
-    return this._guildMemberCollection as any as import("discord.js").Collection<
-      string,
-      import("discord.js").GuildMember
-    >;
+    return this._guildMemberCollection;
   }
 
   get voiceState() {
-    return this._voiceState as any as import("discord.js").VoiceState;
+    return this._voiceState;
   }
 
   get messageEmbedSimple() {
@@ -330,36 +328,27 @@ export default class MockDiscord {
   }
 
   get messageWithEmbed() {
-    return this._messageWithEmbed as any as import("discord.js").Message;
+    return this._messageWithEmbed;
   }
 
   get pinnedMessage() {
-    return this._pinnedMessage as any as import("discord.js").Message;
+    return this._pinnedMessage;
   }
 
   get unPinnedMessage() {
-    return this._unPinnedMessage as any as import("discord.js").Message;
+    return this._unPinnedMessage;
   }
 
   get textChannelCollection() {
-    return this._textChannelCollection as any as import("discord.js").Collection<
-      string,
-      import("discord.js").TextChannel
-    >;
+    return this._textChannelCollection;
   }
 
   get guildCollection() {
-    return this._guildCollection as any as import("discord.js").Collection<
-      string,
-      import("discord.js").Guild
-    >;
+    return this._guildCollection;
   }
 
   get channelCollection() {
-    return this._channelCollection as any as import("discord.js").Collection<
-      string,
-      import("discord.js").Channel
-    >;
+    return this._channelCollection;
   }
 
   get<T extends Collection<K, V>, K, V>(collection: T, index: number) {
@@ -406,9 +395,11 @@ export default class MockDiscord {
     this._textChannelCollection = this.mockTextChannelCollection();
     this._channelCollection = this.mockChannelCollection();
     this._guildCollection = this.mockGuildCollection();
+
+    this._guildBan = this.mockGuildBan();
   }
 
-  mockClient<TConversion extends any>() {
+  mockClient() {
     /**
      * Initialize without the restSweepInterval was causing timeout error:
      * 
@@ -423,14 +414,30 @@ export default class MockDiscord {
       at async _run10000 (node_modules/@jest/core/build/cli/index.js:320:7)
       at async runCLI (node_modules/@jest/core/build/cli/index.js:173:3)
      */
-    return new Client(Options.createDefault()) as TConversion;
+    return new Client({
+      intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
+    });
   }
 
   mockId() {
     return SnowflakeUtil.generate();
   }
 
-  mockTyping() {
+  mockRawGuildBanData(): RawGuildBanData {
+    return {
+      guild_id: Fake.Id,
+      reason: "",
+      user: this.mockApiUser(),
+    };
+  }
+
+  mockGuildBan(): GuildBan {
+    // @ts-expect-error
+    return new GuildBan(this.mockClient(), this.mockRawGuildBanData(), this.mockGuild());
+  }
+
+  mockTyping(): Typing {
+    // @ts-ignore
     return new Typing(this.mockTextChannel(), this.mockPartialUser());
   }
 
@@ -469,6 +476,7 @@ export default class MockDiscord {
   }
 
   mockGuild() {
+    // @ts-ignore
     return new Guild(this._client, {
       unavailable: false,
       id: "729334530350652501",
@@ -496,6 +504,7 @@ export default class MockDiscord {
   }
 
   mockTextChannel() {
+    // @ts-ignore
     return new TextChannel(
       this.mockGuild(),
       {
@@ -508,6 +517,7 @@ export default class MockDiscord {
   }
 
   mockGuildChannel() {
+    // @ts-ignore
     return new BaseGuildTextChannel(this._guild, {
       id: Fake.Id,
       permissions: "",
@@ -522,6 +532,7 @@ export default class MockDiscord {
       id: this.generateId(),
       deleted: false,
     };
+    // @ts-ignore
     return new GuildEmoji(this._client, emojiData ?? data, this._guild);
   }
 
@@ -541,6 +552,7 @@ export default class MockDiscord {
   }
 
   mockUser(isBot: boolean) {
+    // @ts-ignore
     return new User(this._client, {
       id: "529112540350652502",
       username: "UserCorde",
@@ -551,6 +563,7 @@ export default class MockDiscord {
   }
 
   mockGuildMember() {
+    // @ts-ignore
     return new GuildMember(
       this._client,
       {
@@ -593,6 +606,7 @@ export default class MockDiscord {
   }
 
   mockMessage(customMessage = "this is the message content") {
+    // @ts-ignore
     const msg = new Message(this._client, {
       id: "125332540654650541",
       type: MessageType.Call,
@@ -637,6 +651,7 @@ export default class MockDiscord {
   }
 
   mockMessageReaction(customEmoji = "😀") {
+    // @ts-ignore
     return new MessageReaction(
       this._client,
       {
@@ -654,6 +669,7 @@ export default class MockDiscord {
 
   mockIsolatedMockMessageReaction() {
     const message = this.mockMessage();
+    // @ts-ignore
     return new MessageReaction(
       this._client,
       {
@@ -670,6 +686,7 @@ export default class MockDiscord {
   }
 
   mockMessageManager() {
+    // @ts-ignore
     return new MessageManager(this._textChannel);
   }
 
@@ -722,7 +739,8 @@ export default class MockDiscord {
     return embed;
   }
 
-  mockRole(apiRole?: APIRole) {
+  mockRole(apiRole?: Partial<APIRole>) {
+    // @ts-ignore
     const role = new Role(
       this._client,
       {
@@ -743,6 +761,7 @@ export default class MockDiscord {
   }
 
   mockPresence() {
+    // @ts-ignore
     return new Presence(this._client, {
       status: PresenceUpdateStatus.Online,
       activities: [],
@@ -756,6 +775,7 @@ export default class MockDiscord {
   }
 
   mockVoiceState() {
+    // @ts-ignore
     return new VoiceState(this._guild, {
       channel_id: "123123",
       deaf: false,
@@ -815,6 +835,7 @@ export default class MockDiscord {
   }
 
   mockRoleManager() {
+    // @ts-ignore
     const manager = new RoleManager(this._guild, [this.mockApiRole()]);
 
     // Workaround for rawPosition change after add to manager
