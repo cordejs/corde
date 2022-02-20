@@ -1,4 +1,11 @@
-import { EmbedFieldData, MessageEmbed, MessageEmbedImage, MessageEmbedThumbnail } from "discord.js";
+import {
+  EmbedFieldData,
+  EmbedFooterData,
+  MessageEmbed,
+  MessageEmbedAuthor,
+  MessageEmbedImage,
+  MessageEmbedThumbnail,
+} from "discord.js";
 
 import MockDiscord from "../../mocks/mockDiscord";
 import { messageUtils } from "../../../src/command/matches/message/messageUtils";
@@ -94,11 +101,13 @@ describe("testing messageUtils", () => {
     });
 
     it("should convert messageEmbedSimple footer string", () => {
-      const footer: corde.IMessageEmbedFooter = {
+      const footer: EmbedFooterData = {
         text: "footer text",
       };
       const messageLike: corde.IMessageEmbed = {
-        footer: "footer text",
+        footer: {
+          text: "footer text",
+        },
       };
       const embed = messageUtils.embedMessageInterfaceToMessageEmbed(messageLike);
       expect(embed.footer).toMatchObject(footer);
@@ -170,12 +179,16 @@ describe("testing messageUtils", () => {
     });
 
     it("should set author object", () => {
-      const author: corde.IMessageEmbedAuthor = {
+      const author: MessageEmbedAuthor = {
         name: "cordebot",
         iconURL: "www.google.com?icon",
         url: "www.google.com?url",
       };
-      embed.setAuthor(author.name, author.iconURL, author.url);
+      embed.author = {
+        name: author.name,
+        iconURL: author.iconURL,
+        url: author.url,
+      };
       const msg = messageUtils.messageEmbedToMessageEmbedInterface(embed);
       expect(msg).toEqual<corde.IMessageEmbed>({
         author,
@@ -183,7 +196,9 @@ describe("testing messageUtils", () => {
     });
 
     it("should set author name string", () => {
-      embed.setAuthor("bot");
+      embed.author = {
+        name: "bot",
+      };
       const msg = messageUtils.messageEmbedToMessageEmbedInterface(embed);
       expect(msg).toEqual<corde.IMessageEmbed>({
         author: "bot",
@@ -204,7 +219,10 @@ describe("testing messageUtils", () => {
     };
 
     it("should set footer object", () => {
-      embed.setFooter(footer.text, footer.iconURL);
+      embed.footer = {
+        text: footer.text,
+        iconURL: footer.iconURL,
+      };
       const msg = messageUtils.messageEmbedToMessageEmbedInterface(embed);
       expect(msg).toEqual<corde.IMessageEmbed>({
         footer,
@@ -212,10 +230,14 @@ describe("testing messageUtils", () => {
     });
 
     it("should set footer string", () => {
-      embed.setFooter(footer.text);
+      embed.footer = {
+        text: "test footer",
+      };
       const msg = messageUtils.messageEmbedToMessageEmbedInterface(embed);
       expect(msg).toEqual<corde.IMessageEmbed>({
-        footer: footer.text,
+        footer: {
+          text: "test footer",
+        },
       });
     });
 

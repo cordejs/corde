@@ -13,7 +13,7 @@ export function toEqual(this: ITestProps, expected: any, received: any) {
   let pass = matcherUtils.matchValues(
     () => {
       if (typeof expected === "object" && typeof received === "object") {
-        // Compare two objects using deep equal, if some prop in the object is asymetric,
+        // Compare two objects using deep equal, if some prop in the object is asymmetric,
         // use a custom and recursive comparable function.
         return deepEqual(expected, received);
       }

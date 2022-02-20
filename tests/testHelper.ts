@@ -1,7 +1,7 @@
 import path from "path";
 import fs from "fs";
 import MockDiscord from "./mocks/mockDiscord";
-import { Client } from "discord.js";
+import { Client, Collection } from "discord.js";
 import { CordeBot } from "../src/core/CordeBot";
 import { ICordeBot, ITestReport, ObjectLike } from "../src/types";
 import { IExpectTestBaseParams } from "../src/types";
@@ -20,6 +20,11 @@ export const tempJsonPath = path.resolve(process.cwd(), "__corde.json");
 
 export function getConsoleSpyStder(spy: jest.SpyInstance<void, any>) {
   return getFullConsoleLog(spy.mock.calls);
+}
+
+export function replaceCollection<T, U>(from: Collection<T, U>, to: Collection<T, U>) {
+  to.clear();
+  from.forEach((value, key) => to.set(key, value));
 }
 
 export function getFullConsoleLog(log: [any?, ...any[]][]) {

@@ -47,7 +47,7 @@ exports[`testing setRolePermission function should return a not passed test due 
 Object {
   "message": "    
     expected: role permissions change to: ATTACH_FILES
-    received: ADMINISTRATOR (and 30 others)
+    received: 
 ",
   "pass": false,
   "testName": "setRolePermission",
@@ -57,8 +57,8 @@ Object {
 exports[`testing setRolePermission function should return a not passed test due expected name did not match to received 2`] = `
 Object {
   "message": "    
-    [32m- Expected  - 62[39m
-    [31m+ Received  +  1[39m
+    [32m- Expected[39m
+    [31m+ Received[39m
     
     [2m  Array [[22m
     [32m-   \\"1\\",[39m
@@ -92,6 +92,7 @@ Object {
     [32m-   \\"268435456\\",[39m
     [32m-   \\"536870912\\",[39m
     [32m-   \\"1073741824\\",[39m
+    [32m-   \\"2147483648\\",[39m
     [32m-   \\"CREATE_INSTANT_INVITE\\",[39m
     [32m-   \\"KICK_MEMBERS\\",[39m
     [32m-   \\"BAN_MEMBERS\\",[39m
@@ -120,9 +121,32 @@ Object {
     [32m-   \\"MANAGE_NICKNAMES\\",[39m
     [32m-   \\"MANAGE_ROLES\\",[39m
     [32m-   \\"MANAGE_WEBHOOKS\\",[39m
-    [32m-   \\"MANAGE_EMOJIS\\",[39m
     [32m-   \\"STREAM\\",[39m
     [32m-   \\"VIEW_GUILD_INSIGHTS\\",[39m
+    [32m-   \\"MANAGE_EMOJIS_AND_STICKERS\\",[39m
+    [32m-   \\"USE_APPLICATION_COMMANDS\\",[39m
+    [32m-   \\"REQUEST_TO_SPEAK\\",[39m
+    [32m-   \\"4294967296\\",[39m
+    [32m-   \\"MANAGE_THREADS\\",[39m
+    [32m-   \\"17179869184\\",[39m
+    [32m-   \\"CREATE_PUBLIC_THREADS\\",[39m
+    [32m-   \\"34359738368\\",[39m
+    [32m-   \\"CREATE_PRIVATE_THREADS\\",[39m
+    [32m-   \\"68719476736\\",[39m
+    [32m-   \\"USE_EXTERNAL_STICKERS\\",[39m
+    [32m-   \\"137438953472\\",[39m
+    [32m-   \\"SEND_MESSAGES_IN_THREADS\\",[39m
+    [32m-   \\"274877906944\\",[39m
+    [32m-   \\"START_EMBEDDED_ACTIVITIES\\",[39m
+    [32m-   \\"549755813888\\",[39m
+    [32m-   \\"MODERATE_MEMBERS\\",[39m
+    [32m-   \\"1099511627776\\",[39m
+    [32m-   \\"MANAGE_EVENTS\\",[39m
+    [32m-   \\"8589934592\\",[39m
+    [32m-   \\"USE_PRIVATE_THREADS\\",[39m
+    [32m-   \\"8589934593\\",[39m
+    [32m-   \\"USE_PUBLIC_THREADS\\",[39m
+    [32m-   \\"8589934594\\",[39m
     [31m+   null,[39m
     [2m  ][22m
 ",
@@ -156,8 +180,8 @@ Object {
 exports[`testing setRolePermission function should return false due to invalid permission parameter (object) 1`] = `
 Object {
   "message": "    
-    [32m- Expected  - 62[39m
-    [31m+ Received  +  1[39m
+    [32m- Expected[39m
+    [31m+ Received[39m
     
     [2m  Array [[22m
     [32m-   \\"1\\",[39m
@@ -191,6 +215,7 @@ Object {
     [32m-   \\"268435456\\",[39m
     [32m-   \\"536870912\\",[39m
     [32m-   \\"1073741824\\",[39m
+    [32m-   \\"2147483648\\",[39m
     [32m-   \\"CREATE_INSTANT_INVITE\\",[39m
     [32m-   \\"KICK_MEMBERS\\",[39m
     [32m-   \\"BAN_MEMBERS\\",[39m
@@ -219,9 +244,32 @@ Object {
     [32m-   \\"MANAGE_NICKNAMES\\",[39m
     [32m-   \\"MANAGE_ROLES\\",[39m
     [32m-   \\"MANAGE_WEBHOOKS\\",[39m
-    [32m-   \\"MANAGE_EMOJIS\\",[39m
     [32m-   \\"STREAM\\",[39m
     [32m-   \\"VIEW_GUILD_INSIGHTS\\",[39m
+    [32m-   \\"MANAGE_EMOJIS_AND_STICKERS\\",[39m
+    [32m-   \\"USE_APPLICATION_COMMANDS\\",[39m
+    [32m-   \\"REQUEST_TO_SPEAK\\",[39m
+    [32m-   \\"4294967296\\",[39m
+    [32m-   \\"MANAGE_THREADS\\",[39m
+    [32m-   \\"17179869184\\",[39m
+    [32m-   \\"CREATE_PUBLIC_THREADS\\",[39m
+    [32m-   \\"34359738368\\",[39m
+    [32m-   \\"CREATE_PRIVATE_THREADS\\",[39m
+    [32m-   \\"68719476736\\",[39m
+    [32m-   \\"USE_EXTERNAL_STICKERS\\",[39m
+    [32m-   \\"137438953472\\",[39m
+    [32m-   \\"SEND_MESSAGES_IN_THREADS\\",[39m
+    [32m-   \\"274877906944\\",[39m
+    [32m-   \\"START_EMBEDDED_ACTIVITIES\\",[39m
+    [32m-   \\"549755813888\\",[39m
+    [32m-   \\"MODERATE_MEMBERS\\",[39m
+    [32m-   \\"1099511627776\\",[39m
+    [32m-   \\"MANAGE_EVENTS\\",[39m
+    [32m-   \\"8589934592\\",[39m
+    [32m-   \\"USE_PRIVATE_THREADS\\",[39m
+    [32m-   \\"8589934593\\",[39m
+    [32m-   \\"USE_PUBLIC_THREADS\\",[39m
+    [32m-   \\"8589934594\\",[39m
     [31m+   Object {},[39m
     [2m  ][22m
 ",
@@ -233,8 +281,8 @@ Object {
 exports[`testing setRolePermission function should return false due to invalid permission parameter (undefined) 1`] = `
 Object {
   "message": "    
-    [32m- Expected  - 62[39m
-    [31m+ Received  +  1[39m
+    [32m- Expected[39m
+    [31m+ Received[39m
     
     [2m  Array [[22m
     [32m-   \\"1\\",[39m
@@ -268,6 +316,7 @@ Object {
     [32m-   \\"268435456\\",[39m
     [32m-   \\"536870912\\",[39m
     [32m-   \\"1073741824\\",[39m
+    [32m-   \\"2147483648\\",[39m
     [32m-   \\"CREATE_INSTANT_INVITE\\",[39m
     [32m-   \\"KICK_MEMBERS\\",[39m
     [32m-   \\"BAN_MEMBERS\\",[39m
@@ -296,9 +345,32 @@ Object {
     [32m-   \\"MANAGE_NICKNAMES\\",[39m
     [32m-   \\"MANAGE_ROLES\\",[39m
     [32m-   \\"MANAGE_WEBHOOKS\\",[39m
-    [32m-   \\"MANAGE_EMOJIS\\",[39m
     [32m-   \\"STREAM\\",[39m
     [32m-   \\"VIEW_GUILD_INSIGHTS\\",[39m
+    [32m-   \\"MANAGE_EMOJIS_AND_STICKERS\\",[39m
+    [32m-   \\"USE_APPLICATION_COMMANDS\\",[39m
+    [32m-   \\"REQUEST_TO_SPEAK\\",[39m
+    [32m-   \\"4294967296\\",[39m
+    [32m-   \\"MANAGE_THREADS\\",[39m
+    [32m-   \\"17179869184\\",[39m
+    [32m-   \\"CREATE_PUBLIC_THREADS\\",[39m
+    [32m-   \\"34359738368\\",[39m
+    [32m-   \\"CREATE_PRIVATE_THREADS\\",[39m
+    [32m-   \\"68719476736\\",[39m
+    [32m-   \\"USE_EXTERNAL_STICKERS\\",[39m
+    [32m-   \\"137438953472\\",[39m
+    [32m-   \\"SEND_MESSAGES_IN_THREADS\\",[39m
+    [32m-   \\"274877906944\\",[39m
+    [32m-   \\"START_EMBEDDED_ACTIVITIES\\",[39m
+    [32m-   \\"549755813888\\",[39m
+    [32m-   \\"MODERATE_MEMBERS\\",[39m
+    [32m-   \\"1099511627776\\",[39m
+    [32m-   \\"MANAGE_EVENTS\\",[39m
+    [32m-   \\"8589934592\\",[39m
+    [32m-   \\"USE_PRIVATE_THREADS\\",[39m
+    [32m-   \\"8589934593\\",[39m
+    [32m-   \\"USE_PUBLIC_THREADS\\",[39m
+    [32m-   \\"8589934594\\",[39m
     [31m+   Object {},[39m
     [2m  ][22m
 ",

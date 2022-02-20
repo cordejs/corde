@@ -94,8 +94,8 @@ exports[`testing toBe should return false for { k: 1 } and {} 1`] = `
     
     expect([32mexpected[39m).toBe([31mreceived[39m)
     
-    [32m- Expected  - 3[39m
-    [31m+ Received  + 1[39m
+    [32m- Expected[39m
+    [31m+ Received[39m
     
     [32m- Object {[39m
     [32m-   \\"k\\": 1,[39m
@@ -110,8 +110,8 @@ exports[`testing toBe should return false for {} and { k: 1 } 1`] = `
     
     expect([32mexpected[39m).toBe([31mreceived[39m)
     
-    [32m- Expected  - 1[39m
-    [31m+ Received  + 3[39m
+    [32m- Expected[39m
+    [31m+ Received[39m
     
     [32m- Object {}[39m
     [31m+ Object {[39m
@@ -156,8 +156,8 @@ exports[`testing toBe should return false for Map(0) {} and Map(1) { 1 => 123123
     
     expect([32mexpected[39m).toBe([31mreceived[39m)
     
-    [32m- Expected  - 1[39m
-    [31m+ Received  + 3[39m
+    [32m- Expected[39m
+    [31m+ Received[39m
     
     [32m- Map {}[39m
     [31m+ Map {[39m
@@ -182,8 +182,8 @@ exports[`testing toBe should return false for any(String) and any(Number) 1`] = 
     
     expect([32mexpected[39m).toBe([31mreceived[39m)
     
-    [32m- Expected  - 1[39m
-    [31m+ Received  + 1[39m
+    [32m- Expected[39m
+    [31m+ Received[39m
     
     [2m  AsymmetricMatcher {[22m
     [2m    \\"_classType\\": Array [[22m

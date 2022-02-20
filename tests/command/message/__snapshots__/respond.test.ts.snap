@@ -44,9 +44,6 @@ Object {
           \\"value\\": \\"Some value here\\",
         },
       ],
-      \\"files\\": Array [
-        \\"https://i.imgur.com/wSTFkRM.png\\",
-      ],
       \\"thumbnailUrl\\": \\"https://i.imgur.com/wSTFkRM.png\\",
       \\"title\\": \\"Some title\\",
       \\"url\\": \\"https://discord.js.org/\\",
@@ -64,40 +61,13 @@ Object {
     expected: 'expect value'
     received: Object {
       \\"author\\": Object {
-        \\"iconURL\\": \\"https://i.imgur.com/wSTFkRM.png\\",
-        \\"name\\": \\"Some name\\",
-        \\"url\\": \\"https://discord.js.org\\",
+        \\"iconURL\\": \\"https://github.com/cordejs/corde/blob/master/website/static/img/logo/android-icon-192x192.png\\",
+        \\"name\\": \\"cordeto\\",
+        \\"url\\": undefined,
       },
       \\"color\\": 2123412,
-      \\"description\\": \\"Some description here\\",
-      \\"fields\\": Array [
-        Object {
-          \\"inline\\": false,
-          \\"name\\": \\"Regular field title\\",
-          \\"value\\": \\"Some value here\\",
-        },
-        Object {
-          \\"inline\\": false,
-          \\"name\\": \\"​\\",
-          \\"value\\": \\"​\\",
-        },
-        Object {
-          \\"inline\\": true,
-          \\"name\\": \\"Inline field title\\",
-          \\"value\\": \\"Some value here\\",
-        },
-        Object {
-          \\"inline\\": true,
-          \\"name\\": \\"Inline field title\\",
-          \\"value\\": \\"Some value here\\",
-        },
-      ],
-      \\"files\\": Array [
-        \\"https://i.imgur.com/wSTFkRM.png\\",
-      ],
-      \\"thumbnailUrl\\": \\"https://i.imgur.com/wSTFkRM.png\\",
+      \\"timestamp\\": 886761031000,
       \\"title\\": \\"Some title\\",
-      \\"url\\": \\"https://discord.js.org/\\",
     }
 ",
   "pass": false,

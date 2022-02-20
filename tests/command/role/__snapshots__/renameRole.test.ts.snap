@@ -26,7 +26,7 @@ exports[`testing renameRole function should return a failed test due expected na
 Object {
   "message": "    
     expected: role change name to 'test'
-    received: name was not changed (actual: 'WE DEM BOYZZ!!!!!! 1')
+    received: name was not changed (actual: 'Tortodile')
 ",
   "pass": false,
   "testName": "renameRole",
@@ -46,8 +46,8 @@ Object {
 exports[`testing renameRole function should return a failed test due to name should not change (isNot true) 1`] = `
 Object {
   "message": "    
-    expected: role not change name to 'WE DEM BOYZZ!!!!!! 1'
-    received: name was not changed (actual: 'WE DEM BOYZZ!!!!!! 1')
+    expected: role not change name to 'Tortodile'
+    received: name was not changed (actual: 'Tortodile')
 ",
   "pass": false,
   "testName": "renameRole",

@@ -83,8 +83,8 @@ export class Events implements corde.IOnceEvents, ClientEventsFn {
    * @param fn Operation to be executed after client becomes ready.
    * @internal
    */
-  onReady(fn: () => void): void {
-    this._client.on("ready", fn);
+  onReady(fn: () => void) {
+    return this._client.on("ready", fn);
   }
 
   /**

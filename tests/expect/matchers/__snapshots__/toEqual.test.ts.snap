@@ -56,8 +56,8 @@ exports[`testing toEqual should return false for { a: [AsymmetricMatcher] } and 
     
     expect([32mexpected[39m).not.toEqual([31mreceived[39m)
     
-    [32m- Expected  - 5[39m
-    [31m+ Received  + 1[39m
+    [32m- Expected[39m
+    [31m+ Received[39m
     
     [2m  Object {[22m
     [32m-   \\"a\\": AsymmetricMatcher {[39m
@@ -76,8 +76,8 @@ exports[`testing toEqual should return false for { a: [AsymmetricMatcher] } and 
     
     expect([32mexpected[39m).not.toEqual([31mreceived[39m)
     
-    [32m- Expected  - 3[39m
-    [31m+ Received  + 1[39m
+    [32m- Expected[39m
+    [31m+ Received[39m
     
     [2m  Object {[22m
     [32m-   \\"a\\": AsymmetricMatcher {[39m
@@ -94,8 +94,8 @@ exports[`testing toEqual should return false for { a: 1 } and { a: [AsymmetricMa
     
     expect([32mexpected[39m).not.toEqual([31mreceived[39m)
     
-    [32m- Expected  - 1[39m
-    [31m+ Received  + 5[39m
+    [32m- Expected[39m
+    [31m+ Received[39m
     
     [2m  Object {[22m
     [32m-   \\"a\\": 1,[39m
@@ -114,8 +114,8 @@ exports[`testing toEqual should return false for { a: 1 } and { a: [AsymmetricMa
     
     expect([32mexpected[39m).not.toEqual([31mreceived[39m)
     
-    [32m- Expected  - 1[39m
-    [31m+ Received  + 3[39m
+    [32m- Expected[39m
+    [31m+ Received[39m
     
     [2m  Object {[22m
     [32m-   \\"a\\": 1,[39m

@@ -16,7 +16,7 @@ import { messageUtils } from "./messageUtils";
 export async function embedMatch(this: CommandState, embed: corde.IMessageEmbed) {
   if (typeOf(embed) !== "object") {
     return this.createFailedTest(
-      "expected: parameter to be an object of type IMesageEmbed \n",
+      "expected: parameter to be an object of type IMessageEmbed \n",
       `received: ${typeOf(embed)}`,
     );
   }

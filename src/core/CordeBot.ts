@@ -100,7 +100,7 @@ export class CordeBot implements ICordeBot {
    */
   async login(token: string) {
     try {
-      return this._client.login(token);
+      return await this._client.login(token);
     } catch (error) {
       throw new CordeClientError(this.buildLoginErrorMessage(token, error.message));
     }
@@ -161,15 +161,13 @@ export class CordeBot implements ICordeBot {
       }
 
       if (channel.isText()) {
-        const returnedMessage = await channel.send(formattedMessage);
-        return returnedMessage;
+        return channel.send(formattedMessage);
       }
 
       throw new Error("Can not send a message to a non text channel");
     }
 
-    const returnedMessage = await this.textChannel.send(formattedMessage);
-    return returnedMessage;
+    return this.textChannel.send(formattedMessage);
   }
 
   private async findChannelById(channelId: string) {

@@ -81,6 +81,8 @@ export interface VoiceStateData {
   self_streaming?: boolean;
 }
 
+// TODO: Rename prefix "collection" to just the name in plural
+
 /**
  * Initialize mock values for Discord namespace
  * This can be used to get dumb data for tests.
@@ -127,6 +129,7 @@ export default class MockDiscord {
   private _textChannelCollection!: Collection<string, TextChannel>;
   private _guildCollection!: Collection<string, Guild>;
   private _channelCollection!: Collection<string, Channel>;
+  private _roles!: Collection<string, Role>;
 
   /**
    * Initialize all mocks
@@ -163,6 +166,10 @@ export default class MockDiscord {
 
   get typing() {
     return this._typing;
+  }
+
+  get roles() {
+    return this._roles;
   }
 
   /**
@@ -357,7 +364,7 @@ export default class MockDiscord {
 
   private init() {
     this._id = this.mockId();
-    this._client = this.mockClient() as any as Client;
+    this._client = this.mockClient();
     this._guild = this.mockGuild();
 
     this._textChannel = this.mockTextChannel();
@@ -397,6 +404,7 @@ export default class MockDiscord {
     this._guildCollection = this.mockGuildCollection();
 
     this._guildBan = this.mockGuildBan();
+    this._roles = this.mockRoles();
   }
 
   mockClient() {
@@ -414,9 +422,11 @@ export default class MockDiscord {
       at async _run10000 (node_modules/@jest/core/build/cli/index.js:320:7)
       at async runCLI (node_modules/@jest/core/build/cli/index.js:173:3)
      */
-    return new Client({
+    const cli = new Client({
       intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
     });
+    cli.token = "TEST_TOKEN";
+    return cli;
   }
 
   mockId() {
@@ -739,7 +749,16 @@ export default class MockDiscord {
     return embed;
   }
 
-  mockRole(apiRole?: Partial<APIRole>) {
+  mockRoles() {
+    const role1 = this.role;
+    const role2 = this.mockRole();
+    return new Collection<string, Role>([
+      [role1.id, role1],
+      [role2.id, role2],
+    ]);
+  }
+
+  mockRole(apiRole?: Partial<APIRole>): Role {
     // @ts-ignore
     const role = new Role(
       this._client,

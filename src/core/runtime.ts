@@ -1,7 +1,7 @@
 import { IConfigOptions, ICordeBot } from "../types";
 import { IInternalEvents } from "./internalEvents";
 import { CordeBot } from "./CordeBot";
-import { Client, Options } from "discord.js";
+import { Client, Intents } from "discord.js";
 import { Config } from "./Config";
 import { TestCollector } from "./TestCollector";
 import { ConfigError } from "../errors";
@@ -173,7 +173,26 @@ export class Runtime {
   }
 
   private initClient() {
-    return new Client(Options.createDefault());
+    return new Client({
+      intents: [
+        Intents.FLAGS.DIRECT_MESSAGES,
+        Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
+        Intents.FLAGS.DIRECT_MESSAGE_TYPING,
+        Intents.FLAGS.GUILDS,
+        Intents.FLAGS.GUILD_BANS,
+        Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
+        Intents.FLAGS.GUILD_INTEGRATIONS,
+        Intents.FLAGS.GUILD_INVITES,
+        Intents.FLAGS.GUILD_MEMBERS,
+        Intents.FLAGS.GUILD_MESSAGES,
+        Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+        Intents.FLAGS.GUILD_MESSAGE_TYPING,
+        Intents.FLAGS.GUILD_PRESENCES,
+        Intents.FLAGS.GUILD_SCHEDULED_EVENTS,
+        Intents.FLAGS.GUILD_VOICE_STATES,
+        Intents.FLAGS.GUILD_WEBHOOKS,
+      ],
+    });
   }
 }
 

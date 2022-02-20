@@ -1,19 +1,14 @@
-import { Collection, MessageOptions } from "discord.js";
+import { MessageOptions } from "discord.js";
 import { BotAPI } from "../../src/api";
 import { ICordeBot } from "../../src/types";
 import { collectionToArray } from "../../src/utils/collectionToArray";
 import MockDiscord from "../mocks/mockDiscord";
-import { initCordeClientWithChannel } from "../testHelper";
+import { initCordeClientWithChannel, replaceCollection } from "../testHelper";
 
 const mockDiscord = new MockDiscord();
 
 let bot: BotAPI;
 let cordeBot: ICordeBot;
-
-function replaceCollection<T, U>(from: Collection<T, U>, to: Collection<T, U>) {
-  to.clear();
-  from.forEach((value, key) => to.set(key, value));
-}
 
 beforeEach(() => {
   const client = mockDiscord.mockClient();
