@@ -59,14 +59,14 @@ async function loadConfigs() {
 }
 
 export async function runTests() {
-  startLoading("login to corde bot");
-
   try {
-    const loginPromise = runtime.bot.login(runtime.configs.cordeBotToken);
-    const readyPromise = runtime.bot.events.onceReady();
-    await Promise.allSettled([loginPromise, readyPromise]);
-
-    spinner.stop();
+    if (runtime.configs.loginCordeBotOnStart) {
+      startLoading("login to corde bot");
+      const loginPromise = runtime.bot.login(runtime.configs.cordeBotToken);
+      const readyPromise = runtime.bot.events.onceReady();
+      await Promise.allSettled([loginPromise, readyPromise]);
+      spinner.stop();
+    }
 
     const testMatches = await reader.getTestsFromFiles({
       filesPattern: runtime.configs.testMatches,
