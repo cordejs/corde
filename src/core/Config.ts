@@ -183,6 +183,10 @@ export class Config implements Readonly<IConfigOptions> {
       this._guildId = config.guildId;
     }
 
+    if (config.loginCordeBotOnStart && (!this.loginCordeBotOnStart || forceUpdate)) {
+      this._loginCordeBotOnStart = config.loginCordeBotOnStart;
+    }
+
     if (isNumber(config.timeout) && (!this.timeout || forceUpdate)) {
       // Forces to set timeout to a number
       this._timeout = +(config.timeout as any);

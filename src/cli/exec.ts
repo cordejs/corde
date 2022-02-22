@@ -59,6 +59,7 @@ async function loadConfigs() {
 }
 
 export async function runTests() {
+  debug("loginCordeBotOnStart: " + runtime.configs.loginCordeBotOnStart);
   try {
     if (runtime.configs.loginCordeBotOnStart) {
       startLoading("login to corde bot");
@@ -75,7 +76,7 @@ export async function runTests() {
 
     if (testMatches.length === 0) {
       console.log(`${chalk.bgYellow(chalk.black(" INFO "))} No test were found.`);
-      await finishProcess(0);
+      return finishProcess(0);
     }
 
     const log = new LogUpdate();
@@ -89,18 +90,18 @@ export async function runTests() {
     summary.print(executionReport);
 
     if (executionReport.totalTestsFailed > 0) {
-      await finishProcess(1);
-    } else {
-      await finishProcess(0);
+      return finishProcess(1);
     }
+
+    return finishProcess(0);
   } catch (error) {
     spinner.stop();
     console.error(error);
-    await finishProcess(1);
+    finishProcess(1);
   }
 }
 
-async function finishProcess(code: number, error?: any): Promise<never> {
+function finishProcess(code: number, error?: any): never {
   try {
     if (error) {
       console.log(error);

@@ -174,13 +174,6 @@ describe("testing corde bot API", () => {
     });
   });
 
-  it("should get only textChannels", () => {
-    expect(bot.getOnlyTextChannels()).toHaveLength(0);
-    // @ts-expect-error
-    cordeBot.client.channels.cache = mockDiscord.textChannelCollection;
-    expect(bot.getOnlyTextChannels().length).not.toBe(0);
-  });
-
   describe("testing fetchRole", () => {
     it("should fail due to bot not logged", async () => {
       jest.spyOn(cordeBot, "isLoggedIn").mockReturnValueOnce(false);
@@ -214,8 +207,7 @@ describe("testing corde bot API", () => {
     });
 
     it("should get by invalid guildId without fetch", async () => {
-      // @ts-expect-error
-      cordeBot.client.guilds.cache = mockDiscord.guildCollection;
+      replaceCollection(mockDiscord.guildCollection, cordeBot.client.guilds.cache);
       const spy = jest
         .spyOn(cordeBot.guild.roles, "fetch")
         .mockResolvedValue(mockDiscord.role as any);
@@ -246,8 +238,7 @@ describe("testing corde bot API", () => {
     });
 
     it("should get by invalid guildId, not finding the guild", async () => {
-      // @ts-expect-error
-      cordeBot.client.guilds.cache = mockDiscord.guildCollection;
+      replaceCollection(mockDiscord.guildCollection, cordeBot.client.guilds.cache);
       jest.spyOn(cordeBot.guild.roles, "fetch").mockResolvedValue(mockDiscord.role as any);
       const spyGuildFetch = jest
         .spyOn(cordeBot.client.guilds, "fetch")
@@ -265,27 +256,23 @@ describe("testing corde bot API", () => {
 
   describe("testing getChannel", () => {
     it("should get channel defined in configs", () => {
-      // @ts-expect-error
-      cordeBot.client.channels.cache = mockDiscord.textChannelCollection;
+      replaceCollection(mockDiscord.textChannelCollection, cordeBot.client.channels.cache);
       expect(bot.getChannel()).toEqual(cordeBot.channel);
     });
 
     it("should return undefined due to no channel found in cache", () => {
-      // @ts-expect-error
-      cordeBot.client.channels.cache = mockDiscord.textChannelCollection;
+      replaceCollection(mockDiscord.textChannelCollection, cordeBot.client.channels.cache);
       expect(bot.getChannel({ id: "321foo" })).toEqual(undefined);
     });
 
     it("should get channel by id", () => {
-      // @ts-expect-error
-      cordeBot.client.channels.cache = mockDiscord.textChannelCollection;
+      replaceCollection(mockDiscord.textChannelCollection, cordeBot.client.channels.cache);
       const channel = mockDiscord.textChannelCollection.first();
       expect(bot.getChannel(channel?.id ?? "")).toEqual(channel);
     });
 
     it("should get channel by id inside object", () => {
-      // @ts-expect-error
-      cordeBot.client.channels.cache = mockDiscord.textChannelCollection;
+      replaceCollection(mockDiscord.textChannelCollection, cordeBot.client.channels.cache);
       const channel = mockDiscord.textChannelCollection.first();
       // @ts-expect-error
       expect(bot.getChannel({ id: channel.id })).toEqual(channel);
@@ -312,22 +299,19 @@ describe("testing corde bot API", () => {
 
     it("should get guild by id", () => {
       replaceCollection(mockDiscord.guildCollection, cordeBot.client.guilds.cache);
-      const guild = mockDiscord.guildCollection.first();
-      // @ts-expect-error
+      const guild = bot.guilds[0];
       expect(bot.getGuild(guild.id)).toEqual(guild);
     });
 
     it("should get guild by id inside object", () => {
       replaceCollection(mockDiscord.guildCollection, cordeBot.client.guilds.cache);
-      const guild = mockDiscord.guildCollection.first();
-      // @ts-expect-error
+      const guild = bot.guilds[0];
       expect(bot.getGuild({ id: guild.id })).toEqual(guild);
     });
 
     it("should get guild by name inside object", () => {
       replaceCollection(mockDiscord.guildCollection, cordeBot.client.guilds.cache);
-      const guild = mockDiscord.guildCollection.first();
-      // @ts-expect-error
+      const guild = bot.guilds[0];
       expect(bot.getGuild({ name: guild.name })).toEqual(guild);
     });
 

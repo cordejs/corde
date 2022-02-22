@@ -636,7 +636,7 @@ export class Events implements corde.IOnceEvents, ClientEventsFn {
    * @param fn function to receive the event.
    * @internal
    */
-  onDisconnect(fn: (closeEvent: CloseEvent, code: number) => void): void {
+  onDisconnect(fn: () => void): void {
     this._client.on("disconnect", fn);
   }
 

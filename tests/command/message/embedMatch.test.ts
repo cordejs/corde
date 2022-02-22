@@ -130,16 +130,6 @@ describe(`testing ${testName} function`, () => {
     );
 
     testProperty(
-      "should get passed due to color not match (isNot true)",
-      {
-        color: "",
-      },
-      {
-        isNot: true,
-      },
-    );
-
-    testProperty(
       "should get passed due to description match",
       {
         description: simpleEmbed.description,

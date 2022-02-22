@@ -282,12 +282,10 @@ export class BotAPI {
     }
 
     if (typeof identifier === "string") {
-      return this._bot.client.guilds.cache.find((c) => c.id === identifier);
+      return this.guilds.find((c) => c.id === identifier);
     }
 
-    return this._bot.client.guilds.cache.find(
-      (c) => c.id === identifier.id || c.name === identifier.name,
-    );
+    return this.guilds.find((c) => c.id === identifier.id || c.name === identifier.name);
   }
 
   /**

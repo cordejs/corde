@@ -214,7 +214,7 @@ describe("testing events event", () => {
     it("should get callback", () => {
       let closeEvent!: CloseEvent;
       let code = 0;
-      events.onDisconnect((event, _code) => {
+      events.onShardDisconnect((event, _code) => {
         closeEvent = event;
         code = _code;
       });

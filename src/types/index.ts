@@ -261,7 +261,7 @@ export interface IConfigOptions {
   project?: string;
   /**
    * Define if corde should stop if any problem
-   * occour when importing a test file.
+   * occur when importing a test file.
    *
    * @default true
    */

@@ -84,7 +84,7 @@ describe(`testing ${testName} function`, () => {
 
   it("should return true due to role changed permissions (isNot false)", async () => {
     const mockEvent = new MockEvents(cordeClient, mockDiscord);
-    const mockRole = mockDiscord.createMockRole(
+    const mockRole = mockDiscord.mockRole(
       "test role",
       // @ts-expect-error
       calcPermissionsValue(...mockDiscord.role.permissions.toArray().map((p) => Permission[p])),
@@ -100,8 +100,9 @@ describe(`testing ${testName} function`, () => {
   });
 
   it("should return a failed test due to permissions should not change (isNot true)", async () => {
-    const mockRole = mockDiscord.createMockRole(
+    const mockRole = mockDiscord.mockRole(
       "test role",
+      // @ts-expect-error
       calcPermissionsValue(Permission.ADMINISTRATOR),
     );
     const mockEvent = new MockEvents(cordeClient, mockDiscord);
@@ -113,8 +114,9 @@ describe(`testing ${testName} function`, () => {
   });
 
   it("should return a not passed test due to permissions should not change (isNot true)", async () => {
-    const mockRole = mockDiscord.createMockRole(
+    const mockRole = mockDiscord.mockRole(
       "test role",
+      // @ts-expect-error
       calcPermissionsValue(Permission.ADMINISTRATOR, Permission.BAN_MEMBERS),
     );
     const mockEvent = new MockEvents(cordeClient, mockDiscord);
@@ -131,8 +133,9 @@ describe(`testing ${testName} function`, () => {
   });
 
   it("should return a not passed test due to permissions should not change (isNot true)", async () => {
-    const mockRole = mockDiscord.createMockRole(
+    const mockRole = mockDiscord.mockRole(
       "test role",
+      // @ts-expect-error
       calcPermissionsValue(Permission.ADMINISTRATOR, Permission.BAN_MEMBERS, Permission.CONNECT),
     );
 

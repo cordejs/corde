@@ -37,14 +37,14 @@ export async function setRolePosition(
   let role = await this.cordeBot.findRole(identifier);
   const lastRole = this.cordeBot
     .getRoles()
-    .sort((r1, r2) => r2.position - r1.position)
+    .sort((r1, r2) => r2.rawPosition - r1.rawPosition)
     .first();
 
   if (!lastRole) {
     return this.createReport("no roles were found");
   }
 
-  if (newPosition > lastRole.position) {
+  if (newPosition > lastRole.rawPosition) {
     return this.createReport(
       `expected: position to be >= 0 and <= ${lastRole.rawPosition} (max value possible)\n`,
       `received: ${newPosition}`,
@@ -74,7 +74,7 @@ export async function setRolePosition(
     );
   }
 
-  if (role.position === newPosition) {
+  if (role.rawPosition === newPosition) {
     this.hasPassed = true;
   }
 
