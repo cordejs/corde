@@ -594,43 +594,43 @@ declare namespace corde {
     /**
      * author name **or** information
      */
-    author?: IMessageEmbedAuthor | string;
+    author?: import("discord.js").MessageEmbedAuthor | string | null;
     /**
      * color code of the embed
      */
-    color?: import("discord.js").ColorResolvable;
+    color?: import("discord.js").ColorResolvable | null;
     /**
      * description of embed
      */
-    description?: string;
+    description?: string | null;
     /**
      * fields information. An array of embed field objects
      */
-    fields?: IEmbedFieldData[];
+    fields?: IEmbedFieldData[] | null;
     /**
      * Footer url **or** information
      */
-    footer?: import("discord.js").EmbedFooterData;
+    footer?: import("discord.js").EmbedFooterData | null;
     /**
      * IImage URL **or** information
      */
-    image?: IMessageEmbedImage | string;
+    image?: IMessageEmbedImage | string | null;
     /**
      * Source url of thumbnail (only supports HTTP(s) and attachments)
      */
-    thumbnailUrl?: string;
+    thumbnailUrl?: import("discord.js").MessageEmbedThumbnail | null;
     /**
      * Timestamp of embed content **or** a Date object
      */
-    timestamp?: number | Date;
+    timestamp?: number | Date | null;
     /**
      * Title of embed
      */
-    title?: string;
+    title?: string | null;
     /**
      * Url of embed
      */
-    url?: string;
+    url?: string | null;
   }
 
   export type Base64Resolvable = Buffer | string;

@@ -48,7 +48,7 @@ describe(`testing ${testName} function`, () => {
   it("should get success test due to bot returned equal messages that matches", async () => {
     mockEmbedMessage();
     const report = await debugCon().should.embedMatch({
-      author: mockDiscord.messageEmbedSimple.author,
+      author: mockDiscord.messageEmbed.author,
     });
 
     expect(report).toEqual(passReport);
@@ -58,7 +58,7 @@ describe(`testing ${testName} function`, () => {
   it("should get failed test due to bot returned equal messages that matches isNot(true)", async () => {
     mockEmbedMessage();
     const report = await debugCon().should.not.embedMatch({
-      author: mockDiscord.messageEmbedSimple.author,
+      author: mockDiscord.messageEmbed.author,
     });
 
     expect(report).toMatchObject(failReport);
@@ -72,131 +72,115 @@ describe(`testing ${testName} function`, () => {
   }
 
   describe("testing each property of messageEmbed", () => {
-    const simpleEmbed = mockDiscord.messageEmbedSimple;
-    function testProperty(
-      testName: string,
-      messageEmbed: corde.IMessageEmbed,
-      options?: TestOption,
-    ) {
-      const itFn = options?.only ? it.only : it;
+    const simpleEmbed = mockDiscord.messageEmbed;
 
-      itFn(testName, async () => {
-        mockEmbedMessage();
-        let report: ITestReport = {} as any;
+    it.each([
+      [
+        "should get passed due to title match",
+        {
+          title: simpleEmbed.title,
+        },
+        {
+          pass: true,
+        },
+      ],
+      [
+        "should get passed due to title not match (isNot true)",
+        {
+          title: "",
+        },
+        {
+          isNot: true,
+        },
+      ],
+      [
+        "should get passed due to color not match",
+        {
+          color: simpleEmbed.color,
+        },
+        {
+          pass: true,
+        },
+      ],
+      [
+        "should get passed due to description match",
+        {
+          description: simpleEmbed.description,
+        },
+        {
+          pass: true,
+        },
+      ],
+      [
+        "should get passed due to fields match",
+        {
+          fields: simpleEmbed.fields,
+        },
+        {
+          pass: true,
+        },
+      ],
+      [
+        "should get passed due to footer match",
+        {
+          footer: simpleEmbed.footer,
+        },
+        {
+          pass: true,
+        },
+      ],
+      [
+        "should get passed due to image match",
+        {
+          image: simpleEmbed.image,
+        },
+        {
+          pass: true,
+        },
+      ],
+      [
+        "should get passed due to url match",
+        {
+          url: simpleEmbed.url,
+        },
+        {
+          pass: true,
+        },
+      ],
+      [
+        "should get passed due to timestamp match",
+        {
+          timestamp: simpleEmbed.timestamp,
+        },
+        {
+          pass: true,
+        },
+      ],
+      [
+        "should get passed due to thumbnailUrl match",
+        {
+          thumbnailUrl: simpleEmbed.thumbnail,
+        },
+        {
+          pass: true,
+        },
+      ],
+    ])("%s", async (_: string, messageEmbed: any, options: TestOption) => {
+      mockEmbedMessage();
+      let report: ITestReport = {} as any;
 
-        if (options?.isNot) {
-          report = await debugCon().should.not.embedMatch(messageEmbed);
-        } else {
-          report = await debugCon().should.embedMatch(messageEmbed);
-        }
+      if (options?.isNot) {
+        report = await debugCon().should.not.embedMatch(messageEmbed);
+      } else {
+        report = await debugCon().should.embedMatch(messageEmbed);
+      }
 
-        if (isNullOrUndefined(options?.pass) || options?.pass) {
-          expect(report).toEqual(passReport);
-        } else {
-          expect(report).toMatchObject(failReport);
-          expect(report).toMatchSnapshot();
-        }
-      });
-    }
-
-    testProperty(
-      "should get passed due to title match",
-      {
-        title: simpleEmbed.title,
-      },
-      {
-        pass: true,
-      },
-    );
-
-    testProperty(
-      "should get passed due to title not match (isNot true)",
-      {
-        title: "",
-      },
-      {
-        isNot: true,
-      },
-    );
-
-    testProperty(
-      "should get passed due to color not match",
-      {
-        color: simpleEmbed.color,
-      },
-      {
-        pass: true,
-      },
-    );
-
-    testProperty(
-      "should get passed due to description match",
-      {
-        description: simpleEmbed.description,
-      },
-      {
-        pass: true,
-      },
-    );
-
-    testProperty(
-      "should get passed due to fields match",
-      {
-        fields: simpleEmbed.fields,
-      },
-      {
-        pass: true,
-      },
-    );
-
-    testProperty(
-      "should get passed due to footer match",
-      {
-        footer: simpleEmbed.footer,
-      },
-      {
-        pass: true,
-      },
-    );
-
-    testProperty(
-      "should get passed due to image match",
-      {
-        image: simpleEmbed.image,
-      },
-      {
-        pass: true,
-      },
-    );
-
-    testProperty(
-      "should get passed due to thumbnailUrl match",
-      {
-        thumbnailUrl: simpleEmbed.thumbnailUrl,
-      },
-      {
-        pass: true,
-      },
-    );
-
-    testProperty(
-      "should get passed due to timestamp match",
-      {
-        timestamp: simpleEmbed.timestamp,
-      },
-      {
-        pass: true,
-      },
-    );
-
-    testProperty(
-      "should get passed due to url match",
-      {
-        url: simpleEmbed.url,
-      },
-      {
-        pass: true,
-      },
-    );
+      if (isNullOrUndefined(options?.pass) || options?.pass) {
+        expect(report).toEqual(passReport);
+      } else {
+        expect(report).toMatchObject(failReport);
+        expect(report).toMatchSnapshot();
+      }
+    });
   });
 });

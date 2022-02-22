@@ -218,7 +218,7 @@ export namespace messageUtils {
     }
 
     if (message.thumbnail) {
-      embedLike.thumbnailUrl = message.thumbnail.url;
+      embedLike.thumbnailUrl = message.thumbnail;
     }
     return embedLike;
   }
@@ -270,7 +270,7 @@ export namespace messageUtils {
     }
 
     if (embedLike.thumbnailUrl) {
-      embed.setThumbnail(embedLike.thumbnailUrl);
+      embed.thumbnail = embedLike.thumbnailUrl;
     }
 
     if (embedLike.timestamp) {

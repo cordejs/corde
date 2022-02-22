@@ -727,7 +727,9 @@ export default class MockDiscord {
         { name: "Inline field title", value: "Some value here", inline: true },
         { name: "Inline field title", value: "Some value here", inline: true },
       ],
-      thumbnailUrl: "https://i.imgur.com/wSTFkRM.png",
+      thumbnailUrl: {
+        url: "https://i.imgur.com/wSTFkRM.png",
+      },
     };
   }
 
@@ -743,6 +745,48 @@ export default class MockDiscord {
       author: this.mockApiEmbedAuthor(),
       color: "BLUE",
       timestamp: Fake.Date,
+      description: "example description",
+      fields: [
+        {
+          name: "field1",
+          value: "1",
+          inline: false,
+        },
+      ],
+      footer: {
+        iconURL: "iconURl example",
+        icon_url: "icon_url example",
+        proxyIconURL: "proxyiconURl example",
+        proxy_icon_url: "proxy_icon_url example",
+        text: "test example",
+      },
+      image: {
+        height: 100,
+        proxyURL: "proxy url example",
+        proxy_url: "proxy url example",
+        url: "url example",
+        width: 100,
+      },
+      provider: {
+        name: "provider example",
+        url: "url example",
+      },
+      thumbnail: {
+        height: 100,
+        proxyURL: "proxy url example thumbnail",
+        proxy_url: "proxy url  example thumbnail",
+        url: "url example thumbnail",
+        width: 100,
+      },
+      title: "title",
+      url: "url example",
+      video: {
+        height: 100,
+        proxyURL: "proxy url example",
+        proxy_url: "proxy url example thumbnail",
+        url: "url example thumbnail",
+        width: 100,
+      },
     });
     embed.setColor(customColor);
     embed.setTitle(customTitle);
