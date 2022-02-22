@@ -27,7 +27,6 @@ export async function validate(configs: IConfigOptions) {
   addToErrorsIfPropertyIsMissing(configs.channelId, errors, "channel ID");
   addToErrorsIfPropertyIsMissing(configs.cordeBotToken, errors, "corde token");
   addToErrorsIfPropertyIsMissing(configs.guildId, errors, "guild ID");
-  addToErrorsIfPropertyIsMissing(configs.botToken, errors, "bot test token");
   await validatePaths(configs.testMatches, errors);
 
   let errorsString = "";

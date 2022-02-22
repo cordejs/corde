@@ -13,7 +13,6 @@ describe("testing config", () => {
     const configExample: Partial<IConfigOptions> = {
       botPrefix: "!",
       botTestId: "id123",
-      botToken: "token",
       channelId: "1231321",
       cordeBotToken: "121241414141",
       exitOnFileReadingError: false,
@@ -34,7 +33,6 @@ describe("testing config", () => {
     );
     expect(config.botPrefix).toEqual(configExample.botPrefix);
     expect(config.botPrefix).toEqual(configExample.botPrefix);
-    expect(config.botToken).toEqual(configExample.botToken);
     expect(config.channelId).toEqual(configExample.channelId);
 
     expect(config.cordeBotToken).toEqual(configExample.cordeBotToken);

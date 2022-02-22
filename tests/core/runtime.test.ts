@@ -11,7 +11,6 @@ const config: IConfigOptions = {
   guildId: "123",
   testMatches: ["123"],
   timeout: DEFAULT_TEST_TIMEOUT,
-  botToken: "12412412123124",
 };
 
 describe("Testing runtime", () => {
@@ -49,11 +48,6 @@ describe("Testing runtime", () => {
   it("should get botTestId", () => {
     runtime.setConfigs(config);
     expect(runtime.botTestId).toBe(config.botTestId);
-  });
-
-  it("should get botToken", () => {
-    runtime.setConfigs(config);
-    expect(runtime.botToken).toBe(config.botToken);
   });
 
   it("should get channelId", () => {

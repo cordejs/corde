@@ -30,10 +30,6 @@ export class ConfigAPI implements Readonly<Required<IConfigOptions>> {
     return this._internalConfigs.botTestId;
   }
 
-  get botToken() {
-    return this._internalConfigs.botToken;
-  }
-
   get channelId() {
     return this._internalConfigs.channelId;
   }

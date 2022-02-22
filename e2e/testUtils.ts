@@ -6,9 +6,8 @@ import * as childProcess from "child_process";
 import { CliOutput, OSEnv } from "./types";
 import path from "path";
 import chalk from "chalk";
-import { IConfigOptions } from "../src/types";
 
-function getWindowsConfigs(): Partial<IConfigOptions> {
+function getWindowsConfigs() {
   return {
     botPrefix: process.env.BOT_PREFIX,
     timeout: Number(process.env.TIME_OUT),
@@ -20,7 +19,7 @@ function getWindowsConfigs(): Partial<IConfigOptions> {
   };
 }
 
-function getMacConfigs(): Partial<IConfigOptions> {
+function getMacConfigs() {
   return {
     botPrefix: process.env.BOT_PREFIX,
     timeout: Number(process.env.TIME_OUT),
@@ -32,7 +31,7 @@ function getMacConfigs(): Partial<IConfigOptions> {
   };
 }
 
-function getDevConfigs(): Partial<IConfigOptions> {
+function getDevConfigs() {
   return {
     botPrefix: process.env.BOT_PREFIX,
     timeout: Number(process.env.TIME_OUT),
@@ -44,7 +43,7 @@ function getDevConfigs(): Partial<IConfigOptions> {
   };
 }
 
-function getLinuxConfigs(): Partial<IConfigOptions> {
+function getLinuxConfigs() {
   return {
     botPrefix: process.env.BOT_PREFIX,
     timeout: Number(process.env.TIME_OUT),
@@ -106,7 +105,7 @@ namespace testUtils {
 
       console.log(`${chalk.bgYellow.grey(" RUNNING ")}: ${chalk.magenta(con)}`);
 
-      const child = childProcess.exec(con, (_error, stdout, _stderr) => {
+      const child = childProcess.exec(con, (_error, stdout) => {
         resolve({ stdout: removeANSIColorStyle(stdout), exitCode: child.exitCode });
       });
     });
@@ -141,7 +140,7 @@ namespace testUtils {
     return "dev";
   }
 
-  export function getEnvConfig(): Partial<IConfigOptions> {
+  export function getEnvConfig() {
     const env = testUtils.env();
     switch (env) {
       case "dev":

@@ -3,6 +3,7 @@ eol=lf
 # Auto detect text files and perform LF normalization
 * text=auto eol=lf
 
+*.mdx text linguist-detectable
 
 # JS and TS files must always use LF for tools to work
 *.js eol=lf

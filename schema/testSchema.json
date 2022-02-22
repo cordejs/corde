@@ -2,7 +2,6 @@
   "$schema": "./corde.schema.json",
   "cordeBotToken": "",
   "botTestId": "",
-  "botToken": "",
   "guildId": "",
   "channelId": "",
   "botPrefix": "!",

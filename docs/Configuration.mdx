@@ -10,7 +10,7 @@ or you can declare a custom path for it with the cli option [--config](CLI.mdx#-
 Configs can also be accessed (in readonly mode) trough `corde.configs`.
 
 :::note
-both `cordeBotToken` and `botToken` can be found in [Discord Developers portal](https://discord.com/developers/applications)
+`cordeBotToken` can be found in [Discord Developers portal](https://discord.com/developers/applications)
 :::
 
 ## Configuration Options
@@ -40,21 +40,6 @@ Your bot's id.
 ```js title="corde.config.js"
 module.exports = {
   botTestId: "514212632960122287894", // Example value
-};
-```
-
----
-
-### `botToken`
-
-- Required: `true`
-- Type: `string`
-
-Your bot's Token.
-
-```js title="corde.config.js"
-module.exports = {
-  botToken: "YaA4MDMiOTY2O4I2MjAwODMy.X2iRwg.Rf3-TqLExWuPQjxnVaDCGv9V7cB", // Example value
 };
 ```
 

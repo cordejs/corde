@@ -21,7 +21,6 @@ export const DEFAULT_CONFIG: Required<IConfigOptions> = {
   cordeBotToken: "",
   guildId: "",
   testMatches: [],
-  botToken: "",
   project: path.resolve(process.cwd(), "tsconfig.json"),
   timeout: DEFAULT_TEST_TIMEOUT,
   exitOnFileReadingError: true,
