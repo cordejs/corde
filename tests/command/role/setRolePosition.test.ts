@@ -56,7 +56,7 @@ describe("testing ToSetRolePosition operation", () => {
   it("should find and must return passed report due to 'changed position' (isNot false)", async () => {
     const mockEvent = new MockEvents(cordeClient, mockDiscord);
     mockEvent.mockOnceRolePositionUpdate();
-    const report = await debugCon().should.setRolePosition(-1, { id: "123" });
+    const report = await debugCon().should.setRolePosition(1, { id: "123" });
     expect(report).toEqual(passReport);
   });
 

@@ -84,11 +84,12 @@ describe(`testing ${testName} function`, () => {
 
   it("should return true due to role changed permissions (isNot false)", async () => {
     const mockEvent = new MockEvents(cordeClient, mockDiscord);
-    const mockRole = mockDiscord.mockRole(
-      "test role",
-      // @ts-expect-error
-      calcPermissionsValue(...mockDiscord.role.permissions.toArray().map((p) => Permission[p])),
-    );
+
+    const mockRole = mockDiscord.mockRole({
+      permissions: calcPermissionsValue(
+        ...mockDiscord.role.permissions.toArray().map((p) => Permission[p]),
+      )?.toString(),
+    });
 
     mockEvent.mockOnceRolePermissionsUpdate(mockRole);
     const report = await debugCon().should.setRolePermission(
@@ -100,11 +101,9 @@ describe(`testing ${testName} function`, () => {
   });
 
   it("should return a failed test due to permissions should not change (isNot true)", async () => {
-    const mockRole = mockDiscord.mockRole(
-      "test role",
-      // @ts-expect-error
-      calcPermissionsValue(Permission.ADMINISTRATOR),
-    );
+    const mockRole = mockDiscord.mockRole({
+      permissions: calcPermissionsValue(Permission.ADMINISTRATOR)?.toString(),
+    });
     const mockEvent = new MockEvents(cordeClient, mockDiscord);
 
     mockEvent.mockOnceRolePermissionsUpdate(mockRole);
@@ -114,11 +113,12 @@ describe(`testing ${testName} function`, () => {
   });
 
   it("should return a not passed test due to permissions should not change (isNot true)", async () => {
-    const mockRole = mockDiscord.mockRole(
-      "test role",
-      // @ts-expect-error
-      calcPermissionsValue(Permission.ADMINISTRATOR, Permission.BAN_MEMBERS),
-    );
+    const mockRole = mockDiscord.mockRole({
+      permissions: calcPermissionsValue(
+        Permission.ADMINISTRATOR,
+        Permission.BAN_MEMBERS,
+      )?.toString(),
+    });
     const mockEvent = new MockEvents(cordeClient, mockDiscord);
 
     mockEvent.mockOnceRolePermissionsUpdate(mockRole);
@@ -133,11 +133,13 @@ describe(`testing ${testName} function`, () => {
   });
 
   it("should return a not passed test due to permissions should not change (isNot true)", async () => {
-    const mockRole = mockDiscord.mockRole(
-      "test role",
-      // @ts-expect-error
-      calcPermissionsValue(Permission.ADMINISTRATOR, Permission.BAN_MEMBERS, Permission.CONNECT),
-    );
+    const mockRole = mockDiscord.mockRole({
+      permissions: calcPermissionsValue(
+        Permission.ADMINISTRATOR,
+        Permission.BAN_MEMBERS,
+        Permission.CONNECT,
+      )?.toString(),
+    });
 
     const mockEvent = new MockEvents(cordeClient, mockDiscord);
 

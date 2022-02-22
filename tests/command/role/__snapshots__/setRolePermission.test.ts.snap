@@ -36,7 +36,7 @@ exports[`testing setRolePermission function should return a failed test due to p
 Object {
   "message": "    
     expected: role permissions not change to: ADMINISTRATOR
-    received: ADMINISTRATOR (and 30 others)
+    received: ADMINISTRATOR
 ",
   "pass": false,
   "testName": "setRolePermission",
@@ -159,7 +159,7 @@ exports[`testing setRolePermission function should return a not passed test due 
 Object {
   "message": "    
     expected: role permissions not change to: ADMINISTRATOR and BAN_MEMBERS
-    received: ADMINISTRATOR (and 30 others)
+    received: ADMINISTRATOR and BAN_MEMBERS
 ",
   "pass": false,
   "testName": "setRolePermission",
@@ -170,7 +170,7 @@ exports[`testing setRolePermission function should return a not passed test due 
 Object {
   "message": "    
     expected: role permissions not change to: ADMINISTRATOR (and 2 others)
-    received: ADMINISTRATOR (and 30 others)
+    received: ADMINISTRATOR (and 2 others)
 ",
   "pass": false,
   "testName": "setRolePermission",

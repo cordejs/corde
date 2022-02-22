@@ -1,6 +1,5 @@
 // Set TEST environment to avoid process to exit with code 1 inside application
 process.env.ENV = "UNITY_TEST";
-process.env.CORDE_DEBUG_MODE = "true";
 
 module.exports = {
   rootDir: ".",
