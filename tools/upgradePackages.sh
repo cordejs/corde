@@ -1,3 +1,4 @@
 #!/bin/bash
 
-yarn upgrade-interactive
+## Just a reminder
+yarn upgrade-interactive --latest

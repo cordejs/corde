@@ -81,7 +81,6 @@
     "@typescript-eslint/parser": "^5.12.1",
     "auto-changelog": "^2.4.0",
     "babel-jest": "^27.5.1",
-    "cli-spinners": "^2.6.1",
     "codecov": "^3.6.5",
     "dotenv": "^16.0.0",
     "eslint": "^8.9.0",
@@ -118,17 +117,17 @@
     "yarn": "^1.22.10"
   },
   "dependencies": {
-    "@discordjs/voice": "^0.7.5",
-    "chalk": "^4.1.1",
-    "commander": "^8.0.0",
-    "discord.js": "^13.5.0",
+    "@discordjs/voice": "^0.8.0",
+    "chalk": "^5.0.0",
+    "commander": "^9.0.0",
+    "discord.js": "^13.6.0",
     "esm": "^3.2.25",
-    "fast-glob": "^3.2.5",
+    "fast-glob": "^3.2.11",
     "fast-json-stable-stringify": "^2.1.0",
-    "jest-diff": "^27.0.2",
-    "log-update": "4.0.0",
+    "jest-diff": "^27.5.1",
+    "log-update": "5.0.0",
     "ora": "5.4.1",
-    "pretty-format": "^27.0.1",
+    "pretty-format": "^27.5.1",
     "tslib": "^2.2.0"
   },
   "engines": {
