@@ -1,4 +1,4 @@
-import { Timer } from "../../src/utils/timer";
+import { Timer } from "../../src/utils/Timer";
 
 export function mockTimer() {
   jest.mock("../../src/utils/timer");

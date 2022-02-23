@@ -1,4 +1,4 @@
-import { Timer } from "../../src/utils/timer";
+import { Timer } from "../../src/utils/Timer";
 import { wait } from "../../src/utils/wait";
 
 describe("testing timer class", () => {
