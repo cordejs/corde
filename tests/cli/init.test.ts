@@ -1,7 +1,6 @@
+/* eslint-disable no-console */
 import { init } from "../../src/cli/init";
 import { FsMockUtils } from "../mockUtils/fs";
-import { IConfigOptions, IJSONFile } from "../../src/types";
-import { DEFAULT_CONFIG } from "../../src/consts";
 
 // As there are a local config file for manual tests,
 // These files are renamed to avoid remotion after finish

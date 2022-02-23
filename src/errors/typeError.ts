@@ -1,9 +1,10 @@
+import { InternalError } from "./internalError";
 import { Errors } from "./defaults";
 
 /**
  * Represents a error related to a type (channel, file etc) that isn't supported by corde
  */
-export class TypeError extends Error {
+export class TypeError extends InternalError {
   /**
    * Throws when there is a type convertion occours
    */

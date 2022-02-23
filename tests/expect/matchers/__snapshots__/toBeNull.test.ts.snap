@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing toBeNull should return false for  (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect([32mexpected[39m).toBeNull()
+    
+    [1mexpected[22m should be [32mnull[39m.
+    got: [31mstring[39m
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeNull should return false for 1 (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect([32mexpected[39m).toBeNull()
+    
+    [1mexpected[22m should be [32mnull[39m.
+    got: [31mnumber[39m
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeNull should return false for Symbol() (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect([32mexpected[39m).toBeNull()
+    
+    [1mexpected[22m should be [32mnull[39m.
+    got: [31msymbol[39m
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeNull should return false for any (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect([32mexpected[39m).toBeNull()
+    
+    [1mexpected[22m should be [32mnull[39m.
+    got: [31many[39m
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeNull should return false for false (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect([32mexpected[39m).toBeNull()
+    
+    [1mexpected[22m should be [32mnull[39m.
+    got: [31mboolean[39m
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeNull should return false for null (isNot true) 1`] = `
+Object {
+  "message": "    
+    expect([32mexpected[39m).not.toBeNull()
+    
+    [1mexpected[22m should not be [32mnull[39m.
+    got: [31mnull[39m
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeNull should return false for true (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect([32mexpected[39m).toBeNull()
+    
+    [1mexpected[22m should be [32mnull[39m.
+    got: [31mboolean[39m
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeNull should return false for undefined (isNot false) 1`] = `
+Object {
+  "message": "    
+    expect([32mexpected[39m).toBeNull()
+    
+    [1mexpected[22m should be [32mnull[39m.
+    got: [31mundefined[39m
+",
+  "pass": false,
+}
+`;

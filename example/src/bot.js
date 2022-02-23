@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { Client } = require("discord.js");
-const config = require("../corde.config.js");
+import { Client } from "discord.js";
+//const { Client } = require("discord.js");
+import { botToken, botPrefix } from "../corde.config.js";
 
 const bot = new Client();
 
 /**
- * Use this functions before use sendMessage (add it to **corde.beforeStart**)
+ * Use this functions before use sendMessage (add it to **corde.beforeAll**)
  */
 async function login() {
   const readyPromise = new Promise((resolve) => {
@@ -13,16 +14,17 @@ async function login() {
       resolve();
     });
   });
-  await bot.login(config.botToken);
+  await bot.login(botToken);
   await readyPromise;
 }
 
 bot.on("message", async (message) => {
   try {
-    const args = message.content.slice(config.botPrefix.length).trim().split(" ");
+    const args = message.content.slice(botPrefix.length).trim().split(" ");
     const command = args.shift();
     await handleCommands(message, command, args);
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error);
     throw new Error("Could not execute operation");
   }
@@ -34,7 +36,11 @@ bot.on("message", async (message) => {
  */
 async function handleCommands(message, command) {
   if (command === "ping") {
-    await ping(message);
+    return ping(message);
+  }
+
+  if (command == "giphy") {
+    return giphy(message);
   }
 }
 
@@ -42,8 +48,17 @@ async function handleCommands(message, command) {
  * @param {Message} msg
  * @param {string} msgId
  */
-async function ping(msg) {
-  await msg.channel.send("pong");
+function ping(msg) {
+  return msg.channel.send("pong");
 }
 
-exports.login = login;
+/**
+ *
+ * @param {import("discord.js").Message} msg
+ * @returns
+ */
+function giphy(msg) {
+  return msg.channel.send("");
+}
+
+login();

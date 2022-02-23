@@ -1,50 +1,40 @@
-import { testCollector } from "../common/testCollector";
+import runtime from "../core/runtime";
 import { VoidLikeFunction } from "../types";
-import { executePromiseWithTimeout, resolveName } from "../utils";
+import { resolveName } from "../utils/resolveName";
+import { executePromiseWithTimeout } from "../utils/executePromiseWithTimeout";
 
-/**
- * Define a single test. A test should contain one or more expectations that test action of
- * the discord bot.
- * A spec whose expectations all succeed will be passing and a spec with any failures will fail.
- *
- * @param expectationDescription Textual description of what this test is checking
- * @param assertion Function that contains the code of your test. If not provided it will be ignored in the report.
- * @param timeout Custom timeout for an async test
- *
- * @since 1.0
- */
-export const test = <T extends any>(
-  expectationDescription: T,
+export const test: corde.ITestClosure = <T>(
+  description: T,
   assertion: VoidLikeFunction,
   timeout?: number | undefined,
 ) => {
+  const { testCollector } = runtime;
   const _internalTest = async () => {
-    testCollector.isInsideTestClausure = true;
+    testCollector.currentTestFile.isInsideTestClosure = true;
 
     if (assertion) {
       await assertion();
-
-      const testName = await resolveName(expectationDescription);
-      if (testCollector.testsFunctions && testCollector.testsFunctions.length) {
-        testCollector.tests.push({
-          name: testName,
-          testsFunctions: testCollector.cloneTestFunctions(),
-        });
-      }
     }
 
-    testCollector.testsFunctions = [];
-    testCollector.isInsideTestClausure = false;
+    testCollector.currentTestFile.isInsideTestClosure = false;
   };
 
-  if (timeout) {
-    testCollector.addToGroupClousure(async () => {
-      await executePromiseWithTimeout<void>(async (resolve) => {
-        await _internalTest();
-        resolve();
-      }, timeout);
-    });
-  } else {
-    testCollector.addToTestClousure(async () => await _internalTest());
-  }
+  testCollector.currentTestFile.addTest({
+    action: () => {
+      return executePromiseWithTimeout<void>(async (resolve, reject) => {
+        try {
+          await _internalTest();
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
+      }, timeout ?? runtime.configs.getConfigTimeoutOrDefault());
+    },
+    toResolveName: () => resolveName(description),
+  });
 };
+
+/**
+ * Alias for `test`
+ */
+export const it = test;

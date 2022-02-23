@@ -1,4 +1,4 @@
-import { keysOf } from "../../src/utils";
+import { keysOf } from "../../src/utils/keysOf";
 
 describe("testing keyOf function", () => {
   it("should get all keys of a object", () => {

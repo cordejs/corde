@@ -1,7 +1,8 @@
-import { rgba } from "../../src/utils";
+import { rgba } from "../../src/utils/rgba";
 
 describe("testing rgba function", () => {
   it("should return null due to invalid value", () => {
+    // @ts-expect-error
     expect(rgba(null)).toEqual([0, 0, 0, 0]);
   });
 

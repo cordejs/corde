@@ -7,12 +7,14 @@
 // For some reason unknown by god, ts files get error, but js files works ok (???)
 // (it's why this is the only file that is js file in this folder)
 
-import { Client, Message } from "discord.js";
+import { Client, ColorResolvable, Intents, Message } from "discord.js";
 import * as config from "./corde.config";
 
-export const bot = new Client();
+export const bot = new Client({
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
+});
 
-// TODO: Corde do not recognize optional chaning
+// TODO: Corde do not recognize optional chaining
 
 export async function sendMessage(message: string) {
   if (!config.channelId) {
@@ -54,7 +56,7 @@ export function getRoleManager() {
 }
 
 /**
- * Use this functions before use sendMessage (add it to **corde.beforeStart**)
+ * Use this functions before use sendMessage (add it to **corde.beforeAll**)
  */
 export async function login(isDebugMode?: boolean) {
   if (isDebugMode) {
@@ -91,7 +93,7 @@ bot.on("message", async (message) => {
 });
 
 async function handleCommands(message: Message, command: string | undefined, args: string[]) {
-  // TODO: Refact this. '-'
+  // TODO: Refactor this. '-'
   if (command === "hello" || command === "h") {
     await message.channel.send("Hello!!");
   } else if (command === "emoji") {
@@ -111,7 +113,7 @@ async function handleCommands(message: Message, command: string | undefined, arg
   } else if (command === "renameRole") {
     await renameRole(message, args[0], args[1]);
   } else if (command === "changeRoleColor") {
-    await changeRoleColor(message, args[0], args[1]);
+    await changeRoleColor(message, args[0], args[1] as any);
   } else if (command === "setRoleHoist") {
     await setRoleHoist(message, args[0]);
   } else if (command === "setRoleMentionable") {
@@ -191,7 +193,11 @@ async function renameRole(msg: Message, roleId: string, newName: string | undefi
   }
 }
 
-async function changeRoleColor(msg: Message, roleId: string, newColor: string | undefined) {
+async function changeRoleColor(
+  msg: Message,
+  roleId: string,
+  newColor: ColorResolvable | undefined,
+) {
   if (!newColor) {
     return;
   }

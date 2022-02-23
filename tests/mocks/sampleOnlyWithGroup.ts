@@ -1,6 +1,8 @@
-import corde from "../../src";
+import { group } from "../../src/closures";
+import { command } from "../../src/command";
+
 import consts from "./constsNames";
 
-corde.describe(consts.GROUP_1, () => {
-  corde.expect(consts.COMMAND_1).toReturn(consts.COMMAND_RESPONSE_1);
+group(consts.GROUP_1, () => {
+  command(consts.COMMAND_1).should.respond(consts.COMMAND_RESPONSE_1);
 });

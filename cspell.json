@@ -1,0 +1,26 @@
+{
+  "version": "0.2",
+  "ignorePaths": [],
+  "dictionaryDefinitions": [],
+  "dictionaries": [],
+  "words": [
+    "BOYZZ",
+    "circleci",
+    "clearbuild",
+    "codecov",
+    "commitlint",
+    "cordeto",
+    "depcruise",
+    "Gomes",
+    "ICLI",
+    "lucasgmagalhaes",
+    "pinst",
+    "postpublish",
+    "Tortodile",
+    "tsdoc",
+    "tslog",
+    "typedoc"
+  ],
+  "ignoreWords": [],
+  "import": []
+}

@@ -1,3 +1,0 @@
-File: toReturn/test2.spec.ts
-exit code: 1
-- login to corde bot

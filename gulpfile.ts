@@ -32,7 +32,7 @@ task("default", async () => {
       }),
     )
     .pipe(dest(outDir));
-  return tsResult.dts.pipe(dest(outDir));
+  // eslint-disable-next-line no-console
 });
 
 task("clear", async () => {

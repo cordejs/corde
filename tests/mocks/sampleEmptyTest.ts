@@ -1,4 +1,4 @@
-import corde from "../../src";
+import { test } from "../../src/closures";
 import consts from "./constsNames";
 
-corde.it(consts.TEST_1, () => {});
+test(consts.TEST_1, () => {});

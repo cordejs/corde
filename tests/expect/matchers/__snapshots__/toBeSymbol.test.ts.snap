@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing toBeSymbol should return false for  1`] = `
+Object {
+  "message": "    
+    expect([32mexpected[39m).toBeSymbol()
+    
+    [1mexpected[22m should be a [32msymbol[39m.
+    got: [31mstring[39m
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeSymbol should return false for {} 1`] = `
+Object {
+  "message": "    
+    expect([32mexpected[39m).toBeSymbol()
+    
+    [1mexpected[22m should be a [32msymbol[39m.
+    got: [31mobject[39m
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeSymbol should return false for 111 1`] = `
+Object {
+  "message": "    
+    expect([32mexpected[39m).toBeSymbol()
+    
+    [1mexpected[22m should be a [32msymbol[39m.
+    got: [31mnumber[39m
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeSymbol should return false for 9007199254740991n 1`] = `
+Object {
+  "message": "    
+    expect([32mexpected[39m).toBeSymbol()
+    
+    [1mexpected[22m should be a [32msymbol[39m.
+    got: [31mbigint[39m
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeSymbol should return false for a 1`] = `
+Object {
+  "message": "    
+    expect([32mexpected[39m).toBeSymbol()
+    
+    [1mexpected[22m should be a [32msymbol[39m.
+    got: [31mstring[39m
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeSymbol should return false for asymmetricMatcher of any value that is not number 1`] = `
+Object {
+  "message": "    
+    expect([32mexpected[39m).toBeSymbol()
+    
+    [1mexpected[22m should be a [32msymbol[39m.
+    got: [31many(Bigint)[39m
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeSymbol should return false for null 1`] = `
+Object {
+  "message": "    
+    expect([32mexpected[39m).toBeSymbol()
+    
+    [1mexpected[22m should be a [32msymbol[39m.
+    got: [31mnull[39m
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeSymbol should return false for number with isNot true 1`] = `
+Object {
+  "message": "    
+    expect([32mexpected[39m).not.toBeSymbol()
+    
+    [1mexpected[22m should not be a [32msymbol[39m.
+    got: [31msymbol[39m
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeSymbol should return false for undefined 1`] = `
+Object {
+  "message": "    
+    expect([32mexpected[39m).toBeSymbol()
+    
+    [1mexpected[22m should be a [32msymbol[39m.
+    got: [31mundefined[39m
+",
+  "pass": false,
+}
+`;

@@ -1,4 +1,4 @@
-import { isPrimitiveValue } from "../../src/utils";
+import { isPrimitiveValue } from "../../src/utils/isPrimitiveValue";
 
 describe("testing isPrimitiveValue function", () => {
   it("number should be primitive", () => {
@@ -26,8 +26,7 @@ describe("testing isPrimitiveValue function", () => {
   });
 
   it("class instance should not be primitive", () => {
-    let a: string | number | {};
-    a = "";
+    const a = "";
     expect(isPrimitiveValue(a)).toBeTruthy();
   });
 });

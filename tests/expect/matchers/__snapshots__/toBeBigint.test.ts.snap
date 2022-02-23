@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing toBeBigint should return false for {} 1`] = `
+Object {
+  "message": "    
+    expect([32mexpected[39m).toBeBigInt()
+    
+    [1mexpected[22m should be an [32mbigInt[39m.
+    got: [31mobject[39m
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeBigint should return false for 1 1`] = `
+Object {
+  "message": "    
+    expect([32mexpected[39m).toBeBigInt()
+    
+    [1mexpected[22m should be an [32mbigInt[39m.
+    got: [31mnumber[39m
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeBigint should return false for Symbol() 1`] = `
+Object {
+  "message": "    
+    expect([32mexpected[39m).toBeBigInt()
+    
+    [1mexpected[22m should be an [32mbigInt[39m.
+    got: [31msymbol[39m
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeBigint should return false for aa 1`] = `
+Object {
+  "message": "    
+    expect([32mexpected[39m).toBeBigInt()
+    
+    [1mexpected[22m should be an [32mbigInt[39m.
+    got: [31mstring[39m
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeBigint should return false for asymmetricMatcher of any value that is not bigint 1`] = `
+Object {
+  "message": "    
+    expect([32mexpected[39m).toBeBigInt()
+    
+    [1mexpected[22m should be an [32mbigInt[39m.
+    got: [31mobject[39m
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeBigint should return false for bigint with isNot true 1`] = `
+Object {
+  "message": "    
+    expect([32mexpected[39m).not.toBeBigInt()
+    
+    [1mexpected[22m should not be an [32mbigInt[39m.
+    got: [31mbigint[39m
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeBigint should return false for null 1`] = `
+Object {
+  "message": "    
+    expect([32mexpected[39m).toBeBigInt()
+    
+    [1mexpected[22m should be an [32mbigInt[39m.
+    got: [31mnull[39m
+",
+  "pass": false,
+}
+`;
+
+exports[`testing toBeBigint should return false for undefined 1`] = `
+Object {
+  "message": "    
+    expect([32mexpected[39m).toBeBigInt()
+    
+    [1mexpected[22m should be an [32mbigInt[39m.
+    got: [31mundefined[39m
+",
+  "pass": false,
+}
+`;

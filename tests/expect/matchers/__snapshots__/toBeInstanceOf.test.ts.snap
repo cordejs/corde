@@ -1,0 +1,107 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing toBeInstanceOf should return false for [] (isNot true) 1`] = `
+"    
+    expect([32mexpected[39m).not.toBeInstanceOf([31minstanceType[39m)
+    
+    [1mexpected[22m should not be instance of [32mArray[39m.
+    got: [31mArray[39m
+"
+`;
+
+exports[`testing toBeInstanceOf should return false for [Boolean: false] (isNot true) 1`] = `
+"    
+    expect([32mexpected[39m).not.toBeInstanceOf([31minstanceType[39m)
+    
+    [1mexpected[22m should not be instance of [32mBoolean[39m.
+    got: [31mBoolean[39m
+"
+`;
+
+exports[`testing toBeInstanceOf should return false for [Number: 0] (isNot true) 1`] = `
+"    
+    expect([32mexpected[39m).not.toBeInstanceOf([31minstanceType[39m)
+    
+    [1mexpected[22m should not be instance of [32mNumber[39m.
+    got: [31mNumber[39m
+"
+`;
+
+exports[`testing toBeInstanceOf should return false for [String: ''] (isNot true) 1`] = `
+"    
+    expect([32mexpected[39m).not.toBeInstanceOf([31minstanceType[39m)
+    
+    [1mexpected[22m should not be instance of [32mString[39m.
+    got: [31mString[39m
+"
+`;
+
+exports[`testing toBeInstanceOf should return false for {} (isNot false) 1`] = `
+"    
+    expect([32mexpected[39m).toBeInstanceOf([31minstanceType[39m)
+    
+    [1mexpected[22m should be instance of [32mString[39m.
+    got: [31mObject[39m
+"
+`;
+
+exports[`testing toBeInstanceOf should return false for {} (isNot true) 1`] = `
+"    
+    expect([32mexpected[39m).not.toBeInstanceOf([31minstanceType[39m)
+    
+    [1mexpected[22m should not be instance of [32mObject[39m.
+    got: [31mObject[39m
+"
+`;
+
+exports[`testing toBeInstanceOf should return false for Class {} (isNot true) 1`] = `
+"    
+    expect([32mexpected[39m).not.toBeInstanceOf([31minstanceType[39m)
+    
+    [1mexpected[22m should not be instance of [32mClass[39m.
+    got: [31mClass[39m
+"
+`;
+
+exports[`testing toBeInstanceOf should return false for Map(0) {} (isNot true) 1`] = `
+"    
+    expect([32mexpected[39m).not.toBeInstanceOf([31minstanceType[39m)
+    
+    [1mexpected[22m should not be instance of [32mMap[39m.
+    got: [31mMap[39m
+"
+`;
+
+exports[`testing toBeInstanceOf should return false for Symbol() (isNot false) 1`] = `
+"    
+    expect([32mexpected[39m).toBeInstanceOf([31minstanceType[39m)
+    
+    [1mexpected[22m should be instance of [32mSymbol[39m.
+    got: [31mSymbol[39m
+"
+`;
+
+exports[`testing toBeInstanceOf should return false for any(Number) (isNot false) 1`] = `
+"    
+    expect([32mexpected[39m).toBeInstanceOf([31minstanceType[39m)
+    
+    [1mexpected[22m should be instance of [32mString[39m.
+    got: [31many(Number)[39m
+"
+`;
+
+exports[`testing toBeInstanceOf should return false for function anonymous(
+) {
+
+} (isNot true) 1`] = `
+"    
+    expect([32mexpected[39m).not.toBeInstanceOf([31minstanceType[39m)
+    
+    [1mexpected[22m should not be instance of [32mFunction[39m.
+    got: [31mFunction[39m
+"
+`;
+
+exports[`testing toBeInstanceOf should return false for null (isNot false) 1`] = `"Right-hand side of 'instanceof' is not an object"`;
+
+exports[`testing toBeInstanceOf should return false for undefined (isNot false) 1`] = `"Right-hand side of 'instanceof' is not an object"`;

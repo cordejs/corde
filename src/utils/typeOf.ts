@@ -1,6 +1,6 @@
 /**
- * Like `typeof` but returns **null** if the value is **null**.
- * And **array** if the object is an array.
+ * Like `typeof` but returns **null** if the value is **null**,
+ * **array** if the object is an array, and **any** for AsymmetricMatcher
  *
  * @example
  *

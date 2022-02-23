@@ -1,7 +1,6 @@
-import { DeepReadonly, StrictObject } from "../types";
 import { isPrimitiveValue } from "./isPrimitiveValue";
 import { typeOf } from "./typeOf";
-
+import { DeepReadonly, StrictObject } from "../types";
 /**
  * Create a new instance of the object with all public properties frozen.
  * public properties: properties that not starts with `_`.

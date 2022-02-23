@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing any matcher should return name of asymetric 1`] = `"any(Number, Bigint, Boolean, Function, Object, Symbol, Class)"`;

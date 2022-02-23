@@ -1,659 +1,415 @@
-import { TestExecutor } from "../../src/core/testExecutor";
-import { buildReportMessage, diff, LogUpdate, utils } from "../../src/utils";
-import {
-  generateTestFile,
-  removeANSIColorStyle,
-  TestFileGeneratorInfo,
-  testFileNames,
-  testNames,
-  testUtils,
-} from "../testHelper";
+/* eslint-disable no-console */
+import { TestExecutor } from "../../src/core/TestExecutor";
+import { LogUpdate } from "../../src/utils/LogUpdate";
+import { removeANSIColorStyle, testUtils } from "../testHelper";
 
 import { mockTimer } from "../mocks/mockTimer";
-import { afterEach as _afterEach, beforeEach as _beforeEach } from "../../src";
-import { ISemiRunnerReport, ITestFile } from "../../src/types";
+import { IRunnerReport } from "../../src/types";
+import { group, test } from "../../src/closures";
+import { expect as _expect } from "../../src/expect";
+import runtime from "../../src/core/runtime";
 
 let logUpdate: LogUpdate;
 let testRunner: TestExecutor;
+
+const { testCollector } = runtime;
 
 mockTimer();
 
 beforeEach(() => {
   logUpdate = new LogUpdate();
   testRunner = new TestExecutor(logUpdate);
+  testCollector.clearTestFiles();
+  testCollector.createTestFile("test file");
 });
 
 it("should print report for 1 test file, 1 test closure and 1 test function", async () => {
-  const data: TestFileGeneratorInfo = {
-    amountOfTestFiles: 1,
-    amountOfTestFunctions: 1,
-    amountOfTests: 1,
-  };
+  test("test closure", () => {
+    _expect(1).toEqual(1);
+  });
 
-  const tests = generateTestFile(data);
-
-  const report = await testRunner.runTestsAndPrint(tests);
-  const amountOfTest = data.amountOfTestFiles * data.amountOfTests * data.amountOfTestFunctions;
-
-  expect(report).toMatchObject<ISemiRunnerReport>({
-    totalTestFiles: data.amountOfTestFiles,
-    totalTestFilesFailed: 0,
-    totalTestFilesPassed: data.amountOfTestFiles,
-    totalTests: amountOfTest,
-    totalTestsFailed: 0,
-    totalTestsPassed: amountOfTest,
+  const report = await testRunner.runTestsAndPrint(testCollector.testFiles);
+  expect(report).toEqual<IRunnerReport>({
+    totalTests: 1,
     totalEmptyTestFiles: 0,
     totalEmptyTests: 0,
+    totalTestFiles: 1,
+    totalTestFilesFailed: 0,
+    testTimer: "10ms",
+    totalTestsFailed: 0,
+    totalTestsPassed: 1,
+    totalTestFilesPassed: 1,
   });
-  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
+
+  const stdoutClearned = testUtils.replaceStackTracePaths(logUpdate.stdout);
+  expect(stdoutClearned).toMatchSnapshot();
+  expect(removeANSIColorStyle(stdoutClearned)).toMatchSnapshot("without ANSI Colors");
 });
 
 it("should print report for 1 test file, 1 test closure and 2 test function", async () => {
-  const data: TestFileGeneratorInfo = {
-    amountOfTestFiles: 1,
-    amountOfTestFunctions: 2,
-    amountOfTests: 1,
-  };
+  test("test closure", () => {
+    _expect(1).toEqual(1);
+    _expect(1).toEqual(1);
+  });
 
-  const tests = generateTestFile(data);
-
-  const report = await testRunner.runTestsAndPrint(tests);
-  const amountOfTest = data.amountOfTestFiles * data.amountOfTests * data.amountOfTestFunctions;
-
-  expect(report).toMatchObject<ISemiRunnerReport>({
-    totalTestFiles: data.amountOfTestFiles,
-    totalTestFilesFailed: 0,
-    totalTestFilesPassed: data.amountOfTestFiles,
-    totalTests: amountOfTest,
-    totalTestsFailed: 0,
-    totalTestsPassed: amountOfTest,
+  const report = await testRunner.runTestsAndPrint(testCollector.testFiles);
+  expect(report).toEqual<IRunnerReport>({
+    totalTests: 1,
     totalEmptyTestFiles: 0,
     totalEmptyTests: 0,
+    totalTestFiles: 1,
+    totalTestFilesFailed: 0,
+    totalTestsFailed: 0,
+    totalTestsPassed: 1,
+    totalTestFilesPassed: 1,
+    testTimer: "10ms",
   });
-  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
+
+  const stdoutClearned = testUtils.replaceStackTracePaths(logUpdate.stdout);
+  expect(stdoutClearned).toMatchSnapshot();
+  expect(removeANSIColorStyle(stdoutClearned)).toMatchSnapshot("without ANSI Colors");
 });
 
-it("should print report for 2 test file, 1 test closure and 1 test function", async () => {
-  const data: TestFileGeneratorInfo = {
-    amountOfTestFiles: 2,
-    amountOfTestFunctions: 1,
-    amountOfTests: 1,
-  };
-
-  const tests = generateTestFile({
-    amountOfTestFiles: 2,
-    amountOfTestFunctions: 1,
-    amountOfTests: 1,
+it("should print a report for a group with a test with multiple expects", async () => {
+  group("group", () => {
+    test("test closure", () => {
+      _expect(1).toEqual(1);
+      _expect(1).toEqual(1);
+    });
   });
 
-  const report = await testRunner.runTestsAndPrint(tests);
-  const amountOfTest = data.amountOfTestFiles * data.amountOfTests * data.amountOfTestFunctions;
-
-  expect(report).toMatchObject<ISemiRunnerReport>({
-    totalTestFiles: data.amountOfTestFiles,
-    totalTestFilesFailed: 0,
-    totalTestFilesPassed: data.amountOfTestFiles,
-    totalTests: amountOfTest,
-    totalTestsFailed: 0,
-    totalTestsPassed: amountOfTest,
+  await testCollector.executeGroupClojure();
+  const report = await testRunner.runTestsAndPrint(testCollector.testFiles);
+  expect(report).toEqual<IRunnerReport>({
+    totalTests: 1,
     totalEmptyTestFiles: 0,
     totalEmptyTests: 0,
+    totalTestFiles: 1,
+    totalTestFilesFailed: 0,
+    totalTestsFailed: 0,
+    totalTestsPassed: 1,
+    totalTestFilesPassed: 1,
+    testTimer: "10ms",
   });
-  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
+
+  const stdoutClearned = testUtils.replaceStackTracePaths(logUpdate.stdout);
+  expect(stdoutClearned).toMatchSnapshot();
+  expect(removeANSIColorStyle(stdoutClearned)).toMatchSnapshot("without ANSI Colors");
 });
 
-it("should print report for 2 test file, 1 test closure and 2 test function", async () => {
-  const data: TestFileGeneratorInfo = {
-    amountOfTestFiles: 2,
-    amountOfTestFunctions: 2,
-    amountOfTests: 1,
-  };
+it("should print report for single group and a single test", async () => {
+  group("group", () => {
+    test("test closure", () => {
+      _expect(1).not.toEqual(1);
+    });
+  });
 
-  const tests = generateTestFile(data);
-
-  const report = await testRunner.runTestsAndPrint(tests);
-  const amountOfTest = data.amountOfTestFiles * data.amountOfTests * data.amountOfTestFunctions;
-
-  expect(report).toMatchObject<ISemiRunnerReport>({
-    totalTestFiles: data.amountOfTestFiles,
-    totalTestFilesFailed: 0,
-    totalTestFilesPassed: data.amountOfTestFiles,
-    totalTests: amountOfTest,
-    totalTestsFailed: 0,
-    totalTestsPassed: amountOfTest,
+  await testCollector.executeGroupClojure();
+  const report = await testRunner.runTestsAndPrint(testCollector.testFiles);
+  expect(report).toEqual<IRunnerReport>({
+    totalTests: 1,
     totalEmptyTestFiles: 0,
     totalEmptyTests: 0,
-  });
-  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
-});
-
-it("should print report for 2 test file, 2 test closure and 2 test function", async () => {
-  const data: TestFileGeneratorInfo = {
-    amountOfTestFiles: 2,
-    amountOfTestFunctions: 2,
-    amountOfTests: 2,
-  };
-
-  const tests = generateTestFile(data);
-
-  const report = await testRunner.runTestsAndPrint(tests);
-  const amountOfTest = data.amountOfTestFiles * data.amountOfTests * data.amountOfTestFunctions;
-
-  expect(report).toMatchObject<ISemiRunnerReport>({
-    totalTestFiles: data.amountOfTestFiles,
-    totalTestFilesFailed: 0,
-    totalTestFilesPassed: data.amountOfTestFiles,
-    totalTests: amountOfTest,
-    totalTestsFailed: 0,
-    totalTestsPassed: amountOfTest,
-    totalEmptyTestFiles: 0,
-    totalEmptyTests: 0,
-  });
-  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
-});
-
-it("should print report for 1 test file, 1 test closure and 1 test function that fail", async () => {
-  const data: TestFileGeneratorInfo = {
-    amountOfTestFiles: 1,
-    testFunctionsReport: [testUtils.createFailedITestReport(["expected: hi\n", "received: hi!"])],
-    amountOfTests: 1,
-  };
-
-  const tests = generateTestFile(data);
-
-  const report = await testRunner.runTestsAndPrint(tests);
-  const amountOfTest = data.amountOfTestFiles * data.amountOfTests * data.amountOfTestFunctions;
-
-  expect(report).toMatchObject<ISemiRunnerReport>({
-    totalTestFiles: data.amountOfTestFiles,
+    totalTestFiles: 1,
     totalTestFilesFailed: 1,
     totalTestFilesPassed: 0,
-    totalTests: amountOfTest,
-    totalTestsFailed: amountOfTest,
+    totalTestsFailed: 1,
     totalTestsPassed: 0,
-    totalEmptyTestFiles: 0,
-    totalEmptyTests: 0,
+    testTimer: "10ms",
   });
-  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
+
+  const stdoutClearned = testUtils.replaceStackTracePaths(logUpdate.stdout);
+  expect(stdoutClearned).toMatchSnapshot();
+  expect(removeANSIColorStyle(stdoutClearned)).toMatchSnapshot("without ANSI Colors");
 });
 
-it("should print report for 1 test file, 1 test closure and 1 failed function and 1 passed function", async () => {
-  const data: TestFileGeneratorInfo = {
-    amountOfTestFiles: 1,
-    testFunctionsReport: [
-      testUtils.createFailedITestReport(["expected: hi\n", "received: hi!"]),
-      testUtils.createPassReport(),
-    ],
-    amountOfTests: 1,
-  };
-
-  const tests = generateTestFile(data);
-
-  const report = await testRunner.runTestsAndPrint(tests);
-
-  expect(report).toMatchObject<ISemiRunnerReport>({
-    totalTestFiles: data.amountOfTestFiles,
-    totalTestFilesFailed: 1,
-    totalTestFilesPassed: 0,
-    totalTests: 2,
-    totalTestsFailed: 1,
-    totalTestsPassed: 1,
-    totalEmptyTestFiles: 0,
-    totalEmptyTests: 0,
+it("should get report for single group and a empty test", async () => {
+  group("group", () => {
+    test("test closure", () => {});
   });
-  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
+
+  await testCollector.executeGroupClojure();
+  const report = await testRunner.runTestsAndPrint(testCollector.testFiles);
+  expect(report).toEqual<IRunnerReport>({
+    totalTests: 1,
+    totalEmptyTestFiles: 1,
+    totalEmptyTests: 1,
+    totalTestFiles: 1,
+    totalTestFilesFailed: 0,
+    totalTestsFailed: 0,
+    totalTestsPassed: 0,
+    totalTestFilesPassed: 0,
+    testTimer: "10ms",
+  });
+
+  const stdoutClearned = testUtils.replaceStackTracePaths(logUpdate.stdout);
+  expect(stdoutClearned).toMatchSnapshot();
+  expect(removeANSIColorStyle(stdoutClearned)).toMatchSnapshot("without ANSI Colors");
 });
 
-it("should print report for 1 test file, 1 test closure and 1 failed function and 1 passed function", async () => {
-  const data: TestFileGeneratorInfo = {
-    amountOfTestFiles: 1,
-    testFunctionsReport: [
-      testUtils.createFailedITestReport(["expected: hi\n", "received: hi!"]),
-      testUtils.createPassReport(),
-    ],
-    amountOfTests: 1,
-  };
+it("should get report for multiple tests inside a group", async () => {
+  group("group", () => {
+    test("test closure", () => {
+      _expect(1).toEqual(1);
+    });
 
-  const tests = generateTestFile(data);
+    test("test closure", () => {
+      _expect(1).toEqual(1);
+    });
 
-  const report = await testRunner.runTestsAndPrint(tests);
+    test("test closure", () => {
+      _expect(1).toEqual(1);
+    });
+  });
 
-  expect(report).toMatchObject<ISemiRunnerReport>({
-    totalTestFiles: data.amountOfTestFiles,
-    totalTestFilesFailed: 1,
-    totalTestFilesPassed: 0,
-    totalTests: 2,
-    totalTestsFailed: 1,
-    totalTestsPassed: 1,
+  await testCollector.executeGroupClojure();
+  const report = await testRunner.runTestsAndPrint(testCollector.testFiles);
+  expect(report).toEqual<IRunnerReport>({
+    totalTests: 3,
     totalEmptyTestFiles: 0,
     totalEmptyTests: 0,
+    totalTestFiles: 1,
+    totalTestFilesFailed: 0,
+    totalTestsFailed: 0,
+    totalTestsPassed: 3,
+    totalTestFilesPassed: 1,
+    testTimer: "10ms",
   });
-  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
+
+  const stdoutClearned = testUtils.replaceStackTracePaths(logUpdate.stdout);
+  expect(stdoutClearned).toMatchSnapshot();
+  expect(removeANSIColorStyle(stdoutClearned)).toMatchSnapshot("without ANSI Colors");
 });
 
-it("should print report for 1 test file, 2 test closure and 1 failed function and 1 passed function", async () => {
-  const data: TestFileGeneratorInfo = {
-    amountOfTestFiles: 1,
-    testFunctionsReport: [
-      testUtils.createFailedITestReport(["expected: hi\n", "received: hi!"]),
-      testUtils.createPassReport(),
-    ],
-    amountOfTests: 2,
-  };
+it("should get report for multiple tests inside a group and failed tests", async () => {
+  group("group", () => {
+    test("test closure", () => {
+      _expect(1).toEqual(1);
+    });
 
-  const tests = generateTestFile(data);
+    test("test closure", () => {
+      _expect(1).toEqual(1);
+    });
 
-  const report = await testRunner.runTestsAndPrint(tests);
+    test("test closure", () => {
+      _expect(1).toEqual(1);
+    });
 
-  expect(report).toMatchObject<ISemiRunnerReport>({
-    totalTestFiles: data.amountOfTestFiles,
-    totalTestFilesFailed: 1,
-    totalTestFilesPassed: 0,
+    test("test closure", () => {
+      _expect(1).not.toEqual(1);
+    });
+  });
+
+  await testCollector.executeGroupClojure();
+  const report = await testRunner.runTestsAndPrint(testCollector.testFiles);
+  expect(report).toEqual<IRunnerReport>({
     totalTests: 4,
-    totalTestsFailed: 2,
-    totalTestsPassed: 2,
     totalEmptyTestFiles: 0,
     totalEmptyTests: 0,
-  });
-  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
-});
-
-it("should print report for 2 test file, 2 test closure and 1 failed function and 1 passed function", async () => {
-  const data: TestFileGeneratorInfo = {
-    amountOfTestFiles: 2,
-    testFunctionsReport: [
-      testUtils.createFailedITestReport(["expected: hi\n", "received: hi!"]),
-      testUtils.createPassReport(),
-    ],
-    amountOfTests: 2,
-  };
-
-  const tests = generateTestFile(data);
-
-  const report = await testRunner.runTestsAndPrint(tests);
-
-  expect(report).toMatchObject<ISemiRunnerReport>({
-    totalTestFiles: data.amountOfTestFiles,
-    totalTestFilesFailed: 2,
-    totalTestFilesPassed: 0,
-    totalTests: 8,
-    totalTestsFailed: 4,
-    totalTestsPassed: 4,
-    totalEmptyTestFiles: 0,
-    totalEmptyTests: 0,
-  });
-  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
-});
-
-it("should print report for 1 test file, 2 test closure and 1 failed function and 1 passed function", async () => {
-  const tests: ITestFile[] = [
-    {
-      path: testFileNames[0],
-      isEmpty: false,
-      groups: [
-        {
-          name: "group name",
-          tests: [
-            {
-              name: testNames[0],
-              testsFunctions: [() => testUtils.createResolvedPassReport()],
-            },
-            {
-              name: testNames[1],
-              testsFunctions: [
-                () => testUtils.createResolvedFailedReport(["expected: hi\n", "received: hi!"]),
-              ],
-            },
-          ],
-        },
-      ],
-    },
-  ];
-
-  const report = await testRunner.runTestsAndPrint(tests);
-
-  expect(report).toMatchObject<ISemiRunnerReport>({
     totalTestFiles: 1,
     totalTestFilesFailed: 1,
-    totalTestFilesPassed: 0,
-    totalTests: 2,
     totalTestsFailed: 1,
-    totalTestsPassed: 1,
-    totalEmptyTestFiles: 0,
-    totalEmptyTests: 0,
-  });
-  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
-});
-
-it("should print for a empty test file name", async () => {
-  const tests: ITestFile[] = [
-    {
-      path: testFileNames[0],
-      isEmpty: false,
-      groups: [
-        {
-          name: "",
-          tests: [
-            {
-              name: "",
-              testsFunctions: [() => testUtils.createResolvedPassReport()],
-            },
-          ],
-        },
-      ],
-    },
-  ];
-
-  const report = await testRunner.runTestsAndPrint(tests);
-
-  expect(report).toMatchObject<ISemiRunnerReport>({
-    totalTestFiles: 1,
-    totalTestFilesFailed: 0,
-    totalTestFilesPassed: 1,
-    totalTests: 1,
-    totalTestsFailed: 0,
-    totalTestsPassed: 1,
-    totalEmptyTestFiles: 0,
-    totalEmptyTests: 0,
-  });
-  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
-});
-
-it("should print tests for a subgroup", async () => {
-  const tests: ITestFile[] = [
-    {
-      path: testFileNames[0],
-      isEmpty: false,
-      groups: [
-        {
-          name: "",
-          tests: [],
-          subGroups: [
-            {
-              name: "subgroup",
-              tests: [
-                {
-                  name: "test",
-                  testsFunctions: [() => testUtils.createResolvedPassReport()],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-  ];
-
-  const report = await testRunner.runTestsAndPrint(tests);
-
-  expect(report).toMatchObject<ISemiRunnerReport>({
-    totalTestFiles: 1,
-    totalTestFilesFailed: 0,
-    totalTestFilesPassed: 1,
-    totalTests: 1,
-    totalTestsFailed: 0,
-    totalTestsPassed: 1,
-    totalEmptyTestFiles: 0,
-    totalEmptyTests: 0,
-  });
-  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
-});
-
-it("should print subtest for a subgroup", async () => {
-  const tests: ITestFile[] = [
-    {
-      path: testFileNames[0],
-      isEmpty: false,
-      groups: [
-        {
-          name: "",
-          tests: [],
-          subGroups: [
-            {
-              name: "subgroup",
-              tests: [
-                {
-                  name: "test",
-                  testsFunctions: [],
-                  subTests: [
-                    {
-                      name: "subtest",
-                      testsFunctions: [() => testUtils.createResolvedPassReport()],
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-  ];
-
-  const report = await testRunner.runTestsAndPrint(tests);
-
-  expect(report).toMatchObject<ISemiRunnerReport>({
-    totalTestFiles: 1,
-    totalTestFilesFailed: 0,
-    totalTestFilesPassed: 1,
-    totalTests: 2,
-    totalTestsFailed: 0,
-    totalTestsPassed: 1,
-    totalEmptyTestFiles: 0,
-    totalEmptyTests: 1,
-  });
-  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
-});
-
-it("should print empty test file", async () => {
-  const tests: ITestFile[] = [
-    {
-      path: testFileNames[0],
-      isEmpty: true,
-      groups: [],
-    },
-  ];
-
-  const report = await testRunner.runTestsAndPrint(tests);
-
-  expect(report).toMatchObject<ISemiRunnerReport>({
-    totalTestFiles: 1,
-    totalTestFilesFailed: 0,
+    totalTestsPassed: 3,
     totalTestFilesPassed: 0,
-    totalTests: 0,
-    totalTestsFailed: 0,
-    totalTestsPassed: 0,
-    totalEmptyTestFiles: 1,
-    totalEmptyTests: 0,
+    testTimer: "10ms",
   });
-  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
+
+  const stdoutClearned = testUtils.replaceStackTracePaths(logUpdate.stdout);
+
+  console.log(stdoutClearned);
+  expect(stdoutClearned).toMatchSnapshot();
+  expect(removeANSIColorStyle(stdoutClearned)).toMatchSnapshot("without ANSI Colors");
 });
 
-it("should print empty test file", async () => {
-  const tests: ITestFile[] = [
-    {
-      path: testFileNames[0],
-      isEmpty: false,
-      groups: [
-        {
-          name: "",
-          tests: [],
-          subGroups: [
-            {
-              name: "subgroup",
-              tests: [
-                {
-                  name: "test",
-                  testsFunctions: [],
-                  subTests: [
-                    {
-                      name: "subtest",
-                      testsFunctions: [() => testUtils.createResolvedPassReport()],
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-    {
-      groups: [],
-      isEmpty: true,
-      path: testFileNames[1],
-    },
-  ];
+it("should get report for subgroups", async () => {
+  group("g1", () => {
+    group("g2", () => {
+      group("g3", () => {
+        group("g4", () => {
+          group("g5", () => {
+            group("g6", () => {
+              test("test", () => {
+                _expect(1).toEqual(1);
+              });
+            });
+          });
+        });
+      });
+    });
+  });
 
-  const report = await testRunner.runTestsAndPrint(tests);
-
-  expect(report).toMatchObject<ISemiRunnerReport>({
-    totalTestFiles: 2,
+  await testCollector.executeGroupClojure();
+  const report = await testRunner.runTestsAndPrint(testCollector.testFiles);
+  expect(report).toEqual<IRunnerReport>({
+    totalTests: 1,
+    totalEmptyTestFiles: 0,
+    totalEmptyTests: 0,
+    totalTestFiles: 1,
     totalTestFilesFailed: 0,
-    totalTestFilesPassed: 1,
-    totalTests: 2,
     totalTestsFailed: 0,
     totalTestsPassed: 1,
-    totalEmptyTestFiles: 1,
-    totalEmptyTests: 1,
+    totalTestFilesPassed: 1,
+    testTimer: "10ms",
   });
-  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
+
+  const stdoutClearned = testUtils.replaceStackTracePaths(logUpdate.stdout);
+  expect(stdoutClearned).toMatchSnapshot();
+  expect(removeANSIColorStyle(stdoutClearned)).toMatchSnapshot("without ANSI Colors");
 });
 
-it("should print report for 1 test file, 2 test closure and 1 failed function and 1 passed function", async () => {
-  const data: TestFileGeneratorInfo = {
-    amountOfTestFiles: 1,
-    testFunctionsReport: [testUtils.createFailedITestReport([diff({ a: 1 }, { a: 2 })])],
-    amountOfTests: 1,
-  };
+it("should get report for subtests", async () => {
+  test("t1", () => {
+    test("t2", () => {
+      test("t3", () => {
+        test("t4", () => {
+          test("t5", () => {
+            test("t6", () => {
+              test("t7", () => {
+                _expect(1).toEqual(1);
+              });
+            });
+          });
+        });
+      });
+    });
+  });
 
-  const tests = generateTestFile(data);
+  await testCollector.executeGroupClojure();
+  const report = await testRunner.runTestsAndPrint(testCollector.testFiles);
+  expect(report).toEqual<IRunnerReport>({
+    totalTests: 7,
+    totalEmptyTestFiles: 0,
+    totalEmptyTests: 6,
+    totalTestFiles: 1,
+    totalTestFilesFailed: 0,
+    totalTestsFailed: 0,
+    totalTestsPassed: 1,
+    totalTestFilesPassed: 1,
+    testTimer: "10ms",
+  });
 
-  const report = await testRunner.runTestsAndPrint(tests);
+  const stdoutClearned = testUtils.replaceStackTracePaths(logUpdate.stdout);
+  expect(stdoutClearned).toMatchSnapshot();
+  expect(removeANSIColorStyle(stdoutClearned)).toMatchSnapshot("without ANSI Colors");
+});
 
-  expect(report).toMatchObject<ISemiRunnerReport>({
-    totalTestFiles: data.amountOfTestFiles,
+it("-", async () => {
+  group("group 1", () => {
+    test("test closure 1", () => {
+      _expect(1).toEqual(1);
+    });
+
+    test("test closure 2", () => {
+      _expect(1).toEqual(1);
+    });
+
+    test("test closure 3", () => {
+      _expect(1).toEqual(1);
+    });
+
+    test("test closure 4", () => {
+      _expect(1).not.toEqual(1);
+    });
+  });
+
+  group("group 2", () => {
+    test("test closure 5", () => {
+      _expect(1).toEqual(1);
+    });
+
+    test("test closure 6", () => {
+      _expect(1).toEqual(1);
+    });
+
+    test("test closure 7", () => {
+      _expect(1).toEqual(1);
+    });
+
+    test("test closure 8", () => {
+      _expect(1).not.toEqual(1);
+    });
+  });
+
+  group("group 3", () => {
+    test("test closure 9", () => {
+      _expect(1).toEqual(1);
+    });
+
+    test("test closure 10", () => {
+      _expect(1).toEqual(1);
+    });
+
+    test("test closure 11", () => {
+      _expect(1).toEqual(1);
+    });
+
+    test("test closure 12", () => {
+      _expect(1).not.toEqual(1);
+    });
+  });
+
+  await testCollector.executeGroupClojure();
+  const report = await testRunner.runTestsAndPrint(testCollector.testFiles);
+  expect(report).toEqual<IRunnerReport>({
+    totalTests: 12,
+    totalEmptyTestFiles: 0,
+    totalEmptyTests: 0,
+    totalTestFiles: 1,
     totalTestFilesFailed: 1,
+    totalTestsFailed: 3,
+    totalTestsPassed: 9,
     totalTestFilesPassed: 0,
-    totalTests: 1,
-    totalTestsFailed: 1,
-    totalTestsPassed: 0,
+    testTimer: "10ms",
+  });
+
+  const stdoutClearned = testUtils.replaceStackTracePaths(logUpdate.stdout);
+  expect(stdoutClearned).toMatchSnapshot();
+  expect(removeANSIColorStyle(stdoutClearned)).toMatchSnapshot("without ANSI Colors");
+});
+
+it("should get report for multiple files", async () => {
+  testCollector.clearTestFiles();
+  testCollector.createTestFile("file 1");
+
+  group("group 1", () => {
+    test("test closure 1", () => {
+      _expect(1).toEqual(1);
+    });
+  });
+
+  await testCollector.executeGroupClojure();
+  testCollector.createTestFile("file 2");
+
+  group("group 2", () => {
+    test("test closure 2", () => {
+      _expect(1).toEqual(1);
+    });
+  });
+
+  await testCollector.executeGroupClojure();
+  testCollector.createTestFile("file 3");
+
+  group("group 3", () => {
+    test("test closure 3", () => {
+      _expect(1).toEqual(1);
+    });
+  });
+
+  await testCollector.executeGroupClojure();
+  const report = await testRunner.runTestsAndPrint(testCollector.testFiles);
+  expect(report).toEqual<IRunnerReport>({
+    totalTests: 3,
     totalEmptyTestFiles: 0,
     totalEmptyTests: 0,
-  });
-  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
-});
-
-it("should print report for 1 test file, 2 test closure and 1 failed function and 1 passed function with stackTrace", async () => {
-  const data: TestFileGeneratorInfo = {
-    amountOfTestFiles: 1,
-    testFunctionsReport: [
-      testUtils.createFailedITestReport(
-        [diff({ a: 1 }, { a: 2 })],
-        buildReportMessage(
-          "at TestExecutor.printReportData (src/core/testExecutor.ts:202:13)\n" +
-            "at Object.<anonymous> (tests/utils/colors.test.ts:29:39)",
-        ),
-      ),
-    ],
-    amountOfTests: 1,
-  };
-
-  const tests = generateTestFile(data);
-
-  const report = await testRunner.runTestsAndPrint(tests);
-
-  expect(report).toMatchObject<ISemiRunnerReport>({
-    totalTestFiles: data.amountOfTestFiles,
-    totalTestFilesFailed: 1,
-    totalTestFilesPassed: 0,
-    totalTests: 1,
-    totalTestsFailed: 1,
-    totalTestsPassed: 0,
-    totalEmptyTestFiles: 0,
-    totalEmptyTests: 0,
-  });
-  expect(removeANSIColorStyle(logUpdate.stdout)).toMatchSnapshot();
-});
-
-it("should print for a file that throws error in test function", async () => {
-  const reports = await testRunner.runTest({
-    testsFunctions: [
-      (_: any) => {
-        throw new Error("error message");
-      },
-    ],
+    totalTestFiles: 3,
+    totalTestFilesFailed: 0,
+    totalTestsFailed: 0,
+    totalTestsPassed: 3,
+    totalTestFilesPassed: 3,
+    testTimer: "10ms",
   });
 
-  expect(reports[0].message).toEqual("error message");
-  expect(reports[0].pass).toEqual(false);
-});
-
-it("should print for a file that throws unknown error in test function", async () => {
-  const reports = await testRunner.runTest({
-    testsFunctions: [
-      (_: any) => {
-        // tslint:disable-next-line: no-string-throw
-        throw "error message";
-      },
-    ],
-  });
-
-  expect(reports[0].message).toEqual(`\"error message\"`);
-  expect(reports[0].pass).toEqual(false);
-});
-
-it("should execute hooks with failure", async () => {
-  _afterEach(() => {
-    throw new Error("error in beforeEachFunctions");
-  });
-
-  _beforeEach(() => {
-    throw new Error("error in afterEachFunctions");
-  });
-
-  const report = await testRunner.runTest({
-    testsFunctions: [
-      (_: any) => {
-        return testUtils.createResolvedPassReport();
-      },
-    ],
-  });
-
-  expect(report[0].pass).toEqual(true);
-});
-
-it("should execute hooks with failure (failure is not a Error instance)", async () => {
-  _afterEach(() => {
-    throw { message: "error in beforeEachFunctions" };
-  });
-
-  const report = await testRunner.runTest({
-    testsFunctions: [
-      (_: any) => {
-        return Promise.resolve(testUtils.createPassReport());
-      },
-    ],
-  });
-
-  expect(report[0].pass).toEqual(true);
-});
-
-it("should hook, but execute just once", async () => {
-  _afterEach(() => {
-    throw { message: "error in beforeEachFunctions" };
-  });
-
-  const report = await testRunner.runTest({
-    testsFunctions: [
-      (_: any) => {
-        return testUtils.createResolvedPassReport();
-      },
-      (_: any) => {
-        return testUtils.createResolvedPassReport();
-      },
-    ],
-  });
-
-  expect(report[0].pass).toEqual(true);
+  const stdoutClearned = testUtils.replaceStackTracePaths(logUpdate.stdout);
+  expect(stdoutClearned).toMatchSnapshot();
+  expect(removeANSIColorStyle(stdoutClearned)).toMatchSnapshot("without ANSI Colors");
 });

@@ -1,5 +1,5 @@
-import { Permission } from "../../src/types";
-import { calcPermissionsValue } from "../../src/utils/permission";
+import { Permission } from "../../src";
+import { calcPermissionsValue } from "../../src/utils/calcPermissionsValue";
 
 describe("testing permission conversion", () => {
   it("should get value from permission", () => {
@@ -10,6 +10,6 @@ describe("testing permission conversion", () => {
   });
 
   it("should return 0 due to no permission", () => {
-    expect(calcPermissionsValue(undefined)).toEqual(undefined);
+    expect(calcPermissionsValue()).toEqual(undefined);
   });
 });

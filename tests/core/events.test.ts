@@ -1,30 +1,30 @@
 import {
   Channel,
-  Client,
   Collection,
   Guild,
   GuildEmoji,
+  CloseEvent,
   GuildMember,
   Message,
   MessageReaction,
-  PartialDMChannel,
   PartialGuildMember,
   PartialMessage,
   PartialUser,
   Presence,
   Role,
-  Speaking,
   User,
   VoiceState,
+  TextBasedChannel,
+  GuildBan,
+  Typing,
 } from "discord.js";
-import { EventResume, Events } from "../../src/core/events";
+import { Events } from "../../src/core/Events";
 import MockDiscord from "../mocks/mockDiscord";
 
-const client = new Client();
 const mockDiscord = new MockDiscord();
-let events: Events;
+const client = mockDiscord.client;
 
-const DEFAULT_DELAY = 10;
+let events: Events;
 
 beforeEach(() => {
   events = new Events(client);
@@ -36,22 +36,22 @@ describe("testing events event", () => {
     it("should get callback", () => {
       let a = 0;
       events.onReady(() => (a = 1));
-      client.emit(eventName);
+      client.emit(eventName, client);
       expect(a).toBe(1);
     });
 
     it("should get async once", async () => {
       const promise = events.onceReady();
-      client.emit(eventName);
-      const _void = await promise;
-      expect(_void).toBeFalsy();
+      client.emit(eventName, client);
+      const _client = await promise;
+      expect(_client).toEqual(client);
     });
   });
 
   describe("testing messageReactionRemoveEmoji event", () => {
     const eventName = "messageReactionRemoveEmoji";
     it("should get callback", () => {
-      let _reaction: MessageReaction;
+      let _reaction!: MessageReaction;
       events.onMessageReactionRemoveEmoji((reaction) => (_reaction = reaction));
       client.emit(eventName, mockDiscord.messageReaction);
       expect(_reaction).toEqual(mockDiscord.messageReaction);
@@ -68,58 +68,58 @@ describe("testing events event", () => {
   describe("testing channelCreate event", () => {
     const eventName = "channelCreate";
     it("should get callback", () => {
-      let _channel: Channel;
+      let _channel!: Channel;
       events.onChannelCreate((channel) => (_channel = channel));
-      client.emit(eventName, mockDiscord.channel);
-      expect(_channel).toEqual(mockDiscord.channel);
+      client.emit(eventName, mockDiscord.textChannel);
+      expect(_channel).toEqual(mockDiscord.textChannel);
     });
 
     it("should get async once", async () => {
       const promise = events.onceChannelCreate();
-      client.emit(eventName, mockDiscord.channel);
+      client.emit(eventName, mockDiscord.textChannel);
       const _channel = await promise;
-      expect(_channel).toEqual(mockDiscord.channel);
+      expect(_channel).toEqual(mockDiscord.textChannel);
     });
   });
 
   describe("testing channelDelete event", () => {
     const eventName = "channelDelete";
     it("should get callback", () => {
-      let _channel: Channel;
+      let _channel!: Channel;
       events.onChannelDelete((channel) => (_channel = channel));
-      client.emit(eventName, mockDiscord.channel);
-      expect(_channel).toEqual(mockDiscord.channel);
+      client.emit(eventName, mockDiscord.textChannel);
+      expect(_channel).toEqual(mockDiscord.textChannel);
     });
 
     it("should get async once", async () => {
       const promise = events.onceChannelDelete();
-      client.emit(eventName, mockDiscord.channel);
+      client.emit(eventName, mockDiscord.textChannel);
       const _channel = await promise;
-      expect(_channel).toEqual(mockDiscord.channel);
+      expect(_channel).toEqual(mockDiscord.textChannel);
     });
   });
 
   describe("testing channelPinsUpdate event", () => {
     const eventName = "channelPinsUpdate";
     it("should get callback", () => {
-      let _channel: Channel;
-      let _date: Date;
+      let _channel!: TextBasedChannel;
+      let _date!: Date;
       const now = new Date();
       events.onChannelPinsUpdate((channel, date) => {
         _channel = channel;
         _date = date;
       });
-      client.emit(eventName, mockDiscord.channel, now);
-      expect(_channel).toEqual(mockDiscord.channel);
+      client.emit(eventName, mockDiscord.textChannel, now);
+      expect(_channel).toEqual(mockDiscord.textChannel);
       expect(_date).toEqual(now);
     });
 
     it("should get async once", async () => {
       const now = new Date();
       const promise = events.onceChannelPinsUpdate();
-      client.emit(eventName, mockDiscord.channel, now);
+      client.emit(eventName, mockDiscord.textChannel, now);
       const [_channel, _date] = await promise;
-      expect(_channel).toEqual(mockDiscord.channel);
+      expect(_channel).toEqual(mockDiscord.textChannel);
       expect(_date).toEqual(now);
     });
   });
@@ -131,8 +131,8 @@ describe("testing events event", () => {
     newChannel.name = "potatoe";
 
     it("should get callback", () => {
-      let _oldChannel: Channel;
-      let _newChannel: Channel;
+      let _oldChannel!: Channel;
+      let _newChannel!: Channel;
 
       events.onChannelUpdate((oldReceived, newReceived) => {
         _oldChannel = oldReceived;
@@ -157,7 +157,7 @@ describe("testing events event", () => {
     const eventName = "debug";
     it("should get callback", () => {
       let a = "";
-      events.onDebug((argEmited) => (a = argEmited));
+      events.onDebug((argEmitted) => (a = argEmitted));
       client.emit(eventName, "test");
       expect(a).toEqual("test");
     });
@@ -173,7 +173,7 @@ describe("testing events event", () => {
   describe("testing roleDelete event", () => {
     const eventName = "roleDelete";
     it("should get callback", () => {
-      let deleted: Role;
+      let deleted!: Role;
       events.onRoleDelete((role) => (deleted = role));
       client.emit(eventName, mockDiscord.role);
       expect(deleted).toEqual(mockDiscord.role);
@@ -195,7 +195,7 @@ describe("testing events event", () => {
 
     it("should fail when get async once with roleIdentifier", async () => {
       expect(async () => {
-        const promise = events.onceRoleDelete({ id: "123" }, 10);
+        const promise = events.onceRoleDelete({ id: "123", timeout: 10 });
         client.emit(eventName, mockDiscord.role);
         await promise;
       }).rejects.toBeTruthy();
@@ -209,23 +209,23 @@ describe("testing events event", () => {
     });
   });
 
-  describe("testing disconnect event", () => {
-    const eventName = "disconnect";
+  describe("testing shardDisconnect event", () => {
+    const eventName = "shardDisconnect";
     it("should get callback", () => {
-      let closeEvent: CloseEvent;
+      let closeEvent!: CloseEvent;
       let code = 0;
-      events.onDisconnect((event, _code) => {
+      events.onShardDisconnect((event, _code) => {
         closeEvent = event;
         code = _code;
       });
-      client.emit(eventName, {}, 1);
+      client.emit(eventName, {} as any as CloseEvent, 1);
       expect(closeEvent).toEqual({});
       expect(code).toEqual(1);
     });
 
     it("should get async once", async () => {
       const promise = events.onceDisconnect();
-      client.emit(eventName, {}, 1);
+      client.emit(eventName, {} as any as CloseEvent, 1);
       const [closeEvent, code] = await promise;
       expect(closeEvent).toEqual({});
       expect(code).toEqual(1);
@@ -235,7 +235,7 @@ describe("testing events event", () => {
   describe("testing emojiCreate event", () => {
     const eventName = "emojiCreate";
     it("should get callback", () => {
-      let emoji: GuildEmoji;
+      let emoji!: GuildEmoji;
       events.onEmojiCreate((created) => (emoji = created));
       client.emit(eventName, mockDiscord.guildEmoji);
       expect(emoji).toEqual(mockDiscord.guildEmoji);
@@ -252,7 +252,7 @@ describe("testing events event", () => {
   describe("testing emojiDelete event", () => {
     const eventName = "emojiDelete";
     it("should get callback", () => {
-      let emoji: GuildEmoji;
+      let emoji!: GuildEmoji;
       events.onEmojiDelete((created) => (emoji = created));
       client.emit(eventName, mockDiscord.guildEmoji);
       expect(emoji).toEqual(mockDiscord.guildEmoji);
@@ -270,11 +270,11 @@ describe("testing events event", () => {
     const eventName = "emojiUpdate";
     const oldEmoji = mockDiscord.guildEmoji;
     const newEmoji = mockDiscord.guildEmoji;
-    newEmoji.name = "potatoe";
+    newEmoji.name = "potatoes";
 
     it("should get callback", () => {
-      let _oldEmoji: GuildEmoji;
-      let _newEmoji: GuildEmoji;
+      let _oldEmoji!: GuildEmoji;
+      let _newEmoji!: GuildEmoji;
 
       events.onEmojiUpdate((oldChannel, newChannel) => {
         _oldEmoji = oldChannel;
@@ -298,10 +298,10 @@ describe("testing events event", () => {
   describe("testing error event", () => {
     const eventName = "error";
     it("should get callback", () => {
-      let emitedError: Error;
-      events.onError((error) => (emitedError = error));
+      let emittedError!: Error;
+      events.onError((error) => (emittedError = error));
       client.emit(eventName, new Error("Fail in connection"));
-      expect(emitedError).toBeInstanceOf(Error);
+      expect(emittedError).toBeInstanceOf(Error);
     });
 
     it("should get async once", async () => {
@@ -315,53 +315,45 @@ describe("testing events event", () => {
   describe("testing guildBanAdd event", () => {
     const eventName = "guildBanAdd";
     it("should get callback", () => {
-      let _guild: Guild;
-      let _user: User;
-      events.onGuildBan((guild, user) => {
+      let _guild!: GuildBan;
+      events.onGuildBan((guild) => {
         _guild = guild;
-        _user = user;
       });
-      client.emit(eventName, mockDiscord.guild, mockDiscord.user);
-      expect(_guild).toEqual(mockDiscord.guild);
-      expect(_user).toEqual(mockDiscord.user);
+      client.emit(eventName, mockDiscord.guildBan);
+      expect(_guild).toEqual(mockDiscord.guildBan);
     });
 
     it("should get async once", async () => {
       const promise = events.onceGuildBan();
-      client.emit(eventName, mockDiscord.guild, mockDiscord.user);
-      const [_guild, _user] = await promise;
-      expect(_guild).toEqual(mockDiscord.guild);
-      expect(_user).toBe(mockDiscord.user);
+      client.emit(eventName, mockDiscord.guildBan);
+      const _guildBan = await promise;
+      expect(_guildBan).toEqual(mockDiscord.guildBan);
     });
   });
 
   describe("testing guildBanRemove event", () => {
     const eventName = "guildBanRemove";
     it("should get callback", () => {
-      let _guild: Guild;
-      let _user: User;
-      events.onGuildBanRemove((guild, user) => {
+      let _guild!: GuildBan;
+      events.onGuildBanRemove((guild) => {
         _guild = guild;
-        _user = user;
       });
-      client.emit(eventName, mockDiscord.guild, mockDiscord.user);
-      expect(_guild).toEqual(mockDiscord.guild);
-      expect(_user).toEqual(mockDiscord.user);
+      client.emit(eventName, mockDiscord.guildBan);
+      expect(_guild).toEqual(mockDiscord.guildBan);
     });
 
     it("should get async once", async () => {
       const promise = events.onceGuildBanRemove();
-      client.emit(eventName, mockDiscord.guild, mockDiscord.user);
-      const [_guild, _user] = await promise;
-      expect(_guild).toEqual(mockDiscord.guild);
-      expect(_user).toBe(mockDiscord.user);
+      client.emit(eventName, mockDiscord.guildBan);
+      const _guild = await promise;
+      expect(_guild).toEqual(mockDiscord.guildBan);
     });
   });
 
   describe("testing guildCreate event", () => {
     const eventName = "guildCreate";
     it("should get callback", () => {
-      let created: Guild;
+      let created!: Guild;
       events.onGuildCreate((guild) => (created = guild));
       client.emit(eventName, mockDiscord.guild);
       expect(created).toEqual(mockDiscord.guild);
@@ -378,7 +370,7 @@ describe("testing events event", () => {
   describe("testing guildDelete event", () => {
     const eventName = "guildDelete";
     it("should get callback", () => {
-      let deleted: Guild;
+      let deleted!: Guild;
       events.onGuildDelete((guild) => (deleted = guild));
       client.emit(eventName, mockDiscord.guild);
       expect(deleted).toEqual(mockDiscord.guild);
@@ -395,7 +387,7 @@ describe("testing events event", () => {
   describe("testing guildMemberAdd event", () => {
     const eventName = "guildMemberAdd";
     it("should get callback", () => {
-      let memberAdded: GuildMember;
+      let memberAdded!: GuildMember;
       events.onGuildMemberAdd((guild) => (memberAdded = guild));
       client.emit(eventName, mockDiscord.guildMember);
       expect(memberAdded).toEqual(mockDiscord.guildMember);
@@ -412,7 +404,7 @@ describe("testing events event", () => {
   describe("testing guildMemberAvailable event", () => {
     const eventName = "guildMemberAvailable";
     it("should get callback", () => {
-      let memberAdded: GuildMember | PartialGuildMember;
+      let memberAdded!: GuildMember | PartialGuildMember;
       events.onGuildMemberAvailable((guild) => (memberAdded = guild));
       client.emit(eventName, mockDiscord.guildMember);
       expect(memberAdded).toEqual(mockDiscord.guildMember);
@@ -429,7 +421,7 @@ describe("testing events event", () => {
   describe("testing guildMemberRemove event", () => {
     const eventName = "guildMemberRemove";
     it("should get callback", () => {
-      let memberAdded: GuildMember | PartialGuildMember;
+      let memberAdded!: GuildMember | PartialGuildMember;
       events.onGuildMemberRemove((guild) => (memberAdded = guild));
       client.emit(eventName, mockDiscord.guildMember);
       expect(memberAdded).toEqual(mockDiscord.guildMember);
@@ -446,16 +438,16 @@ describe("testing events event", () => {
   describe("testing guildMemberChunk event", () => {
     const eventName = "guildMembersChunk";
 
-    const eventResume: EventResume = {
+    const eventResume: corde.IEventResume = {
       count: 1,
       index: 0,
       nonce: "",
     };
 
     it("should get callback", () => {
-      let _members: Collection<string, GuildMember>;
-      let _guild: Guild;
-      let _resume: EventResume;
+      let _members!: Collection<string, GuildMember>;
+      let _guild!: Guild;
+      let _resume!: corde.IEventResume;
 
       events.onGuildMemberChunk((members, guild, resume) => {
         _members = members;
@@ -472,45 +464,17 @@ describe("testing events event", () => {
     it("should get async once", async () => {
       const promise = events.onceGuildMemberChunk();
       client.emit(eventName, mockDiscord.guildMemberCollection, mockDiscord.guild, eventResume);
-      const [_members, _guild, _resume] = await promise;
+      const [_members, _guild] = await promise;
       expect(_members).toEqual(mockDiscord.guildMemberCollection);
       expect(_guild).toEqual(mockDiscord.guild);
-      expect(_resume).toEqual(eventResume);
-    });
-  });
-
-  describe("testing onGuildMemberSpeaking", () => {
-    const eventName = "guildMemberSpeaking";
-    it("should get callback", () => {
-      let _guildMember: GuildMember | PartialGuildMember;
-      let _speaking: Readonly<Speaking>;
-
-      events.onGuildMemberSpeaking((guildMember, speaking) => {
-        _guildMember = guildMember;
-        _speaking = speaking;
-      });
-
-      client.emit(eventName, mockDiscord.guildMember, mockDiscord.speaking);
-      expect(_guildMember).toEqual(mockDiscord.guildMember);
-      expect(_speaking).toEqual(mockDiscord.speaking);
-    });
-
-    it("should get async once", async () => {
-      const promise = events.onceGuildMemberSpeaking();
-
-      client.emit(eventName, mockDiscord.guildMember, mockDiscord.speaking);
-      const [_guildMember, _speaking] = await promise;
-
-      expect(_guildMember).toEqual(mockDiscord.guildMember);
-      expect(_speaking).toEqual(mockDiscord.speaking);
     });
   });
 
   describe("testing guildMemberUpdate event", () => {
     const eventName = "guildMemberUpdate";
     it("should get callback", () => {
-      let _oldGuildMember: GuildMember | PartialGuildMember;
-      let _newGuildMember: GuildMember;
+      let _oldGuildMember!: GuildMember | PartialGuildMember;
+      let _newGuildMember!: GuildMember;
 
       events.onGuildMemberUpdate((oldGuildMember, newGuildMember) => {
         _oldGuildMember = oldGuildMember;
@@ -541,7 +505,7 @@ describe("testing events event", () => {
   describe("testing guildUnavailable event", () => {
     const eventName = "guildUnavailable";
     it("should get callback", () => {
-      let _guild: Guild;
+      let _guild!: Guild;
       events.onGuildUnavailable((guild) => (_guild = guild));
       client.emit(eventName, mockDiscord.guild);
       expect(_guild).toEqual(mockDiscord.guild);
@@ -558,8 +522,8 @@ describe("testing events event", () => {
   describe("testing guildUpdate event", () => {
     const eventName = "guildUpdate";
     it("should get callback", () => {
-      let _oldGuild: Guild;
-      let _newGuild: Guild;
+      let _oldGuild!: Guild;
+      let _newGuild!: Guild;
       events.onGuildUpdate((oldGuild, newGuild) => {
         _oldGuild = oldGuild;
         _newGuild = newGuild;
@@ -587,7 +551,7 @@ describe("testing events event", () => {
   describe("testing message event", () => {
     const eventName = "message";
     it("should get callback", () => {
-      let _message: Message;
+      let _message!: Message;
       events.onMessage((message) => (_message = message));
       client.emit(eventName, mockDiscord.message);
       expect(_message).toEqual(mockDiscord.message);
@@ -601,7 +565,7 @@ describe("testing events event", () => {
     });
 
     it("should get async once with messageIdentifier", async () => {
-      const promise = events.onceMessage(mockDiscord.message.author.id);
+      const promise = events.onceMessage({ message: mockDiscord.message });
       client.emit(eventName, mockDiscord.message);
       const message = await promise;
       expect(message).toEqual(mockDiscord.message);
@@ -609,7 +573,11 @@ describe("testing events event", () => {
 
     it("should fail when get async once with messageIdentifier", async () => {
       expect(async () => {
-        const promise = events.onceMessage("123", null, 10);
+        const promise = events.onceMessage({
+          message: {
+            content: "",
+          },
+        });
         client.emit(eventName, mockDiscord.message);
         await promise;
       }).rejects.toBeTruthy();
@@ -619,7 +587,7 @@ describe("testing events event", () => {
   describe("testing messageDelete event", () => {
     const eventName = "messageDelete";
     it("should get callback", () => {
-      let _message: Message | PartialMessage;
+      let _message!: Message | PartialMessage;
       events.onMessageDelete((message) => (_message = message));
       client.emit(eventName, mockDiscord.message);
       expect(_message).toEqual(mockDiscord.message);
@@ -636,7 +604,7 @@ describe("testing events event", () => {
   describe("testing messageDeleteBulk event", () => {
     const eventName = "messageDeleteBulk";
     it("should get callback", () => {
-      let _messages: Collection<string, Message | PartialMessage>;
+      let _messages!: Collection<string, Message | PartialMessage>;
       events.onMessageDeleteBulk((messages) => (_messages = messages));
       client.emit(eventName, mockDiscord.messageCollection);
       expect(_messages).toEqual(mockDiscord.messageCollection);
@@ -653,8 +621,8 @@ describe("testing events event", () => {
   describe("testing messageReactionAdd event", () => {
     const eventName = "messageReactionAdd";
     it("should get callback", () => {
-      let _reaction: MessageReaction;
-      let _author: User | PartialUser;
+      let _reaction!: MessageReaction;
+      let _author!: User | PartialUser;
       events.onMessageReactionAdd((reaction, author) => {
         _reaction = reaction;
         _author = author;
@@ -686,11 +654,12 @@ describe("testing events event", () => {
 
     it("should get without informing emoji and messageIdentifier", async () => {
       const promise = events.onceMessageReactionsAdd({
-        emojis: [mockDiscord.messageReaction.emoji],
-        messageIdentifier: {
-          id: mockDiscord.messageReaction.message.id,
-        },
-        authorId: mockDiscord.user.id,
+        emojis: [
+          {
+            id: mockDiscord.messageReaction.emoji.id ?? "",
+            name: mockDiscord.messageReaction.emoji.name ?? "",
+          },
+        ],
       });
       client.emit(eventName, mockDiscord.messageReaction, mockDiscord.user);
       const reactionsWithAuthors = await promise;
@@ -713,7 +682,9 @@ describe("testing events event", () => {
 
     it("should return message pinned filter", async () => {
       const promise = events.onceMessagePinned({
-        id: mockDiscord.unPinnedMessage.id,
+        message: {
+          id: mockDiscord.unPinnedMessage.id,
+        },
       });
       const updatedMessage = Object.assign({}, mockDiscord.unPinnedMessage);
       updatedMessage.pinned = true;
@@ -726,8 +697,8 @@ describe("testing events event", () => {
   describe("testing messageReactionRemove event", () => {
     const eventName = "messageReactionRemove";
     it("should get callback", () => {
-      let _reaction: MessageReaction;
-      let _author: User | PartialUser;
+      let _reaction!: MessageReaction;
+      let _author!: User | PartialUser;
       events.onMessageReactionRemove((reaction, author) => {
         _reaction = reaction;
         _author = author;
@@ -749,15 +720,15 @@ describe("testing events event", () => {
   describe("testing messageReactionRemoveAll event", () => {
     const eventName = "messageReactionRemoveAll";
     it("should get callback", () => {
-      let _message: Message | PartialMessage;
+      let _message!: Message | PartialMessage;
       events.onMessageReactionRemoveAll((messages) => (_message = messages));
-      client.emit(eventName, mockDiscord.message);
+      client.emit(eventName, mockDiscord.message, mockDiscord.messageReactionCollection);
       expect(_message).toEqual(mockDiscord.message);
     });
 
     it("should get async once", async () => {
       const promise = events.onceMessageReactionRemoveAll();
-      client.emit(eventName, mockDiscord.message);
+      client.emit(eventName, mockDiscord.message, mockDiscord.messageReactionCollection);
       const message = await promise;
       expect(message).toEqual(mockDiscord.message);
     });
@@ -766,8 +737,8 @@ describe("testing events event", () => {
   describe("testing messageUpdate event", () => {
     const eventName = "messageUpdate";
     it("should get callback", () => {
-      let _oldMessage: Message | PartialMessage;
-      let _newMessage: Message | PartialMessage;
+      let _oldMessage!: Message | PartialMessage;
+      let _newMessage!: Message | PartialMessage;
       events.onMessageUpdate((oldGuild, newGuild) => {
         _oldMessage = oldGuild;
         _newMessage = newGuild;
@@ -794,8 +765,8 @@ describe("testing events event", () => {
   describe("testing presenceUpdate event", () => {
     const eventName = "presenceUpdate";
     it("should get callback", () => {
-      let _oldPresence: Presence;
-      let _newPresence: Presence;
+      let _oldPresence!: Presence | undefined | null;
+      let _newPresence!: Presence;
       events.onPresenceUpdate((oldPresence, newPresence) => {
         _oldPresence = oldPresence;
         _newPresence = newPresence;
@@ -813,8 +784,7 @@ describe("testing events event", () => {
 
       const promise = events.oncePresenceUpdate();
       client.emit(eventName, mockDiscord.presence, updatedPresence);
-      const [_oldPresence, _newPresence] = await promise;
-      expect(_oldPresence).toEqual(mockDiscord.presence);
+      const _newPresence = await promise;
       expect(_newPresence).toEqual(updatedPresence);
     });
   });
@@ -822,7 +792,7 @@ describe("testing events event", () => {
   describe("testing roleCreate event", () => {
     const eventName = "roleCreate";
     it("should get callback", () => {
-      let _role: Role;
+      let _role!: Role;
       events.onRoleCreate((role) => (_role = role));
       client.emit(eventName, mockDiscord.role);
       expect(_role).toEqual(mockDiscord.role);
@@ -839,8 +809,8 @@ describe("testing events event", () => {
   describe("testing roleUpdate event", () => {
     const eventName = "roleUpdate";
     it("should get callback", () => {
-      let _oldRole: Role;
-      let _newRole: Role;
+      let _oldRole!: Role;
+      let _newRole!: Role;
       events.onRoleUpdate((oldRole, newRole) => {
         _oldRole = oldRole;
         _newRole = newRole;
@@ -866,7 +836,9 @@ describe("testing events event", () => {
 
   describe("testing onceRolePermissionUpdate", () => {
     const eventName = "roleUpdate";
-    const updatedRole = mockDiscord.createMockRole("test", 0);
+    const updatedRole = mockDiscord.mockRole({
+      name: "test",
+    });
     updatedRole.id = mockDiscord.role.id;
     updatedRole.name = mockDiscord.role.name;
 
@@ -878,7 +850,9 @@ describe("testing events event", () => {
     });
 
     it("should wait for updates in a role based on it's name", async () => {
-      const promise = events.onceRolePermissionUpdate({ name: updatedRole.name });
+      const promise = events.onceRolePermissionUpdate({
+        name: updatedRole.name,
+      });
       client.emit(eventName, mockDiscord.role, updatedRole);
       const newRole = await promise;
       expect(newRole).toEqual(updatedRole);
@@ -896,7 +870,7 @@ describe("testing events event", () => {
 
     it("should throw timeout for waiting", () => {
       expect(async () => {
-        const promise = events.onceRolePermissionUpdate({ name: "potatoe" }, 100);
+        const promise = events.onceRolePermissionUpdate({ name: "potatoes", timeout: 10 });
         client.emit(eventName, mockDiscord.role, updatedRole);
         await promise;
       }).rejects.toBeTruthy();
@@ -906,23 +880,19 @@ describe("testing events event", () => {
   describe("testing typingStart event", () => {
     const eventName = "typingStart";
     it("should get callback", () => {
-      let _channel: Channel | PartialDMChannel;
-      let _user: User | PartialUser;
-      events.onTypingStart((channel, user) => {
-        _channel = channel;
-        _user = user;
+      let _typing!: Typing;
+      events.onTypingStart((typing) => {
+        _typing = typing;
       });
-      client.emit(eventName, mockDiscord.channel, mockDiscord.user);
-      expect(_channel).toEqual(mockDiscord.channel);
-      expect(_user).toEqual(mockDiscord.user);
+      client.emit(eventName, mockDiscord.typing);
+      expect(_typing).toEqual(mockDiscord.typing);
     });
 
     it("should get async once", async () => {
       const promise = events.onceTypingStart();
-      client.emit(eventName, mockDiscord.channel, mockDiscord.user);
-      const [_channel, _user] = await promise;
-      expect(_channel).toEqual(mockDiscord.channel);
-      expect(_user).toEqual(mockDiscord.user);
+      client.emit(eventName, mockDiscord.typing);
+      const _typing = await promise;
+      expect(_typing).toEqual(mockDiscord.typing);
     });
   });
 
@@ -932,8 +902,8 @@ describe("testing events event", () => {
     updatedUser.avatar = "online";
 
     it("should get callback", () => {
-      let _oldUser: User | PartialUser;
-      let _newUser: User;
+      let _oldUser!: User | PartialUser;
+      let _newUser!: User;
       events.onUserUpdate((oldUser, newUser) => {
         _oldUser = oldUser;
         _newUser = newUser;
@@ -958,8 +928,8 @@ describe("testing events event", () => {
     const updatedVoiceState = Object.assign({}, mockDiscord.voiceState);
     updatedVoiceState.selfDeaf = true;
     it("should get callback", () => {
-      let _oldVoiceState: VoiceState;
-      let _newVoiceState: VoiceState;
+      let _oldVoiceState!: VoiceState;
+      let _newVoiceState!: VoiceState;
       events.onVoiceStateUpdate((oldMember, newMember) => {
         _oldVoiceState = oldMember;
         _newVoiceState = newMember;

@@ -1,11 +1,8 @@
+/// <reference types="../../lib/src/global" />
 /* eslint-disable no-console */
-import corde from "../../lib";
-import { testCollector } from "../../lib/src/common/testCollector";
 
-corde.afterAll(() => {
+afterAll(() => {
   console.log("test afterAll");
 });
 
-corde.it("", () => {
-  testCollector.addTestFunction(() => Promise.resolve({ pass: true } as any));
-});
+it("", () => null);

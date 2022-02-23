@@ -1,5 +1,4 @@
-import { IMessageEmbed } from "../../src/types";
-import { isPartialOf } from "../../src/utils";
+import { isPartialOf } from "../../src/utils/isPartialOf";
 
 describe("testing isPartialOf", () => {
   it("should return true to equal objects", () => {
@@ -14,7 +13,7 @@ describe("testing isPartialOf", () => {
     expect(isPartialOf({ c: 1 }, { a: 1, b: 212 })).toBeFalsy();
   });
 
-  it("should return true due to subproperties equals", () => {
+  it("should return true due to properties equals", () => {
     expect(isPartialOf({ abc: { abc1: 1 } }, { a: 1, b: 212, abc: { abc1: 1 } })).toBeTruthy();
   });
 
@@ -27,22 +26,26 @@ describe("testing isPartialOf", () => {
   });
 
   it("should match having null properties", () => {
-    expect(isPartialOf({ abc: [1, 2, 3], a: null }, { abc: [1, 2, 3] })).toBeTruthy();
+    expect(isPartialOf({ abc: [1, 2, 3] }, { abc: [1, 2, 3], a: null })).toBeTruthy();
   });
 
   it("null values should match", () => {
+    // @ts-ignore
     expect(isPartialOf(null, null)).toBeTruthy();
   });
 
   it("undefined values should match", () => {
+    // @ts-ignore
     expect(isPartialOf(undefined, undefined)).toBeTruthy();
   });
 
   it("null and object values should return false", () => {
+    // @ts-ignore
     expect(isPartialOf({ abc: 1 }, undefined)).toBeFalsy();
   });
 
   it("null and object values should return false", () => {
+    // @ts-ignore
     expect(isPartialOf(undefined, { abc: 1 })).toBeFalsy();
   });
 
@@ -57,8 +60,8 @@ describe("testing isPartialOf", () => {
   it("functions should return true", () => {
     expect(
       isPartialOf(
-        () => {},
-        () => {},
+        () => 1,
+        () => 1,
       ),
     ).toBeTruthy();
   });

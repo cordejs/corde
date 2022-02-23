@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing toBeFalse should return false for {} 1`] = `
+"    
+    expect([32mexpected[39m).toBeFalse()
+    
+    [1mexpected[22m should be [1mfalse[22m.
+    got: [31mobject[39m
+"
+`;
+
+exports[`testing toBeFalse should return false for 1 1`] = `
+"    
+    expect([32mexpected[39m).toBeFalse()
+    
+    [1mexpected[22m should be [1mfalse[22m.
+    got: [31mstring[39m
+"
+`;
+
+exports[`testing toBeFalse should return false for false (isNot true) 1`] = `
+"    
+    expect([32mexpected[39m).not.toBeFalse()
+    
+    [1mexpected[22m should not be [1mfalse[22m.
+    got: [31mfalse[39m
+"
+`;
+
+exports[`testing toBeFalse should return false for true 1`] = `
+"    
+    expect([32mexpected[39m).toBeFalse()
+    
+    [1mexpected[22m should be [1mfalse[22m.
+    got: [31mtrue[39m
+"
+`;

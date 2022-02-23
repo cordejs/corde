@@ -4,8 +4,7 @@ import * as validateFunc from "../../src/cli/validate";
 import * as goFunc from "../../src/cli/exec";
 
 import { program } from "../../src/cli/cli";
-import { runtime } from "../../src/common/runtime";
-import { reader } from "../../src/core/reader";
+import { reader } from "../../src/core/Reader";
 
 describe("testing cli", () => {
   it("should get version", () => {
@@ -17,6 +16,7 @@ describe("testing cli", () => {
 
   it("should call init command", () => {
     program.exitOverride();
+    // @ts-expect-error
     const spy = jest.spyOn(initFunc, "init").mockImplementation(null);
     program.parse(["node", "test", "init"]);
     expect(spy).toBeCalled();
@@ -24,6 +24,7 @@ describe("testing cli", () => {
 
   it("should call init command with 'i' alias", () => {
     program.exitOverride();
+    // @ts-expect-error
     const spy = jest.spyOn(initFunc, "init").mockImplementation(null);
     program.parse(["node", "test", "i"]);
     expect(spy).toBeCalled();
@@ -31,7 +32,9 @@ describe("testing cli", () => {
 
   it("should call validate command", () => {
     program.exitOverride();
+    // @ts-expect-error
     jest.spyOn(reader, "loadConfig").mockImplementation(null);
+    // @ts-expect-error
     const spyValidate = jest.spyOn(validateFunc, "validate").mockImplementation(null);
     program.parse(["node", "test", "validate"]);
     expect(spyValidate).toBeCalled();
@@ -39,7 +42,9 @@ describe("testing cli", () => {
 
   it("should call validate command with 'v' alias", () => {
     program.exitOverride();
+    // @ts-expect-error
     jest.spyOn(reader, "loadConfig").mockImplementation(() => null);
+    // @ts-expect-error
     const spyValidate = jest.spyOn(validateFunc, "validate").mockImplementation(() => null);
     program.parse(["node", "test", "v"]);
     expect(spyValidate).toBeCalled();
@@ -47,6 +52,7 @@ describe("testing cli", () => {
 
   it("should call exec command", () => {
     program.exitOverride();
+    // @ts-expect-error
     const spy = jest.spyOn(goFunc, "exec").mockImplementation(null);
     program.parse(["node", "test", ""]);
     expect(spy).toBeCalled();

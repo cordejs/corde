@@ -1,4 +1,4 @@
-import { EXPECT_RECEIVED_TAB_SPACE } from "../consts";
+import { EXPECT_RECEIVED_TAB_SPACE } from "../const";
 
 /**
  * @internal

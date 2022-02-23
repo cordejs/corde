@@ -1,9 +1,10 @@
+import { InternalError } from "./internalError";
 import { Errors } from "./defaults";
 
 /**
  * Related to a file operation error.
  */
-export class FileError extends Error {
+export class FileError extends InternalError {
   /**
    * Throws when a operation involving files occours.
    * @param message Custom message for this error.

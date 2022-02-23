@@ -17,10 +17,6 @@ describe("testing queue structure", () => {
       expect(queue.defaultParameters.length).toEqual(0);
     });
 
-    it("hasFunctions should be false after initialization", () => {
-      expect(queue.hasFunctions).toBeFalsy();
-    });
-
     it("validateDefaultArguments should be false after initialization", () => {
       expect(queue.isDefaultArgumentsValid()).toBeTruthy();
     });
@@ -38,7 +34,11 @@ describe("testing queue structure", () => {
     });
 
     it("should throw error due to attempt to add a null | undefined value", () => {
-      expect(() => queue.enqueue(null)).toThrowError();
+      expect(() =>
+        queue
+          // @ts-ignore
+          .enqueue(null),
+      ).toThrowError();
     });
 
     it("should throw error due to attempt to add a non funtion value", () => {
@@ -67,7 +67,9 @@ describe("testing queue structure", () => {
     it("should not dequeue a function due to null guid", () => {
       const fn = () => {};
       queue.enqueue(fn);
-      const dequeued = queue.dequeue(null);
+      const dequeued = queue
+        // @ts-ignore
+        .dequeue(null);
       expect(queue.size).toBe(1);
       expect(dequeued).toBeFalsy();
     });
@@ -571,6 +573,17 @@ describe("testing queue structure", () => {
     it("first should return something", () => {
       numberQueue.enqueue(() => 1);
       expect(numberQueue.first()).toBeTruthy();
+    });
+  });
+
+  describe("testing isEmpty", () => {
+    it("should return true", () => {
+      expect(numberQueue.isEmpty()).toBeTruthy();
+    });
+
+    it("should return false", () => {
+      numberQueue.enqueue(() => 1);
+      expect(numberQueue.isEmpty()).toBeFalsy();
     });
   });
 });

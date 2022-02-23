@@ -1,11 +1,11 @@
 import chalk from "chalk";
-import { runtime } from "../common/runtime";
-import { Queue } from "../data-structures";
+import runtime from "../core/runtime";
 import { VoidLikeFunction } from "../types";
-import { executePromiseWithTimeout, formatObject } from "../utils";
+import { executePromiseWithTimeout } from "../utils/executePromiseWithTimeout";
+import { formatObject } from "../utils/formatObject";
 
 interface HookParams {
-  queueToAdd: Queue<VoidLikeFunction>;
+  hookHandler: (fn: VoidLikeFunction) => void;
   fn: () => void | Promise<void>;
   trace: string;
   errorTitle: string;
@@ -18,8 +18,8 @@ interface HookParams {
  * @internal
  */
 export function hookBuilder(params: HookParams) {
-  const { queueToAdd, fn, trace, errorTitle, timeout } = params;
-  queueToAdd.enqueue(async () => {
+  const { hookHandler, fn, trace, errorTitle, timeout } = params;
+  hookHandler(async () => {
     try {
       await executePromiseWithTimeout<void>(async (resolve, reject) => {
         try {
@@ -28,7 +28,7 @@ export function hookBuilder(params: HookParams) {
         } catch (error) {
           reject(error);
         }
-      }, timeout ?? runtime.timeout);
+      }, timeout ?? runtime.configs.getConfigTimeoutOrDefault());
     } catch (error) {
       let newError: Error;
       const errorLabel = chalk.bgRed(`● ${errorTitle}`);

@@ -1,5 +1,5 @@
 import { ITestReport } from "../../src/types";
-import { getStackTrace } from "../../src/utils";
+import { getStackTrace } from "../../src/utils/getStackTrace";
 
 type TypeExecutor = () => Promise<ITestReport>;
 const executorList: TypeExecutor[] = [];
@@ -7,15 +7,14 @@ const executorList: TypeExecutor[] = [];
 class ExpectExample {
   toReturn() {
     const trace = getStackTrace();
-    executorList.push(() => {
-      return Promise.resolve<ITestReport>({
+    executorList.push(async () => {
+      const r = await Promise.resolve<ITestReport>({
         testName: "",
         pass: false,
         message: "error",
-      }).then((r) => {
-        r.trace = trace;
-        return r;
       });
+      r.trace = trace;
+      return r;
     });
   }
 }

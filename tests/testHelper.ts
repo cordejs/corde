@@ -1,13 +1,13 @@
 import path from "path";
 import fs from "fs";
 import MockDiscord from "./mocks/mockDiscord";
-import { Client } from "discord.js";
-import { CordeBot } from "../src/core/cordeBot";
-import { ICordeBot, ITest, ITestFile, TestFunctionType, ITestReport } from "../src/types";
-import { ExpectTest } from "../src/expect/matches/expectTest";
+import { Client, Collection } from "discord.js";
+import { CordeBot } from "../src/core/CordeBot";
+import { ICordeBot, ITestReport, ObjectLike } from "../src/types";
 import { IExpectTestBaseParams } from "../src/types";
-import { runtime } from "../src/common/runtime";
-import { buildReportMessage } from "../src/utils";
+import { buildReportMessage } from "../src/utils/buildReportMessage";
+import { CommandState } from "../src/command/matches/commandState";
+import runtime from "../src/core/runtime";
 
 export const normalTsPath = path.resolve(process.cwd(), "corde.ts");
 export const tempTsPath = path.resolve(process.cwd(), "__corde.ts");
@@ -20,6 +20,11 @@ export const tempJsonPath = path.resolve(process.cwd(), "__corde.json");
 
 export function getConsoleSpyStder(spy: jest.SpyInstance<void, any>) {
   return getFullConsoleLog(spy.mock.calls);
+}
+
+export function replaceCollection<T, U>(from: Collection<T, U>, to: Collection<T, U>) {
+  to.clear();
+  from.forEach((value, key) => to.set(key, value));
 }
 
 export function getFullConsoleLog(log: [any?, ...any[]][]) {
@@ -67,7 +72,11 @@ export function renameConfigTempFileNamesToNormal() {
  * @param property Object property to be mocked
  * @param value New value to property
  */
-export function mockProperty<T extends {}, K extends keyof T>(object: T, property: K, value: T[K]) {
+export function mockProperty<T extends ObjectLike, K extends keyof T>(
+  object: T,
+  property: K,
+  value: T[K],
+) {
   Object.defineProperty(object, property, { get: () => value });
 }
 
@@ -75,37 +84,29 @@ export function createCordeBotWithMockedFunctions(
   mockDiscord: MockDiscord,
   findRoleMock: any = mockDiscord.role,
 ) {
-  const corde = initCordeClientWithChannel(mockDiscord, new Client());
+  const corde = initCordeClientWithChannel(mockDiscord, mockDiscord.client);
   corde.getRoles = jest.fn().mockReturnValue(mockDiscord.roleManager.cache);
   corde.findRole = jest.fn().mockReturnValue(findRoleMock);
-  corde.sendTextMessage = jest.fn().mockImplementation(() => {});
+  corde.sendTextMessage = jest.fn().mockImplementation(() => 1);
   return corde;
 }
 
-export function initCordeClientWithChannel(
-  mockDiscord: MockDiscord,
-  client: Client,
-  timeout = 500,
-) {
+export function initCordeClientWithChannel(mockDiscord: MockDiscord, client: Client) {
   client.guilds.cache.has = jest.fn().mockReturnValueOnce(true);
   client.guilds.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.guild);
 
   mockDiscord.guild.channels.cache.has = jest.fn().mockReturnValueOnce(true);
   mockDiscord.guild.channels.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.textChannel);
-  return initCordeClient(mockDiscord, client, timeout);
+  return initCordeClient(mockDiscord, client);
 }
 
 export const DEFAULT_PREFIX = "!";
 
-export function initCordeClient(
-  mockDiscord: MockDiscord,
-  clientInstance: Client,
-  timeout = 500,
-): ICordeBot {
+export function initCordeClient(mockDiscord: MockDiscord, clientInstance: Client): ICordeBot {
   return new CordeBot(
     DEFAULT_PREFIX,
     mockDiscord.guild.id,
-    mockDiscord.channel.id,
+    mockDiscord.textChannel.id,
     mockDiscord.userBotId,
     clientInstance,
   );
@@ -119,6 +120,7 @@ export function executeWithDelay(fn: () => void, delay: number) {
 
 export function removeANSIColorStyle(value: string) {
   return value.replace(
+    // eslint-disable-next-line no-control-regex
     /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g,
     "",
   );
@@ -140,55 +142,7 @@ export const testFileNames = [
 
 export const testNames = ["test case1", "test case2", "test case3", "test case4"];
 
-export function generateTestFile(generatorData: TestFileGeneratorInfo) {
-  const testMatches: ITestFile[] = [];
-  const testFunctions: TestFunctionType[] = [];
-  const tests: ITest[] = [];
-
-  if (generatorData.testFunctionsReport) {
-    for (const report of generatorData.testFunctionsReport) {
-      testFunctions.push(() => Promise.resolve(report));
-    }
-  }
-
-  if (generatorData.amountOfTestFunctions) {
-    for (let i = 0; i < generatorData.amountOfTestFunctions; i++) {
-      testFunctions.push(() =>
-        Promise.resolve<ITestReport>({
-          testName: "",
-          pass: true,
-        }),
-      );
-    }
-  }
-
-  // Updates the value if pass testFunctions.
-  generatorData.amountOfTestFunctions = testFunctions.length;
-
-  for (let i = 0; i < generatorData.amountOfTests; i++) {
-    tests.push({
-      name: testNames[i],
-      testsFunctions: testFunctions,
-    });
-  }
-
-  for (let i = 0; i < generatorData.amountOfTestFiles; i++) {
-    testMatches.push({
-      path: testFileNames[i],
-      isEmpty: false,
-      groups: [
-        {
-          name: "group",
-          tests,
-        },
-      ],
-    });
-  }
-
-  return testMatches;
-}
-
-export function _initTestSimpleInstance<T extends ExpectTest>(
+export function _initTestSimpleInstance<T extends CommandState>(
   type: new (params: IExpectTestBaseParams) => T,
   params: IExpectTestBaseParams,
 ) {
@@ -204,7 +158,7 @@ export function _initTestSimpleInstance<T extends ExpectTest>(
 }
 
 export namespace testUtils {
-  export function initTestClass<T extends ExpectTest>(
+  export function initTestClass<T extends CommandState>(
     type: new (params: IExpectTestBaseParams) => T,
     params: Partial<IExpectTestBaseParams>,
   ) {
@@ -226,6 +180,16 @@ export namespace testUtils {
     };
   }
 
+  export function replaceStackTracePaths(value: string) {
+    const regString = /(\/(.*)\/)|(src\\(.*)\\)|(tests\\(.*)\\)/;
+    const regx = new RegExp(regString, "g");
+    const pathClearnedValue = value.replace(regx, "/<fake>/<file>/<path>/");
+
+    const lineRegexString = /([.]ts(.*):)(\d+)/;
+    const lineRegex = new RegExp(lineRegexString, "g");
+    return pathClearnedValue.replace(lineRegex, ".ts:200:100");
+  }
+
   export function createResolvedPassReport() {
     return Promise.resolve(testUtils.createPassReport());
   }
@@ -244,7 +208,7 @@ export namespace testUtils {
   }
 }
 
-export function createReport(entity: Object, pass: boolean, message?: string): ITestReport {
+export function createReport(entity: ObjectLike, pass: boolean, message?: string): ITestReport {
   const obj: ITestReport = {
     pass,
     testName: entity.toString(),
@@ -254,4 +218,15 @@ export function createReport(entity: Object, pass: boolean, message?: string): I
     obj.message = message;
   }
   return obj;
+}
+
+export namespace testHelper {
+  export function initCommandTestsFixtures(): [MockDiscord, ICordeBot] {
+    const file = runtime.testCollector.createTestFile("");
+    file.isInsideTestClosure = true;
+    const mockDiscord = new MockDiscord();
+    runtime.setConfigs({ timeout: 100 }, true);
+    const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, mockDiscord.client);
+    return [mockDiscord, cordeClient];
+  }
 }

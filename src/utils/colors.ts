@@ -1,12 +1,13 @@
 import { ColorResolvable } from "discord.js";
-import { ColorsHex } from "../types";
+import { isString } from "./isString";
+import { ColorsHex } from "..";
 
 export function resolveColor(color: ColorResolvable) {
   if (color > 0 && color < 0xffffff) {
     return +color;
   }
 
-  if (typeof color === "string" && color.includes("#")) {
+  if (isString(color) && color.includes("#")) {
     return parseInt(color.toString().replace("#", ""), 16);
   }
 

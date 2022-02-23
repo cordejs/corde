@@ -1,5 +1,5 @@
+import { isInDebugMode } from "./isInDebugMode";
 import { TimeoutError } from "../errors";
-import { utils } from "./utils";
 
 /**
  * Execute a function that returns a promise, passing a `resolve` and
@@ -22,19 +22,19 @@ import { utils } from "./utils";
  *   }, 1000, items);
  * }
  *
- * // If the functions reachs the timeout, it will throw the
+ * // If the functions reach's the timeout, it will throw the
  * // exception TimeoutError with the items array as data property
  *
- * @throws TimeoutError if the function reachs timeout. This error has a property
+ * @throws TimeoutError if the function reach's timeout. This error has a property
  * data that is passed throw the `rejectedData` parameter
  *
  * @param fn function to be executed.
  * @param timeout Time to wait for completion of the function.
- * @param rejectedData Data that should be added in rejection if the function reachs timeout.
+ * @param rejectedData Data that should be added in rejection if the function reach's timeout.
  * @returns Return of `fn` parameter.
  * @internal
  */
-export function executePromiseWithTimeout<TResult extends any>(
+export function executePromiseWithTimeout<TResult>(
   fn: (resolve: (reason?: TResult) => void, reject: (reason?: any) => void) => void,
   timeout?: number,
   rejectedData?: TResult,
@@ -43,7 +43,7 @@ export function executePromiseWithTimeout<TResult extends any>(
     throw new Error("can not execute an null function");
   }
 
-  if (utils.isInDebugMode()) {
+  if (isInDebugMode()) {
     return new Promise<TResult>((resolve, reject) => {
       fn((value) => {
         resolve(value as TResult);

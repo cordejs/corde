@@ -13,7 +13,10 @@ exports[`Testing creation of config file in init should create corde.config.js f
   exitOnFileReadingError: true,
   extensions: [\\".js\\", \\".ts\\"],
   modulePathIgnorePatterns: [\\"(?:^|/)node_modules/\\"],
-  rootDir: \\"\\"
+  rootDir: \\"\\",
+  useConfigValuesInEventsDefaultParameters: false,
+  useTimeoutValueInEventsDefaultParameters: true,
+  loginCordeBotOnStart: true
 }"
 `;
 
@@ -31,7 +34,10 @@ exports[`Testing creation of config file in init should create corde.config.json
   \\"exitOnFileReadingError\\": true,
   \\"extensions\\": [\\".js\\", \\".ts\\"],
   \\"modulePathIgnorePatterns\\": [\\"(?:^|/)node_modules/\\"],
-  \\"rootDir\\": \\"\\"
+  \\"rootDir\\": \\"\\",
+  \\"useConfigValuesInEventsDefaultParameters\\": false,
+  \\"useTimeoutValueInEventsDefaultParameters\\": true,
+  \\"loginCordeBotOnStart\\": true
 }"
 `;
 
@@ -48,6 +54,9 @@ exports[`Testing creation of config file in init should create corde.config.ts f
   exitOnFileReadingError: true,
   extensions: [\\".js\\", \\".ts\\"],
   modulePathIgnorePatterns: [\\"(?:^|/)node_modules/\\"],
-  rootDir: \\"\\"
+  rootDir: \\"\\",
+  useConfigValuesInEventsDefaultParameters: false,
+  useTimeoutValueInEventsDefaultParameters: true,
+  loginCordeBotOnStart: true
 }"
 `;

@@ -1,185 +1,183 @@
-import { RoleMatchesImpl, MessageMatches, ToHaveResultMatcher } from "./matcher";
-import { IExpect, IMacherContructorArgs } from "../types";
+/* eslint-disable no-console */
+import chalk from "chalk";
+import runtime from "../core/runtime";
+import { TestError } from "../errors";
+import { ITestProps, ITestReport } from "../types";
+import { getStackTrace } from "../utils/getStackTrace";
+import { isAsymmetricMatcher } from "../utils/isAsymmetricMatcher";
+import { typeOf } from "../utils/typeOf";
+import { any } from "./asymmetricMatcher";
+import * as matchers from "./matchers";
 
-function getMessageMatchers(): string[] {
-  return getFunctions(MessageMatches);
+type Matchers = {
+  not: typeof matchers;
+} & typeof matchers;
+
+interface IMatcher {
+  (props: ITestProps, ...args: any[]): ITestReport;
 }
 
-function getRoleMatchers(): string[] {
-  return getFunctions(RoleMatchesImpl);
+type KeyOfMatcher = keyof typeof matchers;
+
+function pickFn(name: KeyOfMatcher) {
+  return matchers[name] as any as IMatcher;
 }
 
-function getToHaveResultsMatchers(): string[] {
-  return getFunctions(ToHaveResultMatcher);
+function createMatcherFn(matcher: string, isNot: boolean, expected: any, isDebug: boolean) {
+  const { testCollector } = runtime;
+  const trace = getStackTrace(Infinity, true, matcher);
+  if (!testCollector.currentTestFile?.isInsideTestClosure && !isDebug) {
+    throw new Error("expect can only be used inside a test(it) Closure");
+  }
+  return (...args: any[]): ITestReport | void => {
+    // If someone pass expect.any, we must invoke it to return
+    // the Any matcher.
+
+    // If the suite is already marked as failed,
+    // There is no need to run other tests.
+    // Same for command assertion
+    if (testCollector.currentSuite?.markedAsFailed) {
+      return;
+    }
+
+    if (expected === any) {
+      args = [expected(), ...args];
+    } else {
+      args = [expected, ...args];
+    }
+
+    args = args.map((arg) => {
+      if (arg === any) {
+        return arg();
+      }
+      return arg;
+    });
+
+    try {
+      const matcherFn = pickFn(matcher as KeyOfMatcher);
+
+      const props: ITestProps = {
+        isNot,
+        expectedColorFn: chalk.bold,
+        receivedColorFn: chalk.bold,
+        createHint: (...paramsName: string[]) => {
+          return `expect(${chalk.green("expected")}).${isNot ? "not." : ""}${matcher}(${paramsName
+            .map((param) => chalk.red(param))
+            .join(",")})`;
+        },
+        formatValue: (value: any) => {
+          if (typeof value === "symbol" || isAsymmetricMatcher(value)) {
+            return value.toString();
+          }
+
+          if (typeOf(value) === "object") {
+            if (Object.keys(value).length === 0) {
+              return "{}";
+            }
+
+            return "{ ... }";
+          }
+
+          if (
+            typeof value === "string" &&
+            (value.length === 0 || (!value.startsWith("'") && !value.endsWith("'")))
+          ) {
+            return `'${value}'`;
+          }
+
+          if (Array.isArray(value)) {
+            if (value.length > 0) {
+              return "[...]";
+            }
+            return "[]";
+          }
+
+          return value;
+        },
+      };
+
+      const report = matcherFn.bind(props, ...args)();
+      if (!report.pass) {
+        if (!isDebug) {
+          report.trace = trace;
+        }
+        throw new TestError(report);
+      }
+
+      runtime.internalEvents.emit("test_end", report);
+
+      if (isDebug) {
+        return report;
+      }
+    } catch (error) {
+      const failedReport: ITestReport = {
+        pass: false,
+        message: handleError(error),
+        trace: trace,
+      };
+      if (isDebug) {
+        delete failedReport.trace;
+        return failedReport;
+      }
+      throw new TestError(failedReport);
+    }
+  };
 }
 
-function getFunctions<T>(type: new (...args: any[]) => T): string[] {
-  return Object.getOwnPropertyNames(type.prototype).filter(
-    (propName) => propName !== "constructor" && typeof type.prototype[propName] === "function",
-  );
+function handleError(error: any) {
+  if (error instanceof Error) {
+    return error.message;
+  }
+  return error;
 }
 
-const expectation = {
-  not: {},
-  inGuild: {},
-  inChannel: {},
+function createLocalExpect(isDebug: boolean) {
+  let localExpect: any = {};
+
+  localExpect = (expected: any) => {
+    const _expect: any = {};
+    _expect.not = {};
+    Object.getOwnPropertyNames(matchers).forEach((matcher) => {
+      _expect[matcher] = createMatcherFn(matcher, false, expected, isDebug);
+      _expect.not[matcher] = createMatcherFn(matcher, true, expected, isDebug);
+    });
+    return _expect;
+  };
+
+  localExpect.any = any;
+
+  return localExpect;
+}
+
+interface MatcherFn {
+  <T>(value: T): { not: ExpectType<typeof matchers> } & ExpectType<typeof matchers>;
+}
+
+type DropFirst<T extends unknown[]> = T extends [any, ...infer U] ? U : never;
+
+type ExpectType<T> = {
+  [P in keyof T]: T[P] extends (...args: any[]) => any
+    ? (...params: DropFirst<Parameters<T[P]>>) => { pass: boolean; message: string }
+    : DebugExpectType<T[P]>;
 };
 
-function createTestFunction(classType: any, params: IMacherContructorArgs, functionName: string) {
-  return (...args: any[]) => (new classType(params) as any)[functionName](...args);
-}
+export const expect = createLocalExpect(false) as MatcherFn;
 
-function createTestsFromMatches<T>(
-  names: string[],
-  params: IMacherContructorArgs,
-  classType: new (...args: any[]) => T,
-): [string, (...args: any[]) => any][] {
-  return names.map((name) => {
-    return [name, createTestFunction(classType, params, name)];
-  });
-}
-
-function set(from: [string, (...args: any[]) => any][], to: any) {
-  from.forEach((test) => {
-    to[test[0]] = test[1];
-  });
-}
-
-const messageTestNames = getMessageMatchers();
-const roleMatchers = getRoleMatchers();
-const resultMatchers = getToHaveResultsMatchers();
-
-const _expect: any = <T extends (() => number | string) | number | string>(
-  commandName: T,
-  channelId?: string,
-) => {
-  const baseMatcherConstructor: IMacherContructorArgs = {
-    commandName,
-    channelIdToSendCommand: channelId,
-  };
-
-  const messageTests = createTestsFromMatches(
-    messageTestNames,
-    baseMatcherConstructor,
-    MessageMatches,
-  );
-
-  const todoInCascadeMatcher = createTestsFromMatches(
-    resultMatchers,
-    baseMatcherConstructor,
-    ToHaveResultMatcher,
-  );
-
-  const todoInCascadeMatcherIsNot = createTestsFromMatches(
-    resultMatchers,
-    { ...baseMatcherConstructor, isNot: true },
-    ToHaveResultMatcher,
-  );
-
-  set(todoInCascadeMatcher, expectation);
-  set(todoInCascadeMatcherIsNot, expectation.not);
-
-  const isNotMessageTests = createTestsFromMatches(
-    messageTestNames,
-    { ...baseMatcherConstructor, isNot: true },
-    MessageMatches,
-  );
-
-  const roleTests = createTestsFromMatches(roleMatchers, baseMatcherConstructor, RoleMatchesImpl);
-
-  const isNotRoleTests = createTestsFromMatches(
-    roleMatchers,
-    { commandName, isNot: true },
-    RoleMatchesImpl,
-  );
-
-  set(messageTests, expectation);
-  set(isNotMessageTests, expectation.not);
-
-  set(roleTests, expectation);
-  set(isNotRoleTests, expectation.not);
-
-  expectation.inGuild = (guildId: string) => {
-    const inGuildMatches: any = {
-      not: {},
-    };
-
-    const roleTests = createTestsFromMatches(
-      roleMatchers,
-      { ...baseMatcherConstructor, guildId },
-      RoleMatchesImpl,
-    );
-
-    const isNotRoleTests = createTestsFromMatches(
-      roleMatchers,
-      { ...baseMatcherConstructor, guildId, isNot: true },
-      RoleMatchesImpl,
-    );
-
-    set(roleTests, inGuildMatches);
-    set(isNotRoleTests, inGuildMatches.not);
-
-    return inGuildMatches;
-  };
-
-  expectation.inChannel = (channelId: string) => {
-    const inChannelMatches: any = {
-      not: {},
-    };
-
-    const roleTests = createTestsFromMatches(
-      messageTestNames,
-      { ...baseMatcherConstructor, channelId },
-      MessageMatches,
-    );
-
-    const isNotRoleTests = createTestsFromMatches(
-      messageTestNames,
-      { ...baseMatcherConstructor, channelId, isNot: true },
-      MessageMatches,
-    );
-
-    set(roleTests, inChannelMatches);
-    set(isNotRoleTests, inChannelMatches.not);
-
-    return inChannelMatches;
-  };
-
-  return expectation;
+type DebugExpectType<T> = {
+  [P in keyof T]: T[P] extends (...args: any[]) => any
+    ? (...params: DropFirst<Parameters<T[P]>>) => { pass: boolean; message: string }
+    : DebugExpectType<T[P]>;
 };
 
-const messageTests = createTestsFromMatches(
-  messageTestNames,
-  { commandName: "", isNot: false, isCascade: true },
-  MessageMatches,
-);
+export interface IDebugExpect {
+  <T>(value: T): ExpectType<Matchers>;
+  any(...classType: any[]): any;
+}
 
-const isNotMessageTests = createTestsFromMatches(
-  messageTestNames,
-  { commandName: "", isNot: true, isCascade: true },
-  MessageMatches,
-);
-
-const roleTests = createTestsFromMatches(
-  roleMatchers,
-  { commandName: "", isNot: false, isCascade: true },
-  RoleMatchesImpl,
-);
-
-const isNotRoleTests = createTestsFromMatches(
-  roleMatchers,
-  { commandName: "", isNot: true, isCascade: true },
-  RoleMatchesImpl,
-);
-
-_expect.not = {};
-
-set(messageTests, _expect);
-set(isNotMessageTests, _expect.not);
-
-set(roleTests, _expect);
-set(isNotRoleTests, _expect.not);
-
-const expect = _expect as IExpect;
-
-export { expect };
+/**
+ * Testing object for corde
+ * This is not used in production
+ *
+ * @internal
+ */
+export const cordeExpect = createLocalExpect(true) as IDebugExpect;

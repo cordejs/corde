@@ -1,3 +1,5 @@
+import { isObject } from "./isObject";
+
 type KeyValue = {
   [key: string]: any;
 };
@@ -30,10 +32,10 @@ type PartialWithAnyValue<T> = Partial<T> & KeyValue;
  * // It fails because property 'a' does not exists in objA.
  *
  * @param sample Partial object of `holder`
- * @param holder "Original" object wich contains all properties that `sample` should have in part
+ * @param holder "Original" object which contains all properties that `sample` should have in part
  * @returns If object `sample` has properties of `holder`
  */
-export function isPartialOf<T extends unknown>(
+export function isPartialOf<T>(
   sample: PartialWithAnyValue<T> & KeyValue,
   holder: T,
 ) {
@@ -53,7 +55,7 @@ export function isPartialOf<T extends unknown>(
     const sampleProp = (sample as any)[propName];
     const holderProp = (holder as any)[propName];
 
-    if (typeof sampleProp === "object") {
+    if (isObject(sampleProp)) {
       const result = isPartialOf(holderProp, sampleProp);
       if (!result) {
         return false;

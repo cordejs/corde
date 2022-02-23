@@ -1,4 +1,5 @@
-import { Timer, wait } from "../../src/utils";
+import { Timer } from "../../src/utils/Timer";
+import { wait } from "../../src/utils/wait";
 
 describe("testing timer class", () => {
   it("should get instance of Timer", () => {

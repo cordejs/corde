@@ -1,0 +1,2132 @@
+yarn run v1.22.10
+$ jest --silent --ci --detectOpenHandles --collect-coverage --collectCoverageFrom=src/**/*.ts
+ PASS  tests/core/events.test.ts (10.877 s)
+ PASS  tests/data-structures/queue.test.ts
+ PASS  tests/api/botAPI.test.ts
+ PASS  tests/core/cordeBot.test.ts
+ RUNS   test file
+ RUNS   test file
+   ● test closure
+ RUNS   test file
+   ✔  test closure   10ms
+
+ PASS    test file   10ms
+   ✔  test closure   10ms
+ RUNS   test file
+ RUNS   test file
+   ● test closure
+ RUNS   test file
+   ✔  test closure   10ms
+
+ PASS    test file   10ms
+   ✔  test closure   10ms
+ RUNS   test file
+ RUNS   test file
+   ● test closure
+ RUNS   test file
+   ✔  test closure   10ms
+
+ PASS    test file   10ms
+   ✔  test closure   10ms
+ RUNS   test file
+ RUNS   test file
+   ● test closure
+ RUNS   test file
+   x test closure   10ms
+ RUNS   test file
+   x test closure   10ms
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use 
+toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+ RUNS   test file
+   x test closure   10ms
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use 
+toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /home/circleci/corde/src/expect/index.ts:2104:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/home/circleci/corde/src/expect/index.ts:2096:42)
+    at /home/circleci/corde/tests/core/testExecutor.test.ts:102:27
+    at _internalTest (/home/circleci/corde/src/closures/test.ts:432:13)
+    at /home/circleci/corde/src/closures/test.ts:472:19
+    at /home/circleci/corde/src/utils/executePromiseWithTimeout.ts:503:5
+
+
+ FAIL    test file   10ms
+   x test closure   10ms
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use 
+toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /home/circleci/corde/src/expect/index.ts:2104:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/home/circleci/corde/src/expect/index.ts:2096:42)
+    at /home/circleci/corde/tests/core/testExecutor.test.ts:102:27
+    at _internalTest (/home/circleci/corde/src/closures/test.ts:432:13)
+    at /home/circleci/corde/src/closures/test.ts:472:19
+    at /home/circleci/corde/src/utils/executePromiseWithTimeout.ts:503:5
+
+ RUNS   test file
+ RUNS   test file
+   ● test closure
+ RUNS   test file
+    ● test closure (empty)   10ms
+
+ PASS    test file   10ms
+    ● test closure (empty)   10ms
+ RUNS   test file
+ RUNS   test file
+   ● test closure
+ RUNS   test file
+   ✔  test closure   10ms
+ RUNS   test file
+   ✔  test closure   10ms
+   ● test closure
+ RUNS   test file
+   ✔  test closure   10ms
+   ✔  test closure   10ms
+ RUNS   test file
+   ✔  test closure   10ms
+   ✔  test closure   10ms
+   ● test closure
+ RUNS   test file
+   ✔  test closure   10ms
+   ✔  test closure   10ms
+   ✔  test closure   10ms
+
+ PASS    test file   10ms
+   ✔  test closure   10ms
+   ✔  test closure   10ms
+   ✔  test closure   10ms
+ RUNS   test file
+ RUNS   test file
+   ● test closure
+ RUNS   test file
+   ✔  test closure   10ms
+ RUNS   test file
+   ✔  test closure   10ms
+   ● test closure
+ RUNS   test file
+   ✔  test closure   10ms
+   ✔  test closure   10ms
+ RUNS   test file
+   ✔  test closure   10ms
+   ✔  test closure   10ms
+   ● test closure
+ RUNS   test file
+   ✔  test closure   10ms
+   ✔  test closure   10ms
+   ✔  test closure   10ms
+ RUNS   test file
+   ✔  test closure   10ms
+   ✔  test closure   10ms
+   ✔  test closure   10ms
+   ● test closure
+ RUNS   test file
+   ✔  test closure   10ms
+   ✔  test closure   10ms
+   ✔  test closure   10ms
+   x test closure   10ms
+ RUNS   test file
+   ✔  test closure   10ms
+   ✔  test closure   10ms
+   ✔  test closure   10ms
+   x test closure   10ms
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use 
+toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+ RUNS   test file
+   ✔  test closure   10ms
+   ✔  test closure   10ms
+   ✔  test closure   10ms
+   x test closure   10ms
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use 
+toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /home/circleci/corde/src/expect/index.ts:2104:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/home/circleci/corde/src/expect/index.ts:2096:42)
+    at /home/circleci/corde/tests/core/testExecutor.test.ts:190:27
+    at _internalTest (/home/circleci/corde/src/closures/test.ts:432:13)
+    at /home/circleci/corde/src/closures/test.ts:472:19
+    at /home/circleci/corde/src/utils/executePromiseWithTimeout.ts:503:5
+
+
+ FAIL    test file   10ms
+   ✔  test closure   10ms
+   ✔  test closure   10ms
+   ✔  test closure   10ms
+   x test closure   10ms
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use 
+toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /home/circleci/corde/src/expect/index.ts:2104:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/home/circleci/corde/src/expect/index.ts:2096:42)
+    at /home/circleci/corde/tests/core/testExecutor.test.ts:190:27
+    at _internalTest (/home/circleci/corde/src/closures/test.ts:432:13)
+    at /home/circleci/corde/src/closures/test.ts:472:19
+    at /home/circleci/corde/src/utils/executePromiseWithTimeout.ts:503:5
+
+ RUNS   test file
+ RUNS   test file
+   ● test
+ RUNS   test file
+   ✔  test   10ms
+
+ PASS    test file   10ms
+   ✔  test   10ms
+ RUNS   test file
+ RUNS   test file
+   ● t1
+ RUNS   test file
+    ● t1 (empty)   10ms
+ RUNS   test file
+    ● t1 (empty)   10ms
+   ● t2
+ RUNS   test file
+    ● t1 (empty)   10ms
+    ● t2 (empty)   10ms
+ RUNS   test file
+    ● t1 (empty)   10ms
+    ● t2 (empty)   10ms
+   ● t3
+ RUNS   test file
+    ● t1 (empty)   10ms
+    ● t2 (empty)   10ms
+    ● t3 (empty)   10ms
+ RUNS   test file
+    ● t1 (empty)   10ms
+    ● t2 (empty)   10ms
+    ● t3 (empty)   10ms
+   ● t4
+ RUNS   test file
+    ● t1 (empty)   10ms
+    ● t2 (empty)   10ms
+    ● t3 (empty)   10ms
+    ● t4 (empty)   10ms
+ RUNS   test file
+    ● t1 (empty)   10ms
+    ● t2 (empty)   10ms
+    ● t3 (empty)   10ms
+    ● t4 (empty)   10ms
+   ● t5
+ RUNS   test file
+    ● t1 (empty)   10ms
+    ● t2 (empty)   10ms
+    ● t3 (empty)   10ms
+    ● t4 (empty)   10ms
+    ● t5 (empty)   10ms
+ RUNS   test file
+    ● t1 (empty)   10ms
+    ● t2 (empty)   10ms
+    ● t3 (empty)   10ms
+    ● t4 (empty)   10ms
+    ● t5 (empty)   10ms
+   ● t6
+ RUNS   test file
+    ● t1 (empty)   10ms
+    ● t2 (empty)   10ms
+    ● t3 (empty)   10ms
+    ● t4 (empty)   10ms
+    ● t5 (empty)   10ms
+    ● t6 (empty)   10ms
+ RUNS   test file
+    ● t1 (empty)   10ms
+    ● t2 (empty)   10ms
+    ● t3 (empty)   10ms
+    ● t4 (empty)   10ms
+    ● t5 (empty)   10ms
+    ● t6 (empty)   10ms
+   ● t7
+ RUNS   test file
+    ● t1 (empty)   10ms
+    ● t2 (empty)   10ms
+    ● t3 (empty)   10ms
+    ● t4 (empty)   10ms
+    ● t5 (empty)   10ms
+    ● t6 (empty)   10ms
+   ✔  t7   10ms
+
+ PASS    test file   10ms
+    ● t1 (empty)   10ms
+    ● t2 (empty)   10ms
+    ● t3 (empty)   10ms
+    ● t4 (empty)   10ms
+    ● t5 (empty)   10ms
+    ● t6 (empty)   10ms
+   ✔  t7   10ms
+ RUNS   test file
+ RUNS   test file
+   ● test closure 1
+ RUNS   test file
+   ✔  test closure 1   10ms
+ RUNS   test file
+   ✔  test closure 1   10ms
+   ● test closure 2
+ RUNS   test file
+   ✔  test closure 1   10ms
+   ✔  test closure 2   10ms
+ RUNS   test file
+   ✔  test closure 1   10ms
+   ✔  test closure 2   10ms
+   ● test closure 3
+ RUNS   test file
+   ✔  test closure 1   10ms
+   ✔  test closure 2   10ms
+   ✔  test closure 3   10ms
+ RUNS   test file
+   ✔  test closure 1   10ms
+   ✔  test closure 2   10ms
+   ✔  test closure 3   10ms
+   ● test closure 4
+ RUNS   test file
+   ✔  test closure 1   10ms
+   ✔  test closure 2   10ms
+   ✔  test closure 3   10ms
+   x test closure 4   10ms
+ RUNS   test file
+   ✔  test closure 1   10ms
+   ✔  test closure 2   10ms
+   ✔  test closure 3   10ms
+   x test closure 4   10ms
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use 
+toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+ RUNS   test file
+   ✔  test closure 1   10ms
+   ✔  test closure 2   10ms
+   ✔  test closure 3   10ms
+   x test closure 4   10ms
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use 
+toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /home/circleci/corde/src/expect/index.ts:2104:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/home/circleci/corde/src/expect/index.ts:2096:42)
+    at /home/circleci/corde/tests/core/testExecutor.test.ts:295:27
+    at _internalTest (/home/circleci/corde/src/closures/test.ts:432:13)
+    at /home/circleci/corde/src/closures/test.ts:472:19
+    at /home/circleci/corde/src/utils/executePromiseWithTimeout.ts:503:5
+
+ RUNS   test file
+   ✔  test closure 1   10ms
+   ✔  test closure 2   10ms
+   ✔  test closure 3   10ms
+   x test closure 4   10ms
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use 
+toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /home/circleci/corde/src/expect/index.ts:2104:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/home/circleci/corde/src/expect/index.ts:2096:42)
+    at /home/circleci/corde/tests/core/testExecutor.test.ts:295:27
+    at _internalTest (/home/circleci/corde/src/closures/test.ts:432:13)
+    at /home/circleci/corde/src/closures/test.ts:472:19
+    at /home/circleci/corde/src/utils/executePromiseWithTimeout.ts:503:5
+
+   ● test closure 5
+ RUNS   test file
+   ✔  test closure 1   10ms
+   ✔  test closure 2   10ms
+   ✔  test closure 3   10ms
+   x test closure 4   10ms
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use 
+toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /home/circleci/corde/src/expect/index.ts:2104:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/home/circleci/corde/src/expect/index.ts:2096:42)
+    at /home/circleci/corde/tests/core/testExecutor.test.ts:295:27
+    at _internalTest (/home/circleci/corde/src/closures/test.ts:432:13)
+    at /home/circleci/corde/src/closures/test.ts:472:19
+    at /home/circleci/corde/src/utils/executePromiseWithTimeout.ts:503:5
+
+   ✔  test closure 5   10ms
+ RUNS   test file
+   ✔  test closure 1   10ms
+   ✔  test closure 2   10ms
+   ✔  test closure 3   10ms
+   x test closure 4   10ms
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use 
+toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /home/circleci/corde/src/expect/index.ts:2104:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/home/circleci/corde/src/expect/index.ts:2096:42)
+    at /home/circleci/corde/tests/core/testExecutor.test.ts:295:27
+    at _internalTest (/home/circleci/corde/src/closures/test.ts:432:13)
+    at /home/circleci/corde/src/closures/test.ts:472:19
+    at /home/circleci/corde/src/utils/executePromiseWithTimeout.ts:503:5
+
+   ✔  test closure 5   10ms
+   ● test closure 6
+ RUNS   test file
+   ✔  test closure 1   10ms
+   ✔  test closure 2   10ms
+   ✔  test closure 3   10ms
+   x test closure 4   10ms
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use 
+toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /home/circleci/corde/src/expect/index.ts:2104:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/home/circleci/corde/src/expect/index.ts:2096:42)
+    at /home/circleci/corde/tests/core/testExecutor.test.ts:295:27
+    at _internalTest (/home/circleci/corde/src/closures/test.ts:432:13)
+    at /home/circleci/corde/src/closures/test.ts:472:19
+    at /home/circleci/corde/src/utils/executePromiseWithTimeout.ts:503:5
+
+   ✔  test closure 5   10ms
+   ✔  test closure 6   10ms
+ RUNS   test file
+   ✔  test closure 1   10ms
+   ✔  test closure 2   10ms
+   ✔  test closure 3   10ms
+   x test closure 4   10ms
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use 
+toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /home/circleci/corde/src/expect/index.ts:2104:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/home/circleci/corde/src/expect/index.ts:2096:42)
+    at /home/circleci/corde/tests/core/testExecutor.test.ts:295:27
+    at _internalTest (/home/circleci/corde/src/closures/test.ts:432:13)
+    at /home/circleci/corde/src/closures/test.ts:472:19
+    at /home/circleci/corde/src/utils/executePromiseWithTimeout.ts:503:5
+
+   ✔  test closure 5   10ms
+   ✔  test closure 6   10ms
+   ● test closure 7
+ RUNS   test file
+   ✔  test closure 1   10ms
+   ✔  test closure 2   10ms
+   ✔  test closure 3   10ms
+   x test closure 4   10ms
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use 
+toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /home/circleci/corde/src/expect/index.ts:2104:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/home/circleci/corde/src/expect/index.ts:2096:42)
+    at /home/circleci/corde/tests/core/testExecutor.test.ts:295:27
+    at _internalTest (/home/circleci/corde/src/closures/test.ts:432:13)
+    at /home/circleci/corde/src/closures/test.ts:472:19
+    at /home/circleci/corde/src/utils/executePromiseWithTimeout.ts:503:5
+
+   ✔  test closure 5   10ms
+   ✔  test closure 6   10ms
+   ✔  test closure 7   10ms
+   10ms
+   ✔  test closure 2   10ms
+   ✔  test closure 3   10ms
+   x test closure 4   10ms
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use 
+toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /home/circleci/corde/src/expect/index.ts:2104:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/home/circleci/corde/src/expect/index.ts:2096:42)
+    at /home/circleci/corde/tests/core/testExecutor.test.ts:295:27
+    at _internalTest (/home/circleci/corde/src/closures/test.ts:432:13)
+    at /home/circleci/corde/src/closures/test.ts:472:19
+    at /home/circleci/corde/src/utils/executePromiseWithTimeout.ts:503:5
+
+   ✔  test closure 5   10ms
+   ✔  test closure 6   10ms
+   ✔  test closure 7   10ms
+   ● test closure 8
+   10ms
+   ✔  test closure 2   10ms
+   ✔  test closure 3   10ms
+   x test closure 4   10ms
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use 
+toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /home/circleci/corde/src/expect/index.ts:2104:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/home/circleci/corde/src/expect/index.ts:2096:42)
+    at /home/circleci/corde/tests/core/testExecutor.test.ts:295:27
+    at _internalTest (/home/circleci/corde/src/closures/test.ts:432:13)
+    at /home/circleci/corde/src/closures/test.ts:472:19
+    at /home/circleci/corde/src/utils/executePromiseWithTimeout.ts:503:5
+
+   ✔  test closure 5   10ms
+   ✔  test closure 6   10ms
+   ✔  test closure 7   10ms
+   x test closure 8   10ms
+   at localExpect (/home/circleci/corde/src/expect/index.ts:2096:42)
+    at /home/circleci/corde/tests/core/testExecutor.test.ts:295:27
+    at _internalTest (/home/circleci/corde/src/closures/test.ts:432:13)
+    at /home/circleci/corde/src/closures/test.ts:472:19
+    at /home/circleci/corde/src/utils/executePromiseWithTimeout.ts:503:5
+
+   ✔  test closure 5   10ms
+   ✔  test closure 6   10ms
+   ✔  test closure 7   10ms
+   x test closure 8   10ms
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use 
+toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+est closure 5   10ms
+   ✔  test closure 6   10ms
+   ✔  test closure 7   10ms
+   x test closure 8   10ms
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use 
+toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /home/circleci/corde/src/expect/index.ts:2104:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/home/circleci/corde/src/expect/index.ts:2096:42)
+    at /home/circleci/corde/tests/core/testExecutor.test.ts:309:27
+    at _internalTest (/home/circleci/corde/src/closures/test.ts:432:13)
+    at /home/circleci/corde/src/closures/test.ts:472:19
+    at /home/circleci/corde/src/utils/executePromiseWithTimeout.ts:503:5
+
+10ms
+   x test closure 8   10ms
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use 
+toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /home/circleci/corde/src/expect/index.ts:2104:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/home/circleci/corde/src/expect/index.ts:2096:42)
+    at /home/circleci/corde/tests/core/testExecutor.test.ts:309:27
+    at _internalTest (/home/circleci/corde/src/closures/test.ts:432:13)
+    at /home/circleci/corde/src/closures/test.ts:472:19
+    at /home/circleci/corde/src/utils/executePromiseWithTimeout.ts:503:5
+
+   ● test closure 9
+10ms
+   x test closure 8   10ms
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use 
+toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /home/circleci/corde/src/expect/index.ts:2104:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/home/circleci/corde/src/expect/index.ts:2096:42)
+    at /home/circleci/corde/tests/core/testExecutor.test.ts:309:27
+    at _internalTest (/home/circleci/corde/src/closures/test.ts:432:13)
+    at /home/circleci/corde/src/closures/test.ts:472:19
+    at /home/circleci/corde/src/utils/executePromiseWithTimeout.ts:503:5
+
+   ✔  test closure 9   10ms
+serts the value of properties. To compare their identity use toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /home/circleci/corde/src/expect/index.ts:2104:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/home/circleci/corde/src/expect/index.ts:2096:42)
+    at /home/circleci/corde/tests/core/testExecutor.test.ts:309:27
+    at _internalTest (/home/circleci/corde/src/closures/test.ts:432:13)
+    at /home/circleci/corde/src/closures/test.ts:472:19
+    at /home/circleci/corde/src/utils/executePromiseWithTimeout.ts:503:5
+
+   ✔  test closure 9   10ms
+   ● test closure 10
+serts the value of properties. To compare their identity use toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /home/circleci/corde/src/expect/index.ts:2104:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/home/circleci/corde/src/expect/index.ts:2096:42)
+    at /home/circleci/corde/tests/core/testExecutor.test.ts:309:27
+    at _internalTest (/home/circleci/corde/src/closures/test.ts:432:13)
+    at /home/circleci/corde/src/closures/test.ts:472:19
+    at /home/circleci/corde/src/utils/executePromiseWithTimeout.ts:503:5
+
+   ✔  test closure 9   10ms
+   ✔  test closure 10   10ms
+  expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /home/circleci/corde/src/expect/index.ts:2104:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/home/circleci/corde/src/expect/index.ts:2096:42)
+    at /home/circleci/corde/tests/core/testExecutor.test.ts:309:27
+    at _internalTest (/home/circleci/corde/src/closures/test.ts:432:13)
+    at /home/circleci/corde/src/closures/test.ts:472:19
+    at /home/circleci/corde/src/utils/executePromiseWithTimeout.ts:503:5
+
+   ✔  test closure 9   10ms
+   ✔  test closure 10   10ms
+   ● test closure 11
+  expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /home/circleci/corde/src/expect/index.ts:2104:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/home/circleci/corde/src/expect/index.ts:2096:42)
+    at /home/circleci/corde/tests/core/testExecutor.test.ts:309:27
+    at _internalTest (/home/circleci/corde/src/closures/test.ts:432:13)
+    at /home/circleci/corde/src/closures/test.ts:472:19
+    at /home/circleci/corde/src/utils/executePromiseWithTimeout.ts:503:5
+
+   ✔  test closure 9   10ms
+   ✔  test closure 10   10ms
+   ✔  test closure 11   10ms
+ expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /home/circleci/corde/src/expect/index.ts:2104:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/home/circleci/corde/src/expect/index.ts:2096:42)
+    at /home/circleci/corde/tests/core/testExecutor.test.ts:309:27
+    at _internalTest (/home/circleci/corde/src/closures/test.ts:432:13)
+    at /home/circleci/corde/src/closures/test.ts:472:19
+    at /home/circleci/corde/src/utils/executePromiseWithTimeout.ts:503:5
+
+   ✔  test closure 9   10ms
+   ✔  test closure 10   10ms
+   ✔  test closure 11   10ms
+   ● test closure 12
+ expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /home/circleci/corde/src/expect/index.ts:2104:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/home/circleci/corde/src/expect/index.ts:2096:42)
+    at /home/circleci/corde/tests/core/testExecutor.test.ts:309:27
+    at _internalTest (/home/circleci/corde/src/closures/test.ts:432:13)
+    at /home/circleci/corde/src/closures/test.ts:472:19
+    at /home/circleci/corde/src/utils/executePromiseWithTimeout.ts:503:5
+
+   ✔  test closure 9   10ms
+   ✔  test closure 10   10ms
+   ✔  test closure 11   10ms
+   x test closure 12   10ms
+es/test.ts:432:13)
+    at /home/circleci/corde/src/closures/test.ts:472:19
+    at /home/circleci/corde/src/utils/executePromiseWithTimeout.ts:503:5
+
+   ✔  test closure 9   10ms
+   ✔  test closure 10   10ms
+   ✔  test closure 11   10ms
+   x test closure 12   10ms
+    
+    Tip: toEqual asserts the value of properties. To compare their identity use 
+toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+se toBe
+    
+    expect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /home/circleci/corde/src/expect/index.ts:2104:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/home/circleci/corde/src/expect/index.ts:2096:42)
+    at /home/circleci/corde/tests/core/testExecutor.test.ts:323:27
+    at _internalTest (/home/circleci/corde/src/closures/test.ts:432:13)
+    at /home/circleci/corde/src/closures/test.ts:472:19
+    at /home/circleci/corde/src/utils/executePromiseWithTimeout.ts:503:5
+
+ect(expected).not.toEqual(received)
+    
+    expect: 1 !== 1
+
+    at toEqual /home/circleci/corde/src/expect/index.ts:2104:30
+    at Array.forEach (<anonymous>)
+    at localExpect (/home/circleci/corde/src/expect/index.ts:2096:42)
+    at /home/circleci/corde/tests/core/testExecutor.test.ts:323:27
+    at _internalTest (/home/circleci/corde/src/closures/test.ts:432:13)
+    at /home/circleci/corde/src/closures/test.ts:472:19
+    at /home/circleci/corde/src/utils/executePromiseWithTimeout.ts:503:5
+
+ RUNS   file 1
+ RUNS   file 1
+   ● test closure 1
+ RUNS   file 1
+   ✔  test closure 1   10ms
+
+ PASS    file 1   10ms
+   ✔  test closure 1   10ms
+ RUNS   file 2
+ RUNS   file 2
+   ● test closure 2
+ RUNS   file 2
+   ✔  test closure 2   10ms
+
+ PASS    file 2   10ms
+   ✔  test closure 2   10ms
+ RUNS   file 3
+ RUNS   file 3
+   ● test closure 3
+ RUNS   file 3
+   ✔  test closure 3   10ms
+
+ PASS    file 3   10ms
+   ✔  test closure 3   10ms
+ PASS  tests/core/testExecutor.test.ts
+ PASS  tests/command/message/messageUtils.test.ts
+ PASS  tests/command/message/shouldEditMessage.test.ts
+ PASS  tests/command/role/shouldSetRolePermission.test.ts
+ FAIL  tests/command/role/shouldDeleteRole.test.ts
+  ● testing shouldDeleteRole function › isNot false › should return a passed report for a deleted role
+
+    expect(received).toMatchSnapshot()
+
+      Snapshot name: `testing shouldDeleteRole function isNot false should return a passed report for a deleted role 1`
+      - Snapshot  - 1
+      + Received  + 1
+        Object {
+      -   "message": "Cannot read property 'guild' of undefined",
+      +   "message": "Cannot read properties of undefined (reading 'guild')",
+          "pass": false,
+          "testName": "shouldDeleteRole",
+        }    at shouldHaveResult
+
+ › 1 snapshot failed.
+ PASS  tests/command/message/shouldReturn.test.ts
+ PASS  tests/command/message/shouldAddReaction.test.ts
+ PASS  tests/utils/resolveName.test.ts
+ PASS  tests/command/role/shouldSetRolePosition.test.ts
+ PASS  tests/command/message/shouldEmbedMatch.test.ts
+ RUNS   test file
+ RUNS   test file
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+
+ PASS    test file   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+ RUNS   test file
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+
+ PASS    test file   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+ RUNS   test file
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+
+ PASS    test file   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+ RUNS   test file
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+
+ PASS    test file   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+ RUNS   test file
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+
+ PASS    test file   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+ RUNS   test file
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+
+ PASS    test file   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+ RUNS   test file
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+
+ PASS    test file   10ms
+   ✔  <empty test name>   10ms
+ RUNS   test file
+ RUNS   test file
+   ● <empty test name>
+ RUNS   test file
+   ✔  <empty test name>   10ms
+
+ PASS    test file   10ms
+   ✔  <empty test name>   10ms
+ PASS  tests/integration/hooks.test.ts
+ PASS  tests/core/reader.test.ts
+ PASS  tests/command/role/shouldSetRoleHoist.test.ts
+ PASS  tests/command/role/shouldSetRoleMentionable.test.ts
+ PASS  tests/command/message/shouldRemoveReaction.test.ts
+ PASS  tests/command/role/shouldRenameRole.test.ts
+ FAIL  tests/command/role/shouldSetRoleColor.test.ts
+  ● testing shouldSetRoleColor function › should fail due to role hadn't color changed
+
+    expect(received).toMatchSnapshot()
+
+      Snapshot name: `testing shouldSetRoleColor function should fail due to role hadn't color changed 1`
+      - Snapshot  - 1
+      + Received  + 1
+        Object {
+          "message": "    
+      -     expected: change role color from -1 to 3426654
+      +     expected: change role color from -1 to 3426654
+            received: the color was not changed
+        ",
+          "pass": false,
+          "testName": "shouldSetRoleColor",
+        }    at shouldHaveResult
+
+  ● testing shouldSetRoleColor function › should return a not passed test due to color should not change (isNot true)
+
+    expect(received).toMatchSnapshot()
+
+      Snapshot name: `testing shouldSetRoleColor function should return a not passed test due to color should not change (isNot true) 1`
+      - Snapshot  - 1
+      + Received  + 1
+        Object {
+          "message": "    
+      -     expected: change role color from undefined to 12745742
+      +     expected: change role color from undefined to 12745742
+            received: 3447003
+        ",
+          "pass": false,
+          "testName": "shouldSetRoleColor",
+        }    at shouldHaveResult
+
+  ● testing shouldSetRoleColor function › should return a not passed test due expected name did not match to received
+
+    expect(received).toMatchSnapshot()
+
+      Snapshot name: `testing shouldSetRoleColor function should return a not passed test due expected name did not match to received 1`
+      - Snapshot  - 1
+      + Received  + 1
+        Object {
+          "message": "    
+      -     expected: change role color from undefined to 1752220
+      +     expected: change role color from undefined to 1752220
+            received: 3447003
+        ",
+          "pass": false,
+          "testName": "shouldSetRoleColor",
+        }    at shouldHaveResult
+
+ › 3 snapshots failed.
+ PASS  tests/command/message/shouldMessageContentContains.test.ts
+ PASS  tests/core/summary.test.ts
+ PASS  tests/command/message/shouldUnPin.test.ts
+ PASS  tests/command/message/shouldPin.test.ts
+ PASS  tests/cli/exec.test.ts
+ PASS  tests/api/configAPI.test.ts
+ PASS  tests/command/roleUtils.test.ts
+ PASS  tests/core/config.test.ts
+ PASS  tests/utils/dateDiff.test.ts
+ PASS  tests/cli/validate.test.ts
+ PASS  tests/utils/deepFreeze.test.ts
+ PASS  tests/expect/matchers/toBeLessThan.test.ts
+ PASS  tests/expect/matchers/toBeGreaterThan.test.ts
+ PASS  tests/expect/matchers/toBe.test.ts
+ PASS  tests/expect/matchers/toBeGreaterOrEqualThan.test.ts
+ PASS  tests/cli/init.test.ts
+ PASS  tests/expect/matchers/toBeLessOrEqualThan.test.ts
+ PASS  tests/utils/isPartialOf.test.ts
+ PASS  tests/command/shouldHaveResult.test.ts
+ PASS  tests/core/runtime.test.ts
+ PASS  tests/closure/group.test.ts
+v4.4.1
+ PASS  tests/cli/cli.test.ts
+ PASS  tests/expect/asymmetricMatcher.test.ts
+ PASS  tests/expect/matchers/toLength.test.ts
+ PASS  tests/errors/errors.test.ts
+ PASS  tests/utils/isPromise.test.ts
+ PASS  tests/utils/deepEquals.test.ts
+ PASS  tests/utils/LogUpdate.test.ts
+text
+
+text
+text
+text1
+text
+
+text1
+text
+text
+text
+text1
+t
+text1
+text
+ text
+ PASS  tests/expect/matchers/toBeBoolean.test.ts
+ PASS  tests/expect/matchers/toBeSymbol.test.ts
+ PASS  tests/expect/matchers/toBeBigint.test.ts
+ PASS  tests/expect/matchers/toBeString.test.ts
+ PASS  tests/expect/matchers/toBeNumber.test.ts
+ PASS  tests/expect/matchers/toBeInstanceOf.test.ts
+ PASS  tests/expect/matchers/toBeArray.test.ts
+ PASS  tests/expect/matchers/toBeDate.test.ts
+ PASS  tests/expect/matchers/toBeSameLengthAs.test.ts
+ PASS  tests/expect/matchers/toBeShorterThan.test.ts
+ PASS  tests/expect/matchers/toBeLongerThan.test.ts
+ PASS  tests/expect/matchers/toStartWith.test.ts
+ PASS  tests/expect/matchers/toEndWith.test.ts
+ PASS  tests/expect/matchers/toEqual.test.ts
+ PASS  tests/expect/matchers/toBeDefined.test.ts
+ PASS  tests/expect/matchers/toBePrimitive.test.ts
+ PASS  tests/utils/executePromiseWithTimeout.test.ts
+ PASS  tests/hooks/beforeEach.test.ts
+ PASS  tests/hooks/beforeAll.test.ts
+ PASS  tests/hooks/afterAll.test.ts
+ PASS  tests/expect/matchers/toStringContains.test.ts
+ PASS  tests/expect/matchers/toBeNegativeInfinity.test.ts
+ PASS  tests/expect/matchers/toBeWhitespace.test.ts
+ PASS  tests/expect/matchers/toBePositiveInfinity.test.ts
+ PASS  tests/expect/matchers/toBeValidDate.test.ts
+ RUNS   test file
+
+ PASS    test file   10ms
+ PASS  tests/integration/executorWithSummary.test.ts
+ PASS  tests/expect/matchers/toBeNothing.test.ts
+ PASS  tests/expect/matchers/toBeUndefined.test.ts
+ PASS  tests/expect/matchers/toBeTruthy.test.ts
+ PASS  tests/expect/matchers/toBeFalsy.test.ts
+ PASS  tests/expect/matchers/toBeNull.test.ts
+ PASS  tests/utils/colors.test.ts
+ PASS  tests/expect/matchers/toBeEmptyString.test.ts
+ PASS  tests/utils/typeOf.test.ts
+ PASS  tests/expect/matchers/toBeFunction.test.ts
+ PASS  tests/expect/matchers/toBeEmptyArray.test.ts
+ PASS  tests/utils/validator.test.ts
+ PASS  tests/expect/matchers/toBeNaN.test.ts
+ PASS  tests/utils/stringIsNullOrEmpty.test.ts
+ PASS  tests/core/testCollector.test.ts
+ PASS  tests/utils/isPrimitiveValue.test.ts
+ PASS  tests/utils/getStackTrace.test.ts
+ PASS  tests/expect/matchers/toBeFalse.test.ts
+ PASS  tests/expect/matchers/toBeTrue.test.ts
+ PASS  tests/utils/executeWithTimeout.test.ts
+ PASS  tests/utils/keyOf.test.ts
+ PASS  tests/closure/test.test.ts
+ PASS  tests/utils/rgba.test.ts
+ PASS  tests/utils/wait.test.ts
+ PASS  tests/utils/permission.test.ts
+ PASS  tests/utils/replaceAll.test.ts
+ PASS  tests/core/index.test.ts
+ PASS  tests/api/fail.test.ts
+ PASS  tests/package.test.ts
+ PASS  tests/hooks/index.test.ts
+ PASS  tests/utils/isValidNumber.test.ts
+ PASS  tests/utils/timer.test.ts
+ PASS  tests/utils/isNumeric.test.ts
+ PASS  tests/utils/isFunction.test.ts
+ PASS  tests/utils/formatObject.test.ts
+ PASS  tests/utils/asymmetricTypeOf.test.ts
+ PASS  tests/utils/isNumber.test.ts
+ PASS  tests/utils/diff.test.ts
+ PASS  tests/cli/index.test.ts
+ PASS  tests/utils/isObject.test.ts
+ PASS  tests/utils/isBoolean.test.ts
+ PASS  tests/exit.test.ts
+ PASS  tests/utils/isBigint.test.ts
+ PASS  tests/utils/pick.test.ts
+ PASS  tests/envVariables.test.ts
+ PASS  tests/utils/isString.test.ts
+ PASS  tests/data-structures/index.test.ts
+ PASS  tests/types/index.test.ts
+ PASS  tests/index.test.ts
+ PASS  tests/utils/index.test.ts
+----------------------------------|---------|----------|---------|---------|-------------------------------------------------------------------------
+File                              | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                                                       
+----------------------------------|---------|----------|---------|---------|-------------------------------------------------------------------------
+All files                         |   87.51 |    82.18 |   87.73 |   87.73 |                                                                         
+ src                              |   74.42 |    46.15 |   69.23 |   73.81 |                                                                         
+  consts.ts                       |     100 |      100 |     100 |     100 |                                                                         
+  enums.ts                        |       0 |        0 |       0 |       0 |                                                                         
+  envVariables.ts                 |     100 |      100 |     100 |     100 |                                                                         
+  errorHandler.ts                 |   23.08 |        0 |      20 |   23.08 | 7,11,15-31                                                              
+  exit.ts                         |     100 |      100 |     100 |     100 |                                                                         
+  index.ts                        |       0 |        0 |       0 |       0 |                                                                         
+  package.ts                      |   85.71 |       50 |     100 |   85.71 | 11                                                                      
+ src/api                          |   98.35 |    88.33 |     100 |   98.28 |                                                                         
+  botAPI.ts                       |   98.02 |    93.75 |     100 |   97.92 | 257,374                                                                 
+  configAPI.ts                    |     100 |    66.67 |     100 |     100 | 28,48-52,64                                                             
+  fail.ts                         |     100 |      100 |     100 |     100 |                                                                         
+  index.ts                        |       0 |        0 |       0 |       0 |                                                                         
+ src/cli                          |   88.67 |    69.23 |   85.71 |   88.36 |                                                                         
+  cli.ts                          |   83.33 |     37.5 |      75 |   83.33 | 19,64-68                                                                
+  exec.ts                         |   87.04 |    56.25 |      75 |   87.04 | 22,86,92,106,132-134                                                    
+  init.ts                         |   95.45 |       92 |     100 |   95.24 | 24,89                                                                   
+  validate.ts                     |   85.29 |     62.5 |     100 |   84.38 | 42-44,60-61                                                             
+ src/closures                     |     100 |       75 |     100 |     100 |                                                                         
+  group.ts                        |     100 |       75 |     100 |     100 | 13                                                                      
+  index.ts                        |       0 |        0 |       0 |       0 |                                                                         
+  test.ts                         |     100 |       75 |     100 |     100 | 14                                                                      
+ src/command                      |   91.18 |       82 |     100 |   91.18 |                                                                         
+  index.ts                        |   86.96 |    71.88 |     100 |   86.96 | 43,56,61,89,105,120                                                     
+  roleUtils.ts                    |     100 |      100 |     100 |     100 |                                                                         
+ src/command/matches              |   55.74 |    38.89 |   44.44 |   57.89 |                                                                         
+  commandstate.ts                 |      92 |    58.33 |     100 |      92 | 77,81                                                                   
+  index.ts                        |       0 |        0 |       0 |       0 |                                                                         
+  shouldHaveResult.ts             |   30.56 |    29.17 |   16.67 |   31.25 | 30-83                                                                   
+ src/command/matches/message      |    95.5 |    92.13 |     100 |   95.44 |                                                                         
+  index.ts                        |       0 |        0 |       0 |       0 |                                                                         
+  messageUtils.ts                 |   98.36 |    95.38 |     100 |   98.36 | 26,63                                                                   
+  shouldAddReaction.ts            |     100 |    92.59 |     100 |     100 | 49,90                                                                   
+  shouldEditMessage.ts            |     100 |      100 |     100 |     100 |                                                                         
+  shouldEmbedMatch.ts             |   66.67 |    66.67 |     100 |   66.67 | 20,31-35,42,64-65                                                       
+  shouldMessageContentContains.ts |   82.35 |       70 |     100 |   82.35 | 44-50                                                                   
+  shouldPin.ts                    |     100 |    92.31 |     100 |     100 | 60                                                                      
+  shouldRemoveReaction.ts         |   97.22 |    88.89 |     100 |   97.06 | 85                                                                      
+  shouldReturn.ts                 |   94.44 |      100 |     100 |   94.44 | 19                                                                      
+  shouldUnpin.ts                  |     100 |    92.31 |     100 |     100 | 60                                                                      
+ src/command/matches/role         |   98.57 |    97.74 |     100 |   98.56 |                                                                         
+  index.ts                        |       0 |        0 |       0 |       0 |                                                                         
+  shouldDeleteRole.ts             |   96.55 |    94.44 |     100 |   96.55 | 68                                                                      
+  shouldRenameRole.ts             |     100 |      100 |     100 |     100 |                                                                         
+  shouldSetRoleColor.ts           |     100 |    92.86 |     100 |     100 | 73                                                                      
+  shouldSetRoleHoist.ts           |     100 |      100 |     100 |     100 |                                                                         
+  shouldSetRoleMentionable.ts     |     100 |      100 |     100 |     100 |                                                                         
+  shouldSetRolePermission.ts      |     100 |      100 |     100 |     100 |                                                                         
+  shouldSetRolePosition.ts        |   93.55 |    93.75 |     100 |   93.55 | 41,54                                                                   
+ src/core                         |   82.41 |    78.16 |   83.57 |   83.36 |                                                                         
+  Config.ts                       |   94.44 |    97.33 |      95 |   94.34 | 87,168,183                                                              
+  CordeBot.ts                     |   68.33 |     67.8 |   72.09 |   68.42 | 102-111,145-156,164-170,247,264-267,276,298,311,317,338-373             
+  Events.ts                       |    86.6 |    72.37 |   87.41 |   89.44 | 217,568,668,798,826,854,861,867,872-884,962,974,986,1002,1025,1042,1129 
+  Group.ts                        |     100 |      100 |     100 |     100 |                                                                         
+  Reader.ts                       |   91.11 |    84.38 |     100 |   91.11 | 56,68,76,98                                                             
+  TestCollector.ts                |     100 |       50 |     100 |     100 | 47                                                                      
+  TestExecutor.ts                 |   92.06 |    83.93 |   94.74 |   91.87 | 78-82,259-261,301-302                                                   
+  TestFile.ts                     |   82.14 |       60 |      80 |   85.19 | 59,64,69-70                                                             
+  debug.ts                        |   66.67 |       50 |     100 |   66.67 | 10                                                                      
+  index.ts                        |       0 |        0 |       0 |       0 |                                                                         
+  injectGlobals.ts                |       0 |      100 |       0 |       0 | 10-40                                                                   
+  internalEvents.ts               |       0 |        0 |       0 |       0 |                                                                         
+  printHookError.ts               |       0 |        0 |       0 |       0 | 8-26                                                                    
+  runtime.ts                      |   78.95 |    35.71 |   84.62 |   78.95 | 36,118-135                                                              
+  summary.ts                      |   96.67 |    93.75 |     100 |   96.55 | 68                                                                      
+  tsRegister.ts                   |     100 |      100 |     100 |     100 |                                                                         
+ src/data-structures              |   98.33 |    93.75 |   95.83 |   98.33 |                                                                         
+  index.ts                        |       0 |        0 |       0 |       0 |                                                                         
+  queue.ts                        |   98.33 |    93.75 |   95.83 |   98.33 | 33,365                                                                  
+ src/errors                       |   81.25 |       80 |   81.25 |   81.25 |                                                                         
+  assertionError.ts               |       0 |      100 |       0 |       0 | 15-16                                                                   
+  commandTestError.ts             |       0 |      100 |       0 |       0 | 15-16                                                                   
+  configError.ts                  |     100 |      100 |     100 |     100 |                                                                         
+  cordeClientError.ts             |     100 |      100 |     100 |     100 |                                                                         
+  defaults.ts                     |     100 |      100 |     100 |     100 |                                                                         
+  discordJSError.ts               |       0 |        0 |       0 |       0 | 13-14                                                                   
+  fileError.ts                    |     100 |      100 |     100 |     100 |                                                                         
+  index.ts                        |       0 |        0 |       0 |       0 |                                                                         
+  internalError.ts                |     100 |      100 |     100 |     100 |                                                                         
+  propertyError.ts                |     100 |      100 |     100 |     100 |                                                                         
+  queueFunctionError.ts           |     100 |      100 |     100 |     100 |                                                                         
+  testError.ts                    |     100 |       50 |     100 |     100 | 25                                                                      
+  timeoutError.ts                 |     100 |      100 |     100 |     100 |                                                                         
+  typeError.ts                    |     100 |      100 |     100 |     100 |                                                                         
+ src/expect                       |   80.99 |     70.4 |   87.88 |   80.71 |                                                                         
+  asymmetricMatcher.ts            |   62.26 |    50.88 |   83.33 |   61.54 | 83-124                                                                  
+  index.ts                        |   91.67 |     87.5 |     100 |   91.67 | 28,38,49,76,129                                                         
+  matcherUtils.ts                 |    93.1 |    85.71 |      80 |   92.86 | 55-59                                                                   
+ src/expect/matchers              |   94.97 |    94.98 |   95.89 |   95.03 |                                                                         
+  index.ts                        |       0 |        0 |       0 |       0 |                                                                         
+  toBe.ts                         |     100 |      100 |     100 |     100 |                                                                         
+  toBeArray.ts                    |     100 |      100 |     100 |     100 |                                                                         
+  toBeBigInt.ts                   |     100 |      100 |     100 |     100 |                                                                         
+  toBeBoolean.ts                  |     100 |      100 |     100 |     100 |                                                                         
+  toBeDate.ts                     |     100 |      100 |     100 |     100 |                                                                         
+  toBeDefined.ts                  |     100 |      100 |     100 |     100 |                                                                         
+  toBeEmptyArray.ts               |     100 |      100 |     100 |     100 |                                                                         
+  toBeEmptyString.ts              |     100 |      100 |     100 |     100 |                                                                         
+  toBeFalse.ts                    |     100 |      100 |     100 |     100 |                                                                         
+  toBeFalsy.ts                    |     100 |      100 |     100 |     100 |                                                                         
+  toBeFunction.ts                 |     100 |      100 |     100 |     100 |                                                                         
+  toBeGreaterOrEqualThan.ts       |     100 |      100 |     100 |     100 |                                                                         
+  toBeGreaterThan.ts              |     100 |      100 |     100 |     100 |                                                                         
+  toBeInstanceOf.ts               |   93.75 |    93.75 |     100 |   93.75 | 20                                                                      
+  toBeLessOrEqualThan.ts          |     100 |      100 |     100 |     100 |                                                                         
+  toBeLessThan.ts                 |     100 |      100 |     100 |     100 |                                                                         
+  toBeLongerThan.ts               |     100 |      100 |     100 |     100 |                                                                         
+  toBeNaN.ts                      |     100 |      100 |     100 |     100 |                                                                         
+  toBeNegativeInfinity.ts         |     100 |      100 |     100 |     100 |                                                                         
+  toBeNonEmptyString.ts           |       0 |        0 |       0 |       0 | 10-27                                                                   
+  toBeNothing.ts                  |     100 |      100 |     100 |     100 |                                                                         
+  toBeNull.ts                     |     100 |      100 |     100 |     100 |                                                                         
+  toBeNumber.ts                   |     100 |      100 |     100 |     100 |                                                                         
+  toBePositiveInfinity.ts         |     100 |      100 |     100 |     100 |                                                                         
+  toBePrimitive.ts                |     100 |      100 |     100 |     100 |                                                                         
+  toBeRegExp.ts                   |       0 |        0 |       0 |       0 | 9-17                                                                    
+  toBeSameLengthAs.ts             |     100 |      100 |     100 |     100 |                                                                         
+  toBeShorterThan.ts              |     100 |      100 |     100 |     100 |                                                                         
+  toBeString.ts                   |     100 |      100 |     100 |     100 |                                                                         
+  toBeSymbol.ts                   |     100 |      100 |     100 |     100 |                                                                         
+  toBeTrue.ts                     |     100 |      100 |     100 |     100 |                                                                         
+  toBeTruthy.ts                   |     100 |      100 |     100 |     100 |                                                                         
+  toBeUndefined.ts                |     100 |      100 |     100 |     100 |                                                                         
+  toBeValidDate.ts                |     100 |      100 |     100 |     100 |                                                                         
+  toBeWhiteSpace.ts               |     100 |      100 |     100 |     100 |                                                                         
+  toEndWith.ts                    |     100 |      100 |     100 |     100 |                                                                         
+  toEqual.ts                      |     100 |      100 |     100 |     100 |                                                                         
+  toLength.ts                     |     100 |      100 |     100 |     100 |                                                                         
+  toStartWith.ts                  |     100 |      100 |     100 |     100 |                                                                         
+  toStringContains.ts             |   93.75 |    93.75 |     100 |   93.75 | 29                                                                      
+ src/global                       |       0 |        0 |       0 |       0 |                                                                         
+  closures.d.ts                   |       0 |        0 |       0 |       0 |                                                                         
+  command.d.ts                    |       0 |        0 |       0 |       0 |                                                                         
+  expect.d.ts                     |       0 |        0 |       0 |       0 |                                                                         
+  hooks.d.ts                      |       0 |        0 |       0 |       0 |                                                                         
+  index.d.ts                      |       0 |        0 |       0 |       0 |                                                                         
+  types.d.ts                      |       0 |        0 |       0 |       0 |                                                                         
+ src/hooks                        |   97.06 |    85.71 |     100 |   97.06 |                                                                         
+  afterAll.ts                     |     100 |      100 |     100 |     100 |                                                                         
+  afterEach.ts                    |     100 |       50 |     100 |     100 | 6                                                                       
+  beforeAll.ts                    |     100 |      100 |     100 |     100 |                                                                         
+  beforeEach.ts                   |     100 |      100 |     100 |     100 |                                                                         
+  hookBuilder.ts                  |   92.86 |    83.33 |     100 |   92.86 | 35                                                                      
+  index.ts                        |       0 |        0 |       0 |       0 |                                                                         
+ src/mapper                       |      20 |    18.29 |   16.67 |      20 |                                                                         
+  messageMapper.ts                |      20 |    18.29 |   16.67 |      20 | 8,15,20,24,28-30,40-52,58-61,66-69,74,78,82,86,93-182                   
+ src/types                        |       0 |        0 |       0 |       0 |                                                                         
+  index.ts                        |       0 |        0 |       0 |       0 |                                                                         
+ src/utils                        |   92.34 |    93.53 |   92.11 |   92.13 |                                                                         
+  asymmetricTypeOf.ts              |     100 |      100 |     100 |     100 |                                                                         
+  asyncHandler.ts                 |       0 |        0 |       0 |       0 | 7-15                                                                    
+  buildReportMessage.ts           |     100 |       50 |     100 |     100 | 9                                                                       
+  colors.ts                       |     100 |      100 |     100 |     100 |                                                                         
+  dateDiff.ts                     |     100 |      100 |     100 |     100 |                                                                         
+  deepEqual.ts                    |   97.92 |    95.24 |     100 |   97.87 | 47                                                                      
+  deepFreeze.ts                   |     100 |      100 |     100 |     100 |                                                                         
+  diff.ts                         |     100 |      100 |     100 |     100 |                                                                         
+  executePromiseWithTimeout.ts    |      75 |       75 |   66.67 |      75 | 47-49                                                                   
+  executeWithTimeout.ts           |   77.78 |       75 |      50 |   77.78 | 22,26                                                                   
+  formatObject.ts                 |     100 |      100 |     100 |     100 |                                                                         
+  getFiles.ts                     |     100 |      100 |     100 |     100 |                                                                         
+  getStackTrace.ts                |     100 |    93.33 |     100 |     100 | 36                                                                      
+  importFile.ts                   |     100 |      100 |     100 |     100 |                                                                         
+  index.ts                        |       0 |        0 |       0 |       0 |                                                                         
+  isAsymmetricMatcher.ts           |     100 |      100 |     100 |     100 |                                                                         
+  isBigint.ts                     |     100 |      100 |     100 |     100 |                                                                         
+  isBoolean.ts                    |     100 |      100 |     100 |     100 |                                                                         
+  isFunction.ts                   |     100 |      100 |     100 |     100 |                                                                         
+  isInDebugMode.ts                |     100 |      100 |     100 |     100 |                                                                         
+  isNullOrUndefined.ts            |     100 |      100 |     100 |     100 |                                                                         
+  isNumber.ts                     |     100 |      100 |     100 |     100 |                                                                         
+  isNumeric.ts                    |     100 |      100 |     100 |     100 |                                                                         
+  isObject.ts                     |     100 |      100 |     100 |     100 |                                                                         
+  isPartialOf.ts                  |   94.12 |    93.75 |     100 |   93.75 | 61                                                                      
+  isPrimitiveValue.ts             |     100 |      100 |     100 |     100 |                                                                         
+  isPromise.ts                    |     100 |      100 |     100 |     100 |                                                                         
+  isString.ts                     |     100 |      100 |     100 |     100 |                                                                         
+  isValidNumber.ts                |     100 |      100 |     100 |     100 |                                                                         
+  keysOf.ts                       |     100 |      100 |     100 |     100 |                                                                         
+  logUpdate.ts                    |     100 |      100 |     100 |     100 |                                                                         
+  permission.ts                   |     100 |      100 |     100 |     100 |                                                                         
+  pick.ts                         |     100 |      100 |     100 |     100 |                                                                         
+  replaceAll.ts                   |     100 |      100 |     100 |     100 |                                                                         
+  resolveName.ts                  |     100 |      100 |     100 |     100 |                                                                         
+  rgba.ts                         |     100 |      100 |     100 |     100 |                                                                         
+  safeImportFile.ts               |       0 |        0 |       0 |       0 | 5-11                                                                    
+  stringIsNullOrEmpty.ts          |     100 |      100 |     100 |     100 |                                                                         
+  syncHandler.ts                  |       0 |      100 |       0 |       0 | 4-7                                                                     
+  timer.ts                        |     100 |      100 |     100 |     100 |                                                                         
+  typeOf.ts                       |     100 |      100 |     100 |     100 |                                                                         
+  utils.ts                        |     100 |      100 |     100 |     100 |                                                                         
+  validator.ts                    |     100 |      100 |     100 |     100 |                                                                         
+  wait.ts                         |     100 |      100 |     100 |     100 |                                                                         
+----------------------------------|---------|----------|---------|---------|-------------------------------------------------------------------------
+
+Summary of all failing tests
+ FAIL  tests/command/role/shouldDeleteRole.test.ts
+  ● testing shouldDeleteRole function › isNot false › should return a passed report for a deleted role
+
+    expect(received).toMatchSnapshot()
+
+      Snapshot name: `testing shouldDeleteRole function isNot false should return a passed report for a deleted role 1`
+      - Snapshot  - 1
+      + Received  + 1
+        Object {
+      -   "message": "Cannot read property 'guild' of undefined",
+      +   "message": "Cannot read properties of undefined (reading 'guild')",
+          "pass": false,
+          "testName": "shouldDeleteRole",
+        }    at shouldHaveResult
+
+ FAIL  tests/command/role/shouldSetRoleColor.test.ts
+  ● testing shouldSetRoleColor function › should fail due to role hadn't color changed
+
+    expect(received).toMatchSnapshot()
+
+      Snapshot name: `testing shouldSetRoleColor function should fail due to role hadn't color changed 1`
+      - Snapshot  - 1
+      + Received  + 1
+        Object {
+          "message": "    
+      -     expected: change role color from -1 to 3426654
+      +     expected: change role color from -1 to 3426654
+            received: the color was not changed
+        ",
+          "pass": false,
+          "testName": "shouldSetRoleColor",
+        }    at shouldHaveResult
+
+  ● testing shouldSetRoleColor function › should return a not passed test due to color should not change (isNot true)
+
+    expect(received).toMatchSnapshot()
+
+      Snapshot name: `testing shouldSetRoleColor function should return a not passed test due to color should not change (isNot true) 1`
+      - Snapshot  - 1
+      + Received  + 1
+        Object {
+          "message": "    
+      -     expected: change role color from undefined to 12745742
+      +     expected: change role color from undefined to 12745742
+            received: 3447003
+        ",
+          "pass": false,
+          "testName": "shouldSetRoleColor",
+        }    at shouldHaveResult
+
+  ● testing shouldSetRoleColor function › should return a not passed test due expected name did not match to received
+
+    expect(received).toMatchSnapshot()
+
+      Snapshot name: `testing shouldSetRoleColor function should return a not passed test due expected name did not match to received 1`
+      - Snapshot  - 1
+      + Received  + 1
+        Object {
+          "message": "    
+      -     expected: change role color from undefined to 1752220
+      +     expected: change role color from undefined to 1752220
+            received: 3447003
+        ",
+          "pass": false,
+          "testName": "shouldSetRoleColor",
+        }    at shouldHaveResult
+
+
+Snapshot Summary
+ › 4 snapshots failed from 2 test suites. Inspect your code changes or run `yarn run test-with-coverage -u` to update them.
+
+Test Suites: 2 failed, 122 passed, 124 total
+Tests:       4 failed, 1635 passed, 1639 total
+Snapshots:   4 failed, 589 passed, 593 total
+Time:        70.519 s
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+Exited with code exit status 1

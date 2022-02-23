@@ -1,0 +1,35 @@
+{
+  "name": "@corde/browser-sender",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node index.js",
+    "lint": "eslint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cordejs/corde.git"
+  },
+  "author": {
+    "name": "Lucas Gomes",
+    "email": "lucasgsm88@gmail.com",
+    "url": "https://github.com/cordejs"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cordejs/corde/issues"
+  },
+  "homepage": "https://cordejs.org",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "chalk": "^3.0.0",
+    "dotenv": "^8.2.0",
+    "inquirer": "^7.0.0",
+    "puppeteer": "^2.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.7.1"
+  }
+}

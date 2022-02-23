@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing toBeNegativeInfinity should return false for negative infinity (isNot true) 1`] = `
+"    
+    expect([32mexpected[39m).not.toBeNegativeInfinity()
+    
+    [1mexpected[22m should not be [32m-Infinity[39m.
+    got: [31m-Infinity[39m
+"
+`;
+
+exports[`testing toBeNegativeInfinity should return false for negative infinity (isNot true) 2`] = `
+"    
+    expect([32mexpected[39m).not.toBeNegativeInfinity()
+    
+    [1mexpected[22m should not be [32m-Infinity[39m.
+    got: [31many[39m
+"
+`;
+
+exports[`testing toBeNegativeInfinity should return false for negative infinity (isNot true) 3`] = `
+"    
+    expect([32mexpected[39m).not.toBeNegativeInfinity()
+    
+    [1mexpected[22m should not be [32m-Infinity[39m.
+    got: [31many(Bigint)[39m
+"
+`;
+
+exports[`testing toBeNegativeInfinity should return false for negative infinity (isNot true) 4`] = `
+"    
+    expect([32mexpected[39m).not.toBeNegativeInfinity()
+    
+    [1mexpected[22m should not be [32m-Infinity[39m.
+    got: [31many(Number)[39m
+"
+`;
+
+exports[`testing toBeNegativeInfinity should return false for values that are not negative infinity numbers 1`] = `
+"    
+    expect([32mexpected[39m).not.toBeNegativeInfinity()
+    
+    [1mexpected[22m should not be [32m-Infinity[39m.
+    got: [31m-Infinity[39m
+"
+`;
+
+exports[`testing toBeNegativeInfinity should return false for values that are not negative infinity numbers 2`] = `
+"    
+    expect([32mexpected[39m).not.toBeNegativeInfinity()
+    
+    [1mexpected[22m should not be [32m-Infinity[39m.
+    got: [31m-Infinity[39m
+"
+`;
+
+exports[`testing toBeNegativeInfinity should return false for values that are not negative infinity numbers 3`] = `
+"    
+    expect([32mexpected[39m).not.toBeNegativeInfinity()
+    
+    [1mexpected[22m should not be [32m-Infinity[39m.
+    got: [31m-Infinity[39m
+"
+`;
+
+exports[`testing toBeNegativeInfinity should return false for values that are not negative infinity numbers 4`] = `
+"    
+    expect([32mexpected[39m).not.toBeNegativeInfinity()
+    
+    [1mexpected[22m should not be [32m-Infinity[39m.
+    got: [31m-Infinity[39m
+"
+`;
+
+exports[`testing toBeNegativeInfinity should return false for values that are not negative infinity numbers 5`] = `
+"    
+    expect([32mexpected[39m).not.toBeNegativeInfinity()
+    
+    [1mexpected[22m should not be [32m-Infinity[39m.
+    got: [31m-Infinity[39m
+"
+`;
+
+exports[`testing toBeNegativeInfinity should return false for values that are not negative infinity numbers 6`] = `
+"    
+    expect([32mexpected[39m).not.toBeNegativeInfinity()
+    
+    [1mexpected[22m should not be [32m-Infinity[39m.
+    got: [31m-Infinity[39m
+"
+`;
+
+exports[`testing toBeNegativeInfinity should return false for values that are not negative infinity numbers 7`] = `
+"    
+    expect([32mexpected[39m).not.toBeNegativeInfinity()
+    
+    [1mexpected[22m should not be [32m-Infinity[39m.
+    got: [31m-Infinity[39m
+"
+`;
+
+exports[`testing toBeNegativeInfinity should return false for values that are not negative infinity numbers 8`] = `
+"    
+    expect([32mexpected[39m).not.toBeNegativeInfinity()
+    
+    [1mexpected[22m should not be [32m-Infinity[39m.
+    got: [31m-Infinity[39m
+"
+`;
+
+exports[`testing toBeNegativeInfinity should return false for values that are not negative infinity numbers 9`] = `
+"    
+    expect([32mexpected[39m).not.toBeNegativeInfinity()
+    
+    [1mexpected[22m should not be [32m-Infinity[39m.
+    got: [31m-Infinity[39m
+"
+`;
+
+exports[`testing toBeNegativeInfinity should return false for values that are not negative infinity numbers 10`] = `
+"    
+    expect([32mexpected[39m).not.toBeNegativeInfinity()
+    
+    [1mexpected[22m should not be [32m-Infinity[39m.
+    got: [31m-Infinity[39m
+"
+`;

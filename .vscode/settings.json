@@ -1,7 +1,9 @@
 {
+  "jest.autoRun": "off",
   "editor.codeActionsOnSave": {
     "source.fixAll.tslint": true
   },
-  "cSpell.words": ["Corde's", "corde", "cordebot"],
-  "typescript.tsdk": "node_modules\\typescript\\lib"
+  "cSpell.words": ["batata", "corde", "Corde's", "cordebot", "discordjs", "Magalhaes"],
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "jest.jestCommandLine": "yarn jest"
 }

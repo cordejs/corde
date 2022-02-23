@@ -1,4 +1,4 @@
-import { typeOf } from "../../src/utils";
+import { typeOf } from "../../src/utils/typeOf";
 
 describe("testing typeOf", () => {
   it("should get number", () => {
@@ -34,7 +34,11 @@ describe("testing typeOf", () => {
   });
 
   it("should get function", () => {
-    expect(typeOf(() => {})).toEqual("function");
+    expect(
+      typeOf(() => {
+        return 1;
+      }),
+    ).toEqual("function");
   });
 
   it("should return array", () => {

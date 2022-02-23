@@ -1,8 +1,26 @@
-import { DEFAULT_CONFIG } from "../consts";
+import { DEFAULT_CONFIG } from "../const";
 import { IConfigOptions } from "../types";
 
 export class ConfigAPI implements Readonly<Required<IConfigOptions>> {
   constructor(private _internalConfigs: IConfigOptions) {}
+
+  get useConfigValuesInEventsDefaultParameters() {
+    return (
+      this._internalConfigs.useConfigValuesInEventsDefaultParameters ??
+      DEFAULT_CONFIG.useConfigValuesInEventsDefaultParameters
+    );
+  }
+
+  get useTimeoutValueInEventsDefaultParameters() {
+    return (
+      this._internalConfigs.useTimeoutValueInEventsDefaultParameters ??
+      DEFAULT_CONFIG.useTimeoutValueInEventsDefaultParameters
+    );
+  }
+
+  get loginCordeBotOnStart() {
+    return this._internalConfigs.loginCordeBotOnStart ?? DEFAULT_CONFIG.loginCordeBotOnStart;
+  }
 
   get cordeBotToken() {
     return this._internalConfigs.cordeBotToken;

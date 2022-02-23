@@ -1,8 +1,8 @@
-import { isFunction } from "../../src/utils";
+import { isFunction } from "../../src/utils/isFunction";
 
 describe("testing isFunction function", () => {
   test("should return true for a function", () => {
-    expect(isFunction(() => {})).toBeTruthy();
+    expect(isFunction(() => 1)).toBeTruthy();
   });
 
   test("should return false for a non function", () => {

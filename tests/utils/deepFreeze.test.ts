@@ -1,4 +1,4 @@
-import { deepFreeze } from "../../src/utils";
+import { deepFreeze } from "../../src/utils/deepFreeze";
 
 describe("testing deepFreeze entity", () => {
   it("should freeze entity ignoring private properties using class", () => {
@@ -60,13 +60,17 @@ describe("testing deepFreeze entity", () => {
   });
 
   it("should return frozen empty object for a undefined", () => {
-    const frozen = deepFreeze(undefined);
+    const frozen =
+      // @ts-expect-error
+      deepFreeze(undefined);
     expect(Object.isFrozen(frozen)).toBeTruthy();
     expect(frozen).toEqual({});
   });
 
   it("should return frozen empty object for a null", () => {
-    const frozen = deepFreeze(null);
+    const frozen =
+      // @ts-expect-error
+      deepFreeze(null);
     expect(Object.isFrozen(frozen)).toBeTruthy();
     expect(frozen).toEqual({});
   });

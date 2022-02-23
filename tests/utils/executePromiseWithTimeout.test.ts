@@ -1,5 +1,6 @@
 import { TimeoutError } from "../../src/errors";
-import { executePromiseWithTimeout, wait } from "../../src/utils";
+import { executePromiseWithTimeout } from "../../src/utils/executePromiseWithTimeout";
+import { wait } from "../../src/utils/wait";
 
 describe("testing executePromiseWithTimeout", () => {
   it("should execute a function in time", async () => {
@@ -20,11 +21,12 @@ describe("testing executePromiseWithTimeout", () => {
   });
 
   it("should get timeout due to function not resolved or rejected", async () => {
-    expect(async () => await executePromiseWithTimeout(() => {}, 100)).rejects.toBeTruthy();
+    expect(async () => await executePromiseWithTimeout(() => 1, 100)).rejects.toBeTruthy();
   });
 
   it("should throw error due to no function", async () => {
     try {
+      // @ts-ignore
       await executePromiseWithTimeout(null, 1000);
       fail();
     } catch (error) {

@@ -1,6 +1,8 @@
-import corde from "../../src";
+import { test } from "../../src/closures";
+import { command } from "../../src/command";
+
 import consts from "./constsNames";
 
-corde.it(consts.TEST_1, () => {
-  corde.expect(consts.COMMAND_1).toReturn(consts.COMMAND_RESPONSE_1);
+test(consts.TEST_1, () => {
+  command(consts.COMMAND_1).should.respond(consts.COMMAND_RESPONSE_1);
 });

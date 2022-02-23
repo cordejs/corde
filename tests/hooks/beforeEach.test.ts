@@ -1,37 +1,54 @@
-import { testCollector } from "../../src/common/testCollector";
+import runtime from "../../src/core/runtime";
 import { Queue } from "../../src/data-structures";
-import { beforeEach as _beforeEach } from "../../src/hooks";
-import { wait } from "../../src/utils";
+import { beforeEach as hook } from "../../src/hooks";
+import { VoidLikeFunction } from "../../src/types";
+import { wait } from "../../src/utils/wait";
 
-describe("Testing beforeEach function", () => {
-  afterEach(() => {
-    testCollector.beforeEachFunctions = new Queue();
+let queue: Queue<VoidLikeFunction>;
+
+describe("testing beforeEach function", () => {
+  beforeEach(() => {
+    runtime.testCollector.clearTestFiles();
+    runtime.testCollector.createTestFile("test");
+    queue = runtime.testCollector.currentTestFile.beforeEachHooks;
   });
-  it("Should add a function", () => {
+
+  it("should add a function", () => {
     let a = 1;
-    _beforeEach(() => {
+
+    hook(() => {
       a = 2;
     });
 
-    testCollector.beforeEachFunctions.executeSync();
+    queue.executeSync();
     expect(a).toBe(2);
+  });
+
+  it("should throw error and get this error", async () => {
+    hook(() => {
+      throw new Error();
+    });
+
+    const errors = await queue.executeWithCatchCollectAsync();
+    expect(errors.length).toBeGreaterThan(0);
+    expect(errors).toMatchSnapshot();
   });
 
   it("should execute a async function", async () => {
     let a = 0;
-    _beforeEach(async () => {
+    hook(async () => {
       await wait(100);
       a = 1;
     });
 
-    await testCollector.beforeEachFunctions.executeWithCatchCollectAsync();
+    await queue.executeWithCatchCollectAsync();
     expect(a).toEqual(1);
   });
 
   it("Should do nothing", () => {
-    _beforeEach(undefined);
-
-    const length = testCollector.beforeEachFunctions.size;
+    // @ts-ignore
+    hook(undefined);
+    const length = queue.size;
     expect(length).toBe(0);
   });
 });

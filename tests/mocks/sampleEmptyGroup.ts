@@ -1,4 +1,5 @@
-import corde from "../../src";
+import { group } from "../../src/closures";
+
 import consts from "./constsNames";
 
-corde.describe(consts.GROUP_1, () => {});
+group(consts.GROUP_1, () => {});

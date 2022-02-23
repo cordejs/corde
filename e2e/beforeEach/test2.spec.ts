@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import corde from "../../lib";
-import { testCollector } from "../../lib/src/common/testCollector";
+import { testCollector } from "../../lib/src/core/testCollector";
 import { wait } from "../../src/utils";
 
 corde.beforeEach(async () => {

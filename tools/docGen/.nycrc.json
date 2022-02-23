@@ -1,0 +1,12 @@
+{
+  "reporter": ["lcov", "text", "text-summary"],
+  "cache": false,
+  "extension": [".ts"],
+  "check-coverage": true,
+  "include": ["src/**"],
+  "exclude": ["src/utils.ts"],
+  "statements": 100,
+  "branches": 100,
+  "functions": 100,
+  "lines": 100
+}

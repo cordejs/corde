@@ -1,0 +1,294 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing editMessage function should fail due to message was not edited by the bot (no messageIdentifier as object with content) 1`] = `
+Object {
+  "message": "    
+    expected: testing bot to edit the message of content \\"message test\\"
+    received: message was not edited
+",
+  "pass": false,
+  "testName": "editMessage",
+}
+`;
+
+exports[`testing editMessage function should fail due to message was not edited by the bot (no messageIdentifier as object with id) 1`] = `
+Object {
+  "message": "    
+    expected: testing bot to edit the message of id 123
+    received: message was not edited
+",
+  "pass": false,
+  "testName": "editMessage",
+}
+`;
+
+exports[`testing editMessage function should fail due to message was not edited by the bot (no messageIdentifier as string) 1`] = `
+Object {
+  "message": "    
+    expected: testing bot to edit the message of id 123
+    received: message was not edited
+",
+  "pass": false,
+  "testName": "editMessage",
+}
+`;
+
+exports[`testing editMessage function should fail due to message was not edited by the bot (no messageIdentifier) 1`] = `
+Object {
+  "message": "    
+    expected: testing bot to edit the last message sent
+    received: message was not edited
+",
+  "pass": false,
+  "testName": "editMessage",
+}
+`;
+
+exports[`testing editMessage function should get fail test due to bot returned different messages (both embed) 1`] = `
+Object {
+  "message": "    
+    [32m- Expected[39m
+    [31m+ Received[39m
+    
+    [2m  Object {[22m
+    [32m-   \\"author\\": Object {[39m
+    [32m-     \\"iconURL\\": \\"https://github.com/cordejs/corde/blob/master/website/static/img/logo/android-icon-192x192.png\\",[39m
+    [32m-     \\"name\\": \\"cordeto\\",[39m
+    [32m-     \\"url\\": undefined,[39m
+    [32m-   },[39m
+    [32m-   \\"color\\": 2123412,[39m
+    [32m-   \\"description\\": \\"example description\\",[39m
+    [2m    \\"fields\\": Array [[22m
+    [2m      Object {[22m
+    [2m        \\"inline\\": false,[22m
+    [32m-       \\"name\\": \\"field1\\",[39m
+    [32m-       \\"value\\": \\"1\\",[39m
+    [31m+       \\"name\\": \\"Regular field title\\",[39m
+    [31m+       \\"value\\": \\"Some value here\\",[39m
+    [2m      },[22m
+    [32m-   ],[39m
+    [32m-   \\"footer\\": Object {[39m
+    [32m-     \\"iconURL\\": \\"iconURl example\\",[39m
+    [32m-     \\"proxyIconURL\\": \\"proxyiconURl example\\",[39m
+    [32m-     \\"text\\": \\"test example\\",[39m
+    [31m+     Object {[39m
+    [31m+       \\"inline\\": false,[39m
+    [31m+       \\"name\\": \\"​\\",[39m
+    [31m+       \\"value\\": \\"​\\",[39m
+    [2m      },[22m
+    [32m-   \\"image\\": Object {[39m
+    [32m-     \\"height\\": 100,[39m
+    [32m-     \\"url\\": \\"url example\\",[39m
+    [32m-     \\"width\\": 100,[39m
+    [31m+     Object {[39m
+    [31m+       \\"inline\\": true,[39m
+    [31m+       \\"name\\": \\"Inline field title\\",[39m
+    [31m+       \\"value\\": \\"Some value here\\",[39m
+    [2m      },[22m
+    [32m-   \\"thumbnailUrl\\": Object {[39m
+    [32m-     \\"height\\": 100,[39m
+    [32m-     \\"proxyURL\\": \\"proxy url example thumbnail\\",[39m
+    [32m-     \\"url\\": \\"url example thumbnail\\",[39m
+    [32m-     \\"width\\": 100,[39m
+    [31m+     Object {[39m
+    [31m+       \\"inline\\": true,[39m
+    [31m+       \\"name\\": \\"Inline field title\\",[39m
+    [31m+       \\"value\\": \\"Some value here\\",[39m
+    [2m      },[22m
+    [32m-   \\"timestamp\\": 886761031000,[39m
+    [32m-   \\"title\\": \\"Some title\\",[39m
+    [32m-   \\"url\\": \\"url example\\",[39m
+    [31m+   ],[39m
+    [2m  }[22m
+",
+  "pass": false,
+  "testName": "editMessage",
+}
+`;
+
+exports[`testing editMessage function should get fail test due to bot returned different messages (expect embed and returned primitive) 1`] = `
+Object {
+  "message": "    
+    expected: Object {
+      \\"author\\": Object {
+        \\"iconURL\\": \\"https://i.imgur.com/wSTFkRM.png\\",
+        \\"name\\": \\"Some name\\",
+        \\"url\\": \\"https://discord.js.org\\",
+      },
+      \\"color\\": 2123412,
+      \\"description\\": \\"Some description here\\",
+      \\"fields\\": Array [
+        Object {
+          \\"inline\\": false,
+          \\"name\\": \\"Regular field title\\",
+          \\"value\\": \\"Some value here\\",
+        },
+        Object {
+          \\"inline\\": false,
+          \\"name\\": \\"​\\",
+          \\"value\\": \\"​\\",
+        },
+        Object {
+          \\"inline\\": true,
+          \\"name\\": \\"Inline field title\\",
+          \\"value\\": \\"Some value here\\",
+        },
+        Object {
+          \\"inline\\": true,
+          \\"name\\": \\"Inline field title\\",
+          \\"value\\": \\"Some value here\\",
+        },
+      ],
+      \\"thumbnailUrl\\": Object {
+        \\"url\\": \\"https://i.imgur.com/wSTFkRM.png\\",
+      },
+      \\"title\\": \\"Some title\\",
+      \\"url\\": \\"https://discord.js.org/\\",
+    }
+    received: 'this is the message content'
+",
+  "pass": false,
+  "testName": "editMessage",
+}
+`;
+
+exports[`testing editMessage function should get fail test due to bot returned different messages (expect primitive and returned embed) 1`] = `
+Object {
+  "message": "    
+    expected: 'expect value'
+    received: Object {
+      \\"author\\": Object {
+        \\"iconURL\\": \\"https://github.com/cordejs/corde/blob/master/website/static/img/logo/android-icon-192x192.png\\",
+        \\"name\\": \\"cordeto\\",
+        \\"url\\": undefined,
+      },
+      \\"color\\": 2123412,
+      \\"description\\": \\"example description\\",
+      \\"fields\\": Array [
+        Object {
+          \\"inline\\": false,
+          \\"name\\": \\"field1\\",
+          \\"value\\": \\"1\\",
+        },
+      ],
+      \\"footer\\": Object {
+        \\"iconURL\\": \\"iconURl example\\",
+        \\"proxyIconURL\\": \\"proxyiconURl example\\",
+        \\"text\\": \\"test example\\",
+      },
+      \\"image\\": Object {
+        \\"height\\": 100,
+        \\"url\\": \\"url example\\",
+        \\"width\\": 100,
+      },
+      \\"thumbnailUrl\\": Object {
+        \\"height\\": 100,
+        \\"proxyURL\\": \\"proxy url example thumbnail\\",
+        \\"url\\": \\"url example thumbnail\\",
+        \\"width\\": 100,
+      },
+      \\"timestamp\\": 886761031000,
+      \\"title\\": \\"Some title\\",
+      \\"url\\": \\"url example\\",
+    }
+",
+  "pass": false,
+  "testName": "editMessage",
+}
+`;
+
+exports[`testing editMessage function should get fail test due to bot returned different messages both primitive values 1`] = `
+Object {
+  "message": "    
+    expected: 'expect value'
+    received: 'this is the message content'
+",
+  "pass": false,
+  "testName": "editMessage",
+}
+`;
+
+exports[`testing editMessage function should get failed test due to bot returned equal messages (isNot true) 1`] = `
+Object {
+  "message": "    
+    expected: message from bot be different from expectation
+    received: both returned and expectation are equal
+",
+  "pass": false,
+  "testName": "editMessage",
+}
+`;
+
+exports[`testing editMessage function should get success test due to bot returned different messages (isNot true) 1`] = `
+Object {
+  "pass": true,
+  "testName": "editMessage",
+}
+`;
+
+exports[`testing editMessage function should get success test due to bot returned equal message 1`] = `
+Object {
+  "pass": true,
+  "testName": "editMessage",
+}
+`;
+
+exports[`testing editMessage function should get success test due to bot returned equal messages (string number) 1`] = `
+Object {
+  "pass": true,
+  "testName": "editMessage",
+}
+`;
+
+exports[`testing editMessage function should get success test due to bot returned equal messages (string type) 1`] = `
+Object {
+  "pass": true,
+  "testName": "editMessage",
+}
+`;
+
+exports[`testing editMessage function should get success test due to bot returned equal messages (type embed) 1`] = `
+Object {
+  "pass": true,
+  "testName": "editMessage",
+}
+`;
+
+exports[`testing editMessage function should get success test due to timeout but isNot = true 1`] = `
+Object {
+  "pass": true,
+  "testName": "editMessage",
+}
+`;
+
+exports[`testing editMessage function should return a failed test due to failure in message sending 1`] = `
+Object {
+  "message": "    
+    can not send message to channel x
+",
+  "pass": false,
+  "testName": "editMessage",
+}
+`;
+
+exports[`testing editMessage function should return a failed test due to invalid parameter (null) 1`] = `
+Object {
+  "message": "    
+    expected: expect value to be a primitive value (string, boolean, number) or an IMessageEmbed object
+    received: undefined
+",
+  "pass": false,
+  "testName": "editMessage",
+}
+`;
+
+exports[`testing editMessage function should return a failed test due to invalid parameter (undefined) 1`] = `
+Object {
+  "message": "    
+    expected: expect value to be a primitive value (string, boolean, number) or an IMessageEmbed object
+    received: undefined
+",
+  "pass": false,
+  "testName": "editMessage",
+}
+`;
