@@ -6,7 +6,7 @@ import { any } from "../expect/asymmetricMatcher";
 import * as matchers from "./matches";
 import runtime from "../core/runtime";
 import { ICordeBot, ITestReport } from "../types";
-import { CommandState } from "./matches/commandState";
+import { CommandState } from "./matches/CommandState";
 
 interface ICreateMatcherParam {
   matcher: string;
@@ -228,7 +228,7 @@ function createLocalCommand(isDebug: boolean) {
 
 export const command = createLocalCommand(false) as corde.ICommand;
 
-type DebugTypes<T extends any> = {
+type DebugTypes<T> = {
   [P in keyof T]: T[P] extends (...args: any[]) => Promise<any>
     ? (...params: Parameters<T[P]>) => Promise<{
         pass: boolean;
@@ -242,7 +242,7 @@ type DebugTypes<T extends any> = {
 };
 
 interface DebugFn {
-  <T extends any>(
+  <T>(
     value: T,
     channelId?: string,
     cordeBot?: ICordeBot,

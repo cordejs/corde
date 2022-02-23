@@ -1,7 +1,7 @@
 import { Role } from "discord.js";
 import { typeOf } from "../../../utils/typeOf";
 import { roleUtils } from "../../roleUtils";
-import { CommandState } from "../commandState";
+import { CommandState } from "../CommandState";
 
 /**
  * Function to be injected globally.

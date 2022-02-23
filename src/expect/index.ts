@@ -150,7 +150,7 @@ function createLocalExpect(isDebug: boolean) {
 }
 
 interface MatcherFn {
-  <T extends any>(value: T): { not: ExpectType<typeof matchers> } & ExpectType<typeof matchers>;
+  <T>(value: T): { not: ExpectType<typeof matchers> } & ExpectType<typeof matchers>;
 }
 
 type DropFirst<T extends unknown[]> = T extends [any, ...infer U] ? U : never;
@@ -170,7 +170,7 @@ type DebugExpectType<T> = {
 };
 
 export interface IDebugExpect {
-  <T extends any>(value: T): ExpectType<Matchers>;
+  <T>(value: T): ExpectType<Matchers>;
   any(...classType: any[]): any;
 }
 

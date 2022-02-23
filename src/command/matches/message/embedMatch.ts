@@ -4,7 +4,7 @@ import { isPartialOf } from "../../../utils/isPartialOf";
 import { keysOf } from "../../../utils/keysOf";
 import { pick } from "../../../utils/pick";
 import { typeOf } from "../../../utils/typeOf";
-import { CommandState } from "../commandState";
+import { CommandState } from "../CommandState";
 import { messageUtils } from "./messageUtils";
 
 /**

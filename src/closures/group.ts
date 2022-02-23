@@ -3,7 +3,7 @@ import runtime from "../core/runtime";
 import { VoidLikeFunction } from "../types";
 import { resolveName } from "../utils/resolveName";
 
-export const group: corde.IDescribeClosure = <T extends any>(
+export const group: corde.IDescribeClosure = <T>(
   description: T,
   testDefinitions: VoidLikeFunction,
 ) => {

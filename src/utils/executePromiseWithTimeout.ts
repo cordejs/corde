@@ -34,7 +34,7 @@ import { TimeoutError } from "../errors";
  * @returns Return of `fn` parameter.
  * @internal
  */
-export function executePromiseWithTimeout<TResult extends any>(
+export function executePromiseWithTimeout<TResult>(
   fn: (resolve: (reason?: TResult) => void, reject: (reason?: any) => void) => void,
   timeout?: number,
   rejectedData?: TResult,

@@ -11,7 +11,7 @@ declare namespace corde {
    * Defines all functions that can be used
    * to check a bot reaction of a command.
    */
-  export type CommandMatchers<TReturn extends any> = IMessageMatches<TReturn> &
+  export type CommandMatchers<TReturn> = IMessageMatches<TReturn> &
     IRoleMatches<TReturn>;
 
   /**
@@ -19,7 +19,7 @@ declare namespace corde {
    * **command** function. It includes all matches and
    * the *not* statement. Which will deny the executed match
    */
-  export interface IIsNot<TMatchesResponse extends any, TResponse2 = void> {
+  export interface IIsNot<TMatchesResponse, TResponse2 = void> {
     /**
      * Defines that command should **not** do something.
      * Use this if you can not precise what response a command will throw,
@@ -28,13 +28,13 @@ declare namespace corde {
     not: TMatchesResponse & TResponse2;
   }
 
-  export type InChannelMatches<TReturn extends any> = IIsNot<IMessageMatches<TReturn>> &
+  export type InChannelMatches<TReturn> = IIsNot<IMessageMatches<TReturn>> &
     IMessageMatches<TReturn>;
 
-  export type InGuildMatches<TReturn extends any> = IIsNot<IRoleMatches<TReturn>> &
+  export type InGuildMatches<TReturn> = IIsNot<IRoleMatches<TReturn>> &
     IRoleMatches<TReturn>;
 
-  export interface ISetGuildMatchers<TReturn extends any> {
+  export interface ISetGuildMatchers<TReturn> {
     /**
      * Specify a guild where tests will be **validated** in.
      *
@@ -90,7 +90,7 @@ declare namespace corde {
    * to check a bot reaction of a command.
    *
    */
-  export interface IMessageMatches<TReturn extends any> {
+  export interface IMessageMatches<TReturn> {
     /**
      * Defines the message expected to be returned by a
      * command.
@@ -220,7 +220,7 @@ declare namespace corde {
   /**
    * Tests for a **Role** structure.
    */
-  export interface IRoleMatches<TReturn extends any> {
+  export interface IRoleMatches<TReturn> {
     /**
      * Check if a command changed a role color.
      *
@@ -403,7 +403,7 @@ declare namespace corde {
     setRolePermission(roleIdentifier: IRoleIdentifier, ...permissions: PermissionString[]): TReturn;
   }
 
-  export interface ISetChannelMatchers<TReturn extends any> {
+  export interface ISetChannelMatchers<TReturn> {
     /**
      * Specify a channel where tests will be **validated** in.
      *
@@ -427,7 +427,7 @@ declare namespace corde {
 
   type IsNotWithHaveResults = IIsNot<CommandMatchers<Promise<void>>>;
 
-  export type AllMatches<TReturn extends any> = IIsNot<CommandMatchers<any>> &
+  export type AllMatches<TReturn> = IIsNot<CommandMatchers<any>> &
     CommandMatchers<TReturn> &
     ISetChannelMatchers<TReturn> &
     ISetGuildMatchers<TReturn>;

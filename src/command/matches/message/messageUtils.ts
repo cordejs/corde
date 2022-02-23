@@ -5,7 +5,7 @@ import { deepEqual } from "../../../utils/deepEqual";
 import { formatObject } from "../../../utils/formatObject";
 import { isPrimitiveValue } from "../../../utils/isPrimitiveValue";
 import { typeOf } from "../../../utils/typeOf";
-import { CommandState } from "../commandState";
+import { CommandState } from "../CommandState";
 
 export namespace messageUtils {
   export function validateExpect(matcher: CommandState, expect: Primitive | corde.IMessageEmbed) {

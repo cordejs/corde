@@ -1,4 +1,4 @@
-import { LogUpdate } from "../../src/utils/logUpdate";
+import { LogUpdate } from "../../src/utils/LogUpdate";
 
 let logUpdate!: LogUpdate;
 

@@ -5,7 +5,7 @@ import runtime from "../core/runtime";
 import { reader } from "../core/Reader";
 import { summary } from "../core/summary";
 import { TestExecutor } from "../core/TestExecutor";
-import { LogUpdate } from "../utils/logUpdate";
+import { LogUpdate } from "../utils/LogUpdate";
 import { validate } from "./validate";
 import { StrictObject } from "../types";
 import { registerTsNode } from "../core/tsRegister";

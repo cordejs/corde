@@ -46,7 +46,7 @@ declare namespace corde {
      *
      * @since 1.0
      */
-    <T extends unknown>(
+    <T>(
       description: T,
       testDefinitions: (() => void) | (() => Promise<void>),
     ): void;
@@ -64,7 +64,7 @@ declare namespace corde {
      *
      * @since 1.0
      */
-    <T extends unknown>(
+    <T>(
       description: T,
       testDefinitions: (() => void) | (() => Promise<void>),
       timeout?: number | undefined,

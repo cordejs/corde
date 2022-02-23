@@ -1,5 +1,5 @@
 import { typeOf } from "../../../utils/typeOf";
-import { CommandState } from "../commandState";
+import { CommandState } from "../CommandState";
 import { messageUtils } from "./messageUtils";
 
 /**

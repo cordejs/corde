@@ -10,7 +10,7 @@ import { isInDebugMode } from "./isInDebugMode";
  * @returns Result of the executed function (`fn`)
  * @internal
  */
-export async function executeWithTimeout<TResult extends any>(
+export async function executeWithTimeout<TResult>(
   fn: () => TResult | Promise<TResult>,
   timeout: number,
 ) {

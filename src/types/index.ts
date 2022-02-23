@@ -223,10 +223,6 @@ export interface IConfigOptions {
    */
   botTestId: string;
   /**
-   * User's bot token that will run.
-   */
-  botToken: string;
-  /**
    * Channel where tests will run
    */
   channelId: string;

@@ -1,4 +1,4 @@
-export function syncHandler<T extends (...args: any) => any, U extends any>(
+export function syncHandler<T extends (...args: any) => any, U>(
   fn: T,
 ): [ReturnType<T> | undefined, U | undefined] {
   try {

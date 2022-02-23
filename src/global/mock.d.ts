@@ -28,7 +28,7 @@ declare namespace corde {
   export interface IMockInstance<
     TEntity extends Record<string, unknown>,
     TKeyEntity extends keyof TEntity,
-    TProp extends any = TEntity[TKeyEntity],
+    TProp = TEntity[TKeyEntity],
   > {
     /**
      * Inform the total amount of calls of the mock.

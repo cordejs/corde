@@ -35,7 +35,7 @@ type PartialWithAnyValue<T> = Partial<T> & KeyValue;
  * @param holder "Original" object which contains all properties that `sample` should have in part
  * @returns If object `sample` has properties of `holder`
  */
-export function isPartialOf<T extends unknown>(
+export function isPartialOf<T>(
   sample: PartialWithAnyValue<T> & KeyValue,
   holder: T,
 ) {

@@ -3,7 +3,7 @@ import { VoidLikeFunction } from "../types";
 import { resolveName } from "../utils/resolveName";
 import { executePromiseWithTimeout } from "../utils/executePromiseWithTimeout";
 
-export const test: corde.ITestClosure = <T extends any>(
+export const test: corde.ITestClosure = <T>(
   description: T,
   assertion: VoidLikeFunction,
   timeout?: number | undefined,

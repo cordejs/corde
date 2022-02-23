@@ -3,7 +3,7 @@ import { diff } from "jest-diff";
 import { PERMISSIONS } from "../../../const";
 import { typeOf } from "../../../utils/typeOf";
 import { roleUtils } from "../../roleUtils";
-import { CommandState } from "../commandState";
+import { CommandState } from "../CommandState";
 
 /**
  * Function to be injected globally.

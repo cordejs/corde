@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import { EXPECT_RECEIVED_TAB_SPACE } from "../../const";
 import { ITestReport } from "../../types";
-import { CommandState } from "./commandState";
+import { CommandState } from "./CommandState";
 
 /**
  * Function to be injected globally.

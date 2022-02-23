@@ -1,7 +1,7 @@
 import { isPromise } from "./isPromise";
 import { ArgResponse } from "../types";
 
-export async function asyncHandler<T extends (...args: any) => any, U extends any>(
+export async function asyncHandler<T extends (...args: any) => any, U>(
   fn: T,
 ): Promise<[ArgResponse<T> | undefined, U | undefined]> {
   try {

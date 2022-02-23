@@ -586,15 +586,15 @@
             <path fill="none" stroke="#757575" d="M734.21,-5511.7C760.51,-5509.36 793.44,-5506.43 823.61,-5503.75"/>
             <polygon fill="#757575" stroke="#757575" points="824.06,-5507.23 833.72,-5502.85 823.44,-5500.25 824.06,-5507.23"/>
         </g>
-        <!-- src/utils/logUpdate.js -->
+        <!-- src/utils/LogUpdate.js -->
         <g id="node31" class="node">
-            <title>src/utils/logUpdate.js</title>
+            <title>src/utils/LogUpdate.js</title>
             <path fill="none" stroke="#cfffac" d="M976.33,-5466.66C976.33,-5466.66 843.67,-5466.66 843.67,-5466.66 839.83,-5466.66 836,-5462.83 836,-5459 836,-5459 836,-5451.33 836,-5451.33 836,-5447.5 839.83,-5443.66 843.67,-5443.66 843.67,-5443.66 976.33,-5443.66 976.33,-5443.66 980.17,-5443.66 984,-5447.5 984,-5451.33 984,-5451.33 984,-5459 984,-5459 984,-5462.83 980.17,-5466.66 976.33,-5466.66"/>
-            <text text-anchor="middle" x="910" y="-5451.46" font-family="Arial" font-size="14.00" fill="#cfffac">src/utils/logUpdate.js</text>
+            <text text-anchor="middle" x="910" y="-5451.46" font-family="Arial" font-size="14.00" fill="#cfffac">src/utils/LogUpdate.js</text>
         </g>
-        <!-- src/cli/exec.js&#45;&gt;src/utils/logUpdate.js -->
+        <!-- src/cli/exec.js&#45;&gt;src/utils/LogUpdate.js -->
         <g id="edge31" class="edge">
-            <title>src/cli/exec.js&#45;&gt;src/utils/logUpdate.js</title>
+            <title>src/cli/exec.js&#45;&gt;src/utils/LogUpdate.js</title>
             <path fill="none" stroke="#757575" d="M714.22,-5504.51C738.27,-5495.57 772.93,-5483.39 804,-5475.16 812.69,-5472.86 821.86,-5470.71 831.01,-5468.75"/>
             <polygon fill="#757575" stroke="#757575" points="831.83,-5472.15 840.9,-5466.68 830.4,-5465.3 831.83,-5472.15"/>
         </g>

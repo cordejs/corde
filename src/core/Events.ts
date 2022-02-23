@@ -1835,7 +1835,7 @@ export class Events implements corde.IOnceEvents, ClientEventsFn {
    * @param event event's name.
    * @internal
    */
-  private async _once<T extends any>(event: keyof ClientEvents): Promise<T> {
+  private async _once<T>(event: keyof ClientEvents): Promise<T> {
     const response = await once(this._client, event);
 
     if (response.length === 1) {

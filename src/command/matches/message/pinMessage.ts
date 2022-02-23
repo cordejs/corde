@@ -2,7 +2,7 @@ import { isNullOrUndefined } from "../../../utils/isNullOrUndefined";
 import { isObject } from "../../../utils/isObject";
 import { isString } from "../../../utils/isString";
 import { typeOf } from "../../../utils/typeOf";
-import { CommandState } from "../commandState";
+import { CommandState } from "../CommandState";
 import { messageUtils } from "./messageUtils";
 
 /**

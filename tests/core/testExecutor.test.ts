@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { TestExecutor } from "../../src/core/TestExecutor";
-import { LogUpdate } from "../../src/utils/logUpdate";
+import { LogUpdate } from "../../src/utils/LogUpdate";
 import { removeANSIColorStyle, testUtils } from "../testHelper";
 
 import { mockTimer } from "../mocks/mockTimer";

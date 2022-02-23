@@ -2,7 +2,7 @@ import { group, test as _test } from "../../src/closures";
 import { expect as _expect } from "../../src/expect";
 import { summary } from "../../src/core/summary";
 import { TestExecutor } from "../../src/core/TestExecutor";
-import { LogUpdate } from "../../src/utils/logUpdate";
+import { LogUpdate } from "../../src/utils/LogUpdate";
 import { mockTimer } from "../mocks/mockTimer";
 import { removeANSIColorStyle } from "../testHelper";
 import runtime from "../../src/core/runtime";

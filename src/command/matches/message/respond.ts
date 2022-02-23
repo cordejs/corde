@@ -1,6 +1,6 @@
 import { Message } from "discord.js";
 import { Primitive } from "../../../types";
-import { CommandState } from "../commandState";
+import { CommandState } from "../CommandState";
 import { messageUtils } from "./messageUtils";
 
 /**

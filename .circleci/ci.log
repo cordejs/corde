@@ -1756,7 +1756,7 @@ v4.4.1
  PASS  tests/errors/errors.test.ts
  PASS  tests/utils/isPromise.test.ts
  PASS  tests/utils/deepEquals.test.ts
- PASS  tests/utils/logUpdate.test.ts
+ PASS  tests/utils/LogUpdate.test.ts
 text
 
 text

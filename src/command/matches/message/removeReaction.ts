@@ -2,7 +2,7 @@ import { PartialUser, User } from "discord.js";
 import { TimeoutError } from "../../../errors";
 import { EmojisType } from "../../../types";
 import { typeOf } from "../../../utils/typeOf";
-import { CommandState } from "../commandState";
+import { CommandState } from "../CommandState";
 
 // TODO: refactor it due to it's equal to ToAddReaction
 

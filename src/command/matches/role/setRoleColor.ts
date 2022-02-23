@@ -4,7 +4,7 @@ import { resolveColor } from "../../../utils/colors";
 import { rgba } from "../../../utils/rgba";
 import { typeOf } from "../../../utils/typeOf";
 import { roleUtils } from "../../roleUtils";
-import { CommandState } from "../commandState";
+import { CommandState } from "../CommandState";
 
 /**
  * Function to be injected globally.

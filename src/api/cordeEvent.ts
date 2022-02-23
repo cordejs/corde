@@ -34,7 +34,7 @@ function getAuthor(author: Optional<corde.IAuthorIdentifier>): corde.IAuthorIden
   return author ?? { id: runtime.configs.botTestId };
 }
 
-function getDefaultOptionsIfNeeded<T extends any>(options?: any): T {
+function getDefaultOptionsIfNeeded<T>(options?: any): T {
   const op = options as IDefault;
   return {
     authorId: getAuthorId(op),

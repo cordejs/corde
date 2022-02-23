@@ -6,7 +6,7 @@ const THIS_DEFAULT_NAME = "$mock";
 export class ObjectMock<
   TEntity extends Record<string, unknown>,
   TKeyEntity extends keyof TEntity,
-  TProp extends any = TEntity[TKeyEntity],
+  TProp = TEntity[TKeyEntity],
 > implements corde.IMockInstance<TEntity, TKeyEntity, TProp>
 {
   private _entity: TEntity;

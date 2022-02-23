@@ -1,16 +1,16 @@
 declare const expect: corde.IExpect;
 
 declare namespace corde {
-  export interface IExpectMatchersWithNot<T extends any> extends corde.IExpectMatchers<T> {
+  export interface IExpectMatchersWithNot<T> extends corde.IExpectMatchers<T> {
     not: corde.IExpectMatchers<T>;
   }
 
   export interface IExpect {
-    <T extends any>(value: T): corde.IExpectMatchersWithNot<T>;
+    <T>(value: T): corde.IExpectMatchersWithNot<T>;
     any(...classType: any[]): any;
   }
 
-  export interface IExpectMatchers<T extends any> {
+  export interface IExpectMatchers<T> {
     /**
      * Checks if a `expected` value is identical to a `value`.
      *
@@ -513,6 +513,6 @@ declare namespace corde {
     /**
      * @since 5.0
      */
-    toThrowErrorOfType<TError extends any>(errorType: TError): void;
+    toThrowErrorOfType<TError>(errorType: TError): void;
   }
 }
