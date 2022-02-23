@@ -44,7 +44,9 @@ Object {
           \\"value\\": \\"Some value here\\",
         },
       ],
-      \\"thumbnailUrl\\": \\"https://i.imgur.com/wSTFkRM.png\\",
+      \\"thumbnailUrl\\": Object {
+        \\"url\\": \\"https://i.imgur.com/wSTFkRM.png\\",
+      },
       \\"title\\": \\"Some title\\",
       \\"url\\": \\"https://discord.js.org/\\",
     }
@@ -66,8 +68,33 @@ Object {
         \\"url\\": undefined,
       },
       \\"color\\": 2123412,
+      \\"description\\": \\"example description\\",
+      \\"fields\\": Array [
+        Object {
+          \\"inline\\": false,
+          \\"name\\": \\"field1\\",
+          \\"value\\": \\"1\\",
+        },
+      ],
+      \\"footer\\": Object {
+        \\"iconURL\\": \\"iconURl example\\",
+        \\"proxyIconURL\\": \\"proxyiconURl example\\",
+        \\"text\\": \\"test example\\",
+      },
+      \\"image\\": Object {
+        \\"height\\": 100,
+        \\"url\\": \\"url example\\",
+        \\"width\\": 100,
+      },
+      \\"thumbnailUrl\\": Object {
+        \\"height\\": 100,
+        \\"proxyURL\\": \\"proxy url example thumbnail\\",
+        \\"url\\": \\"url example thumbnail\\",
+        \\"width\\": 100,
+      },
       \\"timestamp\\": 886761031000,
       \\"title\\": \\"Some title\\",
+      \\"url\\": \\"url example\\",
     }
 ",
   "pass": false,

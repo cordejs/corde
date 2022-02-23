@@ -38,7 +38,7 @@ class AssertionResult extends Error {
  */
 export function deepEqual(obj1: any, obj2: any) {
   try {
-    asserMatchersForObjects(obj1, obj2);
+    assertMatchersForObjects(obj1, obj2);
     return true;
   } catch (error) {
     if (error instanceof AssertionResult) {
@@ -48,9 +48,9 @@ export function deepEqual(obj1: any, obj2: any) {
   }
 }
 
-function asserMatchersForObjects(obj1: any, obj2: any) {
+function assertMatchersForObjects(obj1: any, obj2: any) {
   assertNullAndUndefined(obj1, obj2);
-  assertAssymetrics(obj1, obj2);
+  assertAsymmetric(obj1, obj2);
   assertNonObject(obj1, obj2);
   assertArray(obj1, obj2);
   assertDeepObjProperties(obj1, obj2);
@@ -119,7 +119,7 @@ function assertNullAndUndefined(obj1: any, obj2: any) {
   }
 }
 
-function assertAssymetrics(obj1: any, obj2: any) {
+function assertAsymmetric(obj1: any, obj2: any) {
   if (isAsymmetricMatcher(obj1) && isAsymmetricMatcher(obj2)) {
     throw new AssertionResult(obj1.matchType(...obj2.getTypes()));
   }

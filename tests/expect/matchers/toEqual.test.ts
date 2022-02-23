@@ -43,7 +43,7 @@ describe("testing toEqual", () => {
   });
 
   // @ts-ignore
-  it.only.each(validTests)("should return false for %s and %s (isNot true)", (value1, value2) => {
+  it.each(validTests)("should return false for %s and %s (isNot true)", (value1, value2) => {
     const report = cordeExpect(value1).not.toEqual(value2);
     expect(report.pass).toBeFalsy();
     expect(report.message).toMatchSnapshot();

@@ -3,6 +3,7 @@ import { createCordeBotWithMockedFunctions, testHelper } from "../../testHelper"
 import { ICordeBot, ITestReport } from "../../../src/types";
 import { MockEvents } from "../../mocks/mockEvents";
 import { debugCommand } from "../../../src/command";
+import { messageUtils } from "../../../src/command/matches/message/messageUtils";
 
 const testName = "editMessage";
 
@@ -38,7 +39,7 @@ describe(`testing ${testName} function`, () => {
 
   it("should return a failed test due to invalid parameter (undefined)", async () => {
     const report = await debugCon()
-      .should// @ts-expect-error
+      .should // @ts-expect-error
       .editMessage(undefined);
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
@@ -110,7 +111,10 @@ describe(`testing ${testName} function`, () => {
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessageContentOrEmbedChange(mockDiscord.messageWithEmbed);
 
-    const report = await debugCon().should.editMessage(mockDiscord.messageEmbedSimple);
+    const embedInterface = messageUtils.messageEmbedToMessageEmbedInterface(
+      mockDiscord.messageEmbed,
+    );
+    const report = await debugCon().should.editMessage(embedInterface);
 
     expect(report).toEqual(passReport);
     expect(report).toMatchSnapshot();
@@ -120,7 +124,10 @@ describe(`testing ${testName} function`, () => {
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessageContentOrEmbedChange(mockDiscord.messageWithEmbed);
 
-    const report = await debugCon().should.not.editMessage(mockDiscord.messageEmbedSimple);
+    const embedInterface = messageUtils.messageEmbedToMessageEmbedInterface(
+      mockDiscord.messageEmbed,
+    );
+    const report = await debugCon().should.not.editMessage(embedInterface);
 
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();

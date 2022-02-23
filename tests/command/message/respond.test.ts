@@ -4,6 +4,7 @@ import { createCordeBotWithMockedFunctions, testHelper } from "../../testHelper"
 import { ICordeBot, ITestReport } from "../../../src/types";
 
 import { debugCommand } from "../../../src/command";
+import { messageUtils } from "../../../src/command/matches/message/messageUtils";
 
 const testName = "respond";
 
@@ -85,7 +86,8 @@ describe(`testing ${testName} function`, () => {
     mockDiscord.message.embeds.push(mockDiscord.messageEmbed);
     events.mockOnceMessage(mockDiscord.message);
 
-    const report = await debugCon().should.respond(mockDiscord.messageEmbedSimple);
+    const messageEmbed = messageUtils.messageEmbedToMessageEmbedInterface(mockDiscord.messageEmbed);
+    const report = await debugCon().should.respond(messageEmbed);
 
     expect(report).toEqual(passReport);
   });
@@ -96,7 +98,8 @@ describe(`testing ${testName} function`, () => {
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessage();
 
-    const report = await debugCon().should.not.respond(mockDiscord.messageEmbedSimple);
+    const messageEmbed = messageUtils.messageEmbedToMessageEmbedInterface(mockDiscord.messageEmbed);
+    const report = await debugCon().should.not.respond(messageEmbed);
 
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();

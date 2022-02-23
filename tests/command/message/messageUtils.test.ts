@@ -118,7 +118,9 @@ describe("testing messageUtils", () => {
         url: "wwww.google",
       };
       const messageLike: corde.IMessageEmbed = {
-        thumbnailUrl: "wwww.google",
+        thumbnailUrl: {
+          url: "wwww.google",
+        },
       };
       const embed = messageUtils.embedMessageInterfaceToMessageEmbed(messageLike);
       expect(embed.thumbnail).toMatchObject(thumbnail);
@@ -253,7 +255,9 @@ describe("testing messageUtils", () => {
       embed.setThumbnail("wwww");
       const msg = messageUtils.messageEmbedToMessageEmbedInterface(embed);
       expect(msg).toEqual<corde.IMessageEmbed>({
-        thumbnailUrl: "wwww",
+        thumbnailUrl: {
+          url: "wwww",
+        },
       });
     });
 
