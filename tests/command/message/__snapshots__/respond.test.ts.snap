@@ -57,51 +57,6 @@ Object {
 }
 `;
 
-exports[`testing respond function should get fail test due to bot returned different messages (expect primitive and returned embed) 1`] = `
-Object {
-  "message": "    
-    expected: 'expect value'
-    received: Object {
-      \\"author\\": Object {
-        \\"iconURL\\": \\"https://github.com/cordejs/corde/blob/master/website/static/img/logo/android-icon-192x192.png\\",
-        \\"name\\": \\"cordeto\\",
-        \\"url\\": undefined,
-      },
-      \\"color\\": 2123412,
-      \\"description\\": \\"example description\\",
-      \\"fields\\": Array [
-        Object {
-          \\"inline\\": false,
-          \\"name\\": \\"field1\\",
-          \\"value\\": \\"1\\",
-        },
-      ],
-      \\"footer\\": Object {
-        \\"iconURL\\": \\"iconURl example\\",
-        \\"proxyIconURL\\": \\"proxyiconURl example\\",
-        \\"text\\": \\"test example\\",
-      },
-      \\"image\\": Object {
-        \\"height\\": 100,
-        \\"url\\": \\"url example\\",
-        \\"width\\": 100,
-      },
-      \\"thumbnailUrl\\": Object {
-        \\"height\\": 100,
-        \\"proxyURL\\": \\"proxy url example thumbnail\\",
-        \\"url\\": \\"url example thumbnail\\",
-        \\"width\\": 100,
-      },
-      \\"timestamp\\": 886761031000,
-      \\"title\\": \\"Some title\\",
-      \\"url\\": \\"url example\\",
-    }
-",
-  "pass": false,
-  "testName": "respond",
-}
-`;
-
 exports[`testing respond function should get fail test due to bot returned different messages both primitive values 1`] = `
 Object {
   "message": "    
