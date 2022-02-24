@@ -5,12 +5,12 @@ declare namespace corde {
    */
   export type ReturnValueOrOwnType<T> = T extends (...args: any[]) => infer U ? U : T;
   /**
-   * Given a value, return its **resolved** value if it's a Promise. Otherwise reutrns
+   * Given a value, return its **resolved** value if it's a Promise. Otherwise returns
    * the own type.
    */
   export type ResolvedValue<T> = T extends (...args: any[]) => PromiseLike<infer U> ? U : T;
   /**
-   * Given a value, return its **rejected** value if it's a Promise. Otherwise reutrns
+   * Given a value, return its **rejected** value if it's a Promise. Otherwise returns
    * the own type.
    */
   export type RejectedValue<T> = T extends (...args: any[]) => PromiseLike<any> ? any : T;
@@ -47,7 +47,7 @@ declare namespace corde {
     readonly callsCount: number;
     /**
      * Inform the total amount of call of the mock.
-     * This value is reseted when restore function is called.
+     * This value is resets when restore function is called.
      *
      * @example
      *
@@ -61,7 +61,7 @@ declare namespace corde {
      */
     readonly instanceCallsCount: number;
     /**
-     * Mock the implemtation of a function just **one** time.
+     * Mock the implementation of a function just **one** time.
      * The previous function's value is restored after call it.
      *
      * @param fn Empty or some implementation for a function.
@@ -206,7 +206,7 @@ declare namespace corde {
 
     /**
      * Defines a new value for a function rejection.
-     * This function sorround `newValue` with a `Promise.reject`
+     * This function surround `newValue` with a `Promise.reject`
      *
      * @param newValue New rejected value for a function.
      * @param maxCalls Defines the max amount of calls the rejected mocked return value will be valid for.
@@ -231,7 +231,7 @@ declare namespace corde {
      * @example
      *
      * // this:
-     * corde.mock(obj, "incrementAsync").setRturnValueOnce(() => Promise.reject(1));
+     * corde.mock(obj, "incrementAsync").setReturnValueOnce(() => Promise.reject(1));
      * // is equal to:
      * corde.mock(obj, "incrementAsync").setRejectedValueOnce(() => 1);
      *
