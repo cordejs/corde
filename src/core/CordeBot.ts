@@ -13,7 +13,7 @@ import {
   VoiceChannel,
 } from "discord.js";
 import { CordeClientError } from "../errors";
-import { ICordeBot, IVoiceChannelState, Primitive } from "../types";
+import { ICordeBot, Primitive } from "../types";
 import { isPrimitiveValue } from "../utils/isPrimitiveValue";
 import { typeOf } from "../utils/typeOf";
 import { Events } from "./Events";
@@ -30,7 +30,7 @@ export class CordeBot implements ICordeBot {
   private readonly _channelId: string;
   private readonly _testBotId: string;
   private readonly _client: Client;
-  private _voiceConnection?: IVoiceChannelState;
+  private _voiceConnection?: corde.IVoiceChannelState;
 
   private textChannel!: TextChannel;
   private _isReady: boolean;

@@ -11,12 +11,10 @@ import {
   Role,
   RoleManager,
   TextChannel,
-  VoiceChannel,
 } from "discord.js";
 import { Group } from "../core/Group";
 import { Events } from "../core/Events";
 import { Queue } from "../data-structures";
-import { VoiceConnection } from "@discordjs/voice";
 
 export type FunctionOnly<T> = {
   [U in keyof T]: T[U] extends (...args: any[]) => any ? T[U] : never;
@@ -55,7 +53,7 @@ export interface ICordeBot {
   readonly roleManager: RoleManager;
   readonly channel: TextChannel;
   readonly testBotId: string;
-  readonly voiceConnection?: IVoiceChannelState;
+  readonly voiceConnection?: corde.IVoiceChannelState;
 
   /**
    * Authenticate Corde bot to the installed bot in the Discord server.
@@ -108,7 +106,7 @@ export interface ICordeBot {
   findChannel(channelId: string): GuildBasedChannel | undefined;
   findChannel(guild: Guild, channelId: string): GuildBasedChannel | undefined;
 
-  joinVoiceChannel(channelId: string): Promise<IVoiceChannelState>;
+  joinVoiceChannel(channelId: string): Promise<corde.IVoiceChannelState>;
   isInVoiceChannel(): boolean;
   leaveVoiceChannel(): void;
   isStreamingInVoiceChannel(): void;
@@ -347,11 +345,6 @@ export interface IMacherContructorArgs {
 export interface ITestFilePattern {
   filesPattern: string[];
   ignorePattern?: string[];
-}
-
-export interface IVoiceChannelState {
-  channel: VoiceChannel;
-  connection?: VoiceConnection;
 }
 
 export type MapObj<T> = {

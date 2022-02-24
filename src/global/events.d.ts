@@ -1,29 +1,4 @@
 declare namespace corde {
-  export type PartialOrMessageReaction =
-    | import("discord.js").MessageReaction
-    | import("discord.js").PartialMessageReaction;
-
-  type User = import("discord.js").User;
-  type Channel = import("discord.js").Channel;
-  type Message = import("discord.js").Message;
-  type PartialUser = import("discord.js").PartialUser;
-
-  type MessageReaction = import("discord.js").MessageReaction;
-  type PartialMessageReaction = import("discord.js").PartialMessageReaction;
-  type TextBasedChannel = import("discord.js").TextBasedChannel;
-  type Role = import("discord.js").Role;
-
-  type GuildEmoji = import("discord.js").GuildEmoji;
-  type GuildBan = import("discord.js").GuildBan;
-  type Guild = import("discord.js").Guild;
-  type GuildMember = import("discord.js").GuildMember;
-
-  type PartialGuildMember = import("discord.js").PartialGuildMember;
-  type Collection<T, U> = import("discord.js").Collection<T, U>;
-  type PartialMessage = import("discord.js").PartialMessage;
-  type Presence = import("discord.js").Presence;
-  type VoiceState = import("discord.js").VoiceState;
-
   /**
    * Define events emitted by Discord.js used internally by corde to test
    * each bot operation in a Promise response with filters.
