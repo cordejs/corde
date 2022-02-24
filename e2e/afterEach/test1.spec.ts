@@ -1,12 +1,9 @@
 /// <reference types="../../lib/src/global" />
 
-/* eslint-disable no-console */
-import { testCollector } from "../../lib/src/core/testCollector";
+import testUtils from "../testUtils";
 
-afterAll(() => {
-  console.log("test afterAll");
-});
+afterAll(() => {});
 
 it("", () => {
-  testCollector.addTestFunction(() => Promise.resolve({ pass: true } as any));
+  testUtils.addMockClosure();
 });

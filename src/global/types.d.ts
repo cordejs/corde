@@ -1,4 +1,42 @@
 declare namespace corde {
+  // ----------------------------- Init of Discord.js Types -----------------------------
+
+  type TextChannel = import("discord.js").TextChannel;
+  export type PartialOrMessageReaction =
+    | import("discord.js").MessageReaction
+    | import("discord.js").PartialMessageReaction;
+
+  type User = import("discord.js").User;
+  type Channel = import("discord.js").Channel;
+  type Message = import("discord.js").Message;
+  type PartialUser = import("discord.js").PartialUser;
+
+  type MessageReaction = import("discord.js").MessageReaction;
+  type PartialMessageReaction = import("discord.js").PartialMessageReaction;
+  type TextBasedChannel = import("discord.js").TextBasedChannel;
+  type Role = import("discord.js").Role;
+
+  type GuildEmoji = import("discord.js").GuildEmoji;
+  type GuildBan = import("discord.js").GuildBan;
+  type Guild = import("discord.js").Guild;
+  type GuildMember = import("discord.js").GuildMember;
+
+  type PartialGuildMember = import("discord.js").PartialGuildMember;
+  type Collection<T, U> = import("discord.js").Collection<T, U>;
+  type PartialMessage = import("discord.js").PartialMessage;
+  type Presence = import("discord.js").Presence;
+  type VoiceState = import("discord.js").VoiceState;
+  type DMChannel = import("discord.js").DMChannel;
+  type NewsChannel = import("discord.js").NewsChannel;
+  type MessageOptions = import("discord.js").MessageOptions;
+  type CreateRoleOptions = import("discord.js").CreateRoleOptions;
+  type VoiceChannel = import("discord.js").VoiceChannel;
+  type CategoryChannel = import("discord.js").CategoryChannel;
+  type AnyChannel = import("discord.js").AnyChannel;
+  type VoiceConnection = import("@discordjs/voice").VoiceConnection;
+
+  // ----------------------------- End of Discord.js types -----------------------------
+
   type KeyOf<T> = keyof T;
 
   type Stream = import("stream").Stream;
@@ -21,6 +59,11 @@ declare namespace corde {
     count: number;
     index: number;
     nonce: string | undefined;
+  }
+
+  export interface IVoiceChannelState {
+    channel: VoiceChannel;
+    connection?: VoiceConnection;
   }
 
   export interface ICreateChannelFilter extends IDefaultOptions {
@@ -46,10 +89,7 @@ declare namespace corde {
      *
      * @since 1.0
      */
-    <T>(
-      description: T,
-      testDefinitions: (() => void) | (() => Promise<void>),
-    ): void;
+    <T>(description: T, testDefinitions: (() => void) | (() => Promise<void>)): void;
   }
 
   export interface ITestClosure {
@@ -942,5 +982,406 @@ declare namespace corde {
       files: string;
       config: string;
     }
+  }
+
+  export interface IBot {
+    /**
+     * Gets the voice channel state that corde's bot is connected in, If it's connected.
+     * This property is filled when `joinVoiceChannel()` connects to a channel
+     * and is cleared when `leaveVoiceChannel()` is called.
+     */
+    readonly voiceState: IVoiceChannelState | undefined;
+
+    /**
+     * Client of Discord.js
+     */
+    readonly client: import("discord.js").Client<boolean>;
+
+    /**
+     * Same of `this.getChannel()`
+     * @throws Error if corde bot is not connected.
+     */
+    readonly channel: TextChannel;
+
+    /**
+     * Get all channels in **cache** of the bot.
+     * @throws Error if corde bot is not connected.
+     */
+    readonly channels: AnyChannel[];
+
+    /**
+     * Same of `this.getGuild()`
+     * @throws Error if corde bot is not connected.
+     */
+    readonly guild: Guild;
+
+    /**
+     * Members of the guild defined in configs
+     * @throws Error if corde bot is not connected.
+     */
+    readonly guildMembers: GuildMember[];
+
+    /**
+     * Get all guilds in **cache** of the bot.
+     * @throws Error if corde bot is not connected.
+     */
+    readonly guilds: Guild[];
+
+    /**
+     * Get all roles in **cache** of the guild
+     * defined in configs.
+     *
+     * @throws Error if corde bot is not connected.
+     */
+    readonly roles: Role[];
+
+    /**
+     * Checks if corde's bot is connected and ready.
+     */
+    readonly isLoggedIn: boolean;
+
+    /**
+     * Checks if a given message was sent by corde's bot
+     * @param message Sent message
+     * @returns If corde's bot is the author of the message
+     */
+    isMessageAuthor(message: Message): boolean;
+
+    /**
+     * Joins corde's bot to a voice channel.
+     * @param channelId Voice channel to corde's bot connect
+     * @throws Error if corde bot is not connected.
+     * @returns Voice connection state. This property can be get from `bot.voiceState`
+     */
+    joinVoiceChannel(channelId: string): Promise<IVoiceChannelState>;
+
+    /**
+     * Leaves a voice channel.
+     * @throws Error if corde bot is not connected.
+     */
+    leaveVoiceChannel(): void;
+
+    /**
+     * From all channels in **cache**, get all that are of type text
+     * @throws Error if corde bot is not connected.
+     */
+    getOnlyTextChannels(): (DMChannel | NewsChannel | TextChannel)[];
+
+    /**
+     * Checks if corde's bot is in a voice channel
+     */
+    isInVoiceChannel(): boolean;
+
+    /**
+     * Makes a fetch of a channel based on it's `id`.
+     * @param id Id of the channel.
+     * @throws Error if corde bot is not connected.
+     * @returns Channel if it's found
+     */
+    fetchChannel(id: string): Promise<AnyChannel | undefined>;
+
+    /**
+     * Makes a fetch of a guild based on it's `id`.
+     * @param id Id of the guild
+     * @throws Error if corde bot is not connected.
+     * @returns Guild if it's found
+     */
+    fetchGuild(id: string): Promise<Guild | undefined>;
+
+    /**
+     * Fetch for a role based on it's id, caching it after that.
+     * @param roleId Id of the role.
+     * @throws Error if corde's bot isn't connected yet.
+     * @returns Fetched Role or undefined.
+     */
+    fetchRole(roleId: string): Promise<Role | undefined>;
+
+    /**
+     * Fetch for a role based on it's id, and it's guild's id, caching it after that.
+     *
+     * @param roleId Id of the role.
+     * @param guildId Id of the guild.
+     * @param fetchGuild Define if the guild should be fetched or searched in cache.
+     *
+     * @throws Error if corde's bot isn't connected yet.
+     *
+     * @returns Fetched Role or undefined.
+     */
+    fetchRole(roleId: string, guildId: string, fetchGuild?: boolean): Promise<Role | undefined>;
+
+    /**
+     * Gets the channel defined in `configs`
+     * @throws Error if corde bot is not connected.
+     */
+    getChannel(): TextChannel;
+
+    /**
+     * Gets a channel from `client.channels.cache` based on the channel's id
+     *
+     * @param id Channel Id
+     * @throws Error if corde bot is not connected.
+     * @return Channel searched by it's id or undefined.
+     */
+    getChannel(id: string): TextChannel | undefined;
+
+    /**
+     * Gets a channel from `client.channels.cache` based on the channel's id or name
+     *
+     * @param identifier Channel's identifier
+     * @throws Error if corde bot is not connected.
+     * @return Channel searched or undefined.
+     */
+    getChannel(identifier: corde.IChannelIdentifier): TextChannel | undefined;
+
+    /**
+     * Gets the guild defined in `configs`
+     * @throws Error if corde bot is not connected.
+     */
+    getGuild(): Guild;
+
+    /**
+     * Gets a guild from `client.channels.guild` based on the guild's id
+     * @param id Guild Id
+     * @throws Error if corde bot is not connected.
+     * @return Guild searched by it's id or undefined.
+     */
+    getGuild(id: string): Guild | undefined;
+
+    /**
+     * Gets a guild from `client.guild.cache` based on the guild's id or name
+     *
+     * @param identifier Guild's identifier
+     * @throws Error if corde bot is not connected.
+     * @return Guild searched or undefined.
+     */
+    getGuild(identifier: corde.IGuildIdentifier): Guild | undefined;
+
+    /**
+     * Sends a message to the connected textChannel.
+     *
+     * **This function does not work without a test case**
+     *
+     * @param message Message to send
+     *
+     * @example
+     *
+     * // Works
+     * test("test 1", () => {
+     *    const message = await corde.bot.send("msg");
+     *    expect(`editMessage ${message.id}`).toEditMessage({ id: message.id }, "newValue");
+     * });
+     *
+     * // Do not Works
+     * group("test 1", () => {
+     *    const message = await corde.bot.send("msg");
+     * });
+     *
+     * @throws Error if corde bot is not connected.
+     * @throws Error If message is invalid.
+     *
+     * @returns null if message is empty, null or undefined.
+     * Message if **message** is not empty and it was send to Discord.
+     *
+     * @since 2.0
+     */
+    send(message: string | number | boolean | bigint): Promise<Message>;
+    send(message: MessageOptions): Promise<Message>;
+
+    /**
+     * Creates a new role inside the guild provided in configs.
+     *
+     * @param name Name of the role.
+     * @throws CordeClientError if corde has not yet connect it's bot.
+     * @returns A promise that return the created role.
+     *
+     * @since 2.1
+     */
+    createRole(name?: string): Promise<Role>;
+
+    /**
+     * Creates a new role inside the guild provided in configs.
+     *
+     * @param data Basic information's about the role.
+     * @throws CordeClientError if corde has not yet connect it's bot.
+     * @returns A promise that return the created role.
+     *
+     * @since 2.1
+     */
+    createRole(data: CreateRoleOptions): Promise<Role>;
+
+    /**
+     * Creates a new `guild` in defined in configs.
+     *
+     * Shortcut for:
+     *
+     * ```typescript
+     * this.client.guilds.create("nameExample");
+     * ```
+     *
+     * @param name Name of the new guild.
+     * @throws Error if corde's bot isn't connected yet.
+     * @returns Created guild.
+     */
+    createGuild(name: string): Promise<Guild>;
+
+    /**
+     * Creates a new `guild` in defined in configs.
+     *
+     * Shortcut for:
+     *
+     * ```typescript
+     * this.client.guilds.create("exampleName", { ... });
+     * ```
+     *
+     * @param options information's about the guild.
+     * @throws Error if corde's bot isn't connected yet.
+     * @returns Created guild.
+     */
+    createGuild(options: corde.IGuildCreateOptions): Promise<Guild>;
+
+    /**
+     * Creates a new channel in guild defined in configs.
+     *
+     * Shortcut for:
+     *
+     * ```typescript
+     * this.client.channels.create("exampleName");
+     * ```
+     *
+     * @param name Name of the new channel.
+     * @throws Error if corde's bot isn't connected yet.
+     * @returns Created channel.
+     */
+    createChannel(name: string): Promise<TextChannel>;
+
+    /**
+     * Creates a new channel in guild defined in configs.
+     *
+     * Shortcut for:
+     *
+     * ```typescript
+     * this.client.channels.create("exampleName", { ... });
+     * ```
+     *
+     * @param options information's about the channel, including it's type.
+     * @throws Error if corde's bot isn't connected yet.
+     * @returns Created channel.
+     */
+    createChannel(
+      channelOptions: corde.ICreateChannelOptions,
+    ): Promise<TextChannel | VoiceChannel | CategoryChannel>;
+
+    /**
+     * Creates a new **voice** channel in guild defined in configs.
+     *
+     * Shortcut for:
+     *
+     * ```typescript
+     * this.client.channels.create("exampleName", { type: "voice" });
+     * ```
+     *
+     * @param name Name of the new channel.
+     * @throws Error if corde's bot isn't connected yet.
+     * @returns Created channel.
+     */
+    createVoiceChannel(name: string): Promise<VoiceChannel>;
+
+    /**
+     * Creates a new **voice** channel in guild defined in configs.
+     *
+     * Shortcut for:
+     *
+     * ```typescript
+     * this.client.channels.create("exampleName", { ..., type: "voice" });
+     * ```
+     *
+     * @param options information's about the channel.
+     * @throws Error if corde's bot isn't connected yet.
+     * @returns Created channel.
+     */
+    createVoiceChannel(options: corde.ICreateChannelOptionsSimple): Promise<VoiceChannel>;
+
+    /**
+     * Creates a new **text** channel in guild defined in configs.
+     *
+     * Shortcut for:
+     *
+     * ```typescript
+     * this.client.channels.create("exampleName", { type: "text" });
+     * ```
+     *
+     * @param name Name of the new channel.
+     * @throws Error if corde's bot isn't connected yet.
+     * @returns Created channel.
+     */
+    createTextChannel(name: string): Promise<TextChannel>;
+
+    /**
+     * Creates a new **text** channel in guild defined in configs.
+     *
+     * Shortcut for:
+     *
+     * ```typescript
+     * this.client.channels.create("exampleName", { ..., type: "text" });
+     * ```
+     *
+     * @param options information's about the channel.
+     * @throws Error if corde's bot isn't connected yet.
+     * @returns Created channel.
+     */
+    createTextChannel(options: corde.ICreateChannelOptionsSimple): Promise<TextChannel>;
+
+    /**
+     * Creates a new **category** channel in guild defined in configs.
+     *
+     * Shortcut for:
+     *
+     * ```typescript
+     * this.client.channels.create("exampleName", { type: "category" });
+     * ```
+     *
+     * @param name Name of the new channel.
+     * @throws Error if corde's bot isn't connected yet.
+     * @returns Created channel.
+     */
+    createCategoryChannel(name: string): Promise<CategoryChannel>;
+
+    /**
+     * Creates a new **category** channel in guild defined in configs.
+     *
+     * Shortcut for:
+     *
+     * ```typescript
+     * this.client.channels.create("exampleName", { ..., type: "category" });
+     * ```
+     *
+     * @param options information's about the channel.
+     * @throws Error if corde's bot isn't connected yet.
+     * @returns Created channel.
+     */
+    createCategoryChannel(options: corde.ICreateChannelOptionsSimple): Promise<CategoryChannel>;
+
+    /**
+     * Finds a role in config guild's cache, basing on it's **id**
+     *
+     * @param id Id of the role.
+     * @throws CordeClientError if corde's bot is not connected.
+     * @returns Role that matches the provided **id** or **name**
+     */
+    getRole(id: string): Role | undefined;
+
+    /**
+     * Finds a role in config guild's cache, basing on it's **id** or **name**.
+     *
+     * @param data Data of the role. It can be it's **name** or **id**.
+     *
+     * if both information's be provided, and they are from two different
+     * roles, the result will correspond to the role that match's with the parameter
+     * **id**.
+     *
+     * @throws CordeClientError if corde's bot is not connected.
+     * @returns Role that matches the provided **id** or **name**
+     */
+    getRole(data: corde.IRoleIdentifier): Role | undefined;
   }
 }

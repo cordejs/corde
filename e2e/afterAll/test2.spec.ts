@@ -1,11 +1,11 @@
 /// <reference types="../../lib/src/global" />
-/* eslint-disable no-console */
 
-corde.afterAll(async () => {
-  await wait(100);
-  console.log("test");
+import testUtils from "../testUtils";
+
+afterAll(async () => {
+  await corde.waitAsync(100);
 });
 
-corde.it("", () => {
-  testCollector.addTestFunction(() => Promise.resolve({ pass: true } as any));
+it("", () => {
+  testUtils.addMockClosure();
 });

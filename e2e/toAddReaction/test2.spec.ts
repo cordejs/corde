@@ -1,6 +1,6 @@
-import corde from "../../lib";
+/// <reference types="../../lib/src/global" />
 
-corde.it("should fail in add reaction to a message", () => {
+it("should fail in add reaction to a message", async () => {
   // Intentionally wrong command
-  corde.expect("emoj").toAddReaction(["😎"]);
+  await command("emoj").should.addReaction(["😎"]);
 });

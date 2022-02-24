@@ -91,6 +91,7 @@ declare namespace corde {
   export function send(command: string): Promise<import("discord.js").Message>;
 
   export const events: corde.IOnceEvents;
+  export const bot: corde.IBot;
 
   /**
    * Creates a mock instance for a given object.

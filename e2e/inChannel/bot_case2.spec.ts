@@ -1,5 +1,5 @@
-import corde from "../../lib";
+/// <reference types="../../lib/src/global" />
 
-corde.test("", () => {
-  corde.expect("sendMultiple 829873348309155851").inChannel("123").toReturn("hello2");
+it("", async () => {
+  await command("sendMultiple 829873348309155851").should.inChannel("123").respond("hello2");
 });

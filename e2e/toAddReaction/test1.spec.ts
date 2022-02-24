@@ -1,5 +1,5 @@
-import corde from "../../lib";
+/// <reference types="../../lib/src/global" />
 
-corde.it("should add reaction to a message", () => {
-  corde.expect("emoji").toAddReaction(["😄"]);
+it("should add reaction to a message", async () => {
+  await command("emoji").should.addReaction(["😄"]);
 });

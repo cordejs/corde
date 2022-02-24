@@ -1,13 +1,11 @@
-/* eslint-disable no-console */
-import corde from "../../lib";
-import { testCollector } from "../../lib/src/core/testCollector";
-import { wait } from "../../src/utils";
+/// <reference types="../../lib/src/global" />
 
-corde.beforeEach(async () => {
-  await wait(100);
-  console.log("test beforeEach");
+import testUtils from "../testUtils";
+
+beforeEach(async () => {
+  corde.wait(100);
 });
 
-corde.it("", () => {
-  testCollector.addTestFunction(() => Promise.resolve({ pass: true } as any));
+it("", () => {
+  testUtils.addMockClosure();
 });

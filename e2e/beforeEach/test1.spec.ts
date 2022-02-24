@@ -1,11 +1,9 @@
-/* eslint-disable no-console */
-import corde from "../../lib";
-import { testCollector } from "../../lib/src/core/testCollector";
+/// <reference types="../../lib/src/global" />
 
-corde.beforeEach(() => {
-  console.log("test beforeEach");
-});
+import testUtils from "../testUtils";
 
-corde.it("", () => {
-  testCollector.addTestFunction(() => Promise.resolve({ pass: true } as any));
+beforeEach(() => {});
+
+it("", () => {
+  testUtils.addMockClosure();
 });

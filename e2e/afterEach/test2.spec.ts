@@ -1,6 +1,6 @@
-/* eslint-disable no-console */
-import corde from "../../lib";
-import { testCollector } from "../../lib/src/core/testCollector";
+/// <reference types="../../lib/src/global" />
+
+import testUtils from "../testUtils";
 
 async function asyncFunction() {
   return new Promise((resolve) => {
@@ -10,11 +10,10 @@ async function asyncFunction() {
   });
 }
 
-corde.afterAll(async () => {
+afterAll(async () => {
   await asyncFunction();
-  console.log("test afterAll");
 });
 
-corde.it("", () => {
-  testCollector.addTestFunction(() => Promise.resolve({ pass: true } as any));
+it("", () => {
+  testUtils.addMockClosure();
 });

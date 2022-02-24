@@ -179,15 +179,6 @@ export class BotAPI implements corde.IBot {
     return this._bot.sendMessage(message);
   }
 
-  /**
-   * Creates a new role inside the guild provided in configs.
-   *
-   * @param name Name of the role.
-   * @throws CordeClientError if corde has not yet connect it's bot.
-   * @returns A promise that return the created role.
-   *
-   * @since 2.1
-   */
   createRole(name?: string): Promise<Role>;
   createRole(data: CreateRoleOptions): Promise<Role>;
   createRole(data?: string | CreateRoleOptions) {

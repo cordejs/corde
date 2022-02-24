@@ -1,5 +1,5 @@
-import corde from "../../lib";
+/// <reference types="../../lib/src/global" />
 
-corde.it("should send a message", async () => {
+it("should send a message", async () => {
   await corde.bot.send("TEST MESSAGE");
 });
