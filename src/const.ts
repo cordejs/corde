@@ -1,7 +1,6 @@
 import chalk from "chalk";
 import path from "path";
 import { Permission } from "./enums";
-import { IConfigOptions } from "./types";
 
 export const DEFAULT_TEST_TIMEOUT = 5000;
 export const MESSAGE_TAB_SPACE = "   ";
@@ -14,7 +13,7 @@ export const TEXT_PENDING = chalk.yellow;
 export const TEXT_EMPTY = chalk.yellowBright;
 export const ROOT_DIR = "<rootDir>";
 
-export const DEFAULT_CONFIG: Required<IConfigOptions> = {
+export const DEFAULT_CONFIG: Required<corde.IConfigOptions> = {
   botPrefix: "",
   botTestId: "",
   channelId: "",

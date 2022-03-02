@@ -100,7 +100,7 @@ function convertObjectToFileType(isJson: boolean) {
 
     const comma = i === keys.length - 1 ? "" : ",";
 
-    response += DOUBLE_SPACE + `${strType}${key}${strType}: ${value}${comma}\n`;
+    response += DOUBLE_SPACE + `${strType}${String(key)}${strType}: ${value}${comma}\n`;
   }
 
   response += "}";

@@ -1,13 +1,12 @@
 import path from "path";
 import { DEFAULT_CONFIG, ROOT_DIR } from "../const";
-import { IConfigOptions } from "../types";
 import { replaceAll } from "../utils/replaceAll";
 import { isNumber } from "../utils/isNumber";
 
 /**
  * Default interface of JSON config
  */
-export class Config implements Readonly<IConfigOptions> {
+export class Config implements Readonly<corde.IConfigOptions> {
   private _cordeBotToken!: string;
   private _botTestId!: string;
   private _channelId!: string;
@@ -95,7 +94,7 @@ export class Config implements Readonly<IConfigOptions> {
     this.setConfigs(DEFAULT_CONFIG, true);
   }
 
-  get<T extends keyof IConfigOptions>(configName: T): IConfigOptions[T] {
+  get<T extends keyof corde.IConfigOptions>(configName: T): corde.IConfigOptions[T] {
     return this[configName];
   }
 
@@ -114,7 +113,7 @@ export class Config implements Readonly<IConfigOptions> {
    *
    * @param config new set of configs.
    */
-  setConfigs(config: Partial<IConfigOptions>, forceUpdate?: boolean) {
+  setConfigs(config: Partial<corde.IConfigOptions>, forceUpdate?: boolean) {
     if (config.rootDir && (!this.rootDir || forceUpdate)) {
       this._rootDir = path.resolve(process.cwd(), config.rootDir);
     }

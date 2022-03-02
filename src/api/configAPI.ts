@@ -1,8 +1,7 @@
 import { DEFAULT_CONFIG } from "../const";
-import { IConfigOptions } from "../types";
 
-export class ConfigAPI implements Readonly<Required<IConfigOptions>> {
-  constructor(private _internalConfigs: IConfigOptions) {}
+export class ConfigAPI implements Readonly<Required<corde.IConfigOptions>> {
+  constructor(private _internalConfigs: corde.IConfigOptions) {}
 
   get useConfigValuesInEventsDefaultParameters() {
     return (

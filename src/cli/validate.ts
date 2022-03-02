@@ -1,6 +1,5 @@
 import chalk from "chalk";
 import { FileError, PropertyError } from "../errors";
-import { IConfigOptions } from "../types";
 import { getFiles } from "../utils/getFiles";
 import { stringIsNullOrEmpty } from "../utils/stringIsNullOrEmpty";
 
@@ -15,7 +14,7 @@ import { stringIsNullOrEmpty } from "../utils/stringIsNullOrEmpty";
  *
  * @throws Error if any config is invalid.
  */
-export async function validate(configs: IConfigOptions) {
+export async function validate(configs: corde.IConfigOptions) {
   if (!configs) {
     throw new FileError(chalk.red("● configs not informed."));
   }

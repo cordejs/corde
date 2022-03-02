@@ -1,4 +1,4 @@
-import { IConfigOptions, ICordeBot } from "../types";
+import { ICordeBot } from "../types";
 import { IInternalEvents } from "./internalEvents";
 import { CordeBot } from "./CordeBot";
 import { Client, Intents } from "discord.js";
@@ -108,7 +108,7 @@ export class Runtime {
     this.testCollector = new TestCollector();
   }
 
-  setConfigs(_configs: Partial<IConfigOptions>, forceUpdate?: boolean) {
+  setConfigs(_configs: Partial<corde.IConfigOptions>, forceUpdate?: boolean) {
     if (!_configs) {
       throw new ConfigError("Invalid _configs");
     }

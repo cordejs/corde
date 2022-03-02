@@ -4,7 +4,7 @@ import path from "path";
 import { printHookErrors } from "./printHookError";
 import runtime from "./runtime";
 import { FileError } from "../errors";
-import { IConfigOptions, ITestFilePattern } from "../types";
+import { ITestFilePattern } from "../types";
 import { getFiles } from "../utils/getFiles";
 import { importFile } from "../utils/importFile";
 import { safeImportFile } from "../utils/safeImportFile";
@@ -16,7 +16,7 @@ export class Reader {
    * @throws
    */
   loadConfig() {
-    let _config: IConfigOptions;
+    let _config: corde.IConfigOptions;
 
     const jsonFilePath = path.resolve(process.cwd(), "corde.config.json");
     const tsFilePath = path.resolve(process.cwd(), "corde.config.ts");
@@ -84,7 +84,7 @@ export class Reader {
     return testCollector.testFiles;
   }
 
-  private loadConfigFromConfigFilePath(): IConfigOptions {
+  private loadConfigFromConfigFilePath(): corde.IConfigOptions {
     let filePath = "";
     if (fs.existsSync(runtime.configFilePath)) {
       filePath = path.resolve(process.cwd(), runtime.configFilePath);
