@@ -1,7 +1,7 @@
 /// <reference types="../../lib/src/global" />
 
 import { Role } from "discord.js";
-import { bot } from "../bot";
+import { bot } from "../@bot";
 import { Colors } from "../../lib";
 
 let role: Role;

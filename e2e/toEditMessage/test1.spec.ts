@@ -1,5 +1,5 @@
 /// <reference types="../../lib/src/global" />
-import { sendMessage } from "../bot";
+import { sendMessage } from "../@bot";
 
 it("should edit a message", async () => {
   const msg = await sendMessage("oldValue");
