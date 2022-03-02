@@ -29,6 +29,7 @@ export const DEFAULT_CONFIG: Required<corde.IConfigOptions> = {
   useConfigValuesInEventsDefaultParameters: false,
   useTimeoutValueInEventsDefaultParameters: true,
   loginCordeBotOnStart: true,
+  loginTimeout: 10000,
 };
 
 export const TAG_PENDING = (text = "RUNS") => chalk.bgYellow(chalk.black(` ${text} `));

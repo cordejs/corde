@@ -41,6 +41,10 @@ export class ConfigAPI implements Readonly<Required<corde.IConfigOptions>> {
     return this._internalConfigs.timeout ?? DEFAULT_CONFIG.timeout;
   }
 
+  get loginTimeout() {
+    return this._internalConfigs.timeout ?? DEFAULT_CONFIG.loginTimeout;
+  }
+
   get botPrefix() {
     return this._internalConfigs.botPrefix;
   }

@@ -11,6 +11,7 @@ import { StrictObject } from "../types";
 import { registerTsNode } from "../core/tsRegister";
 import { debug } from "../core/debug";
 import { DEFAULT_CONFIG } from "../const";
+import { executeWithTimeout } from "../utils/executeWithTimeout";
 
 declare module "ora" {
   interface Ora {
@@ -65,7 +66,21 @@ export async function runTests() {
       startLoading("login to corde bot");
       const loginPromise = runtime.bot.login(runtime.configs.cordeBotToken);
       const readyPromise = runtime.bot.events.onceReady();
-      await Promise.allSettled([loginPromise, readyPromise]);
+
+      const timeoutError = () => {
+        spinner.stop();
+        throw new Error(
+          "\nTimeout attempting to logging corde's bot\n" +
+            `Check if ${chalk.cyan("cordeBotToken")} is correct\n`,
+        );
+      };
+
+      await executeWithTimeout(
+        () => Promise.allSettled([loginPromise, readyPromise]),
+        runtime.configs.loginTimeout,
+        timeoutError,
+      );
+
       spinner.stop();
     }
 

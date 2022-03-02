@@ -22,6 +22,11 @@ export class Config implements Readonly<corde.IConfigOptions> {
   private _useConfigValuesInEventsDefaultParameters!: boolean;
   private _useTimeoutValueInEventsDefaultParameters!: boolean;
   private _loginCordeBotOnStart!: boolean;
+  private _loginTimeout!: number;
+
+  get loginTimeout() {
+    return this._loginTimeout;
+  }
 
   get loginCordeBotOnStart() {
     return this._loginCordeBotOnStart;
@@ -132,6 +137,10 @@ export class Config implements Readonly<corde.IConfigOptions> {
 
     if (config.botTestId && (!this.botTestId || forceUpdate)) {
       this._botTestId = config.botTestId;
+    }
+
+    if (config.loginTimeout && (!this.loginTimeout || forceUpdate)) {
+      this._loginTimeout = config.loginTimeout;
     }
 
     if (config.extensions && (!this.extensions || forceUpdate)) {

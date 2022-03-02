@@ -13,6 +13,7 @@ import { isInDebugMode } from "./isInDebugMode";
 export async function executeWithTimeout<TResult>(
   fn: () => TResult | Promise<TResult>,
   timeout: number,
+  timeoutOperation?: string | (() => never),
 ) {
   if (!fn) {
     throw new Error("can not execute an null function");
@@ -23,7 +24,13 @@ export async function executeWithTimeout<TResult>(
   }
 
   const nodeTimeout = setTimeout(() => {
-    throw new Error("timeout");
+    if (typeof timeoutOperation === "string") {
+      throw new Error(timeoutOperation ?? "timeout");
+    }
+
+    if (timeoutOperation) {
+      timeoutOperation();
+    }
   }, timeout);
 
   const response = await fn();
