@@ -1,3 +1,5 @@
+import { debug } from "./debug";
+
 /**
  * @internal
  * Register `ts-node` to support typescript written tests.
@@ -14,6 +16,6 @@ export function registerTsNode(configs: Pick<corde.IConfigOptions, "project">) {
       pretty: true,
     });
   } catch (error) {
-    //
+    debug(error);
   }
 }
