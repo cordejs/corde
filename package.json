@@ -7,9 +7,7 @@
   "directories": {
     "lib": "bin"
   },
-  "bin": {
-    "corde": "bin/corde"
-  },
+  "bin": "bin/corde",
   "keywords": [
     "discord-bot",
     "discord-js",
@@ -110,12 +108,12 @@
     "source-map-support": "^0.5.16",
     "ts-jest": "^27.1.3",
     "ts-node": "^10.5.0",
+    "tslib": "^2.2.0",
     "tslint": "^6.1.3",
     "tslint-config-prettier": "^1.18.0",
     "tslog": "^3.3.2",
     "typescript": "^4.5.5",
-    "yarn": "^1.22.10",
-    "tslib": "^2.2.0"
+    "yarn": "^1.22.17"
   },
   "dependencies": {
     "@discordjs/voice": "^0.8.0",
@@ -131,7 +129,7 @@
     "pretty-format": "^27.5.1"
   },
   "engines": {
-    "node": ">=16.6.0"
+    "node": ">=16.9.0"
   },
   "publishConfig": {
     "@lucasgmagalhaes:registry": "https://npm.pkg.github.com"
@@ -156,5 +154,6 @@
     "bin/",
     "index.js",
     "index.d.ts"
-  ]
+  ],
+  "packageManager": "yarn@3.2.0"
 }
