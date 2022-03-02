@@ -131,7 +131,7 @@
     "pretty-format": "^27.5.1"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=16.6.0"
   },
   "publishConfig": {
     "@lucasgmagalhaes:registry": "https://npm.pkg.github.com"
