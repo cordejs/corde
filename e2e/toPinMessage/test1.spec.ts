@@ -1,15 +1,15 @@
-import corde from "../../lib";
+/// <reference types="../../lib/src/global" />
 
-corde.describe("should pin a message", async () => {
+describe("should pin a message", async () => {
   // Creates a message to pin
   const msg = await corde.bot.send("oldValue");
   // test if it is being pinned
-  corde.it("", async () => {
-    corde.expect("pin " + msg.id).toPin(msg.id);
+  it("", async () => {
+    await command("pin " + msg.id).should.pinMessage(msg.id);
   });
 
   // Unpin to not persist trash in channel
-  corde.afterAll(async () => {
+  afterAll(async () => {
     await corde.bot.send("unPin " + msg.id);
   });
 });

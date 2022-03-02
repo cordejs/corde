@@ -1,8 +1,10 @@
-import corde from "../../lib";
+/// <reference types="../../lib/src/global" />
 
-corde.it("should fail when attempting to set some permitions to a role", async () => {
-  const role = corde.bot.findRole({ name: "random-role" });
-  corde
-    .expect("setRolePermission 123 ADMINISTRATOR BAN_MEMBERS")
-    .toSetRolePermission(role.id, "ADMINISTRATOR", "BAN_MEMBERS");
+it("should fail when attempting to set some permissions to a role", async () => {
+  const role = corde.bot.getRole({ name: "random-role" });
+  await command("setRolePermission 123 ADMINISTRATOR BAN_MEMBERS").should.setRolePermission(
+    role.id,
+    "ADMINISTRATOR",
+    "BAN_MEMBERS",
+  );
 });

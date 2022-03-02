@@ -1,8 +1,8 @@
-import corde from "../../lib";
+/// <reference types="../../lib/src/global" />
 import { sendMessage } from "../bot";
 
-corde.it("should edit a message", async () => {
+it("should edit a message", async () => {
   const msg = await sendMessage("oldValue");
   const newValue = "newMessageEdited";
-  corde.expect(`editMessage ${msg.id} ${newValue}`).toEditMessage(newValue, { id: msg.id });
+  await command(`editMessage ${msg.id} ${newValue}`).should.editMessage(newValue, { id: msg.id });
 });

@@ -1,18 +1,23 @@
+/// <reference types="../../lib/src/global" />
+
 import { Role } from "discord.js";
-import corde, { Colors } from "../../lib";
 import { bot } from "../bot";
+import { Colors } from "../../lib";
 
 let role: Role;
 const roleName = "role-color";
 let oldRoleColor = 0;
 
-corde.it("should set role color", async () => {
-  role = corde.bot.findRole({ name: roleName });
+it("should set role color", async () => {
+  role = corde.bot.getRole({ name: roleName });
   oldRoleColor = role.color;
-  corde.expect(`changeRoleColor ${role.id} ${Colors.NAVY}`).toSetRoleColor(Colors.NAVY, role.id);
+  await command(`changeRoleColor ${role.id} ${Colors.NAVY}`).should.setRoleColor(
+    Colors.NAVY,
+    role.id,
+  );
 });
 
-corde.afterAll(async () => {
+afterAll(async () => {
   if (role) {
     await role.setColor(oldRoleColor);
   }

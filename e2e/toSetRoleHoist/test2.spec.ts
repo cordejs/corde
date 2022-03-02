@@ -1,6 +1,6 @@
-import corde from "../../lib";
+/// <reference types="../../lib/src/global" />
 
-corde.it("should fail attempting to set role mentionable", async () => {
-  const role = corde.bot.findRole({ name: "random-role" });
-  corde.expect("setRoleHoist 312").toSetRoleHoist(true, role.id);
+it("should fail attempting to set role mentionable", async () => {
+  const role = corde.bot.getRole({ name: "random-role" });
+  await command("setRoleHoist 312").should.setRoleHoist(true, role.id);
 });

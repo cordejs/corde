@@ -1,10 +1,10 @@
-import corde from "../../lib";
+/// <reference types="../../lib/src/global" />
 
-corde.describe("test", async () => {
+describe("test", async () => {
   const msg = await corde.bot.send("oldValue");
   await corde.bot.send("pin " + msg.id);
 
-  corde.it("should fail when unpin a message", () => {
-    corde.expect("unPin " + msg.id).toUnPin("12312");
+  it("should fail when unpin a message", async () => {
+    await command("unPin " + msg.id).should.unPinMessage("12312");
   });
 });

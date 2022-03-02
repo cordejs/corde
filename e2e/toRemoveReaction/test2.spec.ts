@@ -1,5 +1,5 @@
-import corde from "../../lib";
+/// <reference types="../../lib/src/global" />
 
-corde.it("should fail when trying to remove a reaction from a role", async () => {
-  corde.expect("removeReaction 321 😄").toRemoveReaction(["😄"], { id: "12321" });
+it("should fail when trying to remove a reaction from a role", async () => {
+  await command("removeReaction 321 😄").should.removeReaction(["😄"], { id: "12321" });
 });

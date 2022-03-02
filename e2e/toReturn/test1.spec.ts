@@ -1,5 +1,5 @@
-import corde from "../../lib";
+/// <reference types="../../lib/src/global" />
 
-corde.it("Hello command should return... hello!!", () => {
-  corde.expect("hello").toReturn("Hello!!");
+it("Hello command should return... hello!!", async () => {
+  await command("hello").should.respond("Hello!!");
 });

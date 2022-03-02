@@ -6,20 +6,20 @@
  */
 
 /**
- * Corde script for end-to-end tests. In comparation with Jest, this script,
- * runs tests with avarage of ~5 seconds faster.
+ * Corde script for end-to-end tests. In comparative with Jest, this script,
+ * runs tests with average of ~5 seconds faster.
  * usage: yarn e2e
  *
  * This script must be executed outside ./e2e folder witch means, in the root
  * of corde folder.
  *
- * This script also suport specifics execution,
+ * This script also support specifics execution,
  * just add --tests followed by the test id
  *
  */
 
 import chalk from "chalk";
-import { login, bot } from "./bot";
+import { login, bot } from "./@bot";
 import { generator } from "./tests";
 import testUtils from "./testUtils";
 

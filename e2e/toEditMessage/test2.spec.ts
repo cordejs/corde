@@ -1,8 +1,8 @@
-import corde from "../../lib";
+/// <reference types="../../lib/src/global" />
 
-corde.it("should fail to edit a message", async () => {
+it("should fail to edit a message", async () => {
   const newValue = "newMessageEdited";
-  corde
-    .expect(`editMessage 11241241241 ${newValue}`)
-    .toEditMessage("wrongValue", { id: "11241241241" });
+  await command(`editMessage 11241241241 ${newValue}`).should.editMessage("wrongValue", {
+    id: "11241241241",
+  });
 });

@@ -1,15 +1,16 @@
+/// <reference types="../../lib/src/global" />
+
 import { Role } from "discord.js";
-import corde from "../../lib";
 
 let role: Role = null;
 const roleName = "random-role";
 
-corde.it("should set role hoist", async () => {
-  role = corde.bot.findRole({ name: roleName });
-  corde.expect(`setRoleHoist ${role.id}`).toSetRoleHoist(true, role.id);
+it("should set role hoist", async () => {
+  role = corde.bot.getRole({ name: roleName });
+  command(`setRoleHoist ${role.id}`).should.setRoleHoist(true, role.id);
 });
 
-corde.afterAll(async () => {
+afterAll(async () => {
   if (role) {
     await role.setHoist(false);
   }

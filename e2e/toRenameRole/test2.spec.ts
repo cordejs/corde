@@ -1,6 +1,6 @@
-import corde from "../../lib";
+/// <reference types="../../lib/src/global" />
 
-corde.it("should fail when renaming a role", async () => {
-  const role = corde.bot.findRole({ name: "old-role-name" });
-  corde.expect("renameRole 321 baba").toRenameRole("batata", role.id);
+it("should fail when renaming a role", async () => {
+  const role = corde.bot.getRole({ name: "old-role-name" });
+  await command("renameRole 321 baba").should.renameRole("batata", role.id);
 });

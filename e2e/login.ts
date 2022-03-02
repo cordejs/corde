@@ -3,7 +3,7 @@
  * File used for manual tests
  */
 
-import { login } from "./bot";
+import { login } from "./@bot";
 
 login(true)
   .then(() => {

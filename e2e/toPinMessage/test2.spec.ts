@@ -1,7 +1,7 @@
-import corde from "../../lib";
+/// <reference types="../../lib/src/global" />
 
-corde.describe("should fail when trying to pin a message", async () => {
-  corde.it("", async () => {
-    corde.expect("pin 1").toPin("batata");
+describe("should fail when trying to pin a message", async () => {
+  it("", async () => {
+    await command("pin 1").should.pinMessage("batata");
   });
 });

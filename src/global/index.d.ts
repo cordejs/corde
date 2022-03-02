@@ -92,7 +92,7 @@ declare namespace corde {
 
   export const events: corde.IOnceEvents;
   export const bot: corde.IBot;
-
+  export const config: Readonly<IConfigOptions>;
   /**
    * Creates a mock instance for a given object.
    * Use it to create simple mocks for `functions` and `properties` of the given object.
