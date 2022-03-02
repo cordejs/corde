@@ -32,7 +32,7 @@ async function main() {
   console.log(`Environment: ${chalk.cyan(testUtils.env())}`);
   let exitCode = 0;
 
-  process.stdout.write(chalk.cyanBright("loging example bot..."));
+  process.stdout.write(chalk.cyanBright("logging example bot..."));
 
   await login();
 
