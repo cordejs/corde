@@ -7,7 +7,7 @@
 
 "use strict";
 
-const MINIMAL_NODE_VERSION = 16.9;
+const MINIMAL_NODE_VERSION = "16.9.0";
 
 const ver = process.versions.node;
 const majorVer = +ver.split(".")[0];
