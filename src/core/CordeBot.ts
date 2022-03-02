@@ -364,7 +364,6 @@ export class CordeBot implements ICordeBot {
         connection: joinVoiceChannel({
           channelId: channel.id,
           guildId: channel.guildId,
-          // @ts-expect-error
           adapterCreator: channel.guild.voiceAdapterCreator,
         }),
       };
