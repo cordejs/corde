@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { TEXT_EMPTY, TEXT_FAIL, TEXT_PASS } from "../const";
 import { IRunnerReport } from "../types";
+import { logger } from "./Logger";
 
 interface ISummaryLine {
   label: string;
@@ -18,7 +19,7 @@ class Summary {
     if (runnerReport.testTimer) {
       message += "Time:       " + runnerReport.testTimer;
     }
-    console.log(message);
+    logger.log(message);
     return message;
   }
 

@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import { logger } from "./core/Logger";
 import runtime from "./core/runtime";
 import { exit } from "./exit";
 
@@ -17,18 +18,18 @@ export function initErrorHandlers() {
 }
 
 async function printErrorAndExit(error: unknown) {
-  console.log("\n");
+  logger.log("\n");
   if (error instanceof Error) {
-    console.error(error.message);
+    logger.error(error.message);
   } else {
-    console.error(error);
+    logger.error(error);
   }
 
   if (runtime.isBotLoggedIn()) {
     runtime.logoffBot();
   }
 
-  console.log("\n");
+  logger.log("\n");
 
   if (process.env.ENV !== "TEST") {
     exit(1);

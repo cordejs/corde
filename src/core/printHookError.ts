@@ -3,6 +3,7 @@
 import { buildReportMessage } from "../utils/buildReportMessage";
 import { formatObject } from "../utils/formatObject";
 import { LogUpdate } from "../utils/LogUpdate";
+import { logger } from "./Logger";
 
 /**
  * @internal
@@ -26,5 +27,5 @@ function print(message: string, log?: LogUpdate) {
     log.append(message);
     return;
   }
-  console.log(message);
+  logger.log(message);
 }

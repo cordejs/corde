@@ -332,3 +332,6 @@ export class Logger implements Console {
     };
   }
 }
+
+const logger = new Logger(process.stdout);
+export { logger };

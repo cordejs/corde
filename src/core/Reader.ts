@@ -8,6 +8,7 @@ import { ITestFilePattern } from "../types";
 import { getFiles } from "../utils/getFiles";
 import { importFile } from "../utils/importFile";
 import { safeImportFile } from "../utils/safeImportFile";
+import { logger } from "./Logger";
 
 export class Reader {
   /**
@@ -54,7 +55,7 @@ export class Reader {
       const matches = await getFiles(filesPattern.filesPattern, filesPattern.ignorePattern);
       filesPath.push(...matches);
     } catch (error) {
-      console.log(error);
+      logger.log(error);
     }
 
     const { configs, testCollector } = runtime;
@@ -68,7 +69,7 @@ export class Reader {
         if (configs.exitOnFileReadingError) {
           await importFile(file);
         } else {
-          await safeImportFile(file, console.error);
+          await safeImportFile(file, logger.error);
         }
 
         // After each file read, execute group closures to load all tests

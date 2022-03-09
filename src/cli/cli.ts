@@ -10,6 +10,7 @@ import { initErrorHandlers } from "../errorHandler";
 import runtime from "../core/runtime";
 import { injectGlobals } from "../core/injectGlobals";
 import { reader } from "../core/Reader";
+import { logger } from "../core/Logger";
 
 initErrorHandlers();
 initEnvVariables();
@@ -18,7 +19,7 @@ initEnvVariables();
 // to not conflict with jest
 
 if (!runtime.isUnityTest) {
-  injectGlobals().catch((e) => console.error("could not load corde's globals: ", e));
+  injectGlobals().catch((e) => logger.error("could not load corde's globals: ", e));
 }
 
 export const program = new Command();
@@ -59,7 +60,7 @@ program
   .action(async () => {
     const configs = reader.loadConfig();
     await validate(configs);
-    console.log("All configs are ok!");
+    logger.log("All configs are ok!");
   });
 
 if (process.env.ENV !== "UNITY_TEST" && process.env.ENV !== "E2E_TEST") {

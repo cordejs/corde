@@ -3,6 +3,7 @@ import chalk from "chalk";
 import fs from "fs";
 import path from "path";
 import { DEFAULT_CONFIG } from "../const";
+import { logger } from "../core/Logger";
 import { FileError } from "../errors";
 import { ConfigFileType } from "../types";
 import { keysOf } from "../utils/keysOf";
@@ -28,7 +29,7 @@ export function init(fileType: ConfigFileType = "json") {
   const fileContent = getFileFromType(fileType);
 
   if (!fileContent) {
-    console.log(
+    logger.log(
       ` - ${chalk.bold(fileType)} is not a valid type. Use '${chalk.bold(
         "init --help",
       )}' to check valid types`,
@@ -40,10 +41,10 @@ export function init(fileType: ConfigFileType = "json") {
     const fileName = `corde.config.${fileType}`;
     const filePath = path.resolve(process.cwd(), fileName);
     fs.writeFileSync(filePath, fileContent);
-    console.log(
+    logger.log(
       `- ${chalk.green("Successfully")} generated corde config in ${chalk.bold(filePath)}`,
     );
-    console.log(fileContent);
+    logger.log(fileContent);
   } catch (error) {
     throw new FileError(
       " - Fail in config file creation. Check if you have permission to create files in this directory.",
