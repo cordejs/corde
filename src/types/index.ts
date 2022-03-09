@@ -102,10 +102,9 @@ export interface ICordeBot {
   findRole(roleIdentifier: corde.IRoleIdentifier): Promise<Role | undefined>;
   getRoles(): Collection<string, Role>;
   findGuild(guildId: string): Guild;
-
+  onceInternallyReady(): Promise<void>;
   findChannel(channelId: string): GuildBasedChannel | undefined;
   findChannel(guild: Guild, channelId: string): GuildBasedChannel | undefined;
-
   joinVoiceChannel(channelId: string): Promise<corde.IVoiceChannelState>;
   isInVoiceChannel(): boolean;
   leaveVoiceChannel(): void;

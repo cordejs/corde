@@ -17,6 +17,7 @@ export function initErrorHandlers() {
 }
 
 async function printErrorAndExit(error: unknown) {
+  console.log("\n");
   if (error instanceof Error) {
     console.error(error.message);
   } else {
@@ -26,6 +27,8 @@ async function printErrorAndExit(error: unknown) {
   if (runtime.isBotLoggedIn()) {
     runtime.logoffBot();
   }
+
+  console.log("\n");
 
   if (process.env.ENV !== "TEST") {
     exit(1);

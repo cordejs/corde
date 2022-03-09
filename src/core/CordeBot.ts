@@ -18,6 +18,17 @@ import { isPrimitiveValue } from "../utils/isPrimitiveValue";
 import { typeOf } from "../utils/typeOf";
 import { Events } from "./Events";
 import { joinVoiceChannel } from "@discordjs/voice";
+import EventEmitter from "events";
+import { once } from "events";
+
+enum InternalEvent {
+  InternallyReady = "internally_ready",
+}
+
+interface InternallyReadyResponse {
+  ok: boolean;
+  error?: string;
+}
 
 /**
  * Encapsulation of Discord Client with all specific
@@ -30,6 +41,7 @@ export class CordeBot implements ICordeBot {
   private readonly _channelId: string;
   private readonly _testBotId: string;
   private readonly _client: Client;
+  private readonly _emitter: EventEmitter;
   private _voiceConnection?: corde.IVoiceChannelState;
 
   private textChannel!: TextChannel;
@@ -58,6 +70,7 @@ export class CordeBot implements ICordeBot {
     this._testBotId = testBotId;
     this.loadClientEvents();
     this._isReady = false;
+    this._emitter = new EventEmitter();
   }
 
   get client() {
@@ -133,6 +146,14 @@ export class CordeBot implements ICordeBot {
       return this.textChannel.send(message.toString());
     }
     return this.textChannel.send(message);
+  }
+
+  async onceInternallyReady() {
+    const [r] = await once(this._emitter, InternalEvent.InternallyReady);
+    const response: InternallyReadyResponse = r;
+    if (!response.ok) {
+      throw new Error(response.error);
+    }
   }
 
   /**
@@ -261,8 +282,14 @@ export class CordeBot implements ICordeBot {
 
   private loadClientEvents() {
     this.events.onReady(() => {
-      this._isReady = true;
-      this.loadChannel();
+      try {
+        this.loadChannel();
+        this._isReady = true;
+        this._emitter.emit(InternalEvent.InternallyReady, { ok: true });
+      } catch (error) {
+        this._isReady = false;
+        this._emitter.emit(InternalEvent.InternallyReady, { ok: false, error });
+      }
     });
   }
 

@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { Client, Message, MessageEmbed } from "discord.js";
+import { Client, Intents, Message } from "discord.js";
 import * as config from "../corde.config";
 
-export const bot = new Client();
+export const bot = new Client({
+  intents: [Intents.FLAGS.GUILDS],
+});
 
 /**
  * Use this functions before use sendMessage (add it to **corde.beforeAll**)
@@ -43,11 +45,21 @@ async function ping(msg: Message) {
 }
 
 async function embedPartial(msg: Message) {
-  await msg.channel.send(
-    new MessageEmbed().setDescription("test").setTitle("title").setAuthor("author"),
-  );
+  await msg.channel.send({
+    embeds: [
+      {
+        title: "abc",
+      },
+    ],
+  });
 }
 
 async function embed(msg: Message) {
-  await msg.channel.send(new MessageEmbed().setDescription("test"));
+  await msg.channel.send({
+    embeds: [
+      {
+        description: "abc",
+      },
+    ],
+  });
 }
