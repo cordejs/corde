@@ -18,7 +18,7 @@ export interface StackData {
 type StdoutStream = NodeJS.WriteStream & { fd: 1 };
 
 /**
- * @private
+ * @internal
  */
 export class Logger implements Console {
   public stack: Array<StackContainer> = [];
