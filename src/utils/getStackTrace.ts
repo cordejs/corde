@@ -21,7 +21,7 @@ import { DEFAULT_STACK_TRACE_LIMIT, EXPECT_RECEIVED_TAB_SPACE } from "../const";
  *     Object.<anonymous> (test.js:25:13)
  *
  * @param stackLimit Amount of lines to be collected.
- * @returns Formated stack trace.
+ * @returns Formatted stack trace.
  *
  * @internal
  */
@@ -29,14 +29,14 @@ export function getStackTrace(
   stackLimit?: number | undefined | null,
   removeFirstStack = true,
   functionName?: string,
-  adicionalSpace?: string,
+  additionalSpace?: string,
 ): string {
   const obj: any = {};
 
   let space = EXPECT_RECEIVED_TAB_SPACE;
 
-  if (adicionalSpace) {
-    space += adicionalSpace;
+  if (additionalSpace) {
+    space += additionalSpace;
   }
 
   Error.prepareStackTrace = (_, calls) => {
@@ -52,13 +52,13 @@ export function getStackTrace(
       "at " +
       formatFunctionName +
       stacksWithoutFirstCall
-        .filter((s) => isStrackRelevant(s))
+        .filter((s) => isStraceRelevant(s))
         .slice(0, stackLimit ?? DEFAULT_STACK_TRACE_LIMIT)
         .join("\n" + space + "at ");
 
     // removes full path of the file for security.
-    const formatedPath = process.cwd().replace(/\\/g, "\\\\");
-    const regex = new RegExp(formatedPath + "\\\\", "g");
+    const formattedPath = process.cwd().replace(/\\/g, "\\\\");
+    const regex = new RegExp(formattedPath + "\\\\", "g");
     return trace.replace(regex, "");
   };
 
@@ -66,7 +66,7 @@ export function getStackTrace(
   return obj.stack;
 }
 
-function isStrackRelevant(stack: NodeJS.CallSite) {
+function isStraceRelevant(stack: NodeJS.CallSite) {
   const fileName = stack.getFileName();
   const functionName = stack.getFunctionName();
   return (
