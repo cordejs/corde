@@ -2,7 +2,9 @@ import path from "path";
 import { DEFAULT_CONFIG, ROOT_DIR } from "../const";
 import { replaceAll } from "../utils/replaceAll";
 import { isNumber } from "../utils/isNumber";
+import { ObjectLike } from "../types";
 
+type KeyOfConfig = keyof corde.IConfigOptions;
 /**
  * Default interface of JSON config
  */
@@ -99,7 +101,7 @@ export class Config implements Readonly<corde.IConfigOptions> {
     this.setConfigs(DEFAULT_CONFIG, true);
   }
 
-  get<T extends keyof corde.IConfigOptions>(configName: T): corde.IConfigOptions[T] {
+  get<T extends KeyOfConfig>(configName: T): corde.IConfigOptions[T] {
     return this[configName];
   }
 
@@ -204,6 +206,15 @@ export class Config implements Readonly<corde.IConfigOptions> {
         this._testMatches = [];
       }
     }
+  }
+
+  toDebug() {
+    const obj: ObjectLike = {};
+
+    Object.getOwnPropertyNames(this).forEach((pName) => {
+      obj[pName.substring(1)] = this.get(pName as KeyOfConfig);
+    });
+    return obj;
   }
 
   private clearArray(array: string[]) {

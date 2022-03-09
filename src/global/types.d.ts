@@ -1474,5 +1474,11 @@ declare namespace corde {
      * @default true
      */
     loginCordeBotOnStart?: boolean;
+    /**
+     * Defines how much time corde should wait for logging with it's bot
+     *
+     * @default 10000
+     */
+    loginTimeout?: number;
   }
 }
