@@ -41,7 +41,6 @@ export class CordeBot implements ICordeBot {
    * @param prefix Corde bot prefix.
    * @param guildId Guild id where corde bot is located in.
    * @param channelId Channel id where corde bot is located in.
-   * @param waitTimeOut Timeout for message wait.
    * @param testBotId id of testing bot.
    */
   constructor(
