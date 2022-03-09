@@ -318,6 +318,8 @@ export class Logger implements Console {
     this.stack = [];
   }
 
+  getStack() {}
+
   private overridePrint(name: string, printFunction: (...args: any[]) => void) {
     return (...args: any[]) => {
       const trace = getStackTrace(undefined, true, undefined, MESSAGE_TAB_SPACE);

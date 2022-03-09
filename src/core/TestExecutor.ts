@@ -28,6 +28,7 @@ import { TestFile } from "./TestFile";
 import { Group } from "./Group";
 import { TestError } from "../errors";
 import runtime from "./runtime";
+import { logger } from "./Logger";
 
 type ReportStatusType = "pass" | "fail" | "empty";
 
@@ -110,6 +111,7 @@ export class TestExecutor {
     );
 
     this._logUpdate.persist();
+    logger.printStacks();
 
     if (status === "pass") {
       this._semiReport.totalTestFilesPassed++;

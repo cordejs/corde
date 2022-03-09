@@ -6,6 +6,7 @@ import * as childProcess from "child_process";
 import { CliOutput, OSEnv } from "./types";
 import path from "path";
 import chalk from "chalk";
+
 import runtime from "../lib/src/core/runtime";
 
 function getWindowsConfigs() {

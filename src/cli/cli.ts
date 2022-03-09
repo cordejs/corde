@@ -19,6 +19,7 @@ initEnvVariables();
 // to not conflict with jest
 
 if (!runtime.isUnityTest) {
+  logger.mock();
   injectGlobals().catch((e) => logger.error("could not load corde's globals: ", e));
 }
 

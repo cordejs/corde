@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { logger } from "./core/Logger";
 import runtime from "./core/runtime";
+import { InternalError } from "./errors";
 import { exit } from "./exit";
 
 export function initErrorHandlers() {
@@ -18,18 +19,21 @@ export function initErrorHandlers() {
 }
 
 async function printErrorAndExit(error: unknown) {
-  logger.log("\n");
-  if (error instanceof Error) {
+  if (error instanceof InternalError) {
+    logger.log("\n");
     logger.error(error.message);
+    logger.log("\n");
   } else {
-    logger.error(error);
+    console.log("\n");
+    console.error(error);
+    console.log("\n");
   }
+
+  logger.printStacks();
 
   if (runtime.isBotLoggedIn()) {
     runtime.logoffBot();
   }
-
-  logger.log("\n");
 
   if (process.env.ENV !== "TEST") {
     exit(1);

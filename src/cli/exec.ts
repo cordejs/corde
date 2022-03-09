@@ -12,6 +12,7 @@ import { registerTsNode } from "../core/tsRegister";
 import { debug } from "../core/debug";
 import { DEFAULT_CONFIG } from "../const";
 import { executeWithTimeout } from "../utils/executeWithTimeout";
+import { logger } from "../core/Logger";
 
 declare module "ora" {
   interface Ora {
@@ -48,7 +49,7 @@ export async function exec(options: corde.Config.ICLIOptions) {
     registerTsNode(runtime.configs);
   }
 
-  debug("loaded configs: ", runtime.configs);
+  debug("loaded configs: ", runtime.configs.toDebug());
 
   await validate(runtime.configs);
   await runTests();
@@ -64,8 +65,12 @@ export async function runTests() {
   try {
     if (runtime.configs.loginCordeBotOnStart) {
       startLoading("login to corde bot");
-      const loginPromise = runtime.bot.login(runtime.configs.cordeBotToken);
-      const readyPromise = runtime.bot.events.onceReady();
+      debug(runtime.configs.cordeBotToken);
+      const loginPromise = runtime.bot
+        .login(runtime.configs.cordeBotToken)
+        .then(() => debug("login ok"));
+
+      const readyPromise = runtime.bot.onceInternallyReady().then(() => debug("ready event ok"));
 
       const timeoutError = () => {
         spinner.stop();
@@ -90,7 +95,7 @@ export async function runTests() {
     });
 
     if (testMatches.length === 0) {
-      console.log(`${chalk.bgYellow(chalk.black(" INFO "))} No test were found.`);
+      logger.log(`${chalk.bgYellow(chalk.black(" INFO "))} No test were found.`);
       return finishProcess(0);
     }
 
@@ -99,7 +104,7 @@ export async function runTests() {
     const executionReport = await testRunner.runTestsAndPrint(testMatches);
 
     if (runtime.isE2eTest) {
-      console.log(log.stdout);
+      logger.log(log.stdout);
     }
 
     summary.print(executionReport);
@@ -111,7 +116,7 @@ export async function runTests() {
     return finishProcess(0);
   } catch (error) {
     spinner.stop();
-    console.error(error);
+    logger.error(error);
     finishProcess(1);
   }
 }
@@ -119,7 +124,7 @@ export async function runTests() {
 function finishProcess(code: number, error?: any): never {
   try {
     if (error) {
-      console.log(error);
+      logger.log(error);
     }
 
     runtime.logoffBot();
