@@ -1,6 +1,8 @@
 import chalk from "chalk";
+import { Guild } from "discord.js";
 import path from "path";
 import { Permission } from "./enums";
+import { typeOf } from "./utils/typeOf";
 
 export const DEFAULT_TEST_TIMEOUT = 5000;
 export const MESSAGE_TAB_SPACE = "   ";
@@ -56,3 +58,69 @@ export const TEST_PASSED_ICON = TEXT_PASS("✔ ");
 export const TEST_FAIL_ICON = TEXT_FAIL("x");
 
 export const PERMISSIONS: [keyof typeof Permission] = Object.keys(Permission) as any;
+
+export const errors = {
+  channel: {
+    notFound(channelId: string) {
+      return `Channel ${channelId} was not found`;
+    },
+    isNotVoice(channelId: string) {
+      return `Channel ${chalk.cyan(channelId)} is not a voice channel`;
+    },
+    cantSendMessageToNonTextChannel() {
+      return "Can not send a message to a non text channel";
+    },
+    invalidChannelId() {
+      return "No channel id provided";
+    },
+  },
+  guild: {
+    withoutChannel(guildName: string) {
+      return `Guild '${guildName}' do not have channels.`;
+    },
+    notFound(guildId: string, availableGuildsIds: string[]) {
+      return (
+        `Guild ${chalk.cyan(guildId)} could not be found.` +
+        `Available guild: ${chalk.green(availableGuildsIds.join(", "))}`
+      );
+    },
+  },
+  client: {
+    invalidToken(token: any) {
+      if (token === undefined || token === null) {
+        return `Token not provided`;
+      }
+      return `Error trying to login with token ${chalk.red(
+        typeOf(token),
+      )}. Expected type ${chalk.cyan("string")}`;
+    },
+  },
+  guildDoNotContainInformedChannel: (guild: Guild, channelId: string) => {
+    return `Guild ${chalk.cyan(
+      `${guild.name} (id: ${guild.id})`,
+    )} doesn't contain channel ${chalk.cyan(channelId)}`;
+  },
+  invalidToken: (token: any) => {
+    if (token === undefined || token === null) {
+      return `Token not provided`;
+    }
+    return `Error trying to login with token ${chalk.red(
+      typeOf(token),
+    )}. Expected type ${chalk.cyan("string")}`;
+  },
+  emptyCommand: `Can not send a empty command`,
+  cordeBotWithoutGuilds: (guildId: string) => {
+    return (
+      `Corde bot isn't add to any guild.` +
+      `Please add it to the guild id informed in configs: ${chalk.cyan(guildId)}`
+    );
+  },
+  cordeBotDontBelongToGuild: (guildId: string) => {
+    return (
+      `\n` +
+      `Corde bot isn't add to guild ${chalk.cyan(guildId)}. change the guild id ` +
+      `in corde.config or add the bot to a valid guild` +
+      `\n`
+    );
+  },
+};

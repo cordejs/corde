@@ -19,6 +19,7 @@ import { Events } from "./Events";
 import { joinVoiceChannel } from "@discordjs/voice";
 import EventEmitter from "events";
 import { once } from "events";
+import { errors } from "../const";
 
 enum InternalEvent {
   InternallyReady = "internally_ready",
@@ -176,14 +177,14 @@ export class CordeBot implements ICordeBot {
       const channel = await this.findChannelById(channelId);
 
       if (!channel) {
-        throw new Error(`Channel ${channelId} was not found`);
+        throw new Error(errors.channel.notFound(channelId));
       }
 
       if (channel.isText()) {
         return channel.send(formattedMessage);
       }
 
-      throw new Error("Can not send a message to a non text channel");
+      throw new Error(errors.channel.cantSendMessageToNonTextChannel());
     }
 
     return this.textChannel.send(formattedMessage);
@@ -274,7 +275,7 @@ export class CordeBot implements ICordeBot {
     const guild = this.findGuild(this._guildId);
     const channel = this.findChannel(guild, this._channelId);
     if (!channel) {
-      throw new Error("Could not load channel " + this._channelId);
+      throw new Error(errors.channel.notFound(this._channelId));
     }
     this.textChannel = this.convertToTextChannel(channel);
   }
@@ -305,39 +306,33 @@ export class CordeBot implements ICordeBot {
 
   private throwIfMessageIsInvalid(message: Primitive) {
     if (!message || message.toString().trim() === "") {
-      throw new Error("command to be sent can not be empty");
+      throw new Error(errors.emptyCommand);
     }
   }
 
   private throwIfChannelIsInvalid() {
     if (!this.textChannel) {
-      throw new Error("text channel not defined");
+      throw new Error(errors.channel.notFound(this._channelId));
     }
   }
 
   findGuild(guildId: string) {
     if (!this._client.guilds) {
-      throw new Error(`corde bot isn't added in a guild. Please add it to the guild: ${guildId}`);
-    } else if (!this._client.guilds.cache.has(guildId)) {
-      throw new Error(
-        `\nGuild ${guildId} doesn't belong to corde bot. change the guild id ` +
-          "in corde.config or add the bot to a valid guild\n",
-      );
-    } else {
-      const guild = this._client.guilds.cache.find((_guild) => _guild.id === guildId);
-
-      if (guild) {
-        return guild;
-      }
-
-      const availableGuildsIds = this._client.guilds.cache.map(
-        (guildAvailable) => guildAvailable.id,
-      );
-      throw new Error(
-        `Could not find the guild ${guildId}.` +
-          ` this client has connections with the following guilds: ${availableGuildsIds}`,
-      );
+      throw new Error(errors.cordeBotWithoutGuilds(guildId));
     }
+
+    if (!this._client.guilds.cache.has(guildId)) {
+      throw new Error(errors.cordeBotDontBelongToGuild(guildId));
+    }
+
+    const guild = this._client.guilds.cache.find((_guild) => _guild.id === guildId);
+
+    if (guild) {
+      return guild;
+    }
+
+    const availableGuildsIds = this._client.guilds.cache.map((guildAvailable) => guildAvailable.id);
+    throw new Error(errors.guild.notFound(guildId, availableGuildsIds));
   }
 
   findChannel(channelId: string): GuildBasedChannel | undefined;
@@ -350,33 +345,30 @@ export class CordeBot implements ICordeBot {
     const guild = channelIdOrGuild;
 
     if (!channelId) {
-      throw new Error("no channel id provided");
+      throw new Error(errors.channel.invalidChannelId());
     }
 
     if (!guild.channels) {
-      throw new Error(`Guild '${guild.name}' do not have any channel.`);
-    } else if (!guild.channels.cache.has(channelId)) {
-      throw new Error(`channel ${channelId} doesn't appear to be a channel of guild ${guild.name}`);
-    } else {
-      const channel = guild.channels.cache.find((ch) => ch.id === channelId);
-
-      if (channel === undefined) {
-        throw new Error("There is no informed channel to start tests");
-      }
-
-      return channel;
+      throw new Error(errors.guild.withoutChannel(guild.name));
     }
+    if (!guild.channels.cache.has(channelId)) {
+      throw new Error(errors.guildDoNotContainInformedChannel(guild, channelId));
+    }
+
+    const channel = guild.channels.cache.find((ch) => ch.id === channelId);
+
+    if (channel === undefined) {
+      throw new Error(errors.channel.notFound(channelId));
+    }
+
+    return channel;
   }
 
   async joinVoiceChannel(channelId: string) {
     const channel = this._client.channels.cache.get(channelId);
 
     if (!channel) {
-      throw new Error(`channel ${channelId} not found`);
-    }
-
-    if (channel.isText()) {
-      throw new Error("can not join a text channel");
+      throw new Error(errors.channel.notFound(channelId));
     }
 
     if (channel instanceof VoiceChannel) {
@@ -391,7 +383,7 @@ export class CordeBot implements ICordeBot {
       return this._voiceConnection;
     }
 
-    throw new Error("channel is not a voice channel to connect");
+    throw new Error(errors.channel.isNotVoice(channelId));
   }
 
   isInVoiceChannel() {
