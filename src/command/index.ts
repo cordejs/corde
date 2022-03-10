@@ -127,8 +127,6 @@ function createMatcherFn(params: ICreateMatcherParam) {
     guildId,
     mustSendCommand,
   } = params;
-
-  const trace = getStackTrace(undefined, true, matcher);
   const { testCollector, configs } = runtime;
 
   if (!testCollector.currentTestFile?.isInsideTestClosure && !isCascade) {
@@ -138,6 +136,7 @@ function createMatcherFn(params: ICreateMatcherParam) {
   return async (
     ...args: any[]
   ): Promise<ITestReport | void | ((...args: any[]) => Promise<ITestReport>)> => {
+    const trace = getStackTrace(undefined, true, matcher);
     // If someone pass expect.any, we must invoke it to return
     // the Any matcher.
 
@@ -242,11 +241,7 @@ type DebugTypes<T> = {
 };
 
 interface DebugFn {
-  <T>(
-    value: T,
-    channelId?: string,
-    cordeBot?: ICordeBot,
-  ): DebugTypes<corde.IShouldCommands>;
+  <T>(value: T, channelId?: string, cordeBot?: ICordeBot): DebugTypes<corde.IShouldCommands>;
 }
 
 /**
