@@ -156,9 +156,17 @@ function createMatcherFn(params: ICreateMatcherParam) {
 
     const matcherFn = pickFn(matcher as KeyOfMatcher);
 
+    let bot = runtime.bot;
+
+    if (isDebug) {
+      bot = cordeBot ?? runtime.bot;
+    }
+
+    //logger.log(bot);
+
     const props = new CommandState({
       isNot,
-      cordeBot: isDebug ? cordeBot ?? runtime.bot : runtime.bot,
+      cordeBot: bot,
       command: commandName,
       timeout: configs.getConfigTimeoutOrDefault(),
       guildId: guildId ?? configs.guildId,

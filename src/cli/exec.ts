@@ -60,17 +60,28 @@ async function loadConfigs() {
   runtime.setConfigs(configs, true);
 }
 
+function errorHandler(error?: Error) {
+  spinner.stop();
+  logger.log(error?.message);
+  finishProcess(1);
+}
+
 export async function runTests() {
   debug("loginCordeBotOnStart: " + runtime.configs.loginCordeBotOnStart);
   try {
     if (runtime.configs.loginCordeBotOnStart) {
       startLoading("login to corde bot");
       debug(runtime.configs.cordeBotToken);
+
       const loginPromise = runtime.bot
         .login(runtime.configs.cordeBotToken)
-        .then(() => debug("login ok"));
+        .then(() => debug("login ok"))
+        .catch(errorHandler);
 
-      const readyPromise = runtime.bot.onceInternallyReady().then(() => debug("ready event ok"));
+      const readyPromise = runtime.bot
+        .onceInternallyReady()
+        .then(() => debug("ready event ok"))
+        .catch(errorHandler);
 
       const timeoutError = () => {
         spinner.stop();
@@ -85,7 +96,6 @@ export async function runTests() {
         runtime.configs.loginTimeout,
         timeoutError,
       );
-
       spinner.stop();
     }
 
