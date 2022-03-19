@@ -11,8 +11,7 @@ declare namespace corde {
    * Defines all functions that can be used
    * to check a bot reaction of a command.
    */
-  export type CommandMatchers<TReturn> = IMessageMatches<TReturn> &
-    IRoleMatches<TReturn>;
+  export type CommandMatchers<TReturn> = IMessageMatches<TReturn> & IRoleMatches<TReturn>;
 
   /**
    * Defines the initial value of expectations from
@@ -31,8 +30,7 @@ declare namespace corde {
   export type InChannelMatches<TReturn> = IIsNot<IMessageMatches<TReturn>> &
     IMessageMatches<TReturn>;
 
-  export type InGuildMatches<TReturn> = IIsNot<IRoleMatches<TReturn>> &
-    IRoleMatches<TReturn>;
+  export type InGuildMatches<TReturn> = IIsNot<IRoleMatches<TReturn>> & IRoleMatches<TReturn>;
 
   export interface ISetGuildMatchers<TReturn> {
     /**
@@ -81,6 +79,39 @@ declare namespace corde {
      * @since 5.0
      */
     and: AllCommandMatches;
+
+    /**
+     * Attaches a callback for only the rejection of the ICommandPromise.
+     *
+     * @param onrejected — The callback to execute when the ICommandPromise is rejected.
+     * @returns — A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(
+      onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | null,
+    ): ICommandPromise;
+
+    /**
+     * Attaches a callback that is invoked when the ICommandPromise is settled (fulfilled or rejected).
+     * The resolved value cannot be modified from the callback.
+     *
+     * @param onfinally — The callback to execute when the ICommandPromise is settled (fulfilled or rejected).
+     *
+     * @returns — A ICommandPromise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | null): ICommandPromise;
+
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the ICommandPromise.
+     *
+     * @param onfulfilled — The callback to execute when the ICommandPromise is resolved.
+     * @param onrejected — The callback to execute when the ICommandPromise is rejected.
+     *
+     * @returns — A ICommandPromise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = any, TResult2 = never>(
+      onfulfilled?: ((value: any) => TResult1 | PromiseLike<TResult1>) | null,
+      onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | null,
+    ): ICommandPromise;
   }
 
   export type MayReturnMatch = CommandMatchers<any> | ICommandPromise;

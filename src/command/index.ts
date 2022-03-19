@@ -61,7 +61,7 @@ function buildAndMatcherFunctions(params: ICreateMatcherParam) {
   return commandReturn;
 }
 
-class PromiseCommand extends Promise<any> implements corde.ICommandPromise {
+class CommandPromise extends Promise<any> implements corde.ICommandPromise {
   private readonly _param: ICreateMatcherParam;
 
   get and(): corde.AllCommandMatches {
@@ -77,6 +77,26 @@ class PromiseCommand extends Promise<any> implements corde.ICommandPromise {
   ) {
     super(executor);
     this._param = param;
+  }
+
+  catch<TResult = never>(
+    onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | null,
+  ): CommandPromise {
+    super.catch(onrejected);
+    return this;
+  }
+
+  finally(onfinally?: (() => void) | null): CommandPromise {
+    super.finally(onfinally);
+    return this;
+  }
+
+  then<TResult1 = any, TResult2 = never>(
+    onfulfilled?: ((value: any) => TResult1 | PromiseLike<TResult1>) | null,
+    onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | null,
+  ): CommandPromise {
+    super.then(onfulfilled, onrejected);
+    return this;
   }
 
   [Symbol.toStringTag]: string;
@@ -178,11 +198,13 @@ function createMatcherFn(params: ICreateMatcherParam) {
 
     const fn = matcherFn.bind(props, ...args);
     params.trace = trace;
-    return new PromiseCommand(async (resolve, reject) => {
+    return new CommandPromise(async (resolve, reject) => {
       try {
         const response = await resolveTestFunction(params, fn);
+        console.log(response);
         resolve(response);
       } catch (error) {
+        console.log(error);
         reject(error);
       }
     }, params);
