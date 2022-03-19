@@ -317,6 +317,10 @@ export class CordeBot implements ICordeBot {
   }
 
   findGuild(guildId: string) {
+    if (!guildId) {
+      throw new Error(errors.guild.invalidId(guildId));
+    }
+
     if (!this._client.guilds) {
       throw new Error(errors.cordeBotWithoutGuilds(guildId));
     }

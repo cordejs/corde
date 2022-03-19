@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import { logger } from "./core/Logger";
 import runtime from "./core/runtime";
-import { InternalError } from "./errors";
 import { exit } from "./exit";
 
 export function initErrorHandlers() {
@@ -19,7 +18,7 @@ export function initErrorHandlers() {
 }
 
 async function printErrorAndExit(error: unknown) {
-  if (error instanceof InternalError) {
+  if (error instanceof Error) {
     logger.log("\n");
     logger.error(error.message);
     logger.log("\n");

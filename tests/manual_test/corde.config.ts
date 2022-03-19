@@ -14,6 +14,9 @@ if (!process.env.CI && result.error) {
   throw result.error;
 }
 
+// Uncomment the code bellow to get debug metrics
+//process.env.CORDE_DEBUG_MODE = "true";
+
 const botPrefix = process.env.BOT_PREFIX;
 const botTestId = process.env.BOT_TEST_ID;
 const channelId = process.env.CHANNEL_ID;

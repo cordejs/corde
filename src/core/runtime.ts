@@ -25,10 +25,6 @@ export class Runtime {
   private _bot!: ICordeBot;
 
   get bot() {
-    if (!this._bot) {
-      this._bot = this.initBot();
-    }
-
     return this._bot;
   }
 
@@ -151,7 +147,7 @@ export class Runtime {
   }
 
   initBot() {
-    return new CordeBot(
+    this._bot = new CordeBot(
       this._configs.botPrefix,
       this._configs.guildId,
       this._configs.channelId,

@@ -15,6 +15,8 @@ export const TEXT_PENDING = chalk.yellow;
 export const TEXT_EMPTY = chalk.yellowBright;
 export const ROOT_DIR = "<rootDir>";
 
+export const LINE_BREAK = "\n";
+
 export const DEFAULT_CONFIG: Required<corde.IConfigOptions> = {
   botPrefix: "",
   botTestId: "",
@@ -59,68 +61,79 @@ export const TEST_FAIL_ICON = TEXT_FAIL("x");
 
 export const PERMISSIONS: [keyof typeof Permission] = Object.keys(Permission) as any;
 
+function addLineBreak(...messages: string[]) {
+  return LINE_BREAK + messages.join("") + LINE_BREAK;
+}
+
 export const errors = {
   channel: {
     notFound(channelId: string) {
-      return `Channel ${channelId} was not found`;
+      return addLineBreak(`Channel ${channelId} was not found`);
     },
     isNotVoice(channelId: string) {
-      return `Channel ${chalk.cyan(channelId)} is not a voice channel`;
+      return addLineBreak(`Channel ${chalk.cyan(channelId)} is not a voice channel`);
     },
     cantSendMessageToNonTextChannel() {
-      return "Can not send a message to a non text channel";
+      return addLineBreak("Can not send a message to a non text channel");
     },
     invalidChannelId() {
-      return "No channel id provided";
+      return addLineBreak("No channel id provided");
     },
   },
   guild: {
     withoutChannel(guildName: string) {
-      return `Guild '${guildName}' do not have channels.`;
+      return LINE_BREAK + `Guild '${guildName}' do not have channels.` + LINE_BREAK;
+    },
+    invalidId(guildId: string) {
+      return addLineBreak(
+        `Guild id is ${chalk.red(guildId)}. `,
+        `Check ${chalk.cyan("guildId")} value in ${chalk.yellow("corde.config")}.`,
+      );
     },
     notFound(guildId: string, availableGuildsIds: string[]) {
-      return (
-        `Guild ${chalk.cyan(guildId)} could not be found.` +
-        `Available guild: ${chalk.green(availableGuildsIds.join(", "))}`
+      return addLineBreak(
+        `Guild ${chalk.cyan(guildId)} could not be found.`,
+        `Available guild: ${chalk.green(availableGuildsIds.join(", "))}`,
       );
     },
   },
   client: {
     invalidToken(token: any) {
       if (token === undefined || token === null) {
-        return `Token not provided`;
+        return addLineBreak(`Token not provided`);
       }
-      return `Error trying to login with token ${chalk.red(
-        typeOf(token),
-      )}. Expected type ${chalk.cyan("string")}`;
+      return addLineBreak(
+        `Error trying to login with token ${chalk.red(typeOf(token))}.`,
+        `Expected type ${chalk.cyan("string")}`,
+      );
     },
   },
   guildDoNotContainInformedChannel: (guild: Guild, channelId: string) => {
-    return `Guild ${chalk.cyan(
-      `${guild.name} (id: ${guild.id})`,
-    )} doesn't contain channel ${chalk.cyan(channelId)}`;
+    return addLineBreak(
+      `Guild ${chalk.cyan(`${guild.name} (id: ${guild.id})`)}`,
+      `doesn't contain channel ${chalk.cyan(channelId)}`,
+    );
   },
   invalidToken: (token: any) => {
     if (token === undefined || token === null) {
-      return `Token not provided`;
+      return addLineBreak(`Token not provided`);
     }
-    return `Error trying to login with token ${chalk.red(
-      typeOf(token),
-    )}. Expected type ${chalk.cyan("string")}`;
+    return addLineBreak(
+      `Error trying to login with token ${chalk.red(typeOf(token))}.`,
+      `Expected type ${chalk.cyan("string")}`,
+    );
   },
-  emptyCommand: `Can not send a empty command`,
+  emptyCommand: addLineBreak(`Can not send a empty command`),
   cordeBotWithoutGuilds: (guildId: string) => {
-    return (
-      `Corde bot isn't add to any guild.` +
-      `Please add it to the guild id informed in configs: ${chalk.cyan(guildId)}`
+    return addLineBreak(
+      `Corde bot isn't add to any guild.`,
+      `Please add it to the guild id informed in configs: ${chalk.cyan(guildId)}`,
     );
   },
   cordeBotDontBelongToGuild: (guildId: string) => {
-    return (
-      `\n` +
-      `Corde bot isn't add to guild ${chalk.cyan(guildId)}. change the guild id ` +
-      `in corde.config or add the bot to a valid guild` +
-      `\n`
+    return addLineBreak(
+      `Corde bot isn't add to guild ${chalk.cyan(guildId)}. Change the guild id `,
+      `in ${chalk.yellow("corde.config")} or add the bot to a valid guild`,
     );
   },
 };

@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
+"use strict";
+
 /* eslint-disable no-console */
 /* eslint-disable quotes */
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable no-global-assign */
-
-"use strict";
 
 const MINIMAL_NODE_VERSION = "16.9.0";
 
@@ -24,9 +24,5 @@ if (majorVer < MINIMAL_NODE_VERSION) {
 try {
   require("../lib/src/cli/cli");
 } catch (error) {
-  if (error instanceof Error) {
-    console.error(error.message);
-  } else {
-    console.error(error);
-  }
+  console.error(error);
 }

@@ -52,6 +52,7 @@ export async function exec(options: corde.Config.ICLIOptions) {
   debug("loaded configs: ", runtime.configs.toDebug());
 
   await validate(runtime.configs);
+  runtime.initBot();
   await runTests();
 }
 
