@@ -14,13 +14,13 @@ exports[`- 1`] = `
     
     expect: [32m1[39m !== [31m1[39m
 
-    at toEqual /<fake>/<file>/<path>/index.ts:200:100
-    at Array.forEach (<anonymous>)
-    at localExpect (/<fake>/<file>/<path>/index.ts:200:100)
-    at /<fake>/<file>/<path>/testExecutor.test.ts:200:100
+    at toEqual /<fake>/<file>/<path>/testExecutor.test.ts:200:100
     at _internalTest (/<fake>/<file>/<path>/test.ts:200:100)
     at /<fake>/<file>/<path>/test.ts:200:100
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:100
+    at Object.action (/<fake>/<file>/<path>/test.ts:200:100)
+    at TestExecutor.runTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
+    at processTicksAndRejections (node:internal/<fake>/<file>/<path>/task_queues:96:5)
 
    [32m[32m✔ [39m[32m test closure 5[39m   [36m10ms[39m
    [32m[32m✔ [39m[32m test closure 6[39m   [36m10ms[39m
@@ -33,13 +33,13 @@ exports[`- 1`] = `
     
     expect: [32m1[39m !== [31m1[39m
 
-    at toEqual /<fake>/<file>/<path>/index.ts:200:100
-    at Array.forEach (<anonymous>)
-    at localExpect (/<fake>/<file>/<path>/index.ts:200:100)
-    at /<fake>/<file>/<path>/testExecutor.test.ts:200:100
+    at toEqual /<fake>/<file>/<path>/testExecutor.test.ts:200:100
     at _internalTest (/<fake>/<file>/<path>/test.ts:200:100)
     at /<fake>/<file>/<path>/test.ts:200:100
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:100
+    at Object.action (/<fake>/<file>/<path>/test.ts:200:100)
+    at TestExecutor.runTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
+    at processTicksAndRejections (node:internal/<fake>/<file>/<path>/task_queues:96:5)
 
    [32m[32m✔ [39m[32m test closure 9[39m   [36m10ms[39m
    [32m[32m✔ [39m[32m test closure 10[39m   [36m10ms[39m
@@ -52,13 +52,13 @@ exports[`- 1`] = `
     
     expect: [32m1[39m !== [31m1[39m
 
-    at toEqual /<fake>/<file>/<path>/index.ts:200:100
-    at Array.forEach (<anonymous>)
-    at localExpect (/<fake>/<file>/<path>/index.ts:200:100)
-    at /<fake>/<file>/<path>/testExecutor.test.ts:200:100
+    at toEqual /<fake>/<file>/<path>/testExecutor.test.ts:200:100
     at _internalTest (/<fake>/<file>/<path>/test.ts:200:100)
     at /<fake>/<file>/<path>/test.ts:200:100
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:100
+    at Object.action (/<fake>/<file>/<path>/test.ts:200:100)
+    at TestExecutor.runTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
+    at processTicksAndRejections (node:internal/<fake>/<file>/<path>/task_queues:96:5)
 "
 `;
 
@@ -76,13 +76,13 @@ exports[`-: without ANSI Colors 1`] = `
     
     expect: 1 !== 1
 
-    at toEqual /<fake>/<file>/<path>/index.ts:200:100
-    at Array.forEach (<anonymous>)
-    at localExpect (/<fake>/<file>/<path>/index.ts:200:100)
-    at /<fake>/<file>/<path>/testExecutor.test.ts:200:100
+    at toEqual /<fake>/<file>/<path>/testExecutor.test.ts:200:100
     at _internalTest (/<fake>/<file>/<path>/test.ts:200:100)
     at /<fake>/<file>/<path>/test.ts:200:100
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:100
+    at Object.action (/<fake>/<file>/<path>/test.ts:200:100)
+    at TestExecutor.runTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
+    at processTicksAndRejections (node:internal/<fake>/<file>/<path>/task_queues:96:5)
 
    ✔  test closure 5   10ms
    ✔  test closure 6   10ms
@@ -95,13 +95,13 @@ exports[`-: without ANSI Colors 1`] = `
     
     expect: 1 !== 1
 
-    at toEqual /<fake>/<file>/<path>/index.ts:200:100
-    at Array.forEach (<anonymous>)
-    at localExpect (/<fake>/<file>/<path>/index.ts:200:100)
-    at /<fake>/<file>/<path>/testExecutor.test.ts:200:100
+    at toEqual /<fake>/<file>/<path>/testExecutor.test.ts:200:100
     at _internalTest (/<fake>/<file>/<path>/test.ts:200:100)
     at /<fake>/<file>/<path>/test.ts:200:100
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:100
+    at Object.action (/<fake>/<file>/<path>/test.ts:200:100)
+    at TestExecutor.runTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
+    at processTicksAndRejections (node:internal/<fake>/<file>/<path>/task_queues:96:5)
 
    ✔  test closure 9   10ms
    ✔  test closure 10   10ms
@@ -114,13 +114,13 @@ exports[`-: without ANSI Colors 1`] = `
     
     expect: 1 !== 1
 
-    at toEqual /<fake>/<file>/<path>/index.ts:200:100
-    at Array.forEach (<anonymous>)
-    at localExpect (/<fake>/<file>/<path>/index.ts:200:100)
-    at /<fake>/<file>/<path>/testExecutor.test.ts:200:100
+    at toEqual /<fake>/<file>/<path>/testExecutor.test.ts:200:100
     at _internalTest (/<fake>/<file>/<path>/test.ts:200:100)
     at /<fake>/<file>/<path>/test.ts:200:100
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:100
+    at Object.action (/<fake>/<file>/<path>/test.ts:200:100)
+    at TestExecutor.runTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
+    at processTicksAndRejections (node:internal/<fake>/<file>/<path>/task_queues:96:5)
 "
 `;
 
@@ -166,13 +166,13 @@ exports[`should get report for multiple tests inside a group and failed tests 1`
     
     expect: [32m1[39m !== [31m1[39m
 
-    at toEqual /<fake>/<file>/<path>/index.ts:200:100
-    at Array.forEach (<anonymous>)
-    at localExpect (/<fake>/<file>/<path>/index.ts:200:100)
-    at /<fake>/<file>/<path>/testExecutor.test.ts:200:100
+    at toEqual /<fake>/<file>/<path>/testExecutor.test.ts:200:100
     at _internalTest (/<fake>/<file>/<path>/test.ts:200:100)
     at /<fake>/<file>/<path>/test.ts:200:100
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:100
+    at Object.action (/<fake>/<file>/<path>/test.ts:200:100)
+    at TestExecutor.runTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
+    at processTicksAndRejections (node:internal/<fake>/<file>/<path>/task_queues:96:5)
 "
 `;
 
@@ -190,13 +190,13 @@ exports[`should get report for multiple tests inside a group and failed tests: w
     
     expect: 1 !== 1
 
-    at toEqual /<fake>/<file>/<path>/index.ts:200:100
-    at Array.forEach (<anonymous>)
-    at localExpect (/<fake>/<file>/<path>/index.ts:200:100)
-    at /<fake>/<file>/<path>/testExecutor.test.ts:200:100
+    at toEqual /<fake>/<file>/<path>/testExecutor.test.ts:200:100
     at _internalTest (/<fake>/<file>/<path>/test.ts:200:100)
     at /<fake>/<file>/<path>/test.ts:200:100
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:100
+    at Object.action (/<fake>/<file>/<path>/test.ts:200:100)
+    at TestExecutor.runTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
+    at processTicksAndRejections (node:internal/<fake>/<file>/<path>/task_queues:96:5)
 "
 `;
 
@@ -210,13 +210,13 @@ exports[`should get report for multiple tests inside a group: without ANSI Color
 
 exports[`should get report for single group and a empty test 1`] = `
 "
-[42m[30m PASS [39m[49m   test file   [36m10ms[39m
+[43m[30m EMPTY [39m[49m  test file   [36m10ms[39m
    [93m ● test closure (empty)[39m   [36m10ms[39m"
 `;
 
 exports[`should get report for single group and a empty test: without ANSI Colors 1`] = `
 "
- PASS    test file   10ms
+ EMPTY   test file   10ms
     ● test closure (empty)   10ms"
 `;
 
@@ -303,13 +303,13 @@ exports[`should print report for single group and a single test 1`] = `
     
     expect: [32m1[39m !== [31m1[39m
 
-    at toEqual /<fake>/<file>/<path>/index.ts:200:100
-    at Array.forEach (<anonymous>)
-    at localExpect (/<fake>/<file>/<path>/index.ts:200:100)
-    at /<fake>/<file>/<path>/testExecutor.test.ts:200:100
+    at toEqual /<fake>/<file>/<path>/testExecutor.test.ts:200:100
     at _internalTest (/<fake>/<file>/<path>/test.ts:200:100)
     at /<fake>/<file>/<path>/test.ts:200:100
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:100
+    at Object.action (/<fake>/<file>/<path>/test.ts:200:100)
+    at TestExecutor.runTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
+    at processTicksAndRejections (node:internal/<fake>/<file>/<path>/task_queues:96:5)
 "
 `;
 
@@ -324,12 +324,12 @@ exports[`should print report for single group and a single test: without ANSI Co
     
     expect: 1 !== 1
 
-    at toEqual /<fake>/<file>/<path>/index.ts:200:100
-    at Array.forEach (<anonymous>)
-    at localExpect (/<fake>/<file>/<path>/index.ts:200:100)
-    at /<fake>/<file>/<path>/testExecutor.test.ts:200:100
+    at toEqual /<fake>/<file>/<path>/testExecutor.test.ts:200:100
     at _internalTest (/<fake>/<file>/<path>/test.ts:200:100)
     at /<fake>/<file>/<path>/test.ts:200:100
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:100
+    at Object.action (/<fake>/<file>/<path>/test.ts:200:100)
+    at TestExecutor.runTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
+    at processTicksAndRejections (node:internal/<fake>/<file>/<path>/task_queues:96:5)
 "
 `;

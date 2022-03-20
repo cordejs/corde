@@ -38,7 +38,9 @@ export const DEFAULT_CONFIG: Required<corde.IConfigOptions> = {
   intents: [],
 };
 
-export const TAG_PENDING = (text = "RUNS") => chalk.bgYellow(chalk.black(` ${text} `));
+export const TAG_PENDING = (text = "RUNS") => {
+  return chalk.bgYellow(chalk.black(` ${text} `));
+};
 
 // Tags FAIL and PASS must have an additional space to align with the tag EMPTY
 // I.E:

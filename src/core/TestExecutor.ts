@@ -87,7 +87,8 @@ export class TestExecutor {
     this._semiReport.totalTestFiles++;
 
     testFileTimer.start();
-    const logIndex = this._logUpdate.append(`${TAG_PENDING()}  ${testFile.path}`);
+    const emptyLabel = `${TAG_PENDING()}  ${testFile.path}`;
+    const logIndex = this._logUpdate.append(emptyLabel);
 
     await this.executeHookFunction(testFile.beforeAllHooks);
 
@@ -99,6 +100,10 @@ export class TestExecutor {
 
     let fileLabel = TAG_PASS();
     let fileNameLabel = testFile.path;
+
+    if (status === "empty") {
+      fileLabel = TAG_PENDING("EMPTY");
+    }
 
     if (status === "fail") {
       fileLabel = TAG_FAIL();
