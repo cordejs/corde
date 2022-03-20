@@ -5,7 +5,8 @@
     "outDir": "./unit",
     "allowJs": true,
     "experimentalDecorators": true,
-    "types": ["node", "jest"]
+    "types": ["node", "jest"],
+    "typeRoots": ["./node_modules/@types"]
   },
   "exclude": ["./unit/**/*"]
 }

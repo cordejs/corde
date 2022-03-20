@@ -1,12 +1,12 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../tsconfig.json",
   "ts-node": {
     "files": true,
     "typeCheck": false
   },
-  "files": ["../../src/global/index.d.ts"],
+  "files": ["../src/global/index.d.ts"],
   "compilerOptions": {
     "preserveSymlinks": true,
-    "typeRoots": ["../../src/global"]
+    "typeRoots": ["../src/global"]
   }
 }
