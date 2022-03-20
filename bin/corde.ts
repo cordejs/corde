@@ -23,8 +23,6 @@ const majorVer = +ver.split(".")[0];
 
 process.env.ENV = "LOCAL";
 
-// Version required for Discord v12
-
 // @ts-expect-error
 if (majorVer < MINIMAL_NODE_VERSION) {
   console.error(
