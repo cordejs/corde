@@ -1,10 +1,11 @@
 /* eslint-disable no-console */
+
 import { Command } from "commander";
 import { exec } from "./exec";
 import { init } from "./init";
 import { validate } from "./validate";
 import { ConfigFileType } from "../types";
-import pack from "../package";
+import { pack } from "../package";
 import { initEnvVariables } from "../envVariables";
 import { initErrorHandlers } from "../errorHandler";
 import runtime from "../core/runtime";
@@ -27,7 +28,7 @@ export const program = new Command();
 
 // Add basic information with default run all command
 program
-  .name("Corde")
+  .name("corde")
   .usage("to start testings o corde [option] to use a specific command.")
   .description(pack.description)
   .version(`v${pack.version}`, "-v, --version");

@@ -1,14 +1,20 @@
 // Cannot be `import` as it's not under TS root dir
 
+import { logger } from "./core/Logger";
 import runtime from "./core/runtime";
 
 type PackageJson = typeof import("../package.json");
 
 function getPackage(): PackageJson {
-  if (runtime.isUnityTest) {
-    return require("../package.json");
+  try {
+    if (runtime.isUnityTest || runtime.isLocal) {
+      return require("../package.json");
+    }
+    return require("../../package.json");
+  } catch (error) {
+    logger.error(error);
+    throw error;
   }
-  return require("../../package.json");
 }
 
 const { version: VERSION, description: DESCRIPTION } = getPackage();
@@ -32,5 +38,4 @@ class Package {
   }
 }
 
-const pack = new Package();
-export default pack;
+export const pack = new Package();
