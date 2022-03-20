@@ -311,7 +311,7 @@ export class Logger implements Console {
       this._stdout.write(`● console.${stackItem.name}\n\n`);
 
       stackItem.data.values.forEach((value) => {
-        stackItem.data.printFunction(`${MESSAGE_TAB_SPACE}${MESSAGE_TAB_SPACE}${value}`);
+        stackItem.data.printFunction(MESSAGE_TAB_SPACE, MESSAGE_TAB_SPACE, value);
         this._stdout.write("\n" + stackItem.data.trace + "\n\n");
       });
     });
