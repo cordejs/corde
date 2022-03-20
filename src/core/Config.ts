@@ -126,36 +126,36 @@ export class Config implements Readonly<corde.IConfigOptions> {
    * @param config new set of configs.
    */
   setConfigs(config: Partial<corde.IConfigOptions>, forceUpdate?: boolean) {
-    if (config.rootDir && (!this.rootDir || forceUpdate)) {
+    if (config?.rootDir && (!this.rootDir || forceUpdate)) {
       this._rootDir = path.resolve(process.cwd(), config.rootDir);
     }
 
-    if (config.cordeBotToken && (!this.cordeBotToken || forceUpdate)) {
+    if (config?.cordeBotToken && (!this.cordeBotToken || forceUpdate)) {
       this._cordeBotToken = config.cordeBotToken;
     }
 
-    if (config.botPrefix && (!this.botPrefix || forceUpdate)) {
+    if (config?.botPrefix && (!this.botPrefix || forceUpdate)) {
       this._botPrefix = config.botPrefix;
     }
 
-    if (config.project && (!this.project || forceUpdate)) {
+    if (config?.project && (!this.project || forceUpdate)) {
       this._project = path.normalize(replaceAll(config.project, ROOT_DIR, this.rootDir));
     }
 
-    if (config.botTestId && (!this.botTestId || forceUpdate)) {
+    if (config?.botTestId && (!this.botTestId || forceUpdate)) {
       this._botTestId = config.botTestId;
     }
 
-    if (config.loginTimeout && (!this.loginTimeout || forceUpdate)) {
+    if (config?.loginTimeout && (!this.loginTimeout || forceUpdate)) {
       this._loginTimeout = config.loginTimeout;
     }
 
-    if (config.extensions && (!this.extensions || forceUpdate)) {
+    if (config?.extensions && (!this.extensions || forceUpdate)) {
       this._extensions = config.extensions;
     }
 
     if (
-      config.useConfigValuesInEventsDefaultParameters &&
+      config?.useConfigValuesInEventsDefaultParameters &&
       (!this.useConfigValuesInEventsDefaultParameters || forceUpdate)
     ) {
       this._useConfigValuesInEventsDefaultParameters =
@@ -163,51 +163,54 @@ export class Config implements Readonly<corde.IConfigOptions> {
     }
 
     if (
-      config.useTimeoutValueInEventsDefaultParameters &&
+      config?.useTimeoutValueInEventsDefaultParameters &&
       (!this.useTimeoutValueInEventsDefaultParameters || forceUpdate)
     ) {
       this._useTimeoutValueInEventsDefaultParameters =
-        config.useTimeoutValueInEventsDefaultParameters;
+        config?.useTimeoutValueInEventsDefaultParameters;
     }
 
     if (
-      typeof config.exitOnFileReadingError !== "undefined" &&
+      typeof config?.exitOnFileReadingError !== "undefined" &&
       (!this.exitOnFileReadingError || forceUpdate)
     ) {
       this._exitOnFileReadingError = config.exitOnFileReadingError;
     }
 
-    if (config.channelId && (!this.channelId || forceUpdate)) {
+    if (config?.channelId && (!this.channelId || forceUpdate)) {
       this._channelId = config.channelId;
     }
 
-    if (config.guildId && (!this.guildId || forceUpdate)) {
+    if (config?.guildId && (!this.guildId || forceUpdate)) {
       this._guildId = config.guildId;
     }
 
-    if (config.loginCordeBotOnStart && (!this.loginCordeBotOnStart || forceUpdate)) {
+    if (config?.loginCordeBotOnStart && (!this.loginCordeBotOnStart || forceUpdate)) {
       this._loginCordeBotOnStart = config.loginCordeBotOnStart;
     }
 
-    if (isNumber(config.timeout) && (!this.timeout || forceUpdate)) {
+    if (isNumber(config?.timeout) && (!this.timeout || forceUpdate)) {
       // Forces to set timeout to a number
       this._timeout = +(config.timeout as any);
     }
 
-    if (config.botPrefix && (!this.botPrefix || forceUpdate)) {
+    if (config?.botPrefix && (!this.botPrefix || forceUpdate)) {
       this._botPrefix = config.botPrefix;
     }
 
-    if (config.intents && (!this.intents || forceUpdate)) {
+    if (config?.intents && (!this.intents || forceUpdate)) {
       this._intents = config.intents;
     }
 
-    if (config.modulePathIgnorePatterns && (!this.modulePathIgnorePatterns || forceUpdate)) {
+    if (config?.modulePathIgnorePatterns && (!this.modulePathIgnorePatterns || forceUpdate)) {
       this._modulePathIgnorePatterns = config.modulePathIgnorePatterns;
       this._modulePathIgnorePatterns = this.clearArray(this._modulePathIgnorePatterns);
     }
 
-    if (config.testMatches && (!this.testMatches || this.testMatches.length === 0 || forceUpdate)) {
+    if (
+      config?.testMatches &&
+      (!this.testMatches || this.testMatches.length === 0 || forceUpdate)
+    ) {
       if (Array.isArray(config.testMatches)) {
         this._testMatches = this.getArrayWithRootReplaced(config.testMatches);
         this._testMatches = this.clearArray(this._testMatches);
