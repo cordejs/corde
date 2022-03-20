@@ -118,7 +118,7 @@
     "yarn": "^1.22.10"
   },
   "dependencies": {
-    "chalk": "^4.1.1",
+    "chalk": "^5.0.1",
     "commander": "^8.0.0",
     "discord.js": "^12.5.3",
     "esm": "^3.2.25",
