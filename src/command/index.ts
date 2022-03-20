@@ -201,7 +201,6 @@ function createMatcherFn(params: ICreateMatcherParam) {
     return new CommandPromise(async (resolve, reject) => {
       try {
         const response = await resolveTestFunction(params, fn);
-        console.log(response);
         resolve(response);
       } catch (error) {
         console.log(error);

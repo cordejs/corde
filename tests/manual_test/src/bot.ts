@@ -1,9 +1,10 @@
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { Client, Intents, Message } from "discord.js";
 import * as config from "../corde.config";
 
 export const bot = new Client({
-  intents: [Intents.FLAGS.GUILDS],
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
 
 /**

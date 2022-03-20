@@ -1,13 +1,13 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-var-requires */
-/// <reference types="../../lib/src/global" />
+/// <reference types="../../src/global" />
 
 import { login, bot } from "../src/bot";
 
 beforeAll(async () => {
-  console.log("logging testing bot...");
+  //console.log("logging testing bot...");
   await login();
-  console.log("done");
+  //console.log("done");
 });
 
 it("ping should return pong", async () => {

@@ -26,11 +26,13 @@ const testMatches = ["./test/**"];
 const botToken = process.env.BOT_TEST_TOKEN;
 const timeout = process.env.TIME_OUT;
 const project = "./tsconfig.json";
+const intents = ["ALL"];
 
 export {
   botPrefix,
   botTestId,
   channelId,
+  intents,
   cordeBotToken,
   guildId,
   botToken,
