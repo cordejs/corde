@@ -30,10 +30,11 @@ export function getStackTrace(
   removeFirstStack = true,
   functionName?: string,
   additionalSpace?: string,
+  removeSpace?: boolean,
 ): string {
   const obj: any = {};
 
-  let space = EXPECT_RECEIVED_TAB_SPACE;
+  let space = removeSpace ? "" : EXPECT_RECEIVED_TAB_SPACE;
 
   if (additionalSpace) {
     space += additionalSpace;

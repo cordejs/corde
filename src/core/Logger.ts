@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import chalk from "chalk";
 import { InspectOptions } from "util";
-import { MESSAGE_TAB_SPACE } from "../const";
 import { getStackTrace } from "../utils/getStackTrace";
 
 export interface StackContainer {
@@ -311,7 +310,7 @@ export class Logger implements Console {
       this._stdout.write(`● console.${stackItem.name}\n\n`);
 
       stackItem.data.values.forEach((value) => {
-        stackItem.data.printFunction(MESSAGE_TAB_SPACE, MESSAGE_TAB_SPACE, value);
+        stackItem.data.printFunction(value);
         this._stdout.write("\n" + stackItem.data.trace + "\n\n");
       });
     });
@@ -322,7 +321,7 @@ export class Logger implements Console {
 
   private overridePrint(name: string, printFunction: (...args: any[]) => void) {
     return (...args: any[]) => {
-      const trace = getStackTrace(undefined, true, undefined, MESSAGE_TAB_SPACE);
+      const trace = getStackTrace(undefined, true, undefined, undefined, true);
       this.stack.push({
         name: name,
         data: {
