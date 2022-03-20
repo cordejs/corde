@@ -22,10 +22,22 @@ declare namespace corde {
      * @param options Optional filter to get a message.
      * @returns First message created, or another one based on a filter.
      *
+     * @deprecated Use onceMessageCreate
+     *
      * @throws TimeoutError if no channel is created in the defined time.
      * @since 5.0
      */
     onceMessage(options?: corde.IMessageEventFilter | undefined): Promise<Message>;
+    /**
+     * Emitted when a message is created.
+     *
+     * @param options Optional filter to get a message.
+     * @returns First message created, or another one based on a filter.
+     *
+     * @throws TimeoutError if no channel is created in the defined time.
+     * @since 5.0
+     */
+    onceMessageCreate(options?: corde.IMessageEventFilter | undefined): Promise<Message>;
 
     /**
      * Emitted when a reaction is added to a cached message.

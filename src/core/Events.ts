@@ -289,6 +289,35 @@ export class Events implements corde.IOnceEvents, ClientEventsFn {
     this._client.on("messageCreate", fn);
   }
 
+  onceMessageCreate(options?: corde.IMessageContentEvent) {
+    const validator = new Validator<[Message]>();
+
+    if (options?.author) {
+      validator.add(
+        (mgs) =>
+          mgs.author.username === options?.author?.username ||
+          mgs.author.id === options?.author?.id ||
+          mgs.author.bot === options.author?.isBot,
+      );
+    }
+
+    if (options?.message) {
+      validator.add((msg) => this.getMessageIdentifierValidation(msg, options.message));
+    }
+
+    if (options?.channel) {
+      validator.add((mgs) => this.getChannelIdentifierValidation(mgs.channel, options.channel));
+    }
+
+    return executePromiseWithTimeout<Message>((resolve) => {
+      this.onMessageCreate((message) => {
+        if (validator.isValid(message)) {
+          resolve(message);
+        }
+      });
+    }, options?.timeout);
+  }
+
   /**
    * @internal
    */
@@ -1077,6 +1106,7 @@ export class Events implements corde.IOnceEvents, ClientEventsFn {
 
   /**
    * @internal
+   * @deprecated Use onMessageCreated instead
    */
   onMessage(fn: (message: Message) => void) {
     this._client.on("message", fn);
@@ -1086,6 +1116,7 @@ export class Events implements corde.IOnceEvents, ClientEventsFn {
 
   /**
    * @internal
+   * @deprecated Use onceMessageCreated instead
    */
   onceMessage(options?: corde.IMessageContentEvent) {
     const validator = new Validator<[Message]>();

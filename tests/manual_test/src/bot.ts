@@ -19,7 +19,7 @@ export async function login() {
   await readyPromise;
 }
 
-bot.on("message", async (message) => {
+bot.on("messageCreate", async (message) => {
   try {
     const args = message.content.slice(config?.botPrefix?.length).trim().split(" ");
     const command = args.shift();

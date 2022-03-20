@@ -20,7 +20,7 @@ export async function messageContentContains(this: CommandState, expect: string)
 
   let returnedMessage: Message;
   try {
-    returnedMessage = await this.cordeBot.events.onceMessage({
+    returnedMessage = await this.cordeBot.events.onceMessageCreate({
       author: { id: this.cordeBot.testBotId },
       channel: { id: this.channelId },
       timeout: this.timeout,

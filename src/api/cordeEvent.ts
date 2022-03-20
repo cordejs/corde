@@ -74,6 +74,16 @@ export const cordeEvent: corde.IOnceEvents = {
   /**
    * @global
    */
+  onceMessageCreate(options?: corde.IMessageEventFilter) {
+    if (runtime.configs.useConfigValuesInEventsDefaultParameters) {
+      options = getDefaultOptionsIfNeeded(options);
+    }
+    options = getTimeoutParameterIfNeeded(options);
+    return runtime.bot.events.onceMessageCreate(options);
+  },
+  /**
+   * @global
+   */
   onceMessageReactionsAdd(options?: corde.ISearchMessageReactionsFilter) {
     if (runtime.configs.useConfigValuesInEventsDefaultParameters) {
       options = getDefaultOptionsIfNeeded(options);

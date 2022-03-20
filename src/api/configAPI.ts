@@ -17,6 +17,10 @@ export class ConfigAPI implements Readonly<Required<corde.IConfigOptions>> {
     );
   }
 
+  get intents() {
+    return this._internalConfigs.intents ?? [];
+  }
+
   get loginCordeBotOnStart() {
     return this._internalConfigs.loginCordeBotOnStart ?? DEFAULT_CONFIG.loginCordeBotOnStart;
   }

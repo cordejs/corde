@@ -24,7 +24,7 @@ export async function respond(this: CommandState, expected: Primitive | corde.IM
 
   let returnedMessage: Message;
   try {
-    returnedMessage = await this.cordeBot.events.onceMessage({
+    returnedMessage = await this.cordeBot.events.onceMessageCreate({
       author: { id: this.cordeBot.testBotId },
       channel: { id: this.channelId },
       timeout: this.timeout,
