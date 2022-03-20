@@ -1,4 +1,4 @@
-import { isNumber } from "./isNumber";
+import { isNumberParsable } from "./isNumberParsable";
 
 /**
  * Collection of functions to parse a value to a specific type
@@ -15,10 +15,10 @@ export namespace parser {
    * @returns Numeric type of `value`
    */
   export function toNumber(value: any) {
-    const temp = +value;
-    if (isNumber(temp)) {
-      return temp;
+    if (isNumberParsable(value)) {
+      return +value;
     }
+
     throw new Error(`Can not parse value: ${value} to number`);
   }
 
@@ -30,9 +30,8 @@ export namespace parser {
    * @returns Numeric type of `value` or `0`.
    */
   export function tryToNumber(value: any) {
-    const temp = +value;
-    if (isNumber(temp)) {
-      return temp;
+    if (isNumberParsable(value)) {
+      return +value;
     }
     return 0;
   }
