@@ -1,7 +1,11 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "strict": false,
-    "experimentalDecorators": true
-  }
+    "outDir": "./unit",
+    "allowJs": true,
+    "experimentalDecorators": true,
+    "types": ["node", "jest"]
+  },
+  "exclude": ["./unit/**/*"]
 }
