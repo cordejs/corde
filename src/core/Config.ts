@@ -1,8 +1,9 @@
 import path from "path";
 import { DEFAULT_CONFIG, ROOT_DIR } from "../const";
 import { replaceAll } from "../utils/replaceAll";
-import { isNumber } from "../utils/isNumber";
 import { ObjectLike } from "../types";
+import { isNumberParsable } from "../utils/isNumberParsable";
+import { parser } from "../utils/parser";
 
 type KeyOfConfig = keyof corde.IConfigOptions;
 /**
@@ -189,9 +190,9 @@ export class Config implements Readonly<corde.IConfigOptions> {
       this._loginCordeBotOnStart = config.loginCordeBotOnStart;
     }
 
-    if (isNumber(config?.timeout) && (!this.timeout || forceUpdate)) {
+    if (isNumberParsable(config?.timeout) && (!this.timeout || forceUpdate)) {
       // Forces to set timeout to a number
-      this._timeout = +(config.timeout as any);
+      this._timeout = parser.toNumber(config?.timeout);
     }
 
     if (config?.botPrefix && (!this.botPrefix || forceUpdate)) {

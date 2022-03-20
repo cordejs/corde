@@ -1,7 +1,6 @@
 import chalk from "chalk";
 import { Guild } from "discord.js";
 import path from "path";
-import runtime from "./core/runtime";
 import { Permission } from "./enums";
 import { typeOf } from "./utils/typeOf";
 
@@ -102,12 +101,12 @@ export const errors = {
     },
   },
   client: {
-    loginError(token: string, error?: any) {
+    loginError(token: string, intents: corde.Intent[], error?: any) {
       return addLineBreak(
         `Error trying to login with token ${chalk.cyan(token)}.`,
         error,
         "Check out your token and your intents.",
-        `Informed intents: ${chalk.cyan(runtime.configs.intents)}`,
+        `Informed intents: ${chalk.cyan(intents)}`,
       );
     },
     invalidToken(token: any) {

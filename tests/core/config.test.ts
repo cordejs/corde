@@ -1,4 +1,6 @@
-import { IConfigOptions } from "../../src/types";
+/* eslint-disable @typescript-eslint/triple-slash-reference */
+/// <reference path="../../src/global/types.d.ts" />
+
 import { Config } from "../../src/core/Config";
 import path from "path";
 
@@ -9,8 +11,14 @@ beforeEach(() => {
 });
 
 describe("testing config", () => {
+  it("should convert numeric value to number when setting", () => {
+    const timeout: any = "111";
+    config.setConfigs({ timeout }, true);
+    expect(config.timeout).toEqual(111);
+  });
+
   it("should set props correctly", () => {
-    const configExample: Partial<IConfigOptions> = {
+    const configExample: Partial<corde.IConfigOptions> = {
       botPrefix: "!",
       botTestId: "id123",
       channelId: "1231321",

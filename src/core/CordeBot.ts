@@ -20,6 +20,7 @@ import { joinVoiceChannel } from "@discordjs/voice";
 import EventEmitter from "events";
 import { once } from "events";
 import { errors } from "../const";
+import runtime from "./runtime";
 
 enum InternalEvent {
   InternallyReady = "internally_ready",
@@ -301,7 +302,7 @@ export class CordeBot implements ICordeBot {
     if (!token) {
       return `Error trying to login with ${chalk.bold(typeOf(token))} token`;
     }
-    return errors.client.loginError(token, error);
+    return errors.client.loginError(token, runtime.configs.intents, error);
   }
 
   private throwIfMessageIsInvalid(message: Primitive) {
