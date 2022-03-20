@@ -32,6 +32,10 @@ export class Runtime {
     return process.env.ENV === "UNITY_TEST";
   }
 
+  get isLocal() {
+    return process.env.ENV === "LOCAL";
+  }
+
   get isE2eTest() {
     return process.env.ENV === "E2E_TEST";
   }
