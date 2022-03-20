@@ -8,11 +8,10 @@ import { TestExecutor } from "../core/TestExecutor";
 import { LogUpdate } from "../utils/LogUpdate";
 import { validate } from "./validate";
 import { StrictObject } from "../types";
-import { registerTsNode } from "../core/tsRegister";
 import { debug } from "../core/debug";
-import { DEFAULT_CONFIG } from "../const";
 import { executeWithTimeout } from "../utils/executeWithTimeout";
 import { logger } from "../core/Logger";
+import { loadConfigs } from "./showConfigs";
 
 declare module "ora" {
   interface Ora {
@@ -27,38 +26,10 @@ process.on("uncaughtException", () => {
 let spinner: Ora;
 
 export async function exec(options: corde.Config.ICLIOptions) {
-  if (options.config) {
-    runtime.configFilePath = options.config;
-  }
-
-  // Register ts-node with default options to prevent errors
-  // when registering from configs.
-  registerTsNode(DEFAULT_CONFIG.project as any);
-
-  debug("runtime.project: ", runtime.configs.project);
-  debug("runtime.configFilePath: " + runtime.configFilePath);
-
-  await loadConfigs();
-
-  // Configs provide in CLI overrides configs in config file
-  if (options.files) {
-    runtime.setConfigs({ testMatches: options.files.split(" ") }, true);
-  }
-
-  if (runtime.configs.project) {
-    registerTsNode(runtime.configs);
-  }
-
-  debug("loaded configs: ", runtime.configs.toDebug());
-
+  loadConfigs(options);
   await validate(runtime.configs);
   runtime.initBot();
   await runTests();
-}
-
-async function loadConfigs() {
-  const configs = reader.loadConfig();
-  runtime.setConfigs(configs, true);
 }
 
 function errorHandler(error?: Error) {

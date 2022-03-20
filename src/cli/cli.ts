@@ -12,6 +12,8 @@ import runtime from "../core/runtime";
 import { injectGlobals } from "../core/injectGlobals";
 import { reader } from "../core/Reader";
 import { logger } from "../core/Logger";
+import { showConfigs } from "./showConfigs";
+import { exit } from "process";
 
 initErrorHandlers();
 initEnvVariables();
@@ -63,6 +65,19 @@ program
     const configs = reader.loadConfig();
     await validate(configs);
     logger.log("All configs are ok!");
+  });
+
+program
+  .command("showConfigs")
+  .alias("show")
+  .description("Loads configs and display them")
+  .option("-c, --config <type>", "Set config file path")
+  .option("-p, --project <type>", "Set tsconfig path")
+  .action(() => {
+    const options = program.opts() as corde.Config.ICLIOptions;
+    showConfigs(options);
+    // Force to exit
+    exit(0);
   });
 
 if (process.env.ENV !== "UNITY_TEST" && process.env.ENV !== "E2E_TEST") {

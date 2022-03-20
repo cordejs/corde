@@ -182,8 +182,6 @@ function createMatcherFn(params: ICreateMatcherParam) {
       bot = cordeBot ?? runtime.bot;
     }
 
-    //logger.log(bot);
-
     const props = new CommandState({
       isNot,
       cordeBot: bot,
