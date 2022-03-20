@@ -6,6 +6,25 @@ declare namespace corde {
     | import("discord.js").MessageReaction
     | import("discord.js").PartialMessageReaction;
 
+  export type Intent =
+    | "GUILDS"
+    | "GUILD_MEMBERS"
+    | "GUILD_BANS"
+    | "GUILD_EMOJIS_AND_STICKERS"
+    | "GUILD_INTEGRATIONS"
+    | "GUILD_WEBHOOKS"
+    | "GUILD_INVITES"
+    | "GUILD_VOICE_STATES"
+    | "GUILD_PRESENCES"
+    | "GUILD_MESSAGES"
+    | "GUILD_MESSAGE_REACTIONS"
+    | "GUILD_MESSAGE_TYPING"
+    | "DIRECT_MESSAGES"
+    | "DIRECT_MESSAGE_REACTIONS"
+    | "DIRECT_MESSAGE_TYPING"
+    | "GUILD_SCHEDULED_EVENTS"
+    | "ALL";
+
   type User = import("discord.js").User;
   type Channel = import("discord.js").Channel;
   type Message = import("discord.js").Message;
@@ -81,7 +100,7 @@ declare namespace corde {
     /**
      * Create a group of tests.
      *
-     * @param descriptionDefinition Resolvable description of the group. It is often a string,
+     * @param description Resolvable description of the group. It is often a string,
      * but can be sync or async functions, numbers, booleans... Functions will be executed to get the
      * primitive value of then.
      *
@@ -1480,5 +1499,12 @@ declare namespace corde {
      * @default 10000
      */
     loginTimeout?: number;
+    /**
+     * Define which intents corde's bot is allowed.
+     *
+     * @see https://discord.com/developers/docs/topics/gateway#gateway-intents
+     * @default []
+     */
+    intents?: Intent[];
   }
 }

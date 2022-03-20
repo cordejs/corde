@@ -1,7 +1,7 @@
 import { ICordeBot } from "../types";
 import { IInternalEvents } from "./internalEvents";
 import { CordeBot } from "./CordeBot";
-import { Client, Intents } from "discord.js";
+import { Client, IntentsString } from "discord.js";
 import { Config } from "./Config";
 import { TestCollector } from "./TestCollector";
 import { ConfigError } from "../errors";
@@ -169,8 +169,30 @@ export class Runtime {
   }
 
   private initClient() {
+    let intents = this.configs.intents as IntentsString[];
+    if (this.configs.intents.includes("ALL")) {
+      intents = [
+        "GUILDS",
+        "GUILD_MEMBERS",
+        "GUILD_BANS",
+        "GUILD_EMOJIS_AND_STICKERS",
+        "GUILD_INTEGRATIONS",
+        "GUILD_WEBHOOKS",
+        "GUILD_INVITES",
+        "GUILD_VOICE_STATES",
+        "GUILD_PRESENCES",
+        "GUILD_MESSAGES",
+        "GUILD_MESSAGE_REACTIONS",
+        "GUILD_MESSAGE_TYPING",
+        "DIRECT_MESSAGES",
+        "DIRECT_MESSAGE_REACTIONS",
+        "DIRECT_MESSAGE_TYPING",
+        "GUILD_SCHEDULED_EVENTS",
+      ];
+    }
+
     return new Client({
-      intents: [Intents.FLAGS.GUILDS],
+      intents: intents,
     });
   }
 }

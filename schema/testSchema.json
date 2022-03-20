@@ -11,5 +11,6 @@
   "extentions": [".js", ".ts"],
   "project": "<rootDir>/tsconfig.json",
   "rootDir": ".",
-  "exitOnFileReadingError": true
+  "exitOnFileReadingError": true,
+  "intents": ["GUILD_VOICE_STATES"]
 }

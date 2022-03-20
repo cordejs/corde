@@ -301,7 +301,7 @@ export class CordeBot implements ICordeBot {
     if (!token) {
       return `Error trying to login with ${chalk.bold(typeOf(token))} token`;
     }
-    return `Error trying to login with token ${chalk.bold(token)}. \n` + error;
+    return errors.client.loginError(token, error);
   }
 
   private throwIfMessageIsInvalid(message: Primitive) {

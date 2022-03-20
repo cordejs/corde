@@ -35,6 +35,32 @@
       "default": "",
       "title": "The id of the channel where both bots are."
     },
+    "intents": {
+      "default": [],
+      "title": "Define which intents corde's bot is allowed.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "GUILDS",
+          "GUILD_MEMBERS",
+          "GUILD_BANS",
+          "GUILD_EMOJIS_AND_STICKERS",
+          "GUILD_INTEGRATIONS",
+          "GUILD_WEBHOOK",
+          "GUILD_INVITES",
+          "GUILD_VOICE_STATES",
+          "GUILD_PRESENCES",
+          "GUILD_MESSAGES",
+          "GUILD_MESSAGE_REACTIONS",
+          "GUILD_MESSAGE_TYPING",
+          "DIRECT_MESSAGES",
+          "DIRECT_MESSAGE_REACTIONS",
+          "DIRECT_MESSAGE_TYPING",
+          "GUILD_SCHEDULED_EVENTS"
+        ]
+      }
+    },
     "botPrefix": {
       "default": "",
       "title": "Prefix for call your bot."

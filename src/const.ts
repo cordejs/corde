@@ -1,6 +1,7 @@
 import chalk from "chalk";
 import { Guild } from "discord.js";
 import path from "path";
+import runtime from "./core/runtime";
 import { Permission } from "./enums";
 import { typeOf } from "./utils/typeOf";
 
@@ -34,6 +35,7 @@ export const DEFAULT_CONFIG: Required<corde.IConfigOptions> = {
   useTimeoutValueInEventsDefaultParameters: true,
   loginCordeBotOnStart: true,
   loginTimeout: 10000,
+  intents: [],
 };
 
 export const TAG_PENDING = (text = "RUNS") => chalk.bgYellow(chalk.black(` ${text} `));
@@ -98,6 +100,14 @@ export const errors = {
     },
   },
   client: {
+    loginError(token: string, error?: any) {
+      return addLineBreak(
+        `Error trying to login with token ${chalk.cyan(token)}.`,
+        error,
+        "Check out your token and your intents.",
+        `Informed intents: ${chalk.cyan(runtime.configs.intents)}`,
+      );
+    },
     invalidToken(token: any) {
       if (token === undefined || token === null) {
         return addLineBreak(`Token not provided`);

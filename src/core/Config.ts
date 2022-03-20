@@ -25,6 +25,7 @@ export class Config implements Readonly<corde.IConfigOptions> {
   private _useTimeoutValueInEventsDefaultParameters!: boolean;
   private _loginCordeBotOnStart!: boolean;
   private _loginTimeout!: number;
+  private _intents!: corde.Intent[];
 
   get loginTimeout() {
     return this._loginTimeout;
@@ -88,6 +89,10 @@ export class Config implements Readonly<corde.IConfigOptions> {
 
   get useTimeoutValueInEventsDefaultParameters() {
     return this._useTimeoutValueInEventsDefaultParameters;
+  }
+
+  get intents() {
+    return this._intents;
   }
 
   getConfigTimeoutOrDefault() {
@@ -191,6 +196,10 @@ export class Config implements Readonly<corde.IConfigOptions> {
 
     if (config.botPrefix && (!this.botPrefix || forceUpdate)) {
       this._botPrefix = config.botPrefix;
+    }
+
+    if (config.intents && (!this.intents || forceUpdate)) {
+      this._intents = config.intents;
     }
 
     if (config.modulePathIgnorePatterns && (!this.modulePathIgnorePatterns || forceUpdate)) {
