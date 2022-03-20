@@ -4,8 +4,8 @@
   "description": "",
   "main": "bot.js",
   "scripts": {
-    "corde": "node --trace-deprecation ../../bin/corde",
-    "test": "node ../../bin/corde",
+    "corde": "node --trace-deprecation ../bin/corde",
+    "test": "node ../bin/corde",
     "loginBot": "ts-node loginBot.ts"
   },
   "author": "Lucas Gomes",
