@@ -34,7 +34,7 @@ export async function respond(this: CommandState, expected: Primitive | corde.IM
       return this.createPassTest();
     }
 
-    return this.createReport(
+    return this.createFailedTest(
       "expected: testing bot to send a message\n",
       "received: no message was sent",
     );
