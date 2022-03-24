@@ -9,6 +9,7 @@
 /// <reference path="./command.d.ts" />
 /// <reference path="./expect.d.ts" />
 /// <reference path="./hooks.d.ts" />
+/// <reference path="./events.d.ts" />
 /// <reference path="./types.d.ts" />
 /// <reference path="./mock.d.ts" />
 
