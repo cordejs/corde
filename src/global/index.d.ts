@@ -24,9 +24,9 @@ declare namespace corde {
    * @example
    *
    * test("test to fail", async () => {
-   *  fail();
+   *  corde.fail();
    *  expect(1).not.toEqual(1);
-   *  await command("ping").toReturn("pong");
+   *  await command("ping").should.respond("pong");
    * });
    *
    * @description
@@ -36,7 +36,7 @@ declare namespace corde {
    *
    * ``` javascript
    * expect(1).not.toEqual(1);
-   * await command("ping").toReturn("pong");
+   * await command("ping").should.respond("pong");
    * ```
    *
    * Without through a error for the failed assertion and send the command
@@ -47,7 +47,7 @@ declare namespace corde {
    * ```javascript
    *
    * test("will throw error", () => {
-   *  fail();
+   *  corde.fail();
    *  throw new Error(); // This error will be thrown
    * });
    *
@@ -79,7 +79,7 @@ declare namespace corde {
    *
    * it("testing", async () => {
    *   // Do something
-   *   await corde.wait(1000); // Wait 1 second
+   *   await corde.waitAsync(1000); // Wait 1 second
    *   // .... Do other stuffs
    * });
    *
