@@ -286,7 +286,7 @@ export class Events implements corde.IOnceEvents, ClientEventsFn {
    * @internal
    */
   onMessageCreate(fn: (message: Message<boolean>) => void) {
-    this._client.on("messageCreate", fn);
+    return this._client.on("messageCreate", fn);
   }
 
   onceMessageCreate(options?: corde.IMessageContentEvent) {
@@ -1474,7 +1474,7 @@ export class Events implements corde.IOnceEvents, ClientEventsFn {
    * @internal
    */
   onceMessagePinned(options?: corde.IMessageEventFilter) {
-    return this._onceMessageSetPinneble(
+    return this._onceMessageSetPinned(
       (oldMessage, newMessage) => !(oldMessage.pinned as boolean) && (newMessage.pinned as boolean),
       options,
     );
@@ -1484,13 +1484,13 @@ export class Events implements corde.IOnceEvents, ClientEventsFn {
    * @internal
    */
   onceMessageUnPinned(options?: corde.IMessageEventFilter) {
-    return this._onceMessageSetPinneble(
+    return this._onceMessageSetPinned(
       (oldMessage, newMessage) => (oldMessage.pinned as boolean) && !(newMessage.pinned as boolean),
       options,
     );
   }
 
-  private _onceMessageSetPinneble(
+  private _onceMessageSetPinned(
     validation: (
       oldMessage: Message | PartialMessage,
       newMessage: Message | PartialMessage,
