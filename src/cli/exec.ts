@@ -58,8 +58,8 @@ export async function runTests() {
       const timeoutError = () => {
         spinner.stop();
         throw new Error(
-          "\nTimeout attempting to logging corde's bot\n" +
-            `Check if ${chalk.cyan("cordeBotToken")} is correct\n`,
+          "Timeout attempting to logging corde's bot" +
+            `Check if ${chalk.cyan("cordeBotToken")} is correct`,
         );
       };
 
