@@ -9,6 +9,7 @@ export const test: corde.ITestClosure = <T>(
   timeout?: number | undefined,
 ) => {
   const { testCollector } = runtime;
+
   const _internalTest = async () => {
     testCollector.currentTestFile.isInsideTestClosure = true;
 
@@ -28,7 +29,7 @@ export const test: corde.ITestClosure = <T>(
         } catch (error) {
           reject(error);
         }
-      }, timeout ?? runtime.configs.getConfigTimeoutOrDefault());
+      }, timeout ?? runtime.configs.suiteTimeout);
     },
     toResolveName: () => resolveName(description),
   });
