@@ -23,6 +23,15 @@
       "sourceMaps": true,
       "cwd": "${workspaceRoot}",
       "protocol": "inspector"
+    },
+    {
+      "name": "manual_test",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/manual_test",
+      "program": "${workspaceFolder}/bin/corde",
+      "internalConsoleOptions": "openOnSessionStart",
+      "skipFiles": ["<node_internals>/**", "node_modules/**"]
     }
   ]
 }
