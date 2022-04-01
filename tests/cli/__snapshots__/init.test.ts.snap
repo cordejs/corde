@@ -9,14 +9,18 @@ exports[`Testing creation of config file in init should create corde.config.js f
   guildId: \\"\\",
   testMatches: [],
   project: \\"\\",
-  timeout: 5000,
+  timeout: 10000,
+  loginTimeout: 10000,
+  suiteTimeout: 10000,
+  commandTimeout: 5000,
   exitOnFileReadingError: true,
   extensions: [\\".js\\", \\".ts\\"],
   modulePathIgnorePatterns: [\\"(?:^|/)node_modules/\\"],
   rootDir: \\"\\",
   useConfigValuesInEventsDefaultParameters: false,
   useTimeoutValueInEventsDefaultParameters: true,
-  loginCordeBotOnStart: true
+  loginCordeBotOnStart: true,
+  intents: []
 }"
 `;
 
@@ -30,14 +34,18 @@ exports[`Testing creation of config file in init should create corde.config.json
   \\"guildId\\": \\"\\",
   \\"testMatches\\": [],
   \\"project\\": \\"\\",
-  \\"timeout\\": 5000,
+  \\"timeout\\": 10000,
+  \\"loginTimeout\\": 10000,
+  \\"suiteTimeout\\": 10000,
+  \\"commandTimeout\\": 5000,
   \\"exitOnFileReadingError\\": true,
   \\"extensions\\": [\\".js\\", \\".ts\\"],
   \\"modulePathIgnorePatterns\\": [\\"(?:^|/)node_modules/\\"],
   \\"rootDir\\": \\"\\",
   \\"useConfigValuesInEventsDefaultParameters\\": false,
   \\"useTimeoutValueInEventsDefaultParameters\\": true,
-  \\"loginCordeBotOnStart\\": true
+  \\"loginCordeBotOnStart\\": true,
+  \\"intents\\": []
 }"
 `;
 
@@ -50,13 +58,17 @@ exports[`Testing creation of config file in init should create corde.config.ts f
   guildId: \\"\\",
   testMatches: [],
   project: \\"\\",
-  timeout: 5000,
+  timeout: 10000,
+  loginTimeout: 10000,
+  suiteTimeout: 10000,
+  commandTimeout: 5000,
   exitOnFileReadingError: true,
   extensions: [\\".js\\", \\".ts\\"],
   modulePathIgnorePatterns: [\\"(?:^|/)node_modules/\\"],
   rootDir: \\"\\",
   useConfigValuesInEventsDefaultParameters: false,
   useTimeoutValueInEventsDefaultParameters: true,
-  loginCordeBotOnStart: true
+  loginCordeBotOnStart: true,
+  intents: []
 }"
 `;

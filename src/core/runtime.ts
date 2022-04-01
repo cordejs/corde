@@ -137,19 +137,6 @@ export class Runtime {
     return this.bot && this.bot.isLoggedIn();
   }
 
-  /**
-   * Shortcut for *bot.logout*
-   */
-  logoffBot() {
-    if (this._bot) {
-      this._bot.logout();
-    }
-  }
-
-  loginBot(token: string) {
-    return this.bot.login(token);
-  }
-
   initBot() {
     this._bot = new CordeBot(
       this._configs.botPrefix,

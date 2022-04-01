@@ -31,7 +31,7 @@ async function printErrorAndExit(error: unknown) {
   logger.printStacks();
 
   if (runtime.isBotLoggedIn()) {
-    runtime.logoffBot();
+    runtime.bot.logout();
   }
 
   if (process.env.ENV !== "TEST") {

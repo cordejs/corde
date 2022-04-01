@@ -1,9 +1,7 @@
 import runtime from "../../src/core/runtime";
 import { DEFAULT_TEST_TIMEOUT } from "../../src/const";
 
-import { IConfigOptions } from "../../src/types";
-
-const config: IConfigOptions = {
+const config: corde.IConfigOptions = {
   botPrefix: "!",
   botTestId: "123",
   channelId: "1241241",
@@ -20,23 +18,6 @@ describe("Testing runtime", () => {
       runtime.setConfigs(undefined);
     } catch (error) {
       expect(error instanceof Error).toBe(true);
-    }
-  });
-
-  it("should call bot.logout", () => {
-    runtime.setConfigs(config);
-    const spy = jest.spyOn(runtime.bot, "logout");
-    runtime.logoffBot();
-    expect(spy).toBeCalledTimes(1);
-  });
-
-  it("should call bot.login", async () => {
-    runtime.setConfigs(config);
-    const spy = jest.spyOn(runtime.bot, "login");
-    try {
-      await runtime.loginBot("13");
-    } catch (error) {
-      expect(spy).toBeCalledTimes(1);
     }
   });
 

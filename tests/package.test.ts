@@ -1,4 +1,4 @@
-import pack from "../src/package";
+import { pack } from "../src/package";
 import * as _pack from "../package.json";
 describe("testing package.ts", () => {
   afterAll(() => {

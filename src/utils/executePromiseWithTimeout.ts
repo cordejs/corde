@@ -40,7 +40,7 @@ export function executePromiseWithTimeout<TResult>(
   rejectedData?: TResult,
 ) {
   if (!fn) {
-    return Promise.reject("can not execute an null function");
+    throw new Error("can not execute an null function");
   }
 
   if (isInDebugMode() || !timeout) {

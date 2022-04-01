@@ -109,7 +109,7 @@ function finishProcess(code: number, error?: any): never {
       logger.log(error);
     }
 
-    runtime.logoffBot();
+    runtime.bot.logout();
   } finally {
     process.exit(code);
   }

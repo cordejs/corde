@@ -24,7 +24,6 @@ const cordeBotToken = process.env.CORDE_TEST_TOKEN;
 const guildId = process.env.GUILD_ID;
 const testMatches = ["./test/**"];
 const botToken = process.env.BOT_TEST_TOKEN;
-const timeout = process.env.TIME_OUT;
 const project = "./tsconfig.json";
 const intents = ["ALL"];
 
@@ -37,6 +36,5 @@ export {
   guildId,
   botToken,
   testMatches,
-  //  timeout,
   project,
 };
