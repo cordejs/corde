@@ -54,7 +54,7 @@ describe(`testing ${testName} function`, () => {
 
   it("should get success test due to bot returned equal message", async () => {
     const events = new MockEvents(cordeClient, mockDiscord);
-    events.mockOnceMessage();
+    events.mockOnceMessageCreate();
 
     const report = await debugCon().should.respond(mockDiscord.message.content);
 
@@ -63,7 +63,7 @@ describe(`testing ${testName} function`, () => {
 
   it("should get success test due to bot returned equal messages (string type)", async () => {
     const events = new MockEvents(cordeClient, mockDiscord);
-    events.mockOnceMessage();
+    events.mockOnceMessageCreate();
 
     const report = await debugCon().should.respond(mockDiscord.message.content);
 
@@ -74,7 +74,7 @@ describe(`testing ${testName} function`, () => {
     mockDiscord.message.content = "2";
 
     const events = new MockEvents(cordeClient, mockDiscord);
-    events.mockOnceMessage();
+    events.mockOnceMessageCreate();
 
     const report = await debugCon().should.respond(2);
 
@@ -84,7 +84,7 @@ describe(`testing ${testName} function`, () => {
   it("should get success test due to bot returned equal messages (type embed)", async () => {
     const events = new MockEvents(cordeClient, mockDiscord);
     mockDiscord.message.embeds.push(mockDiscord.messageEmbed);
-    events.mockOnceMessage(mockDiscord.message);
+    events.mockOnceMessageCreate(mockDiscord.message);
 
     const messageEmbed = messageUtils.messageEmbedToMessageEmbedInterface(mockDiscord.messageEmbed);
     const report = await debugCon().should.respond(messageEmbed);
@@ -96,7 +96,7 @@ describe(`testing ${testName} function`, () => {
     mockDiscord.message.embeds.push(mockDiscord.messageEmbed);
 
     const events = new MockEvents(cordeClient, mockDiscord);
-    events.mockOnceMessage();
+    events.mockOnceMessageCreate();
 
     const messageEmbed = messageUtils.messageEmbedToMessageEmbedInterface(mockDiscord.messageEmbed);
     const report = await debugCon().should.not.respond(messageEmbed);
@@ -107,7 +107,7 @@ describe(`testing ${testName} function`, () => {
 
   it("should get success test due to bot returned different messages (isNot true)", async () => {
     const events = new MockEvents(cordeClient, mockDiscord);
-    events.mockOnceMessage();
+    events.mockOnceMessageCreate();
 
     const report = await debugCon().should.not.respond(mockDiscord.messageEmbedSimple);
 
@@ -118,7 +118,7 @@ describe(`testing ${testName} function`, () => {
     mockDiscord.message.embeds.push(mockDiscord.messageEmbed);
 
     const events = new MockEvents(cordeClient, mockDiscord);
-    events.mockOnceMessage();
+    events.mockOnceMessageCreate();
 
     const expectValue = "expect value";
 
@@ -130,7 +130,7 @@ describe(`testing ${testName} function`, () => {
 
   it("should get fail test due to bot returned different messages (expect embed and returned primitive)", async () => {
     const events = new MockEvents(cordeClient, mockDiscord);
-    events.mockOnceMessage();
+    events.mockOnceMessageCreate();
 
     const report = await debugCon().should.respond(mockDiscord.messageEmbedSimple);
 
@@ -140,7 +140,7 @@ describe(`testing ${testName} function`, () => {
 
   it("should get fail test due to bot returned different messages both primitive values", async () => {
     const events = new MockEvents(cordeClient, mockDiscord);
-    events.mockOnceMessage();
+    events.mockOnceMessageCreate();
 
     const expectValue = "expect value";
 

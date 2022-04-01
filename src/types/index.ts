@@ -230,7 +230,7 @@ export interface IExpectTestBaseParams {
   cordeBot: ICordeBot;
   command?: string | number | boolean;
   isNot: boolean;
-  timeout: number;
+  timeout?: number;
   isCascade: boolean;
   guildId?: string;
   channelId: string;

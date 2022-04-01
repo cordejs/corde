@@ -1,3 +1,4 @@
+import { Client } from "discord.js";
 import { TimeoutError } from "../../src/errors";
 import { executePromiseWithTimeout } from "../../src/utils/executePromiseWithTimeout";
 import { wait } from "../../src/utils/wait";
@@ -9,6 +10,23 @@ describe("testing executePromiseWithTimeout", () => {
     }, 1000);
 
     expect(num).toEqual(1);
+  });
+
+  it("should reject using a eventEmitter", async () => {
+    const emitter = new Client({
+      intents: ["DIRECT_MESSAGES"],
+    });
+
+    try {
+      await executePromiseWithTimeout((resolve) => {
+        emitter.on("messageCreate", (message) => {
+          resolve(message);
+        });
+      }, 1000);
+      fail();
+    } catch (error) {
+      expect(error).not.toBeNull();
+    }
   });
 
   it("should reject", async () => {
