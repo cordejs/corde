@@ -37,6 +37,6 @@ export {
   guildId,
   botToken,
   testMatches,
-  timeout,
+  //  timeout,
   project,
 };
