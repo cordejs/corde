@@ -153,7 +153,7 @@ function createMatcherFn(params: ICreateMatcherParam) {
     throw new Error("command can only be used inside a test(it) closure");
   }
 
-  return async (
+  return (
     ...args: any[]
   ): Promise<ITestReport | void | ((...args: any[]) => Promise<ITestReport>)> => {
     const trace = getStackTrace(undefined, true, matcher);
@@ -164,7 +164,7 @@ function createMatcherFn(params: ICreateMatcherParam) {
     // There is no need to run other tests.
     // Same for command assertion
     if (testCollector.currentSuite?.markedAsFailed) {
-      return;
+      return Promise.reject();
     }
 
     args = args.map((arg) => {
@@ -186,7 +186,7 @@ function createMatcherFn(params: ICreateMatcherParam) {
       isNot,
       cordeBot: bot,
       command: commandName,
-      timeout: configs.getConfigTimeoutOrDefault(),
+      timeout: configs.commandTimeout,
       guildId: guildId ?? configs.guildId,
       channelId: channelId ?? configs.channelId,
       testName: matcher,
@@ -198,10 +198,9 @@ function createMatcherFn(params: ICreateMatcherParam) {
     params.trace = trace;
     return new CommandPromise(async (resolve, reject) => {
       try {
-        const response = await resolveTestFunction(params, fn);
-        resolve(response);
+        const result = await resolveTestFunction(params, fn);
+        resolve(result);
       } catch (error) {
-        console.log(error);
         reject(error);
       }
     }, params);
