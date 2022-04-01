@@ -7,7 +7,7 @@ import { registerTsNode } from "../core/tsRegister";
 
 export function showConfigs(options: corde.Config.ICLIOptions) {
   loadConfigs(options);
-  logger.log(runtime.configs.toDebug());
+  logger.log(runtime.configs.getProps());
 }
 
 export function loadConfigs(options: corde.Config.ICLIOptions) {
@@ -34,5 +34,5 @@ export function loadConfigs(options: corde.Config.ICLIOptions) {
     registerTsNode(runtime.configs);
   }
 
-  debug("loaded configs: ", runtime.configs.toDebug());
+  debug("loaded configs: ", runtime.configs.getProps());
 }
