@@ -18,7 +18,7 @@ export class CommandState {
   readonly isNot: boolean;
   readonly command?: string | number | boolean;
   readonly cordeBot: ICordeBot;
-  readonly timeout: number;
+  readonly timeout?: number;
   readonly testName: string;
   readonly isCascade: boolean;
   readonly guildId: string | undefined;
@@ -28,10 +28,6 @@ export class CommandState {
 
   /**
    * Initialize the match class with its default values.
-   *
-   * @param cordeBot The instance of CordeBot initialized by the runtime.
-   * @param command The command to execute.
-   * @param isNot Definition if this is a deny test.
    */
   constructor({
     isNot,
