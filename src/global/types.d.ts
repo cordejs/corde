@@ -1425,11 +1425,6 @@ declare namespace corde {
      */
     guildId: string;
     /**
-     * Defines max amount of time that a command can run
-     * @default 5000
-     */
-    timeout?: number;
-    /**
      * Defines how to identify bot calls
      */
     botPrefix: string;
@@ -1494,9 +1489,52 @@ declare namespace corde {
      */
     loginCordeBotOnStart?: boolean;
     /**
-     * Defines how much time corde should wait for logging with it's bot
+     * Defines the max amount of time that a test suite can run.
+     *
+     * @example
+     *
+     * // Being suiteTimeout = 1000; The test case bellow
+     * // will wait for in maximum, 1 second
+     * it("", async () => {
+     *  await command("ping").should.respond("pong");
+     * });
+     *
+     * @default this.timeout
+     */
+    suiteTimeout?: number;
+    /**
+     * Defines max amount of time that a command can run.
+     *
+     * Avoid put a value for this prop equal to `suiteTimeout`.
+     * It can lead to suites existing as they are no tests inside.
+     *
+     * @default 5000
+     */
+    commandTimeout?: number;
+    /**
+     * Defines a timeout for all others timeouts.
+     *
+     * If any other timeout has value, they will overlay
+     * any value provided to `timeout`
+     *
+     * If
+     *
+     * ```js
+     * {
+     *  timeout: 1000,
+     *  commandTimeout: 2000
+     * }
+     * ```
+     *
+     * Then the value for `commandTimeout` will be 2000
      *
      * @default 10000
+     */
+    timeout?: number;
+    /**
+     * Defines how much time corde should wait for logging with it's bot
+     *
+     * @default this.timeout
      */
     loginTimeout?: number;
     /**

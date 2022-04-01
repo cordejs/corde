@@ -4,7 +4,7 @@ import path from "path";
 import { Permission } from "./enums";
 import { typeOf } from "./utils/typeOf";
 
-export const DEFAULT_TEST_TIMEOUT = 5000;
+export const DEFAULT_TEST_TIMEOUT = 10000;
 export const MESSAGE_TAB_SPACE = "   ";
 export const EXPECT_RECEIVED_TAB_SPACE = "    ";
 export const DEFAULT_STACK_TRACE_LIMIT = 3;
@@ -17,7 +17,7 @@ export const ROOT_DIR = "<rootDir>";
 
 export const LINE_BREAK = "\n";
 
-export const DEFAULT_CONFIG: Required<corde.IConfigOptions> = {
+export const DEFAULT_CONFIG: corde.IConfigOptions = {
   botPrefix: "",
   botTestId: "",
   channelId: "",
@@ -26,6 +26,9 @@ export const DEFAULT_CONFIG: Required<corde.IConfigOptions> = {
   testMatches: [],
   project: path.resolve(process.cwd(), "tsconfig.json"),
   timeout: DEFAULT_TEST_TIMEOUT,
+  loginTimeout: DEFAULT_TEST_TIMEOUT,
+  suiteTimeout: DEFAULT_TEST_TIMEOUT,
+  commandTimeout: 5000,
   exitOnFileReadingError: true,
   extensions: [".js", ".ts"],
   modulePathIgnorePatterns: ["(?:^|/)node_modules/"],
@@ -33,7 +36,6 @@ export const DEFAULT_CONFIG: Required<corde.IConfigOptions> = {
   useConfigValuesInEventsDefaultParameters: false,
   useTimeoutValueInEventsDefaultParameters: true,
   loginCordeBotOnStart: true,
-  loginTimeout: 10000,
   intents: [],
 };
 
@@ -103,9 +105,9 @@ export const errors = {
   client: {
     loginError(token: string, intents: corde.Intent[], error?: any) {
       return addLineBreak(
-        `Error trying to login with token ${chalk.cyan(token)}.`,
+        `Error trying to login with token ${chalk.cyan(token)}.\n`,
         error,
-        "Check out your token and your intents.",
+        "Check out your token and your intents.\n",
         `Informed intents: ${chalk.cyan(intents)}`,
       );
     },

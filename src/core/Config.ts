@@ -25,7 +25,17 @@ export class Config implements Readonly<corde.IConfigOptions> {
   private _useTimeoutValueInEventsDefaultParameters!: boolean;
   private _loginCordeBotOnStart!: boolean;
   private _loginTimeout!: number;
+  private _commandTimeout?: number;
+  private _suiteTimeout!: number;
   private _intents!: corde.Intent[];
+
+  get commandTimeout() {
+    return this._commandTimeout;
+  }
+
+  get suiteTimeout() {
+    return this._suiteTimeout;
+  }
 
   get loginTimeout() {
     return this._loginTimeout;
@@ -52,7 +62,7 @@ export class Config implements Readonly<corde.IConfigOptions> {
   }
 
   get timeout() {
-    return this._timeout;
+    return this._timeout ?? DEFAULT_CONFIG.timeout;
   }
 
   get botPrefix() {
@@ -96,14 +106,18 @@ export class Config implements Readonly<corde.IConfigOptions> {
   }
 
   getConfigTimeoutOrDefault() {
-    return this._timeout ?? DEFAULT_CONFIG.timeout;
+    return this.timeout;
+  }
+
+  getSuiteTimeout() {
+    return this._suiteTimeout ?? this.timeout;
   }
 
   /**
    * Initialize Configs with default values.
    */
   constructor() {
-    this.setConfigs(DEFAULT_CONFIG, true);
+    this.setConfigs(DEFAULT_CONFIG, true, true);
   }
 
   get<T extends KeyOfConfig>(configName: T): corde.IConfigOptions[T] {
@@ -125,7 +139,11 @@ export class Config implements Readonly<corde.IConfigOptions> {
    *
    * @param config new set of configs.
    */
-  setConfigs(config: Partial<corde.IConfigOptions>, forceUpdate?: boolean) {
+  setConfigs(
+    config: Partial<corde.IConfigOptions>,
+    forceUpdate?: boolean,
+    isDefaultValue?: boolean,
+  ) {
     if (config?.rootDir && (!this.rootDir || forceUpdate)) {
       this._rootDir = path.resolve(process.cwd(), config.rootDir);
     }
@@ -146,9 +164,7 @@ export class Config implements Readonly<corde.IConfigOptions> {
       this._botTestId = config.botTestId;
     }
 
-    if (config?.loginTimeout && (!this.loginTimeout || forceUpdate)) {
-      this._loginTimeout = config.loginTimeout;
-    }
+    this._setTimeouts(config, forceUpdate, isDefaultValue);
 
     if (config?.extensions && (!this.extensions || forceUpdate)) {
       this._extensions = config.extensions;
@@ -189,11 +205,6 @@ export class Config implements Readonly<corde.IConfigOptions> {
       this._loginCordeBotOnStart = config.loginCordeBotOnStart;
     }
 
-    if (config?.timeout && (!this.timeout || forceUpdate)) {
-      // Forces to set timeout to a number
-      this._timeout = parser.toNumber(config?.timeout);
-    }
-
     if (config?.botPrefix && (!this.botPrefix || forceUpdate)) {
       this._botPrefix = config.botPrefix;
     }
@@ -220,7 +231,39 @@ export class Config implements Readonly<corde.IConfigOptions> {
     }
   }
 
-  toDebug() {
+  private _setTimeouts(
+    config: Partial<corde.IConfigOptions>,
+    forceUpdate?: boolean,
+    isDefaultValue?: boolean,
+  ) {
+    if (config?.timeout && (!this.timeout || forceUpdate)) {
+      // Forces to set timeout to a number
+      this._timeout = parser.toNumber(config?.timeout);
+
+      // In case of values being set are not from default configs,
+      // AND timeout value exists, than is will override all others
+      // timeout values.
+      if (!isDefaultValue) {
+        this._loginTimeout = this._timeout;
+        this._suiteTimeout = this._timeout;
+        this._commandTimeout = this._timeout;
+      }
+    }
+
+    if (config?.loginTimeout && (!this.loginTimeout || forceUpdate)) {
+      this._loginTimeout = parser.toNumber(config.loginTimeout);
+    }
+
+    if (config?.suiteTimeout && (!this.suiteTimeout || forceUpdate)) {
+      this._suiteTimeout = parser.toNumber(config.suiteTimeout);
+    }
+
+    if (config?.commandTimeout && (!this.commandTimeout || forceUpdate)) {
+      this._commandTimeout = parser.toNumber(config.commandTimeout);
+    }
+  }
+
+  getProps() {
     const obj: ObjectLike = {};
 
     Object.getOwnPropertyNames(this).forEach((pName) => {
