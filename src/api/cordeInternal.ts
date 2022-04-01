@@ -2,14 +2,12 @@ import runtime from "../core/runtime";
 import { MapObj } from "../types";
 import { getStackTrace } from "../utils/getStackTrace";
 import { BotAPI } from "./botAPI";
-import { ConfigAPI } from "./configAPI";
 import { cordeEvent } from "./cordeEvent";
 import { ObjectMock } from "./ObjectMock";
 
 type CordeType = MapObj<typeof corde>;
 
 const bot = new BotAPI(runtime.bot);
-const config = new ConfigAPI(runtime.configs);
 
 /**
  * @global
@@ -49,5 +47,5 @@ export const cordeInternal: CordeType = {
     ...cordeEvent,
   },
   bot: bot,
-  config: config,
+  config: runtime.configs,
 };
