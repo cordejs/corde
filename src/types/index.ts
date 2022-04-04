@@ -21,6 +21,17 @@ export type FunctionOnly<T> = {
 };
 
 /**
+ * Provides a mechanism for releasing unmanaged resources.
+ */
+export interface IDisposable {
+  /**
+   * Performs application-defined tasks associated with freeing,
+   * releasing, or resetting unmanaged resources.
+   */
+  dispose(): Promise<void> | void;
+}
+
+/**
  * Marks the type as **null** or **undefined**
  *
  * @internal
