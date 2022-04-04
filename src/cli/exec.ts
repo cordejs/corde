@@ -27,6 +27,7 @@ let spinner: Ora;
 
 export async function exec(options: corde.Config.ICLIOptions) {
   loadConfigs(options);
+  console.log("osh");
   await validate(runtime.configs);
   runtime.initBot();
   await runTests();

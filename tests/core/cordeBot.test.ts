@@ -23,7 +23,6 @@ describe("Testing CordeBot object", () => {
     it("should throw error due to no guildManager(Don't know if it's possible)", (done) => {
       try {
         const client = mockDiscord.client;
-        // @ts-expect-error
         client.guilds = null;
         initCordeClient(mockDiscord, client);
         client.emit("ready", client);
@@ -81,7 +80,6 @@ describe("Testing CordeBot object", () => {
       client.guilds.cache.has = jest.fn().mockReturnValueOnce(true);
       client.guilds.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.guild);
 
-      // @ts-expect-error
       mockDiscord.guild.channels = null;
 
       const corde = initCordeClient(mockDiscord, client);
@@ -184,12 +182,7 @@ describe("Testing CordeBot object", () => {
 
   describe("testing sendTextMessage()", () => {
     it("should fail in sendTextMessage due to no message provided", async () => {
-      expect(
-        async () =>
-          await _cordeClient
-            // @ts-expect-error
-            .sendTextMessage(null),
-      ).rejects.toBeTruthy();
+      expect(async () => await _cordeClient.sendTextMessage(null)).rejects.toBeTruthy();
     });
 
     it("should call TextChannel.send() with prefix", async () => {
@@ -276,9 +269,7 @@ describe("Testing CordeBot object", () => {
         .fn()
         .mockReturnValue(mockDiscord.messageCollection);
 
-      const message = await corde
-        // @ts-expect-error
-        .findMessage(null);
+      const message = await corde.findMessage(null);
       expect(message).toBeFalsy();
     });
 
@@ -449,10 +440,7 @@ describe("Testing CordeBot object", () => {
 
   it("should call textChannel.send", async () => {
     const corde = initCordeBot();
-    const spy = jest
-      .spyOn(mockDiscord.textChannel, "send")
-      // @ts-expect-error
-      .mockImplementation(() => null);
+    const spy = jest.spyOn(mockDiscord.textChannel, "send").mockImplementation(() => null);
     await corde.sendMessage("");
     expect(spy).toBeCalled();
   });

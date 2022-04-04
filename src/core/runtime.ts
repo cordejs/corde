@@ -137,13 +137,13 @@ export class Runtime {
     return this.bot && this.bot.isLoggedIn();
   }
 
-  initBot() {
+  initBot(client?: Client) {
     this._bot = new CordeBot(
       this._configs.botPrefix,
       this._configs.guildId,
       this._configs.channelId,
       this._configs.botTestId,
-      this.initClient(),
+      client ?? this.initClient(),
     );
   }
 

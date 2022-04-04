@@ -7,6 +7,7 @@ const { testCollector } = runtime;
 
 describe("testing group function", () => {
   beforeEach(() => {
+    runtime.setConfigs({ timeout: 100 });
     testCollector.clearTestFiles();
     testCollector.createTestFile("");
   });

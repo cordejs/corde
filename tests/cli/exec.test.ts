@@ -2,11 +2,11 @@ import { Reader } from "../../src/core/Reader";
 import * as validateFn from "../../src/cli/validate";
 import * as execCommand from "../../src/cli/exec";
 import runtime from "../../src/core/runtime";
-import { DEFAULT_TEST_TIMEOUT } from "../../src/const";
-import { IConfigOptions } from "../../src/types";
+import { DEFAULT_CONFIG } from "../../src/const";
 import { summary } from "../../src/core/summary";
 import { mockProcess } from "../mocks";
 import { program } from "../../src/cli/cli";
+import MockDiscord from "../mocks/mockDiscord";
 
 jest.mock("ora", () => {
   const spinner = {
@@ -17,16 +17,21 @@ jest.mock("ora", () => {
   return () => result;
 });
 
+beforeAll(() => {
+  const mockDiscord = new MockDiscord();
+  const _client = mockDiscord.mockClient();
+  runtime.initBot(_client);
+});
+
 describe("testing configs load", () => {
-  const config: IConfigOptions = {
+  const config: corde.IConfigOptions = {
     botPrefix: "",
     botTestId: "",
     channelId: "",
     cordeBotToken: "",
     guildId: "",
     testMatches: [""],
-    botToken: "",
-    timeout: DEFAULT_TEST_TIMEOUT,
+    timeout: DEFAULT_CONFIG.timeout,
     loginCordeBotOnStart: false,
   };
   it("should load configs overriding timeout value", async () => {
@@ -76,7 +81,7 @@ describe("testing configs load", () => {
     expect(runtime.testMatches).toEqual(testMatches.split(" "));
   });
 
-  it("should call go command with --config option", async () => {
+  it.only("should call go command with --config option", async () => {
     mockExecProcess(config);
     const testPath = "potatoes";
     await program.parseAsync(["node", "test", "--config", testPath]);
@@ -84,17 +89,10 @@ describe("testing configs load", () => {
   });
 });
 
-function mockExecProcess(config: IConfigOptions) {
+function mockExecProcess(config: corde.IConfigOptions) {
   Reader.prototype.loadConfig = jest.fn().mockReturnValue(config);
 
-  jest.spyOn(validateFn, "validate").mockImplementation(undefined);
-  jest.spyOn(execCommand, "runTests").mockImplementation(undefined);
-
-  mockProcess.mockProcessExit();
-  runtime.loginBot = jest.fn().mockReturnValue(Promise.resolve());
-  runtime.events.onceReady = jest.fn().mockReturnValue(Promise.resolve());
-
-  summary.print = jest.fn().mockReturnValue("");
-
-  jest.spyOn(validateFn, "validate");
+  jest.spyOn(validateFn, "validate").mockImplementation(() => null);
+  jest.spyOn(execCommand, "runTests").mockImplementation(() => null);
+  //mockProcess.mockProcessExit();
 }
