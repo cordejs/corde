@@ -1,12 +1,10 @@
 import { Reader } from "../../src/core/Reader";
-import * as validateFn from "../../src/cli/validate";
-import * as execCommand from "../../src/cli/exec";
 import runtime from "../../src/core/runtime";
 import { DEFAULT_CONFIG } from "../../src/const";
-import { summary } from "../../src/core/summary";
-import { mockProcess } from "../mocks";
-import { program } from "../../src/cli/cli";
+import { program } from "../../src/cli";
 import MockDiscord from "../mocks/mockDiscord";
+import { ExecCommand, ValidateCommand } from "../../src/cli/commands";
+import { commandFactory } from "../../src/cli/common";
 
 jest.mock("ora", () => {
   const spinner = {
@@ -39,7 +37,8 @@ describe("testing configs load", () => {
     const TIMEOUT = 100000;
     config.timeout = TIMEOUT;
     mockExecProcess(config);
-    await execCommand.exec({
+    const execCon = commandFactory.getCommand(ExecCommand);
+    await execCon.handler({
       files: "",
       config: "",
     });
@@ -81,7 +80,7 @@ describe("testing configs load", () => {
     expect(runtime.testMatches).toEqual(testMatches.split(" "));
   });
 
-  it.only("should call go command with --config option", async () => {
+  it("should call go command with --config option", async () => {
     mockExecProcess(config);
     const testPath = "potatoes";
     await program.parseAsync(["node", "test", "--config", testPath]);
@@ -91,8 +90,9 @@ describe("testing configs load", () => {
 
 function mockExecProcess(config: corde.IConfigOptions) {
   Reader.prototype.loadConfig = jest.fn().mockReturnValue(config);
-
-  jest.spyOn(validateFn, "validate").mockImplementation(() => null);
-  jest.spyOn(execCommand, "runTests").mockImplementation(() => null);
-  //mockProcess.mockProcessExit();
+  jest.spyOn(ValidateCommand.prototype, "handler").mockImplementation(() => null);
+  //jest.spyOn(ExecCommand.prototype, "handler").mockImplementation(() => null);
+  jest.spyOn(ExecCommand.prototype, "dispose").mockImplementation(() => null);
+  // @ts-expect-error
+  jest.spyOn(ExecCommand.prototype, "runTests").mockImplementation(() => null);
 }

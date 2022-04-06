@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { forEachProp } from "../utils/forEachProp";
+import { forEachPropsName } from "../utils/forEachPropsName";
 import { getStackTrace } from "../utils/getStackTrace";
 import { isNullOrUndefined } from "../utils/isNullOrUndefined";
 import { any } from "../expect/asymmetricMatcher";
@@ -37,7 +37,7 @@ function buildAndMatcherFunctions(params: ICreateMatcherParam) {
   const commandReturn: any = {};
   commandReturn.not = {};
 
-  forEachProp(matchers, (matcher) => {
+  forEachPropsName(matchers, (matcher) => {
     commandReturn[matcher] = createMatcherFn({
       commandName,
       isDebug,
@@ -224,7 +224,7 @@ function createLocalCommand(isDebug: boolean) {
       },
     };
 
-    forEachProp(matchers, (matcher) => {
+    forEachPropsName(matchers, (matcher) => {
       commandReturn.should[matcher] = createMatcherFn({
         commandName,
         isDebug,

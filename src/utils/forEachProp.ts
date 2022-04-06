@@ -1,7 +1,8 @@
 import { ObjectLike } from "../types";
 
 /**
- * Get all property names of a given object and iterate over them.
+ * Iterate over a object by each property that it
+ * has, excluding `__esModule`.
  *
  * @param obj Object to get his property
  * @param fn Function to be executed in iteration
@@ -10,10 +11,10 @@ import { ObjectLike } from "../types";
  */
 export function forEachProp<T extends ObjectLike>(
   obj: T,
-  fn: (key: keyof T, index: number, array: (keyof T)[]) => void,
+  fn: (key: T[keyof T], index: number, array: (keyof T)[]) => void,
 ) {
-  const props = Object.getOwnPropertyNames(obj);
+  const props = Object.getOwnPropertyNames(obj).filter((p) => p !== "__esModule") as (keyof T)[];
   for (let i = 0; i < props.length; i++) {
-    fn(props[i], i, props);
+    fn(obj[props[i]], i, props);
   }
 }

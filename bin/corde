@@ -21,7 +21,7 @@ if (majorVer < MINIMAL_NODE_VERSION) {
 }
 
 try {
-  require("../lib/src/cli/cli");
+  require("../lib/src/cli");
 } catch (error) {
   console.error(error);
 }

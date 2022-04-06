@@ -1,14 +1,8 @@
-import { DEFAULT_CONFIG } from "../const";
-import { debug } from "../core/debug";
-import { logger } from "../core/Logger";
-import { reader } from "../core/Reader";
-import runtime from "../core/runtime";
-import { registerTsNode } from "../core/tsRegister";
-
-export function showConfigs(options: corde.Config.ICLIOptions) {
-  loadConfigs(options);
-  logger.log(runtime.configs.getProps());
-}
+import { DEFAULT_CONFIG } from "../../const";
+import { debug } from "../../core/debug";
+import { reader } from "../../core/Reader";
+import runtime from "../../core/runtime";
+import { registerTsNode } from "../../core/tsRegister";
 
 export function loadConfigs(options: corde.Config.ICLIOptions) {
   if (options.config) {
