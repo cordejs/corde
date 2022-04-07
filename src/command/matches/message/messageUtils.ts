@@ -231,9 +231,15 @@ export namespace messageUtils {
 
     if (embedLike.author) {
       if (typeof embedLike.author === "string") {
-        embed.setAuthor(embedLike.author);
+        embed.setAuthor({
+          name: embedLike.author,
+        });
       } else {
-        embed.setAuthor(embedLike.author.name, embedLike.author.iconURL, embedLike.author.url);
+        embed.setAuthor({
+          name: embedLike.author.name,
+          iconURL: embedLike.author.iconURL,
+          url: embedLike.author.url,
+        });
       }
     }
 

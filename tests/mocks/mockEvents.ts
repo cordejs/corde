@@ -151,7 +151,7 @@ export class MockEvents {
    * @internal
    */
   mockOnceMessage(message?: Message) {
-    this._corde.events.onceMessage = jest
+    this._corde.events.onceMessageCreate = jest
       .fn()
       .mockReturnValue(message ?? this._mockDiscord.message);
   }

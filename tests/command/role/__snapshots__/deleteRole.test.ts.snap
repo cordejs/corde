@@ -1,5 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`testing deleteRole function is not true should get timeout when trying to delete the role, but should pass 1`] = `
+Object {
+  "pass": true,
+  "testName": "deleteRole",
+}
+`;
+
 exports[`testing deleteRole function isNot false should fail due to inexistent role 1`] = `
 Object {
   "message": "    
@@ -46,40 +53,6 @@ exports[`testing deleteRole function isNot false should return a failed test due
 Object {
   "message": "    
     can not send message to channel x
-",
-  "pass": false,
-  "testName": "deleteRole",
-}
-`;
-
-exports[`testing deleteRole function isNot false should return a passed report for a found role with property role.deleted = true role 1`] = `
-Object {
-  "pass": true,
-  "testName": "deleteRole",
-}
-`;
-
-exports[`testing deleteRole function isnot true should get timeout when trying to delete the role, but should pass 1`] = `
-Object {
-  "pass": true,
-  "testName": "deleteRole",
-}
-`;
-
-exports[`testing deleteRole function isnot true should return a failed report for a deleted role(isNot true) 1`] = `
-Object {
-  "message": "    
-    expected: role undefined to not be deleted
-",
-  "pass": false,
-  "testName": "deleteRole",
-}
-`;
-
-exports[`testing deleteRole function isnot true should return a failed report for a found role with property role.deleted = true role 1`] = `
-Object {
-  "message": "    
-    expected: role undefined to not be deleted
 ",
   "pass": false,
   "testName": "deleteRole",

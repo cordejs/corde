@@ -6,7 +6,7 @@ module.exports = {
   action: async (msg: Message, roleId: string) => {
     const role = getRoleById(msg, roleId);
 
-    if (role && !role.deleted) {
+    if (role) {
       await role.delete();
     }
   },

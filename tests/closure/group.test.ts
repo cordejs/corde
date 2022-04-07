@@ -64,6 +64,7 @@ describe("testing group function", () => {
       group("", () => {});
     });
 
+    runtime.configs.setConfigs({ suiteTimeout: 100 });
     expect(testCollector.currentTestFile.closures.length).toEqual(1);
     try {
       await (testCollector.currentTestFile.closures[0] as ITest).action();

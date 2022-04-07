@@ -45,7 +45,7 @@ export async function deleteRole(
   }
   const deletedRole = await this.cordeBot.fetchRole(role.id);
 
-  if (!deletedRole || deletedRole.deleted) {
+  if (!deletedRole) {
     this.hasPassed = true;
   }
 
@@ -66,16 +66,8 @@ async function getRoleOrInvalidMessage(prop: CommandState, roleIdentifier: corde
   }
 
   const role = await prop.cordeBot.findRole(roleIdentifier);
-
   if (!role) {
     return prop.createFailedTest(roleUtils.validateRole(role, roleIdentifier));
-  }
-
-  if (role.deleted) {
-    return prop.createFailedTest(
-      `expected: role ${role.id} not deleted\n`,
-      `received: role was deleted before call the command '${prop.command}'`,
-    );
   }
 
   return role;

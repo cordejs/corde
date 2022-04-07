@@ -29,11 +29,7 @@ describe(`testing ${testName} function`, () => {
   });
 
   it("should fail due to undefined roleIdentifier", async () => {
-    const report = await debugCon().should.renameRole(
-      "egg",
-      // @ts-expect-error
-      "",
-    );
+    const report = await debugCon().should.renameRole("egg", "");
 
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
