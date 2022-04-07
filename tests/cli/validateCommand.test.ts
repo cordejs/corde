@@ -1,8 +1,12 @@
-import { IConfigOptions } from "../../src/types";
-import { validate } from "../../src/cli/validate";
+import { program } from "../../src/cli";
+import { ValidateCommand } from "../../src/cli/commands";
+import { commandFactory } from "../../src/cli/common";
 import { FileError, PropertyError } from "../../src/errors";
 
-let configs: IConfigOptions;
+let configs: corde.IConfigOptions;
+
+commandFactory.loadCommands(program);
+const validate = commandFactory.getCommand(ValidateCommand);
 
 beforeEach(() => {
   configs = {
@@ -19,55 +23,54 @@ beforeEach(() => {
 describe("Testing validate CLI function", () => {
   it("Should return false due to no botPrefix", () => {
     configs.botPrefix = "";
-    expect(async () => await validate(configs)).rejects.toBeTruthy();
+    expect(async () => await validate.handler(configs)).rejects.toBeTruthy();
   });
 
   it("Should return false due to no botTestId", () => {
     configs.botTestId = "";
-    expect(async () => await validate(configs)).rejects.toThrow(PropertyError);
+    expect(async () => await validate.handler(configs)).rejects.toThrow(PropertyError);
   });
 
   it("Should return false due to no channelId", () => {
     configs.channelId = "";
-    expect(async () => await validate(configs)).rejects.toThrow(PropertyError);
+    expect(async () => await validate.handler(configs)).rejects.toThrow(PropertyError);
   });
 
   it("Should return false due to no cordeBotToken", () => {
     configs.cordeBotToken = "";
-    expect(async () => await validate(configs)).rejects.toThrow(PropertyError);
+    expect(async () => await validate.handler(configs)).rejects.toThrow(PropertyError);
   });
 
   it("Should return false due to no guildId", () => {
     configs.guildId = "";
-    expect(async () => await validate(configs)).rejects.toThrow(PropertyError);
+    expect(async () => await validate.handler(configs)).rejects.toThrow(PropertyError);
   });
 
   it("Should return false due to no testMatches", () => {
     configs.testMatches = [];
-    expect(async () => await validate(configs)).rejects.toThrow(PropertyError);
+    expect(async () => await validate.handler(configs)).rejects.toThrow(PropertyError);
   });
 
   it("Should return false due invalid dir", () => {
     configs.testMatches = ["./tests/dirTest/**"];
-    expect(async () => await validate(configs)).rejects.toThrow(PropertyError);
+    expect(async () => await validate.handler(configs)).rejects.toThrow(PropertyError);
   });
 
   it("Should not throw error due to existence of file", () => {
     configs.testMatches = ["./tests/dirTestFiles/testFile.test.ts"];
-    expect(async () => await validate(configs)).not.toThrow(PropertyError);
+    expect(async () => await validate.handler(configs)).not.toThrow(PropertyError);
   });
 
   it("Should throw error due to inexistent of file", () => {
     configs.testMatches = ["./tests/dirTestFiles/testF.test.ts"];
-    expect(async () => await validate(configs)).rejects.toThrow(PropertyError);
+    expect(async () => await validate.handler(configs)).rejects.toThrow(PropertyError);
   });
 
   it("Should return true due all configs presence", () => {
-    expect(async () => await validate(configs)).not.toThrowError();
+    expect(async () => await validate.handler(configs)).not.toThrowError();
   });
 
   it("Should throw exception due to null parameter", () => {
-    // @ts-expect-error
-    expect(async () => await validate(null)).rejects.toThrow(FileError);
+    expect(async () => await validate.handler(null)).rejects.toThrow(FileError);
   });
 });

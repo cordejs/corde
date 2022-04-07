@@ -3,7 +3,7 @@ import runtime from "../../src/core/runtime";
 import { DEFAULT_CONFIG } from "../../src/const";
 import { program } from "../../src/cli";
 import MockDiscord from "../mocks/mockDiscord";
-import { ExecCommand, ValidateCommand } from "../../src/cli/commands";
+import { ExecCommand, InitCommand, ValidateCommand } from "../../src/cli/commands";
 import { commandFactory } from "../../src/cli/common";
 
 jest.mock("ora", () => {
@@ -91,7 +91,7 @@ describe("testing configs load", () => {
 function mockExecProcess(config: corde.IConfigOptions) {
   Reader.prototype.loadConfig = jest.fn().mockReturnValue(config);
   jest.spyOn(ValidateCommand.prototype, "handler").mockImplementation(() => null);
-  //jest.spyOn(ExecCommand.prototype, "handler").mockImplementation(() => null);
+  jest.spyOn(InitCommand.prototype, "dispose").mockImplementation(() => null);
   jest.spyOn(ExecCommand.prototype, "dispose").mockImplementation(() => null);
   // @ts-expect-error
   jest.spyOn(ExecCommand.prototype, "runTests").mockImplementation(() => null);

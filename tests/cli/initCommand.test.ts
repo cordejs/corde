@@ -1,5 +1,7 @@
 /* eslint-disable no-console */
-import { init } from "../../src/cli/init";
+import { program } from "../../src/cli";
+import { InitCommand } from "../../src/cli/commands";
+import { commandFactory } from "../../src/cli/common";
 import { FsMockUtils } from "../mockUtils/fs";
 
 // As there are a local config file for manual tests,
@@ -7,9 +9,13 @@ import { FsMockUtils } from "../mockUtils/fs";
 // all tests.
 
 const fs = new FsMockUtils();
+commandFactory.loadCommands(program);
+const init = commandFactory.getCommand(InitCommand);
+
 jest.mock("fs");
 
 beforeAll(() => {
+  jest.spyOn(InitCommand.prototype, "dispose").mockImplementation(() => null);
   fs.createMockForWriteFileSync();
 });
 
@@ -19,32 +25,32 @@ afterEach(() => {
 
 describe("Testing creation of config file in init", () => {
   it("should create corde.config.js file", () => {
-    init("js");
+    init.handler("js");
     expect(fs.getCreatedFileContent).toMatchSnapshot();
   });
 
   it("should create corde.config.ts file", () => {
-    init("ts");
+    init.handler("ts");
     expect(fs.getCreatedFileContent).toMatchSnapshot();
   });
 
   it("should create corde.config.json file", () => {
-    init("json");
+    init.handler("json");
     expect(fs.getCreatedFileContent).toMatchSnapshot();
   });
 
   it("should create corde.config.json file with directly argument", () => {
-    init("json");
+    init.handler("json");
     expect(fs.writeFileSyncArgs).toContain(fs.buildFilePath("corde.config.json"));
   });
 
   it("should create corde.config.json file without directly argument", () => {
-    init();
+    init.handler();
     expect(fs.writeFileSyncArgs).toContain(fs.buildFilePath("corde.config.json"));
   });
 
   it("should create corde.config.json file with undefined argument", () => {
-    init(undefined);
+    init.handler(undefined);
     expect(fs.writeFileSyncArgs).toContain(fs.buildFilePath("corde.config.json"));
   });
 });
@@ -55,6 +61,6 @@ describe("Testing content of config file in init", () => {
       throw new Error("testing error");
     });
 
-    expect(() => init("json")).toThrow(Error);
+    expect(() => init.handler("json")).toThrow(Error);
   });
 });

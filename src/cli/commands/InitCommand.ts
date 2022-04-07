@@ -67,7 +67,7 @@ export class InitCommand extends CliCommand<ConfigFileType> implements IDisposab
     }
   }
 
-  dispose(): void | Promise<void> {
+  dispose() {
     exit(0);
   }
 
