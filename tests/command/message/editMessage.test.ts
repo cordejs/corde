@@ -38,9 +38,7 @@ describe(`testing ${testName} function`, () => {
   });
 
   it("should return a failed test due to invalid parameter (undefined)", async () => {
-    const report = await debugCon()
-      .should // @ts-expect-error
-      .editMessage(undefined);
+    const report = await debugCon().should.editMessage(undefined);
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });

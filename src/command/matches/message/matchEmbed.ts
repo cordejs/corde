@@ -13,7 +13,7 @@ import { messageUtils } from "./messageUtils";
  *
  * @internal
  */
-export async function embedMatch(this: CommandState, embed: corde.IMessageEmbed) {
+export async function matchEmbed(this: CommandState, embed: corde.IMessageEmbed) {
   if (typeOf(embed) !== "object") {
     return this.createFailedTest(
       "expected: parameter to be an object of type IMessageEmbed \n",

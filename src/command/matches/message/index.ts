@@ -4,5 +4,5 @@ export * from "./unpinMessage";
 export * from "./pinMessage";
 export * from "./editMessage";
 export * from "./messageContentContains";
-export * from "./embedMatch";
+export * from "./matchEmbed";
 export * from "./respond";

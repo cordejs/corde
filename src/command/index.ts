@@ -266,8 +266,16 @@ type DebugTypes<T> = {
     : T[P];
 };
 
+type MatchersWithNot = {
+  not: typeof matchers;
+} & typeof matchers;
+
+type Matchers = {
+  should: MatchersWithNot;
+};
+
 interface DebugFn {
-  <T>(value: T, channelId?: string, cordeBot?: ICordeBot): DebugTypes<corde.IShouldCommands>;
+  <T>(value: T, channelId?: string, cordeBot?: ICordeBot): DebugTypes<Matchers>;
 }
 
 /**

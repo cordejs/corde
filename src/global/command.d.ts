@@ -225,12 +225,12 @@ declare namespace corde {
      *  // The follow test will pass because we are only checking if the returning embed
      *  // has the color property equals.
      *
-     *  expect("embed").toEmbedMatch({ color: "#0099ff" }); // Test pass
+     *  command("embed").should.matchEmbed({ color: "#0099ff" }); // Test pass
      *
      * @param embed Embed message to check with returned embed of an command.
      * @since 4.0
      */
-    embedMatch(embed: IMessageEmbed): TReturn;
+    matchEmbed(embed: IMessageEmbed): TReturn;
 
     /**
      * Verify if a sent message **contains** the value informed in `expectedContent`.

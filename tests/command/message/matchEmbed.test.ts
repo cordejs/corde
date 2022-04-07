@@ -5,7 +5,7 @@ import { debugCommand } from "../../../src/command";
 import { MockEvents } from "../../mocks";
 import { isNullOrUndefined } from "../../../src/utils/isNullOrUndefined";
 
-const testName = "embedMatch";
+const testName = "matchEmbed";
 
 const failReport: ITestReport = {
   pass: false,
@@ -25,9 +25,9 @@ function debugCon(customCommand?: string, customChannelId?: string, customClient
 }
 
 function mockEmbedMessage() {
-  const events = new MockEvents(cordeClient, mockDiscord);
+  const mockEvents = new MockEvents(cordeClient, mockDiscord);
   mockDiscord.message.embeds.push(mockDiscord.messageEmbed);
-  events.mockOnceMessage(mockDiscord.message);
+  mockEvents.mockOnceMessage(mockDiscord.message);
 }
 
 describe(`testing ${testName} function`, () => {
@@ -37,9 +37,7 @@ describe(`testing ${testName} function`, () => {
 
   it("should return a failed test due to invalid parameter (null)", async () => {
     mockEmbedMessage();
-    const report = await debugCon()
-      // @ts-expect-error
-      .should.embedMatch(null);
+    const report = await debugCon().should.matchEmbed(null);
 
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
@@ -47,7 +45,7 @@ describe(`testing ${testName} function`, () => {
 
   it("should get success test due to bot returned equal messages that matches", async () => {
     mockEmbedMessage();
-    const report = await debugCon().should.embedMatch({
+    const report = await debugCon().should.matchEmbed({
       author: mockDiscord.messageEmbed.author,
     });
 
@@ -57,7 +55,7 @@ describe(`testing ${testName} function`, () => {
 
   it("should get failed test due to bot returned equal messages that matches isNot(true)", async () => {
     mockEmbedMessage();
-    const report = await debugCon().should.not.embedMatch({
+    const report = await debugCon().should.not.matchEmbed({
       author: mockDiscord.messageEmbed.author,
     });
 
@@ -170,9 +168,9 @@ describe(`testing ${testName} function`, () => {
       let report: ITestReport = {} as any;
 
       if (options?.isNot) {
-        report = await debugCon().should.not.embedMatch(messageEmbed);
+        report = await debugCon().should.not.matchEmbed(messageEmbed);
       } else {
-        report = await debugCon().should.embedMatch(messageEmbed);
+        report = await debugCon().should.matchEmbed(messageEmbed);
       }
 
       if (isNullOrUndefined(options?.pass) || options?.pass) {
