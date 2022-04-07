@@ -20,18 +20,6 @@ describe("Testing CordeBot object", () => {
   });
 
   describe("testing findGuild()", () => {
-    it("should throw error due to no guildManager(Don't know if it's possible)", (done) => {
-      try {
-        const client = mockDiscord.client;
-        client.guilds = null;
-        initCordeClient(mockDiscord, client);
-        client.emit("ready", client);
-      } catch (error) {
-        expect(error).toBeTruthy();
-        done();
-      }
-    });
-
     it("should throw error due guilds.cache.has === false", async () => {
       try {
         const client = mockDiscord.client;
@@ -74,26 +62,6 @@ describe("Testing CordeBot object", () => {
   });
 
   describe("testing findChannel()", () => {
-    it("should throw error due to no channelManager(Don't know if it's possible)", (done) => {
-      const client = mockDiscord.client;
-
-      client.guilds.cache.has = jest.fn().mockReturnValueOnce(true);
-      client.guilds.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.guild);
-
-      mockDiscord.guild.channels = null;
-
-      const corde = initCordeClient(mockDiscord, client);
-      const findMock = jest.spyOn(corde, "findChannel");
-
-      try {
-        client.emit("ready", client);
-      } catch (error) {
-        expect(findMock).toBeCalled();
-        expect(error).toBeTruthy();
-        done();
-      }
-    });
-
     it("should throw error guild.channels.cache.has === false", async () => {
       const client = mockDiscord.client;
 
