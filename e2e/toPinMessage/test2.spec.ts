@@ -1,4 +1,4 @@
-/// <reference types="../../lib/src/global" />
+/// <reference types="../../src/global" />
 
 describe("should fail when trying to pin a message", async () => {
   it("", async () => {

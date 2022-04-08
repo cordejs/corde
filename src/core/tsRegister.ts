@@ -3,7 +3,7 @@ import { debug } from "./debug";
 /**
  * @internal
  * Register `ts-node` to support typescript written tests.
- * @param projectPath Path for tsconfig.json. If it is not provided,
+ * @param configs Path for tsconfig.json. If it is not provided,
  * is tyred to get the file from root.
  */
 export function registerTsNode(configs: Pick<corde.IConfigOptions, "project">) {

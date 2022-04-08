@@ -1,6 +1,4 @@
-/// <reference types="../../lib/src/global" />
-
-import testUtils from "../testUtils";
+/// <reference types="../../src/global" />
 
 async function asyncFunction() {
   return new Promise((resolve) => {
@@ -14,6 +12,4 @@ beforeAll(async () => {
   await asyncFunction();
 });
 
-it("", () => {
-  testUtils.addMockClosure();
-});
+it("", () => {});

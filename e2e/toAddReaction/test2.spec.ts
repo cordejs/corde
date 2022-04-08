@@ -1,4 +1,4 @@
-/// <reference types="../../lib/src/global" />
+/// <reference types="../../src/global" />
 
 it("should fail in add reaction to a message", async () => {
   // Intentionally wrong command

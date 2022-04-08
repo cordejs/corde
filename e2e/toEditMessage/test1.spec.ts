@@ -1,4 +1,4 @@
-/// <reference types="../../lib/src/global" />
+/// <reference types="../../src/global" />
 import { sendMessage } from "../@bot";
 
 it("should edit a message", async () => {

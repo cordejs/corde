@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 
-/// <reference types="../../lib/src/global" />
+/// <reference types="../../src/global" />
 
 let role = null;
 const roleName = "role-to-delete";

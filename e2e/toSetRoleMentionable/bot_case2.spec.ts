@@ -1,4 +1,4 @@
-/// <reference types="../../lib/src/global" />
+/// <reference types="../../src/global" />
 
 it("should fail when attempting to set role mentionable", async () => {
   const role = corde.bot.getRole({ name: "random-role" });

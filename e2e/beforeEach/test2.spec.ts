@@ -1,11 +1,7 @@
-/// <reference types="../../lib/src/global" />
-
-import testUtils from "../testUtils";
+/// <reference types="../../src/global" />
 
 beforeEach(async () => {
   corde.wait(100);
 });
 
-it("", () => {
-  testUtils.addMockClosure();
-});
+it("", () => {});

@@ -1,4 +1,4 @@
-/// <reference types="../../lib/src/global" />
+/// <reference types="../../src/global" />
 
 import { Role } from "discord.js";
 

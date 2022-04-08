@@ -1,4 +1,4 @@
-/// <reference types="../../lib/src/global" />
+/// <reference types="../../src/global" />
 
 it("should fail to edit a message", async () => {
   const newValue = "newMessageEdited";

@@ -1,4 +1,4 @@
-/// <reference types="../../lib/src/global" />
+/// <reference types="../../src/global" />
 
 describe("test", async () => {
   const msg = await corde.bot.send("oldValue");

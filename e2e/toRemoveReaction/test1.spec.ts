@@ -1,4 +1,4 @@
-/// <reference types="../../lib/src/global" />
+/// <reference types="../../src/global" />
 
 it("should remove a reaction from a message", async () => {
   const msg = await corde.bot.send("toReactMessage");

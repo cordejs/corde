@@ -1,9 +1,5 @@
-/// <reference types="../../lib/src/global" />
-
-import testUtils from "../testUtils";
+/// <reference types="../../src/global" />
 
 beforeEach(() => {});
 
-it("", () => {
-  testUtils.addMockClosure();
-});
+it("", () => {});

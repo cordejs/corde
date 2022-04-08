@@ -7,8 +7,6 @@ import { CliOutput, OSEnv } from "./types";
 import path from "path";
 import chalk from "chalk";
 
-import runtime from "../lib/src/core/runtime";
-
 function getWindowsConfigs() {
   return {
     botPrefix: process.env.BOT_PREFIX,
@@ -77,7 +75,13 @@ namespace testUtils {
     let data = `File: ${filename}\n`;
     data += `exit code: ${output.exitCode}\n`;
 
-    data += output.stdout;
+    if (output.stdout.trim()) {
+      data += Array.from(new Set(output.stdout.split(" "))).toString();
+    }
+
+    if (output.stderr.trim()) {
+      data += Array.from(new Set(output.stderr.split(" "))).toString();
+    }
 
     const SNAPSHOT_FOLDER = "./e2e/__snapshots__";
 
@@ -107,8 +111,8 @@ namespace testUtils {
 
       console.log(`${chalk.bgYellow.grey(" RUNNING ")}: ${chalk.magenta(con)}`);
 
-      const child = childProcess.exec(con, (_error, stdout) => {
-        resolve({ stdout: removeANSIColorStyle(stdout), exitCode: child.exitCode });
+      const child = childProcess.exec(con, (_error, stdout, stderr) => {
+        resolve({ stdout: removeANSIColorStyle(stdout), exitCode: child.exitCode, stderr });
       });
     });
   }
@@ -156,10 +160,6 @@ namespace testUtils {
       default:
         return getDevConfigs();
     }
-  }
-
-  export function addMockClosure() {
-    runtime.testCollector.addToGroupClosure(() => Promise.resolve({ pass: true } as any));
   }
 }
 

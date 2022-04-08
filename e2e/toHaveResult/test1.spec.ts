@@ -1,4 +1,4 @@
-/// <reference types="../../lib/src/global" />
+/// <reference types="../../src/global" />
 
 describe("testing todoInCascade", () => {
   it("test should pass", async () => {

@@ -22,6 +22,7 @@ import chalk from "chalk";
 import { login, bot } from "./@bot";
 import { generator } from "./tests";
 import testUtils from "./testUtils";
+import { CliOutput, ITestFile } from "./types";
 
 function logoutBot() {
   console.log(chalk.cyanBright("logout bot"));
@@ -31,7 +32,7 @@ function logoutBot() {
 async function main() {
   console.log(`Environment: ${chalk.cyan(testUtils.env())}`);
   let exitCode = 0;
-
+  let _testsPass = true;
   process.stdout.write(chalk.cyanBright("logging example bot..."));
 
   await login();
@@ -47,16 +48,25 @@ async function main() {
       if (selectedTests.length === 0 || selectedTests.includes(fileObj.id.toString())) {
         const output = await testFn();
         console.log(chalk.cyanBright(`Output of: ${fileObj.testFile}\n`));
-        console.log(output.stdout);
-        testUtils.saveOutput(fileObj.testFile, output);
 
-        if (output.exitCode !== fileObj.exitCodeExpectation) {
+        if (output.stdout.trim()) {
+          console.log(removeDuplicates(output.stdout));
+        }
+
+        if (output.stderr.trim()) {
+          console.error(removeDuplicates(output.stderr));
+        }
+
+        //testUtils.saveOutput(fileObj.testFile, output);
+
+        if (testsPass(output, fileObj)) {
+          _testsPass = false;
+          logoutBot();
           console.log(
             `${chalk.bgRed.black(" FAIL ")} Exit code: ${output.exitCode}. Expected: ${
               fileObj.exitCodeExpectation
             }`,
           );
-          logoutBot();
           return 1;
         }
       }
@@ -69,11 +79,21 @@ async function main() {
     exitCode = 1;
   } finally {
     console.log("\n");
-    if (exitCode === 0) {
+    if (_testsPass) {
       console.log(`${chalk.bgGreen(" SUCCESS ")}: All tests passed`);
     }
   }
   return exitCode;
+}
+
+function removeDuplicates(val: string) {
+  return Array.from(new Set(val.split("\n")))
+    .join("\n")
+    .toString();
+}
+
+function testsPass(output: CliOutput, fileObj: ITestFile) {
+  return output.exitCode !== fileObj.exitCodeExpectation;
 }
 
 main().then((exitCode) => process.exit(exitCode));

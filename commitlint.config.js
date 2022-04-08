@@ -17,6 +17,7 @@ module.exports = {
       [
         "build",
         "chore",
+        "e2e",
         "ci",
         "docs",
         "feat",

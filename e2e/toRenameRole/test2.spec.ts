@@ -1,4 +1,4 @@
-/// <reference types="../../lib/src/global" />
+/// <reference types="../../src/global" />
 
 it("should fail when renaming a role", async () => {
   const role = corde.bot.getRole({ name: "old-role-name" });
