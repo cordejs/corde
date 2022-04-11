@@ -12,8 +12,6 @@ import * as config from "../corde.config";
 import * as _commands from "./commands";
 import { Command } from "./types";
 
-const commands: Command[] = _commands as any;
-
 export const bot = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
@@ -81,11 +79,21 @@ export async function login(isDebugMode?: boolean) {
   await Promise.allSettled([loginPromise, readyPromise]);
 }
 
-bot.on("message", async (message) => {
+bot.on("messageCreate", async (message) => {
   try {
+    if (message.author.id === bot.user?.id) {
+      return;
+    }
+
     if (config.botPrefix) {
       const args = message.content.slice(config.botPrefix.length).trim().split(" ");
       const command = args.shift();
+
+      if (!command) {
+        console.error("Command can not be undefined");
+        return;
+      }
+
       await handleCommands(message, command, args);
     }
   } catch (error) {
@@ -94,10 +102,10 @@ bot.on("message", async (message) => {
   }
 });
 
-async function handleCommands(message: Message, command: string | undefined, args: string[]) {
+async function handleCommands(message: Message, command: string, args: string[]) {
   // TODO: Refactor this. '-'
 
-  const con = commands.find((c) => c.name === command);
+  const con = _commands[command as keyof typeof _commands] as Command;
   if (con) {
     return await con.action(message, ...args);
   }
