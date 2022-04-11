@@ -16,7 +16,7 @@ import { Command } from "commander";
  *
  * @throws Error if any config is invalid.
  */
-export class ValidateCommand extends CliCommand<corde.IConfigOptions> {
+export class ValidateCommand extends CliCommand {
   constructor(program: Command) {
     super({
       program,

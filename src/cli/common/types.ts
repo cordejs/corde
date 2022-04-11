@@ -1,8 +1,8 @@
 import { Command } from "commander";
 
-export type ParamsFrom = "type" | "options";
+export type ParamsFrom = "args" | "options";
 export interface ICliCommand {
-  readonly paramsFrom?: ParamsFrom;
+  readonly paramsFrom?: ParamsFrom | ParamsFrom[];
   handler(...args: any[]): Promise<void> | void;
 }
 

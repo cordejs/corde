@@ -20,13 +20,13 @@ declare module "ora" {
   }
 }
 
-export class ExecCommand extends CliCommand<corde.Config.ICLIOptions> implements IDisposable {
+export class ExecCommand extends CliCommand implements IDisposable {
   private spinner!: Ora;
 
   constructor(program: Command) {
     super({
       program,
-      paramsFrom: "options",
+      paramsFrom: ["options", "args"],
     });
 
     process.on("uncaughtException", () => {
@@ -49,6 +49,8 @@ export class ExecCommand extends CliCommand<corde.Config.ICLIOptions> implements
           " for Array, use only 'corde <path1> <path2>'",
       },
     );
+
+    this.setArgs("[files...]");
   }
 
   dispose(code?: number, error?: any): void | Promise<void> {
@@ -63,43 +65,30 @@ export class ExecCommand extends CliCommand<corde.Config.ICLIOptions> implements
     }
   }
 
-  async handler(options: corde.Config.ICLIOptions) {
-    loadConfigs(options);
-    const validateCon = commandFactory.getCommand(ValidateCommand);
-    await validateCon?.handler(runtime.configs);
-    runtime.initBot();
+  async handler(options: corde.Config.ICLIOptions, files?: string[]) {
+    await this.loadConfigsAndValidate(options, files);
     await this.runTests();
   }
 
+  public async loadConfigsAndValidate(options: corde.Config.ICLIOptions, files?: string[]) {
+    loadConfigs(options);
+
+    if (files?.length) {
+      runtime.setConfigs({ testMatches: files }, true);
+    }
+
+    const validateCon = commandFactory.getCommand(ValidateCommand);
+    await validateCon?.handler(runtime.configs);
+    runtime.initBot();
+  }
+
   private async runTests() {
-    const { bot, configs } = runtime;
+    const { configs } = runtime;
 
     debug("loginCordeBotOnStart: " + configs.loginCordeBotOnStart);
     try {
       if (configs.loginCordeBotOnStart) {
-        this.startLoading("login to corde bot");
-        debug(configs.cordeBotToken);
-
-        const loginPromise = bot.login(configs.cordeBotToken).then(() => debug("login ok"));
-
-        const readyPromise = bot.events.onceReady().then(() => debug("ready event ok"));
-
-        const timeoutError = () => {
-          this.spinner.stop();
-          throw new Error(
-            "Timeout attempting to logging corde's bot" +
-              `Check if ${chalk.cyan("cordeBotToken")} is correct`,
-          );
-        };
-
-        await executeWithTimeout(
-          () => Promise.all([loginPromise, readyPromise]),
-          configs.loginTimeout,
-          timeoutError,
-        );
-
-        await bot.loadGuildAndChannel();
-        this.spinner.stop();
+        await this.loginBot();
       }
 
       const testMatches = await reader.getTestsFromFiles({
@@ -141,7 +130,7 @@ export class ExecCommand extends CliCommand<corde.Config.ICLIOptions> implements
   }
 
   async loginBot() {
-    const { configs, bot } = runtime;
+    const { bot, configs } = runtime;
     this.startLoading("login to corde bot");
     debug(configs.cordeBotToken);
 

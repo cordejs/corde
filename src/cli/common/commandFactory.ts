@@ -4,6 +4,7 @@ import { IDisposable } from "../../types";
 import { forEachProp } from "../../utils/forEachProp";
 import { isIn } from "../../utils/isIn";
 import { ICliCommand } from "./types";
+import { CliCommand } from "./CliCommand";
 
 type Constructor<T> = new (...args: any[]) => T;
 
@@ -16,9 +17,24 @@ export namespace commandFactory {
     }
 
     forEachProp(commands, (commandType) => {
-      const con = new commandType(command);
+      const con = new commandType(command) as CliCommand;
       cache.push(con);
-      if (con.paramsFrom === "type") {
+
+      if (Array.isArray(con.paramsFrom)) {
+        if (con.paramsFrom.includes("args") && con.paramsFrom.includes("options")) {
+          con.setAction(async (args) => {
+            const options = command.opts();
+            await con.handler(options, args as any);
+
+            if (isDisposable(con)) {
+              await con.dispose();
+            }
+          });
+        }
+        return;
+      }
+
+      if (con.paramsFrom === "args") {
         con.setAction(async (args) => {
           await con.handler(args);
 

@@ -21,12 +21,12 @@ import { Command } from "commander";
  *
  * @throws Error if could not create the config file
  */
-export class InitCommand extends CliCommand<ConfigFileType> implements IDisposable {
+export class InitCommand extends CliCommand implements IDisposable {
   constructor(program: Command) {
     super({
       program,
       name: "init [type]",
-      paramsFrom: "type",
+      paramsFrom: "args",
     });
 
     this.alias("i")
