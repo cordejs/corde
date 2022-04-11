@@ -72,21 +72,17 @@ export class ExecCommand extends CliCommand<corde.Config.ICLIOptions> implements
   }
 
   private async runTests() {
-    debug("loginCordeBotOnStart: " + runtime.configs.loginCordeBotOnStart);
+    const { bot, configs } = runtime;
+
+    debug("loginCordeBotOnStart: " + configs.loginCordeBotOnStart);
     try {
-      if (runtime.configs.loginCordeBotOnStart) {
+      if (configs.loginCordeBotOnStart) {
         this.startLoading("login to corde bot");
-        debug(runtime.configs.cordeBotToken);
+        debug(configs.cordeBotToken);
 
-        const loginPromise = runtime.bot
-          .login(runtime.configs.cordeBotToken)
-          .then(() => debug("login ok"))
-          .catch(this.errorHandler);
+        const loginPromise = bot.login(configs.cordeBotToken).then(() => debug("login ok"));
 
-        const readyPromise = runtime.bot
-          .onceInternallyReady()
-          .then(() => debug("ready event ok"))
-          .catch(this.errorHandler);
+        const readyPromise = bot.events.onceReady().then(() => debug("ready event ok"));
 
         const timeoutError = () => {
           this.spinner.stop();
@@ -97,16 +93,18 @@ export class ExecCommand extends CliCommand<corde.Config.ICLIOptions> implements
         };
 
         await executeWithTimeout(
-          () => Promise.allSettled([loginPromise, readyPromise]),
-          runtime.configs.loginTimeout,
+          () => Promise.all([loginPromise, readyPromise]),
+          configs.loginTimeout,
           timeoutError,
         );
+
+        await bot.loadGuildAndChannel();
         this.spinner.stop();
       }
 
       const testMatches = await reader.getTestsFromFiles({
-        filesPattern: runtime.configs.testMatches,
-        ignorePattern: runtime.configs.modulePathIgnorePatterns,
+        filesPattern: configs.testMatches,
+        ignorePattern: configs.modulePathIgnorePatterns,
       });
 
       if (testMatches.length === 0) {
@@ -131,9 +129,42 @@ export class ExecCommand extends CliCommand<corde.Config.ICLIOptions> implements
       return this.dispose(0);
     } catch (error) {
       this.spinner.stop();
-      logger.error(error);
+
+      if (error instanceof Error) {
+        logger.error(error.message);
+      } else {
+        logger.error(error);
+      }
+
       this.dispose(1);
     }
+  }
+
+  async loginBot() {
+    const { configs, bot } = runtime;
+    this.startLoading("login to corde bot");
+    debug(configs.cordeBotToken);
+
+    const loginPromise = bot.login(configs.cordeBotToken).then(() => debug("login ok"));
+
+    const readyPromise = bot.events.onceReady().then(() => debug("ready event ok"));
+
+    const timeoutError = () => {
+      this.spinner.stop();
+      throw new Error(
+        "Timeout attempting to logging corde's bot" +
+          `Check if ${chalk.cyan("cordeBotToken")} is correct`,
+      );
+    };
+
+    await executeWithTimeout(
+      () => Promise.all([loginPromise, readyPromise]),
+      configs.loginTimeout,
+      timeoutError,
+    );
+
+    await bot.loadGuildAndChannel();
+    this.spinner.stop();
   }
 
   private errorHandler(error?: Error) {
