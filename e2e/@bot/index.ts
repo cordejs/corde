@@ -10,7 +10,7 @@
 import { Client, Intents, Message } from "discord.js";
 import * as config from "../corde.config";
 import * as _commands from "./commands";
-import { Command } from "./types";
+import { ICommand } from "./types";
 
 export const bot = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
@@ -105,7 +105,7 @@ bot.on("messageCreate", async (message) => {
 async function handleCommands(message: Message, command: string, args: string[]) {
   // TODO: Refactor this. '-'
 
-  const con = _commands[command as keyof typeof _commands] as Command;
+  const con = _commands[command as keyof typeof _commands] as ICommand;
   if (con) {
     return await con.action(message, ...args);
   }

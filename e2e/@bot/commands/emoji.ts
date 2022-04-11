@@ -1,7 +1,7 @@
 import { Message } from "discord.js";
+import { ICommand } from "../types";
 
-module.exports = {
-  name: "emoji",
+export const emoji: ICommand = {
   action: async (msg: Message) => {
     await msg.react("😄");
   },

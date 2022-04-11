@@ -26,7 +26,7 @@ export const cordeBotToken = configs.cordeBotToken;
 export const guildId = configs.guildId;
 export const botToken = configs.botToken;
 export const botPrefix = configs.botPrefix;
-export const timeout = configs.timeout;
+//export const timeout = configs.timeout;
 export const project = "./tsconfig.json";
 
 if (testUtils.isDebug()) {

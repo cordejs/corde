@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import path from "path";
-import { testCases } from "./testCases";
+import { testCases } from "./cases";
 import testUtils from "./testUtils";
 import { CliOutput, ITestFile, TestModule } from "./types";
 

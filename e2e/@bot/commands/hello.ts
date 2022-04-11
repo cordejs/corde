@@ -1,7 +1,6 @@
 import { Message } from "discord.js";
 
-module.exports = {
-  name: "hello",
+export const hello = {
   action: async (msg: Message) => {
     await msg.channel.send("Hello!!");
   },

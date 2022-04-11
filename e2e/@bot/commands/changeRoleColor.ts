@@ -1,8 +1,8 @@
 import { ColorResolvable, Message } from "discord.js";
+import { ICommand } from "../types";
 import { getRoleById } from "../utils";
 
-module.exports = {
-  name: "changeRoleColor",
+export const changeRoleColor: ICommand = {
   action: async (msg: Message, roleId: string, newColor: ColorResolvable | undefined) => {
     if (!newColor) {
       return;

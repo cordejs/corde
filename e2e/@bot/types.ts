@@ -1,6 +1,5 @@
 import { Message } from "discord.js";
 
-export interface Command {
-  name: string;
+export interface ICommand {
   action: (message: Message, ...args: any[]) => Promise<void>;
 }

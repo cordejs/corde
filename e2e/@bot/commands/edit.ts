@@ -1,7 +1,7 @@
 import { Message } from "discord.js";
+import { ICommand } from "../types";
 
-module.exports = {
-  name: "edit",
+export const edit: ICommand = {
   action: async (msg: Message) => {
     if (msg) {
       await msg.edit("newValue");
