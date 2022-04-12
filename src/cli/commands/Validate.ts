@@ -22,8 +22,9 @@ export class Validate extends CliCommand {
       program,
       name: "validate",
     });
-    this.alias("v");
-    this.description("Search for corde configs and check if all data are valid");
+
+    this.setAlias("v");
+    this.setDescription("Search for corde configs and check if all data are valid");
   }
 
   async handler(configs: corde.IConfigOptions) {

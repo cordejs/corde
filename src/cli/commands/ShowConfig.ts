@@ -14,8 +14,8 @@ export class ShowConfig extends CliCommand implements IDisposable {
       paramsFrom: "options",
     });
 
-    this.alias("show");
-    this.description("Loads configs and display them");
+    this.setAlias("show");
+    this.setDescription("Loads configs and display them");
   }
 
   dispose() {

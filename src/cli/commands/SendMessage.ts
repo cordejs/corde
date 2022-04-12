@@ -22,7 +22,7 @@ export class SendMessage extends CliCommand implements IDisposable {
 
     this.setArg("<content>", "Define the content of what should be sent");
 
-    this.options(
+    this.setOptions(
       {
         flags: "-c, --config <type>",
         description: "Set config file path",

@@ -29,9 +29,9 @@ export class Init extends CliCommand implements IDisposable {
       paramsFrom: "args",
     });
 
-    this.alias("i")
-      .description("Initialize a config file with all possible options")
-      .usage("[js ts json] or empty for default type (json)");
+    this.setAlias("i")
+      .setDescription("Initialize a config file with all possible options")
+      .setUsage("[js ts json] or empty for default type (json)");
   }
 
   handler(fileType: ConfigFileType = "json") {

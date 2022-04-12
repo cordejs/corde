@@ -33,7 +33,7 @@ export class Exec extends CliCommand implements IDisposable {
       this.stopLoading();
     });
 
-    this.options(
+    this.setOptions(
       {
         flags: "-c, --config <type>",
         description: "Set config file path",

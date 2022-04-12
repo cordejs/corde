@@ -16,6 +16,9 @@ export interface ICliCommandConstructor {
 
 export interface ICliCommand {
   readonly paramsFrom?: ParamsFrom;
+  /**
+   * Gets **Commander** instance for the command.
+   */
   readonly command: Command;
   handler(...args: any[]): Promise<void> | void;
 }
