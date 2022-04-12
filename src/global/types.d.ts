@@ -998,8 +998,8 @@ declare namespace corde {
 
   export namespace Config {
     export interface ICLIOptions {
-      files: string;
-      config: string;
+      files?: string;
+      config?: string;
     }
   }
 
