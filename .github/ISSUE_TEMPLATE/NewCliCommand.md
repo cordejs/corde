@@ -2,7 +2,7 @@
 name: New CLI Command
 about: Suggest a new CLI command
 title: ""
-labels: "cli"
+labels: ""
 assignees: ""
 ---
 
