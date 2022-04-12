@@ -1,29 +1,19 @@
 import { Command } from "commander";
-import { ICliCommand } from "./types";
-
-type ParamsFrom = "args" | "options";
-
-interface ICommandOptions {
-  flags: string;
-  description?: string;
-  defaultValue?: string;
-}
-
-interface CliCommandConstructor {
-  name?: string;
-  program: Command;
-  paramsFrom?: ParamsFrom | ParamsFrom[];
-}
+import { ICliCommand, ICliCommandConstructor, ICommandOptions, ParamsFrom } from "./types";
 
 export abstract class CliCommand implements ICliCommand {
-  private _paramsFrom?: ParamsFrom | ParamsFrom[];
+  private _paramsFrom?: ParamsFrom;
   private _command: Command;
 
   get paramsFrom() {
     return this._paramsFrom;
   }
 
-  constructor({ name, paramsFrom, program }: CliCommandConstructor) {
+  get command() {
+    return this._command;
+  }
+
+  constructor({ name, paramsFrom, program }: ICliCommandConstructor) {
     this._paramsFrom = paramsFrom;
 
     if (name) {
@@ -38,8 +28,12 @@ export abstract class CliCommand implements ICliCommand {
     return this;
   }
 
-  setArgs(args: string) {
+  setArg(args: string) {
     this._command.argument(args);
+  }
+
+  setArgs(args: string) {
+    this._command.arguments(args);
   }
 
   setAction(action: (...args: any[]) => Promise<void> | void) {

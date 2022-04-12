@@ -12,7 +12,7 @@ import { executeWithTimeout } from "../../utils/executeWithTimeout";
 import { LogUpdate } from "../../utils/LogUpdate";
 import { CliCommand } from "../common/CliCommand";
 import { commandFactory, loadConfigs } from "../common";
-import { ValidateCommand } from "./ValidateCommand";
+import { Validate } from "./Validate";
 
 declare module "ora" {
   interface Ora {
@@ -20,13 +20,13 @@ declare module "ora" {
   }
 }
 
-export class ExecCommand extends CliCommand implements IDisposable {
+export class Exec extends CliCommand implements IDisposable {
   private spinner!: Ora;
 
   constructor(program: Command) {
     super({
       program,
-      paramsFrom: ["options", "args"],
+      paramsFrom: "both",
     });
 
     process.on("uncaughtException", () => {
@@ -50,7 +50,7 @@ export class ExecCommand extends CliCommand implements IDisposable {
       },
     );
 
-    this.setArgs("[files...]");
+    this.setArg("[files...]");
   }
 
   dispose(code?: number, error?: any): void | Promise<void> {
@@ -65,7 +65,7 @@ export class ExecCommand extends CliCommand implements IDisposable {
     }
   }
 
-  async handler(options: corde.Config.ICLIOptions, files?: string[]) {
+  async handler(options: corde.Config.ICLIOptions, ...files: string[]) {
     await this.loadConfigsAndValidate(options, files);
     await this.runTests();
   }
@@ -77,7 +77,7 @@ export class ExecCommand extends CliCommand implements IDisposable {
       runtime.setConfigs({ testMatches: files }, true);
     }
 
-    const validateCon = commandFactory.getCommand(ValidateCommand);
+    const validateCon = commandFactory.getCommand(Validate);
     await validateCon?.handler(runtime.configs);
     runtime.initBot();
   }

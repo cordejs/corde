@@ -21,6 +21,9 @@ export async function login() {
 
 bot.on("messageCreate", async (message) => {
   try {
+    if (message.author.id === config.botToken) {
+      return;
+    }
     const args = message.content.slice(config?.botPrefix?.length).trim().split(" ");
     const command = args.shift();
     await handleCommands(message, command);

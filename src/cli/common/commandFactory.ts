@@ -19,43 +19,31 @@ export namespace commandFactory {
     forEachProp(commands, (commandType) => {
       const con = new commandType(command) as CliCommand;
       cache.push(con);
-
-      if (Array.isArray(con.paramsFrom)) {
-        if (con.paramsFrom.includes("args") && con.paramsFrom.includes("options")) {
-          con.setAction(async (args) => {
-            const options = command.opts();
-            await con.handler(options, args as any);
-
-            if (isDisposable(con)) {
-              await con.dispose();
-            }
-          });
-        }
-        return;
-      }
-
-      if (con.paramsFrom === "args") {
-        con.setAction(async (args) => {
-          await con.handler(args);
-
-          if (isDisposable(con)) {
-            await con.dispose();
-          }
-        });
-        return;
-      }
-
-      con.setAction(async () => {
-        const options = command.opts();
-        await con.handler(options as any);
-
-        if (isDisposable(con)) {
-          await con.dispose();
-        }
-      });
+      setAction(con);
     });
 
     return cache;
+  }
+
+  function setAction(con: CliCommand) {
+    con.setAction(async () => {
+      if (con.paramsFrom === "args") {
+        await con.handler(con.command.args);
+      }
+
+      if (con.paramsFrom === "options") {
+        await con.handler(con.command.opts());
+      }
+
+      if (con.paramsFrom === "both") {
+        await con.handler(con.command.opts(), ...con.command.args);
+      }
+
+      if (isDisposable(con)) {
+        await con.dispose();
+        return;
+      }
+    });
   }
 
   export function getCommand<T>(type: Constructor<T>) {

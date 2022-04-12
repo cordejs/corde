@@ -21,7 +21,7 @@ import { Command } from "commander";
  *
  * @throws Error if could not create the config file
  */
-export class InitCommand extends CliCommand implements IDisposable {
+export class Init extends CliCommand implements IDisposable {
   constructor(program: Command) {
     super({
       program,

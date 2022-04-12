@@ -6,7 +6,7 @@ import { IDisposable } from "../../types";
 import { CliCommand } from "../common/CliCommand";
 import { loadConfigs } from "../common";
 
-export class ShowConfigCommand extends CliCommand implements IDisposable {
+export class ShowConfig extends CliCommand implements IDisposable {
   constructor(program: Command) {
     super({
       program,

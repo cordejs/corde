@@ -87,6 +87,9 @@ export interface ICordeBot {
   sendMessage(
     message: Primitive | MessageOptions | MessagePayload | MessageEmbed,
   ): Promise<Message>;
+
+  loadGuildAndChannel(): Promise<void>;
+
   /**
    * Send a message to a channel defined in configs.
    *
@@ -113,9 +116,8 @@ export interface ICordeBot {
   findRole(roleIdentifier: corde.IRoleIdentifier): Promise<Role | undefined>;
   getRoles(): Collection<string, Role>;
   findGuild(guildId: string): Guild;
-  onceInternallyReady(): Promise<void>;
-  findChannel(channelId: string): GuildBasedChannel | undefined;
-  findChannel(guild: Guild, channelId: string): GuildBasedChannel | undefined;
+  findChannel(channelId: string): Promise<GuildBasedChannel>;
+  findChannel(guild: Guild, channelId: string): Promise<GuildBasedChannel>;
   joinVoiceChannel(channelId: string): Promise<corde.IVoiceChannelState>;
   isInVoiceChannel(): boolean;
   leaveVoiceChannel(): void;

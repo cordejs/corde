@@ -18,25 +18,15 @@ import { typeOf } from "../utils/typeOf";
 import { Events } from "./Events";
 import { joinVoiceChannel } from "@discordjs/voice";
 import EventEmitter from "events";
-import { once } from "events";
 import { errors } from "../const";
 import runtime from "./runtime";
-
-enum InternalEvent {
-  InternallyReady = "internally_ready",
-}
-
-interface InternallyReadyResponse {
-  ok: boolean;
-  error?: string;
-}
 
 /**
  * Encapsulation of Discord Client with all specific
  * functions for corde test.
  */
 export class CordeBot implements ICordeBot {
-  readonly events: Events;
+  public readonly events: Events;
   private readonly _prefix: string;
   private readonly _guildId: string;
   private readonly _channelId: string;
@@ -47,6 +37,8 @@ export class CordeBot implements ICordeBot {
 
   private textChannel!: TextChannel;
   private _isReady: boolean;
+
+  public guild!: Guild;
 
   /**
    * Starts new instance of Discord client with its events.
@@ -69,17 +61,12 @@ export class CordeBot implements ICordeBot {
     this._prefix = prefix;
     this._guildId = guildId;
     this._testBotId = testBotId;
-    this.loadClientEvents();
     this._isReady = false;
     this._emitter = new EventEmitter();
   }
 
   get client() {
     return this._client;
-  }
-
-  get guild() {
-    return this.textChannel.guild;
   }
 
   get roleManager() {
@@ -149,14 +136,6 @@ export class CordeBot implements ICordeBot {
     return this.textChannel.send(message);
   }
 
-  async onceInternallyReady() {
-    const [r] = await once(this._emitter, InternalEvent.InternallyReady);
-    const response: InternallyReadyResponse = r;
-    if (!response.ok) {
-      throw new Error(response.error);
-    }
-  }
-
   /**
    * Send a message to a channel defined in configs.
    *
@@ -170,18 +149,14 @@ export class CordeBot implements ICordeBot {
    */
   async sendTextMessage(message: Primitive, channelId?: string): Promise<Message> {
     this.throwIfMessageIsInvalid(message);
-    this.throwIfChannelIsInvalid();
 
     const formattedMessage = this._prefix + message;
 
     if (channelId) {
       const channel = await this.findChannelById(channelId);
+      this.throwIfChannelIsInvalid(channel, channelId);
 
-      if (!channel) {
-        throw new Error(errors.channel.notFound(channelId));
-      }
-
-      if (channel.isText()) {
+      if (channel?.isText()) {
         return channel.send(formattedMessage);
       }
 
@@ -192,13 +167,13 @@ export class CordeBot implements ICordeBot {
   }
 
   private async findChannelById(channelId: string) {
-    const channel = this._client.channels.cache.get(channelId);
+    const channel = this.guild.channels.cache.get(channelId);
 
     if (channel) {
       return channel;
     }
 
-    return await this._client.channels.fetch(channelId, { cache: true });
+    return await this.guild.channels.fetch(channelId, { cache: true });
   }
 
   /**
@@ -269,29 +244,11 @@ export class CordeBot implements ICordeBot {
 
   /**
    * Get a channel based in the id stored in configs.
-   *
-   * @see Runtime
    */
-  private loadChannel() {
-    const guild = this.findGuild(this._guildId);
-    const channel = this.findChannel(guild, this._channelId);
-    if (!channel) {
-      throw new Error(errors.channel.notFound(this._channelId));
-    }
+  async loadGuildAndChannel() {
+    this.guild = this.findGuild(this._guildId);
+    const channel = await this.findChannel(this._channelId);
     this.textChannel = this.convertToTextChannel(channel);
-  }
-
-  private loadClientEvents() {
-    this.events.onReady(() => {
-      try {
-        this.loadChannel();
-        this._isReady = true;
-        this._emitter.emit(InternalEvent.InternallyReady, { ok: true });
-      } catch (error) {
-        this._isReady = false;
-        this._emitter.emit(InternalEvent.InternallyReady, { ok: false, error: error.message });
-      }
-    });
   }
 
   // Don't use `object` as a type. The `object` type is currently hard to use
@@ -311,10 +268,22 @@ export class CordeBot implements ICordeBot {
     }
   }
 
-  private throwIfChannelIsInvalid() {
-    if (!this.textChannel) {
-      throw new Error(errors.channel.notFound(this._channelId));
+  private throwIfChannelIsInvalid(
+    channel: Channel | any,
+    channelId: string,
+  ): channel is Channel | never {
+    if (!channel) {
+      let errorMessage = errors.channel.notFound(channelId);
+      const channels = this.guild.channels.cache.map((c) => c.id);
+      if (channels.length) {
+        errorMessage += `Available channels: `;
+        errorMessage += channels.toString();
+      } else {
+        errorMessage += `No channel is available for guid: ${this._guildId}`;
+      }
+      throw new Error(errorMessage);
     }
+    return typeof channel === "object";
   }
 
   findGuild(guildId: string) {
@@ -340,13 +309,20 @@ export class CordeBot implements ICordeBot {
     throw new Error(errors.guild.notFound(guildId, availableGuildsIds));
   }
 
-  findChannel(channelId: string): GuildBasedChannel | undefined;
-  findChannel(guild: Guild, channelId: string): GuildBasedChannel | undefined;
-  findChannel(channelIdOrGuild: Guild | string, channelId?: string): GuildBasedChannel | undefined {
+  async findChannel(channelId: string): Promise<GuildBasedChannel>;
+  async findChannel(guild: Guild, channelId: string): Promise<GuildBasedChannel>;
+  async findChannel(
+    channelIdOrGuild: Guild | string,
+    channelId?: string,
+  ): Promise<GuildBasedChannel> {
     if (typeof channelIdOrGuild === "string") {
-      return this.guild.channels.cache.get(channelIdOrGuild);
+      let channel = this.guild.channels.cache.get(channelIdOrGuild);
+      if (!channel) {
+        channel = (await this.guild.channels.fetch(channelIdOrGuild)) as GuildBasedChannel;
+      }
+      this.throwIfChannelIsInvalid(channel, channelIdOrGuild);
+      return channel as GuildBasedChannel;
     }
-
     const guild = channelIdOrGuild;
 
     if (!channelId) {
@@ -361,12 +337,9 @@ export class CordeBot implements ICordeBot {
     }
 
     const channel = guild.channels.cache.find((ch) => ch.id === channelId);
+    this.throwIfChannelIsInvalid(channel, channelId);
 
-    if (channel === undefined) {
-      throw new Error(errors.channel.notFound(channelId));
-    }
-
-    return channel;
+    return channel as GuildBasedChannel;
   }
 
   async joinVoiceChannel(channelId: string) {
