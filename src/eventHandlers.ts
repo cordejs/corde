@@ -3,7 +3,7 @@ import { logger } from "./core/Logger";
 import runtime from "./core/runtime";
 import { exit } from "./exit";
 
-export function initErrorHandlers() {
+export function initEventHandlers() {
   process.on("uncaughtException", async (err: Error) => {
     await printErrorAndExit(err);
   });
@@ -15,6 +15,41 @@ export function initErrorHandlers() {
   process.on("uncaughtExceptionMonitor", async (err) => {
     await printErrorAndExit(err);
   });
+
+  process.on("exit", () => {
+    exitHandle();
+  });
+
+  process.on("beforeExit", () => {
+    exitHandle();
+  });
+
+  process.on("disconnect", () => {
+    exitHandle();
+  });
+
+  // CTRL+C
+  process.on("SIGINT", () => {
+    exitHandle();
+  });
+
+  // Keyboard quit
+  process.on("SIGQUIT", () => {
+    exitHandle();
+  });
+
+  // `kill` command
+  process.on("SIGTERM", () => {
+    exitHandle();
+  });
+
+  process.on("SIGHUP", () => {
+    exitHandle();
+  });
+}
+
+function exitHandle() {
+  runtime.bot?.logout();
 }
 
 async function printErrorAndExit(error: unknown) {
@@ -31,7 +66,7 @@ async function printErrorAndExit(error: unknown) {
   logger.printStacks();
 
   if (runtime.isBotLoggedIn()) {
-    runtime.bot.logout();
+    exitHandle();
   }
 
   if (process.env.ENV !== "TEST") {

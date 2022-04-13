@@ -110,7 +110,7 @@ async function handleCommands(message: Message, command: string, args: string[])
     return await con.action(message, ...args);
   }
   const errorMessage = "Command not found for: " + command;
-  await message.channel.send(errorMessage);
+  //await message.channel.send(errorMessage);
   console.error(errorMessage);
 }
 

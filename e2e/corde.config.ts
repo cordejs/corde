@@ -28,6 +28,7 @@ export const botToken = configs.botToken;
 export const botPrefix = configs.botPrefix;
 //export const timeout = configs.timeout;
 export const project = "./tsconfig.json";
+export const intents = ["ALL"];
 
 if (testUtils.isDebug()) {
   console.log("Loaded configs: ");

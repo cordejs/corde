@@ -7,6 +7,7 @@ import { ObjectLike } from "../types";
  * @param fn Function to be executed in iteration
  *
  * @internal
+ * @deprecated use object.foreachKey instead
  */
 export function forEachPropsName<T extends ObjectLike>(
   obj: T,

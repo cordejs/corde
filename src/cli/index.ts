@@ -1,15 +1,17 @@
 /* eslint-disable no-console */
 
+process.stdin.resume();
+
 import { Command } from "commander";
 import { pack } from "../package";
 import { initEnvVariables } from "../envVariables";
-import { initErrorHandlers } from "../errorHandler";
+import { initEventHandlers } from "../eventHandlers";
 import runtime from "../core/runtime";
 import { injectGlobals } from "../core/injectGlobals";
 import { logger } from "../core/Logger";
 import { commandFactory } from "./common";
 
-initErrorHandlers();
+initEventHandlers();
 initEnvVariables();
 
 // global variables can not be injected when running unity tests

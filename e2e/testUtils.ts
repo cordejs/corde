@@ -104,10 +104,12 @@ namespace testUtils {
    */
   export function runCLI(command: string, setConfig = true) {
     return new Promise<CliOutput>((resolve) => {
-      let con = `node ./bin/corde ${setConfig ? "--config ./e2e/corde.config.ts" : ""} ${command}`;
+      const con = `node ./bin/corde ${
+        setConfig ? "--config ./e2e/corde.config.ts" : ""
+      } ${command}`;
 
-      con += " ";
-      con += testUtils.env();
+      // con += " ";
+      // con += testUtils.env();
 
       console.log(`${chalk.bgYellow.grey(" RUNNING ")}: ${chalk.magenta(con)}`);
 

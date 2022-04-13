@@ -70,7 +70,7 @@ export class Validate extends CliCommand {
       const files = await getFiles(pathDir);
 
       if (files.length === 0) {
-        errors.push(`path: ${pathDir} does not exists`);
+        errors.push(`path: ${chalk.cyan(pathDir)} does not exists`);
       }
     }
   }
