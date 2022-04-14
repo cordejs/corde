@@ -20,6 +20,8 @@ export type FunctionOnly<T> = {
   [U in keyof T]: T[U] extends (...args: any[]) => any ? T[U] : never;
 };
 
+export type Constructor<T> = new (...args: any[]) => T;
+
 /**
  * Provides a mechanism for releasing unmanaged resources.
  */

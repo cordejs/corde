@@ -1,4 +1,4 @@
-import { Client, ConstantsEvents } from "discord.js";
+import { Client, ClientEvents } from "discord.js";
 import { object } from "../utils/object";
 
 type IntentType =
@@ -19,7 +19,8 @@ type IntentType =
   | "DIRECT_MESSAGE_TYPING"
   | "GUILD_SCHEDULED_EVENTS";
 
-type EventNames = keyof ConstantsEvents;
+export type EventNames = keyof ClientEvents;
+
 type EventClass = {
   [k in IntentType]: {
     bitfield: number;
@@ -31,106 +32,101 @@ export namespace intentHelper {
     GUILDS: {
       bitfield: 1 << 0,
       events: [
-        "GUILD_CREATE",
-        "GUILD_UPDATE",
-        "GUILD_DELETE",
-        "GUILD_ROLE_CREATE",
-        "GUILD_ROLE_UPDATE",
-        "GUILD_ROLE_DELETE",
-        "CHANNEL_CREATE",
-        "CHANNEL_UPDATE",
-        "CHANNEL_DELETE",
-        "CHANNEL_PINS_UPDATE",
-        "THREAD_CREATE",
-        "THREAD_UPDATE",
-        "THREAD_DELETE",
-        "THREAD_LIST_SYNC",
-        "THREAD_MEMBER_UPDATE",
-        "THREAD_MEMBERS_UPDATE",
-        "STAGE_INSTANCE_CREATE",
-        "STAGE_INSTANCE_UPDATE",
-        "STAGE_INSTANCE_DELETE",
+        "guildCreate",
+        "guildUpdate",
+        "guildDelete",
+        "roleCreate",
+        "roleUpdate",
+        "roleDelete",
+        "channelCreate",
+        "channelUpdate",
+        "channelDelete",
+        "channelPinsUpdate",
+        "threadCreate",
+        "threadUpdate",
+        "threadDelete",
+        "threadListSync",
+        "threadMemberUpdate",
+        "threadMembersUpdate",
+        "stageInstanceCreate",
+        "stageInstanceUpdate",
+        "stageInstanceDelete",
       ],
     },
     GUILD_MEMBERS: {
       bitfield: 1 << 1,
-      events: [
-        "GUILD_MEMBER_ADD",
-        "GUILD_MEMBER_UPDATE",
-        "GUILD_MEMBER_REMOVE",
-        "THREAD_MEMBERS_UPDATE",
-      ],
+      events: ["guildMemberAdd", "guildMemberUpdate", "guildMemberRemove", "threadMembersUpdate"],
     },
     GUILD_BANS: {
       bitfield: 1 << 2,
-      events: ["GUILD_BAN_ADD", "GUILD_BAN_REMOVE"],
+      events: ["guildBanAdd", "guildBanRemove"],
     },
     GUILD_EMOJIS_AND_STICKERS: {
       bitfield: 1 << 3,
-      events: ["GUILD_EMOJI_UPDATE"],
+      events: ["emojiUpdate"],
     },
     GUILD_INTEGRATIONS: {
       bitfield: 1 << 4,
-      events: ["GUILD_INTEGRATIONS_UPDATE", "INTERACTION_CREATE", "GUILD_INTEGRATIONS_UPDATE"],
+      events: ["guildIntegrationsUpdate", "interactionCreate"],
     },
     GUILD_WEBHOOKS: {
       bitfield: 1 << 5,
-      events: ["WEBHOOKS_UPDATE"],
+      events: ["webhookUpdate"],
     },
     GUILD_INVITES: {
       bitfield: 1 << 6,
-      events: ["INVITE_CREATE", "INVITE_DELETE"],
+      events: ["inviteCreate", "inviteDelete"],
     },
     GUILD_VOICE_STATES: {
       bitfield: 1 << 7,
-      events: ["VOICE_STATE_UPDATE"],
+      events: ["voiceStateUpdate"],
     },
     GUILD_PRESENCES: {
       bitfield: 1 << 8,
-      events: ["PRESENCE_UPDATE"],
+      events: ["presenceUpdate"],
     },
     GUILD_MESSAGES: {
       bitfield: 1 << 9,
-      events: ["MESSAGE_CREATE", "MESSAGE_UPDATE", "MESSAGE_DELETE", "MESSAGE_BULK_DELETE"],
+      events: ["messageCreate", "messageUpdate", "messageDelete", "messageDeleteBulk"],
     },
     GUILD_MESSAGE_REACTIONS: {
       bitfield: 1 << 10,
       events: [
-        "MESSAGE_REACTION_ADD",
-        "MESSAGE_REACTION_REMOVE",
-        "MESSAGE_REACTION_REMOVE_ALL",
-        "MESSAGE_REACTION_REMOVE_EMOJI",
+        "messageReactionAdd",
+        "messageReactionRemove",
+        "messageReactionRemoveAll",
+        "messageReactionRemoveEmoji",
       ],
     },
     GUILD_MESSAGE_TYPING: {
       bitfield: 1 << 11,
-      events: ["TYPING_START"],
+      events: ["typingStart"],
     },
     DIRECT_MESSAGES: {
       bitfield: 1 << 12,
-      events: ["MESSAGE_CREATE", "MESSAGE_UPDATE", "MESSAGE_DELETE", "CHANNEL_PINS_UPDATE"],
+      events: ["messageCreate", "messageUpdate", "messageDelete", "channelPinsUpdate"],
     },
     DIRECT_MESSAGE_REACTIONS: {
       bitfield: 1 << 13,
       events: [
-        "MESSAGE_REACTION_ADD",
-        "MESSAGE_REACTION_REMOVE",
-        "MESSAGE_REACTION_REMOVE_ALL",
-        "MESSAGE_REACTION_REMOVE_EMOJI",
+        "messageReactionAdd",
+        "messageReactionRemove",
+        "messageReactionRemoveAll",
+        "messageReactionRemoveEmoji",
       ],
     },
     DIRECT_MESSAGE_TYPING: {
       bitfield: 1 << 14,
-      events: ["TYPING_START"],
+      events: ["typingStart"],
     },
     GUILD_SCHEDULED_EVENTS: {
       bitfield: 1 << 16,
       events: [
-        "GUILD_SCHEDULED_EVENT_CREATE",
-        "GUILD_SCHEDULED_EVENT_UPDATE",
-        "GUILD_SCHEDULED_EVENT_DELETE",
-        "GUILD_SCHEDULED_EVENT_USER_ADD",
-        "GUILD_SCHEDULED_EVENT_USER_REMOVE",
+        "guildScheduledEventCreate",
+        "guildScheduledEventUpdate",
+        "guildScheduledEventDelete",
+        "guildScheduledEventUserAdd",
+        "guildScheduledEventUserRemove",
       ],
     },
   };
@@ -149,5 +145,17 @@ export namespace intentHelper {
 
     const intents = client.options.intents as number;
     return (intents & eventClass.bitfield) != 0;
+  }
+
+  export function getIntentForEvent(eventName: EventNames) {
+    const eventClasses: string[] = [];
+    object.foreachKey(EVENT_CLASS, (key) => {
+      if (EVENT_CLASS[key].events.includes(eventName)) {
+        eventClasses.push(key);
+        return;
+      }
+    });
+
+    return eventClasses;
   }
 }

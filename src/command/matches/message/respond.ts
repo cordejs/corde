@@ -1,4 +1,5 @@
 import { Message } from "discord.js";
+import { MessageCreate } from "../../../core/event";
 import { Primitive } from "../../../types";
 import { CommandState } from "../CommandState";
 import { messageUtils } from "./messageUtils";
@@ -16,6 +17,15 @@ export async function respond(this: CommandState, expected: Primitive | corde.IM
     return errorReport;
   }
 
+  const event = this.getEvent(MessageCreate);
+
+  if (!event.canListen()) {
+    return this.createMissingIntentError(
+      "Client has no intent to listen to created messages",
+      event.getIntents(),
+    );
+  }
+
   try {
     await this.sendCommandMessage();
   } catch (error) {
@@ -25,7 +35,7 @@ export async function respond(this: CommandState, expected: Primitive | corde.IM
   let returnedMessage: Message;
 
   try {
-    returnedMessage = await this.cordeBot.events.onceMessageCreate({
+    returnedMessage = await event.once({
       author: { id: this.cordeBot.testBotId },
       channel: { id: this.channelId },
       timeout: this.timeout,

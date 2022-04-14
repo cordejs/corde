@@ -21,6 +21,7 @@ export interface ICliCommand {
    */
   readonly command: Command;
   handler(...args: any[]): Promise<void> | void;
+  setAction(action: (...args: any[]) => Promise<void> | void): this;
 }
 
 export interface ICliCommandConstructable {

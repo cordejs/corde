@@ -1,4 +1,6 @@
-import { ICordeBot, IExpectTestParams, ITestReport } from "../../types";
+import chalk from "chalk";
+import { eventFactory } from "../../core/event/eventFactory";
+import { Constructor, ICordeBot, IExpectTestParams, ITestReport } from "../../types";
 import { buildReportMessage } from "../../utils/buildReportMessage";
 
 /**
@@ -25,6 +27,10 @@ export class CommandState {
   readonly channelIdToSendCommand?: string;
   readonly channelId: string;
   readonly mustSendCommand: boolean;
+
+  get client() {
+    return this.cordeBot.client;
+  }
 
   /**
    * Initialize the match class with its default values.
@@ -93,6 +99,32 @@ export class CommandState {
       pass: true,
       testName: this.testName,
     };
+  }
+
+  getEvent<T>(type: Constructor<T>) {
+    return eventFactory.findOrConstruct(type, this.client);
+  }
+
+  createMissingIntentError(titleMessage: string, intentsNeeded: string[]) {
+    let intentLabel = "intent";
+
+    if (intentsNeeded.length > 1) {
+      intentLabel += "s";
+    }
+
+    return this.createFailedTest(
+      chalk.red(titleMessage),
+      "\n",
+      chalk.red(
+        `Try to add the ${intentLabel} ${chalk.cyan(intentsNeeded?.join(" or "))} in ${chalk.yellow(
+          "intents",
+        )} config`,
+      ),
+      `\n\n`,
+      chalk.cyan(
+        `Also check https://discordjs.guide/popular-topics/intents.html#privileged-intents`,
+      ),
+    );
   }
 
   createReport(...messages: (string | null | undefined)[]): ITestReport {

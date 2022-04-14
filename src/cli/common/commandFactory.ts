@@ -1,12 +1,9 @@
 import { Command } from "commander";
 import * as commands from "../commands";
-import { IDisposable } from "../../types";
-import { forEachProp } from "../../utils/forEachProp";
+import { Constructor, IDisposable } from "../../types";
 import { isIn } from "../../utils/isIn";
 import { ICliCommand } from "./types";
-import { CliCommand } from "./CliCommand";
-
-type Constructor<T> = new (...args: any[]) => T;
+import { object } from "../../utils/object";
 
 export namespace commandFactory {
   const cache: ICliCommand[] = [];
@@ -16,8 +13,8 @@ export namespace commandFactory {
       return cache;
     }
 
-    forEachProp(commands, (commandType) => {
-      const con = new commandType(command) as CliCommand;
+    object.foreach(commands, (commandType) => {
+      const con = new commandType(command) as ICliCommand;
       cache.push(con);
       setAction(con);
     });
@@ -25,7 +22,7 @@ export namespace commandFactory {
     return cache;
   }
 
-  function setAction(con: CliCommand) {
+  function setAction(con: ICliCommand) {
     con.setAction(async () => {
       if (con.paramsFrom === "args") {
         await con.handler(con.command.args);
