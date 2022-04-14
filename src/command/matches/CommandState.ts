@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { eventFactory } from "../../core/event/eventFactory";
+import { eventFactory } from "../../core/event/common/eventFactory";
 import { Constructor, ICordeBot, IExpectTestParams, ITestReport } from "../../types";
 import { buildReportMessage } from "../../utils/buildReportMessage";
 

@@ -2,7 +2,7 @@ import { Client, Message } from "discord.js";
 import { executePromiseWithTimeout } from "../../utils/executePromiseWithTimeout";
 import { Validator } from "../../utils/validator";
 import { EventNames } from "../intentHelper";
-import { DiscordEvent } from "./DiscordEvent";
+import { DiscordEvent } from "./common/DiscordEvent";
 
 export class MessageCreate extends DiscordEvent<Message<boolean>, corde.IMessageContentEvent> {
   constructor(client: Client, event: EventNames = "messageCreate") {

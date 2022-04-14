@@ -9,9 +9,9 @@ import {
   TextChannel,
   ThreadChannel,
 } from "discord.js";
-import { Optional } from "../../types";
-import { object } from "../../utils/object";
-import { EventNames } from "../intentHelper";
+import { Optional } from "../../../types";
+import { object } from "../../../utils/object";
+import { EventNames } from "../../intentHelper";
 import { EVENT_CLASSES } from "./EventClasses";
 import { IDiscordEvent } from "./types";
 
