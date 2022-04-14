@@ -1,4 +1,5 @@
 import { Message } from "discord.js";
+import { MessageUpdate } from "../../../core/event";
 import { Primitive } from "../../../types";
 import { isPrimitiveValue } from "../../../utils/isPrimitiveValue";
 import { typeOf } from "../../../utils/typeOf";
@@ -23,6 +24,15 @@ export async function editMessage(
     );
   }
 
+  const messageUpdate = this.getEvent(MessageUpdate);
+
+  if (!messageUpdate.canListen()) {
+    return this.createMissingIntentError(
+      "Client has no intent to listen to message edition",
+      messageUpdate.getIntents(),
+    );
+  }
+
   try {
     await this.sendCommandMessage();
   } catch (error) {
@@ -40,7 +50,7 @@ export async function editMessage(
   let returnedMessage: Message;
 
   try {
-    returnedMessage = await this.cordeBot.events.onceMessageContentOrEmbedChange({
+    returnedMessage = await messageUpdate.once({
       message: _messageData,
       timeout: this.timeout,
       channel: { id: this.channelId },

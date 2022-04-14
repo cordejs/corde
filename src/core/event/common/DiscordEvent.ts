@@ -1,22 +1,27 @@
 import {
   Channel,
   Client,
+  ClientEvents,
   DMChannel,
   Message,
   NewsChannel,
   PartialDMChannel,
   PartialMessage,
+  PartialUser,
   TextChannel,
   ThreadChannel,
+  User,
 } from "discord.js";
 import { Optional } from "../../../types";
 import { object } from "../../../utils/object";
 import { EventNames } from "../../intentHelper";
 import { EVENT_CLASSES } from "./EventClasses";
-import { IDiscordEvent } from "./types";
+import { IDiscordEvent, Spread } from "./types";
 
-export abstract class DiscordEvent<TData, TFilter> implements IDiscordEvent<TData, TFilter> {
-  constructor(protected readonly client: Client, protected readonly event: EventNames) {}
+export abstract class DiscordEvent<TEvent extends EventNames, TFilter>
+  implements IDiscordEvent<TEvent, TFilter>
+{
+  constructor(protected readonly client: Client, protected readonly event: TEvent) {}
 
   public canListen() {
     return this.hasIntentFor(this.client, this.event);
@@ -26,12 +31,12 @@ export abstract class DiscordEvent<TData, TFilter> implements IDiscordEvent<TDat
     return this.getIntentForEvent(this.event);
   }
 
-  public on(fn: (message: TData) => void) {
-    this.client.on(this.event as string, fn);
+  public on(fn: (...args: ClientEvents[TEvent]) => void) {
+    this.client.on(this.event, fn);
     return this;
   }
 
-  abstract once(options?: TFilter): Promise<TData>;
+  abstract once(options?: TFilter): Promise<Spread<TEvent>> | any;
 
   /**
    * Check if the Client has permission to access a given event:
@@ -87,5 +92,12 @@ export abstract class DiscordEvent<TData, TFilter> implements IDiscordEvent<TDat
     }
 
     return channel?.id === identifier?.id;
+  }
+
+  protected getUserIdentifierValidation(
+    user: void | Optional<User | PartialUser>,
+    identifier: Optional<corde.IUserIdentifier>,
+  ) {
+    return user?.id === identifier?.id || user?.username === identifier?.name;
   }
 }

@@ -1,4 +1,5 @@
 import { Message } from "discord.js";
+import { MessageCreate } from "../../../core/event";
 import { CommandState } from "../CommandState";
 
 /**
@@ -12,6 +13,15 @@ export async function messageContentContains(this: CommandState, expect: string)
     return this.createFailedTest("expected content can not be null or empty");
   }
 
+  const messageCreate = this.getEvent(MessageCreate);
+
+  if (!messageCreate.canListen()) {
+    return this.createMissingIntentError(
+      "Client has no intent to listen to created messages",
+      messageCreate.getIntents(),
+    );
+  }
+
   try {
     await this.sendCommandMessage();
   } catch (error) {
@@ -20,7 +30,7 @@ export async function messageContentContains(this: CommandState, expect: string)
 
   let returnedMessage: Message;
   try {
-    returnedMessage = await this.cordeBot.events.onceMessageCreate({
+    returnedMessage = await messageCreate.once({
       author: { id: this.cordeBot.testBotId },
       channel: { id: this.channelId },
       timeout: this.timeout,

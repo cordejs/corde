@@ -1,15 +1,14 @@
 import { Client, Message } from "discord.js";
 import { executePromiseWithTimeout } from "../../utils/executePromiseWithTimeout";
 import { Validator } from "../../utils/validator";
-import { EventNames } from "../intentHelper";
 import { DiscordEvent } from "./common/DiscordEvent";
 
-export class MessageCreate extends DiscordEvent<Message<boolean>, corde.IMessageContentEvent> {
-  constructor(client: Client, event: EventNames = "messageCreate") {
-    super(client, event);
+export class MessageCreate extends DiscordEvent<"messageCreate", corde.IMessageContentEvent> {
+  constructor(client: Client) {
+    super(client, "messageCreate");
   }
 
-  once(options?: corde.IMessageContentEvent): Promise<Message<boolean>> {
+  once(options?: corde.IMessageContentEvent) {
     const validator = new Validator<[Message]>();
 
     if (options?.author) {

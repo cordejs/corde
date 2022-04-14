@@ -1,4 +1,5 @@
 import { PartialUser, User } from "discord.js";
+import { MessageReactionsAdd } from "../../../core/event";
 import { TimeoutError } from "../../../errors";
 import { EmojisType } from "../../../types";
 import { typeOf } from "../../../utils/typeOf";
@@ -33,6 +34,15 @@ export async function addReaction(
     );
   }
 
+  const messageReactionAdd = this.getEvent(MessageReactionsAdd);
+
+  if (!messageReactionAdd.canListen()) {
+    return this.createMissingIntentError(
+      "Client has no intent to listen reactions add to messages",
+      messageReactionAdd.getIntents(),
+    );
+  }
+
   try {
     await this.sendCommandMessage();
   } catch (error) {
@@ -51,7 +61,7 @@ export async function addReaction(
     const _messageData =
       typeof messageIdentifier === "string" ? { id: messageIdentifier } : messageIdentifier;
 
-    reactionsWithAuthors = await this.cordeBot.events.onceMessageReactionsAdd({
+    reactionsWithAuthors = await messageReactionAdd.once({
       author: { id: this.cordeBot.testBotId },
       emojis: emojiLike,
       message: _messageData,

@@ -1,4 +1,5 @@
 import { Message } from "discord.js";
+import { MessageCreate } from "../../../core/event";
 import { diff } from "../../../utils/diff";
 import { isPartialOf } from "../../../utils/isPartialOf";
 import { keysOf } from "../../../utils/keysOf";
@@ -21,6 +22,15 @@ export async function matchEmbed(this: CommandState, embed: corde.IMessageEmbed)
     );
   }
 
+  const messageCreate = this.getEvent(MessageCreate);
+
+  if (!messageCreate.canListen()) {
+    return this.createMissingIntentError(
+      "Client has no intent to listen to created messages",
+      messageCreate.getIntents(),
+    );
+  }
+
   try {
     await this.sendCommandMessage();
   } catch (error) {
@@ -29,7 +39,7 @@ export async function matchEmbed(this: CommandState, embed: corde.IMessageEmbed)
 
   let returnedMessage: Message;
   try {
-    returnedMessage = await this.cordeBot.events.onceMessageCreate({
+    returnedMessage = await messageCreate.once({
       author: { id: this.cordeBot.testBotId },
       channel: { id: this.channelId },
       timeout: this.timeout,

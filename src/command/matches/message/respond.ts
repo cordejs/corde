@@ -17,12 +17,12 @@ export async function respond(this: CommandState, expected: Primitive | corde.IM
     return errorReport;
   }
 
-  const event = this.getEvent(MessageCreate);
+  const messageCreate = this.getEvent(MessageCreate);
 
-  if (!event.canListen()) {
+  if (!messageCreate.canListen()) {
     return this.createMissingIntentError(
       "Client has no intent to listen to created messages",
-      event.getIntents(),
+      messageCreate.getIntents(),
     );
   }
 
@@ -35,7 +35,7 @@ export async function respond(this: CommandState, expected: Primitive | corde.IM
   let returnedMessage: Message;
 
   try {
-    returnedMessage = await event.once({
+    returnedMessage = await messageCreate.once({
       author: { id: this.cordeBot.testBotId },
       channel: { id: this.channelId },
       timeout: this.timeout,

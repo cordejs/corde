@@ -1,14 +1,22 @@
 import { Client, ClientEvents } from "discord.js";
 
-export interface IDiscordEvent<TData, TFilter> {
+export type EventNames = keyof ClientEvents;
+
+export type Spread<T extends EventNames> = ClientEvents[T][1] extends undefined
+  ? ClientEvents[T] extends (infer U)[]
+    ? U
+    : never
+  : ClientEvents[T];
+
+export interface IDiscordEvent<TEvent extends EventNames, TFilter> {
   canListen(): boolean;
   getIntents(): string[];
-  on(fn: (message: TData) => void): this;
-  once(options?: TFilter): Promise<TData>;
+  on(fn: (...args: ClientEvents[TEvent]) => void): this;
+  once(filter?: TFilter): Promise<Spread<TEvent>>;
 }
 
-export interface IDiscordEventConstructable<TData, TFilter> {
-  new (client: Client): IDiscordEvent<TData, TFilter>;
+export interface IDiscordEventConstructable<TEvent extends EventNames, TFilter> {
+  new (client: Client): IDiscordEvent<TEvent, TFilter>;
 }
 
 export type IntentType =
@@ -28,8 +36,6 @@ export type IntentType =
   | "DIRECT_MESSAGE_REACTIONS"
   | "DIRECT_MESSAGE_TYPING"
   | "GUILD_SCHEDULED_EVENTS";
-
-export type EventNames = keyof ClientEvents;
 
 export type EventClass = {
   [k in IntentType]: {
