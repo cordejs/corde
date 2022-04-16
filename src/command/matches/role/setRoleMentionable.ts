@@ -1,4 +1,5 @@
 import { Role } from "discord.js";
+import { RoleUpdateMentionable } from "../../../core/event";
 import { typeOf } from "../../../utils/typeOf";
 import { roleUtils } from "../../roleUtils";
 import { CommandState } from "../CommandState";
@@ -42,6 +43,15 @@ export async function setRoleMentionable(
     return this.createFailedTest(invalidRoleErrorMessage);
   }
 
+  const event = this.getEvent(RoleUpdateMentionable);
+
+  if (!event.canListen()) {
+    return this.createMissingIntentError(
+      "Client has no intent to listen to mentionable changes in roles",
+      event.getIntents(),
+    );
+  }
+
   try {
     await this.sendCommandMessage();
   } catch (error) {
@@ -50,7 +60,7 @@ export async function setRoleMentionable(
 
   let role: Role;
   try {
-    role = await this.cordeBot.events.onceRoleMentionableUpdate({
+    role = await event.once({
       ...identifier,
       timeout: this.timeout,
       guild: { id: this.guildId },

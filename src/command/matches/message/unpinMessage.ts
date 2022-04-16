@@ -1,3 +1,4 @@
+import { MessageUnPinned } from "../../../core/event";
 import { typeOf } from "../../../utils/typeOf";
 import { CommandState } from "../CommandState";
 import { messageUtils } from "./messageUtils";
@@ -30,6 +31,15 @@ export async function unPinMessage(
     _msgIdentifier = messageIdentifier;
   }
 
+  const unpinMessage = this.getEvent(MessageUnPinned);
+
+  if (!unpinMessage.canListen()) {
+    return this.createMissingIntentError(
+      "Client has no intent to listen to pinned messages",
+      unpinMessage.getIntents(),
+    );
+  }
+
   try {
     await this.sendCommandMessage();
   } catch (error) {
@@ -38,7 +48,7 @@ export async function unPinMessage(
 
   const msgString = messageUtils.humanizeMessageIdentifierObject(_msgIdentifier);
   try {
-    await this.cordeBot.events.onceMessageUnPinned({
+    await unpinMessage.once({
       message: _msgIdentifier,
       timeout: this.timeout,
       channel: { id: this.channelId },

@@ -1,4 +1,5 @@
 import { Role } from "discord.js";
+import { RoleDelete } from "../../../core/event";
 import { ITestReport } from "../../../types";
 import { roleUtils } from "../../roleUtils";
 import { CommandState } from "../CommandState";
@@ -22,6 +23,16 @@ export async function deleteRole(
 
   const role = roleOrFailObject as Role;
 
+  
+  const event = this.getEvent(RoleDelete);
+
+  if (!event.canListen()) {
+    return this.createMissingIntentError(
+      "Client has no intent to listen to deleted roles",
+      event.getIntents(),
+    );
+  }
+
   try {
     await this.sendCommandMessage();
   } catch (error) {
@@ -29,7 +40,7 @@ export async function deleteRole(
   }
 
   try {
-    await this.cordeBot.events.onceRoleDelete({
+    await event.once({
       ...identifier,
       timeout: this.timeout,
       guild: { id: this.guildId },

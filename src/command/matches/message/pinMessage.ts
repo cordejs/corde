@@ -1,3 +1,4 @@
+import { MessagePinned } from "../../../core/event";
 import { isNullOrUndefined } from "../../../utils/isNullOrUndefined";
 import { isObject } from "../../../utils/isObject";
 import { isString } from "../../../utils/isString";
@@ -33,6 +34,15 @@ export async function pinMessage(
     _msgIdentifier = messageIdentifier;
   }
 
+  const pinMessage = this.getEvent(MessagePinned);
+
+  if (!pinMessage.canListen()) {
+    return this.createMissingIntentError(
+      "Client has no intent to listen to pinned messages",
+      pinMessage.getIntents(),
+    );
+  }
+
   try {
     await this.sendCommandMessage();
   } catch (error) {
@@ -41,7 +51,7 @@ export async function pinMessage(
 
   const msgString = messageUtils.humanizeMessageIdentifierObject(_msgIdentifier);
   try {
-    await this.cordeBot.events.onceMessagePinned({
+    await pinMessage.once({
       message: _msgIdentifier,
       timeout: this.timeout,
       channel: { id: this.channelId },

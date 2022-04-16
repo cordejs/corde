@@ -1,6 +1,7 @@
 import { PermissionString, Role } from "discord.js";
 import { diff } from "jest-diff";
 import { PERMISSIONS } from "../../../const";
+import { RoleUpdatePermission } from "../../../core/event";
 import { typeOf } from "../../../utils/typeOf";
 import { roleUtils } from "../../roleUtils";
 import { CommandState } from "../CommandState";
@@ -45,6 +46,15 @@ export async function setRolePermission(
     return this.createFailedTest(invalidRoleErrorMessage);
   }
 
+  const event = this.getEvent(RoleUpdatePermission);
+
+  if (!event.canListen()) {
+    return this.createMissingIntentError(
+      "Client has no intent to listen to permissions changes in roles",
+      event.getIntents(),
+    );
+  }
+
   try {
     await this.sendCommandMessage();
   } catch (error) {
@@ -53,7 +63,7 @@ export async function setRolePermission(
 
   let role: Role;
   try {
-    role = await this.cordeBot.events.onceRolePermissionUpdate({
+    role = await event.once({
       ...identifier,
       timeout: this.timeout,
       guild: { id: this.guildId },

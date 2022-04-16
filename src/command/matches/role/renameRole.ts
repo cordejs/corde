@@ -1,4 +1,5 @@
 import { Role } from "discord.js";
+import { RoleRenamed } from "../../../core/event";
 import { typeOf } from "../../../utils/typeOf";
 import { roleUtils } from "../../roleUtils";
 import { CommandState } from "../CommandState";
@@ -41,6 +42,15 @@ export async function renameRole(
     return this.createFailedTest(roleUtils.validateRole(oldRole, identifier));
   }
 
+  const event = this.getEvent(RoleRenamed);
+
+  if (!event.canListen()) {
+    return this.createMissingIntentError(
+      "Client has no intent to listen to renamed roles",
+      event.getIntents(),
+    );
+  }
+
   try {
     await this.sendCommandMessage();
   } catch (error) {
@@ -49,7 +59,7 @@ export async function renameRole(
 
   let newRole: Role;
   try {
-    newRole = await this.cordeBot.events.onceRoleRenamed({
+    newRole = await event.once({
       ...identifier,
       timeout: this.timeout,
     });

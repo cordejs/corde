@@ -1,3 +1,4 @@
+import { RoleUpdatePosition } from "../../../core/event";
 import { typeOf } from "../../../utils/typeOf";
 import { roleUtils } from "../../roleUtils";
 import { CommandState } from "../CommandState";
@@ -51,6 +52,15 @@ export async function setRolePosition(
     );
   }
 
+  const event = this.getEvent(RoleUpdatePosition);
+
+  if (!event.canListen()) {
+    return this.createMissingIntentError(
+      "Client has no intent to listen to position changes in roles",
+      event.getIntents(),
+    );
+  }
+
   try {
     await this.sendCommandMessage();
   } catch (error) {
@@ -58,7 +68,7 @@ export async function setRolePosition(
   }
 
   try {
-    role = await this.cordeBot.events.onceRolePositionUpdate({
+    role = await event.once({
       ...identifier,
       timeout: this.timeout,
       guild: { id: this.guildId },

@@ -2,6 +2,7 @@ import { Role } from "discord.js";
 import { roleUtils } from "../../roleUtils";
 import { typeOf } from "../../../utils/typeOf";
 import { CommandState } from "../CommandState";
+import { RoleUpdateHoist } from "../../../core/event";
 
 /**
  * Function to be injected globally.
@@ -42,6 +43,15 @@ export async function setRoleHoist(
     return this.createFailedTest(invalidRoleErrorMessage);
   }
 
+  const event = this.getEvent(RoleUpdateHoist);
+
+  if (!event.canListen()) {
+    return this.createMissingIntentError(
+      "Client has no intent to listen to hoist changes in roles",
+      event.getIntents(),
+    );
+  }
+
   try {
     await this.sendCommandMessage();
   } catch (error) {
@@ -50,7 +60,7 @@ export async function setRoleHoist(
 
   let role: Role;
   try {
-    role = await this.cordeBot.events.onceRoleHoistUpdate({
+    role = await event.once({
       ...identifier,
       timeout: this.timeout,
       guild: { id: this.guildId },

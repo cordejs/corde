@@ -1,5 +1,6 @@
 import chalk from "chalk";
 import { ColorResolvable, Role } from "discord.js";
+import { RoleUpdateColor } from "../../../core/event";
 import { resolveColor } from "../../../utils/colors";
 import { rgba } from "../../../utils/rgba";
 import { typeOf } from "../../../utils/typeOf";
@@ -36,6 +37,15 @@ export async function setRoleColor(
 
   const numberColor = resolveColor(color);
 
+  const event = this.getEvent(RoleUpdateColor);
+
+  if (!event.canListen()) {
+    return this.createMissingIntentError(
+      "Client has no intent to listen to color changes in roles",
+      event.getIntents(),
+    );
+  }
+
   try {
     await this.sendCommandMessage();
   } catch (error) {
@@ -45,7 +55,7 @@ export async function setRoleColor(
   let role: Role;
 
   try {
-    role = await this.cordeBot.events.onceRoleUpdateColor({
+    role = await event.once({
       ...identifier,
       timeout: this.timeout,
       guild: { id: this.guildId },

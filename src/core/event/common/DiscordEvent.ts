@@ -3,11 +3,13 @@ import {
   Client,
   ClientEvents,
   DMChannel,
+  Guild,
   Message,
   NewsChannel,
   PartialDMChannel,
   PartialMessage,
   PartialUser,
+  Role,
   TextChannel,
   ThreadChannel,
   User,
@@ -21,7 +23,9 @@ import { IDiscordEvent, Spread } from "./types";
 export abstract class DiscordEvent<TEvent extends EventNames, TFilter>
   implements IDiscordEvent<TEvent, TFilter>
 {
-  constructor(protected readonly client: Client, protected readonly event: TEvent) {}
+  constructor(
+    protected readonly client: Client, 
+    protected readonly event: TEvent) {}
 
   public canListen() {
     return this.hasIntentFor(this.client, this.event);
@@ -99,5 +103,17 @@ export abstract class DiscordEvent<TEvent extends EventNames, TFilter>
     identifier: Optional<corde.IUserIdentifier>,
   ) {
     return user?.id === identifier?.id || user?.username === identifier?.name;
+  }
+
+  protected roleMatchRoleData(roleIdentifier: corde.IRoleIdentifier | undefined, role: Role) {
+    return roleIdentifier?.id === role?.id || roleIdentifier?.name === role?.name;
+  }
+
+  protected getGuildValidation(guild: Optional<Guild>, identifier: Optional<corde.IGuildIdentifier>) {
+    return guild?.name === identifier?.name || guild?.id === identifier?.id;
+  }
+
+  protected getRoleValidation(role: Optional<Role>, identifier: Optional<corde.IRoleIdentifier>) {
+    return role?.name === identifier?.name || role?.id === identifier?.id;
   }
 }

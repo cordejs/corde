@@ -1,4 +1,5 @@
 import { PartialUser, User } from "discord.js";
+import { MessageReactionRemoveEmoji } from "../../../core/event";
 import { TimeoutError } from "../../../errors";
 import { EmojisType } from "../../../types";
 import { typeOf } from "../../../utils/typeOf";
@@ -35,6 +36,15 @@ export async function removeReaction(
     );
   }
 
+  const reactionRemoveEmoji = this.getEvent(MessageReactionRemoveEmoji);
+
+  if (!reactionRemoveEmoji.canListen()) {
+    return this.createMissingIntentError(
+      "Client has no intent to listen to pinned messages",
+      reactionRemoveEmoji.getIntents(),
+    );
+  }
+
   try {
     await this.sendCommandMessage();
   } catch (error) {
@@ -53,7 +63,7 @@ export async function removeReaction(
     const _messageData =
       typeof messageIdentifier === "string" ? { id: messageIdentifier } : messageIdentifier;
 
-    reactionsWithAuthors = await this.cordeBot.events.onceMessageReactionsRemove({
+    reactionsWithAuthors = await reactionRemoveEmoji.once({
       emojis: emojiLike,
       message: _messageData,
       timeout: this.timeout,
