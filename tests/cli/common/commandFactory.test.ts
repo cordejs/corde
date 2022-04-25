@@ -1,13 +1,9 @@
 import { program } from "commander";
-import {
-  ExecCommand,
-  InitCommand,
-  ShowConfigCommand,
-  ValidateCommand,
-} from "../../../src/cli/commands";
+import { Exec, Init, ShowConfig, Validate } from "../../../src/cli/commands";
 import { commandFactory } from "../../../src/cli/common";
 
-const commandsTypes = [ValidateCommand, InitCommand, ShowConfigCommand, ExecCommand];
+const commandsTypes = [Exec, Init, ShowConfig, Validate];
+
 describe("testing commandFactory", () => {
   it.each(commandsTypes)("should load command %s", (type) => {
     const commands = commandFactory.loadCommands(program);

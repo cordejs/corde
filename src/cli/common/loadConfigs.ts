@@ -29,4 +29,5 @@ export function loadConfigs(options: corde.Config.ICLIOptions) {
   }
 
   debug("loaded configs: ", runtime.configs.getProps());
+  return runtime.configs;
 }

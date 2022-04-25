@@ -20,8 +20,4 @@ if (majorVer < MINIMAL_NODE_VERSION) {
   process.exit(1);
 }
 
-try {
-  require("../lib/src/cli");
-} catch (error) {
-  console.error(error);
-}
+require("../lib/src/cli");

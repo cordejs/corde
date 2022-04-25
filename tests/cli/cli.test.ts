@@ -1,15 +1,19 @@
 import * as pack from "../../package.json";
 
 import { program } from "../../src/cli";
-import { ExecCommand, InitCommand, ValidateCommand } from "../../src/cli/commands";
+import { Exec, Init, Validate } from "../../src/cli/commands";
 import { commandFactory } from "../../src/cli/common";
 import { reader } from "../../src/core/Reader";
 
-const init = commandFactory.getCommand(InitCommand);
-const validate = commandFactory.getCommand(ValidateCommand);
-const exec = commandFactory.getCommand(ExecCommand);
+const init = commandFactory.getCommand(Init);
+const validate = commandFactory.getCommand(Validate);
+const exec = commandFactory.getCommand(Exec);
 
 describe("testing cli", () => {
+  beforeAll(() => {
+    validate.dispose = jest.fn();
+  });
+
   it("should get version", () => {
     program.exitOverride();
     expect(() => {

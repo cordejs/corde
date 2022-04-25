@@ -4,6 +4,7 @@ import { Constructor, IDisposable } from "../../types";
 import { isIn } from "../../utils/isIn";
 import { ICliCommand } from "./types";
 import { object } from "../../utils/object";
+import { logger } from "../../core/Logger";
 
 export namespace commandFactory {
   const cache: ICliCommand[] = [];
@@ -38,6 +39,8 @@ export namespace commandFactory {
 
       if (isDisposable(con)) {
         await con.dispose();
+        logger.printStacks();
+        logger.unmock();
         return;
       }
     });

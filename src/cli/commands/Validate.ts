@@ -4,6 +4,11 @@ import { FileError, PropertyError } from "../../errors";
 import { getFiles } from "../../utils/getFiles";
 import { stringIsNullOrEmpty } from "../../utils/stringIsNullOrEmpty";
 import { Command } from "commander";
+import { IDisposable } from "../../types";
+import { exit } from "process";
+import { logger } from "../../core/Logger";
+import { loadConfigs } from "../common";
+import { isString } from "../../utils/isString";
 
 /**
  * Check if configs are valid. Throws an exception
@@ -16,18 +21,33 @@ import { Command } from "commander";
  *
  * @throws Error if any config is invalid.
  */
-export class Validate extends CliCommand {
+export class Validate extends CliCommand implements IDisposable {
   constructor(program: Command) {
     super({
       program,
-      name: "validate",
+      name: "validate [config]",
+      paramsFrom: "args",
     });
 
     this.setAlias("v");
     this.setDescription("Search for corde configs and check if all data are valid");
   }
 
-  async handler(configs: corde.IConfigOptions) {
+  dispose(): void | Promise<void> {
+    exit(0);
+  }
+
+  async handler(configPath: string): Promise<void>;
+  async handler(config: corde.IConfigOptions): Promise<void>;
+  async handler(configPath: string | corde.IConfigOptions) {
+    let configs: corde.IConfigOptions = configPath as corde.IConfigOptions;
+
+    if (isString(configPath)) {
+      configs = loadConfigs({
+        config: configPath,
+      });
+    }
+
     if (!configs) {
       throw new FileError(chalk.red("● configs not informed."));
     }
@@ -56,6 +76,8 @@ export class Validate extends CliCommand {
         this.buildMissingPropertiesErrorAndThrow(errorsString, errors);
       }
     }
+
+    logger.log("All configs are ok!");
   }
 
   async validatePaths(pathsDir: string[] | undefined, errors: string[]) {
