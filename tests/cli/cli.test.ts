@@ -21,44 +21,44 @@ describe("testing cli", () => {
     }).toThrow(pack.version);
   });
 
-  it("should call init command", () => {
+  it("should call init command", async () => {
     program.exitOverride();
     jest.spyOn(init, "dispose").mockImplementation(null);
     const spy = jest.spyOn(init, "handler").mockImplementation(null);
-    program.parse(["node", "test", "init"]);
+    await program.parseAsync(["node", "test", "init"]);
     expect(spy).toBeCalled();
   });
 
-  it("should call init command with 'i' alias", () => {
+  it("should call init command with 'i' alias", async () => {
     program.exitOverride();
     jest.spyOn(init, "dispose").mockImplementation(null);
     const spy = jest.spyOn(init, "handler").mockImplementation(null);
-    program.parse(["node", "test", "i"]);
+    await program.parseAsync(["node", "test", "i"]);
     expect(spy).toBeCalled();
   });
 
-  it("should call validate command", () => {
+  it("should call validate command", async () => {
     program.exitOverride();
     jest.spyOn(reader, "loadConfig").mockImplementation(null);
     const spyValidate = jest.spyOn(validate, "handler").mockImplementation(null);
-    program.parse(["node", "test", "validate"]);
+    await program.parseAsync(["node", "test", "validate"]);
     expect(spyValidate).toBeCalled();
   });
 
-  it("should call validate command with 'v' alias", () => {
+  it("should call validate command with 'v' alias", async () => {
     program.exitOverride();
     jest.spyOn(reader, "loadConfig").mockImplementation(() => null);
 
     const spyValidate = jest.spyOn(validate, "handler").mockImplementation(() => null);
-    program.parse(["node", "test", "v"]);
+    await program.parseAsync(["node", "test", "v"]);
     expect(spyValidate).toBeCalled();
   });
 
-  it("should call exec command", () => {
+  it("should call exec command", async () => {
     program.exitOverride();
     jest.spyOn(exec, "dispose").mockImplementation(null);
     const spy = jest.spyOn(exec, "handler").mockImplementation(null);
-    program.parse(["node", "test", ""]);
+    await program.parseAsync(["node", "test", ""]);
     expect(spy).toBeCalled();
   });
 });

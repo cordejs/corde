@@ -34,6 +34,7 @@ export class Validate extends CliCommand implements IDisposable {
   }
 
   dispose(): void | Promise<void> {
+    logger.log("All configs are ok!");
     exit(0);
   }
 
@@ -76,8 +77,6 @@ export class Validate extends CliCommand implements IDisposable {
         this.buildMissingPropertiesErrorAndThrow(errorsString, errors);
       }
     }
-
-    logger.log("All configs are ok!");
   }
 
   async validatePaths(pathsDir: string[] | undefined, errors: string[]) {
