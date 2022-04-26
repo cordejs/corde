@@ -56,9 +56,15 @@ export function executePromiseWithTimeout<TResult>(
       reject(new TimeoutError("timeout", rejectedData));
     }, timeout);
 
-    fn((value) => {
-      clearTimeout(nodeTimeout);
-      resolve(value as TResult);
-    }, reject);
+    fn(
+      (value) => {
+        clearTimeout(nodeTimeout);
+        resolve(value as TResult);
+      },
+      (reason) => {
+        clearTimeout(nodeTimeout);
+        reject(reason);
+      },
+    );
   });
 }
