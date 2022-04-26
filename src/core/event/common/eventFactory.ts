@@ -1,9 +1,10 @@
-import { Constructor } from "../../../types";
-
 export namespace eventFactory {
   const cache: any[] = [];
 
-  export function findOrConstruct<T>(type: Constructor<T>, ...params: any[]): T {
+  export function findOrConstruct<T extends new (...args: any[]) => any>(
+    type: T,
+    ...params: ConstructorParameters<T>
+  ): InstanceType<T> {
     let instance = cache.find((c) => c instanceof type);
 
     if (instance) {
