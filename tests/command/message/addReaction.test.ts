@@ -37,17 +37,13 @@ describe(`testing ${testName} function`, () => {
   });
 
   it("should fail due to invalid emoji (undefined)", async () => {
-    const report = await debugCon()
-      .should// @ts-expect-error
-      .addReaction(undefined);
+    const report = await debugCon().should.addReaction(undefined);
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
 
   it("should fail due to invalid emoji (null)", async () => {
-    const report = await debugCon()
-      .should// @ts-expect-error
-      .addReaction(null);
+    const report = await debugCon().should.addReaction(null);
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });

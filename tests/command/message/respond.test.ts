@@ -33,13 +33,17 @@ describe(`testing ${testName} function`, () => {
   it.each([[null], [undefined]])(
     "should return a failed test due to invalid parameter (null)",
     async (value) => {
-      const report = await debugCon()
-        // @ts-expect-error
-        .should.respond(value);
+      const report = await debugCon().should.respond(value);
       expect(report).toMatchObject(failReport);
       expect(report).toMatchSnapshot();
     },
   );
+
+  it("should fail due to not present event", async () => {
+    const report = await debugCon().should.respond("pong");
+    expect(report).toMatchObject(failReport);
+    expect(report).toMatchSnapshot();
+  });
 
   it("should fail due to no message was sent by the bot", async () => {
     const report = await debugCon().should.respond("pong");

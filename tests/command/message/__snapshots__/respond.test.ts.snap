@@ -11,6 +11,17 @@ Object {
 }
 `;
 
+exports[`testing respond function should fail due to not present event 1`] = `
+Object {
+  "message": "    
+    expected: testing bot to send a message
+    received: no message was sent
+",
+  "pass": false,
+  "testName": "respond",
+}
+`;
+
 exports[`testing respond function should get fail test due to bot returned different messages (expect embed and returned primitive) 1`] = `
 Object {
   "message": "    

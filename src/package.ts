@@ -7,7 +7,7 @@ type PackageJson = typeof import("../package.json");
 
 function getPackage(): PackageJson {
   try {
-    if (runtime.isUnityTest || runtime.isLocal) {
+    if (runtime.isUnityTest || runtime.isLocal || process.env.JEST_WORKER_ID) {
       return require("../package.json");
     }
     return require("../../package.json");
