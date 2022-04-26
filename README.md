@@ -1,7 +1,7 @@
 <div align="center">
   <br />
   <p>
-    <img width="120" height="120" src="./website/static/img/logo/android-icon-192x192.png" />
+    <img width="140" height="140" src="./website/static/img/logo/android-icon-192x192.png" />
   </p>
   <p>
    <!-- <a href="https://discord.gg/f3Gs7uU">
@@ -30,7 +30,28 @@
       <img alt="Npm version" src="https://img.shields.io/npm/v/corde" />
     </a>
     <a href="https://www.npmjs.com/package/corde">
-      <img alt="npm" src="https://img.shields.io/npm/dt/corde"></a>
+      <img alt="npm" src="https://img.shields.io/npm/dt/corde">
+    </a>
+    <br>
+    <a href="https://sonarcloud.io/summary/overall?id=cordejs_corde">
+      <img alt="sonar" src="https://sonarcloud.io/api/project_badges/measure?project=cordejs_corde&metric=code_smells">
+    </a>
+    <a href="https://sonarcloud.io/summary/overall?id=cordejs_corde">
+      <img alt="sonar" src="https://sonarcloud.io/api/project_badges/measure?project=cordejs_corde&metric=duplicated_lines_density">
+    </a>
+    <a href="https://sonarcloud.io/summary/overall?id=cordejs_corde">
+      <img alt="sonar" src="https://sonarcloud.io/api/project_badges/measure?project=cordejs_corde&metric=sqale_rating">
+    </a>
+    <a href="https://sonarcloud.io/summary/overall?id=cordejs_corde">
+      <img alt="sonar" src="https://sonarcloud.io/api/project_badges/measure?project=cordejs_corde&metric=reliability_rating">
+    </a>
+    <br>
+    <a href="https://sonarcloud.io/summary/overall?id=cordejs_corde">
+      <img alt="sonar" src="https://sonarcloud.io/api/project_badges/measure?project=cordejs_corde&metric=security_rating">
+    </a> 
+    <a href="https://sonarcloud.io/summary/overall?id=cordejs_corde">
+      <img alt="sonar" src="https://sonarcloud.io/api/project_badges/measure?project=cordejs_corde&metric=vulnerabilities">
+    </a>     
   </p>
 </div>
 
