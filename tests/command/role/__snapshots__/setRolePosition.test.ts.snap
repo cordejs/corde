@@ -66,7 +66,7 @@ exports[`testing ToSetRolePosition operation should return a failed report due t
 Object {
   "message": "    
     expected: role position to change to -2
-    received: position didn't change
+    received: 1
 ",
   "pass": false,
   "testName": "setRolePosition",
@@ -88,7 +88,7 @@ exports[`testing ToSetRolePosition operation should return a failed test due to 
 Object {
   "message": "    
     expected: role position to change to -1
-    received: position didn't change
+    received: 1
 ",
   "pass": false,
   "testName": "setRolePosition",
