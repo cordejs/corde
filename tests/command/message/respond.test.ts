@@ -81,7 +81,6 @@ describe(`testing ${testName} function`, () => {
     events.mockOnceMessageCreate();
 
     const report = await debugCon().should.respond(2);
-
     expect(report).toEqual(passReport);
   });
 

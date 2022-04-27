@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { Guild } from "discord.js";
+import { Guild, IntentsString } from "discord.js";
 import path from "path";
 import { Permission } from "./enums";
 import { typeOf } from "./utils/typeOf";
@@ -16,6 +16,25 @@ export const TEXT_EMPTY = chalk.yellowBright;
 export const ROOT_DIR = "<rootDir>";
 
 export const LINE_BREAK = "\n";
+
+export const ALL_INTENTS: IntentsString[] = [
+  "GUILDS",
+  "GUILD_MEMBERS",
+  "GUILD_BANS",
+  "GUILD_EMOJIS_AND_STICKERS",
+  "GUILD_INTEGRATIONS",
+  "GUILD_WEBHOOKS",
+  "GUILD_INVITES",
+  "GUILD_VOICE_STATES",
+  "GUILD_PRESENCES",
+  "GUILD_MESSAGES",
+  "GUILD_MESSAGE_REACTIONS",
+  "GUILD_MESSAGE_TYPING",
+  "DIRECT_MESSAGES",
+  "DIRECT_MESSAGE_REACTIONS",
+  "DIRECT_MESSAGE_TYPING",
+  "GUILD_SCHEDULED_EVENTS",
+];
 
 export const DEFAULT_CONFIG: corde.IConfigOptions = {
   botPrefix: "",

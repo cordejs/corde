@@ -78,7 +78,6 @@ describe(`testing ${testName} function`, () => {
     events.mockOnceMessageContentOrEmbedChange();
 
     const report = await debugCon().should.editMessage(mockDiscord.message.content);
-
     expect(report).toEqual(passReport);
     expect(report).toMatchSnapshot();
   });

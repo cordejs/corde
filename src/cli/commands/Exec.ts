@@ -156,12 +156,6 @@ export class Exec extends CliCommand implements IDisposable {
     this.spinner.stop();
   }
 
-  private errorHandler(error?: Error) {
-    this.spinner.stop();
-    logger.log(error?.message);
-    this.dispose(1);
-  }
-
   private startLoading(initialMessage: string) {
     this.spinner = ora(initialMessage).start();
     this.spinner._spinner = {

@@ -225,7 +225,6 @@ export class BotAPI implements corde.IBot {
   }
 
   createVoiceChannel(name: string): Promise<VoiceChannel>;
-
   createVoiceChannel(options: corde.ICreateChannelOptionsSimple): Promise<VoiceChannel>;
   createVoiceChannel(options: string | corde.ICreateChannelOptionsSimple) {
     return this._createChannel(options, "GUILD_VOICE");

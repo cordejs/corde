@@ -36,8 +36,6 @@ export class CordeBot implements ICordeBot {
   private _voiceConnection?: corde.IVoiceChannelState;
 
   private textChannel!: TextChannel;
-  private _isReady: boolean;
-
   public guild!: Guild;
 
   /**
@@ -61,7 +59,6 @@ export class CordeBot implements ICordeBot {
     this._prefix = prefix;
     this._guildId = guildId;
     this._testBotId = testBotId;
-    this._isReady = false;
     this._emitter = new EventEmitter();
   }
 
@@ -180,7 +177,7 @@ export class CordeBot implements ICordeBot {
    * Checks if corde bot is connected
    */
   isLoggedIn() {
-    return !!this._client && !!this._client.readyAt && this._isReady;
+    return !!this._client && !!this._client.readyAt;
   }
 
   async findMessage(filter: (message: Message) => boolean): Promise<Message | undefined>;

@@ -88,8 +88,8 @@ export async function removeReaction(
     );
   }
 
-  // We can set it as passed due to all validations about if
-  // the reactions added matches with expected are defined in the event onceMessageReactionsAdd
+  // We can set it as passed due to all validations about whether
+  // reactions added matches with expected are defined in the event onceMessageReactionsAdd
   this.hasPassed = true;
 
   this.invertHasPassedIfIsNot();

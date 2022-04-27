@@ -38,17 +38,13 @@ describe(`testing ${testName} function`, () => {
   });
 
   it("should fail due to invalid emoji (undefined)", async () => {
-    const report = await debugCon()
-      // @ts-expect-error
-      .should.removeReaction(undefined);
+    const report = await debugCon().should.removeReaction(undefined);
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
 
   it("should fail due to invalid emoji (null)", async () => {
-    const report = await debugCon()
-      // @ts-expect-error
-      .should.removeReaction(null);
+    const report = await debugCon().should.removeReaction(null);
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
@@ -62,9 +58,9 @@ describe(`testing ${testName} function`, () => {
 
   it("should return a passed test with isNot = true", async () => {
     cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
-    const report = await debugCon().should.not.removeReaction([
-      mockDiscord.messageReaction.emoji.name,
-    ]);
+    const events = new MockEvents(cordeClient, mockDiscord);
+    events.setAllIntents();
+    const report = await debugCon().should.not.removeReaction(["test"]);
     expect(report).toEqual(passReport);
   });
 

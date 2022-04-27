@@ -1,10 +1,12 @@
-import { Message, MessageReaction, PartialUser, Role, User } from "discord.js";
+import { Intents, Message, MessageReaction, PartialUser, Role, User } from "discord.js";
+import { ALL_INTENTS } from "../../src/const";
 import {
   MessageCreate,
   MessagePinned,
   MessageReactionRemoveEmoji,
   MessageReactionsAdd,
   MessageUnPinned,
+  MessageUpdate,
   RoleDelete,
   RoleRenamed,
   RoleUpdateColor,
@@ -29,7 +31,7 @@ export class MockEvents {
    */
   mockOnceRoleDelete(role?: Role) {
     const event = eventFactory.findOrConstruct(RoleDelete, this._corde.client);
-    this._corde.client.options.intents = "GUILDS";
+    this._corde.client.options.intents = Intents.resolve(ALL_INTENTS);
     event.once = jest.fn().mockReturnValue(role ?? this._mockDiscord.role);
   }
 
@@ -38,7 +40,7 @@ export class MockEvents {
    */
   mockOnceRoleRenamed(role?: Role) {
     const event = eventFactory.findOrConstruct(RoleRenamed, this._corde.client);
-    this._corde.client.options.intents = "GUILDS";
+    this._corde.client.options.intents = Intents.resolve(ALL_INTENTS);
     event.once = jest.fn().mockReturnValue(role ?? this._mockDiscord.role);
   }
 
@@ -47,7 +49,7 @@ export class MockEvents {
    */
   mockOnceRolePositionUpdate(role?: Role) {
     const event = eventFactory.findOrConstruct(RoleUpdatePosition, this._corde.client);
-    this._corde.client.options.intents = "GUILDS";
+    this._corde.client.options.intents = Intents.resolve(ALL_INTENTS);
     event.once = jest.fn().mockReturnValue(role ?? this._mockDiscord.role);
   }
 
@@ -56,7 +58,7 @@ export class MockEvents {
    */
   mockOnceHoistUpdate(role?: Role) {
     const event = eventFactory.findOrConstruct(RoleUpdateHoist, this._corde.client);
-    this._corde.client.options.intents = "GUILDS";
+    this._corde.client.options.intents = Intents.resolve(ALL_INTENTS);
     event.once = jest.fn().mockReturnValue(role ?? this._mockDiscord.role);
   }
 
@@ -65,7 +67,7 @@ export class MockEvents {
    */
   mockOnceMentionableUpdate(role?: Role) {
     const event = eventFactory.findOrConstruct(RoleUpdateMentionable, this._corde.client);
-    this._corde.client.options.intents = "GUILDS";
+    this._corde.client.options.intents = Intents.resolve(ALL_INTENTS);
     event.once = jest.fn().mockReturnValue(role ?? this._mockDiscord.role);
   }
 
@@ -74,7 +76,7 @@ export class MockEvents {
    */
   mockOnceRolePermissionsUpdate(role?: Role) {
     const event = eventFactory.findOrConstruct(RoleUpdatePermission, this._corde.client);
-    this._corde.client.options.intents = "GUILDS";
+    this._corde.client.options.intents = Intents.resolve(ALL_INTENTS);
     event.once = jest.fn().mockReturnValue(role ?? this._mockDiscord.role);
   }
 
@@ -83,7 +85,7 @@ export class MockEvents {
    */
   mockOnceRoleUpdateColor(role?: Role) {
     const event = eventFactory.findOrConstruct(RoleUpdateColor, this._corde.client);
-    this._corde.client.options.intents = "GUILDS";
+    this._corde.client.options.intents = Intents.resolve(ALL_INTENTS);
     event.once = jest.fn().mockReturnValue(role ?? this._mockDiscord.role);
   }
 
@@ -92,12 +94,16 @@ export class MockEvents {
    */
   mockOnceMessageReactionsAdd(reactionsWithAuthors?: [MessageReaction, User | PartialUser][]) {
     const event = eventFactory.findOrConstruct(MessageReactionsAdd, this._corde.client);
-    this._corde.client.options.intents = "DIRECT_MESSAGES";
+    this._corde.client.options.intents = Intents.resolve(ALL_INTENTS);
     event.once = jest
       .fn()
       .mockReturnValue(
-        reactionsWithAuthors ?? [[this._mockDiscord.messageReaction, this._mockDiscord.user]],
+        reactionsWithAuthors ?? [this._mockDiscord.messageReaction, this._mockDiscord.user],
       );
+  }
+
+  setAllIntents() {
+    this._corde.client.options.intents = Intents.resolve(ALL_INTENTS);
   }
 
   /**
@@ -105,7 +111,7 @@ export class MockEvents {
    */
   mockOnceMessageReactionsRemove(reactionsWithAuthors?: [MessageReaction, User | PartialUser][]) {
     const event = eventFactory.findOrConstruct(MessageReactionRemoveEmoji, this._corde.client);
-    this._corde.client.options.intents = "DIRECT_MESSAGES";
+    this._corde.client.options.intents = Intents.resolve(ALL_INTENTS);
     event.once = jest
       .fn()
       .mockReturnValue(
@@ -118,7 +124,7 @@ export class MockEvents {
    */
   mockOnceMessageReactionsAddToReject(error?: Error) {
     const event = eventFactory.findOrConstruct(MessageReactionsAdd, this._corde.client);
-    this._corde.client.options.intents = "DIRECT_MESSAGES";
+    this._corde.client.options.intents = Intents.resolve(ALL_INTENTS);
     event.once = jest.fn().mockImplementation(() => {
       if (error) {
         throw error;
@@ -135,7 +141,7 @@ export class MockEvents {
    */
   mockOnceMessageReactionsRemoveToReject(error?: Error) {
     const event = eventFactory.findOrConstruct(MessageReactionRemoveEmoji, this._corde.client);
-    this._corde.client.options.intents = "DIRECT_MESSAGES";
+    this._corde.client.options.intents = Intents.resolve(ALL_INTENTS);
     event.once = jest.fn().mockImplementation(() => {
       if (error) {
         throw error;
@@ -151,11 +157,9 @@ export class MockEvents {
    * @internal
    */
   mockOnceMessageContentOrEmbedChange(message?: Message) {
-    const event = eventFactory.findOrConstruct(MessageCreate, this._corde.client);
-    this._corde.client.options.intents = "DIRECT_MESSAGES";
-    event.once = jest
-      .fn()
-      .mockReturnValue(message ?? [[this._mockDiscord.messageReaction, this._mockDiscord.user]]);
+    const event = eventFactory.findOrConstruct(MessageUpdate, this._corde.client);
+    this._corde.client.options.intents = Intents.resolve(ALL_INTENTS);
+    event.once = jest.fn().mockResolvedValue(message ?? this._mockDiscord.message);
   }
 
   /**
@@ -163,7 +167,7 @@ export class MockEvents {
    */
   mockOnceMessagePinned(message?: Message) {
     const event = eventFactory.findOrConstruct(MessagePinned, this._corde.client);
-    this._corde.client.options.intents = "DIRECT_MESSAGES";
+    this._corde.client.options.intents = Intents.resolve(ALL_INTENTS);
     event.once = jest.fn().mockReturnValue(message ?? this._mockDiscord.pinnedMessage);
   }
 
@@ -172,7 +176,7 @@ export class MockEvents {
    */
   mockOnceMessageUnPinned(message?: Message) {
     const event = eventFactory.findOrConstruct(MessageUnPinned, this._corde.client);
-    this._corde.client.options.intents = "DIRECT_MESSAGES";
+    this._corde.client.options.intents = Intents.resolve(ALL_INTENTS);
     event.once = jest.fn().mockReturnValue(message ?? this._mockDiscord.pinnedMessage);
   }
 
@@ -190,7 +194,7 @@ export class MockEvents {
    */
   mockOnceMessageCreate(message?: Message) {
     const event = eventFactory.findOrConstruct(MessageCreate, this._corde.client);
-    this._corde.client.options.intents = "DIRECT_MESSAGES";
+    this._corde.client.options.intents = Intents.resolve(ALL_INTENTS);
     event.once = jest.fn().mockReturnValue(message ?? this._mockDiscord.pinnedMessage);
   }
 }

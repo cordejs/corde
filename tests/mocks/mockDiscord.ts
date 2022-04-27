@@ -25,6 +25,7 @@ import {
   BaseGuildTextChannel,
   Intents,
   GuildBan,
+  GuildBasedChannel,
 } from "discord.js";
 import { ColorsHex } from "../../src";
 import {
@@ -130,6 +131,7 @@ export default class MockDiscord {
   private _guildCollection!: Collection<string, Guild>;
   private _channelCollection!: Collection<string, Channel>;
   private _roles!: Collection<string, Role>;
+  private _textGuildBasedChannel!: GuildBasedChannel;
 
   /**
    * Initialize all mocks
@@ -281,6 +283,10 @@ export default class MockDiscord {
     return this._presence;
   }
 
+  get textGuildBasedChannel() {
+    return this._textGuildBasedChannel;
+  }
+
   /**
    * Recreates all mocks
    */
@@ -405,6 +411,8 @@ export default class MockDiscord {
 
     this._guildBan = this.mockGuildBan();
     this._roles = this.mockRoles();
+
+    this._textGuildBasedChannel = this.textChannel;
   }
 
   mockClient() {
@@ -518,7 +526,7 @@ export default class MockDiscord {
     return new TextChannel(
       this.mockGuild(),
       {
-        id: "aaaaa",
+        id: "123124",
         permissions: "",
         type: ChannelType.GroupDM,
       },
