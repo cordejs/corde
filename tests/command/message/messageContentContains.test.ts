@@ -83,10 +83,9 @@ describe(`testing ${testName} function`, () => {
     const cordeClient = createCordeBotWithMockedFunctions(mockDiscord, mockDiscord.client);
 
     const events = new MockEvents(cordeClient, mockDiscord);
-    events.mockOnceMessage();
+    events.mockOnceMessageCreate();
 
     const report = await debugCon().should.messageContentContains("expect value");
-
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });

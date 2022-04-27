@@ -78,7 +78,7 @@ describe(`testing ${testName} function`, () => {
     mockDiscord.message.content = "2";
 
     const events = new MockEvents(cordeClient, mockDiscord);
-    events.mockOnceMessageCreate();
+    events.mockOnceMessageCreate(mockDiscord.message);
 
     const report = await debugCon().should.respond(2);
     expect(report).toEqual(passReport);
@@ -99,7 +99,7 @@ describe(`testing ${testName} function`, () => {
     mockDiscord.message.embeds.push(mockDiscord.messageEmbed);
 
     const events = new MockEvents(cordeClient, mockDiscord);
-    events.mockOnceMessageCreate();
+    events.mockOnceMessageCreate(mockDiscord.message);
 
     const messageEmbed = messageUtils.messageEmbedToMessageEmbedInterface(mockDiscord.messageEmbed);
     const report = await debugCon().should.not.respond(messageEmbed);
@@ -158,14 +158,14 @@ describe(`testing ${testName} function`, () => {
     corde.getRoles = jest.fn().mockReturnValue(mockDiscord.roleManager.cache);
     corde.findRole = jest.fn().mockReturnValue(mockDiscord.role);
 
-    const errorMessage = "can not send message to channel x";
+    //const errorMessage = "can not send message to channel x";
 
-    corde.sendTextMessage = jest
-      .fn()
-      .mockImplementation(() => Promise.reject(new Error(errorMessage)));
+    const events = new MockEvents(corde, mockDiscord);
+    events.mockOnceMessageCreateImpl(() => {
+      throw new Error();
+    });
 
-    const report = await debugCon().should.respond("");
-
+    const report = await debugCon(null, null, corde).should.respond("");
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });

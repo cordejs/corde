@@ -197,4 +197,13 @@ export class MockEvents {
     this._corde.client.options.intents = Intents.resolve(ALL_INTENTS);
     event.once = jest.fn().mockReturnValue(message ?? this._mockDiscord.pinnedMessage);
   }
+
+  /**
+   * @internal
+   */
+  mockOnceMessageCreateImpl(fn?: (...args: any[]) => any) {
+    const event = eventFactory.findOrConstruct(MessageCreate, this._corde.client);
+    this._corde.client.options.intents = Intents.resolve(ALL_INTENTS);
+    event.once = jest.fn().mockImplementation(fn);
+  }
 }

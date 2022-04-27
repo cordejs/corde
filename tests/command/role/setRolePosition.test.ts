@@ -37,9 +37,7 @@ describe("testing ToSetRolePosition operation", () => {
   });
 
   it("should fail due to undefined roleIdentifier", async () => {
-    const report = await debugCon()
-      .should // @ts-expect-error
-      .setRolePosition(1, "");
+    const report = await debugCon().should.setRolePosition(1, "");
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
@@ -89,10 +87,7 @@ describe("testing ToSetRolePosition operation", () => {
   });
 
   it("should not find a role and return a failed report", async () => {
-    cordeClient.findRole = jest
-      .fn()
-      // @ts-expect-error
-      .mockImplementation(null);
+    cordeClient.findRole = jest.fn().mockImplementation(null);
     const report = await debugCon().should.setRolePosition(1, { id: "123" });
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();

@@ -14,8 +14,7 @@ Object {
 exports[`testing messageContentContains function should get fail test due to bot returned different messages both primitive values 1`] = `
 Object {
   "message": "    
-    expected: testing bot to send a message
-    received: no message was sent
+    expected 'this is the message content' to contains 'expect value'
 ",
   "pass": false,
   "testName": "messageContentContains",
