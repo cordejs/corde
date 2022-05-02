@@ -121,7 +121,6 @@
     "chalk": "^4.1.1",
     "commander": "^9.2.0",
     "discord.js": "^12.5.3",
-    "esm": "^3.2.25",
     "fast-glob": "^3.2.5",
     "fast-json-stable-stringify": "^2.1.0",
     "jest-diff": "^28.0.0",
