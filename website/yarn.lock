@@ -1818,7 +1818,7 @@
     webpack-merge "^5.8.0"
     webpackbar "^5.0.2"
 
-"@docusaurus/core@^2.0.0-beta.19":
+"@docusaurus/core@2.0.0-beta.19", "@docusaurus/core@^2.0.0-beta.19":
   version "2.0.0-beta.19"
   resolved "https://registry.yarnpkg.com/@docusaurus/core/-/core-2.0.0-beta.19.tgz#b3e0008affea95b84ab4fbec16cfea77a10d452a"
   integrity sha512-pHjnghPiLCogFF5FCMZrJJBGbT4wW2GEtUdRemMqWt0zru/0iQPwUQOKc2yhZTwCBCGaA5EqY/+I08W9FQIUJg==
@@ -2155,7 +2155,7 @@
     react-json-view "^1.21.3"
     tslib "^2.3.1"
 
-"@docusaurus/plugin-google-analytics@2.0.0-beta.16", "@docusaurus/plugin-google-analytics@^2.0.0-beta.14":
+"@docusaurus/plugin-google-analytics@2.0.0-beta.16":
   version "2.0.0-beta.16"
   resolved "https://registry.yarnpkg.com/@docusaurus/plugin-google-analytics/-/plugin-google-analytics-2.0.0-beta.16.tgz#3bce2c65fb35082201dad21dfd73b0f7924bd499"
   integrity sha512-UKd1RWYHeSm/RLjJ2ZflLTT6hbiWQWFAxVzYRBiyOnDbBP+un8qmP692QZCIP+rrm+KkxsV1FGte0NtrcsFUEw==
@@ -2163,6 +2163,15 @@
     "@docusaurus/core" "2.0.0-beta.16"
     "@docusaurus/utils-validation" "2.0.0-beta.16"
     tslib "^2.3.1"
+
+"@docusaurus/plugin-google-analytics@^2.0.0-beta.19":
+  version "2.0.0-beta.19"
+  resolved "https://registry.yarnpkg.com/@docusaurus/plugin-google-analytics/-/plugin-google-analytics-2.0.0-beta.19.tgz#be167a357e3d7eed93e63f229120c17eaf9fb25c"
+  integrity sha512-e15Fz+qReONeR8yZbtMejiY2T9USzNUZ5i+iDSLFujC0cAPW6XzA15+bzg2wcpC4HRwIsLsaAJkY8Z3stFjcdw==
+  dependencies:
+    "@docusaurus/core" "2.0.0-beta.19"
+    "@docusaurus/utils-validation" "2.0.0-beta.19"
+    tslib "^2.4.0"
 
 "@docusaurus/plugin-google-gtag@2.0.0-beta.16":
   version "2.0.0-beta.16"
