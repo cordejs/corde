@@ -1818,7 +1818,7 @@
     webpack-merge "^5.8.0"
     webpackbar "^5.0.2"
 
-"@docusaurus/core@^2.0.0-beta.19":
+"@docusaurus/core@2.0.0-beta.19", "@docusaurus/core@^2.0.0-beta.19":
   version "2.0.0-beta.19"
   resolved "https://registry.yarnpkg.com/@docusaurus/core/-/core-2.0.0-beta.19.tgz#b3e0008affea95b84ab4fbec16cfea77a10d452a"
   integrity sha512-pHjnghPiLCogFF5FCMZrJJBGbT4wW2GEtUdRemMqWt0zru/0iQPwUQOKc2yhZTwCBCGaA5EqY/+I08W9FQIUJg==
@@ -2186,18 +2186,18 @@
     sitemap "^7.1.1"
     tslib "^2.3.1"
 
-"@docusaurus/plugin-sitemap@^2.0.0-beta.18":
-  version "2.0.0-beta.18"
-  resolved "https://registry.yarnpkg.com/@docusaurus/plugin-sitemap/-/plugin-sitemap-2.0.0-beta.18.tgz#7e8217e95bede5719bd02265dcf7eb2fea76b675"
-  integrity sha512-Klonht0Ye3FivdBpS80hkVYNOH+8lL/1rbCPEV92rKhwYdwnIejqhdKct4tUTCl8TYwWiyeUFQqobC/5FNVZPQ==
+"@docusaurus/plugin-sitemap@^2.0.0-beta.19":
+  version "2.0.0-beta.19"
+  resolved "https://registry.yarnpkg.com/@docusaurus/plugin-sitemap/-/plugin-sitemap-2.0.0-beta.19.tgz#4d506e2d4679af7231428b9214b6d06c329a9e42"
+  integrity sha512-UwkL8Pe7AmOgnPcnDzlKkWUKhprc4dGBBAYrMl27vX1CQDU9fgnFLFAe3Bi+y93bjgRjrWVkUPN1+Gc/HOR5ig==
   dependencies:
-    "@docusaurus/core" "2.0.0-beta.18"
-    "@docusaurus/utils" "2.0.0-beta.18"
-    "@docusaurus/utils-common" "2.0.0-beta.18"
-    "@docusaurus/utils-validation" "2.0.0-beta.18"
-    fs-extra "^10.0.1"
+    "@docusaurus/core" "2.0.0-beta.19"
+    "@docusaurus/utils" "2.0.0-beta.19"
+    "@docusaurus/utils-common" "2.0.0-beta.19"
+    "@docusaurus/utils-validation" "2.0.0-beta.19"
+    fs-extra "^10.1.0"
     sitemap "^7.1.1"
-    tslib "^2.3.1"
+    tslib "^2.4.0"
 
 "@docusaurus/preset-classic@^2.0.0-beta.16":
   version "2.0.0-beta.16"
