@@ -2156,7 +2156,7 @@
     react-json-view "^1.21.3"
     tslib "^2.3.1"
 
-"@docusaurus/plugin-google-analytics@2.0.0-beta.16", "@docusaurus/plugin-google-analytics@^2.0.0-beta.14":
+"@docusaurus/plugin-google-analytics@2.0.0-beta.16":
   version "2.0.0-beta.16"
   resolved "https://registry.yarnpkg.com/@docusaurus/plugin-google-analytics/-/plugin-google-analytics-2.0.0-beta.16.tgz#3bce2c65fb35082201dad21dfd73b0f7924bd499"
   integrity sha512-UKd1RWYHeSm/RLjJ2ZflLTT6hbiWQWFAxVzYRBiyOnDbBP+un8qmP692QZCIP+rrm+KkxsV1FGte0NtrcsFUEw==
@@ -2164,6 +2164,15 @@
     "@docusaurus/core" "2.0.0-beta.16"
     "@docusaurus/utils-validation" "2.0.0-beta.16"
     tslib "^2.3.1"
+
+"@docusaurus/plugin-google-analytics@^2.0.0-beta.20":
+  version "2.0.0-beta.20"
+  resolved "https://registry.yarnpkg.com/@docusaurus/plugin-google-analytics/-/plugin-google-analytics-2.0.0-beta.20.tgz#c1bdbc1239f987f9716fa30c2fd86962c190a765"
+  integrity sha512-4C5nY25j0R1lntFmpSEalhL7jYA7tWvk0VZObiIxGilLagT/f9gWPQtIjNBe4yzdQvkhiaXpa8xcMcJUAKRJyw==
+  dependencies:
+    "@docusaurus/core" "2.0.0-beta.20"
+    "@docusaurus/utils-validation" "2.0.0-beta.20"
+    tslib "^2.4.0"
 
 "@docusaurus/plugin-google-gtag@2.0.0-beta.16":
   version "2.0.0-beta.16"
