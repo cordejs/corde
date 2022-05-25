@@ -2,11 +2,22 @@ import { ICordeBot } from "../../src/types";
 import MockDiscord from "../mocks/mockDiscord";
 import { initCordeClient, initCordeClientWithChannel, replaceCollection } from "../testHelper";
 
-const DEFAULT_PREFIX = "!";
 const mockDiscord = new MockDiscord();
 
 let _client = mockDiscord.mockClient();
 let _cordeClient = initCordeClient(mockDiscord, _client);
+
+let corde: ICordeBot;
+
+beforeEach(async () => {
+  const client = mockDiscord.mockClient();
+  client.readyAt = new Date();
+  corde = initCordeClientWithChannel(mockDiscord, client);
+  client.emit("ready", client);
+  jest.spyOn(corde, "findGuild").mockReturnValue(mockDiscord.guild);
+  jest.spyOn(corde, "findChannel").mockResolvedValue(mockDiscord.textChannel);
+  await corde.loadGuildAndChannel();
+});
 
 describe("Testing CordeBot object", () => {
   beforeEach(() => {
@@ -99,24 +110,6 @@ describe("Testing CordeBot object", () => {
         expect(error).toBeTruthy();
       }
     });
-
-    it("should find a channel", async () => {
-      const client = mockDiscord.client;
-
-      client.guilds.cache.has = jest.fn().mockReturnValueOnce(true);
-      client.guilds.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.guild);
-
-      mockDiscord.guild.channels.cache.has = jest.fn().mockReturnValueOnce(true);
-      mockDiscord.guild.channels.cache.find = jest
-        .fn()
-        .mockReturnValueOnce(mockDiscord.textChannel);
-
-      const corde = initCordeClient(mockDiscord, client);
-      const findMock = jest.spyOn(corde, "findChannel");
-
-      client.emit("ready", client);
-      expect(findMock).toHaveLastReturnedWith(mockDiscord.textChannel);
-    });
   });
 
   describe("testing login()", () => {
@@ -153,61 +146,28 @@ describe("Testing CordeBot object", () => {
       expect(async () => await _cordeClient.sendTextMessage(null)).rejects.toBeTruthy();
     });
 
-    it("should call TextChannel.send() with prefix", async () => {
-      const client = mockDiscord.client;
-      client.guilds.cache.has = jest.fn().mockReturnValueOnce(true);
-      client.guilds.cache.find = jest.fn().mockReturnValueOnce(mockDiscord.guild);
-
-      mockDiscord.guild.channels.cache.has = jest.fn().mockReturnValueOnce(true);
-      mockDiscord.guild.channels.cache.find = jest
-        .fn()
-        .mockReturnValueOnce(mockDiscord.textChannel);
-
-      const corde = initCordeClient(mockDiscord, client);
-      const spy = jest.spyOn(mockDiscord.textChannel, "send");
-      client.emit("ready", client);
-      try {
-        await corde.sendTextMessage("text");
-      } catch (error) {
-        expect(spy).toBeCalledWith(`${DEFAULT_PREFIX}text`);
-      }
-    });
-
     it("should return a Discord.Message when called a valid message", async () => {
       const client = mockDiscord.client;
-      const corde = initCordeClientWithChannel(mockDiscord, client);
-      mockDiscord.textChannel.send = jest.fn().mockReturnValue(mockDiscord.message);
+      corde.textChannel.send = jest.fn().mockReturnValue(mockDiscord.message);
       client.emit("ready", client);
       expect(await corde.sendTextMessage("ok")).toBe(mockDiscord.message);
     });
   });
 
   describe("testing isLoggedIn", () => {
-    it("should return true due to all properties are filled", () => {
+    it("should return true due to ready at value", () => {
       const client = mockDiscord.client;
       client.readyAt = new Date();
-      const corde = initCordeClientWithChannel(mockDiscord, client);
-      client.emit("ready", client);
       expect(corde.isLoggedIn()).toBeTruthy();
-    });
-
-    it("should return false due to all properties not filled", () => {
-      const client = mockDiscord.client;
-      client.readyAt = new Date();
-      const corde = initCordeClientWithChannel(mockDiscord, client);
-      expect(corde.isLoggedIn()).toBeFalsy();
     });
   });
 
   describe("testing findMessage", () => {
     it("should find a not cached message using anonymous filter function", async () => {
       const client = mockDiscord.client;
-      const corde = initCordeClientWithChannel(mockDiscord, client);
       client.emit("ready", client);
 
-      mockDiscord.textChannel.messages.fetch = jest
-        .fn()
-        .mockReturnValue(mockDiscord.messageCollection);
+      corde.textChannel.messages.fetch = jest.fn().mockReturnValue(mockDiscord.messageCollection);
 
       const message = await corde.findMessage((m) => m.id === mockDiscord.message.id);
       expect(message?.id).toBe(mockDiscord.message.id);
@@ -215,12 +175,9 @@ describe("Testing CordeBot object", () => {
 
     it("should find a cached message using anonymous filter function", async () => {
       const client = mockDiscord.client;
-      const corde = initCordeClientWithChannel(mockDiscord, client);
       client.emit("ready", client);
 
-      mockDiscord.textChannel.messages.fetch = jest
-        .fn()
-        .mockReturnValue(mockDiscord.messageCollection);
+      corde.textChannel.messages.fetch = jest.fn().mockReturnValue(mockDiscord.messageCollection);
       replaceCollection(mockDiscord.messageCollection, mockDiscord.textChannel.messages.cache);
 
       const message = await corde.findMessage((m) => m.id === mockDiscord.message.id);
@@ -229,7 +186,6 @@ describe("Testing CordeBot object", () => {
 
     it("should return null due to no parameter", async () => {
       const client = mockDiscord.client;
-      const corde = initCordeClientWithChannel(mockDiscord, client);
       client.emit("ready", client);
 
       replaceCollection(mockDiscord.messageCollection, mockDiscord.textChannel.messages.cache);
@@ -241,30 +197,24 @@ describe("Testing CordeBot object", () => {
       expect(message).toBeFalsy();
     });
 
-    it("should return null due to no no fetch data", async () => {
+    it("should return null due to no data to fetch", async () => {
       const client = mockDiscord.client;
-      const corde = initCordeClientWithChannel(mockDiscord, client);
       client.emit("ready", client);
 
       mockDiscord.textChannel.messages.cache.find = jest.fn().mockReturnValue(null);
-      mockDiscord.textChannel.messages.fetch = jest
-        .fn()
-        .mockReturnValue(mockDiscord.messageCollection);
+      corde.textChannel.messages.fetch = jest.fn().mockReturnValue(mockDiscord.messageCollection);
 
-      mockDiscord.textChannel.messages.fetch = jest.fn().mockReturnValue(null);
+      corde.textChannel.messages.fetch = jest.fn().mockReturnValue(null);
       const message = await corde.findMessage((m) => m.id === mockDiscord.message.id);
       expect(message).toBeFalsy();
     });
 
     it("should find a cached message using message content", async () => {
       const client = mockDiscord.client;
-      const corde = initCordeClientWithChannel(mockDiscord, client);
       client.emit("ready", client);
 
       replaceCollection(mockDiscord.messageCollection, mockDiscord.textChannel.messages.cache);
-      mockDiscord.textChannel.messages.fetch = jest
-        .fn()
-        .mockReturnValue(mockDiscord.messageCollection);
+      corde.textChannel.messages.fetch = jest.fn().mockReturnValue(mockDiscord.messageCollection);
 
       const message = await corde.findMessage({ content: mockDiscord.message.content });
       expect(message?.id).toBe(mockDiscord.message.id);
@@ -272,12 +222,9 @@ describe("Testing CordeBot object", () => {
 
     it("should find a not cached message using message content", async () => {
       const client = mockDiscord.client;
-      const corde = initCordeClientWithChannel(mockDiscord, client);
       client.emit("ready", client);
 
-      mockDiscord.textChannel.messages.fetch = jest
-        .fn()
-        .mockReturnValue(mockDiscord.messageCollection);
+      corde.textChannel.messages.fetch = jest.fn().mockReturnValue(mockDiscord.messageCollection);
 
       const message = await corde.findMessage({ content: mockDiscord.message.content });
       expect(message?.id).toBe(mockDiscord.message.id);
@@ -285,13 +232,10 @@ describe("Testing CordeBot object", () => {
 
     it("should find a cached message using message id", async () => {
       const client = mockDiscord.client;
-      const corde = initCordeClientWithChannel(mockDiscord, client);
       client.emit("ready", client);
 
       replaceCollection(mockDiscord.messageCollection, mockDiscord.textChannel.messages.cache);
-      mockDiscord.textChannel.messages.fetch = jest
-        .fn()
-        .mockReturnValue(mockDiscord.messageCollection);
+      corde.textChannel.messages.fetch = jest.fn().mockReturnValue(mockDiscord.messageCollection);
 
       const message = await corde.findMessage({ id: mockDiscord.message.id });
       expect(message?.id).toBe(mockDiscord.message.id);
@@ -299,25 +243,19 @@ describe("Testing CordeBot object", () => {
 
     it("should find a not cached message using message id", async () => {
       const client = mockDiscord.client;
-      const corde = initCordeClientWithChannel(mockDiscord, client);
       client.emit("ready", client);
 
-      mockDiscord.textChannel.messages.fetch = jest
-        .fn()
-        .mockReturnValue(mockDiscord.messageCollection);
+      corde.textChannel.messages.fetch = jest.fn().mockResolvedValue(mockDiscord.messageCollection);
 
-      const message = await corde.findMessage({ id: mockDiscord.message.id });
-      expect(message?.id).toBe(mockDiscord.message.id);
+      const message = await corde.findMessage({ id: mockDiscord.messageCollection.first().id });
+      expect(message?.id).toBe(mockDiscord.messageCollection.first().id);
     });
 
     it("should not find a message", async () => {
       const client = mockDiscord.client;
-      const corde = initCordeClientWithChannel(mockDiscord, client);
       client.emit("ready", client);
 
-      mockDiscord.textChannel.messages.fetch = jest
-        .fn()
-        .mockReturnValue(mockDiscord.messageCollection);
+      corde.textChannel.messages.fetch = jest.fn().mockReturnValue(mockDiscord.messageCollection);
 
       replaceCollection(mockDiscord.messageCollection, mockDiscord.textChannel.messages.cache);
 
@@ -327,69 +265,59 @@ describe("Testing CordeBot object", () => {
   });
 
   it("should fetchRole by it's id", async () => {
-    const corde = initCordeBot();
     mockRoleFetch(corde);
     const role = await corde.fetchRole(mockDiscord.role.id);
     expect(role).toEqual(mockDiscord.role);
   });
 
   it("should find a role by it's id", async () => {
-    const corde = initCordeBot();
     mockRolesFetch(corde);
     const role = await corde.findRole({ id: mockDiscord.role.id });
     expect(role).toEqual(mockDiscord.role);
   });
 
   it("should find a role by it's name", async () => {
-    const corde = initCordeBot();
     mockRolesFetch(corde);
     const role = await corde.findRole({ name: mockDiscord.role.name });
     expect(role).toEqual(mockDiscord.role);
   });
 
   it("should not find a role by it's name", async () => {
-    const corde = initCordeBot();
     mockRolesFetch(corde);
     const role = await corde.findRole({ name: "ba" });
     expect(role).toBeFalsy();
   });
 
   it("should not find a role by it's id", async () => {
-    const corde = initCordeBot();
     mockRolesFetch(corde);
     const role = await corde.findRole({ id: "123" });
     expect(role).toBeFalsy();
   });
 
   it("should not find a role due to no option", async () => {
-    const corde = initCordeBot();
     mockRolesFetch(corde);
     const role = await corde.findRole({});
     expect(role).toBeFalsy();
   });
 
   it("should find a role by it's id if pass both id and name", async () => {
-    const corde = initCordeBot();
     mockRolesFetch(corde);
     const role = await corde.findRole({ id: mockDiscord.role.id, name: "bata" });
     expect(role).toEqual(mockDiscord.role);
   });
 
   it("should list all roles of the guild", async () => {
-    const corde = initCordeBot();
     expect(corde.getRoles()).toEqual(mockDiscord.guild.roles.cache);
   });
 
   describe("testing hasRole", () => {
     it("should return true due to a existing role", async () => {
-      const corde = initCordeBot();
       mockRolesFetch(corde);
       const role = await corde.hasRole({ id: mockDiscord.role.id });
       expect(role).toBeTruthy();
     });
 
     it("should return false due to a existing role", async () => {
-      const corde = initCordeBot();
       mockRolesFetch(corde);
       const role = await corde.hasRole({ id: "9879" });
       expect(role).toBeFalsy();
@@ -397,24 +325,20 @@ describe("Testing CordeBot object", () => {
   });
 
   it("should get roleManager", () => {
-    const corde = initCordeBot();
     expect(corde.roleManager).toEqual(mockDiscord.guild.roles);
   });
 
   it("should get channel", () => {
-    const corde = initCordeBot();
     expect(corde.channel).toEqual(mockDiscord.textChannel);
   });
 
   it("should call textChannel.send", async () => {
-    const corde = initCordeBot();
-    const spy = jest.spyOn(mockDiscord.textChannel, "send").mockImplementation(() => null);
+    const spy = jest.spyOn(corde.textChannel, "send").mockImplementation(() => null);
     await corde.sendMessage("");
     expect(spy).toBeCalled();
   });
 
   it("should call roles.fetch", async () => {
-    const corde = initCordeBot();
     const spy = jest
       .spyOn(corde.guild.roles, "fetch")
       .mockImplementation(() => Promise.resolve(mockDiscord.roles));
@@ -422,13 +346,6 @@ describe("Testing CordeBot object", () => {
     expect(spy).toBeCalled();
   });
 });
-
-function initCordeBot() {
-  const client = mockDiscord.client;
-  const corde = initCordeClientWithChannel(mockDiscord, client);
-  client.emit("ready", client);
-  return corde;
-}
 
 function mockRolesFetch(corde: ICordeBot) {
   return jest

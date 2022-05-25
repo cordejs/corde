@@ -35,8 +35,16 @@ export class CordeBot implements ICordeBot {
   private readonly _emitter: EventEmitter;
   private _voiceConnection?: corde.IVoiceChannelState;
 
-  private textChannel!: TextChannel;
-  public guild!: Guild;
+  private _textChannel!: TextChannel;
+  public _guild!: Guild;
+
+  get guild() {
+    return this._guild;
+  }
+
+  get textChannel() {
+    return this._textChannel;
+  }
 
   /**
    * Starts new instance of Discord client with its events.
@@ -190,12 +198,15 @@ export class CordeBot implements ICordeBot {
     if (messageIdentifier && messageIdentifier.content) {
       return this._findMessage((m) => m.content === messageIdentifier.content);
     }
+
     if (messageIdentifier && messageIdentifier.id) {
       return this._findMessage((m) => m.id === messageIdentifier.id);
     }
+
     if (data) {
       return this._findMessage(data as (message: Message) => boolean);
     }
+
     return undefined;
   }
 
@@ -243,9 +254,9 @@ export class CordeBot implements ICordeBot {
    * Get a channel based in the id stored in configs.
    */
   async loadGuildAndChannel() {
-    this.guild = this.findGuild(this._guildId);
+    this._guild = this.findGuild(this._guildId);
     const channel = await this.findChannel(this._channelId);
-    this.textChannel = this.convertToTextChannel(channel);
+    this._textChannel = this.convertToTextChannel(channel);
   }
 
   // Don't use `object` as a type. The `object` type is currently hard to use

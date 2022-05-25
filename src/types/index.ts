@@ -63,6 +63,7 @@ export interface ICordeBot {
   readonly client: Client;
   readonly events: Events;
   readonly guild: Guild;
+  readonly textChannel: TextChannel;
   readonly roleManager: RoleManager;
   readonly channel: TextChannel;
   readonly testBotId: string;

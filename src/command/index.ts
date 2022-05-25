@@ -209,7 +209,7 @@ function createMatcherFn(params: ICreateMatcherParam) {
 
 function handleError(error: any) {
   if (error instanceof Error) {
-    return error.message;
+    return error.message + "\n" + error.stack;
   }
   return error;
 }

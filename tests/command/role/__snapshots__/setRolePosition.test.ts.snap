@@ -43,8 +43,8 @@ Object {
 exports[`testing ToSetRolePosition operation should not find a role and must return a failed test (isNot true) 1`] = `
 Object {
   "message": "    
-    expected: role position to change to 1
-    received: position didn't change
+    expected: position to be >= 0 and <= 1 (max value possible)
+    received: 2
 ",
   "pass": false,
   "testName": "setRolePosition",

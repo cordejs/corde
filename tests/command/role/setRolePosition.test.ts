@@ -69,7 +69,7 @@ describe("testing ToSetRolePosition operation", () => {
   });
 
   it("should not find a role and must return a failed test (isNot true)", async () => {
-    const report = await debugCon().should.setRolePosition(1, { id: "123" });
+    const report = await debugCon().should.not.setRolePosition(2, { id: "3213" });
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });

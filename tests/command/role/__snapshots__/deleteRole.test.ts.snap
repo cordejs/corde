@@ -32,7 +32,7 @@ Object {
 exports[`testing deleteRole function isNot false should get timeout when trying to delete the role 1`] = `
 Object {
   "message": "    
-    timeout: role undefined wasn't deleted in the expected time (100)
+    expected: role undefined to be deleted
 ",
   "pass": false,
   "testName": "deleteRole",
