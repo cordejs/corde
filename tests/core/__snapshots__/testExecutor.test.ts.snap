@@ -20,7 +20,7 @@ exports[`- 1`] = `
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:100
     at Object.action (/<fake>/<file>/<path>/test.ts:200:100)
     at TestExecutor.runTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
-    at process.processTicksAndRejections (node:internal/<fake>/<file>/<path>/task_queues:95:5)
+    at async TestExecutor.executeTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
 
    [32m[32m✔ [39m[32m test closure 5[39m   [36m10ms[39m
    [32m[32m✔ [39m[32m test closure 6[39m   [36m10ms[39m
@@ -39,7 +39,7 @@ exports[`- 1`] = `
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:100
     at Object.action (/<fake>/<file>/<path>/test.ts:200:100)
     at TestExecutor.runTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
-    at process.processTicksAndRejections (node:internal/<fake>/<file>/<path>/task_queues:95:5)
+    at async TestExecutor.executeTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
 
    [32m[32m✔ [39m[32m test closure 9[39m   [36m10ms[39m
    [32m[32m✔ [39m[32m test closure 10[39m   [36m10ms[39m
@@ -58,7 +58,7 @@ exports[`- 1`] = `
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:100
     at Object.action (/<fake>/<file>/<path>/test.ts:200:100)
     at TestExecutor.runTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
-    at process.processTicksAndRejections (node:internal/<fake>/<file>/<path>/task_queues:95:5)
+    at async TestExecutor.executeTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
 "
 `;
 
@@ -82,7 +82,7 @@ exports[`-: without ANSI Colors 1`] = `
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:100
     at Object.action (/<fake>/<file>/<path>/test.ts:200:100)
     at TestExecutor.runTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
-    at process.processTicksAndRejections (node:internal/<fake>/<file>/<path>/task_queues:95:5)
+    at async TestExecutor.executeTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
 
    ✔  test closure 5   10ms
    ✔  test closure 6   10ms
@@ -101,7 +101,7 @@ exports[`-: without ANSI Colors 1`] = `
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:100
     at Object.action (/<fake>/<file>/<path>/test.ts:200:100)
     at TestExecutor.runTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
-    at process.processTicksAndRejections (node:internal/<fake>/<file>/<path>/task_queues:95:5)
+    at async TestExecutor.executeTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
 
    ✔  test closure 9   10ms
    ✔  test closure 10   10ms
@@ -120,7 +120,7 @@ exports[`-: without ANSI Colors 1`] = `
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:100
     at Object.action (/<fake>/<file>/<path>/test.ts:200:100)
     at TestExecutor.runTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
-    at process.processTicksAndRejections (node:internal/<fake>/<file>/<path>/task_queues:95:5)
+    at async TestExecutor.executeTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
 "
 `;
 
@@ -172,7 +172,7 @@ exports[`should get report for multiple tests inside a group and failed tests 1`
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:100
     at Object.action (/<fake>/<file>/<path>/test.ts:200:100)
     at TestExecutor.runTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
-    at process.processTicksAndRejections (node:internal/<fake>/<file>/<path>/task_queues:95:5)
+    at async TestExecutor.executeTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
 "
 `;
 
@@ -196,7 +196,7 @@ exports[`should get report for multiple tests inside a group and failed tests: w
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:100
     at Object.action (/<fake>/<file>/<path>/test.ts:200:100)
     at TestExecutor.runTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
-    at process.processTicksAndRejections (node:internal/<fake>/<file>/<path>/task_queues:95:5)
+    at async TestExecutor.executeTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
 "
 `;
 
@@ -309,7 +309,7 @@ exports[`should print report for single group and a single test 1`] = `
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:100
     at Object.action (/<fake>/<file>/<path>/test.ts:200:100)
     at TestExecutor.runTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
-    at process.processTicksAndRejections (node:internal/<fake>/<file>/<path>/task_queues:95:5)
+    at async TestExecutor.executeTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
 "
 `;
 
@@ -330,6 +330,6 @@ exports[`should print report for single group and a single test: without ANSI Co
     at /<fake>/<file>/<path>/executePromiseWithTimeout.ts:200:100
     at Object.action (/<fake>/<file>/<path>/test.ts:200:100)
     at TestExecutor.runTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
-    at process.processTicksAndRejections (node:internal/<fake>/<file>/<path>/task_queues:95:5)
+    at async TestExecutor.executeTest (/<fake>/<file>/<path>/TestExecutor.ts:200:100)
 "
 `;
