@@ -92,13 +92,15 @@ export class MockEvents {
   /**
    * @internal
    */
-  mockOnceMessageReactionsAdd(reactionsWithAuthors?: [MessageReaction, User | PartialUser][]) {
+  mockOnceMessageReactionsAdd(
+    reactionsWithAuthors?: [corde.PartialOrMessageReaction, void | User | PartialUser][],
+  ) {
     const event = eventFactory.findOrConstruct(MessageReactionsAdd, this._corde.client);
     this._corde.client.options.intents = Intents.resolve(ALL_INTENTS);
-    event.once = jest
-      .fn()
-      .mockReturnValue(
-        reactionsWithAuthors ?? [this._mockDiscord.messageReaction, this._mockDiscord.user],
+    jest
+      .spyOn(event, "once")
+      .mockResolvedValue(
+        reactionsWithAuthors ?? [[this._mockDiscord.messageReaction, this._mockDiscord.user]],
       );
   }
 

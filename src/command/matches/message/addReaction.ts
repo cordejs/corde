@@ -51,7 +51,7 @@ export async function addReaction(
 
   let reactionsWithAuthors: [corde.PartialOrMessageReaction, void | User | PartialUser][];
   try {
-    const emojiLike = emojis.map((e: string | corde.IEmoji) => {
+    const emojiLike = emojis?.map((e: string | corde.IEmoji) => {
       if (typeof e === "string") {
         return { name: e };
       }
@@ -87,8 +87,10 @@ export async function addReaction(
     );
   }
 
-  // We can set it as passed due to all validations about if
-  // the reactions added matches with expected are defined in the event onceMessageReactionsAdd
+  // We can set it as passed because if the "once" method
+  // returned a value, it means that there is a message with the given
+  // reaction.
+
   this.hasPassed = true;
 
   this.invertHasPassedIfIsNot();
