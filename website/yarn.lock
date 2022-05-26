@@ -6181,10 +6181,10 @@ firebase-frameworks@^0.4.2:
     semver "^7.3.7"
     tslib "^2.3.1"
 
-firebase-tools@^11.0.0:
-  version "11.0.0"
-  resolved "https://registry.yarnpkg.com/firebase-tools/-/firebase-tools-11.0.0.tgz#a4adec1f330a26aa28ba1539ab7a080a1752f5be"
-  integrity sha512-sSJ7zdfbqwOhjWZCgRqWAzWIRMNdpDV2nVHZCb3V4iMsEaGiOt1fATKoUT5zyXhNA1tYThYljzgfmVgg5cyy2A==
+firebase-tools@^11.0.1:
+  version "11.0.1"
+  resolved "https://registry.yarnpkg.com/firebase-tools/-/firebase-tools-11.0.1.tgz#2aa130066377abc23083b2c0cd432c9a2bd25f0f"
+  integrity sha512-be5Xx2FbdW0G2YMpxsIcNaFuekeiRgFRPScVbXhnfHLIOUJ/ETYCNrQEndzhprVlawl6l6EW9H18DRx61I5RKQ==
   dependencies:
     "@google-cloud/pubsub" "^2.19.4"
     abort-controller "^3.0.0"
