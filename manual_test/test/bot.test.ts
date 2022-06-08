@@ -5,9 +5,15 @@
 import { login, bot } from "../src/bot";
 
 beforeAll(async () => {
-  //console.log("logging testing bot...");
   await login();
-  //console.log("done");
+});
+
+beforeEach(async () => {
+  await corde.waitAsync(1000);
+});
+
+it("ping should return pong", async () => {
+  await command("ping").should.respond("pong");
 });
 
 it("ping should return pong", async () => {
