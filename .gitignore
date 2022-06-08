@@ -59,6 +59,8 @@ typings/
 # dotenv environment variables file
 /.env
 /e2e/.env
+/e2e/.env.*
+!/e2e/.env.*.example
 /corde.json
 
 # next.js build output

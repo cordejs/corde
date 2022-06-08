@@ -8,11 +8,13 @@
 import env from "dotenv";
 import testUtils from "./testUtils";
 
-const result = env.config({ path: "./e2e/.env" });
-
 // Do not throw any error if the project in running inside CI.
-if (!process.env.CI && result.error) {
-  throw result.error;
+if (!process.env.CI) {
+  const result = env.config({ path: "./e2e/.env." + testUtils.env() });
+
+  if (result.error) {
+    throw result.error;
+  }
 }
 
 // Different types of env variables are used

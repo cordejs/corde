@@ -7,54 +7,6 @@ import { CliOutput, OSEnv } from "./types";
 import path from "path";
 import chalk from "chalk";
 
-function getWindowsConfigs() {
-  return {
-    botPrefix: process.env.BOT_PREFIX,
-    timeout: Number(process.env.TIME_OUT),
-    botTestId: process.env.BOT_TEST_ID_WINDOWS,
-    botToken: process.env.BOT_TEST_TOKEN_WINDOWS,
-    channelId: process.env.CHANNEL_ID_WINDOWS,
-    cordeBotToken: process.env.CORDE_TEST_TOKEN_WINDOWS,
-    guildId: process.env.GUILD_ID_WINDOWS,
-  };
-}
-
-function getMacConfigs() {
-  return {
-    botPrefix: process.env.BOT_PREFIX,
-    timeout: Number(process.env.TIME_OUT),
-    botTestId: process.env.BOT_TEST_ID_MAC,
-    botToken: process.env.BOT_TEST_TOKEN_MAC,
-    channelId: process.env.CHANNEL_ID_MAC,
-    cordeBotToken: process.env.CORDE_TEST_TOKEN_MAC,
-    guildId: process.env.GUILD_ID_MAC,
-  };
-}
-
-function getDevConfigs() {
-  return {
-    botPrefix: process.env.BOT_PREFIX,
-    timeout: Number(process.env.TIME_OUT),
-    botTestId: process.env.BOT_TEST_ID,
-    botToken: process.env.BOT_TEST_TOKEN,
-    channelId: process.env.CHANNEL_ID,
-    cordeBotToken: process.env.CORDE_TEST_TOKEN,
-    guildId: process.env.GUILD_ID,
-  };
-}
-
-function getLinuxConfigs() {
-  return {
-    botPrefix: process.env.BOT_PREFIX,
-    timeout: Number(process.env.TIME_OUT),
-    botTestId: process.env.BOT_TEST_ID_LINUX,
-    botToken: process.env.BOT_TEST_TOKEN_LINUX,
-    channelId: process.env.CHANNEL_ID_LINUX,
-    cordeBotToken: process.env.CORDE_TEST_TOKEN_LINUX,
-    guildId: process.env.GUILD_ID_LINUX,
-  };
-}
-
 namespace testUtils {
   export function parseCommand(message: Message, prefix: string) {
     if (message.content.indexOf("") !== 0) return "";
@@ -149,19 +101,15 @@ namespace testUtils {
   }
 
   export function getEnvConfig() {
-    const env = testUtils.env();
-    switch (env) {
-      case "dev":
-        return getDevConfigs();
-      case "linux":
-        return getLinuxConfigs();
-      case "mac":
-        return getMacConfigs();
-      case "windows":
-        return getWindowsConfigs();
-      default:
-        return getDevConfigs();
-    }
+    return {
+      botPrefix: process.env.BOT_PREFIX,
+      timeout: Number(process.env.TIME_OUT),
+      botTestId: process.env.BOT_TEST_ID,
+      botToken: process.env.BOT_TEST_TOKEN,
+      channelId: process.env.CHANNEL_ID,
+      cordeBotToken: process.env.CORDE_TEST_TOKEN,
+      guildId: process.env.GUILD_ID,
+    };
   }
 }
 

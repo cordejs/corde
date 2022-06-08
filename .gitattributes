@@ -4,6 +4,7 @@ eol=lf
 * text=auto eol=lf
 
 *.mdx text linguist-detectable
+*.env text linguist-detectable
 
 # JS and TS files must always use LF for tools to work
 *.js eol=lf
