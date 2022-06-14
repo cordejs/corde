@@ -13,9 +13,5 @@
   "license": "ISC",
   "devDependencies": {
     "corde": "*"
-  },
-  "dependencies": {
-    "discord.js": "^13.6.0",
-    "ts-node": "^10.7.0"
   }
 }
