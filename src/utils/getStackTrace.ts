@@ -58,8 +58,15 @@ export function getStackTrace(
         .join("\n" + space + "at ");
 
     // removes full path of the file for security.
-    const formattedPath = process.cwd().replace(/\\/g, "\\\\");
-    const regex = new RegExp(formattedPath + "\\\\", "g");
+
+    let formattedPath = process.cwd().replace(/\/\//g, "\\\\");
+    let regex = new RegExp(formattedPath + "\\\\", "g");
+
+    if (process.platform !== "win32") {
+      formattedPath = process.cwd();
+      regex = new RegExp(formattedPath + "/", "g");
+    }
+
     return trace.replace(regex, "");
   };
 
