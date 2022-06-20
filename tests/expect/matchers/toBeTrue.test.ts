@@ -14,6 +14,8 @@ describe("testing toBeTrue", () => {
   it.each([[false], ["1"], [{}]])("should return false for %s", (value) => {
     const result = cordeExpect(value).toBeTrue();
     expect(result.pass).toBeFalsy();
+    // eslint-disable-next-line no-console
+    console.log(result.message);
     expect(result.message).toMatchSnapshot();
   });
 
