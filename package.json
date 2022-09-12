@@ -80,7 +80,7 @@
     "@typescript-eslint/eslint-plugin": "^4.20.0",
     "@typescript-eslint/parser": "^4.20.0",
     "auto-changelog": "^2.3.0",
-    "babel-jest": "^28.0.0",
+    "babel-jest": "^29.0.3",
     "cli-spinners": "^2.4.0",
     "codecov": "^3.6.5",
     "dotenv": "^10.0.0",
