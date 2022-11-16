@@ -126,7 +126,7 @@ export class Reader {
 
     if (fileExt === ".json") {
       return JSON.parse(fs.readFileSync(filePath).toString());
-    } else if (fileExt === ".js" || fileExt === ".ts") {
+    } else if (fileExt === ".cjs" || fileExt === ".js" || fileExt === ".ts") {
       return require(filePath);
     } else {
       throw new FileError(`Extension '${fileExt}' is not supported`);

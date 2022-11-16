@@ -31,11 +31,21 @@ describe("reader class", () => {
       beforeEach(() => {
         jest.resetAllMocks();
       });
-      it("should read configs from configFilePath", () => {
+      it("should read JS configs from configFilePath", () => {
         const spy = jest.spyOn(fs, "readFileSync").mockReturnValue(null);
         runtime.configFilePath = path.resolve(
           process.cwd(),
           "tests/mocks/jsconfig/corde.config.js",
+        );
+        expect(reader.loadConfig()).toEqual(conf);
+        spy.mockReset();
+      });
+
+      it("should read CJS configs from configFilePath", () => {
+        const spy = jest.spyOn(fs, "readFileSync").mockReturnValue(null);
+        runtime.configFilePath = path.resolve(
+          process.cwd(),
+          "tests/mocks/cjsconfig/corde.config.cjs",
         );
         expect(reader.loadConfig()).toEqual(conf);
         spy.mockReset();
