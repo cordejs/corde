@@ -42,6 +42,16 @@ describe("reader class", () => {
         spy.mockReset();
       });
 
+      it("should read CJS configs from configFilePath", () => {
+        const spy = jest.spyOn(fs, "readFileSync").mockReturnValue(null);
+        runtime.configFilePath = path.resolve(
+          process.cwd(),
+          "tests/mocks/cjsconfig/corde.config.cjs",
+        );
+        expect(reader.loadConfig()).toEqual(conf);
+        spy.mockReset();
+      });
+
       it("should throw error when path in runtime.configFilepath is invalid", () => {
         runtime.configFilePath = ".";
         jest.spyOn(fs, "existsSync").mockReturnValue(false);
