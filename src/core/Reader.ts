@@ -18,10 +18,12 @@ export class Reader {
    */
   loadConfig() {
     let _config: corde.IConfigOptions;
+    const baseConfigName = "corde.config";
 
-    const jsonFilePath = path.resolve(process.cwd(), "corde.config.json");
-    const tsFilePath = path.resolve(process.cwd(), "corde.config.ts");
-    const jsFilePath = path.resolve(process.cwd(), "corde.config.js");
+    const jsonFilePath = path.resolve(process.cwd(), `${baseConfigName}.json`);
+    const tsFilePath = path.resolve(process.cwd(), `${baseConfigName}.ts`);
+    const jsFilePath = path.resolve(process.cwd(), `${baseConfigName}.js`);
+    const cjsFilePath = path.resolve(process.cwd(), `${baseConfigName}.cjs`);
 
     if (runtime.configFilePath) {
       return this.loadConfigFromConfigFilePath();
@@ -33,6 +35,8 @@ export class Reader {
       _config = require(tsFilePath);
     } else if (fs.existsSync(jsFilePath)) {
       _config = require(jsFilePath);
+    } else if (fs.existsSync(cjsFilePath)) {
+      _config = require(cjsFilePath);
     } else {
       throw new FileError("No config file was found");
     }
@@ -96,7 +100,7 @@ export class Reader {
 
     if (fileExt === ".json") {
       return JSON.parse(fs.readFileSync(filePath).toString());
-    } else if (fileExt === ".js" || fileExt === ".ts") {
+    } else if (fileExt === ".js" || fileExt === ".ts" || fileExt === ".cjs") {
       return require(filePath);
     } else {
       throw new FileError(`Extension '${fileExt}' is not supported`);

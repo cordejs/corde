@@ -30,13 +30,20 @@ describe("reader class", () => {
         jest.resetAllMocks();
       });
       it("should read configs from configFilePath", () => {
-        const spy = jest
-          .spyOn(fs, "readFileSync")
-          // @ts-expect-error
-          .mockReturnValue(null);
+        const spy = jest.spyOn(fs, "readFileSync").mockReturnValue(null);
         runtime.configFilePath = path.resolve(
           process.cwd(),
           "tests/mocks/jsconfig/corde.config.js",
+        );
+        expect(reader.loadConfig()).toEqual(conf);
+        spy.mockReset();
+      });
+
+      it("should read CJS configs from configFilePath", () => {
+        const spy = jest.spyOn(fs, "readFileSync").mockReturnValue(null);
+        runtime.configFilePath = path.resolve(
+          process.cwd(),
+          "tests/mocks/cjsconfig/corde.config.cjs",
         );
         expect(reader.loadConfig()).toEqual(conf);
         spy.mockReset();
@@ -59,10 +66,7 @@ describe("reader class", () => {
       });
 
       it("should resolve path of config", () => {
-        const spy = jest
-          .spyOn(fs, "readFileSync")
-          // @ts-expect-error
-          .mockReturnValue(null);
+        const spy = jest.spyOn(fs, "readFileSync").mockReturnValue(null);
         runtime.configFilePath = "tests/mocks/jsconfig/corde.config.js";
         expect(reader.loadConfig()).toEqual(conf);
         spy.mockReset();
@@ -86,7 +90,6 @@ describe("reader class", () => {
       it("should throw error due to no file", async () => {
         testCollector.createTestFile("path");
         try {
-          // @ts-expect-error
           await reader.getTestsFromFiles(null);
           fail();
         } catch (error) {
