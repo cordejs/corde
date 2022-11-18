@@ -8871,7 +8871,7 @@ source-map-resolve@^0.5.0:
     source-map-url "^0.4.0"
     urix "^0.1.0"
 
-source-map-support@^0.5.16, source-map-support@^0.5.21, source-map-support@^0.5.6:
+source-map-support@^0.5.16, source-map-support@^0.5.6:
   version "0.5.21"
   resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.21.tgz#04fe7c7f9e1ed2d662233c28cb2b35b9f63f6e4f"
   integrity sha512-uBHU3L3czsIyYXKX88fdrGovxdSCoTGDRZ6SYXtSRxLZUzHg5P/66Ht6uoUlHu9EZod+inXhKo3qQgwXUT/y1w==
@@ -9541,12 +9541,10 @@ tslint@^6.1.3:
     tslib "^1.13.0"
     tsutils "^2.29.0"
 
-tslog@^3.2.0:
-  version "3.3.3"
-  resolved "https://registry.yarnpkg.com/tslog/-/tslog-3.3.3.tgz#751a469e0d36841bd7e03676c27e53e7ffe9bc3d"
-  integrity sha512-lGrkndwpAohZ9ntQpT+xtUw5k9YFV1DjsksiWQlBSf82TTqsSAWBARPRD9juI730r8o3Awpkjp2aXy9k+6vr+g==
-  dependencies:
-    source-map-support "^0.5.21"
+tslog@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/tslog/-/tslog-4.2.0.tgz#e232d0b6fd448d7bc3838c41d60745cf8097af4e"
+  integrity sha512-dIN3eV6pqxxK+DTuoSZ7UOSMl424EDLuR2C6ZfiPYTEu4szD+8OzX9kJ/98kNKySUC1XjwV8qe54B9EG1+jbIg==
 
 tsutils@^2.29.0:
   version "2.29.0"
