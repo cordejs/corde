@@ -59,7 +59,7 @@ export function getStackTrace(
 
     // removes full path of the file for security.
 
-    let formattedPath = process.cwd().replace(/\/\//g, "\\\\");
+    let formattedPath = process.cwd().replace(/\\/g, "\\\\");
     let regex = new RegExp(formattedPath + "\\\\", "g");
 
     if (process.platform !== "win32") {
