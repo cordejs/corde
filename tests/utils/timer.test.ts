@@ -6,6 +6,15 @@ describe("testing timer class", () => {
     expect(new Timer()).toBeInstanceOf(Timer);
   });
 
+  it("should not start again a timer after it already was started", async () => {
+    const timer = new Timer();
+    timer.start();
+    const date = timer["_startTime"];
+    timer.start();
+    const date2 = timer["_startTime"];
+    expect(date).toEqual(date2);
+  });
+
   it("should init and end a timer", async () => {
     const timer = new Timer();
     timer.start();
