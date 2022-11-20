@@ -23,22 +23,36 @@ import { login, bot } from "./@bot";
 import { generator } from "./tests";
 import testUtils from "./testUtils";
 import { CliOutput, ITestFile } from "./types";
+import * as childProcess from "child_process";
 
 function logoutBot() {
   console.log(chalk.cyanBright("logout bot"));
   bot.destroy();
 }
 
+function buildProject() {
+  childProcess.execSync("yarn build");
+}
+
 async function main() {
   console.log(`Environment: ${chalk.cyan(testUtils.env())}`);
+
+  if (shouldBuild()) {
+    console.log("Building project... ");
+    buildProject();
+    console.log("Done\n");
+  } else {
+    console.log("Skipping build");
+  }
+
   let exitCode = 0;
   let _testsPass = true;
-  process.stdout.write(chalk.cyanBright("logging example bot..."));
+  console.log(chalk.cyanBright("logging example bot..."));
 
   await login();
 
   try {
-    process.stdout.write(chalk.green(" Done\n"));
+    console.log(chalk.green(" Done\n"));
 
     const selectedTests = process.argv
       .slice(process.argv.indexOf("--tests"))
@@ -84,6 +98,10 @@ async function main() {
     }
   }
   return exitCode;
+}
+
+function shouldBuild() {
+  return process.argv.indexOf("--skip-build") !== -1;
 }
 
 function removeDuplicates(val: string) {

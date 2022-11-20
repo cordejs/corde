@@ -45,6 +45,7 @@ export interface ITestReport {
   testName?: string;
   message?: string;
   trace?: string;
+  isHandledError?: boolean;
 }
 
 export interface ITestProps {

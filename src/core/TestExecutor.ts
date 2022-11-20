@@ -29,6 +29,7 @@ import { Group } from "./Group";
 import { TestError } from "../errors";
 import runtime from "./runtime";
 import { logger } from "./Logger";
+import { getStackTrace } from "../utils/getStackTrace";
 
 type ReportStatusType = "pass" | "fail" | "empty";
 
@@ -222,13 +223,26 @@ export class TestExecutor {
   }
 
   private printReportData(report: ITestReport) {
+    if (!report.isHandledError) {
+      this._logUpdate.clear();
+    }
+
     if (report.message) {
-      this._logUpdate.appendLine(report.message);
+      const formattedMsg = this.getTextFormatPerReportType(report.message, report.isHandledError);
+      this._logUpdate.appendLine(formattedMsg);
     }
 
     if (!report.pass && report.trace) {
-      this._logUpdate.appendLine(report.trace + "\n");
+      const formattedMsg = this.getTextFormatPerReportType(report.trace, report.isHandledError);
+      this._logUpdate.appendLine(formattedMsg + "\n");
     }
+  }
+
+  private getTextFormatPerReportType(msg: string, isHandledError?: boolean) {
+    if (isHandledError) {
+      return msg;
+    }
+    return chalk.red(msg);
   }
 
   private createTestText(testName?: string | number | boolean) {
@@ -278,14 +292,7 @@ export class TestExecutor {
       testCollector.currentSuite = test;
       await test.action();
     } catch (error) {
-      if (error instanceof TestError) {
-        report = {
-          message: error.message,
-          pass: error.pass,
-          testName: error.testName,
-          trace: error.trace,
-        };
-      }
+      report = this.getErrorReport(error);
     }
 
     runtime.internalEvents.removeListener("test_end", onSuiteEnd);
@@ -298,6 +305,29 @@ export class TestExecutor {
     }
 
     return report;
+  }
+
+  private getErrorReport(error: any): ITestReport {
+    if (error instanceof TestError) {
+      return {
+        message: error.message,
+        pass: error.pass,
+        testName: error.testName,
+        trace: error.trace,
+      };
+    }
+    if (error instanceof Error) {
+      return {
+        message: error.message,
+        pass: false,
+        trace: error.stack,
+      };
+    }
+    return {
+      pass: false,
+      message: error.toString(),
+      trace: getStackTrace(),
+    };
   }
 
   private async executeHookFunction(queue?: Queue<VoidLikeFunction>) {

@@ -123,4 +123,10 @@ export const testCases: ITestFile[] = [
     testFile: "test1.spec.ts",
     exitCodeExpectation: 0,
   },
+  {
+    id: 20,
+    folder: "others",
+    testFile: "handleErrors.spec.ts",
+    exitCodeExpectation: 1,
+  },
 ];

@@ -24,6 +24,11 @@ export class LogUpdate {
     return newLength - 1;
   }
 
+  clear() {
+    _logUpdate.clear();
+    this._logValue = [];
+  }
+
   appendLine(value: string) {
     return this.append("\n" + value);
   }
