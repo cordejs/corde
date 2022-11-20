@@ -61,6 +61,7 @@ export class Exec extends CliCommand implements IDisposable {
 
       runtime.bot.logout();
     } finally {
+      logger.printStacks();
       process.exit(code);
     }
   }
