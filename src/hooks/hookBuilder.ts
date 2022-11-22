@@ -1,4 +1,3 @@
-import chalk from "chalk";
 import runtime from "../core/runtime";
 import { VoidLikeFunction } from "../types";
 import { executePromiseWithTimeout } from "../utils/executePromiseWithTimeout";
@@ -31,7 +30,7 @@ export function hookBuilder(params: HookParams) {
       }, timeout ?? runtime.configs.getConfigTimeoutOrDefault());
     } catch (error) {
       let newError: Error;
-      const errorLabel = chalk.bgRed(`● ${errorTitle}`);
+      const errorLabel = `● ${errorTitle}`;
       if (error instanceof Error && error.message) {
         newError = new Error(`${errorLabel}: ${error.message}`);
       } else {

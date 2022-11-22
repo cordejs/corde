@@ -117,16 +117,17 @@ export class TestExecutor {
       `${fileLabel}  ${fileNameLabel}   ${chalk.cyan(_diff[0])}`,
     );
 
-    this._logUpdate.clear();
-
     // For some reason unknown even by god itself, we have to
     // log all information from _logUpdate using "logger"
     // I don't know why or how. Just figure out after a long fucking
     // time trying, that this is the only thing that worked.
     // do not print values using `this._logUpdate.persist()` (bad thing gonna happen)
-    logger.log(...this._logUpdate["_logValue"]);
     this.logAndPersistHookErrors(beforeAllErrors);
     this.logAndPersistHookErrors(afterAllErrors);
+
+    this._logUpdate.clear();
+
+    logger.log(...this._logUpdate["_logValue"]);
 
     logger.printStacks();
 
@@ -382,7 +383,6 @@ export class TestExecutor {
   private logAndPersistHookErrors(errors: any[]) {
     if (errors.length) {
       printHookErrors(errors, this._logUpdate);
-      // this._logUpdate.persist();
     }
   }
 
