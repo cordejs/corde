@@ -54,6 +54,9 @@ declare namespace corde {
     inGuild(id: string): InGuildMatches<TReturn>;
   }
 
+  /**
+   * Promise extension of Corde tests
+   */
   export interface ICommandPromise extends Promise<void> {
     /**
      * Defines that a single command should do more than one action.
@@ -189,7 +192,7 @@ declare namespace corde {
     /**
      * Verify if a command unpinned a message.
      *
-     * @param message Object with **id** or **content** of the message.
+     * @param messageIdentifier Object with **id** or **content** of the message.
      *
      * @since 2.0
      */

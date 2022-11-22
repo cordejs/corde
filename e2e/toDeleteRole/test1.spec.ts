@@ -21,7 +21,7 @@ it("should delete a role", async () => {
     throw new Error("Role not found");
   }
 
-  command(`deleteRole ${role.id}`).should.deleteRole(role.id);
+  await command(`deleteRole ${role.id}`).should.deleteRole(role.id);
 });
 
 afterAll(async () => {
