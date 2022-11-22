@@ -1,7 +1,6 @@
 import chalk from "chalk";
 import { ITestProps } from "../../types";
 import { asymmetricTypeOf } from "../../utils/asymmetricTypeOf";
-import { buildReportMessage } from "../../utils/buildReportMessage";
 import { isString } from "../../utils/isString";
 
 /**
@@ -20,13 +19,11 @@ export function toBeWhiteSpace(this: ITestProps, expected: any) {
     pass,
     message: pass
       ? ""
-      : buildReportMessage(
-          this.createHint(),
-          "\n\n",
-          `${this.expectedColorFn("expected")} should${isNotText} be ${chalk.green(
-            "string with white spaces",
-          )}.\n`,
-          `got: ${chalk.red(typeof expected === "string" ? expected : asymmetricTypeOf(expected))}`,
-        ),
+      : this.createHint() +
+        "\n\n" +
+        `${this.expectedColorFn("expected")} should${isNotText} be ${chalk.green(
+          "string with white spaces",
+        )}.\n` +
+        `got: ${chalk.red(typeof expected === "string" ? expected : asymmetricTypeOf(expected))}`,
   };
 }

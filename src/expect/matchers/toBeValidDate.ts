@@ -1,6 +1,5 @@
 import chalk from "chalk";
 import { ITestProps } from "../../types";
-import { buildReportMessage } from "../../utils/buildReportMessage";
 import { isValidNumber } from "../../utils/isValidNumber";
 import { matcherUtils } from "../matcherUtils";
 
@@ -33,13 +32,11 @@ export function toBeValidDate(this: ITestProps, expected: any) {
     pass,
     message: pass
       ? ""
-      : buildReportMessage(
-          this.createHint(),
-          "\n\n",
-          `${this.expectedColorFn("expected")} should${isNotText} be a valid ${chalk.green(
-            "date",
-          )}.\n`,
-          `got: ${chalk.red(this.formatValue(expected))}`,
-        ),
+      : this.createHint() +
+        "\n\n" +
+        `${this.expectedColorFn("expected")} should${isNotText} be a valid ${chalk.green(
+          "date",
+        )}.\n` +
+        `got: ${chalk.red(this.formatValue(expected))}`,
   };
 }

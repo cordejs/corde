@@ -1,7 +1,6 @@
 import chalk from "chalk";
 import { ITestProps } from "../../types";
 import { asymmetricTypeOf } from "../../utils/asymmetricTypeOf";
-import { buildReportMessage } from "../../utils/buildReportMessage";
 import { matcherUtils } from "../matcherUtils";
 
 /**
@@ -22,13 +21,11 @@ export function toBeDefined<T>(this: ITestProps, expected: T) {
     pass,
     message: pass
       ? ""
-      : buildReportMessage(
-          this.createHint(),
-          "\n\n",
-          `${this.expectedColorFn("expected")} should${isNotText} have a defined value. (${
-            this.isNot ? "equal to" : "different than"
-          } ${chalk.bold("undefined")} or ${chalk.bold("null")}).\n`,
-          `got: '${chalk.red(asymmetricTypeOf(expected))}'`,
-        ),
+      : this.createHint() +
+        "\n\n" +
+        `${this.expectedColorFn("expected")} should${isNotText} have a defined value. (${
+          this.isNot ? "equal to" : "different than"
+        } ${chalk.bold("undefined")} or ${chalk.bold("null")}).\n` +
+        `got: '${chalk.red(asymmetricTypeOf(expected))}'`,
   };
 }

@@ -1,5 +1,4 @@
 import { ITestProps } from "../../types";
-import { buildReportMessage } from "../../utils/buildReportMessage";
 import { matcherUtils } from "../matcherUtils";
 
 /**
@@ -27,10 +26,6 @@ export function toBeLessOrEqualThan(this: ITestProps, expected: any, received: n
     pass,
     message: pass
       ? ""
-      : buildReportMessage(
-          this.createHint("received"),
-          "\n\n",
-          `expect: ${expected} ${comparator} ${received}.\n`,
-        ),
+      : this.createHint("received") + "\n\n" + `expect: ${expected} ${comparator} ${received}.\n`,
   };
 }

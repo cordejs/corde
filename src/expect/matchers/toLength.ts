@@ -1,7 +1,6 @@
 import chalk from "chalk";
 import { ITestProps } from "../../types";
 import { asymmetricTypeOf } from "../../utils/asymmetricTypeOf";
-import { buildReportMessage } from "../../utils/buildReportMessage";
 import { matcherUtils } from "../matcherUtils";
 
 /**
@@ -37,10 +36,9 @@ export function toLength(this: ITestProps, expected: any, length: number) {
   if (invalidParam) {
     return {
       pass: false,
-      message: buildReportMessage(
-        `${this.expectedColorFn(invalidParam.name)} should be a ${invalidParam.shouldBeText}\n`,
+      message:
+        `${this.expectedColorFn(invalidParam.name)} should be a ${invalidParam.shouldBeText}\n` +
         `got: ${chalk.red(asymmetricTypeOf(invalidParam.value))}`,
-      ),
     };
   }
 
@@ -60,11 +58,9 @@ export function toLength(this: ITestProps, expected: any, length: number) {
     pass,
     message: pass
       ? ""
-      : buildReportMessage(
-          this.createHint("length"),
-          "\n\n",
-          `${this.expectedColorFn("expected")} should${isNotText} length: ${length}.\n`,
-          `got: ${chalk.red((expected as string).length)}`,
-        ),
+      : this.createHint("length") +
+        "\n\n" +
+        `${this.expectedColorFn("expected")} should${isNotText} length: ${length}.\n` +
+        `got: ${chalk.red((expected as string).length)}`,
   };
 }

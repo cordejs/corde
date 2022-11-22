@@ -1,7 +1,6 @@
 import chalk from "chalk";
 import { eventFactory } from "../../core/event/common/eventFactory";
 import { Constructor, ICordeBot, IExpectTestParams, ITestReport } from "../../types";
-import { buildReportMessage } from "../../utils/buildReportMessage";
 
 /**
  * Entity helper for expectation assertions used for Corde tests
@@ -130,7 +129,7 @@ export class CommandState {
   createReport(...messages: (string | null | undefined)[]): ITestReport {
     let message = "";
     if (messages.length) {
-      message = buildReportMessage(...messages);
+      message = messages.join("");
     }
 
     return {

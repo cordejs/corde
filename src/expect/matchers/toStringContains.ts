@@ -1,6 +1,5 @@
 import chalk from "chalk";
 import { ITestProps } from "../../types";
-import { buildReportMessage } from "../../utils/buildReportMessage";
 import { isAsymmetricMatcher } from "../../utils/isAsymmetricMatcher";
 import { matcherUtils } from "../matcherUtils";
 
@@ -49,12 +48,11 @@ export function toStringContains(this: ITestProps, expected: any, received: any)
   let message = "";
 
   if (!pass) {
-    message = buildReportMessage(
-      this.createHint("received"),
-      "\n\n",
-      `expected: ${chalk.green(this.formatValue(expected))}.\n`,
-      `to${isNotText} include: ${chalk.red(this.formatValue(received))}`,
-    );
+    message =
+      this.createHint("received") +
+      "\n\n" +
+      `expected: ${chalk.green(this.formatValue(expected))}.\n` +
+      `to${isNotText} include: ${chalk.red(this.formatValue(received))}`;
   }
 
   return {

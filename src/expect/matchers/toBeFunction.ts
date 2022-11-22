@@ -1,7 +1,6 @@
 import chalk from "chalk";
 import { ITestProps } from "../../types";
 import { asymmetricTypeOf } from "../../utils/asymmetricTypeOf";
-import { buildReportMessage } from "../../utils/buildReportMessage";
 import { isFunction } from "../../utils/isFunction";
 import { matcherUtils } from "../matcherUtils";
 
@@ -24,13 +23,11 @@ export function toBeFunction(this: ITestProps, expected: any) {
     pass,
     message: pass
       ? ""
-      : buildReportMessage(
-          this.createHint(),
-          "\n\n",
-          `${this.expectedColorFn("expected")} should${isNotText} be an ${chalk.green(
-            "function",
-          )}.\n`,
-          `got: ${chalk.red(asymmetricTypeOf(expected))}`,
-        ),
+      : this.createHint() +
+        "\n\n" +
+        `${this.expectedColorFn("expected")} should${isNotText} be an ${chalk.green(
+          "function",
+        )}.\n` +
+        `got: ${chalk.red(asymmetricTypeOf(expected))}`,
   };
 }

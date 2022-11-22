@@ -1,7 +1,6 @@
 import chalk from "chalk";
 import { diff } from "jest-diff";
 import { ITestProps } from "../../types";
-import { buildReportMessage } from "../../utils/buildReportMessage";
 import { deepEqual } from "../../utils/deepEqual";
 import { typeOf } from "../../utils/typeOf";
 import { matcherUtils } from "../matcherUtils";
@@ -48,13 +47,11 @@ export function toEqual(this: ITestProps, expected: any, received: any) {
     pass,
     message: pass
       ? ""
-      : buildReportMessage(
-          `Tip: toEqual asserts the value of properties. To compare their identity use ${chalk.bold(
-            "toBe",
-          )}\n\n`,
-          this.createHint("received"),
-          "\n\n",
-          `${_getReportMessage()}`,
-        ),
+      : `Tip: toEqual asserts the value of properties. To compare their identity use ${chalk.bold(
+          "toBe",
+        )}\n\n` +
+        this.createHint("received") +
+        "\n\n" +
+        `${_getReportMessage()}`,
   };
 }

@@ -1,6 +1,5 @@
 import chalk from "chalk";
 import { ITestProps } from "../../types";
-import { buildReportMessage } from "../../utils/buildReportMessage";
 import { matcherUtils } from "../matcherUtils";
 
 /**
@@ -44,13 +43,11 @@ export function toBeInstanceOf(this: ITestProps, expected: any, instanceType: an
     pass,
     message: pass
       ? ""
-      : buildReportMessage(
-          this.createHint("instanceType"),
-          "\n\n",
-          `${this.expectedColorFn("expected")} should${isNotText} be instance of ${chalk.green(
-            instanceTypeName,
-          )}.\n`,
-          `got: ${chalk.red(expectedTypeName)}`,
-        ),
+      : this.createHint("instanceType") +
+        "\n\n" +
+        `${this.expectedColorFn("expected")} should${isNotText} be instance of ${chalk.green(
+          instanceTypeName,
+        )}.\n` +
+        `got: ${chalk.red(expectedTypeName)}`,
   };
 }

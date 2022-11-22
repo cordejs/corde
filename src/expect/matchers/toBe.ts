@@ -1,7 +1,6 @@
 import chalk from "chalk";
 import { diff } from "jest-diff";
 import { ITestProps } from "../../types";
-import { buildReportMessage } from "../../utils/buildReportMessage";
 import { typeOf } from "../../utils/typeOf";
 import { matcherUtils } from "../matcherUtils";
 
@@ -35,13 +34,11 @@ export function toBe(this: ITestProps, expected: any, received: any) {
     pass,
     message: pass
       ? ""
-      : buildReportMessage(
-          `Tip: toBe asserts identity of values. To compare only values use ${chalk.bold(
-            "toEqual",
-          )}\n\n`,
-          this.createHint("received"),
-          "\n\n",
-          `${_getReportMessage()}`,
-        ),
+      : `Tip: toBe asserts identity of values. To compare only values use ${chalk.bold(
+          "toEqual",
+        )}\n` +
+        this.createHint("received") +
+        "\n" +
+        `${_getReportMessage()}`,
   };
 }

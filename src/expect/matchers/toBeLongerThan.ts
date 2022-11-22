@@ -1,5 +1,4 @@
 import { ITestProps } from "../../types";
-import { buildReportMessage } from "../../utils/buildReportMessage";
 import { matcherUtils } from "../matcherUtils";
 
 /**
@@ -39,6 +38,6 @@ export function toBeLongerThan(this: ITestProps, expected: any, value: string) {
 
   return {
     pass,
-    message: pass ? "" : buildReportMessage(this.createHint("value"), "\n\n", message),
+    message: pass ? "" : this.createHint("value") + "\n\n" + message,
   };
 }

@@ -98,8 +98,6 @@ class CommandPromise extends Promise<any> implements corde.ICommandPromise {
     super.then(onfulfilled, onrejected);
     return this;
   }
-
-  [Symbol.toStringTag]: string;
 }
 
 async function resolveTestFunction(
@@ -209,7 +207,7 @@ function createMatcherFn(params: ICreateMatcherParam) {
 
 function handleError(error: any) {
   if (error instanceof Error) {
-    return error.message + "\n" + error.stack;
+    return error.message;
   }
   return error;
 }

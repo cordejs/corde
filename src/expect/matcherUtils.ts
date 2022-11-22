@@ -1,7 +1,6 @@
 import chalk from "chalk";
 import { ITestProps } from "../types";
 import { asymmetricTypeOf } from "../utils/asymmetricTypeOf";
-import { buildReportMessage } from "../utils/buildReportMessage";
 import { isNumber } from "../utils/isNumber";
 import { isString } from "../utils/isString";
 import { typeOf } from "../utils/typeOf";
@@ -67,20 +66,14 @@ export namespace matcherUtils {
     if (!matcherUtils.isAsymmetric(value) && !isNumber(value)) {
       return {
         pass: false,
-        message: buildReportMessage(
-          "value is not a number.\n",
-          `received: '${chalk.red(typeOf(value))}'`,
-        ),
+        message: "value is not a number.\n" + `received: '${chalk.red(typeOf(value))}'`,
       };
     }
 
     if (!matcherUtils.isAsymmetric(received) && !isNumber(received)) {
       return {
         pass: false,
-        message: buildReportMessage(
-          "received is not a number.\n",
-          `received: '${chalk.red(typeOf(received))}'`,
-        ),
+        message: "received is not a number.\n" + `received: '${chalk.red(typeOf(received))}'`,
       };
     }
 

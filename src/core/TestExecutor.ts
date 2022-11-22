@@ -241,12 +241,10 @@ export class TestExecutor {
   }
 
   private printReportData(report: ITestReport) {
-    if (report.pass && report.message) {
+    if (!report.pass && report.message) {
       const formattedMsg = this.getTextFormatPerReportType(report.message, report.isHandledError);
       this._logUpdate.appendLine(buildReportMessage(formattedMsg));
-    }
-
-    if (!report.pass && report.trace) {
+    } else if (report.trace) {
       const formattedMsg = this.getTextFormatPerReportType(report.trace, report.isHandledError);
       this._logUpdate.appendLine(buildReportMessage(formattedMsg));
     }
