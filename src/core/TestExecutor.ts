@@ -30,6 +30,7 @@ import { TestError } from "../errors";
 import runtime from "./runtime";
 import { logger } from "./Logger";
 import { getStackTrace } from "../utils/getStackTrace";
+import { buildReportMessage } from "../utils/buildReportMessage";
 
 type ReportStatusType = "pass" | "fail" | "empty";
 
@@ -77,8 +78,8 @@ export class TestExecutor {
 
   private async executeTestFile(testFile: TestFile) {
     if (testFile.isEmpty()) {
-      this._logUpdate.append(`${TAG_PENDING("EMPTY")}  ${testFile.path}`);
-      this._logUpdate.persist();
+      this._logUpdate.appendLine(`${TAG_PENDING("EMPTY")}  ${testFile.path}`);
+      // this._logUpdate.persist();
       this._semiReport.totalEmptyTestFiles++;
       this._semiReport.totalTestFiles++;
       return;
@@ -88,14 +89,14 @@ export class TestExecutor {
     this._semiReport.totalTestFiles++;
 
     testFileTimer.start();
-    const emptyLabel = `${TAG_PENDING()}  ${testFile.path}`;
-    const logIndex = this._logUpdate.append(emptyLabel);
+    const runningTag = `${TAG_PENDING()}  ${testFile.path}`;
+    const logIndex = this._logUpdate.appendLine(runningTag);
 
-    await this.executeHookFunction(testFile.beforeAllHooks);
+    const beforeAllErrors = await this.executeHookFunction(testFile.beforeAllHooks);
 
     const status = await this.executeClosures(testFile.closures, testFile);
 
-    await this.executeHookFunction(testFile.afterAllHooks);
+    const afterAllErrors = await this.executeHookFunction(testFile.afterAllHooks);
 
     const _diff = testFileTimer.stop();
 
@@ -116,7 +117,17 @@ export class TestExecutor {
       `${fileLabel}  ${fileNameLabel}   ${chalk.cyan(_diff[0])}`,
     );
 
-    this._logUpdate.persist();
+    this._logUpdate.clear();
+
+    // For some reason unknown even by god itself, we have to
+    // log all information from _logUpdate using "logger"
+    // I don't know why or how. Just figure out after a long fucking
+    // time trying, that this is the only thing that worked.
+    // do not print values using `this._logUpdate.persist()` (bad thing gonna happen)
+    logger.log(...this._logUpdate["_logValue"]);
+    this.logAndPersistHookErrors(beforeAllErrors);
+    this.logAndPersistHookErrors(afterAllErrors);
+
     logger.printStacks();
 
     if (status === "pass") {
@@ -130,9 +141,15 @@ export class TestExecutor {
 
   private async executeGroup(group: Group, testFile: TestFile): Promise<ReportStatusType> {
     let status: ReportStatusType = "pass";
-    await this.executeHookFunction(group.beforeAllHooks);
+
+    const beforeAllErrors = await this.executeHookFunction(group.beforeAllHooks);
+    this.logAndPersistHookErrors(beforeAllErrors);
+
     status = await this.executeClosures(group.closures, testFile);
-    await this.executeHookFunction(group.afterAllHooks);
+
+    const afterAllErrors = await this.executeHookFunction(group.afterAllHooks);
+    this.logAndPersistHookErrors(afterAllErrors);
+
     return status;
   }
 
@@ -161,6 +178,7 @@ export class TestExecutor {
 
     const testName = await test.toResolveName();
     const testText = this.createTestText(testName);
+
     logPosition = this._logUpdate.appendLine(testText);
 
     const report = await this.runTest(test, testFile, group);
@@ -223,18 +241,14 @@ export class TestExecutor {
   }
 
   private printReportData(report: ITestReport) {
-    if (!report.isHandledError) {
-      this._logUpdate.clear();
-    }
-
     if (report.message) {
       const formattedMsg = this.getTextFormatPerReportType(report.message, report.isHandledError);
-      this._logUpdate.appendLine(formattedMsg);
+      this._logUpdate.appendLine("\n" + formattedMsg + "\n");
     }
 
     if (!report.pass && report.trace) {
       const formattedMsg = this.getTextFormatPerReportType(report.trace, report.isHandledError);
-      this._logUpdate.appendLine(formattedMsg + "\n");
+      this._logUpdate.appendLine(buildReportMessage(formattedMsg));
     }
   }
 
@@ -259,15 +273,14 @@ export class TestExecutor {
 
   async runTest(test: ITest, testFile: TestFile, group?: Group) {
     let report: Nullable<ITestReport> = undefined;
+
     // before e after hooks will run just one time
     // for test structure (if the hook fail)
     let keepRunningBeforeEachFunctions = true;
     let keepRunningAfterEachFunctions = true;
 
     if (keepRunningBeforeEachFunctions) {
-      const testFileHookOk = await this.executeHookFunction(testFile.beforeEachHooks);
-      const groupHookOk = await this.executeHookFunction(group?.beforeEachHooks);
-      keepRunningBeforeEachFunctions = testFileHookOk && groupHookOk;
+      keepRunningBeforeEachFunctions = await this.runBeforeEachHooks(testFile, group);
     }
 
     const { testCollector } = runtime;
@@ -299,12 +312,30 @@ export class TestExecutor {
     runtime.internalEvents.removeListener("suite_forced_fail", onSuiteForceFail);
 
     if (keepRunningAfterEachFunctions) {
-      const testFileHookOk = await this.executeHookFunction(testFile.afterEachHooks);
-      const groupHookOk = await this.executeHookFunction(group?.afterEachHooks);
-      keepRunningAfterEachFunctions = testFileHookOk && groupHookOk;
+      keepRunningAfterEachFunctions = await this.runAfterEachHooks(testFile, group);
     }
 
     return report;
+  }
+
+  private async runAfterEachHooks(testFile: TestFile, group?: Group) {
+    const testFileHookErrors = await this.executeHookFunction(testFile.afterEachHooks);
+    const groupHookErrors = await this.executeHookFunction(group?.afterEachHooks);
+
+    this.logAndPersistHookErrors(testFileHookErrors);
+    this.logAndPersistHookErrors(groupHookErrors);
+
+    return this.isAllEmpty(testFileHookErrors, groupHookErrors);
+  }
+
+  private async runBeforeEachHooks(testFile: TestFile, group?: Group) {
+    const testFileHookErrors = await this.executeHookFunction(testFile.beforeEachHooks);
+    const groupHookErrors = await this.executeHookFunction(group?.beforeEachHooks);
+
+    this.logAndPersistHookErrors(testFileHookErrors);
+    this.logAndPersistHookErrors(groupHookErrors);
+
+    return this.isAllEmpty(testFileHookErrors, groupHookErrors);
   }
 
   private getErrorReport(error: any): ITestReport {
@@ -314,6 +345,7 @@ export class TestExecutor {
         pass: error.pass,
         testName: error.testName,
         trace: error.trace,
+        isHandledError: true,
       };
     }
     if (error instanceof Error) {
@@ -321,25 +353,32 @@ export class TestExecutor {
         message: error.message,
         pass: false,
         trace: error.stack,
+        isHandledError: false,
       };
     }
     return {
       pass: false,
       message: error.toString(),
       trace: getStackTrace(),
+      isHandledError: false,
     };
   }
 
-  private async executeHookFunction(queue?: Queue<VoidLikeFunction>) {
+  private executeHookFunction(queue?: Queue<VoidLikeFunction>) {
     if (!queue) {
-      return true;
+      return Promise.resolve([]);
     }
+    return queue.executeWithCatchCollectAsync();
+  }
 
-    const _functionErrors = await queue.executeWithCatchCollectAsync();
-    if (_functionErrors && _functionErrors.length) {
-      printHookErrors(_functionErrors);
-      return false;
+  private logAndPersistHookErrors(errors: any[]) {
+    if (errors.length) {
+      printHookErrors(errors, this._logUpdate);
+      // this._logUpdate.persist();
     }
-    return true;
+  }
+
+  private isAllEmpty(...arr: any[][]) {
+    return arr.every((e) => !e.length);
   }
 }

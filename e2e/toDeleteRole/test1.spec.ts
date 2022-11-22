@@ -2,7 +2,7 @@
 
 /// <reference types="../../src/global" />
 
-let role = null;
+let role: corde.Role | undefined = undefined;
 const roleName = "role-to-delete";
 
 beforeAll(async () => {

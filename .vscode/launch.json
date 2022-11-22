@@ -18,11 +18,10 @@
       "name": "Cli",
       "type": "node",
       "request": "launch",
-      "args": ["lib/src/cli.js", "--run", "./tests/messages/messages_fail.test.ts"],
-      "runtimeArgs": ["--nolazy", "-r", "ts-node/register"],
+      "args": ["--config", "./e2e/corde.config.ts", "-f", "./e2e/others/handleErrors.spec.ts"],
       "sourceMaps": true,
-      "cwd": "${workspaceRoot}",
-      "protocol": "inspector"
+      "program": "${workspaceFolder}/lib/src/cli/index.js",
+      "skipFiles": ["<node_internals>/**"]
     },
     {
       "name": "manual_test",

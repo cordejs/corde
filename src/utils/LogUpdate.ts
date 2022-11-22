@@ -3,6 +3,7 @@ import _logUpdate from "log-update";
 export class LogUpdate {
   private _logValue: string[];
   private _stdout: string;
+  private _log: _logUpdate.LogUpdate;
 
   get stdout() {
     return this._stdout;
@@ -11,26 +12,30 @@ export class LogUpdate {
   constructor() {
     this._logValue = [];
     this._stdout = "";
+    this._log = _logUpdate.create(process.stdout);
   }
 
   /**
    * Add a data to the updatable log, returning the item position
    * in the log.
-   * @param value New data to add to log.
+   * @param values New data to add to log.
    */
-  append(value: string) {
-    const newLength = this._logValue.push(value);
+  append(...values: string[]) {
+    for (const line of values) {
+      this._logValue.push(line);
+    }
+
     this.print();
-    return newLength - 1;
+    return this._logValue.length - 1;
   }
 
   clear() {
-    _logUpdate.clear();
-    this._logValue = [];
+    this._log.clear();
+    //this._logValue = [];
   }
 
-  appendLine(value: string) {
-    return this.append("\n" + value);
+  appendLine(...values: string[]) {
+    return this.append(...values.map((v) => "\n" + v));
   }
 
   update(index: number, newValue: string) {
@@ -46,7 +51,8 @@ export class LogUpdate {
   }
 
   persist() {
-    _logUpdate.done();
+    this.print();
+    this._log.done();
     this._stdout += this.getLogValueString();
     this._logValue = [];
   }
@@ -56,6 +62,6 @@ export class LogUpdate {
   }
 
   private print() {
-    _logUpdate(this.getLogValueString());
+    this._log(...this._logValue);
   }
 }

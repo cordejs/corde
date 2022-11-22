@@ -17,7 +17,7 @@ export function printHookErrors(errors: Error[], log?: LogUpdate) {
       print(buildReportMessage(errors[i].stack), log);
     } else {
       const _formattedObject = formatObject(errors[i]);
-      print(buildReportMessage(_formattedObject));
+      print(buildReportMessage(_formattedObject), log);
     }
   }
 }

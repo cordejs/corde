@@ -34,7 +34,7 @@ function watch() {
     else
         echo "watching changes for root dir"
     fi
-    tsc -w
+    tsc -w --sourcemap
 }
 
 function clearAndWatch() {

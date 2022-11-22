@@ -4,7 +4,7 @@ import prettyFormat from "pretty-format";
  * Binder of pretty-format.
  *
  * @see https://github.com/facebook/jest/tree/master/packages/pretty-format
- * @param value Data to be formated.
+ * @param value Data to be formatted.
  *
  * @internal
  */
