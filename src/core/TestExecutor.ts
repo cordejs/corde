@@ -339,6 +339,8 @@ export class TestExecutor {
   }
 
   private getErrorReport(error: any): ITestReport {
+    const ERROR_COUNT_LIMIT = 4;
+
     if (error instanceof TestError) {
       return {
         message: error.message,
@@ -348,20 +350,26 @@ export class TestExecutor {
         isHandledError: true,
       };
     }
+
     if (error instanceof Error) {
       return {
         message: error.message,
         pass: false,
-        trace: error.stack,
+        trace: this.getStackWithLimit(ERROR_COUNT_LIMIT, error.stack),
         isHandledError: false,
       };
     }
+
     return {
       pass: false,
       message: error.toString(),
-      trace: getStackTrace(),
+      trace: getStackTrace(ERROR_COUNT_LIMIT),
       isHandledError: false,
     };
+  }
+
+  private getStackWithLimit(countLimit: number, stack?: string) {
+    return stack?.split("\n").slice(0, countLimit).join("\n");
   }
 
   private executeHookFunction(queue?: Queue<VoidLikeFunction>) {
