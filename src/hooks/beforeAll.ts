@@ -11,7 +11,7 @@ export const beforeAll: corde.IHook = (fn: () => void | Promise<void>, timeout?:
       hookHandler: (fn) => testCollector.currentTestFile.addBeforeAllHook(fn),
       fn,
       trace,
-      errorTitle: "BeforeAllError",
+      errorTitle: "BeforeAll",
       timeout,
     });
   }

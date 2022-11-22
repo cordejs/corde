@@ -11,7 +11,7 @@ export const beforeEach: corde.IHook = (fn: () => void | Promise<void>, timeout?
       hookHandler: (fn) => testCollector.currentTestFile.addBeforeEachHook(fn),
       fn,
       trace,
-      errorTitle: "BeforeEachError",
+      errorTitle: "BeforeEach",
       timeout,
     });
   }

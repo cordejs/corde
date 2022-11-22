@@ -10,7 +10,7 @@ export const afterAll: corde.IHook = (fn: () => void | Promise<void>, timeout?: 
       hookHandler: (fn) => testCollector.currentTestFile.addAfterAllHook(fn),
       fn,
       trace,
-      errorTitle: "AfterAllError",
+      errorTitle: "AfterAll",
       timeout,
     });
   }
