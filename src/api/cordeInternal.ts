@@ -7,8 +7,6 @@ import { ObjectMock } from "./ObjectMock";
 
 type CordeType = MapObj<typeof corde>;
 
-const bot = new BotAPI(runtime.bot);
-
 /**
  * @global
  */
@@ -46,6 +44,6 @@ export const cordeInternal: CordeType = {
   events: {
     ...cordeEvent,
   },
-  bot: bot,
+  bot: new BotAPI(),
   config: runtime.configs,
 };

@@ -10,12 +10,18 @@ import {
   TextChannel,
   VoiceChannel,
 } from "discord.js";
+import runtime from "../core/runtime";
 import { CordeClientError } from "../errors";
 import { ICordeBot, Primitive } from "../types";
 import { collectionToArray } from "../utils/collectionToArray";
 
 export class BotAPI implements corde.IBot {
-  private _bot: ICordeBot;
+  // Test only
+  private _internalBot?: ICordeBot;
+
+  private get _bot() {
+    return this._internalBot ?? runtime.bot;
+  }
 
   get voiceState() {
     return this._bot.voiceConnection;
@@ -48,6 +54,11 @@ export class BotAPI implements corde.IBot {
     return collectionToArray(this._bot.client.guilds.cache);
   }
 
+  // Test only
+  constructor(bot?: ICordeBot) {
+    this._internalBot = bot;
+  }
+
   get roles() {
     this._throwErrorIfNotLogged();
     return collectionToArray(this.getGuild().roles.cache);
@@ -55,10 +66,6 @@ export class BotAPI implements corde.IBot {
 
   get isLoggedIn() {
     return this._bot.isLoggedIn();
-  }
-
-  constructor(bot: ICordeBot) {
-    this._bot = bot;
   }
 
   isMessageAuthor(message: Message) {
