@@ -9,6 +9,8 @@ export const MESSAGE_TAB_SPACE = "   ";
 export const EXPECT_RECEIVED_TAB_SPACE = "    ";
 export const DEFAULT_STACK_TRACE_LIMIT = 5;
 
+export const STACK_TRACE_COUNT_LIMIT = 3;
+
 export const TEXT_PASS = chalk.green;
 export const TEXT_FAIL = chalk.red;
 export const TEXT_PENDING = chalk.yellow;

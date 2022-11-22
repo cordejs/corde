@@ -2,6 +2,7 @@ import chalk from "chalk";
 import { printHookErrors } from "./printHookError";
 import {
   MESSAGE_TAB_SPACE,
+  STACK_TRACE_COUNT_LIMIT,
   TAG_FAIL,
   TAG_PASS,
   TAG_PENDING,
@@ -337,8 +338,6 @@ export class TestExecutor {
   }
 
   private getErrorReport(error: any): ITestReport {
-    const ERROR_COUNT_LIMIT = 4;
-
     if (error instanceof TestError) {
       return {
         message: error.message,
@@ -353,7 +352,7 @@ export class TestExecutor {
       return {
         message: error.message,
         pass: false,
-        trace: this.getStackWithLimit(ERROR_COUNT_LIMIT, error.stack),
+        trace: this.getStackWithLimit(STACK_TRACE_COUNT_LIMIT, error.stack),
         isHandledError: false,
       };
     }
@@ -361,7 +360,7 @@ export class TestExecutor {
     return {
       pass: false,
       message: error.toString(),
-      trace: getStackTrace(ERROR_COUNT_LIMIT),
+      trace: getStackTrace(STACK_TRACE_COUNT_LIMIT),
       isHandledError: false,
     };
   }
