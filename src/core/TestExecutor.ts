@@ -79,7 +79,6 @@ export class TestExecutor {
   private async executeTestFile(testFile: TestFile) {
     if (testFile.isEmpty()) {
       this._logUpdate.appendLine(`${TAG_PENDING("EMPTY")}  ${testFile.path}`);
-      // this._logUpdate.persist();
       this._semiReport.totalEmptyTestFiles++;
       this._semiReport.totalTestFiles++;
       return;
@@ -242,9 +241,9 @@ export class TestExecutor {
   }
 
   private printReportData(report: ITestReport) {
-    if (report.message) {
+    if (report.pass && report.message) {
       const formattedMsg = this.getTextFormatPerReportType(report.message, report.isHandledError);
-      this._logUpdate.appendLine("\n" + formattedMsg + "\n");
+      this._logUpdate.appendLine(buildReportMessage(formattedMsg));
     }
 
     if (!report.pass && report.trace) {
