@@ -1,97 +1,77 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`testing toStringContains should return false for  and  (isNot true) 1`] = `
-"    
-    expect([32mexpected[39m).not.toStringContains([31mreceived[39m)
-    
-    expected: [32m''[39m.
-    to not include: [31m''[39m
-"
+"expect([32mexpected[39m).not.toStringContains([31mreceived[39m)
+
+expected: [32m''[39m.
+to not include: [31m''[39m"
 `;
 
 exports[`testing toStringContains should return false for  and any (isNot true) 1`] = `
-"    
-    expect([32mexpected[39m).not.toStringContains([31mreceived[39m)
-    
-    expected: [32m''[39m.
-    to not include: [31many[39m
-"
+"expect([32mexpected[39m).not.toStringContains([31mreceived[39m)
+
+expected: [32m''[39m.
+to not include: [31many[39m"
 `;
 
 exports[`testing toStringContains should return false for  and any(String) (isNot true) 1`] = `
-"    
-    expect([32mexpected[39m).not.toStringContains([31mreceived[39m)
-    
-    expected: [32m''[39m.
-    to not include: [31many(String)[39m
-"
+"expect([32mexpected[39m).not.toStringContains([31mreceived[39m)
+
+expected: [32m''[39m.
+to not include: [31many(String)[39m"
 `;
 
 exports[`testing toStringContains should return false for 1 and 1 1`] = `"[1mexpected[22m must be a string"`;
 
 exports[`testing toStringContains should return false for 11 and 1 (isNot true) 1`] = `
-"    
-    expect([32mexpected[39m).not.toStringContains([31mreceived[39m)
-    
-    expected: [32m'11'[39m.
-    to not include: [31m'1'[39m
-"
+"expect([32mexpected[39m).not.toStringContains([31mreceived[39m)
+
+expected: [32m'11'[39m.
+to not include: [31m'1'[39m"
 `;
 
 exports[`testing toStringContains should return false for any and  (isNot true) 1`] = `
-"    
-    expect([32mexpected[39m).not.toStringContains([31mreceived[39m)
-    
-    expected: [32many[39m.
-    to not include: [31m''[39m
-"
+"expect([32mexpected[39m).not.toStringContains([31mreceived[39m)
+
+expected: [32many[39m.
+to not include: [31m''[39m"
 `;
 
 exports[`testing toStringContains should return false for any and 1 1`] = `"[1mreceived[22m must be a string"`;
 
 exports[`testing toStringContains should return false for any and any(String) (isNot true) 1`] = `
-"    
-    expect([32mexpected[39m).not.toStringContains([31mreceived[39m)
-    
-    expected: [32many[39m.
-    to not include: [31many(String)[39m
-"
+"expect([32mexpected[39m).not.toStringContains([31mreceived[39m)
+
+expected: [32many[39m.
+to not include: [31many(String)[39m"
 `;
 
 exports[`testing toStringContains should return false for any(Number) and 1 1`] = `"[1mreceived[22m must be a string"`;
 
 exports[`testing toStringContains should return false for any(String) and  (isNot true) 1`] = `
-"    
-    expect([32mexpected[39m).not.toStringContains([31mreceived[39m)
-    
-    expected: [32many(String)[39m.
-    to not include: [31m''[39m
-"
+"expect([32mexpected[39m).not.toStringContains([31mreceived[39m)
+
+expected: [32many(String)[39m.
+to not include: [31m''[39m"
 `;
 
 exports[`testing toStringContains should return false for any(String) and any (isNot true) 1`] = `
-"    
-    expect([32mexpected[39m).not.toStringContains([31mreceived[39m)
-    
-    expected: [32many(String)[39m.
-    to not include: [31many[39m
-"
+"expect([32mexpected[39m).not.toStringContains([31mreceived[39m)
+
+expected: [32many(String)[39m.
+to not include: [31many[39m"
 `;
 
 exports[`testing toStringContains should return false for any(String) and any(String) (isNot true) 1`] = `
-"    
-    expect([32mexpected[39m).not.toStringContains([31mreceived[39m)
-    
-    expected: [32many(String)[39m.
-    to not include: [31many(String)[39m
-"
+"expect([32mexpected[39m).not.toStringContains([31mreceived[39m)
+
+expected: [32many(String)[39m.
+to not include: [31many(String)[39m"
 `;
 
 exports[`testing toStringContains should return false for foo bar and baa 1`] = `
-"    
-    expect([32mexpected[39m).toStringContains([31mreceived[39m)
-    
-    expected: [32m'foo bar'[39m.
-    to include: [31m'baa'[39m
-"
+"expect([32mexpected[39m).toStringContains([31mreceived[39m)
+
+expected: [32m'foo bar'[39m.
+to include: [31m'baa'[39m"
 `;

@@ -1,37 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`testing toBeFunction should return false for [ '' ] 1`] = `
-"    
-    expect([32mexpected[39m).toBeFunction()
-    
-    [1mexpected[22m should be an [32mfunction[39m.
-    got: [31marray[39m
-"
+"expect([32mexpected[39m).toBeFunction()
+
+[1mexpected[22m should be an [32mfunction[39m.
+got: [31marray[39m"
 `;
 
 exports[`testing toBeFunction should return false for 1 1`] = `
-"    
-    expect([32mexpected[39m).toBeFunction()
-    
-    [1mexpected[22m should be an [32mfunction[39m.
-    got: [31mnumber[39m
-"
+"expect([32mexpected[39m).toBeFunction()
+
+[1mexpected[22m should be an [32mfunction[39m.
+got: [31mnumber[39m"
 `;
 
 exports[`testing toBeFunction should return false for 4141 1`] = `
-"    
-    expect([32mexpected[39m).toBeFunction()
-    
-    [1mexpected[22m should be an [32mfunction[39m.
-    got: [31mstring[39m
-"
+"expect([32mexpected[39m).toBeFunction()
+
+[1mexpected[22m should be an [32mfunction[39m.
+got: [31mstring[39m"
 `;
 
 exports[`testing toBeFunction should return false for a function when isNot true 1`] = `
-"    
-    expect([32mexpected[39m).not.toBeFunction()
-    
-    [1mexpected[22m should not be an [32mfunction[39m.
-    got: [31mfunction[39m
-"
+"expect([32mexpected[39m).not.toBeFunction()
+
+[1mexpected[22m should not be an [32mfunction[39m.
+got: [31mfunction[39m"
 `;

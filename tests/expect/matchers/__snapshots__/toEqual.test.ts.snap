@@ -1,197 +1,165 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`testing toEqual should return false for  and  (isNot true) 1`] = `
-"    
-    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
-    
-    expect([32mexpected[39m).not.toEqual([31mreceived[39m)
-    
-    expect: [32m''[39m !== [31m''[39m
-"
+"Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
+
+expect([32mexpected[39m).not.toEqual([31mreceived[39m)
+
+expect: [32m''[39m !== [31m''[39m"
 `;
 
 exports[`testing toEqual should return false for [ 1 ] and [ 1 ] (isNot true) 1`] = `
-"    
-    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
-    
-    expect([32mexpected[39m).not.toEqual([31mreceived[39m)
-    
-    expect: [32m[...][39m !== [31m[...][39m
-"
+"Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
+
+expect([32mexpected[39m).not.toEqual([31mreceived[39m)
+
+expect: [32m[...][39m !== [31m[...][39m"
 `;
 
 exports[`testing toEqual should return false for [ 1, [AsymmetricMatcher], 3 ] and [ 1, 2, 3 ] (isNot true) 1`] = `
-"    
-    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
-    
-    expect([32mexpected[39m).not.toEqual([31mreceived[39m)
-    
-    expect: [32m[...][39m !== [31m[...][39m
-"
+"Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
+
+expect([32mexpected[39m).not.toEqual([31mreceived[39m)
+
+expect: [32m[...][39m !== [31m[...][39m"
 `;
 
 exports[`testing toEqual should return false for [ 1, 2, 3 ] and [ 1, 2, 3 ] (isNot true) 1`] = `
-"    
-    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
-    
-    expect([32mexpected[39m).not.toEqual([31mreceived[39m)
-    
-    expect: [32m[...][39m !== [31m[...][39m
-"
+"Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
+
+expect([32mexpected[39m).not.toEqual([31mreceived[39m)
+
+expect: [32m[...][39m !== [31m[...][39m"
 `;
 
 exports[`testing toEqual should return false for [] and [] (isNot true) 1`] = `
-"    
-    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
-    
-    expect([32mexpected[39m).not.toEqual([31mreceived[39m)
-    
-    expect: [32m[][39m !== [31m[][39m
-"
+"Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
+
+expect([32mexpected[39m).not.toEqual([31mreceived[39m)
+
+expect: [32m[][39m !== [31m[][39m"
 `;
 
 exports[`testing toEqual should return false for { a: [AsymmetricMatcher] } and { a: 1 } (isNot true) 1`] = `
-"    
-    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
-    
-    expect([32mexpected[39m).not.toEqual([31mreceived[39m)
-    
-    [32m- Expected[39m
-    [31m+ Received[39m
-    
-    [2m  Object {[22m
-    [32m-   \\"a\\": AsymmetricMatcher {[39m
-    [32m-     \\"_classType\\": Array [[39m
-    [32m-       [Function Number],[39m
-    [32m-     ],[39m
-    [32m-   },[39m
-    [31m+   \\"a\\": 1,[39m
-    [2m  }[22m
-"
+"Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
+
+expect([32mexpected[39m).not.toEqual([31mreceived[39m)
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  Object {[22m
+[32m-   \\"a\\": AsymmetricMatcher {[39m
+[32m-     \\"_classType\\": Array [[39m
+[32m-       [Function Number],[39m
+[32m-     ],[39m
+[32m-   },[39m
+[31m+   \\"a\\": 1,[39m
+[2m  }[22m"
 `;
 
 exports[`testing toEqual should return false for { a: [AsymmetricMatcher] } and { a: 1 } (isNot true) 2`] = `
-"    
-    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
-    
-    expect([32mexpected[39m).not.toEqual([31mreceived[39m)
-    
-    [32m- Expected[39m
-    [31m+ Received[39m
-    
-    [2m  Object {[22m
-    [32m-   \\"a\\": AsymmetricMatcher {[39m
-    [32m-     \\"_classType\\": Array [],[39m
-    [32m-   },[39m
-    [31m+   \\"a\\": 1,[39m
-    [2m  }[22m
-"
+"Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
+
+expect([32mexpected[39m).not.toEqual([31mreceived[39m)
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  Object {[22m
+[32m-   \\"a\\": AsymmetricMatcher {[39m
+[32m-     \\"_classType\\": Array [],[39m
+[32m-   },[39m
+[31m+   \\"a\\": 1,[39m
+[2m  }[22m"
 `;
 
 exports[`testing toEqual should return false for { a: 1 } and { a: [AsymmetricMatcher] } (isNot true) 1`] = `
-"    
-    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
-    
-    expect([32mexpected[39m).not.toEqual([31mreceived[39m)
-    
-    [32m- Expected[39m
-    [31m+ Received[39m
-    
-    [2m  Object {[22m
-    [32m-   \\"a\\": 1,[39m
-    [31m+   \\"a\\": AsymmetricMatcher {[39m
-    [31m+     \\"_classType\\": Array [[39m
-    [31m+       [Function Number],[39m
-    [31m+     ],[39m
-    [31m+   },[39m
-    [2m  }[22m
-"
+"Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
+
+expect([32mexpected[39m).not.toEqual([31mreceived[39m)
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  Object {[22m
+[32m-   \\"a\\": 1,[39m
+[31m+   \\"a\\": AsymmetricMatcher {[39m
+[31m+     \\"_classType\\": Array [[39m
+[31m+       [Function Number],[39m
+[31m+     ],[39m
+[31m+   },[39m
+[2m  }[22m"
 `;
 
 exports[`testing toEqual should return false for { a: 1 } and { a: [AsymmetricMatcher] } (isNot true) 2`] = `
-"    
-    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
-    
-    expect([32mexpected[39m).not.toEqual([31mreceived[39m)
-    
-    [32m- Expected[39m
-    [31m+ Received[39m
-    
-    [2m  Object {[22m
-    [32m-   \\"a\\": 1,[39m
-    [31m+   \\"a\\": AsymmetricMatcher {[39m
-    [31m+     \\"_classType\\": Array [],[39m
-    [31m+   },[39m
-    [2m  }[22m
-"
+"Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
+
+expect([32mexpected[39m).not.toEqual([31mreceived[39m)
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  Object {[22m
+[32m-   \\"a\\": 1,[39m
+[31m+   \\"a\\": AsymmetricMatcher {[39m
+[31m+     \\"_classType\\": Array [],[39m
+[31m+   },[39m
+[2m  }[22m"
 `;
 
 exports[`testing toEqual should return false for {} and {} (isNot true) 1`] = `
-"    
-    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
-    
-    expect([32mexpected[39m).not.toEqual([31mreceived[39m)
-    
-    [2mCompared values have no visual difference.[22m
-"
+"Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
+
+expect([32mexpected[39m).not.toEqual([31mreceived[39m)
+
+[2mCompared values have no visual difference.[22m"
 `;
 
 exports[`testing toEqual should return false for 1 and 1 (isNot true) 1`] = `
-"    
-    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
-    
-    expect([32mexpected[39m).not.toEqual([31mreceived[39m)
-    
-    expect: [32m1[39m !== [31m1[39m
-"
+"Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
+
+expect([32mexpected[39m).not.toEqual([31mreceived[39m)
+
+expect: [32m1[39m !== [31m1[39m"
 `;
 
 exports[`testing toEqual should return false for Map(0) {} and Map(0) {} (isNot true) 1`] = `
-"    
-    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
-    
-    expect([32mexpected[39m).not.toEqual([31mreceived[39m)
-    
-    [2mCompared values have no visual difference.[22m
-"
+"Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
+
+expect([32mexpected[39m).not.toEqual([31mreceived[39m)
+
+[2mCompared values have no visual difference.[22m"
 `;
 
 exports[`testing toEqual should return false for false and false (isNot true) 1`] = `
-"    
-    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
-    
-    expect([32mexpected[39m).not.toEqual([31mreceived[39m)
-    
-    expect: [32mfalse[39m !== [31mfalse[39m
-"
+"Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
+
+expect([32mexpected[39m).not.toEqual([31mreceived[39m)
+
+expect: [32mfalse[39m !== [31mfalse[39m"
 `;
 
 exports[`testing toEqual should return false for null and null (isNot true) 1`] = `
-"    
-    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
-    
-    expect([32mexpected[39m).not.toEqual([31mreceived[39m)
-    
-    expect: [32mnull[39m !== [31mnull[39m
-"
+"Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
+
+expect([32mexpected[39m).not.toEqual([31mreceived[39m)
+
+expect: [32mnull[39m !== [31mnull[39m"
 `;
 
 exports[`testing toEqual should return false for true and true (isNot true) 1`] = `
-"    
-    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
-    
-    expect([32mexpected[39m).not.toEqual([31mreceived[39m)
-    
-    expect: [32mtrue[39m !== [31mtrue[39m
-"
+"Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
+
+expect([32mexpected[39m).not.toEqual([31mreceived[39m)
+
+expect: [32mtrue[39m !== [31mtrue[39m"
 `;
 
 exports[`testing toEqual should return false for undefined and undefined (isNot true) 1`] = `
-"    
-    Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
-    
-    expect([32mexpected[39m).not.toEqual([31mreceived[39m)
-    
-    expect: [32mundefined[39m !== [31mundefined[39m
-"
+"Tip: toEqual asserts the value of properties. To compare their identity use [1mtoBe[22m
+
+expect([32mexpected[39m).not.toEqual([31mreceived[39m)
+
+expect: [32mundefined[39m !== [31mundefined[39m"
 `;

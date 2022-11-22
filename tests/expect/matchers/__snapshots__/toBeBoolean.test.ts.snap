@@ -2,96 +2,80 @@
 
 exports[`testing toBeBoolean should return false for {} 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).toBeBoolean()
-    
-    [1mexpected[22m should be an [32mboolean[39m.
-    got: [31mobject[39m
-",
+  "message": "expect([32mexpected[39m).toBeBoolean()
+
+[1mexpected[22m should be an [32mboolean[39m.
+got: [31mobject[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBeBoolean should return false for 1 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).toBeBoolean()
-    
-    [1mexpected[22m should be an [32mboolean[39m.
-    got: [31mnumber[39m
-",
+  "message": "expect([32mexpected[39m).toBeBoolean()
+
+[1mexpected[22m should be an [32mboolean[39m.
+got: [31mnumber[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBeBoolean should return false for Symbol() 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).toBeBoolean()
-    
-    [1mexpected[22m should be an [32mboolean[39m.
-    got: [31msymbol[39m
-",
+  "message": "expect([32mexpected[39m).toBeBoolean()
+
+[1mexpected[22m should be an [32mboolean[39m.
+got: [31msymbol[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBeBoolean should return false for aa 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).toBeBoolean()
-    
-    [1mexpected[22m should be an [32mboolean[39m.
-    got: [31mstring[39m
-",
+  "message": "expect([32mexpected[39m).toBeBoolean()
+
+[1mexpected[22m should be an [32mboolean[39m.
+got: [31mstring[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBeBoolean should return false for asymmetricMatcher of any value that is not boolean 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).toBeBoolean()
-    
-    [1mexpected[22m should be an [32mboolean[39m.
-    got: [31many(Number)[39m
-",
+  "message": "expect([32mexpected[39m).toBeBoolean()
+
+[1mexpected[22m should be an [32mboolean[39m.
+got: [31many(Number)[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBeBoolean should return false for boolean with isNot true 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).not.toBeBoolean()
-    
-    [1mexpected[22m should not be an [32mboolean[39m.
-    got: [31mboolean[39m
-",
+  "message": "expect([32mexpected[39m).not.toBeBoolean()
+
+[1mexpected[22m should not be an [32mboolean[39m.
+got: [31mboolean[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBeBoolean should return false for null 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).toBeBoolean()
-    
-    [1mexpected[22m should be an [32mboolean[39m.
-    got: [31mnull[39m
-",
+  "message": "expect([32mexpected[39m).toBeBoolean()
+
+[1mexpected[22m should be an [32mboolean[39m.
+got: [31mnull[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBeBoolean should return false for undefined 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).toBeBoolean()
-    
-    [1mexpected[22m should be an [32mboolean[39m.
-    got: [31mundefined[39m
-",
+  "message": "expect([32mexpected[39m).toBeBoolean()
+
+[1mexpected[22m should be an [32mboolean[39m.
+got: [31mundefined[39m",
   "pass": false,
 }
 `;

@@ -1,91 +1,71 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`testing toBeFalsy should return false for  and %s (isNot true) 1`] = `
-"    
-    expect([32mexpected[39m).not.toBeFalsy()
-    
-    [1mexpected[22m should not be a falsy value.
-    got: [31mstring[39m
-"
+"expect([32mexpected[39m).not.toBeFalsy()
+
+[1mexpected[22m should not be a falsy value.
+got: [31mstring[39m"
 `;
 
 exports[`testing toBeFalsy should return false for 0 and %s (isNot true) 1`] = `
-"    
-    expect([32mexpected[39m).not.toBeFalsy()
-    
-    [1mexpected[22m should not be a falsy value.
-    got: [31mnumber[39m
-"
+"expect([32mexpected[39m).not.toBeFalsy()
+
+[1mexpected[22m should not be a falsy value.
+got: [31mnumber[39m"
 `;
 
 exports[`testing toBeFalsy should return false for false and %s (isNot true) 1`] = `
-"    
-    expect([32mexpected[39m).not.toBeFalsy()
-    
-    [1mexpected[22m should not be a falsy value.
-    got: [31mboolean[39m
-"
+"expect([32mexpected[39m).not.toBeFalsy()
+
+[1mexpected[22m should not be a falsy value.
+got: [31mboolean[39m"
 `;
 
 exports[`testing toBeFalsy should return false for null and %s (isNot true) 1`] = `
-"    
-    expect([32mexpected[39m).not.toBeFalsy()
-    
-    [1mexpected[22m should not be a falsy value.
-    got: [31mnull[39m
-"
+"expect([32mexpected[39m).not.toBeFalsy()
+
+[1mexpected[22m should not be a falsy value.
+got: [31mnull[39m"
 `;
 
 exports[`testing toBeFalsy should return false for truthy 1`] = `
-"    
-    expect([32mexpected[39m).toBeFalsy()
-    
-    [1mexpected[22m should be a falsy value.
-    got: [31mboolean[39m
-"
+"expect([32mexpected[39m).toBeFalsy()
+
+[1mexpected[22m should be a falsy value.
+got: [31mboolean[39m"
 `;
 
 exports[`testing toBeFalsy should return false for truthy 2`] = `
-"    
-    expect([32mexpected[39m).toBeFalsy()
-    
-    [1mexpected[22m should be a falsy value.
-    got: [31mstring[39m
-"
+"expect([32mexpected[39m).toBeFalsy()
+
+[1mexpected[22m should be a falsy value.
+got: [31mstring[39m"
 `;
 
 exports[`testing toBeFalsy should return false for truthy 3`] = `
-"    
-    expect([32mexpected[39m).toBeFalsy()
-    
-    [1mexpected[22m should be a falsy value.
-    got: [31marray[39m
-"
+"expect([32mexpected[39m).toBeFalsy()
+
+[1mexpected[22m should be a falsy value.
+got: [31marray[39m"
 `;
 
 exports[`testing toBeFalsy should return false for truthy 4`] = `
-"    
-    expect([32mexpected[39m).toBeFalsy()
-    
-    [1mexpected[22m should be a falsy value.
-    got: [31mnumber[39m
-"
+"expect([32mexpected[39m).toBeFalsy()
+
+[1mexpected[22m should be a falsy value.
+got: [31mnumber[39m"
 `;
 
 exports[`testing toBeFalsy should return false for truthy 5`] = `
-"    
-    expect([32mexpected[39m).toBeFalsy()
-    
-    [1mexpected[22m should be a falsy value.
-    got: [31many[39m
-"
+"expect([32mexpected[39m).toBeFalsy()
+
+[1mexpected[22m should be a falsy value.
+got: [31many[39m"
 `;
 
 exports[`testing toBeFalsy should return false for undefined and %s (isNot true) 1`] = `
-"    
-    expect([32mexpected[39m).not.toBeFalsy()
-    
-    [1mexpected[22m should not be a falsy value.
-    got: [31mundefined[39m
-"
+"expect([32mexpected[39m).not.toBeFalsy()
+
+[1mexpected[22m should not be a falsy value.
+got: [31mundefined[39m"
 `;

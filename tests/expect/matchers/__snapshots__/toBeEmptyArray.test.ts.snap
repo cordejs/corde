@@ -1,37 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`testing toBeEmptyArray should return false for  1`] = `
-"    
-    expect([32mexpected[39m).toBeEmptyArray()
-    
-    [1mexpected[22m should be an [32mempty array[39m.
-    got: [31mstring[39m
-"
+"expect([32mexpected[39m).toBeEmptyArray()
+
+[1mexpected[22m should be an [32mempty array[39m.
+got: [31mstring[39m"
 `;
 
 exports[`testing toBeEmptyArray should return false for [ '' ] 1`] = `
-"    
-    expect([32mexpected[39m).toBeEmptyArray()
-    
-    [1mexpected[22m should be an [32mempty array[39m.
-    got: [31mexpected.length == 1[39m
-"
+"expect([32mexpected[39m).toBeEmptyArray()
+
+[1mexpected[22m should be an [32mempty array[39m.
+got: [31mexpected.length == 1[39m"
 `;
 
 exports[`testing toBeEmptyArray should return false for 1 1`] = `
-"    
-    expect([32mexpected[39m).toBeEmptyArray()
-    
-    [1mexpected[22m should be an [32mempty array[39m.
-    got: [31mnumber[39m
-"
+"expect([32mexpected[39m).toBeEmptyArray()
+
+[1mexpected[22m should be an [32mempty array[39m.
+got: [31mnumber[39m"
 `;
 
 exports[`testing toBeEmptyArray should return false for empty array when isNot true 1`] = `
-"    
-    expect([32mexpected[39m).not.toBeEmptyArray()
-    
-    [1mexpected[22m should not be an [32mempty array[39m.
-    got: [31mexpected.length == 0[39m
-"
+"expect([32mexpected[39m).not.toBeEmptyArray()
+
+[1mexpected[22m should not be an [32mempty array[39m.
+got: [31mexpected.length == 0[39m"
 `;

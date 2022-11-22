@@ -2,96 +2,80 @@
 
 exports[`testing toBeUndefined should return false for  (isNot false) 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).toBeUndefined()
-    
-    [1mexpected[22m should be an [32mundefined[39m.
-    got: [31mstring[39m
-",
+  "message": "expect([32mexpected[39m).toBeUndefined()
+
+[1mexpected[22m should be an [32mundefined[39m.
+got: [31mstring[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBeUndefined should return false for 1 (isNot false) 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).toBeUndefined()
-    
-    [1mexpected[22m should be an [32mundefined[39m.
-    got: [31mnumber[39m
-",
+  "message": "expect([32mexpected[39m).toBeUndefined()
+
+[1mexpected[22m should be an [32mundefined[39m.
+got: [31mnumber[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBeUndefined should return false for Symbol() (isNot false) 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).toBeUndefined()
-    
-    [1mexpected[22m should be an [32mundefined[39m.
-    got: [31msymbol[39m
-",
+  "message": "expect([32mexpected[39m).toBeUndefined()
+
+[1mexpected[22m should be an [32mundefined[39m.
+got: [31msymbol[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBeUndefined should return false for any (isNot false) 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).toBeUndefined()
-    
-    [1mexpected[22m should be an [32mundefined[39m.
-    got: [31many[39m
-",
+  "message": "expect([32mexpected[39m).toBeUndefined()
+
+[1mexpected[22m should be an [32mundefined[39m.
+got: [31many[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBeUndefined should return false for false (isNot false) 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).toBeUndefined()
-    
-    [1mexpected[22m should be an [32mundefined[39m.
-    got: [31mboolean[39m
-",
+  "message": "expect([32mexpected[39m).toBeUndefined()
+
+[1mexpected[22m should be an [32mundefined[39m.
+got: [31mboolean[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBeUndefined should return false for null (isNot false) 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).toBeUndefined()
-    
-    [1mexpected[22m should be an [32mundefined[39m.
-    got: [31mnull[39m
-",
+  "message": "expect([32mexpected[39m).toBeUndefined()
+
+[1mexpected[22m should be an [32mundefined[39m.
+got: [31mnull[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBeUndefined should return false for true (isNot false) 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).toBeUndefined()
-    
-    [1mexpected[22m should be an [32mundefined[39m.
-    got: [31mboolean[39m
-",
+  "message": "expect([32mexpected[39m).toBeUndefined()
+
+[1mexpected[22m should be an [32mundefined[39m.
+got: [31mboolean[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBeUndefined should return false for undefined (isNot true) 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).not.toBeUndefined()
-    
-    [1mexpected[22m should not be an [32mundefined[39m.
-    got: [31mundefined[39m
-",
+  "message": "expect([32mexpected[39m).not.toBeUndefined()
+
+[1mexpected[22m should not be an [32mundefined[39m.
+got: [31mundefined[39m",
   "pass": false,
 }
 `;

@@ -2,228 +2,190 @@
 
 exports[`testing toBePrimitive should return false for () => {} (isNot false) 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).toBePrimitive()
-    
-    [1mexpected[22m should be primitive expected ([32mstring | bigint | number | boolean[39m).
-    got: [31mfunction[39m
-",
+  "message": "expect([32mexpected[39m).toBePrimitive()
+
+[1mexpected[22m should be primitive expected ([32mstring | bigint | number | boolean[39m).
+got: [31mfunction[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBePrimitive should return false for [] (isNot false) 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).toBePrimitive()
-    
-    [1mexpected[22m should be primitive expected ([32mstring | bigint | number | boolean[39m).
-    got: [31marray[39m
-",
+  "message": "expect([32mexpected[39m).toBePrimitive()
+
+[1mexpected[22m should be primitive expected ([32mstring | bigint | number | boolean[39m).
+got: [31marray[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBePrimitive should return false for {} (isNot false) 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).toBePrimitive()
-    
-    [1mexpected[22m should be primitive expected ([32mstring | bigint | number | boolean[39m).
-    got: [31mobject[39m
-",
+  "message": "expect([32mexpected[39m).toBePrimitive()
+
+[1mexpected[22m should be primitive expected ([32mstring | bigint | number | boolean[39m).
+got: [31mobject[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBePrimitive should return false for 1 (isNot true) 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).not.toBePrimitive()
-    
-    [1mexpected[22m should not be primitive expected ([32mstring | bigint | number | boolean[39m).
-    got: [31mstring[39m
-",
+  "message": "expect([32mexpected[39m).not.toBePrimitive()
+
+[1mexpected[22m should not be primitive expected ([32mstring | bigint | number | boolean[39m).
+got: [31mstring[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBePrimitive should return false for 1 (isNot true) 2`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).not.toBePrimitive()
-    
-    [1mexpected[22m should not be primitive expected ([32mstring | bigint | number | boolean[39m).
-    got: [31mnumber[39m
-",
+  "message": "expect([32mexpected[39m).not.toBePrimitive()
+
+[1mexpected[22m should not be primitive expected ([32mstring | bigint | number | boolean[39m).
+got: [31mnumber[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBePrimitive should return false for 9007199254740991n (isNot true) 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).not.toBePrimitive()
-    
-    [1mexpected[22m should not be primitive expected ([32mstring | bigint | number | boolean[39m).
-    got: [31mbigint[39m
-",
+  "message": "expect([32mexpected[39m).not.toBePrimitive()
+
+[1mexpected[22m should not be primitive expected ([32mstring | bigint | number | boolean[39m).
+got: [31mbigint[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBePrimitive should return false for Symbol() (isNot false) 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).toBePrimitive()
-    
-    [1mexpected[22m should be primitive expected ([32mstring | bigint | number | boolean[39m).
-    got: [31msymbol[39m
-",
+  "message": "expect([32mexpected[39m).toBePrimitive()
+
+[1mexpected[22m should be primitive expected ([32mstring | bigint | number | boolean[39m).
+got: [31msymbol[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBePrimitive should return false for any(Array) (isNot false) 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).toBePrimitive()
-    
-    [1mexpected[22m should be primitive expected ([32mstring | bigint | number | boolean[39m).
-    got: [31many(Array)[39m
-",
+  "message": "expect([32mexpected[39m).toBePrimitive()
+
+[1mexpected[22m should be primitive expected ([32mstring | bigint | number | boolean[39m).
+got: [31many(Array)[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBePrimitive should return false for any(Bigint) (isNot true) 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).not.toBePrimitive()
-    
-    [1mexpected[22m should not be primitive expected ([32mstring | bigint | number | boolean[39m).
-    got: [31many(Bigint)[39m
-",
+  "message": "expect([32mexpected[39m).not.toBePrimitive()
+
+[1mexpected[22m should not be primitive expected ([32mstring | bigint | number | boolean[39m).
+got: [31many(Bigint)[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBePrimitive should return false for any(Boolean) (isNot true) 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).not.toBePrimitive()
-    
-    [1mexpected[22m should not be primitive expected ([32mstring | bigint | number | boolean[39m).
-    got: [31many(Boolean)[39m
-",
+  "message": "expect([32mexpected[39m).not.toBePrimitive()
+
+[1mexpected[22m should not be primitive expected ([32mstring | bigint | number | boolean[39m).
+got: [31many(Boolean)[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBePrimitive should return false for any(Function) (isNot false) 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).toBePrimitive()
-    
-    [1mexpected[22m should be primitive expected ([32mstring | bigint | number | boolean[39m).
-    got: [31many(Function)[39m
-",
+  "message": "expect([32mexpected[39m).toBePrimitive()
+
+[1mexpected[22m should be primitive expected ([32mstring | bigint | number | boolean[39m).
+got: [31many(Function)[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBePrimitive should return false for any(Number) (isNot true) 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).not.toBePrimitive()
-    
-    [1mexpected[22m should not be primitive expected ([32mstring | bigint | number | boolean[39m).
-    got: [31many(Number)[39m
-",
+  "message": "expect([32mexpected[39m).not.toBePrimitive()
+
+[1mexpected[22m should not be primitive expected ([32mstring | bigint | number | boolean[39m).
+got: [31many(Number)[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBePrimitive should return false for any(Object) (isNot false) 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).toBePrimitive()
-    
-    [1mexpected[22m should be primitive expected ([32mstring | bigint | number | boolean[39m).
-    got: [31many(Object)[39m
-",
+  "message": "expect([32mexpected[39m).toBePrimitive()
+
+[1mexpected[22m should be primitive expected ([32mstring | bigint | number | boolean[39m).
+got: [31many(Object)[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBePrimitive should return false for any(String) (isNot true) 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).not.toBePrimitive()
-    
-    [1mexpected[22m should not be primitive expected ([32mstring | bigint | number | boolean[39m).
-    got: [31many(String)[39m
-",
+  "message": "expect([32mexpected[39m).not.toBePrimitive()
+
+[1mexpected[22m should not be primitive expected ([32mstring | bigint | number | boolean[39m).
+got: [31many(String)[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBePrimitive should return false for any(Symbol) (isNot false) 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).toBePrimitive()
-    
-    [1mexpected[22m should be primitive expected ([32mstring | bigint | number | boolean[39m).
-    got: [31many(Symbol)[39m
-",
+  "message": "expect([32mexpected[39m).toBePrimitive()
+
+[1mexpected[22m should be primitive expected ([32mstring | bigint | number | boolean[39m).
+got: [31many(Symbol)[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBePrimitive should return false for false (isNot true) 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).not.toBePrimitive()
-    
-    [1mexpected[22m should not be primitive expected ([32mstring | bigint | number | boolean[39m).
-    got: [31mboolean[39m
-",
+  "message": "expect([32mexpected[39m).not.toBePrimitive()
+
+[1mexpected[22m should not be primitive expected ([32mstring | bigint | number | boolean[39m).
+got: [31mboolean[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBePrimitive should return false for null (isNot false) 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).toBePrimitive()
-    
-    [1mexpected[22m should be primitive expected ([32mstring | bigint | number | boolean[39m).
-    got: [31mnull[39m
-",
+  "message": "expect([32mexpected[39m).toBePrimitive()
+
+[1mexpected[22m should be primitive expected ([32mstring | bigint | number | boolean[39m).
+got: [31mnull[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBePrimitive should return false for true (isNot true) 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).not.toBePrimitive()
-    
-    [1mexpected[22m should not be primitive expected ([32mstring | bigint | number | boolean[39m).
-    got: [31mboolean[39m
-",
+  "message": "expect([32mexpected[39m).not.toBePrimitive()
+
+[1mexpected[22m should not be primitive expected ([32mstring | bigint | number | boolean[39m).
+got: [31mboolean[39m",
   "pass": false,
 }
 `;
 
 exports[`testing toBePrimitive should return false for undefined (isNot false) 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).toBePrimitive()
-    
-    [1mexpected[22m should be primitive expected ([32mstring | bigint | number | boolean[39m).
-    got: [31mundefined[39m
-",
+  "message": "expect([32mexpected[39m).toBePrimitive()
+
+[1mexpected[22m should be primitive expected ([32mstring | bigint | number | boolean[39m).
+got: [31mundefined[39m",
   "pass": false,
 }
 `;

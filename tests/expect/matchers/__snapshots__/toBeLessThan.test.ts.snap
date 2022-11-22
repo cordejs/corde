@@ -2,11 +2,9 @@
 
 exports[`testing toBeLessThan should fail due to expected be equal than received 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).toBeLessThan([31mreceived[39m)
-    
-    expect: 1 < 1.
-    
+  "message": "expect([32mexpected[39m).toBeLessThan([31mreceived[39m)
+
+expect: 1 < 1.
 ",
   "pass": false,
 }
@@ -14,11 +12,9 @@ Object {
 
 exports[`testing toBeLessThan should fail due to expected be greater than received 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).toBeLessThan([31mreceived[39m)
-    
-    expect: 2 < 1.
-    
+  "message": "expect([32mexpected[39m).toBeLessThan([31mreceived[39m)
+
+expect: 2 < 1.
 ",
   "pass": false,
 }
@@ -26,11 +22,9 @@ Object {
 
 exports[`testing toBeLessThan should fail due to expected be less than received (isNot true) 1`] = `
 Object {
-  "message": "    
-    expect([32mexpected[39m).not.toBeLessThan([31mreceived[39m)
-    
-    expect: 2 >= 4.
-    
+  "message": "expect([32mexpected[39m).not.toBeLessThan([31mreceived[39m)
+
+expect: 2 >= 4.
 ",
   "pass": false,
 }
@@ -38,100 +32,80 @@ Object {
 
 exports[`testing toBeLessThan should return false for 'expected' not to be a number 1`] = `
 Object {
-  "message": "    
-    value is not a number.
-    received: '[31mstring[39m'
-",
+  "message": "value is not a number.
+received: '[31mstring[39m'",
   "pass": false,
 }
 `;
 
 exports[`testing toBeLessThan should return false for 'expected' not to be a number 2`] = `
 Object {
-  "message": "    
-    value is not a number.
-    received: '[31mstring[39m'
-",
+  "message": "value is not a number.
+received: '[31mstring[39m'",
   "pass": false,
 }
 `;
 
 exports[`testing toBeLessThan should return false for 'expected' not to be a number 3`] = `
 Object {
-  "message": "    
-    value is not a number.
-    received: '[31mboolean[39m'
-",
+  "message": "value is not a number.
+received: '[31mboolean[39m'",
   "pass": false,
 }
 `;
 
 exports[`testing toBeLessThan should return false for 'expected' not to be a number 4`] = `
 Object {
-  "message": "    
-    value is not a number.
-    received: '[31mboolean[39m'
-",
+  "message": "value is not a number.
+received: '[31mboolean[39m'",
   "pass": false,
 }
 `;
 
 exports[`testing toBeLessThan should return false for 'expected' not to be a number 5`] = `
 Object {
-  "message": "    
-    value is not a number.
-    received: '[31marray[39m'
-",
+  "message": "value is not a number.
+received: '[31marray[39m'",
   "pass": false,
 }
 `;
 
 exports[`testing toBeLessThan should return false for 'received' not to be a number 1`] = `
 Object {
-  "message": "    
-    received is not a number.
-    received: '[31mstring[39m'
-",
+  "message": "received is not a number.
+received: '[31mstring[39m'",
   "pass": false,
 }
 `;
 
 exports[`testing toBeLessThan should return false for 'received' not to be a number 2`] = `
 Object {
-  "message": "    
-    received is not a number.
-    received: '[31mstring[39m'
-",
+  "message": "received is not a number.
+received: '[31mstring[39m'",
   "pass": false,
 }
 `;
 
 exports[`testing toBeLessThan should return false for 'received' not to be a number 3`] = `
 Object {
-  "message": "    
-    received is not a number.
-    received: '[31mboolean[39m'
-",
+  "message": "received is not a number.
+received: '[31mboolean[39m'",
   "pass": false,
 }
 `;
 
 exports[`testing toBeLessThan should return false for 'received' not to be a number 4`] = `
 Object {
-  "message": "    
-    received is not a number.
-    received: '[31mboolean[39m'
-",
+  "message": "received is not a number.
+received: '[31mboolean[39m'",
   "pass": false,
 }
 `;
 
 exports[`testing toBeLessThan should return false for 'received' not to be a number 5`] = `
 Object {
-  "message": "    
-    received is not a number.
-    received: '[31marray[39m'
-",
+  "message": "received is not a number.
+received: '[31marray[39m'",
   "pass": false,
 }
 `;

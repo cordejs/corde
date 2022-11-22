@@ -1,37 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`testing toBeTrue should return false for {} 1`] = `
-"    
-    expect([32mexpected[39m).toBeTrue()
-    
-    [1mexpected[22m should be [1mtrue[22m.
-    got: [31mobject[39m
-"
+"expect([32mexpected[39m).toBeTrue()
+
+[1mexpected[22m should be [1mtrue[22m.
+got: [31mobject[39m"
 `;
 
 exports[`testing toBeTrue should return false for 1 1`] = `
-"    
-    expect([32mexpected[39m).toBeTrue()
-    
-    [1mexpected[22m should be [1mtrue[22m.
-    got: [31mstring[39m
-"
+"expect([32mexpected[39m).toBeTrue()
+
+[1mexpected[22m should be [1mtrue[22m.
+got: [31mstring[39m"
 `;
 
 exports[`testing toBeTrue should return false for false 1`] = `
-"    
-    expect([32mexpected[39m).toBeTrue()
-    
-    [1mexpected[22m should be [1mtrue[22m.
-    got: [31mfalse[39m
-"
+"expect([32mexpected[39m).toBeTrue()
+
+[1mexpected[22m should be [1mtrue[22m.
+got: [31mfalse[39m"
 `;
 
 exports[`testing toBeTrue should return true for true (isNot true) 1`] = `
-"    
-    expect([32mexpected[39m).not.toBeTrue()
-    
-    [1mexpected[22m should not be [1mtrue[22m.
-    got: [31mtrue[39m
-"
+"expect([32mexpected[39m).not.toBeTrue()
+
+[1mexpected[22m should not be [1mtrue[22m.
+got: [31mtrue[39m"
 `;

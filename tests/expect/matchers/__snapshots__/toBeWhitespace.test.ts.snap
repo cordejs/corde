@@ -1,109 +1,85 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`testing toBeWhitespace  should return true for           122  23 1  (isNot false) 1`] = `
-"    
-    expect([32mexpected[39m).toBeWhiteSpace()
-    
-    [1mexpected[22m should be [32mstring with white spaces[39m.
-    got: [31m          122  23 1 [39m
-"
+"expect([32mexpected[39m).toBeWhiteSpace()
+
+[1mexpected[22m should be [32mstring with white spaces[39m.
+got: [31m          122  23 1 [39m"
 `;
 
 exports[`testing toBeWhitespace  should return true for         (isNot true) 1`] = `
-"    
-    expect([32mexpected[39m).not.toBeWhiteSpace()
-    
-    [1mexpected[22m should not be [32mstring with white spaces[39m.
-    got: [31m       [39m
-"
+"expect([32mexpected[39m).not.toBeWhiteSpace()
+
+[1mexpected[22m should not be [32mstring with white spaces[39m.
+got: [31m       [39m"
 `;
 
 exports[`testing toBeWhitespace  should return true for       (isNot true) 1`] = `
-"    
-    expect([32mexpected[39m).not.toBeWhiteSpace()
-    
-    [1mexpected[22m should not be [32mstring with white spaces[39m.
-    got: [31m     [39m
-"
+"expect([32mexpected[39m).not.toBeWhiteSpace()
+
+[1mexpected[22m should not be [32mstring with white spaces[39m.
+got: [31m     [39m"
 `;
 
 exports[`testing toBeWhitespace  should return true for     (isNot true) 1`] = `
-"    
-    expect([32mexpected[39m).not.toBeWhiteSpace()
-    
-    [1mexpected[22m should not be [32mstring with white spaces[39m.
-    got: [31m   [39m
-"
+"expect([32mexpected[39m).not.toBeWhiteSpace()
+
+[1mexpected[22m should not be [32mstring with white spaces[39m.
+got: [31m   [39m"
 `;
 
 exports[`testing toBeWhitespace  should return true for   (isNot true) 1`] = `
-"    
-    expect([32mexpected[39m).not.toBeWhiteSpace()
-    
-    [1mexpected[22m should not be [32mstring with white spaces[39m.
-    got: [31m [39m
-"
+"expect([32mexpected[39m).not.toBeWhiteSpace()
+
+[1mexpected[22m should not be [32mstring with white spaces[39m.
+got: [31m [39m"
 `;
 
 exports[`testing toBeWhitespace  should return true for  (isNot false) 1`] = `
-"    
-    expect([32mexpected[39m).toBeWhiteSpace()
-    
-    [1mexpected[22m should be [32mstring with white spaces[39m.
-    got: [31marray[39m
-"
+"expect([32mexpected[39m).toBeWhiteSpace()
+
+[1mexpected[22m should be [32mstring with white spaces[39m.
+got: [31marray[39m"
 `;
 
 exports[`testing toBeWhitespace  should return true for  1 (isNot false) 1`] = `
-"    
-    expect([32mexpected[39m).toBeWhiteSpace()
-    
-    [1mexpected[22m should be [32mstring with white spaces[39m.
-    got: [31m 1[39m
-"
+"expect([32mexpected[39m).toBeWhiteSpace()
+
+[1mexpected[22m should be [32mstring with white spaces[39m.
+got: [31m 1[39m"
 `;
 
 exports[`testing toBeWhitespace  should return true for [object Object] (isNot false) 1`] = `
-"    
-    expect([32mexpected[39m).toBeWhiteSpace()
-    
-    [1mexpected[22m should be [32mstring with white spaces[39m.
-    got: [31mobject[39m
-"
+"expect([32mexpected[39m).toBeWhiteSpace()
+
+[1mexpected[22m should be [32mstring with white spaces[39m.
+got: [31mobject[39m"
 `;
 
 exports[`testing toBeWhitespace  should return true for 1 (isNot false) 1`] = `
-"    
-    expect([32mexpected[39m).toBeWhiteSpace()
-    
-    [1mexpected[22m should be [32mstring with white spaces[39m.
-    got: [31mnumber[39m
-"
+"expect([32mexpected[39m).toBeWhiteSpace()
+
+[1mexpected[22m should be [32mstring with white spaces[39m.
+got: [31mnumber[39m"
 `;
 
 exports[`testing toBeWhitespace  should return true for any(Number) (isNot false) 1`] = `
-"    
-    expect([32mexpected[39m).toBeWhiteSpace()
-    
-    [1mexpected[22m should be [32mstring with white spaces[39m.
-    got: [31many(Number)[39m
-"
+"expect([32mexpected[39m).toBeWhiteSpace()
+
+[1mexpected[22m should be [32mstring with white spaces[39m.
+got: [31many(Number)[39m"
 `;
 
 exports[`testing toBeWhitespace  should return true for any(String) (isNot false) 1`] = `
-"    
-    expect([32mexpected[39m).toBeWhiteSpace()
-    
-    [1mexpected[22m should be [32mstring with white spaces[39m.
-    got: [31many(String)[39m
-"
+"expect([32mexpected[39m).toBeWhiteSpace()
+
+[1mexpected[22m should be [32mstring with white spaces[39m.
+got: [31many(String)[39m"
 `;
 
 exports[`testing toBeWhitespace  should return true for function Object() { [native code] } (isNot false) 1`] = `
-"    
-    expect([32mexpected[39m).toBeWhiteSpace()
-    
-    [1mexpected[22m should be [32mstring with white spaces[39m.
-    got: [31mfunction[39m
-"
+"expect([32mexpected[39m).toBeWhiteSpace()
+
+[1mexpected[22m should be [32mstring with white spaces[39m.
+got: [31mfunction[39m"
 `;
