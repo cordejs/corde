@@ -2,10 +2,8 @@
 
 exports[`testing setRoleMentionable function should fail due to no role mentionable was not updated 1`] = `
 Object {
-  "message": "    
-    expected: mentionable to be false
-    received: role mentionable was not updated
-",
+  "message": "expected: mentionable to be false
+received: role mentionable was not updated",
   "pass": false,
   "testName": "setRoleMentionable",
 }
@@ -13,10 +11,8 @@ Object {
 
 exports[`testing setRoleMentionable function should fail due to undefined roleIdentifier 1`] = `
 Object {
-  "message": "    
-    expected: mentionable to be true
-    received: role mentionable was not updated
-",
+  "message": "expected: mentionable to be true
+received: role mentionable was not updated",
   "pass": false,
   "testName": "setRoleMentionable",
 }
@@ -24,9 +20,7 @@ Object {
 
 exports[`testing setRoleMentionable function should return a failed test due to failure in message sending 1`] = `
 Object {
-  "message": "    
-    can not send message to channel x
-",
+  "message": "can not send message to channel x",
   "pass": false,
   "testName": "setRoleMentionable",
 }
@@ -34,10 +28,8 @@ Object {
 
 exports[`testing setRoleMentionable function should return a not passed test due to mentionable should not change (isNot true) 1`] = `
 Object {
-  "message": "    
-    expected: mentionable to not be false
-    received: false
-",
+  "message": "expected: mentionable to not be false
+received: false",
   "pass": false,
   "testName": "setRoleMentionable",
 }
@@ -45,10 +37,8 @@ Object {
 
 exports[`testing setRoleMentionable function should return false due to invalid mentionable parameter (object) 1`] = `
 Object {
-  "message": "    
-    expected: mentionable parameter to be of boolean type
-    received: object
-",
+  "message": "expected: mentionable parameter to be of boolean type
+received: object",
   "pass": false,
   "testName": "setRoleMentionable",
 }
@@ -56,10 +46,8 @@ Object {
 
 exports[`testing setRoleMentionable function should return false due to invalid mentionable parameter (undefined) 1`] = `
 Object {
-  "message": "    
-    expected: mentionable option to be true or false
-    received: undefined
-",
+  "message": "expected: mentionable option to be true or false
+received: undefined",
   "pass": false,
   "testName": "setRoleMentionable",
 }
@@ -67,10 +55,8 @@ Object {
 
 exports[`testing setRoleMentionable function should return false due to not found role 1`] = `
 Object {
-  "message": "    
-    expected: role with id 123
-    received: null
-",
+  "message": "expected: role with id 123
+received: null",
   "pass": false,
   "testName": "setRoleMentionable",
 }

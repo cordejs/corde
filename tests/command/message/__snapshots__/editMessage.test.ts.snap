@@ -2,10 +2,8 @@
 
 exports[`testing editMessage function should fail due to message was not edited by the bot (no messageIdentifier as object with content) 1`] = `
 Object {
-  "message": "    
-    expected: testing bot to edit the message of content \\"message test\\"
-    received: message was not edited
-",
+  "message": "expected: testing bot to edit the message of content \\"message test\\"
+received: message was not edited",
   "pass": false,
   "testName": "editMessage",
 }
@@ -13,10 +11,8 @@ Object {
 
 exports[`testing editMessage function should fail due to message was not edited by the bot (no messageIdentifier as object with id) 1`] = `
 Object {
-  "message": "    
-    expected: testing bot to edit the message of id 123
-    received: message was not edited
-",
+  "message": "expected: testing bot to edit the message of id 123
+received: message was not edited",
   "pass": false,
   "testName": "editMessage",
 }
@@ -24,10 +20,8 @@ Object {
 
 exports[`testing editMessage function should fail due to message was not edited by the bot (no messageIdentifier as string) 1`] = `
 Object {
-  "message": "    
-    expected: testing bot to edit the message of id 123
-    received: message was not edited
-",
+  "message": "expected: testing bot to edit the message of id 123
+received: message was not edited",
   "pass": false,
   "testName": "editMessage",
 }
@@ -35,10 +29,8 @@ Object {
 
 exports[`testing editMessage function should fail due to message was not edited by the bot (no messageIdentifier) 1`] = `
 Object {
-  "message": "    
-    expected: testing bot to edit the last message sent
-    received: message was not edited
-",
+  "message": "expected: testing bot to edit the last message sent
+received: message was not edited",
   "pass": false,
   "testName": "editMessage",
 }
@@ -46,45 +38,43 @@ Object {
 
 exports[`testing editMessage function should get fail test due to bot returned different messages (expect embed and returned primitive) 1`] = `
 Object {
-  "message": "    
-    expected: Object {
-      \\"author\\": Object {
-        \\"iconURL\\": \\"https://i.imgur.com/wSTFkRM.png\\",
-        \\"name\\": \\"Some name\\",
-        \\"url\\": \\"https://discord.js.org\\",
-      },
-      \\"color\\": 2123412,
-      \\"description\\": \\"Some description here\\",
-      \\"fields\\": Array [
-        Object {
-          \\"inline\\": false,
-          \\"name\\": \\"Regular field title\\",
-          \\"value\\": \\"Some value here\\",
-        },
-        Object {
-          \\"inline\\": false,
-          \\"name\\": \\"​\\",
-          \\"value\\": \\"​\\",
-        },
-        Object {
-          \\"inline\\": true,
-          \\"name\\": \\"Inline field title\\",
-          \\"value\\": \\"Some value here\\",
-        },
-        Object {
-          \\"inline\\": true,
-          \\"name\\": \\"Inline field title\\",
-          \\"value\\": \\"Some value here\\",
-        },
-      ],
-      \\"thumbnailUrl\\": Object {
-        \\"url\\": \\"https://i.imgur.com/wSTFkRM.png\\",
-      },
-      \\"title\\": \\"Some title\\",
-      \\"url\\": \\"https://discord.js.org/\\",
-    }
-    received: 'this is the message content'
-",
+  "message": "expected: Object {
+  \\"author\\": Object {
+    \\"iconURL\\": \\"https://i.imgur.com/wSTFkRM.png\\",
+    \\"name\\": \\"Some name\\",
+    \\"url\\": \\"https://discord.js.org\\",
+  },
+  \\"color\\": 2123412,
+  \\"description\\": \\"Some description here\\",
+  \\"fields\\": Array [
+    Object {
+      \\"inline\\": false,
+      \\"name\\": \\"Regular field title\\",
+      \\"value\\": \\"Some value here\\",
+    },
+    Object {
+      \\"inline\\": false,
+      \\"name\\": \\"​\\",
+      \\"value\\": \\"​\\",
+    },
+    Object {
+      \\"inline\\": true,
+      \\"name\\": \\"Inline field title\\",
+      \\"value\\": \\"Some value here\\",
+    },
+    Object {
+      \\"inline\\": true,
+      \\"name\\": \\"Inline field title\\",
+      \\"value\\": \\"Some value here\\",
+    },
+  ],
+  \\"thumbnailUrl\\": Object {
+    \\"url\\": \\"https://i.imgur.com/wSTFkRM.png\\",
+  },
+  \\"title\\": \\"Some title\\",
+  \\"url\\": \\"https://discord.js.org/\\",
+}
+received: 'this is the message content'",
   "pass": false,
   "testName": "editMessage",
 }
@@ -92,10 +82,8 @@ Object {
 
 exports[`testing editMessage function should get fail test due to bot returned different messages both primitive values 1`] = `
 Object {
-  "message": "    
-    expected: 'expect value'
-    received: 'this is the message content'
-",
+  "message": "expected: 'expect value'
+received: 'this is the message content'",
   "pass": false,
   "testName": "editMessage",
 }
@@ -103,10 +91,8 @@ Object {
 
 exports[`testing editMessage function should get failed test due to bot returned equal messages (isNot true) 1`] = `
 Object {
-  "message": "    
-    expected: message from bot be different from expectation
-    received: both returned and expectation are equal
-",
+  "message": "expected: message from bot be different from expectation
+received: both returned and expectation are equal",
   "pass": false,
   "testName": "editMessage",
 }
@@ -156,9 +142,7 @@ Object {
 
 exports[`testing editMessage function should return a failed test due to failure in message sending 1`] = `
 Object {
-  "message": "    
-    can not send message to channel x
-",
+  "message": "can not send message to channel x",
   "pass": false,
   "testName": "editMessage",
 }
@@ -166,10 +150,8 @@ Object {
 
 exports[`testing editMessage function should return a failed test due to invalid parameter (null) 1`] = `
 Object {
-  "message": "    
-    expected: expect value to be a primitive value (string, boolean, number) or an IMessageEmbed object
-    received: undefined
-",
+  "message": "expected: expect value to be a primitive value (string, boolean, number) or an IMessageEmbed object
+received: undefined",
   "pass": false,
   "testName": "editMessage",
 }
@@ -177,10 +159,8 @@ Object {
 
 exports[`testing editMessage function should return a failed test due to invalid parameter (undefined) 1`] = `
 Object {
-  "message": "    
-    expected: expect value to be a primitive value (string, boolean, number) or an IMessageEmbed object
-    received: undefined
-",
+  "message": "expected: expect value to be a primitive value (string, boolean, number) or an IMessageEmbed object
+received: undefined",
   "pass": false,
   "testName": "editMessage",
 }

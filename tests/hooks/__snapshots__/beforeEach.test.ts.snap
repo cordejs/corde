@@ -2,6 +2,6 @@
 
 exports[`testing beforeEach function should throw error and get this error 1`] = `
 Array [
-  [Error: [41m● BeforeEachError[49m: [Error]],
+  [Error: ● BeforeEach: [Error]],
 ]
 `;

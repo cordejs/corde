@@ -2,8 +2,6 @@
 
 exports[`should print report for 1 test file, 1 test closure and 1 failed function and 1 passed function 1`] = `
 "
- PASS    test file   10ms
-   ✔  test closure   10ms
 Test Files: 1 passed. 1 total
 Tests:      1 passed. 1 total
 Time:       10ms"

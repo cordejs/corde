@@ -2,10 +2,8 @@
 
 exports[`testing setRolePermission function should fail due to role permissions was not updated 1`] = `
 Object {
-  "message": "    
-    expected: role permissions change to: ATTACH_FILES
-    received: permissions were not changed
-",
+  "message": "expected: role permissions change to: ATTACH_FILES
+received: permissions were not changed",
   "pass": false,
   "testName": "setRolePermission",
 }
@@ -13,10 +11,8 @@ Object {
 
 exports[`testing setRolePermission function should fail due to undefined roleIdentifier 1`] = `
 Object {
-  "message": "    
-    expected: data to identifier the role (id or name)
-    received: null
-",
+  "message": "expected: data to identifier the role (id or name)
+received: null",
   "pass": false,
   "testName": "setRolePermission",
 }
@@ -24,9 +20,7 @@ Object {
 
 exports[`testing setRolePermission function should return a failed test due to failure in message sending 1`] = `
 Object {
-  "message": "    
-    can not send message to channel x
-",
+  "message": "can not send message to channel x",
   "pass": false,
   "testName": "setRolePermission",
 }
@@ -34,10 +28,8 @@ Object {
 
 exports[`testing setRolePermission function should return a failed test due to permissions should not change (isNot true) 1`] = `
 Object {
-  "message": "    
-    expected: role permissions not change to: ADMINISTRATOR
-    received: ADMINISTRATOR
-",
+  "message": "expected: role permissions not change to: ADMINISTRATOR
+received: ADMINISTRATOR",
   "pass": false,
   "testName": "setRolePermission",
 }
@@ -45,10 +37,8 @@ Object {
 
 exports[`testing setRolePermission function should return a not passed test due expected name did not match to received 1`] = `
 Object {
-  "message": "    
-    expected: role permissions change to: ATTACH_FILES
-    received: 
-",
+  "message": "expected: role permissions change to: ATTACH_FILES
+received: ",
   "pass": false,
   "testName": "setRolePermission",
 }
@@ -56,100 +46,98 @@ Object {
 
 exports[`testing setRolePermission function should return a not passed test due expected name did not match to received 2`] = `
 Object {
-  "message": "    
-    [32m- Expected[39m
-    [31m+ Received[39m
-    
-    [2m  Array [[22m
-    [32m-   \\"1\\",[39m
-    [32m-   \\"2\\",[39m
-    [32m-   \\"4\\",[39m
-    [32m-   \\"8\\",[39m
-    [32m-   \\"16\\",[39m
-    [32m-   \\"32\\",[39m
-    [32m-   \\"64\\",[39m
-    [32m-   \\"128\\",[39m
-    [32m-   \\"256\\",[39m
-    [32m-   \\"512\\",[39m
-    [32m-   \\"1024\\",[39m
-    [32m-   \\"2048\\",[39m
-    [32m-   \\"4096\\",[39m
-    [32m-   \\"8192\\",[39m
-    [32m-   \\"16384\\",[39m
-    [32m-   \\"32768\\",[39m
-    [32m-   \\"65536\\",[39m
-    [32m-   \\"131072\\",[39m
-    [32m-   \\"262144\\",[39m
-    [32m-   \\"524288\\",[39m
-    [32m-   \\"1048576\\",[39m
-    [32m-   \\"2097152\\",[39m
-    [32m-   \\"4194304\\",[39m
-    [32m-   \\"8388608\\",[39m
-    [32m-   \\"16777216\\",[39m
-    [32m-   \\"33554432\\",[39m
-    [32m-   \\"67108864\\",[39m
-    [32m-   \\"134217728\\",[39m
-    [32m-   \\"268435456\\",[39m
-    [32m-   \\"536870912\\",[39m
-    [32m-   \\"1073741824\\",[39m
-    [32m-   \\"2147483648\\",[39m
-    [32m-   \\"CREATE_INSTANT_INVITE\\",[39m
-    [32m-   \\"KICK_MEMBERS\\",[39m
-    [32m-   \\"BAN_MEMBERS\\",[39m
-    [32m-   \\"ADMINISTRATOR\\",[39m
-    [32m-   \\"MANAGE_CHANNELS\\",[39m
-    [32m-   \\"MANAGE_GUILD\\",[39m
-    [32m-   \\"ADD_REACTIONS\\",[39m
-    [32m-   \\"VIEW_AUDIT_LOG\\",[39m
-    [32m-   \\"VIEW_CHANNEL\\",[39m
-    [32m-   \\"SEND_MESSAGES\\",[39m
-    [32m-   \\"SEND_TTS_MESSAGES\\",[39m
-    [32m-   \\"MANAGE_MESSAGES\\",[39m
-    [32m-   \\"EMBED_LINKS\\",[39m
-    [32m-   \\"ATTACH_FILES\\",[39m
-    [32m-   \\"READ_MESSAGE_HISTORY\\",[39m
-    [32m-   \\"MENTION_EVERYONE\\",[39m
-    [32m-   \\"USE_EXTERNAL_EMOJIS\\",[39m
-    [32m-   \\"CONNECT\\",[39m
-    [32m-   \\"SPEAK\\",[39m
-    [32m-   \\"MUTE_MEMBERS\\",[39m
-    [32m-   \\"DEAFEN_MEMBERS\\",[39m
-    [32m-   \\"MOVE_MEMBERS\\",[39m
-    [32m-   \\"USE_VAD\\",[39m
-    [32m-   \\"PRIORITY_SPEAKER\\",[39m
-    [32m-   \\"CHANGE_NICKNAME\\",[39m
-    [32m-   \\"MANAGE_NICKNAMES\\",[39m
-    [32m-   \\"MANAGE_ROLES\\",[39m
-    [32m-   \\"MANAGE_WEBHOOKS\\",[39m
-    [32m-   \\"STREAM\\",[39m
-    [32m-   \\"VIEW_GUILD_INSIGHTS\\",[39m
-    [32m-   \\"MANAGE_EMOJIS_AND_STICKERS\\",[39m
-    [32m-   \\"USE_APPLICATION_COMMANDS\\",[39m
-    [32m-   \\"REQUEST_TO_SPEAK\\",[39m
-    [32m-   \\"4294967296\\",[39m
-    [32m-   \\"MANAGE_THREADS\\",[39m
-    [32m-   \\"17179869184\\",[39m
-    [32m-   \\"CREATE_PUBLIC_THREADS\\",[39m
-    [32m-   \\"34359738368\\",[39m
-    [32m-   \\"CREATE_PRIVATE_THREADS\\",[39m
-    [32m-   \\"68719476736\\",[39m
-    [32m-   \\"USE_EXTERNAL_STICKERS\\",[39m
-    [32m-   \\"137438953472\\",[39m
-    [32m-   \\"SEND_MESSAGES_IN_THREADS\\",[39m
-    [32m-   \\"274877906944\\",[39m
-    [32m-   \\"START_EMBEDDED_ACTIVITIES\\",[39m
-    [32m-   \\"549755813888\\",[39m
-    [32m-   \\"MODERATE_MEMBERS\\",[39m
-    [32m-   \\"1099511627776\\",[39m
-    [32m-   \\"MANAGE_EVENTS\\",[39m
-    [32m-   \\"8589934592\\",[39m
-    [32m-   \\"USE_PRIVATE_THREADS\\",[39m
-    [32m-   \\"8589934593\\",[39m
-    [32m-   \\"USE_PUBLIC_THREADS\\",[39m
-    [32m-   \\"8589934594\\",[39m
-    [31m+   null,[39m
-    [2m  ][22m
-",
+  "message": "[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  Array [[22m
+[32m-   \\"1\\",[39m
+[32m-   \\"2\\",[39m
+[32m-   \\"4\\",[39m
+[32m-   \\"8\\",[39m
+[32m-   \\"16\\",[39m
+[32m-   \\"32\\",[39m
+[32m-   \\"64\\",[39m
+[32m-   \\"128\\",[39m
+[32m-   \\"256\\",[39m
+[32m-   \\"512\\",[39m
+[32m-   \\"1024\\",[39m
+[32m-   \\"2048\\",[39m
+[32m-   \\"4096\\",[39m
+[32m-   \\"8192\\",[39m
+[32m-   \\"16384\\",[39m
+[32m-   \\"32768\\",[39m
+[32m-   \\"65536\\",[39m
+[32m-   \\"131072\\",[39m
+[32m-   \\"262144\\",[39m
+[32m-   \\"524288\\",[39m
+[32m-   \\"1048576\\",[39m
+[32m-   \\"2097152\\",[39m
+[32m-   \\"4194304\\",[39m
+[32m-   \\"8388608\\",[39m
+[32m-   \\"16777216\\",[39m
+[32m-   \\"33554432\\",[39m
+[32m-   \\"67108864\\",[39m
+[32m-   \\"134217728\\",[39m
+[32m-   \\"268435456\\",[39m
+[32m-   \\"536870912\\",[39m
+[32m-   \\"1073741824\\",[39m
+[32m-   \\"2147483648\\",[39m
+[32m-   \\"CREATE_INSTANT_INVITE\\",[39m
+[32m-   \\"KICK_MEMBERS\\",[39m
+[32m-   \\"BAN_MEMBERS\\",[39m
+[32m-   \\"ADMINISTRATOR\\",[39m
+[32m-   \\"MANAGE_CHANNELS\\",[39m
+[32m-   \\"MANAGE_GUILD\\",[39m
+[32m-   \\"ADD_REACTIONS\\",[39m
+[32m-   \\"VIEW_AUDIT_LOG\\",[39m
+[32m-   \\"VIEW_CHANNEL\\",[39m
+[32m-   \\"SEND_MESSAGES\\",[39m
+[32m-   \\"SEND_TTS_MESSAGES\\",[39m
+[32m-   \\"MANAGE_MESSAGES\\",[39m
+[32m-   \\"EMBED_LINKS\\",[39m
+[32m-   \\"ATTACH_FILES\\",[39m
+[32m-   \\"READ_MESSAGE_HISTORY\\",[39m
+[32m-   \\"MENTION_EVERYONE\\",[39m
+[32m-   \\"USE_EXTERNAL_EMOJIS\\",[39m
+[32m-   \\"CONNECT\\",[39m
+[32m-   \\"SPEAK\\",[39m
+[32m-   \\"MUTE_MEMBERS\\",[39m
+[32m-   \\"DEAFEN_MEMBERS\\",[39m
+[32m-   \\"MOVE_MEMBERS\\",[39m
+[32m-   \\"USE_VAD\\",[39m
+[32m-   \\"PRIORITY_SPEAKER\\",[39m
+[32m-   \\"CHANGE_NICKNAME\\",[39m
+[32m-   \\"MANAGE_NICKNAMES\\",[39m
+[32m-   \\"MANAGE_ROLES\\",[39m
+[32m-   \\"MANAGE_WEBHOOKS\\",[39m
+[32m-   \\"STREAM\\",[39m
+[32m-   \\"VIEW_GUILD_INSIGHTS\\",[39m
+[32m-   \\"MANAGE_EMOJIS_AND_STICKERS\\",[39m
+[32m-   \\"USE_APPLICATION_COMMANDS\\",[39m
+[32m-   \\"REQUEST_TO_SPEAK\\",[39m
+[32m-   \\"4294967296\\",[39m
+[32m-   \\"MANAGE_THREADS\\",[39m
+[32m-   \\"17179869184\\",[39m
+[32m-   \\"CREATE_PUBLIC_THREADS\\",[39m
+[32m-   \\"34359738368\\",[39m
+[32m-   \\"CREATE_PRIVATE_THREADS\\",[39m
+[32m-   \\"68719476736\\",[39m
+[32m-   \\"USE_EXTERNAL_STICKERS\\",[39m
+[32m-   \\"137438953472\\",[39m
+[32m-   \\"SEND_MESSAGES_IN_THREADS\\",[39m
+[32m-   \\"274877906944\\",[39m
+[32m-   \\"START_EMBEDDED_ACTIVITIES\\",[39m
+[32m-   \\"549755813888\\",[39m
+[32m-   \\"MODERATE_MEMBERS\\",[39m
+[32m-   \\"1099511627776\\",[39m
+[32m-   \\"MANAGE_EVENTS\\",[39m
+[32m-   \\"8589934592\\",[39m
+[32m-   \\"USE_PRIVATE_THREADS\\",[39m
+[32m-   \\"8589934593\\",[39m
+[32m-   \\"USE_PUBLIC_THREADS\\",[39m
+[32m-   \\"8589934594\\",[39m
+[31m+   null,[39m
+[2m  ][22m",
   "pass": false,
   "testName": "setRolePermission",
 }
@@ -157,10 +145,8 @@ Object {
 
 exports[`testing setRolePermission function should return a not passed test due to permissions should not change (isNot true) 1`] = `
 Object {
-  "message": "    
-    expected: role permissions not change to: ADMINISTRATOR and BAN_MEMBERS
-    received: ADMINISTRATOR and BAN_MEMBERS
-",
+  "message": "expected: role permissions not change to: ADMINISTRATOR and BAN_MEMBERS
+received: ADMINISTRATOR and BAN_MEMBERS",
   "pass": false,
   "testName": "setRolePermission",
 }
@@ -168,10 +154,8 @@ Object {
 
 exports[`testing setRolePermission function should return a not passed test due to permissions should not change (isNot true) 2`] = `
 Object {
-  "message": "    
-    expected: role permissions not change to: ADMINISTRATOR (and 2 others)
-    received: ADMINISTRATOR (and 2 others)
-",
+  "message": "expected: role permissions not change to: ADMINISTRATOR (and 2 others)
+received: ADMINISTRATOR (and 2 others)",
   "pass": false,
   "testName": "setRolePermission",
 }
@@ -179,100 +163,98 @@ Object {
 
 exports[`testing setRolePermission function should return false due to invalid permission parameter (object) 1`] = `
 Object {
-  "message": "    
-    [32m- Expected[39m
-    [31m+ Received[39m
-    
-    [2m  Array [[22m
-    [32m-   \\"1\\",[39m
-    [32m-   \\"2\\",[39m
-    [32m-   \\"4\\",[39m
-    [32m-   \\"8\\",[39m
-    [32m-   \\"16\\",[39m
-    [32m-   \\"32\\",[39m
-    [32m-   \\"64\\",[39m
-    [32m-   \\"128\\",[39m
-    [32m-   \\"256\\",[39m
-    [32m-   \\"512\\",[39m
-    [32m-   \\"1024\\",[39m
-    [32m-   \\"2048\\",[39m
-    [32m-   \\"4096\\",[39m
-    [32m-   \\"8192\\",[39m
-    [32m-   \\"16384\\",[39m
-    [32m-   \\"32768\\",[39m
-    [32m-   \\"65536\\",[39m
-    [32m-   \\"131072\\",[39m
-    [32m-   \\"262144\\",[39m
-    [32m-   \\"524288\\",[39m
-    [32m-   \\"1048576\\",[39m
-    [32m-   \\"2097152\\",[39m
-    [32m-   \\"4194304\\",[39m
-    [32m-   \\"8388608\\",[39m
-    [32m-   \\"16777216\\",[39m
-    [32m-   \\"33554432\\",[39m
-    [32m-   \\"67108864\\",[39m
-    [32m-   \\"134217728\\",[39m
-    [32m-   \\"268435456\\",[39m
-    [32m-   \\"536870912\\",[39m
-    [32m-   \\"1073741824\\",[39m
-    [32m-   \\"2147483648\\",[39m
-    [32m-   \\"CREATE_INSTANT_INVITE\\",[39m
-    [32m-   \\"KICK_MEMBERS\\",[39m
-    [32m-   \\"BAN_MEMBERS\\",[39m
-    [32m-   \\"ADMINISTRATOR\\",[39m
-    [32m-   \\"MANAGE_CHANNELS\\",[39m
-    [32m-   \\"MANAGE_GUILD\\",[39m
-    [32m-   \\"ADD_REACTIONS\\",[39m
-    [32m-   \\"VIEW_AUDIT_LOG\\",[39m
-    [32m-   \\"VIEW_CHANNEL\\",[39m
-    [32m-   \\"SEND_MESSAGES\\",[39m
-    [32m-   \\"SEND_TTS_MESSAGES\\",[39m
-    [32m-   \\"MANAGE_MESSAGES\\",[39m
-    [32m-   \\"EMBED_LINKS\\",[39m
-    [32m-   \\"ATTACH_FILES\\",[39m
-    [32m-   \\"READ_MESSAGE_HISTORY\\",[39m
-    [32m-   \\"MENTION_EVERYONE\\",[39m
-    [32m-   \\"USE_EXTERNAL_EMOJIS\\",[39m
-    [32m-   \\"CONNECT\\",[39m
-    [32m-   \\"SPEAK\\",[39m
-    [32m-   \\"MUTE_MEMBERS\\",[39m
-    [32m-   \\"DEAFEN_MEMBERS\\",[39m
-    [32m-   \\"MOVE_MEMBERS\\",[39m
-    [32m-   \\"USE_VAD\\",[39m
-    [32m-   \\"PRIORITY_SPEAKER\\",[39m
-    [32m-   \\"CHANGE_NICKNAME\\",[39m
-    [32m-   \\"MANAGE_NICKNAMES\\",[39m
-    [32m-   \\"MANAGE_ROLES\\",[39m
-    [32m-   \\"MANAGE_WEBHOOKS\\",[39m
-    [32m-   \\"STREAM\\",[39m
-    [32m-   \\"VIEW_GUILD_INSIGHTS\\",[39m
-    [32m-   \\"MANAGE_EMOJIS_AND_STICKERS\\",[39m
-    [32m-   \\"USE_APPLICATION_COMMANDS\\",[39m
-    [32m-   \\"REQUEST_TO_SPEAK\\",[39m
-    [32m-   \\"4294967296\\",[39m
-    [32m-   \\"MANAGE_THREADS\\",[39m
-    [32m-   \\"17179869184\\",[39m
-    [32m-   \\"CREATE_PUBLIC_THREADS\\",[39m
-    [32m-   \\"34359738368\\",[39m
-    [32m-   \\"CREATE_PRIVATE_THREADS\\",[39m
-    [32m-   \\"68719476736\\",[39m
-    [32m-   \\"USE_EXTERNAL_STICKERS\\",[39m
-    [32m-   \\"137438953472\\",[39m
-    [32m-   \\"SEND_MESSAGES_IN_THREADS\\",[39m
-    [32m-   \\"274877906944\\",[39m
-    [32m-   \\"START_EMBEDDED_ACTIVITIES\\",[39m
-    [32m-   \\"549755813888\\",[39m
-    [32m-   \\"MODERATE_MEMBERS\\",[39m
-    [32m-   \\"1099511627776\\",[39m
-    [32m-   \\"MANAGE_EVENTS\\",[39m
-    [32m-   \\"8589934592\\",[39m
-    [32m-   \\"USE_PRIVATE_THREADS\\",[39m
-    [32m-   \\"8589934593\\",[39m
-    [32m-   \\"USE_PUBLIC_THREADS\\",[39m
-    [32m-   \\"8589934594\\",[39m
-    [31m+   Object {},[39m
-    [2m  ][22m
-",
+  "message": "[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  Array [[22m
+[32m-   \\"1\\",[39m
+[32m-   \\"2\\",[39m
+[32m-   \\"4\\",[39m
+[32m-   \\"8\\",[39m
+[32m-   \\"16\\",[39m
+[32m-   \\"32\\",[39m
+[32m-   \\"64\\",[39m
+[32m-   \\"128\\",[39m
+[32m-   \\"256\\",[39m
+[32m-   \\"512\\",[39m
+[32m-   \\"1024\\",[39m
+[32m-   \\"2048\\",[39m
+[32m-   \\"4096\\",[39m
+[32m-   \\"8192\\",[39m
+[32m-   \\"16384\\",[39m
+[32m-   \\"32768\\",[39m
+[32m-   \\"65536\\",[39m
+[32m-   \\"131072\\",[39m
+[32m-   \\"262144\\",[39m
+[32m-   \\"524288\\",[39m
+[32m-   \\"1048576\\",[39m
+[32m-   \\"2097152\\",[39m
+[32m-   \\"4194304\\",[39m
+[32m-   \\"8388608\\",[39m
+[32m-   \\"16777216\\",[39m
+[32m-   \\"33554432\\",[39m
+[32m-   \\"67108864\\",[39m
+[32m-   \\"134217728\\",[39m
+[32m-   \\"268435456\\",[39m
+[32m-   \\"536870912\\",[39m
+[32m-   \\"1073741824\\",[39m
+[32m-   \\"2147483648\\",[39m
+[32m-   \\"CREATE_INSTANT_INVITE\\",[39m
+[32m-   \\"KICK_MEMBERS\\",[39m
+[32m-   \\"BAN_MEMBERS\\",[39m
+[32m-   \\"ADMINISTRATOR\\",[39m
+[32m-   \\"MANAGE_CHANNELS\\",[39m
+[32m-   \\"MANAGE_GUILD\\",[39m
+[32m-   \\"ADD_REACTIONS\\",[39m
+[32m-   \\"VIEW_AUDIT_LOG\\",[39m
+[32m-   \\"VIEW_CHANNEL\\",[39m
+[32m-   \\"SEND_MESSAGES\\",[39m
+[32m-   \\"SEND_TTS_MESSAGES\\",[39m
+[32m-   \\"MANAGE_MESSAGES\\",[39m
+[32m-   \\"EMBED_LINKS\\",[39m
+[32m-   \\"ATTACH_FILES\\",[39m
+[32m-   \\"READ_MESSAGE_HISTORY\\",[39m
+[32m-   \\"MENTION_EVERYONE\\",[39m
+[32m-   \\"USE_EXTERNAL_EMOJIS\\",[39m
+[32m-   \\"CONNECT\\",[39m
+[32m-   \\"SPEAK\\",[39m
+[32m-   \\"MUTE_MEMBERS\\",[39m
+[32m-   \\"DEAFEN_MEMBERS\\",[39m
+[32m-   \\"MOVE_MEMBERS\\",[39m
+[32m-   \\"USE_VAD\\",[39m
+[32m-   \\"PRIORITY_SPEAKER\\",[39m
+[32m-   \\"CHANGE_NICKNAME\\",[39m
+[32m-   \\"MANAGE_NICKNAMES\\",[39m
+[32m-   \\"MANAGE_ROLES\\",[39m
+[32m-   \\"MANAGE_WEBHOOKS\\",[39m
+[32m-   \\"STREAM\\",[39m
+[32m-   \\"VIEW_GUILD_INSIGHTS\\",[39m
+[32m-   \\"MANAGE_EMOJIS_AND_STICKERS\\",[39m
+[32m-   \\"USE_APPLICATION_COMMANDS\\",[39m
+[32m-   \\"REQUEST_TO_SPEAK\\",[39m
+[32m-   \\"4294967296\\",[39m
+[32m-   \\"MANAGE_THREADS\\",[39m
+[32m-   \\"17179869184\\",[39m
+[32m-   \\"CREATE_PUBLIC_THREADS\\",[39m
+[32m-   \\"34359738368\\",[39m
+[32m-   \\"CREATE_PRIVATE_THREADS\\",[39m
+[32m-   \\"68719476736\\",[39m
+[32m-   \\"USE_EXTERNAL_STICKERS\\",[39m
+[32m-   \\"137438953472\\",[39m
+[32m-   \\"SEND_MESSAGES_IN_THREADS\\",[39m
+[32m-   \\"274877906944\\",[39m
+[32m-   \\"START_EMBEDDED_ACTIVITIES\\",[39m
+[32m-   \\"549755813888\\",[39m
+[32m-   \\"MODERATE_MEMBERS\\",[39m
+[32m-   \\"1099511627776\\",[39m
+[32m-   \\"MANAGE_EVENTS\\",[39m
+[32m-   \\"8589934592\\",[39m
+[32m-   \\"USE_PRIVATE_THREADS\\",[39m
+[32m-   \\"8589934593\\",[39m
+[32m-   \\"USE_PUBLIC_THREADS\\",[39m
+[32m-   \\"8589934594\\",[39m
+[31m+   Object {},[39m
+[2m  ][22m",
   "pass": false,
   "testName": "setRolePermission",
 }
@@ -280,100 +262,98 @@ Object {
 
 exports[`testing setRolePermission function should return false due to invalid permission parameter (undefined) 1`] = `
 Object {
-  "message": "    
-    [32m- Expected[39m
-    [31m+ Received[39m
-    
-    [2m  Array [[22m
-    [32m-   \\"1\\",[39m
-    [32m-   \\"2\\",[39m
-    [32m-   \\"4\\",[39m
-    [32m-   \\"8\\",[39m
-    [32m-   \\"16\\",[39m
-    [32m-   \\"32\\",[39m
-    [32m-   \\"64\\",[39m
-    [32m-   \\"128\\",[39m
-    [32m-   \\"256\\",[39m
-    [32m-   \\"512\\",[39m
-    [32m-   \\"1024\\",[39m
-    [32m-   \\"2048\\",[39m
-    [32m-   \\"4096\\",[39m
-    [32m-   \\"8192\\",[39m
-    [32m-   \\"16384\\",[39m
-    [32m-   \\"32768\\",[39m
-    [32m-   \\"65536\\",[39m
-    [32m-   \\"131072\\",[39m
-    [32m-   \\"262144\\",[39m
-    [32m-   \\"524288\\",[39m
-    [32m-   \\"1048576\\",[39m
-    [32m-   \\"2097152\\",[39m
-    [32m-   \\"4194304\\",[39m
-    [32m-   \\"8388608\\",[39m
-    [32m-   \\"16777216\\",[39m
-    [32m-   \\"33554432\\",[39m
-    [32m-   \\"67108864\\",[39m
-    [32m-   \\"134217728\\",[39m
-    [32m-   \\"268435456\\",[39m
-    [32m-   \\"536870912\\",[39m
-    [32m-   \\"1073741824\\",[39m
-    [32m-   \\"2147483648\\",[39m
-    [32m-   \\"CREATE_INSTANT_INVITE\\",[39m
-    [32m-   \\"KICK_MEMBERS\\",[39m
-    [32m-   \\"BAN_MEMBERS\\",[39m
-    [32m-   \\"ADMINISTRATOR\\",[39m
-    [32m-   \\"MANAGE_CHANNELS\\",[39m
-    [32m-   \\"MANAGE_GUILD\\",[39m
-    [32m-   \\"ADD_REACTIONS\\",[39m
-    [32m-   \\"VIEW_AUDIT_LOG\\",[39m
-    [32m-   \\"VIEW_CHANNEL\\",[39m
-    [32m-   \\"SEND_MESSAGES\\",[39m
-    [32m-   \\"SEND_TTS_MESSAGES\\",[39m
-    [32m-   \\"MANAGE_MESSAGES\\",[39m
-    [32m-   \\"EMBED_LINKS\\",[39m
-    [32m-   \\"ATTACH_FILES\\",[39m
-    [32m-   \\"READ_MESSAGE_HISTORY\\",[39m
-    [32m-   \\"MENTION_EVERYONE\\",[39m
-    [32m-   \\"USE_EXTERNAL_EMOJIS\\",[39m
-    [32m-   \\"CONNECT\\",[39m
-    [32m-   \\"SPEAK\\",[39m
-    [32m-   \\"MUTE_MEMBERS\\",[39m
-    [32m-   \\"DEAFEN_MEMBERS\\",[39m
-    [32m-   \\"MOVE_MEMBERS\\",[39m
-    [32m-   \\"USE_VAD\\",[39m
-    [32m-   \\"PRIORITY_SPEAKER\\",[39m
-    [32m-   \\"CHANGE_NICKNAME\\",[39m
-    [32m-   \\"MANAGE_NICKNAMES\\",[39m
-    [32m-   \\"MANAGE_ROLES\\",[39m
-    [32m-   \\"MANAGE_WEBHOOKS\\",[39m
-    [32m-   \\"STREAM\\",[39m
-    [32m-   \\"VIEW_GUILD_INSIGHTS\\",[39m
-    [32m-   \\"MANAGE_EMOJIS_AND_STICKERS\\",[39m
-    [32m-   \\"USE_APPLICATION_COMMANDS\\",[39m
-    [32m-   \\"REQUEST_TO_SPEAK\\",[39m
-    [32m-   \\"4294967296\\",[39m
-    [32m-   \\"MANAGE_THREADS\\",[39m
-    [32m-   \\"17179869184\\",[39m
-    [32m-   \\"CREATE_PUBLIC_THREADS\\",[39m
-    [32m-   \\"34359738368\\",[39m
-    [32m-   \\"CREATE_PRIVATE_THREADS\\",[39m
-    [32m-   \\"68719476736\\",[39m
-    [32m-   \\"USE_EXTERNAL_STICKERS\\",[39m
-    [32m-   \\"137438953472\\",[39m
-    [32m-   \\"SEND_MESSAGES_IN_THREADS\\",[39m
-    [32m-   \\"274877906944\\",[39m
-    [32m-   \\"START_EMBEDDED_ACTIVITIES\\",[39m
-    [32m-   \\"549755813888\\",[39m
-    [32m-   \\"MODERATE_MEMBERS\\",[39m
-    [32m-   \\"1099511627776\\",[39m
-    [32m-   \\"MANAGE_EVENTS\\",[39m
-    [32m-   \\"8589934592\\",[39m
-    [32m-   \\"USE_PRIVATE_THREADS\\",[39m
-    [32m-   \\"8589934593\\",[39m
-    [32m-   \\"USE_PUBLIC_THREADS\\",[39m
-    [32m-   \\"8589934594\\",[39m
-    [31m+   Object {},[39m
-    [2m  ][22m
-",
+  "message": "[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  Array [[22m
+[32m-   \\"1\\",[39m
+[32m-   \\"2\\",[39m
+[32m-   \\"4\\",[39m
+[32m-   \\"8\\",[39m
+[32m-   \\"16\\",[39m
+[32m-   \\"32\\",[39m
+[32m-   \\"64\\",[39m
+[32m-   \\"128\\",[39m
+[32m-   \\"256\\",[39m
+[32m-   \\"512\\",[39m
+[32m-   \\"1024\\",[39m
+[32m-   \\"2048\\",[39m
+[32m-   \\"4096\\",[39m
+[32m-   \\"8192\\",[39m
+[32m-   \\"16384\\",[39m
+[32m-   \\"32768\\",[39m
+[32m-   \\"65536\\",[39m
+[32m-   \\"131072\\",[39m
+[32m-   \\"262144\\",[39m
+[32m-   \\"524288\\",[39m
+[32m-   \\"1048576\\",[39m
+[32m-   \\"2097152\\",[39m
+[32m-   \\"4194304\\",[39m
+[32m-   \\"8388608\\",[39m
+[32m-   \\"16777216\\",[39m
+[32m-   \\"33554432\\",[39m
+[32m-   \\"67108864\\",[39m
+[32m-   \\"134217728\\",[39m
+[32m-   \\"268435456\\",[39m
+[32m-   \\"536870912\\",[39m
+[32m-   \\"1073741824\\",[39m
+[32m-   \\"2147483648\\",[39m
+[32m-   \\"CREATE_INSTANT_INVITE\\",[39m
+[32m-   \\"KICK_MEMBERS\\",[39m
+[32m-   \\"BAN_MEMBERS\\",[39m
+[32m-   \\"ADMINISTRATOR\\",[39m
+[32m-   \\"MANAGE_CHANNELS\\",[39m
+[32m-   \\"MANAGE_GUILD\\",[39m
+[32m-   \\"ADD_REACTIONS\\",[39m
+[32m-   \\"VIEW_AUDIT_LOG\\",[39m
+[32m-   \\"VIEW_CHANNEL\\",[39m
+[32m-   \\"SEND_MESSAGES\\",[39m
+[32m-   \\"SEND_TTS_MESSAGES\\",[39m
+[32m-   \\"MANAGE_MESSAGES\\",[39m
+[32m-   \\"EMBED_LINKS\\",[39m
+[32m-   \\"ATTACH_FILES\\",[39m
+[32m-   \\"READ_MESSAGE_HISTORY\\",[39m
+[32m-   \\"MENTION_EVERYONE\\",[39m
+[32m-   \\"USE_EXTERNAL_EMOJIS\\",[39m
+[32m-   \\"CONNECT\\",[39m
+[32m-   \\"SPEAK\\",[39m
+[32m-   \\"MUTE_MEMBERS\\",[39m
+[32m-   \\"DEAFEN_MEMBERS\\",[39m
+[32m-   \\"MOVE_MEMBERS\\",[39m
+[32m-   \\"USE_VAD\\",[39m
+[32m-   \\"PRIORITY_SPEAKER\\",[39m
+[32m-   \\"CHANGE_NICKNAME\\",[39m
+[32m-   \\"MANAGE_NICKNAMES\\",[39m
+[32m-   \\"MANAGE_ROLES\\",[39m
+[32m-   \\"MANAGE_WEBHOOKS\\",[39m
+[32m-   \\"STREAM\\",[39m
+[32m-   \\"VIEW_GUILD_INSIGHTS\\",[39m
+[32m-   \\"MANAGE_EMOJIS_AND_STICKERS\\",[39m
+[32m-   \\"USE_APPLICATION_COMMANDS\\",[39m
+[32m-   \\"REQUEST_TO_SPEAK\\",[39m
+[32m-   \\"4294967296\\",[39m
+[32m-   \\"MANAGE_THREADS\\",[39m
+[32m-   \\"17179869184\\",[39m
+[32m-   \\"CREATE_PUBLIC_THREADS\\",[39m
+[32m-   \\"34359738368\\",[39m
+[32m-   \\"CREATE_PRIVATE_THREADS\\",[39m
+[32m-   \\"68719476736\\",[39m
+[32m-   \\"USE_EXTERNAL_STICKERS\\",[39m
+[32m-   \\"137438953472\\",[39m
+[32m-   \\"SEND_MESSAGES_IN_THREADS\\",[39m
+[32m-   \\"274877906944\\",[39m
+[32m-   \\"START_EMBEDDED_ACTIVITIES\\",[39m
+[32m-   \\"549755813888\\",[39m
+[32m-   \\"MODERATE_MEMBERS\\",[39m
+[32m-   \\"1099511627776\\",[39m
+[32m-   \\"MANAGE_EVENTS\\",[39m
+[32m-   \\"8589934592\\",[39m
+[32m-   \\"USE_PRIVATE_THREADS\\",[39m
+[32m-   \\"8589934593\\",[39m
+[32m-   \\"USE_PUBLIC_THREADS\\",[39m
+[32m-   \\"8589934594\\",[39m
+[31m+   Object {},[39m
+[2m  ][22m",
   "pass": false,
   "testName": "setRolePermission",
 }
@@ -381,10 +361,8 @@ Object {
 
 exports[`testing setRolePermission function should return false due to not found role 1`] = `
 Object {
-  "message": "    
-    expected: role with id 123
-    received: null
-",
+  "message": "expected: role with id 123
+received: null",
   "pass": false,
   "testName": "setRolePermission",
 }

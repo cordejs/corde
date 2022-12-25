@@ -2,10 +2,8 @@
 
 exports[`testing matchEmbed function should get failed test due to bot returned equal messages that matches isNot(true) 1`] = `
 Object {
-  "message": "    
-    expected: embed message from bot do not match with expectation
-    received: both returned and expectation embed messages matches
-",
+  "message": "expected: embed message from bot do not match with expectation
+received: both returned and expectation embed messages matches",
   "pass": false,
   "testName": "matchEmbed",
 }
@@ -20,10 +18,8 @@ Object {
 
 exports[`testing matchEmbed function should return a failed test due to invalid parameter (null) 1`] = `
 Object {
-  "message": "    
-    expected: parameter to be an object of type IMessageEmbed 
-    received: null
-",
+  "message": "expected: parameter to be an object of type IMessageEmbed 
+received: null",
   "pass": false,
   "testName": "matchEmbed",
 }

@@ -2,10 +2,8 @@
 
 exports[`testing setRoleHoist function should fail due to no role hoist was not updated 1`] = `
 Object {
-  "message": "    
-    expected: hoist to be false
-    received: role hoist was not updated
-",
+  "message": "expected: hoist to be false
+received: role hoist was not updated",
   "pass": false,
   "testName": "setRoleHoist",
 }
@@ -13,10 +11,8 @@ Object {
 
 exports[`testing setRoleHoist function should fail due to undefined roleIdentifier 1`] = `
 Object {
-  "message": "    
-    expected: hoist to be true
-    received: role hoist was not updated
-",
+  "message": "expected: hoist to be true
+received: role hoist was not updated",
   "pass": false,
   "testName": "setRoleHoist",
 }
@@ -24,9 +20,7 @@ Object {
 
 exports[`testing setRoleHoist function should return a failed test due to failure in message sending 1`] = `
 Object {
-  "message": "    
-    can not send message to channel x
-",
+  "message": "can not send message to channel x",
   "pass": false,
   "testName": "setRoleHoist",
 }
@@ -34,10 +28,8 @@ Object {
 
 exports[`testing setRoleHoist function should return a failed test due to hoist should not change (isNot true) 1`] = `
 Object {
-  "message": "    
-    expected: hoist to not be true
-    received: true
-",
+  "message": "expected: hoist to not be true
+received: true",
   "pass": false,
   "testName": "setRoleHoist",
 }
@@ -45,10 +37,8 @@ Object {
 
 exports[`testing setRoleHoist function should return a not passed test due expected name did not match to received 1`] = `
 Object {
-  "message": "    
-    expected: hoist to be false
-    received: true
-",
+  "message": "expected: hoist to be false
+received: true",
   "pass": false,
   "testName": "setRoleHoist",
 }
@@ -56,10 +46,8 @@ Object {
 
 exports[`testing setRoleHoist function should return false due to invalid hoist parameter (object) 1`] = `
 Object {
-  "message": "    
-    expect: hoist parameter to be of boolean type
-    received: object
-",
+  "message": "expect: hoist parameter to be of boolean type
+received: object",
   "pass": false,
   "testName": "setRoleHoist",
 }
@@ -67,10 +55,8 @@ Object {
 
 exports[`testing setRoleHoist function should return false due to invalid hoist parameter (undefined) 1`] = `
 Object {
-  "message": "    
-    expected: hoist option to be true or false
-    received: undefined
-",
+  "message": "expected: hoist option to be true or false
+received: undefined",
   "pass": false,
   "testName": "setRoleHoist",
 }
@@ -78,10 +64,8 @@ Object {
 
 exports[`testing setRoleHoist function should return false due to not found role 1`] = `
 Object {
-  "message": "    
-    expected: role with id 123
-    received: null
-",
+  "message": "expected: role with id 123
+received: null",
   "pass": false,
   "testName": "setRoleHoist",
 }

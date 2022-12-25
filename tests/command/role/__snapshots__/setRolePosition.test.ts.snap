@@ -2,10 +2,8 @@
 
 exports[`testing ToSetRolePosition operation should fail due to newPosition is not a number 1`] = `
 Object {
-  "message": "    
-    expected: position option to be a number
-    received: string
-",
+  "message": "expected: position option to be a number
+received: string",
   "pass": false,
   "testName": "setRolePosition",
 }
@@ -13,10 +11,8 @@ Object {
 
 exports[`testing ToSetRolePosition operation should fail due to undefined roleIdentifier 1`] = `
 Object {
-  "message": "    
-    expected: role position to change to 1
-    received: position didn't change
-",
+  "message": "expected: role position to change to 1
+received: position didn't change",
   "pass": false,
   "testName": "setRolePosition",
 }
@@ -31,10 +27,8 @@ Object {
 
 exports[`testing ToSetRolePosition operation should not find a role and must return a failed test (isNot false) 1`] = `
 Object {
-  "message": "    
-    expected: position to be >= 0 and <= 1 (max value possible)
-    received: 2
-",
+  "message": "expected: position to be >= 0 and <= 1 (max value possible)
+received: 2",
   "pass": false,
   "testName": "setRolePosition",
 }
@@ -42,10 +36,8 @@ Object {
 
 exports[`testing ToSetRolePosition operation should not find a role and must return a failed test (isNot true) 1`] = `
 Object {
-  "message": "    
-    expected: position to be >= 0 and <= 1 (max value possible)
-    received: 2
-",
+  "message": "expected: position to be >= 0 and <= 1 (max value possible)
+received: 2",
   "pass": false,
   "testName": "setRolePosition",
 }
@@ -53,10 +45,8 @@ Object {
 
 exports[`testing ToSetRolePosition operation should not find a role and return a failed report 1`] = `
 Object {
-  "message": "    
-    expected: role with id 123
-    received: null
-",
+  "message": "expected: role with id 123
+received: null",
   "pass": false,
   "testName": "setRolePosition",
 }
@@ -64,10 +54,8 @@ Object {
 
 exports[`testing ToSetRolePosition operation should return a failed report due to timeout and isNot false 1`] = `
 Object {
-  "message": "    
-    expected: role position to change to -2
-    received: 1
-",
+  "message": "expected: role position to change to -2
+received: 1",
   "pass": false,
   "testName": "setRolePosition",
 }
@@ -75,10 +63,8 @@ Object {
 
 exports[`testing ToSetRolePosition operation should return a failed report position set was different than expected 1`] = `
 Object {
-  "message": "    
-    expected: role position to change to -2
-    received: 1
-",
+  "message": "expected: role position to change to -2
+received: 1",
   "pass": false,
   "testName": "setRolePosition",
 }
@@ -86,10 +72,8 @@ Object {
 
 exports[`testing ToSetRolePosition operation should return a failed test due to failure in message sending 1`] = `
 Object {
-  "message": "    
-    expected: role position to change to -1
-    received: 1
-",
+  "message": "expected: role position to change to -1
+received: 1",
   "pass": false,
   "testName": "setRolePosition",
 }
@@ -97,10 +81,8 @@ Object {
 
 exports[`testing ToSetRolePosition operation should return a not passed test due to new position be higher than the permitted (isNot false) 1`] = `
 Object {
-  "message": "    
-    expected: position to be >= 0 and <= 1 (max value possible)
-    received: 2
-",
+  "message": "expected: position to be >= 0 and <= 1 (max value possible)
+received: 2",
   "pass": false,
   "testName": "setRolePosition",
 }

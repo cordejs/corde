@@ -9,10 +9,8 @@ Object {
 
 exports[`testing deleteRole function isNot false should fail due to inexistent role 1`] = `
 Object {
-  "message": "    
-    expected: role with id 123
-    received: null
-",
+  "message": "expected: role with id 123
+received: null",
   "pass": false,
   "testName": "deleteRole",
 }
@@ -20,10 +18,8 @@ Object {
 
 exports[`testing deleteRole function isNot false should fail due to roleIdentifier null 1`] = `
 Object {
-  "message": "    
-    expected: data to identifier the role (id or name)
-    received: null
-",
+  "message": "expected: data to identifier the role (id or name)
+received: null",
   "pass": false,
   "testName": "deleteRole",
 }
@@ -31,9 +27,7 @@ Object {
 
 exports[`testing deleteRole function isNot false should get timeout when trying to delete the role 1`] = `
 Object {
-  "message": "    
-    expected: role undefined to be deleted
-",
+  "message": "expected: role undefined to be deleted",
   "pass": false,
   "testName": "deleteRole",
 }
@@ -41,9 +35,7 @@ Object {
 
 exports[`testing deleteRole function isNot false should return a failed report for a no deleted role 1`] = `
 Object {
-  "message": "    
-    expected: role undefined to be deleted
-",
+  "message": "expected: role undefined to be deleted",
   "pass": false,
   "testName": "deleteRole",
 }
@@ -51,9 +43,7 @@ Object {
 
 exports[`testing deleteRole function isNot false should return a failed test due to failure in message sending 1`] = `
 Object {
-  "message": "    
-    can not send message to channel x
-",
+  "message": "can not send message to channel x",
   "pass": false,
   "testName": "deleteRole",
 }
