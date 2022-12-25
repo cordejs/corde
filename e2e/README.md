@@ -9,7 +9,7 @@ to execute all tests run in terminal:
 yarn e2e
 ```
 
-Repeting, this is a slower testing process, to testing only what you want run:
+Repeating, this is a slower testing process, to testing only what you want run:
 
 ```shell
 yarn jest ./e2e/toReturn --config=./e2e/jest.config.ts
@@ -26,9 +26,9 @@ Take the following structure as example:
     │     ├── bot_case1.spec.ts     # Naming convention for test file
     └── toReturn.case1.test.ts      # Test case for Jest to run
 
-About the others files, they can be decribed as:
+About the others files, they can be described as:
 
-| File            | Desription                                                                     |
+| File            | Description                                                                    |
 | --------------- | ------------------------------------------------------------------------------ |
 | bot.js          | Contains a mock to be used as example of test                                  |
 | cliRunner.ts    | Execute all commands of corde in a spawned terminal and collect it's responses |
