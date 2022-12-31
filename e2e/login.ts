@@ -5,7 +5,7 @@
 
 import { login } from "./@bot";
 
-login(true)
+login(false)
   .then(() => {
     console.log("Bot connected");
   })

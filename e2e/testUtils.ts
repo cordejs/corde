@@ -63,7 +63,7 @@ namespace testUtils {
       // con += " ";
       // con += testUtils.env();
 
-      console.log(`${chalk.bgYellow.grey(" RUNNING ")}: ${chalk.magenta(con)}`);
+      process.stdout.write(`Running: ${chalk.magenta(con)}`);
 
       const child = childProcess.exec(con, (_error, stdout, stderr) => {
         resolve({ stdout: removeANSIColorStyle(stdout), exitCode: child.exitCode, stderr });

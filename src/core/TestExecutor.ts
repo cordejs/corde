@@ -121,7 +121,7 @@ export class TestExecutor {
     // log all information from _logUpdate using "logger"
     // I don't know why or how. Just figure out after a long fucking
     // time trying, that this is the only thing that worked.
-    // do not print values using `this._logUpdate.persist()` (bad thing gonna happen)
+    // do not print values using `this._logUpdate.persist()` (bad things gonna happen)
     this.logAndPersistHookErrors(beforeAllErrors);
     this.logAndPersistHookErrors(afterAllErrors);
 

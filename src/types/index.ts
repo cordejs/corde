@@ -28,7 +28,7 @@ export type Constructor<T> = new (...args: any[]) => T;
 export interface IDisposable {
   /**
    * Performs application-defined tasks associated with freeing,
-   * releasing, or resetting unmanaged resources.
+   * releasing, or resetting resources.
    */
   dispose(...args: any[]): Promise<void> | void;
 }

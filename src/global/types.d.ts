@@ -1187,7 +1187,6 @@ declare namespace corde {
      * // Works
      * test("test 1", () => {
      *    const message = await corde.bot.send("msg");
-     *    expect(`editMessage ${message.id}`).toEditMessage({ id: message.id }, "newValue");
      * });
      *
      * // Do not Works

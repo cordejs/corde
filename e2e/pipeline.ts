@@ -24,6 +24,7 @@ import { generator } from "./tests";
 import testUtils from "./testUtils";
 import { CliOutput, ITestFile } from "./types";
 import * as childProcess from "child_process";
+import { Timer } from "../src/utils/Timer";
 
 function logoutBot() {
   console.log(chalk.cyanBright("logout bot"));
@@ -58,23 +59,18 @@ async function main() {
       .slice(process.argv.indexOf("--tests"))
       .filter((el: any) => !isNaN(el));
 
+    const timer = new Timer();
     for (const [fileObj, testFn] of generator) {
       if (selectedTests.length === 0 || selectedTests.includes(fileObj.id.toString())) {
+        timer.start();
         const output = await testFn();
-        console.log(chalk.cyanBright(`Output of: ${fileObj.testFile}\n`));
-
-        if (output.stdout.trim()) {
-          console.log(removeDuplicates(output.stdout));
-        }
-
-        if (output.stderr.trim()) {
-          console.error(removeDuplicates(output.stderr));
-        }
+        //console.log(chalk.cyanBright(`Output of: ${fileObj.testFile}\n`));
 
         //testUtils.saveOutput(fileObj.testFile, output);
 
-        if (testsPass(output, fileObj)) {
+        if (testFailed(output, fileObj)) {
           _testsPass = false;
+          process.stdout.write(`${chalk.red(" Failed")}\n`);
           logoutBot();
           console.log(
             `${chalk.bgRed.black(" FAIL ")} Exit code: ${output.exitCode}. Expected: ${
@@ -82,6 +78,8 @@ async function main() {
             }`,
           );
           return 1;
+        } else {
+          process.stdout.write(`${chalk.green(" OK")}\n`);
         }
       }
     }
@@ -110,7 +108,7 @@ function removeDuplicates(val: string) {
     .toString();
 }
 
-function testsPass(output: CliOutput, fileObj: ITestFile) {
+function testFailed(output: CliOutput, fileObj: ITestFile) {
   return output.exitCode !== fileObj.exitCodeExpectation;
 }
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable no-console */
 // Corde reader fail in import the test file because Node.js can not
 // import the submodule. To avoid the problem, this file is here is root of the project,
@@ -13,23 +14,33 @@ import * as _commands from "./commands";
 import { ICommand } from "./types";
 
 export const bot = new Client({
-  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.DIRECT_MESSAGES, Intents.FLAGS.GUILD_MESSAGES],
 });
 
 export async function sendMessage(message: string) {
   if (!config.channelId) {
     return null;
   }
-  const channel = bot.channels.cache.get(config.channelId);
 
-  if (channel === undefined) {
-    throw new Error("Channels not loaded");
+  const channel = getGuild().channels.cache.get(config.channelId);
+
+  if (!channel) {
+    throw new Error(`Channel ${config.channelId} was not loaded`);
   }
 
   if (channel.isText()) {
     return await channel.send(message);
   }
   return null;
+}
+
+export function getGuild() {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const guild = bot.guilds.cache.get(config.guildId!);
+  if (!guild) {
+    throw new Error(`Guild ${config.guildId} not found`);
+  }
+  return guild;
 }
 
 /**
@@ -102,16 +113,20 @@ bot.on("messageCreate", async (message) => {
   }
 });
 
-async function handleCommands(message: Message, command: string, args: string[]) {
+async function handleCommands(message: Message, commandName: string, args: string[]) {
   // TODO: Refactor this. '-'
 
-  const con = _commands[command as keyof typeof _commands] as ICommand;
+  const con = getCommand(commandName);
   if (con) {
     return await con.action(message, ...args);
   }
-  const errorMessage = "Command not found for: " + command;
+  const errorMessage = "Command not found for: " + commandName;
   //await message.channel.send(errorMessage);
   console.error(errorMessage);
+}
+
+function getCommand(commandName: string) {
+  return _commands[commandName as keyof typeof _commands] as ICommand;
 }
 
 export function wait(time: number) {

@@ -3,10 +3,10 @@ import { ICommand } from "../types";
 import { fetchMessageById } from "../utils";
 
 export const editMessage: ICommand = {
-  action: async (msg: Message, msgId: string, reaction: string) => {
+  action: async (msg: Message, msgId: string, newMsg: string) => {
     const message = await fetchMessageById(msg, msgId);
     if (message) {
-      await message.react(reaction);
+      await message.edit(newMsg);
     }
   },
 };
