@@ -22,7 +22,7 @@ import {
   Nullable,
   VoidLikeFunction,
 } from "../types";
-import { Timer } from "../utils/Timer";
+import { Stopwatch } from "../utils/Stopwatch";
 import { stringIsNullOrEmpty } from "../utils/stringIsNullOrEmpty";
 import { LogUpdate } from "../utils/LogUpdate";
 import { TestFile } from "./TestFile";
@@ -62,14 +62,14 @@ export class TestExecutor {
 
   async runTestsAndPrint(testFiles: TestFile[]): Promise<IRunnerReport> {
     this.initReport();
-    const testsTimer = new Timer();
-    testsTimer.start();
+    const stopwatch = new Stopwatch();
+    stopwatch.start();
 
     for (const testFile of testFiles) {
       await this.executeTestFile(testFile);
     }
 
-    const testsDiff = testsTimer.stop();
+    const testsDiff = stopwatch.stop();
 
     return {
       testTimer: testsDiff[0],
@@ -85,7 +85,7 @@ export class TestExecutor {
       return;
     }
 
-    const testFileTimer = new Timer();
+    const testFileTimer = new Stopwatch();
     this._semiReport.totalTestFiles++;
 
     testFileTimer.start();
@@ -173,8 +173,8 @@ export class TestExecutor {
   }
 
   private async executeTest(test: ITest, testFile: TestFile, group?: Group) {
-    const testTimer = new Timer();
-    testTimer.start();
+    const stopwatch = new Stopwatch();
+    stopwatch.start();
     let logPosition = 0;
 
     const testName = await test.toResolveName();
@@ -189,7 +189,7 @@ export class TestExecutor {
       this._semiReport.totalEmptyTests++;
     }
 
-    const testDiff = testTimer.stop();
+    const testDiff = stopwatch.stop();
 
     const testNameLabel = this.testReportLabelFunction(report);
 

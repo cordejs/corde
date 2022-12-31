@@ -24,7 +24,7 @@ import { generator } from "./tests";
 import testUtils from "./testUtils";
 import { CliOutput, ITestFile } from "./types";
 import * as childProcess from "child_process";
-import { Timer } from "../src/utils/Timer";
+import { Stopwatch } from "../src/utils/Stopwatch";
 
 function logoutBot() {
   console.log(chalk.cyanBright("logout bot"));
@@ -59,7 +59,7 @@ async function main() {
       .slice(process.argv.indexOf("--tests"))
       .filter((el: any) => !isNaN(el));
 
-    const timer = new Timer();
+    const timer = new Stopwatch();
     for (const [fileObj, testFn] of generator) {
       if (selectedTests.length === 0 || selectedTests.includes(fileObj.id.toString())) {
         timer.start();
