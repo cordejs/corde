@@ -61,7 +61,7 @@ declare namespace corde {
   type Stream = import("stream").Stream;
   type GuildCreateChannelOptions = import("discord.js").GuildChannelCreateOptions;
   type GuildCreateOptions = import("discord.js").GuildCreateOptions;
-  type BitField<T> = import("discord.js").BitField<T>;
+  type BitField<T extends string> = import("discord.js").BitField<T>;
   type Permission = import("discord.js").PermissionString;
 
   export type FunctionOnly<T> = {

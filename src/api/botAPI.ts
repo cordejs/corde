@@ -3,6 +3,7 @@ import {
   CreateRoleOptions,
   DMChannel,
   Guild,
+  MappedGuildChannelTypes,
   Message,
   MessageOptions,
   NewsChannel,
@@ -271,16 +272,18 @@ export class BotAPI implements corde.IBot {
     return this._bot.getRoles().find((r) => r.id === data.id || r.name === data.name);
   }
 
-  private _createChannel(
+  private _createChannel<T extends keyof MappedGuildChannelTypes>(
     options: string | corde.ICreateChannelOptionsSimple,
-    type?: corde.ICreateChannelOptions["type"],
-  ) {
+    type?: T,
+  ): Promise<MappedGuildChannelTypes[T]> {
     this._throwErrorIfNotLogged("Could not create the channel while corde bot isn't connected yet");
 
     if (typeof options === "string") {
-      return this.guild.channels.create(options, { type });
+      return this.guild.channels.create(options, { type }) as Promise<MappedGuildChannelTypes[T]>;
     }
-    return this.guild.channels.create(options.name, { ...options, type });
+    return this.guild.channels.create(options.name, { ...options, type }) as Promise<
+      MappedGuildChannelTypes[T]
+    >;
   }
 
   private _throwErrorIfNotLogged(message = "Corde is not connected yet to fetch any data") {

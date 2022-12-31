@@ -36,6 +36,7 @@ import {
   User,
   VoiceState,
   MessageReaction,
+  VoiceChannel,
 } from "discord.js";
 import { once } from "events";
 import { ObjectLike, Optional } from "../types";
@@ -396,7 +397,7 @@ export class Events implements corde.IOnceEvents, ClientEventsFn {
   /**
    * @internal
    */
-  onWebhookUpdate(fn: (channel: TextChannel | NewsChannel) => void) {
+  onWebhookUpdate(fn: (channel: NewsChannel | TextChannel | VoiceChannel) => void) {
     this._client.on("webhookUpdate", fn);
   }
 
