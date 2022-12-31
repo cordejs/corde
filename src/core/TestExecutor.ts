@@ -350,9 +350,8 @@ export class TestExecutor {
 
     if (error instanceof Error) {
       return {
-        message: error.message,
+        message: this.getStackWithLimit(STACK_TRACE_COUNT_LIMIT, error.stack),
         pass: false,
-        trace: this.getStackWithLimit(STACK_TRACE_COUNT_LIMIT, error.stack),
         isHandledError: false,
       };
     }
