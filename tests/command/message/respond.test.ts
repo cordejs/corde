@@ -117,6 +117,38 @@ describe(`testing ${testName} function`, () => {
     expect(report).toEqual(passReport);
   });
 
+  it("should get message from another channel", async () => {
+    const events = new MockEvents(cordeClient, mockDiscord);
+    const channelId = "123";
+    events.mockOnceMessageCreateImpl((options) => {
+      if (options.channel.id === channelId) {
+        return Promise.resolve(mockDiscord.message);
+      }
+      throw new Error();
+    });
+
+    const report = await debugCon()
+      .should.inChannel(channelId)
+      .respond(mockDiscord.message.content);
+    expect(report).toEqual(passReport);
+  });
+
+  it("should fail in get message from another channel", async () => {
+    const events = new MockEvents(cordeClient, mockDiscord);
+    const channelId = "123";
+    events.mockOnceMessageCreateImpl((options) => {
+      if (options.channel.id !== channelId) {
+        return Promise.resolve(mockDiscord.message);
+      }
+      throw new Error();
+    });
+
+    const report = await debugCon()
+      .should.inChannel(channelId)
+      .respond(mockDiscord.message.content);
+    expect(report).toEqual(failReport);
+  });
+
   it("should get fail test due to bot returned different messages (expect primitive and returned embed)", async () => {
     mockDiscord.message.embeds.push(mockDiscord.messageEmbed);
 

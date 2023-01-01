@@ -203,7 +203,9 @@ export class MockEvents {
   /**
    * @internal
    */
-  mockOnceMessageCreateImpl(fn?: (...args: any[]) => any) {
+  mockOnceMessageCreateImpl(
+    fn?: (options?: corde.IMessageContentEvent) => Promise<Message<boolean>>,
+  ) {
     const event = eventFactory.findOrConstruct(MessageCreate, this._corde.client);
     this._corde.client.options.intents = Intents.resolve(ALL_INTENTS);
     event.once = jest.fn().mockImplementation(fn);

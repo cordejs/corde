@@ -4,31 +4,30 @@ import { getStackTrace } from "../utils/getStackTrace";
 import { isNullOrUndefined } from "../utils/isNullOrUndefined";
 import { any } from "../expect/asymmetricMatcher";
 import * as matchers from "./matches";
+import * as matchersUtils from "./matches/utilities";
 import runtime from "../core/runtime";
 import { ICordeBot, ITestReport } from "../types";
 import { CommandState } from "./matches/CommandState";
-
-interface ICreateMatcherParam {
-  matcher: string;
-  isNot: boolean;
-  commandName?: string | boolean | number;
-  channelId?: string;
-  guildId?: string;
-  isDebug: boolean;
-  isCascade?: boolean;
-  cordeBot?: ICordeBot;
-  trace?: string;
-  mustSendCommand?: boolean;
-}
+import { object } from "../utils/object";
+import { ICreateMatcherParam } from "./types";
 
 interface IMatcher {
   (props: CommandState, ...args: any[]): Promise<ITestReport>;
 }
 
-type KeyOfMatcher = keyof typeof matchers;
+interface IUtilityMatcher {
+  (props: CommandState, ...args: any[]): CommandState;
+}
 
-function pickFn(name: KeyOfMatcher) {
+type KeyOfMatcher = keyof typeof matchers;
+type KeyOfMatcherUtilities = keyof typeof matchersUtils;
+
+function pickMatcher(name: KeyOfMatcher) {
   return matchers[name] as any as IMatcher;
+}
+
+function pickUtilityMatcher(name: KeyOfMatcherUtilities) {
+  return matchersUtils[name] as any as IUtilityMatcher;
 }
 
 function buildAndMatcherFunctions(params: ICreateMatcherParam) {
@@ -144,6 +143,7 @@ function createMatcherFn(params: ICreateMatcherParam) {
     cordeBot,
     guildId,
     mustSendCommand,
+    utility,
   } = params;
   const { testCollector, configs } = runtime;
 
@@ -151,9 +151,7 @@ function createMatcherFn(params: ICreateMatcherParam) {
     throw new Error("command can only be used inside a test(it) closure");
   }
 
-  return (
-    ...args: any[]
-  ): Promise<ITestReport | void | ((...args: any[]) => Promise<ITestReport>)> => {
+  return (...args: any[]) => {
     const trace = getStackTrace(undefined, true, matcher);
     // If someone pass expect.any, we must invoke it to return
     // the Any matcher.
@@ -172,8 +170,6 @@ function createMatcherFn(params: ICreateMatcherParam) {
       return arg;
     });
 
-    const matcherFn = pickFn(matcher as KeyOfMatcher);
-
     let bot = runtime.bot;
 
     if (isDebug) {
@@ -181,18 +177,46 @@ function createMatcherFn(params: ICreateMatcherParam) {
     }
 
     const props = new CommandState({
-      isNot,
+      isNot: isNot ?? false,
       cordeBot: bot,
       command: commandName,
       timeout: configs.commandTimeout,
       guildId: guildId ?? configs.guildId,
       channelId: channelId ?? configs.channelId,
-      testName: matcher,
+      testName: matcher ?? "",
       isCascade: isCascade ?? false,
       mustSendCommand: isNullOrUndefined(mustSendCommand) ? true : !!mustSendCommand,
     });
 
+    if (utility) {
+      const matcherUtilityFn = pickUtilityMatcher(matcher as KeyOfMatcherUtilities);
+      const fnUtility = matcherUtilityFn.bind(props, ...args);
+      const newConfig = fnUtility();
+      const funcs = {
+        not: {},
+      };
+
+      const configs: ICreateMatcherParam = {
+        isNot: newConfig.isNot,
+        commandName: newConfig.command,
+        isCascade: newConfig.isCascade,
+        channelId: newConfig.channelId,
+        guildId: newConfig.guildId,
+        utility: false,
+        isDebug: isDebug,
+        cordeBot: newConfig.cordeBot,
+        mustSendCommand: newConfig.mustSendCommand,
+      };
+
+      injectMatchFunctions(funcs, matchers, configs);
+      injectMatchFunctions(funcs.not, matchers, configs);
+
+      return funcs;
+    }
+
+    const matcherFn = pickMatcher(matcher as KeyOfMatcher);
     const fn = matcherFn.bind(props, ...args);
+
     params.trace = trace;
     return new CommandPromise(async (resolve, reject) => {
       try {
@@ -212,7 +236,21 @@ function handleError(error: any) {
   return error;
 }
 
-function createLocalCommand(isDebug: boolean) {
+function injectMatchFunctions(objToInject: any, functions: any, params?: ICreateMatcherParam) {
+  object.foreachKey(functions, (matcher) => {
+    objToInject[matcher] = createMatcherFn({
+      commandName: params?.commandName ?? "",
+      isDebug: params?.isDebug ?? false,
+      isNot: params?.isNot ?? false,
+      matcher: params?.matcher ?? (matcher as string),
+      channelId: params?.channelId,
+      utility: params?.utility,
+      cordeBot: params?.cordeBot,
+    });
+  });
+}
+
+function createLocalCommand(isDebug: boolean, params?: ICreateMatcherParam) {
   let localCommand: any = {};
 
   localCommand = (commandName: any, channelId?: string, cordeBot?: ICordeBot) => {
@@ -222,22 +260,35 @@ function createLocalCommand(isDebug: boolean) {
       },
     };
 
-    forEachPropsName(matchers, (matcher) => {
+    object.foreachKey(matchersUtils, (matcher) => {
       commandReturn.should[matcher] = createMatcherFn({
-        commandName,
-        isDebug,
-        isNot: false,
-        matcher,
-        channelId,
-        cordeBot,
+        commandName: params?.commandName ?? commandName,
+        isDebug: params?.isDebug ?? isDebug,
+        isNot: params?.isNot ?? false,
+        matcher: params?.matcher ?? matcher,
+        channelId: params?.channelId ?? channelId,
+        utility: params?.utility ?? true,
+        cordeBot: params?.cordeBot ?? cordeBot,
       });
+    });
+
+    object.foreachKey(matchers, (matcher) => {
+      commandReturn.should[matcher] = createMatcherFn({
+        commandName: params?.commandName ?? commandName,
+        isDebug: params?.isDebug ?? isDebug,
+        isNot: params?.isNot ?? false,
+        matcher: params?.matcher ?? matcher,
+        channelId: params?.channelId ?? channelId,
+        cordeBot: params?.cordeBot ?? cordeBot,
+      });
+
       commandReturn.should.not[matcher] = createMatcherFn({
-        commandName,
-        isDebug,
-        isNot: true,
-        matcher,
-        channelId,
-        cordeBot,
+        commandName: params?.commandName ?? commandName,
+        isDebug: params?.isDebug ?? isDebug,
+        isNot: params?.isNot ?? true,
+        matcher: params?.matcher ?? matcher,
+        channelId: params?.channelId ?? channelId,
+        cordeBot: params?.cordeBot ?? cordeBot,
       });
     });
 
@@ -259,6 +310,8 @@ type DebugTypes<T> = {
         message: string;
         trace?: string;
       }>
+    : T[P] extends (...params: any[]) => CommandState
+    ? (...params: Parameters<T[P]>) => DebugTypes<T>
     : T[P] extends Record<string, any>
     ? DebugTypes<T[P]>
     : T[P];
@@ -269,7 +322,7 @@ type MatchersWithNot = {
 } & typeof matchers;
 
 type Matchers = {
-  should: MatchersWithNot;
+  should: MatchersWithNot & typeof matchersUtils;
 };
 
 interface DebugFn {

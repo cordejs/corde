@@ -12,7 +12,6 @@ import { messageUtils } from "./messageUtils";
  */
 export async function respond(this: CommandState, expected: Primitive | corde.IMessageEmbed) {
   const errorReport = messageUtils.validateExpect(this, expected);
-
   if (errorReport) {
     return errorReport;
   }

@@ -22,9 +22,9 @@ export class CommandState {
   readonly timeout?: number;
   readonly testName: string;
   readonly isCascade: boolean;
-  readonly guildId: string | undefined;
   readonly channelIdToSendCommand?: string;
-  readonly channelId: string;
+  guildId: string | undefined;
+  channelId: string;
   readonly mustSendCommand: boolean;
 
   get client() {
@@ -101,6 +101,9 @@ export class CommandState {
   }
 
   getEvent<T>(type: Constructor<T>) {
+    if (!this.client) {
+      throw new Error("Discord.js Client was not initialized. Can not init test event listener");
+    }
     return eventFactory.findOrConstruct(type, this.client);
   }
 
