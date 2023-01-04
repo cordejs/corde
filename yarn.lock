@@ -9587,9 +9587,9 @@ tslint@^6.1.3:
     tsutils "^2.29.0"
 
 tslog@^4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/tslog/-/tslog-4.2.0.tgz#e232d0b6fd448d7bc3838c41d60745cf8097af4e"
-  integrity sha512-dIN3eV6pqxxK+DTuoSZ7UOSMl424EDLuR2C6ZfiPYTEu4szD+8OzX9kJ/98kNKySUC1XjwV8qe54B9EG1+jbIg==
+  version "4.7.1"
+  resolved "https://registry.yarnpkg.com/tslog/-/tslog-4.7.1.tgz#c439a5d900bfa020da5f04b0719acb064a7bee4e"
+  integrity sha512-Ez90j4FKCUp9bBlgPq96aYDUbXRIOxz6Vxn/4Iw2/IiVxLB5wsUVkWfeK4oqdRMoW8qBVJz9oIT+ysjfyIRufw==
 
 tsutils@^2.29.0:
   version "2.29.0"
