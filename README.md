@@ -38,7 +38,7 @@
 
 - [😀 Table of Content](#-table-of-content)
 - [👀 About](#-about)
-- [Documentation](#documentation)
+- [📜 Documentation](#documentation)
 - [🚀 Getting started](#-getting-started)
 
 ## 👀 About
