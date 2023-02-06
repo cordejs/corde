@@ -18,7 +18,7 @@ jobs:
   install-dependencies:
     <<: *work-dir
     docker:
-      - image: circleci/node:14
+      - image: circleci/node:16
     environment:
       HUSKY_SKIP_INSTALL: 1
     steps:
@@ -47,7 +47,7 @@ jobs:
   lint:
     <<: *work-dir
     docker:
-      - image: circleci/node:14
+      - image: circleci/node:16
     steps:
       - *attach-step
       - run:
