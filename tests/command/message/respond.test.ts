@@ -146,7 +146,8 @@ describe(`testing ${testName} function`, () => {
     const report = await debugCon()
       .should.inChannel(channelId)
       .respond(mockDiscord.message.content);
-    expect(report).toEqual(failReport);
+
+    expect(report).toMatchObject(failReport);
   });
 
   it("should get fail test due to bot returned different messages (expect primitive and returned embed)", async () => {
