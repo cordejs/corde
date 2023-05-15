@@ -29,33 +29,25 @@ describe(`testing ${testName} function`, () => {
   });
 
   it("should return error message due to no messageIdentifier (null)", async () => {
-    const report = await debugCon()
-      // @ts-expect-error
-      .should.pinMessage(null);
+    const report = await debugCon().should.pinMessage(null);
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
 
   it("should return error message due to no messageIdentifier (undefined)", async () => {
-    const report = await debugCon()
-      // @ts-expect-error
-      .should.pinMessage(undefined);
+    const report = await debugCon().should.pinMessage(undefined);
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
 
   it("should return a passed test due to isNot true and timeout", async () => {
-    const report = await debugCon()
-      .should.not // @ts-expect-error
-      .pinMessage("");
+    const report = await debugCon().should.not.pinMessage("");
     expect(report).toEqual(passReport);
     expect(report).toMatchSnapshot();
   });
 
   it("should return a failed test due to isNot false and timeout", async () => {
-    const report = await debugCon()
-      .should // @ts-expect-error
-      .pinMessage("1233");
+    const report = await debugCon().should.pinMessage("1233");
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
@@ -73,6 +65,32 @@ describe(`testing ${testName} function`, () => {
     const report = await debugCon().should.pinMessage({ id: "1233" });
 
     expect(report).toEqual(passReport);
+    expect(report).toMatchSnapshot();
+  });
+
+  it("should return a passed test due to message pinned with 'and' keyword", async () => {
+    const events = new MockEvents(cordeClient, mockDiscord);
+    const mock = events.mockOnceMessagePinned(mockDiscord.pinnedMessage);
+
+    const report = await debugCon()
+      .should.pinMessage({ id: "1233" })
+      .and.pinMessage({ id: "1233" });
+
+    expect(report).toEqual(passReport);
+    expect(mock).toBeCalledTimes(2);
+    expect(report).toMatchSnapshot();
+  });
+
+  it("should return a failed test due to message pinned with 'and' keyword using 'not'", async () => {
+    const events = new MockEvents(cordeClient, mockDiscord);
+    const mock = events.mockOnceMessagePinned(mockDiscord.pinnedMessage);
+
+    const report = await debugCon()
+      .should.pinMessage({ id: "1233" })
+      .and.not.pinMessage({ id: "1233" });
+
+    expect(report).toMatchObject(failReport);
+    expect(mock).toBeCalledTimes(2);
     expect(report).toMatchSnapshot();
   });
 

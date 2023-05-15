@@ -67,6 +67,32 @@ describe(`testing ${testName} function`, () => {
     expect(report).toMatchSnapshot();
   });
 
+  it("should get success test due to bot returned equal message with 'and' keyword", async () => {
+    const events = new MockEvents(cordeClient, mockDiscord);
+    const mock = events.mockOnceMessage();
+
+    const report = await debugCon()
+      .should.messageContentContains(mockDiscord.message.content)
+      .and.messageContentContains(mockDiscord.message.content);
+
+    expect(report).toEqual(passReport);
+    expect(mock).toBeCalledTimes(2);
+    expect(report).toMatchSnapshot();
+  });
+
+  it("should get success test due to bot returned equal message with 'and' and 'not' keyword", async () => {
+    const events = new MockEvents(cordeClient, mockDiscord);
+    const mock = events.mockOnceMessage();
+
+    const report = await debugCon()
+      .should.messageContentContains(mockDiscord.message.content)
+      .and.not.messageContentContains(mockDiscord.message.content);
+
+    expect(report).toMatchObject(failReport);
+    expect(mock).toBeCalledTimes(2);
+    expect(report).toMatchSnapshot();
+  });
+
   it("should get success test due to bot returned a contained message", async () => {
     const events = new MockEvents(cordeClient, mockDiscord);
     mockDiscord.message.content = "message to contain";

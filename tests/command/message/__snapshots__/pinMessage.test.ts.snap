@@ -35,6 +35,15 @@ received: message pin = false",
 }
 `;
 
+exports[`testing pinMessage function should return a failed test due to message pinned with 'and' keyword using 'not' 1`] = `
+Object {
+  "message": "expected: to not pin message of id 1233
+received: message pin = false",
+  "pass": false,
+  "testName": "pinMessage",
+}
+`;
+
 exports[`testing pinMessage function should return a passed test due to isNot true and timeout 1`] = `
 Object {
   "pass": true,
@@ -43,6 +52,13 @@ Object {
 `;
 
 exports[`testing pinMessage function should return a passed test due to message pinned 1`] = `
+Object {
+  "pass": true,
+  "testName": "pinMessage",
+}
+`;
+
+exports[`testing pinMessage function should return a passed test due to message pinned with 'and' keyword 1`] = `
 Object {
   "pass": true,
   "testName": "pinMessage",

@@ -68,6 +68,36 @@ describe(`testing ${testName} function`, () => {
     expect(report).toMatchSnapshot();
   });
 
+  it("should return a passed test with isNot = false using 'and' keyword ", async () => {
+    const events = new MockEvents(cordeClient, mockDiscord);
+    const mock = events.mockOnceMessageReactionsAdd();
+
+    cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
+
+    const report = await debugCon()
+      .should.addReaction([mockDiscord.messageReaction.emoji.name])
+      .and.addReaction([mockDiscord.messageReaction.emoji.name]);
+
+    expect(report).toEqual(passReport);
+    expect(mock).toBeCalledTimes(2);
+    expect(report).toMatchSnapshot();
+  });
+
+  it("should return a failed test with isNot = false using 'and' keyword and 'not' keyword", async () => {
+    const events = new MockEvents(cordeClient, mockDiscord);
+    const mock = events.mockOnceMessageReactionsAdd();
+
+    cordeClient.sendTextMessage = jest.fn().mockReturnValue(mockDiscord.message);
+
+    const report = await debugCon()
+      .should.addReaction([mockDiscord.messageReaction.emoji.name])
+      .and.not.addReaction([mockDiscord.messageReaction.emoji.name]);
+
+    expect(report).toMatchObject(failReport);
+    expect(mock).toBeCalledTimes(2);
+    expect(report).toMatchSnapshot();
+  });
+
   it("should return a passed test with isNot = true", async () => {
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessageReactionsAddToReject();

@@ -27,7 +27,7 @@ function debugCon(customCommand?: string, customChannelId?: string, customClient
 function mockEmbedMessage() {
   const mockEvents = new MockEvents(cordeClient, mockDiscord);
   mockDiscord.message.embeds.push(mockDiscord.messageEmbed);
-  mockEvents.mockOnceMessage(mockDiscord.message);
+  return mockEvents.mockOnceMessage(mockDiscord.message);
 }
 
 describe(`testing ${testName} function`, () => {
@@ -50,6 +50,36 @@ describe(`testing ${testName} function`, () => {
     });
 
     expect(report).toEqual(passReport);
+    expect(report).toMatchSnapshot();
+  });
+
+  it("should get success test due to bot returned equal messages that matches with 'and' keyword", async () => {
+    const mock = mockEmbedMessage();
+    const report = await debugCon()
+      .should.matchEmbed({
+        author: mockDiscord.messageEmbed.author,
+      })
+      .and.matchEmbed({
+        author: mockDiscord.messageEmbed.author,
+      });
+
+    expect(report).toEqual(passReport);
+    expect(mock).toBeCalledTimes(2);
+    expect(report).toMatchSnapshot();
+  });
+
+  it("should get failed test due to bot returned equal messages that matches with 'and' and 'not' keywords", async () => {
+    const mock = mockEmbedMessage();
+    const report = await debugCon()
+      .should.matchEmbed({
+        author: mockDiscord.messageEmbed.author,
+      })
+      .and.not.matchEmbed({
+        author: mockDiscord.messageEmbed.author,
+      });
+
+    expect(report).toMatchObject(failReport);
+    expect(mock).toBeCalledTimes(2);
     expect(report).toMatchSnapshot();
   });
 

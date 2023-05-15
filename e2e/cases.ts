@@ -119,7 +119,7 @@ export const testCases: ITestFile[] = [
   },
   {
     id: 19,
-    folder: "toHaveResult",
+    folder: "and",
     testFile: "test1.spec.ts",
     exitCodeExpectation: 0,
   },

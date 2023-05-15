@@ -73,12 +73,34 @@ describe(`testing ${testName} function`, () => {
     expect(report).toMatchSnapshot();
   });
 
-  it("should get success test due to bot returned equal message", async () => {
+  it("should get success test due to timeout but isNot = true with", async () => {
+    const report = await debugCon().should.not.editMessage("pong");
+    expect(report).toEqual(passReport);
+    expect(report).toMatchSnapshot();
+  });
+
+  it("should get success test due to bot returned equal message 'and' keyword", async () => {
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessageContentOrEmbedChange();
 
-    const report = await debugCon().should.editMessage(mockDiscord.message.content);
+    const report = await debugCon()
+      .should.editMessage(mockDiscord.message.content)
+      .and.editMessage(mockDiscord.message.content);
+
     expect(report).toEqual(passReport);
+    expect(report).toMatchSnapshot();
+  });
+
+  it("should get invalid test due to bot returned equal message 'and' keyword and 'not' keyword", async () => {
+    const events = new MockEvents(cordeClient, mockDiscord);
+    const mock = events.mockOnceMessageContentOrEmbedChange();
+
+    const report = await debugCon()
+      .should.editMessage(mockDiscord.message.content)
+      .and.not.editMessage(mockDiscord.message.content);
+
+    expect(report).toMatchObject(failReport);
+    expect(mock).toBeCalledTimes(2);
     expect(report).toMatchSnapshot();
   });
 

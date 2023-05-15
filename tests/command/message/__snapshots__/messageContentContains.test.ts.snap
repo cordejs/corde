@@ -31,6 +31,13 @@ Object {
 }
 `;
 
+exports[`testing messageContentContains function should get success test due to bot returned equal message with 'and' keyword 1`] = `
+Object {
+  "pass": true,
+  "testName": "messageContentContains",
+}
+`;
+
 exports[`testing messageContentContains function should get success test due to timeout but isNot = true 1`] = `
 Object {
   "pass": true,

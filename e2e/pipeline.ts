@@ -64,9 +64,7 @@ async function main() {
       if (selectedTests.length === 0 || selectedTests.includes(fileObj.id.toString())) {
         timer.start();
         const output = await testFn();
-        //console.log(chalk.cyanBright(`Output of: ${fileObj.testFile}\n`));
-
-        //testUtils.saveOutput(fileObj.testFile, output);
+        timer.stop();
 
         if (testFailed(output, fileObj)) {
           _testsPass = false;
@@ -79,7 +77,9 @@ async function main() {
           );
           return 1;
         } else {
-          process.stdout.write(`${chalk.green(" OK")}\n`);
+          process.stdout.write(
+            `${chalk.green(" OK")} in ${chalk.yellow(timer.elapsedFormatted)}\n`,
+          );
         }
       }
     }

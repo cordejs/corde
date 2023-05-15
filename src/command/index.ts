@@ -309,7 +309,7 @@ type DebugTypes<T> = {
         testName: string;
         message: string;
         trace?: string;
-      }>
+      }> & { and: DebugTypes<T> }
     : T[P] extends (...params: any[]) => CommandState
     ? (...params: Parameters<T[P]>) => DebugTypes<T>
     : T[P] extends Record<string, any>

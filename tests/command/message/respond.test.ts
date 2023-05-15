@@ -65,6 +65,18 @@ describe(`testing ${testName} function`, () => {
     expect(report).toMatchObject(passReport);
   });
 
+  it("should get success test due to bot returned equal message using 'and' keyword", async () => {
+    const events = new MockEvents(cordeClient, mockDiscord);
+    const mock = events.mockOnceMessageCreate();
+
+    const report = await debugCon()
+      .should.respond(mockDiscord.message.content)
+      .and.respond(mockDiscord.message.content);
+
+    expect(report).toMatchObject(passReport);
+    expect(mock).toBeCalledTimes(2);
+  });
+
   it("should get success test due to bot returned equal messages (string type)", async () => {
     const events = new MockEvents(cordeClient, mockDiscord);
     events.mockOnceMessageCreate();

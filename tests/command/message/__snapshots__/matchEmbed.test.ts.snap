@@ -16,6 +16,13 @@ Object {
 }
 `;
 
+exports[`testing matchEmbed function should get success test due to bot returned equal messages that matches with 'and' keyword 1`] = `
+Object {
+  "pass": true,
+  "testName": "matchEmbed",
+}
+`;
+
 exports[`testing matchEmbed function should return a failed test due to invalid parameter (null) 1`] = `
 Object {
   "message": "expected: parameter to be an object of type IMessageEmbed 
