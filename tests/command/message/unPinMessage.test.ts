@@ -30,33 +30,25 @@ describe(`testing ${testName} function`, () => {
   });
 
   it("should return error message due to no messageIdentifier (null)", async () => {
-    const report = await debugCon()
-      // @ts-expect-error
-      .should.unPinMessage(null);
+    const report = await debugCon().should.unPinMessage(null);
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
 
   it("should return error message due to no messageIdentifier (undefined)", async () => {
-    const report = await debugCon()
-      // @ts-expect-error
-      .should.unPinMessage(undefined);
+    const report = await debugCon().should.unPinMessage(undefined);
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
 
   it("should return a passed test due to isNot true and timeout", async () => {
-    const report = await debugCon()
-      .should.not // @ts-expect-error
-      .unPinMessage("1233");
+    const report = await debugCon().should.not.unPinMessage("1233");
     expect(report).toEqual(passReport);
     expect(report).toMatchSnapshot();
   });
 
   it("should return a failed test due to isNot false and timeout", async () => {
-    const report = await debugCon()
-      .should // @ts-expect-error
-      .unPinMessage("1233");
+    const report = await debugCon().should.unPinMessage("1233");
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
   });
@@ -74,6 +66,32 @@ describe(`testing ${testName} function`, () => {
     const report = await debugCon().should.unPinMessage({ id: "1233" });
 
     expect(report).toEqual(passReport);
+    expect(report).toMatchSnapshot();
+  });
+
+  it("should return a passed test due to message unpinned and with 'and' operator", async () => {
+    const events = new MockEvents(cordeClient, mockDiscord);
+    const mock = events.mockOnceMessageUnPinned();
+
+    const report = await debugCon()
+      .should.unPinMessage({ id: "1233" })
+      .and.unPinMessage({ id: "1233" });
+
+    expect(report).toEqual(passReport);
+    expect(mock).toBeCalledTimes(2);
+    expect(report).toMatchSnapshot();
+  });
+
+  it("should return a passed test due to message unpinned and with 'and' and 'not' operator", async () => {
+    const events = new MockEvents(cordeClient, mockDiscord);
+    const mock = events.mockOnceMessageUnPinned();
+
+    const report = await debugCon()
+      .should.unPinMessage({ id: "1233" })
+      .and.not.unPinMessage({ id: "1233" });
+
+    expect(report).toEqual(passReport);
+    expect(mock).toBeCalledTimes(2);
     expect(report).toMatchSnapshot();
   });
 
@@ -96,9 +114,7 @@ describe(`testing ${testName} function`, () => {
       .fn()
       .mockImplementation(() => Promise.reject(new Error(errorMessage)));
 
-    const report = await debugCon()
-      .should // @ts-expect-error
-      .unPinMessage("1");
+    const report = await debugCon().should.unPinMessage("1");
 
     expect(report).toMatchObject(failReport);
     expect(report).toMatchSnapshot();
