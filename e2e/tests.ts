@@ -5,13 +5,15 @@ import testUtils from "./testUtils";
 import { CliOutput, ITestFile, TestModule } from "./types";
 
 function* createTestFunctionsGenerator(): Generator<
-  [ITestFile, () => Promise<CliOutput>],
+  [ITestFile, string, () => Promise<CliOutput>],
   void,
   unknown
 > {
   for (const testCase of testCases) {
+    const command = testUtils.buildCommand(testCase.folder, testCase.testFile);
     yield [
       testCase,
+      command,
       async () => {
         if (testCase.isRequiredFunction) {
           const module: TestModule = await import(
@@ -19,7 +21,6 @@ function* createTestFunctionsGenerator(): Generator<
           );
           return module.testFn();
         }
-        const command = testUtils.buildCommandWithConfigPath(testCase.folder, testCase.testFile);
         return testUtils.runCLI(command);
       },
     ];

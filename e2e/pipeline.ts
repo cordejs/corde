@@ -37,8 +37,9 @@ function buildProject() {
 
 async function main() {
   console.log(`Environment: ${chalk.cyan(testUtils.env())}`);
+  const isToListFiles = process.argv.includes("--list");
 
-  if (shouldBuild()) {
+  if (!isToListFiles && shouldBuild()) {
     console.log("Building project... ");
     buildProject();
     console.log("Done\n");
@@ -48,9 +49,11 @@ async function main() {
 
   let exitCode = 0;
   let _testsPass = true;
-  console.log(chalk.cyanBright("logging example bot..."));
 
-  await login();
+  if (!isToListFiles) {
+    console.log(chalk.cyanBright("logging example bot..."));
+    await login();
+  }
 
   try {
     console.log(chalk.green(" Done\n"));
@@ -60,7 +63,12 @@ async function main() {
       .filter((el: any) => !isNaN(el));
 
     const timer = new Stopwatch();
-    for (const [fileObj, testFn] of generator) {
+    for (const [fileObj, command, testFn] of generator) {
+      if (isToListFiles) {
+        process.stdout.write(`${command}\n`);
+        continue;
+      }
+
       if (selectedTests.length === 0 || selectedTests.includes(fileObj.id.toString())) {
         timer.start();
         const output = await testFn();
@@ -91,7 +99,7 @@ async function main() {
     exitCode = 1;
   } finally {
     console.log("\n");
-    if (_testsPass) {
+    if (_testsPass && !isToListFiles) {
       console.log(`${chalk.bgGreen(" SUCCESS ")}: All tests passed`);
     }
   }

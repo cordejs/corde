@@ -12,7 +12,13 @@ yarn e2e
 Repeating, this is a slower testing process, to testing only what you want run:
 
 ```shell
-yarn jest ./e2e/toReturn --config=./e2e/jest.config.ts
+yarn e2e --file
+```
+
+To list all files run:
+
+```shell
+yarn e2e --list
 ```
 
 ### Tests structure

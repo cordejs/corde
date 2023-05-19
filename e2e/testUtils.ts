@@ -56,12 +56,7 @@ namespace testUtils {
    */
   export function runCLI(command: string, setConfig = true) {
     return new Promise<CliOutput>((resolve) => {
-      const con = `node ./bin/corde ${
-        setConfig ? "--config ./e2e/corde.config.ts" : ""
-      } ${command}`;
-
-      // con += " ";
-      // con += testUtils.env();
+      const con = injectCommand(command, setConfig);
 
       process.stdout.write(`Running: ${chalk.magenta(con)}`);
 
@@ -69,6 +64,21 @@ namespace testUtils {
         resolve({ stdout: removeANSIColorStyle(stdout), exitCode: child.exitCode, stderr });
       });
     });
+  }
+
+  /**
+   * @internal
+   */
+  export function buildCommand(folderName: string, testFileName: string) {
+    const preCommand = buildCommandWithConfigPath(folderName, testFileName);
+    return injectCommand(preCommand);
+  }
+
+  /**
+   * @internal
+   */
+  export function injectCommand(preCommand: string, setConfig = true) {
+    return `node ./bin/corde ${setConfig ? "--config ./e2e/corde.config.ts" : ""} ${preCommand}`;
   }
 
   // Duplicated code from ../tests/testHelper
